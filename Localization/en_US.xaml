@@ -3,4 +3,6 @@
     <sys:String x:Key="LOCLinkManagerName">Link Manager</sys:String>
     <sys:String x:Key="LOCLinkManagerSortLinks">Sort links by name</sys:String>
     <sys:String x:Key="LOCLinkManagerSortedMessage">Links of {0} games sorted!</sys:String>
+    <sys:String x:Key="LOCLinkManagerAddLibraryLink">Add library link</sys:String>
+    <sys:String x:Key="LOCLinkManagerAddedMessage">Added links to {0} games!</sys:String>
 </ResourceDictionary>

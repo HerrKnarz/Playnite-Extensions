@@ -1,12 +1,9 @@
 ﻿using Playnite.SDK;
-using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace LinkManager
@@ -16,24 +13,42 @@ namespace LinkManager
 
         public static void SortLinks(List<Game> games)
         {
+            int gamesAffected = 0;
+
             foreach (Game game in games)
             {
-                if (game.Links != null && game.Links.Count > 0)
-                {
-                    var sortedLinks = game.Links.OrderBy(x => x.Name).ToList();
+                if (LinkHelper.SortLinks(game))
+                    gamesAffected++;
+            }
 
-                    game.Links.Clear();
-
-                    foreach (Link link in sortedLinks)
-                    {
-                        game.Links.Add(link);
-                    }
-
-                    API.Instance.Database.Games.Update(game);
-                }
+            if (games.Count > 1)
+            {
+                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCLinkManagerSortedMessage"), gamesAffected));
             }
         }
 
+        public static void AddLibraryLink(List<Game> games)
+        {
+            int gamesAffected = 0;
+            Libraries libraries = new Libraries();
+            ILinkAssociation library;
+
+            foreach (Game game in games)
+            {
+                library = libraries.Find(x => x.AssociationId == game.PluginId);
+
+                if (library is object)
+                {
+                    if (library.AddLink(game))
+                        gamesAffected++;
+                }
+            }
+
+            if (games.Count > 1)
+            {
+                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCLinkManagerAddedMessage"), gamesAffected));
+            }
+        }
         // To add new game menu items override GetGameMenuItems
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
@@ -49,25 +64,30 @@ namespace LinkManager
                     {
                         var games = args.Games.Distinct().ToList();
                         SortLinks(games);
-
-                        if (games.Count > 1)
-                        {
-                            PlayniteApi.Dialogs.ShowMessage(String.Format(ResourceProvider.GetString("LOCLinkManagerSortedMessage"),games.Count));
-                        }
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkManagerAddLibraryLink"),
+                    MenuSection = menuSection,
+                    Action = a =>
+                    {
+                        var games = args.Games.Distinct().ToList();
+                        AddLibraryLink(games);
                     }
                 }
             };
         }
 
-        private static readonly ILogger logger = LogManager.GetLogger();
+        //private static readonly ILogger logger = LogManager.GetLogger();
 
-        private LinkManagerSettingsViewModel settings { get; set; }
+        private LinkManagerSettingsViewModel Settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("f692b4bb-238d-4080-ae76-4aaefde6f7a1");
 
         public LinkManager(IPlayniteAPI api) : base(api)
         {
-            settings = new LinkManagerSettingsViewModel(this);
+            Settings = new LinkManagerSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -116,7 +136,7 @@ namespace LinkManager
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            return settings;
+            return Settings;
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)
