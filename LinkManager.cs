@@ -10,45 +10,115 @@ namespace LinkManager
 {
     public class LinkManager : GenericPlugin
     {
+        public LinkManager(IPlayniteAPI api) : base(api)
+        {
+            Settings = new LinkManagerSettingsViewModel(this);
+            Properties = new GenericPluginProperties
+            {
+                HasSettings = true
+            };
+        }
 
-        public static void SortLinks(List<Game> games)
+        public void SortLinks(List<Game> games)
         {
             int gamesAffected = 0;
 
-            foreach (Game game in games)
+            using (PlayniteApi.Database.BufferedUpdate())
             {
-                if (LinkHelper.SortLinks(game))
-                    gamesAffected++;
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                    $"LinkManager - {ResourceProvider.GetString("LOCLinkManagerLSortLinksProgress")}",
+                    true
+                )
+                {
+                    IsIndeterminate = false
+                };
+
+                PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+                {
+                    try
+                    {
+                        activateGlobalProgress.ProgressMaxValue = (double)games.Count();
+
+                        foreach (Game game in games)
+                        {
+                            if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                            {
+                                break;
+                            }
+
+                            if (LinkHelper.SortLinks(game))
+                                gamesAffected++;
+
+                            activateGlobalProgress.CurrentProgressValue++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Info("LinkManager:" + ex.Message);
+                    }
+                }, globalProgressOptions);
+
             }
 
             if (games.Count > 1)
             {
-                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCLinkManagerSortedMessage"), gamesAffected));
+                PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCLinkManagerSortedMessage"), gamesAffected));
             }
         }
 
-        public static void AddLibraryLink(List<Game> games)
+        public void AddLibraryLink(List<Game> games)
         {
             int gamesAffected = 0;
-            Libraries libraries = new Libraries();
+            Libraries libraries = new Libraries(Settings.Settings);
             ILinkAssociation library;
 
-            foreach (Game game in games)
+            using (PlayniteApi.Database.BufferedUpdate())
             {
-                library = libraries.Find(x => x.AssociationId == game.PluginId);
-
-                if (library is object)
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                    $"LinkManager - {ResourceProvider.GetString("LOCLinkManagerLibraryLinkProgress")}",
+                    true
+                )
                 {
-                    if (library.AddLink(game))
-                        gamesAffected++;
-                }
+                    IsIndeterminate = false
+                };
+
+                PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+                {
+                    try
+                    {
+                        activateGlobalProgress.ProgressMaxValue = (double)games.Count();
+
+                        foreach (Game game in games)
+                        {
+                            if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                            {
+                                break;
+                            }
+
+                            library = libraries.Find(x => x.AssociationId == game.PluginId);
+
+                            if (library is object)
+                            {
+                                if (library.AddLink(game))
+                                    gamesAffected++;
+                            }
+
+                            activateGlobalProgress.CurrentProgressValue++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Info("LinkManager:" + ex.Message);
+                    }
+                }, globalProgressOptions);
             }
 
             if (games.Count > 1)
             {
-                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCLinkManagerAddedMessage"), gamesAffected));
+                PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCLinkManagerAddedMessage"), gamesAffected));
             }
         }
+
         // To add new game menu items override GetGameMenuItems
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
@@ -79,60 +149,11 @@ namespace LinkManager
             };
         }
 
-        //private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger logger = LogManager.GetLogger();
 
-        private LinkManagerSettingsViewModel Settings { get; set; }
+        public LinkManagerSettingsViewModel Settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("f692b4bb-238d-4080-ae76-4aaefde6f7a1");
-
-        public LinkManager(IPlayniteAPI api) : base(api)
-        {
-            Settings = new LinkManagerSettingsViewModel(this);
-            Properties = new GenericPluginProperties
-            {
-                HasSettings = true
-            };
-        }
-
-        /*public override void OnGameInstalled(OnGameInstalledEventArgs args)
-        {
-            // Add code to be executed when game is finished installing.
-        }
-
-        public override void OnGameStarted(OnGameStartedEventArgs args)
-        {
-            // Add code to be executed when game is started running.
-        }
-
-        public override void OnGameStarting(OnGameStartingEventArgs args)
-        {
-            // Add code to be executed when game is preparing to be started.
-        }
-
-        public override void OnGameStopped(OnGameStoppedEventArgs args)
-        {
-            // Add code to be executed when game is preparing to be started.
-        }
-
-        public override void OnGameUninstalled(OnGameUninstalledEventArgs args)
-        {
-            // Add code to be executed when game is uninstalled.
-        }
-
-        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
-        {
-            // Add code to be executed when Playnite is initialized.
-        }
-
-        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
-        {
-            // Add code to be executed when Playnite is shutting down.
-        }
-
-        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
-        {
-            // Add code to be executed when library is updated.
-        }*/
 
         public override ISettings GetSettings(bool firstRunSettings)
         {

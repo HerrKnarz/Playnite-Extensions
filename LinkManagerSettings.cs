@@ -1,20 +1,16 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinkManager
 {
     public class LinkManagerSettings : ObservableObject
     {
-        private string option1 = string.Empty;
+        private string itchApiKey = string.Empty;
         private bool option2 = false;
         private bool optionThatWontBeSaved = false;
 
-        public string Option1 { get => option1; set => SetValue(ref option1, value); }
+        public string ItchApiKey { get => itchApiKey; set => SetValue(ref itchApiKey, value); }
         public bool Option2 { get => option2; set => SetValue(ref option2, value); }
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
@@ -25,7 +21,7 @@ namespace LinkManager
     public class LinkManagerSettingsViewModel : ObservableObject, ISettings
     {
         private readonly LinkManager plugin;
-        private LinkManagerSettings editingClone { get; set; }
+        private LinkManagerSettings EditingClone { get; set; }
 
         private LinkManagerSettings settings;
         public LinkManagerSettings Settings
@@ -60,14 +56,14 @@ namespace LinkManager
         public void BeginEdit()
         {
             // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
+            EditingClone = Serialization.GetClone(Settings);
         }
 
         public void CancelEdit()
         {
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
+            Settings = EditingClone;
         }
 
         public void EndEdit()

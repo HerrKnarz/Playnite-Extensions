@@ -10,6 +10,7 @@ namespace LinkManager
         Guid AssociationId { get; }
         string LinkName { get; set; }
         string LinkUrl { get; set; }
+        LinkManagerSettings Settings { get; set; }
 
         bool AddLink(Game game);
     }
@@ -18,19 +19,20 @@ namespace LinkManager
     {
         public Guid AssociationId { get; set; }
         public string LinkName { get; set; }
-
         public string LinkUrl { get; set; }
+        public LinkManagerSettings Settings { get; set; }
 
         public bool AddLink(Game game)
         {
             return LinkHelper.AddLink(game, LinkName, string.Format(LinkUrl, game.GameId));
         }
 
-        public SteamLink()
+        public SteamLink(LinkManagerSettings settings)
         {
             AssociationId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
             LinkName = "Steam";
             LinkUrl = "https://store.steampowered.com/app/{0}/";
+            Settings = settings;
         }
     }
 
@@ -38,8 +40,8 @@ namespace LinkManager
     {
         public Guid AssociationId { get; set; }
         public string LinkName { get; set; }
-
         public string LinkUrl { get; set; }
+        public LinkManagerSettings Settings { get; set; }
 
         public bool AddLink(Game game)
         {
@@ -54,11 +56,12 @@ namespace LinkManager
             return LinkHelper.AddLink(game, LinkName, gogMetaData.Links.Store.Href);
         }
 
-        public GogLink()
+        public GogLink(LinkManagerSettings settings)
         {
             AssociationId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
             LinkName = "GOG";
             LinkUrl = "";
+            Settings = settings;
         }
     }
 
@@ -66,39 +69,42 @@ namespace LinkManager
     {
         public Guid AssociationId { get; set; }
         public string LinkName { get; set; }
-
         public string LinkUrl { get; set; }
+        public LinkManagerSettings Settings { get; set; }
 
         public bool AddLink(Game game)
         {
-            ReadConfig config = new ReadConfig();
+            if (!string.IsNullOrWhiteSpace(Settings.ItchApiKey))
+            {
+                string apiUrl = string.Format("https://itch.io//api/1/{0}/game/{1}", Settings.ItchApiKey, game.GameId);
 
-            string apiUrl = string.Format("https://itch.io//api/1/{0}/game/{1}", config.ItchApiKey, game.GameId);
+                WebClient client = new WebClient();
 
-            WebClient client = new WebClient();
+                string myJSON = client.DownloadString(apiUrl);
 
-            string myJSON = client.DownloadString(apiUrl);
+                ItchMetaData itchMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<ItchMetaData>(myJSON);
 
-            ItchMetaData itchMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<ItchMetaData>(myJSON);
-
-            return LinkHelper.AddLink(game, LinkName, itchMetaData.Game.Url);
+                return LinkHelper.AddLink(game, LinkName, itchMetaData.Game.Url);
+            }
+            else return false;
         }
 
-        public ItchLink()
+        public ItchLink(LinkManagerSettings settings)
         {
             AssociationId = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
             LinkName = "Itch";
             LinkUrl = "";
+            Settings = settings;
         }
     }
 
     class Libraries : System.Collections.Generic.List<ILinkAssociation>
     {
-        public Libraries()
+        public Libraries(LinkManagerSettings settings)
         {
-            Add(new SteamLink());
-            Add(new GogLink());
-            Add(new ItchLink());
+            Add(new SteamLink(settings));
+            Add(new GogLink(settings));
+            Add(new ItchLink(settings));
         }
     }
 
