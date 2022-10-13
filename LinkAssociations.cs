@@ -1,5 +1,6 @@
 ﻿using LinkManager.Models;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Game = Playnite.SDK.Models.Game;
 
@@ -98,7 +99,7 @@ namespace LinkManager
         }
     }
 
-    class Libraries : System.Collections.Generic.List<ILinkAssociation>
+    class Libraries : List<ILinkAssociation>
     {
         public Libraries(LinkManagerSettings settings)
         {

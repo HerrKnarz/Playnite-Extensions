@@ -1,15 +1,18 @@
 ﻿using Playnite.SDK;
-using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using Game = Playnite.SDK.Models.Game;
 
 namespace LinkManager
 {
     public class LinkManager : GenericPlugin
     {
+        public SortLinks SortLinks;
+        public AddLibraryLinks AddLibraryLinks;
+
         public LinkManager(IPlayniteAPI api) : base(api)
         {
             Settings = new LinkManagerSettingsViewModel(this);
@@ -17,109 +20,67 @@ namespace LinkManager
             {
                 HasSettings = true
             };
+
+            SortLinks = new SortLinks(Settings.Settings);
+            AddLibraryLinks = new AddLibraryLinks(Settings.Settings);
         }
 
-        public void SortLinks(List<Game> games)
+        private void DoForAll(List<Game> games, ILinkAction linkAction)
         {
-            int gamesAffected = 0;
-
-            using (PlayniteApi.Database.BufferedUpdate())
+            if (games.Count == 1)
             {
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    $"LinkManager - {ResourceProvider.GetString("LOCLinkManagerLSortLinksProgress")}",
-                    true
-                )
-                {
-                    IsIndeterminate = false
-                };
-
-                PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
-                {
-                    try
-                    {
-                        activateGlobalProgress.ProgressMaxValue = (double)games.Count();
-
-                        foreach (Game game in games)
-                        {
-                            if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                            {
-                                break;
-                            }
-
-                            if (LinkHelper.SortLinks(game))
-                                gamesAffected++;
-
-                            activateGlobalProgress.CurrentProgressValue++;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Info("LinkManager:" + ex.Message);
-                    }
-                }, globalProgressOptions);
-
+                linkAction.Execute(games.First());
             }
-
-            if (games.Count > 1)
+            else if (games.Count > 1)
             {
-                PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCLinkManagerSortedMessage"), gamesAffected));
-            }
-        }
+                int gamesAffected = 0;
 
-        public void AddLibraryLink(List<Game> games)
-        {
-            int gamesAffected = 0;
-            Libraries libraries = new Libraries(Settings.Settings);
-            ILinkAssociation library;
-
-            using (PlayniteApi.Database.BufferedUpdate())
-            {
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    $"LinkManager - {ResourceProvider.GetString("LOCLinkManagerLibraryLinkProgress")}",
-                    true
-                )
+                using (PlayniteApi.Database.BufferedUpdate())
                 {
-                    IsIndeterminate = false
-                };
-
-                PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
-                {
-                    try
+                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                        $"LinkManager - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
+                        true
+                    )
                     {
-                        activateGlobalProgress.ProgressMaxValue = (double)games.Count();
+                        IsIndeterminate = false
+                    };
 
-                        foreach (Game game in games)
+                    PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+                    {
+                        try
                         {
-                            if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                            {
-                                break;
-                            }
+                            activateGlobalProgress.ProgressMaxValue = (double)games.Count();
 
-                            library = libraries.Find(x => x.AssociationId == game.PluginId);
-
-                            if (library is object)
+                            foreach (Game game in games)
                             {
-                                if (library.AddLink(game))
+                                if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                                {
+                                    break;
+                                }
+
+                                if (linkAction.Execute(game))
+                                {
                                     gamesAffected++;
+                                }
+
+                                activateGlobalProgress.CurrentProgressValue++;
                             }
-
-                            activateGlobalProgress.CurrentProgressValue++;
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Info("LinkManager:" + ex.Message);
-                    }
-                }, globalProgressOptions);
-            }
+                        catch (Exception ex)
+                        {
+                            logger.Info("LinkManager:" + ex.Message);
+                        }
+                    }, globalProgressOptions);
 
-            if (games.Count > 1)
-            {
-                PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCLinkManagerAddedMessage"), gamesAffected));
+                }
+
+                if (games.Count > 1)
+                {
+                    PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
+                }
             }
         }
 
-        // To add new game menu items override GetGameMenuItems
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             var menuSection = ResourceProvider.GetString("LOCLinkManagerName");
@@ -132,8 +93,8 @@ namespace LinkManager
                     MenuSection = menuSection,
                     Action = a =>
                     {
-                        var games = args.Games.Distinct().ToList();
-                        SortLinks(games);
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, SortLinks);
                     }
                 },
                 new GameMenuItem
@@ -142,8 +103,8 @@ namespace LinkManager
                     MenuSection = menuSection,
                     Action = a =>
                     {
-                        var games = args.Games.Distinct().ToList();
-                        AddLibraryLink(games);
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, AddLibraryLinks);
                     }
                 }
             };
