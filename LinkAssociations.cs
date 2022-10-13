@@ -1,4 +1,5 @@
-﻿using LinkManager.Models;
+﻿using LinkManager.Models.Gog;
+using LinkManager.Models.Itch;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -6,16 +7,41 @@ using Game = Playnite.SDK.Models.Game;
 
 namespace LinkManager
 {
+    /// <summary>
+    /// Interface for all the websites a link can be added to
+    /// </summary>
     interface ILinkAssociation
     {
+        /// <summary>
+        /// ID of the game library (e.g. steam or gog) the link is part of. Is only used to add library links as of now.
+        /// </summary>
         Guid AssociationId { get; }
+        /// <summary>
+        /// Name the link will have in the games link collection
+        /// </summary>
         string LinkName { get; set; }
+        /// <summary>
+        /// Base URL of the link before adding the specific path to the game itself. Only used if applicable.
+        /// </summary>
         string LinkUrl { get; set; }
+        /// <summary>
+        /// Settings to be used
+        /// </summary>
         LinkManagerSettings Settings { get; set; }
 
+        /// <summary>
+        /// Adds a link to the specific game page of the specified website.
+        /// </summary>
+        /// <param name="game">Game the link will be added to</param>
+        /// <returns>
+        /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
+        /// </returns>
         bool AddLink(Game game);
     }
 
+    /// <summary>
+    /// Adds a link to the steam page of the game, if it is part of the steam library.
+    /// </summary>
     class SteamLink : ILinkAssociation
     {
         public Guid AssociationId { get; set; }
@@ -25,6 +51,7 @@ namespace LinkManager
 
         public bool AddLink(Game game)
         {
+            // Adding a link to steam is extremely simple. You only have to add the GameId to the base URL.
             return LinkHelper.AddLink(game, LinkName, string.Format(LinkUrl, game.GameId));
         }
 
@@ -37,6 +64,9 @@ namespace LinkManager
         }
     }
 
+    /// <summary>
+    /// Adds a link to the gog page of the game, if it is part of the steam library.
+    /// </summary>
     class GogLink : ILinkAssociation
     {
         public Guid AssociationId { get; set; }
@@ -46,6 +76,7 @@ namespace LinkManager
 
         public bool AddLink(Game game)
         {
+            // To add a link to the gog page you have to get it from their API via the GameId.
             WebClient client = new WebClient();
 
             client.Headers.Add("Accept", "application/json");
@@ -66,6 +97,9 @@ namespace LinkManager
         }
     }
 
+    /// <summary>
+    /// Adds a link to the itch.io page of the game, if it is part of the steam library.
+    /// </summary>
     class ItchLink : ILinkAssociation
     {
         public Guid AssociationId { get; set; }
@@ -75,6 +109,7 @@ namespace LinkManager
 
         public bool AddLink(Game game)
         {
+            // To get the link to a game on the itch website, you need an API key and request the game data from their api.
             if (!string.IsNullOrWhiteSpace(Settings.ItchApiKey))
             {
                 string apiUrl = string.Format("https://itch.io//api/1/{0}/game/{1}", Settings.ItchApiKey, game.GameId);
@@ -87,7 +122,10 @@ namespace LinkManager
 
                 return LinkHelper.AddLink(game, LinkName, itchMetaData.Game.Url);
             }
-            else return false;
+            else
+            {
+                return false;
+            }
         }
 
         public ItchLink(LinkManagerSettings settings)
@@ -99,6 +137,9 @@ namespace LinkManager
         }
     }
 
+    /// <summary>
+    /// List of all game library link associations. Is used to get the specific library of the game via the GUID using the find method.
+    /// </summary>
     class Libraries : List<ILinkAssociation>
     {
         public Libraries(LinkManagerSettings settings)
@@ -109,6 +150,10 @@ namespace LinkManager
         }
     }
 
+    /// <summary>
+    /// Contains all GUIDs of game libraries currently not available as a LinkAssociation class. At the moment it serves no purpose other
+    /// than keeping track of the GUIDs.
+    /// </summary>
     internal class LinkAssociations
     {
         public static readonly Guid AmazonId = Guid.Parse("402674cd-4af6-4886-b6ec-0e695bfa0688");

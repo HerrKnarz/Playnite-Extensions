@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 
-namespace LinkManager.Models
+// Contains all the classes needed to deserialize the JSON fetched from the itch.io api.
+namespace LinkManager.Models.Itch
 {
     public class Embed
     {

@@ -2,7 +2,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace LinkManager.Models
+// Contains all the classes needed to deserialize the JSON fetched from the gog api.
+namespace LinkManager.Models.Gog
 {
 
     public class BackgroundImage

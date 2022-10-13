@@ -2,32 +2,44 @@
 
 namespace LinkManager
 {
-    public enum LinkActionTypes
-    {
-        Sort,
-        AddLibraryLink
-    }
-
+    /// <summary>
+    /// Interface for classes, that can be used as a link action. Contains texts for the progress bar, result dialog and the action to
+    /// execute.
+    /// </summary>
     public interface ILinkAction
     {
-        LinkActionTypes Type { get; set; }
+        /// <summary>
+        /// Ressource for the localized text in the progress bar
+        /// </summary>
         string ProgressMessage { get; set; }
+        /// <summary>
+        /// Ressource for the localized text in the result dialog. Should contain placeholder for the number of affected games.
+        /// </summary>
         string ResultMessage { get; set; }
+        /// <summary>
+        /// Settings to use for the action
+        /// </summary>
         LinkManagerSettings Settings { get; set; }
 
+        /// <summary>
+        /// Executes the action on a game.
+        /// </summary>
+        /// <param name="game">The game to be processed</param>
+        /// <returns>true, if the action was successful</returns>
         bool Execute(Game game);
     }
 
+    /// <summary>
+    /// Sorts the links of a game.
+    /// </summary>
     public class SortLinks : ILinkAction
     {
-        public LinkActionTypes Type { get; set; }
         public string ProgressMessage { get; set; }
         public string ResultMessage { get; set; }
         public LinkManagerSettings Settings { get; set; }
 
         public SortLinks(LinkManagerSettings settings)
         {
-            Type = LinkActionTypes.Sort;
             ProgressMessage = "LOCLinkManagerLSortLinksProgress";
             ResultMessage = "LOCLinkManagerSortedMessage";
             Settings = settings;
@@ -39,18 +51,22 @@ namespace LinkManager
         }
     }
 
+    /// <summary>
+    /// Adds a link to the game store page of the library (e.g. steam or gog) the game is part of.
+    /// </summary>
     public class AddLibraryLinks : ILinkAction
     {
+        /// <summary>
+        /// contains all game libraries that have a link to a store page that can be added.
+        /// </summary>
         private readonly Libraries libraries;
 
-        public LinkActionTypes Type { get; set; }
         public string ProgressMessage { get; set; }
         public string ResultMessage { get; set; }
         public LinkManagerSettings Settings { get; set; }
 
         public AddLibraryLinks(LinkManagerSettings settings)
         {
-            Type = LinkActionTypes.Sort;
             ProgressMessage = "LOCLinkManagerLibraryLinkProgress";
             ResultMessage = "LOCLinkManagerAddedMessage";
             Settings = settings;
@@ -63,12 +79,15 @@ namespace LinkManager
             ILinkAssociation library;
             bool result = false;
 
+            // Find the library of the game and add a link, if possible.
             library = libraries.Find(x => x.AssociationId == game.PluginId);
 
             if (library is object)
             {
                 if (library.AddLink(game))
+                {
                     result = true;
+                }
             }
             return result;
         }

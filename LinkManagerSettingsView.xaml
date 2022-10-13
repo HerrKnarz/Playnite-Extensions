@@ -10,7 +10,5 @@
     <StackPanel>
         <TextBlock Text="{DynamicResource LOCLinkManagerSettingsItchApiKey}" Margin="20,20,20,0"/>
         <TextBox Text="{Binding Settings.ItchApiKey}" Margin="20,5,20,0"/>
-        <!--<TextBlock Text="Description for Option2:"/>
-        <CheckBox IsChecked="{Binding Settings.Option2}"/>-->
     </StackPanel>
 </UserControl>

@@ -4,18 +4,17 @@ using System.Collections.Generic;
 
 namespace LinkManager
 {
+    /// <summary>
+    /// Contains all settings for the extension
+    /// </summary>
     public class LinkManagerSettings : ObservableObject
     {
         private string itchApiKey = string.Empty;
-        private bool option2 = false;
-        private bool optionThatWontBeSaved = false;
 
+        /// <summary>
+        /// API key used to get game information from itch.io
+        /// </summary>
         public string ItchApiKey { get => itchApiKey; set => SetValue(ref itchApiKey, value); }
-        public bool Option2 { get => option2; set => SetValue(ref option2, value); }
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
-        [DontSerialize]
-        public bool OptionThatWontBeSaved { get => optionThatWontBeSaved; set => SetValue(ref optionThatWontBeSaved, value); }
     }
 
     public class LinkManagerSettingsViewModel : ObservableObject, ISettings
@@ -40,7 +39,7 @@ namespace LinkManager
             this.plugin = plugin;
 
             // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<LinkManagerSettings>();
+            LinkManagerSettings savedSettings = plugin.LoadPluginSettings<LinkManagerSettings>();
 
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
