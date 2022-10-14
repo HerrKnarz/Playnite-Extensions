@@ -7,8 +7,8 @@
     <ProjectGuid>{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LinkManager</RootNamespace>
-    <AssemblyName>LinkManager</AssemblyName>
+    <RootNamespace>LinkUtilities</RootNamespace>
+    <AssemblyName>LinkUtilities</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -58,10 +58,10 @@
     <Compile Include="Models\GogMetaData.cs" />
     <Compile Include="LinkHelper.cs" />
     <Compile Include="LinkAssociations.cs" />
-    <Compile Include="LinkManager.cs" />
-    <Compile Include="LinkManagerSettings.cs" />
-    <Compile Include="LinkManagerSettingsView.xaml.cs">
-      <DependentUpon>LinkManagerSettingsView.xaml</DependentUpon>
+    <Compile Include="LinkUtilities.cs" />
+    <Compile Include="LinkUtilitiesSettings.cs" />
+    <Compile Include="LinkUtilitiesSettingsView.xaml.cs">
+      <DependentUpon>LinkUtilitiesSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -73,7 +73,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="LinkManagerSettingsView.xaml">
+    <Page Include="LinkUtilitiesSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,12 +6,12 @@ using System.Linq;
 using System.Windows.Controls;
 using Game = Playnite.SDK.Models.Game;
 
-namespace LinkManager
+namespace LinkUtilities
 {
     /// <summary>
     /// Class of the actual playnite extension
     /// </summary>
-    public class LinkManager : GenericPlugin
+    public class LinkUtilities : GenericPlugin
     {
         /// <summary>
         /// Class to sort the links of a game
@@ -23,9 +23,9 @@ namespace LinkManager
         /// </summary>
         public AddLibraryLinks AddLibraryLinks;
 
-        public LinkManager(IPlayniteAPI api) : base(api)
+        public LinkUtilities(IPlayniteAPI api) : base(api)
         {
-            Settings = new LinkManagerSettingsViewModel(this);
+            Settings = new LinkUtilitiesSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -55,7 +55,7 @@ namespace LinkManager
                 using (PlayniteApi.Database.BufferedUpdate())
                 {
                     GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                        $"LinkManager - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
+                        $"LinkUtilities - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
                         true
                     )
                     {
@@ -85,7 +85,7 @@ namespace LinkManager
                         }
                         catch (Exception ex)
                         {
-                            logger.Info("LinkManager:" + ex.Message);
+                            logger.Info("LinkUtilities:" + ex.Message);
                         }
                     }, globalProgressOptions);
 
@@ -98,14 +98,14 @@ namespace LinkManager
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            string menuSection = ResourceProvider.GetString("LOCLinkManagerName");
+            string menuSection = ResourceProvider.GetString("LOCLinkUtilitiesName");
 
             return new List<GameMenuItem>
             {
                 // Adds the "sort links" item to the game menu.
                 new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCLinkManagerSortLinks"),
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesSortLinks"),
                     MenuSection = menuSection,
                     Action = a =>
                     {
@@ -116,7 +116,7 @@ namespace LinkManager
                 // Adds the "add library links" item to the game menu.
                 new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCLinkManagerAddLibraryLink"),
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesAddLibraryLink"),
                     MenuSection = menuSection,
                     Action = a =>
                     {
@@ -132,7 +132,7 @@ namespace LinkManager
         /// <summary>
         /// The settings view model of the extension
         /// </summary>
-        public LinkManagerSettingsViewModel Settings { get; set; }
+        public LinkUtilitiesSettingsViewModel Settings { get; set; }
 
         /// <summary>
         /// The global GUID to identify the extension in playnite
@@ -156,7 +156,7 @@ namespace LinkManager
         /// <returns>Settings view</returns>
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            return new LinkManagerSettingsView();
+            return new LinkUtilitiesSettingsView();
         }
     }
 }

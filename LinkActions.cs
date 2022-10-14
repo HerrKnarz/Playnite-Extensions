@@ -1,6 +1,6 @@
 ﻿using Game = Playnite.SDK.Models.Game;
 
-namespace LinkManager
+namespace LinkUtilities
 {
     /// <summary>
     /// Interface for classes, that can be used as a link action. Contains texts for the progress bar, result dialog and the action to
@@ -19,7 +19,7 @@ namespace LinkManager
         /// <summary>
         /// Settings to use for the action
         /// </summary>
-        LinkManagerSettings Settings { get; set; }
+        LinkUtilitiesSettings Settings { get; set; }
 
         /// <summary>
         /// Executes the action on a game.
@@ -36,12 +36,12 @@ namespace LinkManager
     {
         public string ProgressMessage { get; set; }
         public string ResultMessage { get; set; }
-        public LinkManagerSettings Settings { get; set; }
+        public LinkUtilitiesSettings Settings { get; set; }
 
-        public SortLinks(LinkManagerSettings settings)
+        public SortLinks(LinkUtilitiesSettings settings)
         {
-            ProgressMessage = "LOCLinkManagerLSortLinksProgress";
-            ResultMessage = "LOCLinkManagerSortedMessage";
+            ProgressMessage = "LOCLinkUtilitiesLSortLinksProgress";
+            ResultMessage = "LOCLinkUtilitiesSortedMessage";
             Settings = settings;
         }
 
@@ -63,12 +63,12 @@ namespace LinkManager
 
         public string ProgressMessage { get; set; }
         public string ResultMessage { get; set; }
-        public LinkManagerSettings Settings { get; set; }
+        public LinkUtilitiesSettings Settings { get; set; }
 
-        public AddLibraryLinks(LinkManagerSettings settings)
+        public AddLibraryLinks(LinkUtilitiesSettings settings)
         {
-            ProgressMessage = "LOCLinkManagerLibraryLinkProgress";
-            ResultMessage = "LOCLinkManagerAddedMessage";
+            ProgressMessage = "LOCLinkUtilitiesLibraryLinkProgress";
+            ResultMessage = "LOCLinkUtilitiesAddedMessage";
             Settings = settings;
 
             libraries = new Libraries(Settings);

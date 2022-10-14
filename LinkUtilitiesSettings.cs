@@ -2,12 +2,12 @@
 using Playnite.SDK.Data;
 using System.Collections.Generic;
 
-namespace LinkManager
+namespace LinkUtilities
 {
     /// <summary>
     /// Contains all settings for the extension
     /// </summary>
-    public class LinkManagerSettings : ObservableObject
+    public class LinkUtilitiesSettings : ObservableObject
     {
         private string itchApiKey = string.Empty;
 
@@ -17,13 +17,13 @@ namespace LinkManager
         public string ItchApiKey { get => itchApiKey; set => SetValue(ref itchApiKey, value); }
     }
 
-    public class LinkManagerSettingsViewModel : ObservableObject, ISettings
+    public class LinkUtilitiesSettingsViewModel : ObservableObject, ISettings
     {
-        private readonly LinkManager plugin;
-        private LinkManagerSettings EditingClone { get; set; }
+        private readonly LinkUtilities plugin;
+        private LinkUtilitiesSettings EditingClone { get; set; }
 
-        private LinkManagerSettings settings;
-        public LinkManagerSettings Settings
+        private LinkUtilitiesSettings settings;
+        public LinkUtilitiesSettings Settings
         {
             get => settings;
             set
@@ -33,13 +33,13 @@ namespace LinkManager
             }
         }
 
-        public LinkManagerSettingsViewModel(LinkManager plugin)
+        public LinkUtilitiesSettingsViewModel(LinkUtilities plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
 
             // Load saved settings.
-            LinkManagerSettings savedSettings = plugin.LoadPluginSettings<LinkManagerSettings>();
+            LinkUtilitiesSettings savedSettings = plugin.LoadPluginSettings<LinkUtilitiesSettings>();
 
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
@@ -48,7 +48,7 @@ namespace LinkManager
             }
             else
             {
-                Settings = new LinkManagerSettings();
+                Settings = new LinkUtilitiesSettings();
             }
         }
 

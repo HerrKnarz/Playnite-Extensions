@@ -3,10 +3,10 @@ using Playnite.SDK.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace LinkManager
+namespace LinkUtilities
 {
     /// <summary>
-    /// Helper class containing functions used in the link manager
+    /// Helper class containing functions used in the link utilities extension
     /// </summary>
     internal class LinkHelper
     {

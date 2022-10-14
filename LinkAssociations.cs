@@ -1,11 +1,11 @@
-﻿using LinkManager.Models.Gog;
-using LinkManager.Models.Itch;
+﻿using LinkUtilities.Models.Gog;
+using LinkUtilities.Models.Itch;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using Game = Playnite.SDK.Models.Game;
 
-namespace LinkManager
+namespace LinkUtilities
 {
     /// <summary>
     /// Interface for all the websites a link can be added to
@@ -27,7 +27,7 @@ namespace LinkManager
         /// <summary>
         /// Settings to be used
         /// </summary>
-        LinkManagerSettings Settings { get; set; }
+        LinkUtilitiesSettings Settings { get; set; }
 
         /// <summary>
         /// Adds a link to the specific game page of the specified website.
@@ -47,7 +47,7 @@ namespace LinkManager
         public Guid AssociationId { get; set; }
         public string LinkName { get; set; }
         public string LinkUrl { get; set; }
-        public LinkManagerSettings Settings { get; set; }
+        public LinkUtilitiesSettings Settings { get; set; }
 
         public bool AddLink(Game game)
         {
@@ -55,7 +55,7 @@ namespace LinkManager
             return LinkHelper.AddLink(game, LinkName, string.Format(LinkUrl, game.GameId));
         }
 
-        public SteamLink(LinkManagerSettings settings)
+        public SteamLink(LinkUtilitiesSettings settings)
         {
             AssociationId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
             LinkName = "Steam";
@@ -72,7 +72,7 @@ namespace LinkManager
         public Guid AssociationId { get; set; }
         public string LinkName { get; set; }
         public string LinkUrl { get; set; }
-        public LinkManagerSettings Settings { get; set; }
+        public LinkUtilitiesSettings Settings { get; set; }
 
         public bool AddLink(Game game)
         {
@@ -88,7 +88,7 @@ namespace LinkManager
             return LinkHelper.AddLink(game, LinkName, gogMetaData.Links.Store.Href);
         }
 
-        public GogLink(LinkManagerSettings settings)
+        public GogLink(LinkUtilitiesSettings settings)
         {
             AssociationId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
             LinkName = "GOG";
@@ -105,7 +105,7 @@ namespace LinkManager
         public Guid AssociationId { get; set; }
         public string LinkName { get; set; }
         public string LinkUrl { get; set; }
-        public LinkManagerSettings Settings { get; set; }
+        public LinkUtilitiesSettings Settings { get; set; }
 
         public bool AddLink(Game game)
         {
@@ -128,7 +128,7 @@ namespace LinkManager
             }
         }
 
-        public ItchLink(LinkManagerSettings settings)
+        public ItchLink(LinkUtilitiesSettings settings)
         {
             AssociationId = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
             LinkName = "Itch";
@@ -142,7 +142,7 @@ namespace LinkManager
     /// </summary>
     class Libraries : List<ILinkAssociation>
     {
-        public Libraries(LinkManagerSettings settings)
+        public Libraries(LinkUtilitiesSettings settings)
         {
             Add(new SteamLink(settings));
             Add(new GogLink(settings));
