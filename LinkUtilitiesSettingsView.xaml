@@ -12,7 +12,14 @@
                   IsChecked="{Binding Settings.SortAfterChange}"
                   Content="{DynamicResource LOCLinkUtilitiesSettingsSortAfterChange}"
                   Margin="20,20,20,0"/>
-        <TextBlock Text="{DynamicResource LOCLinkUtilitiesSettingsItchApiKey}" Margin="20,20,20,0"/>
-        <TextBox Text="{Binding Settings.ItchApiKey}" Margin="20,5,20,0"/>
+
+        <Grid Margin="20,20,20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="{DynamicResource LOCLinkUtilitiesSettingsItchApiKey}" />
+            <TextBox Grid.Column="1" Text="{Binding Settings.ItchApiKey}" Margin="20,0,0,0"/>
+        </Grid>
     </StackPanel>
 </UserControl>
