@@ -7,5 +7,6 @@
     <sys:String x:Key="LOCLinkUtilitiesAddLibraryLink">Add library link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesAddedMessage">Added links to {0} games!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesLibraryLinkProgress">Adding library links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Sort links after the game meta data was updated</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsItchApiKey">API-Key for Itch.io (needed to fetch the library link)</sys:String>
 </ResourceDictionary>

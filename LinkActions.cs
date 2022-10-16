@@ -84,10 +84,7 @@ namespace LinkUtilities
 
             if (library is object)
             {
-                if (library.AddLink(game))
-                {
-                    result = true;
-                }
+                result = library.AddLink(game);
             }
             return result;
         }

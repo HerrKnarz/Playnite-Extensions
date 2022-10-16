@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -19,7 +20,7 @@ namespace LinkUtilities
         /// <returns>
         /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
         /// </returns>
-        public static bool AddLink(Game game, string linkName, string linkUrl)
+        public static bool AddLink(Game game, string linkName, string linkUrl, LinkUtilitiesSettings settings)
         {
             Link link = new Link(linkName, linkUrl);
             bool mustUpdate = false;
@@ -35,7 +36,22 @@ namespace LinkUtilities
             {
                 if (game.Links.Count(x => x.Name == linkName) == 0)
                 {
-                    game.Links.Add(link);
+                    List<Link> newLinks = new List<Link>(game.Links)
+                    {
+                        link
+                    };
+
+                    // We sort the links automatically if the setting SortAfterChange is true.
+                    if (settings.SortAfterChange)
+                    {
+                        game.Links = new ObservableCollection<Link>(newLinks.OrderBy(x => x.Name));
+                    }
+                    else
+                    {
+                        game.Links = new ObservableCollection<Link>(newLinks);
+                    }
+
+                    //   game.Links.Add(link);
                     mustUpdate = true;
                 }
             }

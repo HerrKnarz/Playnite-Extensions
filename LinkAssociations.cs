@@ -52,7 +52,7 @@ namespace LinkUtilities
         public bool AddLink(Game game)
         {
             // Adding a link to steam is extremely simple. You only have to add the GameId to the base URL.
-            return LinkHelper.AddLink(game, LinkName, string.Format(LinkUrl, game.GameId));
+            return LinkHelper.AddLink(game, LinkName, string.Format(LinkUrl, game.GameId), Settings);
         }
 
         public SteamLink(LinkUtilitiesSettings settings)
@@ -85,7 +85,7 @@ namespace LinkUtilities
 
             GogMetaData gogMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<GogMetaData>(myJSON);
 
-            return LinkHelper.AddLink(game, LinkName, gogMetaData.Links.Store.Href);
+            return LinkHelper.AddLink(game, LinkName, gogMetaData.Links.Store.Href, Settings);
         }
 
         public GogLink(LinkUtilitiesSettings settings)
@@ -120,7 +120,7 @@ namespace LinkUtilities
 
                 ItchMetaData itchMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<ItchMetaData>(myJSON);
 
-                return LinkHelper.AddLink(game, LinkName, itchMetaData.Game.Url);
+                return LinkHelper.AddLink(game, LinkName, itchMetaData.Game.Url, Settings);
             }
             else
             {

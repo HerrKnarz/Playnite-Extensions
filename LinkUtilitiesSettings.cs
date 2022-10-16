@@ -9,7 +9,13 @@ namespace LinkUtilities
     /// </summary>
     public class LinkUtilitiesSettings : ObservableObject
     {
+        private bool sortAfterChange = false;
         private string itchApiKey = string.Empty;
+
+        /// <summary>
+        /// sets whether the links shall be sorted after a game is updated in the database
+        /// </summary>
+        public bool SortAfterChange { get => sortAfterChange; set => SetValue(ref sortAfterChange, value); }
 
         /// <summary>
         /// API key used to get game information from itch.io

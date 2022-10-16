@@ -13,6 +13,21 @@ namespace LinkUtilities
     /// </summary>
     public class LinkUtilities : GenericPlugin
     {
+        public LinkUtilities(IPlayniteAPI api) : base(api)
+        {
+            Settings = new LinkUtilitiesSettingsViewModel(this);
+            api.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+            api.Database.Games.ItemUpdated += Games_ItemUpdated;
+            Properties = new GenericPluginProperties
+            {
+                HasSettings = true
+            };
+
+            SortLinks = new SortLinks(Settings.Settings);
+            AddLibraryLinks = new AddLibraryLinks(Settings.Settings);
+            IsUpdating = false;
+        }
+
         /// <summary>
         /// Class to sort the links of a game
         /// </summary>
@@ -23,17 +38,10 @@ namespace LinkUtilities
         /// </summary>
         public AddLibraryLinks AddLibraryLinks;
 
-        public LinkUtilities(IPlayniteAPI api) : base(api)
-        {
-            Settings = new LinkUtilitiesSettingsViewModel(this);
-            Properties = new GenericPluginProperties
-            {
-                HasSettings = true
-            };
-
-            SortLinks = new SortLinks(Settings.Settings);
-            AddLibraryLinks = new AddLibraryLinks(Settings.Settings);
-        }
+        /// <summary>
+        /// Is set to true, while the library is updated via the SortLinks function. Is used to avoid an endless loop in the function.
+        /// </summary>
+        public bool IsUpdating { get; set; }
 
         /// <summary>
         /// Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update mode if the
@@ -43,56 +51,96 @@ namespace LinkUtilities
         /// <param name="linkAction">Instance of the action to be executed</param>
         private void DoForAll(List<Game> games, ILinkAction linkAction)
         {
-            if (games.Count == 1)
+            // While sorting links we set IsUpdating to true, so the libraby update event knows it doesn't need to sort again.
+            IsUpdating = true;
+            try
             {
-                linkAction.Execute(games.First());
-            }
-            // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
-            else if (games.Count > 1)
-            {
-                int gamesAffected = 0;
-
-                using (PlayniteApi.Database.BufferedUpdate())
+                if (games.Count == 1)
                 {
-                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                        $"LinkUtilities - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
-                        true
-                    )
-                    {
-                        IsIndeterminate = false
-                    };
-
-                    PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
-                    {
-                        try
-                        {
-                            activateGlobalProgress.ProgressMaxValue = games.Count();
-
-                            foreach (Game game in games)
-                            {
-                                if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                                {
-                                    break;
-                                }
-
-                                if (linkAction.Execute(game))
-                                {
-                                    gamesAffected++;
-                                }
-
-                                activateGlobalProgress.CurrentProgressValue++;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            logger.Info("LinkUtilities:" + ex.Message);
-                        }
-                    }, globalProgressOptions);
-
+                    linkAction.Execute(games.First());
                 }
+                // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
+                else if (games.Count > 1)
+                {
+                    int gamesAffected = 0;
 
-                // Shows a dialog with the number of games actually affected.
-                PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
+                    using (PlayniteApi.Database.BufferedUpdate())
+                    {
+                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                            $"LinkUtilities - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
+                            true
+                        )
+                        {
+                            IsIndeterminate = false
+                        };
+
+                        PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+                        {
+                            try
+                            {
+                                activateGlobalProgress.ProgressMaxValue = games.Count();
+
+                                foreach (Game game in games)
+                                {
+                                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                                    {
+                                        break;
+                                    }
+
+                                    if (linkAction.Execute(game))
+                                    {
+                                        gamesAffected++;
+                                    }
+
+                                    activateGlobalProgress.CurrentProgressValue++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.Error(ex.Message);
+                            }
+                        }, globalProgressOptions);
+
+                    }
+
+                    // Shows a dialog with the number of games actually affected.
+                    PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
+                }
+            }
+            finally
+            {
+                IsUpdating = false;
+            }
+        }
+
+        /// <summary>
+        /// Event that get's triggered after updating the game database. Is used to sort links after updating.
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="args">Event arguments. Contains a list of all updated games.</param>
+        public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
+        {
+            if (Settings.Settings.SortAfterChange && !IsUpdating)
+            {
+                List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
+                DoForAll(games, SortLinks);
+            }
+        }
+
+        /// <summary>
+        /// Event that get's triggered after games are added or deleted. Is used to sort links for new games.
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="args">Event arguments. Contains a list of all added games.</param>
+        public void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> args)
+        {
+            if (Settings.Settings.SortAfterChange && !IsUpdating)
+            {
+                if (args.AddedItems.Count > 0)
+                {
+                    List<Game> games = args.AddedItems.Distinct().ToList();
+                    DoForAll(games, SortLinks);
+                }
             }
         }
 
