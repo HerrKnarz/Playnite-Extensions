@@ -1,4 +1,4 @@
-# Link Manager
+# Link Utilities
 
 This is an extension for the superb open source video game library manager and launcher [Playnite](http://playnite.link/). At the moment the extension does the following on button click:
 
