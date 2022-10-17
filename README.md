@@ -1,4 +1,4 @@
-[![DownloadCountTotal](https://img.shields.io/github/downloads/HerrKnarz/Playnite-Extension-LinkUtilities/total?style=for-the-badge)](/HerrKnarz/Playnite-Extension-LinkUtilities/archive/refs/heads/master.zip)
+[![DownloadCountTotal](https://img.shields.io/github/downloads/HerrKnarz/Playnite-Extension-LinkUtilities/total?style=for-the-badge)](https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/archive/refs/heads/master.zip)
 [![LatestVersion](https://img.shields.io/github/v/release/HerrKnarz/Playnite-Extension-LinkUtilities?include_prereleases&style=for-the-badge)](https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases)
 [![LastCommit](https://img.shields.io/github/last-commit/HerrKnarz/Playnite-Extension-LinkUtilities?style=for-the-badge)](https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/commits/master)
 [![License](https://img.shields.io/github/license/HerrKnarz/Playnite-Extension-LinkUtilities?style=for-the-badge)](https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/blob/master/LICENSE.txt)
