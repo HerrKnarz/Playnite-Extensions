@@ -76,16 +76,25 @@ namespace LinkUtilities
 
         public bool AddLink(Game game)
         {
-            // To add a link to the gog page you have to get it from their API via the GameId.
-            WebClient client = new WebClient();
+            try
+            {
+                // To add a link to the gog page you have to get it from their API via the GameId.
+                WebClient client = new WebClient();
 
-            client.Headers.Add("Accept", "application/json");
+                client.Headers.Add("Accept", "application/json");
 
-            string myJSON = client.DownloadString("https://api.gog.com/v2/games/" + game.GameId);
+                string myJSON = client.DownloadString("https://api.gog.com/v2/games/" + game.GameId);
 
-            GogMetaData gogMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<GogMetaData>(myJSON);
+                GogMetaData gogMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<GogMetaData>(myJSON);
 
-            return LinkHelper.AddLink(game, LinkName, gogMetaData.Links.Store.Href, Settings);
+                return LinkHelper.AddLink(game, LinkName, gogMetaData.Links.Store.Href, Settings);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error loading data from GOG");
+
+                return false;
+            }
         }
 
         public GogLink(LinkUtilitiesSettings settings)
@@ -112,15 +121,24 @@ namespace LinkUtilities
             // To get the link to a game on the itch website, you need an API key and request the game data from their api.
             if (!string.IsNullOrWhiteSpace(Settings.ItchApiKey))
             {
-                string apiUrl = string.Format("https://itch.io//api/1/{0}/game/{1}", Settings.ItchApiKey, game.GameId);
+                try
+                {
+                    string apiUrl = string.Format("https://itch.io//api/1/{0}/game/{1}", Settings.ItchApiKey, game.GameId);
 
-                WebClient client = new WebClient();
+                    WebClient client = new WebClient();
 
-                string myJSON = client.DownloadString(apiUrl);
+                    string myJSON = client.DownloadString(apiUrl);
 
-                ItchMetaData itchMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<ItchMetaData>(myJSON);
+                    ItchMetaData itchMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<ItchMetaData>(myJSON);
 
-                return LinkHelper.AddLink(game, LinkName, itchMetaData.Game.Url, Settings);
+                    return LinkHelper.AddLink(game, LinkName, itchMetaData.Game.Url, Settings);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Error loading data from itch.io");
+
+                    return false;
+                }
             }
             else
             {

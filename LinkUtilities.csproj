@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LinkActions.cs" />
+    <Compile Include="Logging.cs" />
     <Compile Include="Models\ItchMetaData.cs" />
     <Compile Include="Models\GogMetaData.cs" />
     <Compile Include="LinkHelper.cs" />

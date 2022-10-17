@@ -98,10 +98,9 @@ namespace LinkUtilities
                             }
                             catch (Exception ex)
                             {
-                                logger.Error(ex.Message);
+                                Log.Error(ex);
                             }
                         }, globalProgressOptions);
-
                     }
 
                     // Shows a dialog with the number of games actually affected.
@@ -178,8 +177,6 @@ namespace LinkUtilities
                 }
             };
         }
-
-        private static readonly ILogger logger = LogManager.GetLogger();
 
         /// <summary>
         /// The settings view model of the extension
