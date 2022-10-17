@@ -49,10 +49,11 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="games">List of games to be processed</param>
         /// <param name="linkAction">Instance of the action to be executed</param>
-        private void DoForAll(List<Game> games, ILinkAction linkAction)
+        private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false)
         {
             // While sorting links we set IsUpdating to true, so the libraby update event knows it doesn't need to sort again.
             IsUpdating = true;
+
             try
             {
                 if (games.Count == 1)
@@ -104,7 +105,10 @@ namespace LinkUtilities
                     }
 
                     // Shows a dialog with the number of games actually affected.
-                    PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
+                    if (showDialog)
+                    {
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
+                    }
                 }
             }
             finally
@@ -158,7 +162,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks);
+                        DoForAll(games, SortLinks, true);
                     }
                 },
                 // Adds the "add library links" item to the game menu.
@@ -169,7 +173,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, AddLibraryLinks);
+                        DoForAll(games, AddLibraryLinks, true);
                     }
                 }
             };

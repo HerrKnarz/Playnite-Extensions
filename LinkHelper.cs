@@ -1,6 +1,5 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -36,22 +35,17 @@ namespace LinkUtilities
             {
                 if (game.Links.Count(x => x.Name == linkName) == 0)
                 {
-                    List<Link> newLinks = new List<Link>(game.Links)
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
                     {
-                        link
-                    };
+                        game.Links.Add(link);
+                    });
 
                     // We sort the links automatically if the setting SortAfterChange is true.
                     if (settings.SortAfterChange)
                     {
-                        game.Links = new ObservableCollection<Link>(newLinks.OrderBy(x => x.Name));
-                    }
-                    else
-                    {
-                        game.Links = new ObservableCollection<Link>(newLinks);
+                        game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => x.Name));
                     }
 
-                    //   game.Links.Add(link);
                     mustUpdate = true;
                 }
             }
