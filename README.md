@@ -1,5 +1,6 @@
 ![DownloadCountTotal](https://img.shields.io/github/downloads/HerrKnarz/Playnite-Extension-LinkUtilities/total?style=for-the-badge)
-![LatestVersion](https://img.shields.io/github/v/release/HerrKnarz/Playnite-Extension-LinkUtilities?style=for-the-badge)
+![LatestVersion](https://img.shields.io/github/v/release/HerrKnarz/Playnite-Extension-LinkUtilities?include_prereleases&style=for-the-badge)
+![LastCommit](https://img.shields.io/github/last-commit/HerrKnarz/Playnite-Extension-LinkUtilities?style=for-the-badge)
 ![License](https://img.shields.io/github/license/HerrKnarz/Playnite-Extension-LinkUtilities?style=for-the-badge)
 
 # Link Utilities
