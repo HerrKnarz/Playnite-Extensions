@@ -1,3 +1,7 @@
+![DownloadCountTotal](https://img.shields.io/github/downloads/HerrKnarz/Playnite-Extension-LinkUtilities/total?style=for-the-badge)
+![LatestVersion](https://img.shields.io/github/v/release/HerrKnarz/Playnite-Extension-LinkUtilities?style=for-the-badge)
+![License](https://img.shields.io/github/license/HerrKnarz/Playnite-Extension-LinkUtilities?style=for-the-badge)
+
 # Link Utilities
 
 This is an extension for the superb open source video game library manager and launcher [Playnite](http://playnite.link/). At the moment the extension does the following on button click:
