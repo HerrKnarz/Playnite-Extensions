@@ -5,7 +5,6 @@ using System.Collections.Generic;
 // Contains all the classes needed to deserialize the JSON fetched from the gog api.
 namespace LinkUtilities.Models.Gog
 {
-
     public class BackgroundImage
     {
         [JsonProperty("href")]
