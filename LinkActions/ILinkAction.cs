@@ -11,11 +11,11 @@ namespace LinkUtilities.LinkActions
         /// <summary>
         /// Ressource for the localized text in the progress bar
         /// </summary>
-        string ProgressMessage { get; set; }
+        string ProgressMessage { get; }
         /// <summary>
         /// Ressource for the localized text in the result dialog. Should contain placeholder for the number of affected games.
         /// </summary>
-        string ResultMessage { get; set; }
+        string ResultMessage { get; }
         /// <summary>
         /// Settings to use for the action
         /// </summary>

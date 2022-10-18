@@ -13,14 +13,12 @@ namespace LinkUtilities.LinkActions
         /// </summary>
         private readonly Links links;
 
-        public string ProgressMessage { get; set; }
-        public string ResultMessage { get; set; }
+        public string ProgressMessage { get; } = "LOCLinkUtilitiesLibraryLinkProgress";
+        public string ResultMessage { get; } = "LOCLinkUtilitiesAddedMessage";
         public LinkUtilitiesSettings Settings { get; set; }
 
         public AddWebsiteLinks(LinkUtilitiesSettings settings)
         {
-            ProgressMessage = "LOCLinkUtilitiesLibraryLinkProgress";
-            ResultMessage = "LOCLinkUtilitiesAddedMessage";
             Settings = settings;
 
             links = new Links(Settings);

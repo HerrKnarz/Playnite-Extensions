@@ -7,14 +7,12 @@ namespace LinkUtilities.LinkActions
     /// </summary>
     public class SortLinks : ILinkAction
     {
-        public string ProgressMessage { get; set; }
-        public string ResultMessage { get; set; }
+        public string ProgressMessage { get; } = "LOCLinkUtilitiesLSortLinksProgress";
+        public string ResultMessage { get; } = "LOCLinkUtilitiesSortedMessage";
         public LinkUtilitiesSettings Settings { get; set; }
 
         public SortLinks(LinkUtilitiesSettings settings)
         {
-            ProgressMessage = "LOCLinkUtilitiesLSortLinksProgress";
-            ResultMessage = "LOCLinkUtilitiesSortedMessage";
             Settings = settings;
         }
 
