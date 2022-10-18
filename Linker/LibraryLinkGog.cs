@@ -10,6 +10,9 @@ namespace LinkUtilities.Linker
     /// </summary>
     class LibraryLinkGog : LibraryLink
     {
+        public override Guid LibraryId { get; } = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
+        public override string LinkName { get; } = "GOG";
+
         public override bool AddLink(Game game)
         {
             try
@@ -23,7 +26,9 @@ namespace LinkUtilities.Linker
 
                 GogMetaData gogMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<GogMetaData>(myJSON);
 
-                return LinkHelper.AddLink(game, LinkName, gogMetaData.Links.Store.Href, Settings);
+                LinkUrl = gogMetaData.Links.Store.Href;
+
+                return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
             }
             catch (Exception ex)
             {
@@ -33,12 +38,8 @@ namespace LinkUtilities.Linker
             }
         }
 
-        public LibraryLinkGog(LinkUtilitiesSettings settings)
+        public LibraryLinkGog(LinkUtilitiesSettings settings) : base(settings)
         {
-            LibraryId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
-            LinkName = "GOG";
-            LinkUrl = "";
-            Settings = settings;
         }
     }
 }

@@ -24,23 +24,29 @@ namespace LinkUtilities
                 HasSettings = true
             };
 
-            SortLinks = new SortLinks(Settings.Settings);
-            AddLibraryLinks = new AddLibraryLinks(Settings.Settings);
+            sortLinks = new SortLinks(Settings.Settings);
+            addLibraryLinks = new AddLibraryLinks(Settings.Settings);
+            addWebsiteLinks = new AddWebsiteLinks(Settings.Settings);
             IsUpdating = false;
         }
 
         /// <summary>
         /// Class to sort the links of a game
         /// </summary>
-        public SortLinks SortLinks;
+        private readonly SortLinks sortLinks;
 
         /// <summary>
         /// Class to add a link to the store page in the library of a game
         /// </summary>
-        public AddLibraryLinks AddLibraryLinks;
+        private readonly AddLibraryLinks addLibraryLinks;
 
         /// <summary>
-        /// Is set to true, while the library is updated via the SortLinks function. Is used to avoid an endless loop in the function.
+        /// Class to add a link to all available websites in the Links list, if a definitive link was found.
+        /// </summary>
+        private readonly AddWebsiteLinks addWebsiteLinks;
+
+        /// <summary>
+        /// Is set to true, while the library is updated via the sortLinks function. Is used to avoid an endless loop in the function.
         /// </summary>
         public bool IsUpdating { get; set; }
 
@@ -127,7 +133,7 @@ namespace LinkUtilities
             if (Settings.Settings.SortAfterChange && !IsUpdating)
             {
                 List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
-                DoForAll(games, SortLinks);
+                DoForAll(games, sortLinks);
             }
         }
 
@@ -143,7 +149,7 @@ namespace LinkUtilities
                 if (args.AddedItems.Count > 0)
                 {
                     List<Game> games = args.AddedItems.Distinct().ToList();
-                    DoForAll(games, SortLinks);
+                    DoForAll(games, sortLinks);
                 }
             }
         }
@@ -162,7 +168,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks, true);
+                        DoForAll(games, sortLinks, true);
                     }
                 },
                 // Adds the "add library links" item to the game menu.
@@ -173,7 +179,18 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, AddLibraryLinks, true);
+                        DoForAll(games, addLibraryLinks, true);
+                    }
+                },
+                // Adds the "add website links" item to the game menu.
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesAddWebsiteLinks"),
+                    MenuSection = menuSection,
+                    Action = a =>
+                    {
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, addWebsiteLinks, true);
                     }
                 }
             };

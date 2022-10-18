@@ -8,18 +8,19 @@ namespace LinkUtilities.Linker
     /// </summary>
     class LibraryLinkSteam : LibraryLink
     {
+        public override Guid LibraryId { get; } = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
+        public override string LinkName { get; } = "Steam";
+        public override string BaseUrl { get; } = "https://store.steampowered.com/app/{0}/";
+
         public override bool AddLink(Game game)
         {
             // Adding a link to steam is extremely simple. You only have to add the GameId to the base URL.
-            return LinkHelper.AddLink(game, LinkName, string.Format(LinkUrl, game.GameId), Settings);
+            LinkUrl = string.Format(BaseUrl, game.GameId);
+            return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
         }
 
-        public LibraryLinkSteam(LinkUtilitiesSettings settings)
+        public LibraryLinkSteam(LinkUtilitiesSettings settings) : base(settings)
         {
-            LibraryId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
-            LinkName = "Steam";
-            LinkUrl = "https://store.steampowered.com/app/{0}/";
-            Settings = settings;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Playnite.SDK.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 
 namespace LinkUtilities
 {
@@ -75,6 +76,27 @@ namespace LinkUtilities
                 return true;
             }
             else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks if an URL is reachable and returns OK
+        /// </summary>
+        /// <param name="url">URL to check</param>
+        /// <returns>True, if the URL is reachable</returns>
+        public static bool CheckUrl(string url)
+        {
+            try
+            {
+                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+                request.Method = "HEAD";
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                response.Close();
+                return (response.StatusCode == HttpStatusCode.OK);
+            }
+            catch
             {
                 return false;
             }

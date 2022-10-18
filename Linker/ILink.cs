@@ -10,9 +10,13 @@ namespace LinkUtilities.Linker
         /// <summary>
         /// Name the link will have in the games link collection
         /// </summary>
-        string LinkName { get; set; }
+        string LinkName { get; }
         /// <summary>
         /// Base URL of the link before adding the specific path to the game itself. Only used if applicable.
+        /// </summary>
+        string BaseUrl { get; }
+        /// <summary>
+        /// The final URL for the link
         /// </summary>
         string LinkUrl { get; set; }
         /// <summary>

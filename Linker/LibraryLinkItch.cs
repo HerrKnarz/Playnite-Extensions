@@ -10,6 +10,9 @@ namespace LinkUtilities.Linker
     /// </summary>
     class LibraryLinkItch : LibraryLink
     {
+        public override Guid LibraryId { get; } = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
+        public override string LinkName { get; } = "Itch";
+
         public override bool AddLink(Game game)
         {
             // To get the link to a game on the itch website, you need an API key and request the game data from their api.
@@ -25,7 +28,9 @@ namespace LinkUtilities.Linker
 
                     ItchMetaData itchMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<ItchMetaData>(myJSON);
 
-                    return LinkHelper.AddLink(game, LinkName, itchMetaData.Game.Url, Settings);
+                    LinkUrl = itchMetaData.Game.Url;
+
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
                 }
                 catch (Exception ex)
                 {
@@ -40,12 +45,8 @@ namespace LinkUtilities.Linker
             }
         }
 
-        public LibraryLinkItch(LinkUtilitiesSettings settings)
+        public LibraryLinkItch(LinkUtilitiesSettings settings) : base(settings)
         {
-            LibraryId = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
-            LinkName = "Itch";
-            LinkUrl = "";
-            Settings = settings;
         }
     }
 }
