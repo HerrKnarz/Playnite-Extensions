@@ -24,13 +24,20 @@ namespace LinkUtilities.LinkActions
             Links = new Links(Settings);
         }
 
-        public bool Execute(Game game)
+        public bool Execute(Game game, string actionModifier = "")
         {
             bool result = false;
 
             foreach (Linker.Link link in Links)
             {
-                result = link.AddLink(game) || result;
+                if (actionModifier == "add")
+                {
+                    result = link.AddLink(game) || result;
+                }
+                else
+                {
+                    result = link.AddSearchedLink(game) || result;
+                }
             }
 
             return result;

@@ -16,7 +16,7 @@ namespace LinkUtilities.LinkActions
             Settings = settings;
         }
 
-        public bool Execute(Game game)
+        public bool Execute(Game game, string actionModifier = "")
         {
             return LinkHelper.SortLinks(game);
         }

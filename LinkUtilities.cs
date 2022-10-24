@@ -66,7 +66,7 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="games">List of games to be processed</param>
         /// <param name="linkAction">Instance of the action to be executed</param>
-        private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false)
+        private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false, string actionModifier = "")
         {
             // While sorting Links we set IsUpdating to true, so the libraby update event knows it doesn't need to sort again.
             IsUpdating = true;
@@ -75,7 +75,7 @@ namespace LinkUtilities
             {
                 if (games.Count == 1)
                 {
-                    linkAction.Execute(games.First());
+                    linkAction.Execute(games.First(), actionModifier);
                 }
                 // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
                 else if (games.Count > 1)
@@ -105,7 +105,7 @@ namespace LinkUtilities
                                         break;
                                     }
 
-                                    if (linkAction.Execute(game))
+                                    if (linkAction.Execute(game, actionModifier))
                                     {
                                         gamesAffected++;
                                     }
@@ -168,6 +168,7 @@ namespace LinkUtilities
         {
             string menuSection = ResourceProvider.GetString("LOCLinkUtilitiesName");
             string menuAddLinks = ResourceProvider.GetString("LOCLinkUtilitiesAddLinkTo");
+            string menuSearchLinks = ResourceProvider.GetString("LOCLinkUtilitiesSearchLinkTo");
 
             List<GameMenuItem> menuItems = new List<GameMenuItem>
             {
@@ -193,23 +194,48 @@ namespace LinkUtilities
                         DoForAll(games, addLibraryLinks, true);
                     }
                 },
-                // Adds the "add website Links" item to the game menu.
+                // Adds the "All configured websites" item to the "add link to" submenu.
                 new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesAddWebsiteLinks"),
-                    MenuSection = menuSection,
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesAllConfiguredWebsites"),
+                    MenuSection = $"{menuSection}|{menuAddLinks}",
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, addWebsiteLinks, true);
+                        DoForAll(games, addWebsiteLinks, true, "add");
                     }
+                },
+                // Adds a separator to the "add link to" submenu
+                new GameMenuItem
+                {
+                    Description = "-",
+                    MenuSection = $"{menuSection}|{menuAddLinks}"
+                },
+                // Adds the "All configured websites" item to the "search link to" submenu.
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesAllConfiguredWebsites"),
+                    MenuSection = $"{menuSection}|{menuSearchLinks}",
+                    Action = a =>
+                    {
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, addWebsiteLinks, true, "search");
+                    }
+                },
+                // Adds a separator to the "search link to" submenu
+                new GameMenuItem
+                {
+                    Description = "-",
+                    MenuSection = $"{menuSection}|{menuSearchLinks}"
                 }
             };
 
-            // Adds the "add link to" item with all linkable websites as a submenu to the game menu.
+            // Adds all linkable websites to the "add link to" and "search link to" submenus.
             foreach (Linker.Link link in addWebsiteLinks.Links)
             {
-                menuItems.Add(
+                if (link.IsAddable)
+                {
+                    menuItems.Add(
                     new GameMenuItem
                     {
                         Description = link.LinkName,
@@ -217,9 +243,25 @@ namespace LinkUtilities
                         Action = a =>
                         {
                             List<Game> games = args.Games.Distinct().ToList();
-                            DoForAll(games, link, true);
+                            DoForAll(games, link, true, "add");
                         }
                     });
+                }
+
+                if (link.IsSearchable)
+                {
+                    menuItems.Add(
+                    new GameMenuItem
+                    {
+                        Description = link.LinkName,
+                        MenuSection = $"{menuSection}|{menuSearchLinks}",
+                        Action = a =>
+                        {
+                            List<Game> games = args.Games.Distinct().ToList();
+                            DoForAll(games, link, true, "search");
+                        }
+                    });
+                }
             }
 
             return menuItems;

@@ -24,7 +24,7 @@ namespace LinkUtilities.LinkActions
             libraries = new Libraries(Settings);
         }
 
-        public bool Execute(Game game)
+        public bool Execute(Game game, string actionModifier = "")
         {
             LibraryLink library;
             bool result = false;

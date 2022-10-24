@@ -25,7 +25,8 @@ namespace LinkUtilities.LinkActions
         /// Executes the action on a game.
         /// </summary>
         /// <param name="game">The game to be processed</param>
+        /// <param name="actionModifier">Optional modifier for the underlying class to do different things in the execute method</param>
         /// <returns>true, if the action was successful</returns>
-        bool Execute(Game game);
+        bool Execute(Game game, string actionModifier = "");
     }
 }
