@@ -167,15 +167,15 @@ namespace LinkUtilities
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             string menuSection = ResourceProvider.GetString("LOCLinkUtilitiesName");
-            string menuAddLinks = ResourceProvider.GetString("LOCLinkUtilitiesAddLinkTo");
-            string menuSearchLinks = ResourceProvider.GetString("LOCLinkUtilitiesSearchLinkTo");
+            string menuAddLinks = ResourceProvider.GetString("LOCLinkUtilitiesMenuAddLinkTo");
+            string menuSearchLinks = ResourceProvider.GetString("LOCLinkUtilitiesMenuSearchLinkTo");
 
             List<GameMenuItem> menuItems = new List<GameMenuItem>
             {
                 // Adds the "sort Links" item to the game menu.
                 new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesSortLinks"),
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinks"),
                     MenuSection = menuSection,
                     Action = a =>
                     {
@@ -186,7 +186,7 @@ namespace LinkUtilities
                 // Adds the "add library Links" item to the game menu.
                 new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesAddLibraryLink"),
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAddLibraryLink"),
                     MenuSection = menuSection,
                     Action = a =>
                     {
@@ -197,7 +197,7 @@ namespace LinkUtilities
                 // Adds the "All configured websites" item to the "add link to" submenu.
                 new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesAllConfiguredWebsites"),
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllConfiguredWebsites"),
                     MenuSection = $"{menuSection}|{menuAddLinks}",
                     Action = a =>
                     {
@@ -214,7 +214,7 @@ namespace LinkUtilities
                 // Adds the "All configured websites" item to the "search link to" submenu.
                 new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesAllConfiguredWebsites"),
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllConfiguredWebsites"),
                     MenuSection = $"{menuSection}|{menuSearchLinks}",
                     Action = a =>
                     {

@@ -61,11 +61,15 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes != null && htmlNodes.Count > 0)
                 {
+                    int counter = 0;
+
                     foreach (HtmlNode node in htmlNodes)
                     {
+                        counter++;
+
                         SearchResults.Add(new SearchResult
                         {
-                            Name = node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText,
+                            Name = counter.ToString() + ". " + node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText,
                             Url = WebsiteUrl + node.SelectSingleNode("./div[@class='mw-search-result-heading']/a").GetAttributeValue("href", ""),
                             Description = ""
                         }

@@ -3,6 +3,7 @@ using Playnite.SDK.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
+using System.Windows;
 
 namespace LinkUtilities
 {
@@ -20,7 +21,7 @@ namespace LinkUtilities
         /// <returns>
         /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
         /// </returns>
-        public static bool AddLink(Game game, string linkName, string linkUrl, LinkUtilitiesSettings settings)
+        public static bool AddLink(Game game, string linkName, string linkUrl, LinkUtilitiesSettings settings, bool ignoreExisting = true)
         {
             Link link = new Link(linkName, linkUrl);
             bool mustUpdate = false;
@@ -34,6 +35,7 @@ namespace LinkUtilities
             // otherwise we'll check if a link with the specified name is already present. If not, we'll add the link and return true.
             else
             {
+
                 if (game.Links.Count(x => x.Name == linkName) == 0)
                 {
                     API.Instance.MainView.UIDispatcher.Invoke(delegate
@@ -48,6 +50,21 @@ namespace LinkUtilities
                     }
 
                     mustUpdate = true;
+                }
+
+                else if (!ignoreExisting)
+                {
+                    if (API.Instance.Dialogs.ShowMessage(
+                        string.Format(ResourceProvider.GetString("LOCLinkUtilitiesDialogReplaceLink"), linkName),
+                        ResourceProvider.GetString("LOCLinkUtilitiesDialogSelectOption"),
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            game.Links.Single(x => x.Name == linkName).Url = linkUrl;
+                        });
+                    }
                 }
             }
 

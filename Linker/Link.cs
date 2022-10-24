@@ -27,8 +27,8 @@ namespace LinkUtilities.Linker
         /// </summary>
         public virtual bool IsSearchable { get { return !string.IsNullOrWhiteSpace(SearchUrl); } }
         public virtual string LinkUrl { get; set; } = string.Empty;
-        public string ProgressMessage { get; } = "LOCLinkUtilitiesLinkProgress";
-        public string ResultMessage { get; } = "LOCLinkUtilitiesAddedMessage";
+        public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLink";
+        public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
         public LinkUtilitiesSettings Settings { get; set; }
         /// <summary>
         /// Results of the last search for the link. Is used to get the right link after closing the search dialog, because the dialog
@@ -47,17 +47,18 @@ namespace LinkUtilities.Linker
                 new List<GenericItemOption>(),
                 (a) => SearchLink(a),
                 game.Name,
-                ResourceProvider.GetString("LOCLinkUtilitiesSearchGame"));
+                ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame"));
 
             if (result != null)
             {
-                return LinkHelper.AddLink(game, LinkName, SearchResults.Find(x => x.Name == result.Name).Url, Settings);
+                return LinkHelper.AddLink(game, LinkName, SearchResults.Find(x => x.Name == result.Name).Url, Settings, false);
             }
             else
             {
                 return false;
             }
         }
+
         /// <summary>
         /// Searches the website and returns a list of found games via GenericItemOption. An extended list with Url is also written to
         /// the list SearchResults. Must be implemented in the derived class or the result will be an empty list.

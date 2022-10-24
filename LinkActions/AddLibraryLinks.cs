@@ -13,8 +13,8 @@ namespace LinkUtilities.LinkActions
         /// </summary>
         private readonly Libraries libraries;
 
-        public string ProgressMessage { get; } = "LOCLinkUtilitiesLibraryLinkProgress";
-        public string ResultMessage { get; } = "LOCLinkUtilitiesAddedMessage";
+        public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLibraryLink";
+        public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
         public LinkUtilitiesSettings Settings { get; set; }
 
         public AddLibraryLinks(LinkUtilitiesSettings settings)

@@ -7,8 +7,8 @@ namespace LinkUtilities.LinkActions
     /// </summary>
     public class SortLinks : ILinkAction
     {
-        public string ProgressMessage { get; } = "LOCLinkUtilitiesLSortLinksProgress";
-        public string ResultMessage { get; } = "LOCLinkUtilitiesSortedMessage";
+        public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressSortLinks";
+        public string ResultMessage { get; } = "LOCLinkUtilitiesDialogSortedMessage";
         public LinkUtilitiesSettings Settings { get; set; }
 
         public SortLinks(LinkUtilitiesSettings settings)
