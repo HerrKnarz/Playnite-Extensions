@@ -61,6 +61,24 @@ namespace LinkUtilities
         }
 
         /// <summary>
+        /// Checks if the game already has a link with the given name
+        /// </summary>
+        /// <param name="game">Game for which the links will be checked</param>
+        /// <param name="linkName">Name of the link</param>
+        /// <returns>True, if a link with that name exists</returns>
+        public static bool LinkExists(Game game, string linkName)
+        {
+            if (game.Links is null)
+            {
+                return false;
+            }
+            else
+            {
+                return game.Links.Count(x => x.Name == linkName) > 0;
+            }
+        }
+
+        /// <summary>
         /// Sorts the links of a game alphabetically by the link name.
         /// </summary>
         /// <param name="game"></param>

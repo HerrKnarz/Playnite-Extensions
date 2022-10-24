@@ -1,29 +1,22 @@
 ﻿using Playnite.SDK.Models;
-using System.Text.RegularExpressions;
 
 namespace LinkUtilities.Linker
 {
     /// <summary>
     /// Adds a link to MobyGames if one is found using the game name.
     /// </summary>
-    class LinkMobyGames : Link
+    class LinkPCGamingWiki : Link
     {
         private string gameName = string.Empty;
-        public override string LinkName { get; } = "MobyGames";
-        public override string BaseUrl { get; } = "https://www.mobygames.com/game/{0}";
+        public override string LinkName { get; } = "PCGamingWiki";
+        public override string BaseUrl { get; } = "https://www.pcgamingwiki.com/wiki/{0}";
 
         public override bool AddLink(Game game)
         {
             if (!LinkHelper.LinkExists(game, LinkName))
             {
-                // MobyGames links need the game name in lowercase without special characters and hyphens instead of white spaces.
-                gameName = Regex.Replace(game.Name, @"[^a-zA-Z0-9\-\s]+", "");
-
-                // We need to remove unnecessary whitespaces, replace the remaining to hyphens and turn the string to lowercase.
-                gameName = Regex.Replace(gameName, @"\s+", " ").
-                    Trim().
-                    Replace(" ", "-").
-                    ToLower();
+                // PCGamingWiki links need the game simply encoded.
+                gameName = System.Uri.EscapeDataString(game.Name);
 
                 LinkUrl = string.Format(BaseUrl, gameName);
 
@@ -43,7 +36,7 @@ namespace LinkUtilities.Linker
                 return false;
             }
         }
-        public LinkMobyGames(LinkUtilitiesSettings settings) : base(settings)
+        public LinkPCGamingWiki(LinkUtilitiesSettings settings) : base(settings)
         {
         }
     }

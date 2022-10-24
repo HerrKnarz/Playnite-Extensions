@@ -65,6 +65,7 @@
     <Compile Include="Linker\LibraryLinkItch.cs" />
     <Compile Include="Linker\LibraryLinkSteam.cs" />
     <Compile Include="Linker\LinkLibrary.cs" />
+    <Compile Include="Linker\LinkPCGamingWiki.cs" />
     <Compile Include="Linker\Links.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Models\ItchMetaData.cs" />

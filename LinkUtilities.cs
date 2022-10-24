@@ -5,6 +5,7 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Windows.Controls;
 
 namespace LinkUtilities
@@ -28,6 +29,15 @@ namespace LinkUtilities
             addLibraryLinks = new AddLibraryLinks(Settings.Settings);
             addWebsiteLinks = new AddWebsiteLinks(Settings.Settings);
             IsUpdating = false;
+
+            PlayniteApi.UriHandler.RegisterSource("LinkUtilities", (args) =>
+            {
+                // UNDONE: put this into a proper DoForAll class. Waits for the bugfix in argument parsing for now...
+                foreach (Game game in PlayniteApi.MainView.SelectedGames)
+                {
+                    LinkHelper.AddLink(game, args.Arguments[1], WebUtility.UrlDecode(args.Arguments[2]), Settings.Settings);
+                }
+            });
         }
 
         /// <summary>

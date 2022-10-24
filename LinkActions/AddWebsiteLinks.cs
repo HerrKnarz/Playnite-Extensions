@@ -30,7 +30,7 @@ namespace LinkUtilities.LinkActions
 
             foreach (Linker.Link link in links)
             {
-                result = result || link.AddLink(game);
+                result = link.AddLink(game) || result;
             }
 
             return result;

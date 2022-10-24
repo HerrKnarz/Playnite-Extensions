@@ -15,25 +15,32 @@ namespace LinkUtilities.Linker
 
         public override bool AddLink(Game game)
         {
-            try
+            if (!LinkHelper.LinkExists(game, LinkName))
             {
-                // To add a link to the gog page you have to get it from their API via the GameId.
-                WebClient client = new WebClient();
+                try
+                {
+                    // To add a link to the gog page you have to get it from their API via the GameId.
+                    WebClient client = new WebClient();
 
-                client.Headers.Add("Accept", "application/json");
+                    client.Headers.Add("Accept", "application/json");
 
-                string myJSON = client.DownloadString("https://api.gog.com/v2/games/" + game.GameId);
+                    string myJSON = client.DownloadString("https://api.gog.com/v2/games/" + game.GameId);
 
-                GogMetaData gogMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<GogMetaData>(myJSON);
+                    GogMetaData gogMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<GogMetaData>(myJSON);
 
-                LinkUrl = gogMetaData.Links.Store.Href;
+                    LinkUrl = gogMetaData.Links.Store.Href;
 
-                return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Error loading data from GOG");
+
+                    return false;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Log.Error(ex, "Error loading data from GOG");
-
                 return false;
             }
         }
