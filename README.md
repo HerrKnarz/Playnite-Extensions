@@ -15,6 +15,7 @@ It's very rudimentary yet, but I'm still learning how to code in C# after about 
 
 ## Planned features
 - add more library links
+- add the active website in a web browser as a link to the selected games via URL command and bookmarklet in Chrome etc.
 - check if links are still working, optional removal of dead links
 - automatically add links to several websites if a definite link can be found. The following sites are already planned:
   - Wikipedia
