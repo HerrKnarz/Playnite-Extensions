@@ -6,11 +6,13 @@
     <sys:String x:Key="LOCLinkUtilitiesLSortLinksProgress">Links werden sortiert...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesAddLibraryLink">Bibliotheks-Link hinzufügen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesLibraryLinkProgress">Füge Bibliotheks-Links hinzu...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesAddWebsiteLinks">Links zu allen konfigurierten Webseiten hinzufügen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesAllConfiguredWebsites">All configured websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesAddLinkTo">Add link to...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSearchLinkTo">Search link to...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesWebsiteLinkProgress">Adding links to configured websites...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesLinkProgress">Adding links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesAddedMessage">Links zu {0} Spielen hinzugefügt!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSearchGame">Search game</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Links sortieren, nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsItchApiKey">API-Schlüssel für Itch.io (benötigt zum Abrufen des Bibliotheks-Links)</sys:String>
 </ResourceDictionary>
