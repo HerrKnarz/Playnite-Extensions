@@ -8,7 +8,7 @@ namespace LinkUtilities.Linker
     interface IGameLibrary
     {
         /// <summary>
-        /// ID of the game library (e.g. steam or gog) the link is part of. Is only used to add library links as of now.
+        /// ID of the game library (e.g. steam or gog) the link is part of. Is only used to add library Links as of now.
         /// </summary>
         Guid LibraryId { get; }
     }

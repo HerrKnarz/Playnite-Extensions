@@ -3,7 +3,7 @@
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// List of all website links that can be added.
+    /// List of all website Links that can be added.
     /// </summary>
     public class Links : List<Link>
     {

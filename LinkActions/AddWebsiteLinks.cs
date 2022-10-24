@@ -9,11 +9,11 @@ namespace LinkUtilities.LinkActions
     public class AddWebsiteLinks : ILinkAction
     {
         /// <summary>
-        /// contains all website links that can be added.
+        /// contains all website Links that can be added.
         /// </summary>
-        private readonly Links links;
+        public readonly Links Links;
 
-        public string ProgressMessage { get; } = "LOCLinkUtilitiesLibraryLinkProgress";
+        public string ProgressMessage { get; } = "LOCLinkUtilitiesWebsiteLinkProgress";
         public string ResultMessage { get; } = "LOCLinkUtilitiesAddedMessage";
         public LinkUtilitiesSettings Settings { get; set; }
 
@@ -21,14 +21,14 @@ namespace LinkUtilities.LinkActions
         {
             Settings = settings;
 
-            links = new Links(Settings);
+            Links = new Links(Settings);
         }
 
         public bool Execute(Game game)
         {
             bool result = false;
 
-            foreach (Linker.Link link in links)
+            foreach (Linker.Link link in Links)
             {
                 result = link.AddLink(game) || result;
             }

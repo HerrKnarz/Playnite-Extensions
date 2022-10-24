@@ -15,7 +15,7 @@ namespace LinkUtilities.Linker
         {
             if (!LinkHelper.LinkExists(game, LinkName))
             {
-                // PCGamingWiki links need the game simply encoded.
+                // PCGamingWiki Links need the game simply encoded.
                 gameName = System.Uri.EscapeDataString(game.Name);
 
                 LinkUrl = string.Format(BaseUrl, gameName);

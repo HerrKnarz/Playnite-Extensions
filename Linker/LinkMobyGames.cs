@@ -16,7 +16,7 @@ namespace LinkUtilities.Linker
         {
             if (!LinkHelper.LinkExists(game, LinkName))
             {
-                // MobyGames links need the game name in lowercase without special characters and hyphens instead of white spaces.
+                // MobyGames Links need the game name in lowercase without special characters and hyphens instead of white spaces.
                 gameName = Regex.Replace(game.Name, @"[^a-zA-Z0-9\-\s]+", "");
 
                 // We need to remove unnecessary whitespaces, replace the remaining to hyphens and turn the string to lowercase.
@@ -43,6 +43,7 @@ namespace LinkUtilities.Linker
                 return false;
             }
         }
+
         public LinkMobyGames(LinkUtilitiesSettings settings) : base(settings)
         {
         }

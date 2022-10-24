@@ -3,7 +3,7 @@
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    /// Sorts the links of a game.
+    /// Sorts the Links of a game.
     /// </summary>
     public class SortLinks : ILinkAction
     {

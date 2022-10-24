@@ -25,7 +25,7 @@ namespace LinkUtilities
             Link link = new Link(linkName, linkUrl);
             bool mustUpdate = false;
 
-            // If the game doesn't have any links yet, we have to add the collection itself.
+            // If the game doesn't have any Links yet, we have to add the collection itself.
             if (game.Links is null)
             {
                 game.Links = new ObservableCollection<Link> { link };
@@ -41,7 +41,7 @@ namespace LinkUtilities
                         game.Links.Add(link);
                     });
 
-                    // We sort the links automatically if the setting SortAfterChange is true.
+                    // We sort the Links automatically if the setting SortAfterChange is true.
                     if (settings.SortAfterChange)
                     {
                         game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => x.Name));
@@ -63,7 +63,7 @@ namespace LinkUtilities
         /// <summary>
         /// Checks if the game already has a link with the given name
         /// </summary>
-        /// <param name="game">Game for which the links will be checked</param>
+        /// <param name="game">Game for which the Links will be checked</param>
         /// <param name="linkName">Name of the link</param>
         /// <returns>True, if a link with that name exists</returns>
         public static bool LinkExists(Game game, string linkName)
@@ -79,7 +79,7 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        /// Sorts the links of a game alphabetically by the link name.
+        /// Sorts the Links of a game alphabetically by the link name.
         /// </summary>
         /// <param name="game"></param>
         /// <returns></returns>

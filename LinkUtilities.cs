@@ -41,7 +41,7 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        /// Class to sort the links of a game
+        /// Class to sort the Links of a game
         /// </summary>
         private readonly SortLinks sortLinks;
 
@@ -68,7 +68,7 @@ namespace LinkUtilities
         /// <param name="linkAction">Instance of the action to be executed</param>
         private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false)
         {
-            // While sorting links we set IsUpdating to true, so the libraby update event knows it doesn't need to sort again.
+            // While sorting Links we set IsUpdating to true, so the libraby update event knows it doesn't need to sort again.
             IsUpdating = true;
 
             try
@@ -134,7 +134,7 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        /// Event that get's triggered after updating the game database. Is used to sort links after updating.
+        /// Event that get's triggered after updating the game database. Is used to sort Links after updating.
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="args">Event arguments. Contains a list of all updated games.</param>
@@ -148,7 +148,7 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        /// Event that get's triggered after games are added or deleted. Is used to sort links for new games.
+        /// Event that get's triggered after games are added or deleted. Is used to sort Links for new games.
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="args">Event arguments. Contains a list of all added games.</param>
@@ -167,10 +167,11 @@ namespace LinkUtilities
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             string menuSection = ResourceProvider.GetString("LOCLinkUtilitiesName");
+            string menuAddLinks = ResourceProvider.GetString("LOCLinkUtilitiesAddLinkTo");
 
-            return new List<GameMenuItem>
+            List<GameMenuItem> menuItems = new List<GameMenuItem>
             {
-                // Adds the "sort links" item to the game menu.
+                // Adds the "sort Links" item to the game menu.
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesSortLinks"),
@@ -181,7 +182,7 @@ namespace LinkUtilities
                         DoForAll(games, sortLinks, true);
                     }
                 },
-                // Adds the "add library links" item to the game menu.
+                // Adds the "add library Links" item to the game menu.
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesAddLibraryLink"),
@@ -192,7 +193,7 @@ namespace LinkUtilities
                         DoForAll(games, addLibraryLinks, true);
                     }
                 },
-                // Adds the "add website links" item to the game menu.
+                // Adds the "add website Links" item to the game menu.
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesAddWebsiteLinks"),
@@ -204,6 +205,25 @@ namespace LinkUtilities
                     }
                 }
             };
+
+            // Adds the "add link to" item with all linkable websites as a submenu to the game menu.
+            foreach (Linker.Link link in addWebsiteLinks.Links)
+            {
+                menuItems.Add(
+                    new GameMenuItem
+                    {
+                        Description = link.LinkName,
+                        MenuSection = $"{menuSection}|{menuAddLinks}",
+                        Action = a =>
+                        {
+                            List<Game> games = args.Games.Distinct().ToList();
+                            DoForAll(games, link, true);
+                        }
+                    });
+            }
+
+            return menuItems;
+            ;
         }
 
         /// <summary>
