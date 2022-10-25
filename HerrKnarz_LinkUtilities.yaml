@@ -1,0 +1,9 @@
+﻿AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
+Packages:
+  - Version: 0.3
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-10-25
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v0.3-alpha/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_0_3.pext
+    Changelog:
+      - added functionalities to add links to MobyGames, PCGamingWiki and Wikipedia
+      - Games can now automatically be sorted after updating metadata

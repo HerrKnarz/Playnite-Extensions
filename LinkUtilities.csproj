@@ -93,6 +93,7 @@
     <Content Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="HerrKnarz_LinkUtilities.yaml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
