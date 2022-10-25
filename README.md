@@ -14,7 +14,7 @@ This is an extension for the superb open source video game library manager and l
 It's very rudimentary yet, but I'm still learning how to code in C# after about seventeen years in Delphi ;)
 
 ## Planned features
-- add more library links
+- add Epic as library link
 - add the active website in a web browser as a link to the selected games via URL command and bookmarklet in Chrome etc.
 - check if links are still working, optional removal of dead links
 - automatically add links to several websites if a definite link can be found. The following sites are already planned:
