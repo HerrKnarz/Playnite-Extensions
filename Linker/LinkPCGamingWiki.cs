@@ -8,7 +8,7 @@ using System.Net;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to MobyGames if one is found using the game name.
+    /// Adds a link to PCGamingWiki.
     /// </summary>
     class LinkPCGamingWiki : Link
     {

@@ -11,6 +11,7 @@ namespace LinkUtilities.Linker
         {
             Add(new LinkMobyGames(settings));
             Add(new LinkPCGamingWiki(settings));
+            Add(new LinkWikipedia(settings));
         }
     }
 }

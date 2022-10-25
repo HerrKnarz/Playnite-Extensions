@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a node to MobyGames if one is found using the game name.
+    /// Adds a link to MobyGames.
     /// </summary>
     class LinkMobyGames : Link
     {
