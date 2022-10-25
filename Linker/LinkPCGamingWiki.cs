@@ -50,6 +50,9 @@ namespace LinkUtilities.Linker
 
             searchTerm = WebUtility.UrlEncode(searchTerm);
 
+            // We could use the Media Wiki API here, but unfortunately the search results aren't good enough because the version on the
+            // PCGamingWiki doesn't support search profiles yet.
+
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm));
 

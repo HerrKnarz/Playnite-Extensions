@@ -73,7 +73,7 @@
     <Compile Include="Logging.cs" />
     <Compile Include="Models\ItchMetaData.cs" />
     <Compile Include="Models\GogMetaData.cs" />
-    <Compile Include="LinkHelper.cs" />
+    <Compile Include="Helper\LinkHelper.cs" />
     <Compile Include="LinkUtilities.cs" />
     <Compile Include="LinkUtilitiesSettings.cs" />
     <Compile Include="LinkUtilitiesSettingsView.xaml.cs">
