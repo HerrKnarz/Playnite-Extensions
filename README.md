@@ -6,24 +6,22 @@
 
 # Link Utilities
 
-This is an extension for the superb open source video game library manager and launcher [Playnite](http://playnite.link/). At the moment the extension does the following on button click:
+This is an extension for the superb open source video game library manager and launcher [Playnite](http://playnite.link/). At the moment the extension does the following:
 
-- sort links by name
+- sort links by name via game menu or optionally automatically after meta data change
+- add links to MobyGames, PCGamingWiki and Wikipedia directly via game name or search dialog
 - library links - add links to the game page on steam, gog or itch, if the game is from those libraries.
-
-It's very rudimentary yet, but I'm still learning how to code in C# after about seventeen years in Delphi ;)
 
 ## Planned features
 - add Epic as library link
 - add the active website in a web browser as a link to the selected games via URL command and bookmarklet in Chrome etc.
 - check if links are still working, optional removal of dead links
-- automatically add links to several websites if a definite link can be found. The following sites are already planned:
-  - Wikipedia
-  - MobyGames
+- add link to active browser window via bookmarklet (nearly done, but currently broken in playnite API)
+- add links to more several websites. The following sites are already planned:
   - IGDB
   - Steam
   - GOG
-  - PCGamingWiki
+  - Epic
   - MetaCritic
   - HardcoreGaming 101
   - Sega Retro
