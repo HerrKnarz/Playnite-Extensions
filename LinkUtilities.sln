@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkUtilities", "LinkUtilities.csproj", "{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkUtilities", "Source\LinkUtilities.csproj", "{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B424CED3-F815-445E-BCCE-7A79779F5EE8}"
+	ProjectSection(SolutionItems) = preProject
+		crowdin.yml = crowdin.yml
+		Manifest\HerrKnarz_LinkUtilities.yaml = Manifest\HerrKnarz_LinkUtilities.yaml
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
