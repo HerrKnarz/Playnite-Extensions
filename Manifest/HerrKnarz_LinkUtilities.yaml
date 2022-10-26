@@ -1,5 +1,12 @@
 ﻿AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 0.4
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-10-26
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v0.4-alpha/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_0_4.pext
+    Changelog:
+      - added links to IGDB
+      - better error handling
   - Version: 0.3
     RequiredApiVersion: 6.5.0
     ReleaseDate: 2022-10-25
