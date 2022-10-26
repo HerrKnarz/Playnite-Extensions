@@ -1,10 +1,9 @@
 ﻿using HtmlAgilityPack;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
-using System.Net;
-using System.Text.RegularExpressions;
 
 namespace LinkUtilities.Linker
 {
@@ -22,13 +21,7 @@ namespace LinkUtilities.Linker
             if (!LinkHelper.LinkExists(game, LinkName))
             {
                 // MobyGames Links need the game name in lowercase without special characters and hyphens instead of white spaces.
-                string gameName = Regex.Replace(game.Name, @"[^a-zA-Z0-9\-\s]+", "");
-
-                // We need to remove unnecessary whitespaces, replace the remaining to hyphens and turn the string to lowercase.
-                gameName = Regex.Replace(gameName, @"\s+", " ").
-                    Trim().
-                    Replace(" ", "-").
-                    ToLower();
+                string gameName = game.Name.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
 
                 LinkUrl = string.Format(BaseUrl, gameName);
 
@@ -53,10 +46,8 @@ namespace LinkUtilities.Linker
         {
             SearchResults.Clear();
 
-            searchTerm = WebUtility.UrlEncode(searchTerm);
-
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm));
+            HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm.UrlEncode()));
 
             HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='searchResult']");
 

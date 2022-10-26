@@ -1,9 +1,9 @@
 ﻿using HtmlAgilityPack;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
-using System.Net;
 
 namespace LinkUtilities.Linker
 {
@@ -23,7 +23,7 @@ namespace LinkUtilities.Linker
             if (!LinkHelper.LinkExists(game, LinkName))
             {
                 // PCGamingWiki Links need the game simply encoded.
-                string gameName = System.Uri.EscapeDataString(game.Name);
+                string gameName = game.Name.EscapeDataString();
 
                 LinkUrl = string.Format(BaseUrl, gameName);
 
@@ -48,13 +48,11 @@ namespace LinkUtilities.Linker
         {
             SearchResults.Clear();
 
-            searchTerm = WebUtility.UrlEncode(searchTerm);
-
             // We could use the Media Wiki API here, but unfortunately the search results aren't good enough because the version on the
             // PCGamingWiki doesn't support search profiles yet.
 
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm));
+            HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm.UrlEncode()));
 
             HtmlNode resultNode = doc.DocumentNode.SelectSingleNode("//div[@class='searchresults']");
 

@@ -22,7 +22,7 @@ namespace LinkUtilities.Linker
             if (!LinkHelper.LinkExists(game, LinkName))
             {
                 // PCGamingWiki Links need the game simply encoded.
-                string gameName = System.Uri.EscapeDataString(game.Name);
+                string gameName = game.Name.EscapeDataString();
 
                 LinkUrl = string.Format(BaseUrl, gameName);
 
@@ -47,13 +47,11 @@ namespace LinkUtilities.Linker
         {
             SearchResults.Clear();
 
-            searchTerm = WebUtility.UrlEncode(searchTerm);
-
             WebClient client = new WebClient();
 
             client.Headers.Add("Accept", "application/xml");
 
-            string xml = client.DownloadString(string.Format(SearchUrl, searchTerm));
+            string xml = client.DownloadString(string.Format(SearchUrl, searchTerm.UrlEncode()));
 
             SearchSuggestion searchResults = xml.ParseXML<SearchSuggestion>();
 
