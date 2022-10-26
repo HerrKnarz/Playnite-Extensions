@@ -3,6 +3,7 @@ using LinkUtilities.Models;
 using LinkUtilities.Models.MediaWiki;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using System;
 using System.Collections.Generic;
 using System.Net;
 
@@ -47,27 +48,34 @@ namespace LinkUtilities.Linker
         {
             SearchResults.Clear();
 
-            WebClient client = new WebClient();
-
-            client.Headers.Add("Accept", "application/xml");
-
-            string xml = client.DownloadString(string.Format(SearchUrl, searchTerm.UrlEncode()));
-
-            SearchSuggestion searchResults = xml.ParseXML<SearchSuggestion>();
-
-            int counter = 0;
-
-            foreach (SearchSuggestionItem item in searchResults.Section)
+            try
             {
-                counter++;
+                WebClient client = new WebClient();
 
-                SearchResults.Add(new SearchResult
+                client.Headers.Add("Accept", "application/xml");
+
+                string xml = client.DownloadString(string.Format(SearchUrl, searchTerm.UrlEncode()));
+
+                SearchSuggestion searchResults = xml.ParseXML<SearchSuggestion>();
+
+                int counter = 0;
+
+                foreach (SearchSuggestionItem item in searchResults.Section)
                 {
-                    Name = counter.ToString() + ". " + item.Text.Value,
-                    Url = item.Url.Value,
-                    Description = ""
+                    counter++;
+
+                    SearchResults.Add(new SearchResult
+                    {
+                        Name = $"{counter}. {item.Text.Value}",
+                        Url = item.Url.Value,
+                        Description = ""
+                    }
+                    );
                 }
-                );
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error loading data from Wikipedia");
             }
 
             return base.SearchLink(searchTerm);

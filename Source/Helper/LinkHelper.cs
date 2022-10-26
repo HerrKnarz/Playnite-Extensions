@@ -10,7 +10,7 @@ namespace LinkUtilities
     /// <summary>
     /// Helper class containing functions used in the link utilities extension
     /// </summary>
-    internal class LinkHelper
+    internal static class LinkHelper
     {
         /// <summary>
         /// Adds a link to the specified URL to a game.
@@ -64,6 +64,8 @@ namespace LinkUtilities
                         {
                             game.Links.Single(x => x.Name == linkName).Url = linkUrl;
                         });
+
+                        mustUpdate = true;
                     }
                 }
             }

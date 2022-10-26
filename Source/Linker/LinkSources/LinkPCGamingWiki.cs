@@ -3,6 +3,7 @@ using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using System;
 using System.Collections.Generic;
 
 namespace LinkUtilities.Linker
@@ -51,32 +52,39 @@ namespace LinkUtilities.Linker
             // We could use the Media Wiki API here, but unfortunately the search results aren't good enough because the version on the
             // PCGamingWiki doesn't support search profiles yet.
 
-            HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm.UrlEncode()));
-
-            HtmlNode resultNode = doc.DocumentNode.SelectSingleNode("//div[@class='searchresults']");
-
-            if (resultNode.SelectSingleNode("./h2/span[text() = 'Page title matches']") != null)
+            try
             {
-                HtmlNodeCollection htmlNodes = resultNode.SelectSingleNode("./ul[@class='mw-search-results']").SelectNodes("./li[@class='mw-search-result']");
+                HtmlWeb web = new HtmlWeb();
+                HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm.UrlEncode()));
 
-                if (htmlNodes != null && htmlNodes.Count > 0)
+                HtmlNode resultNode = doc.DocumentNode.SelectSingleNode("//div[@class='searchresults']");
+
+                if (resultNode.SelectSingleNode("./h2/span[text() = 'Page title matches']") != null)
                 {
-                    int counter = 0;
+                    HtmlNodeCollection htmlNodes = resultNode.SelectSingleNode("./ul[@class='mw-search-results']").SelectNodes("./li[@class='mw-search-result']");
 
-                    foreach (HtmlNode node in htmlNodes)
+                    if (htmlNodes != null && htmlNodes.Count > 0)
                     {
-                        counter++;
+                        int counter = 0;
 
-                        SearchResults.Add(new SearchResult
+                        foreach (HtmlNode node in htmlNodes)
                         {
-                            Name = counter.ToString() + ". " + node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText,
-                            Url = WebsiteUrl + node.SelectSingleNode("./div[@class='mw-search-result-heading']/a").GetAttributeValue("href", ""),
-                            Description = ""
+                            counter++;
+
+                            SearchResults.Add(new SearchResult
+                            {
+                                Name = $"{counter}. {node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText}",
+                                Url = WebsiteUrl + node.SelectSingleNode("./div[@class='mw-search-result-heading']/a").GetAttributeValue("href", ""),
+                                Description = ""
+                            }
+                            );
                         }
-                        );
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error loading data from PCGamingWiki");
             }
 
             return base.SearchLink(searchTerm);

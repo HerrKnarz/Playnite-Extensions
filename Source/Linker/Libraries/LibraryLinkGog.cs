@@ -24,9 +24,9 @@ namespace LinkUtilities.Linker
 
                     client.Headers.Add("Accept", "application/json");
 
-                    string myJSON = client.DownloadString("https://api.gog.com/v2/games/" + game.GameId);
+                    string jsonResult = client.DownloadString("https://api.gog.com/v2/games/" + game.GameId);
 
-                    GogMetaData gogMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<GogMetaData>(myJSON);
+                    GogMetaData gogMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<GogMetaData>(jsonResult);
 
                     LinkUrl = gogMetaData.Links.Store.Href;
 

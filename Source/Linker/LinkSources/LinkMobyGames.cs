@@ -3,6 +3,7 @@ using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using System;
 using System.Collections.Generic;
 
 namespace LinkUtilities.Linker
@@ -46,25 +47,32 @@ namespace LinkUtilities.Linker
         {
             SearchResults.Clear();
 
-            HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm.UrlEncode()));
-
-            HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='searchResult']");
-
-            if (htmlNodes != null && htmlNodes.Count > 0)
+            try
             {
-                foreach (HtmlNode node in htmlNodes)
-                {
-                    HtmlNode searchData = node.SelectSingleNode("./div[@class='searchData']");
+                HtmlWeb web = new HtmlWeb();
+                HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm.UrlEncode()));
 
-                    SearchResults.Add(new SearchResult
+                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='searchResult']");
+
+                if (htmlNodes != null && htmlNodes.Count > 0)
+                {
+                    foreach (HtmlNode node in htmlNodes)
                     {
-                        Name = node.SelectSingleNode("./div[@class='searchNumber']").InnerText + " " + searchData.SelectSingleNode("./div[@class='searchTitle']/a").InnerText,
-                        Url = searchData.SelectSingleNode("./div[@class='searchTitle']/a").GetAttributeValue("href", ""),
-                        Description = searchData.SelectSingleNode("./div[@class='searchDetails']").InnerText
+                        HtmlNode searchData = node.SelectSingleNode("./div[@class='searchData']");
+
+                        SearchResults.Add(new SearchResult
+                        {
+                            Name = node.SelectSingleNode("./div[@class='searchNumber']").InnerText + " " + searchData.SelectSingleNode("./div[@class='searchTitle']/a").InnerText,
+                            Url = searchData.SelectSingleNode("./div[@class='searchTitle']/a").GetAttributeValue("href", ""),
+                            Description = searchData.SelectSingleNode("./div[@class='searchDetails']").InnerText
+                        }
+                        );
                     }
-                    );
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error loading data from MobyGames");
             }
 
             return base.SearchLink(searchTerm);

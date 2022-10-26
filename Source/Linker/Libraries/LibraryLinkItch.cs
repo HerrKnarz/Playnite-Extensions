@@ -20,13 +20,13 @@ namespace LinkUtilities.Linker
             {
                 try
                 {
-                    string apiUrl = string.Format("https://itch.io//api/1/{0}/game/{1}", Settings.ItchApiKey, game.GameId);
+                    string apiUrl = $"https://itch.io//api/1/{Settings.ItchApiKey}/game/{game.GameId}";
 
                     WebClient client = new WebClient();
 
-                    string myJSON = client.DownloadString(apiUrl);
+                    string jsonResult = client.DownloadString(apiUrl);
 
-                    ItchMetaData itchMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<ItchMetaData>(myJSON);
+                    ItchMetaData itchMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<ItchMetaData>(jsonResult);
 
                     LinkUrl = itchMetaData.Game.Url;
 

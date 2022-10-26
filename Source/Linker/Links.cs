@@ -9,6 +9,7 @@ namespace LinkUtilities.Linker
     {
         public Links(LinkUtilitiesSettings settings)
         {
+            Add(new LinkIGDB(settings));
             Add(new LinkMobyGames(settings));
             Add(new LinkPCGamingWiki(settings));
             Add(new LinkWikipedia(settings));
