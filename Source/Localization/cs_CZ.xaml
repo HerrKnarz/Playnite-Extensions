@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCLinkUtilitiesName">Link Utilities</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesName">Nástroje pro odkazy</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Added links to {0} games!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Odkazy přidány do {0} her!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">A link to {0} already exists. Do you want to replace it?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Search game</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Select option</sys:String>
