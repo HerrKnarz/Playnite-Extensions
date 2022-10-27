@@ -6,19 +6,19 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Ya existe un enlace hacia {0}. ¿Deseas reemplazarlo?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Buscar juego</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Elegir opción</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Links of {0} games sorted!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">¡Ordenados los enlaces de {0} juegos!</sys:String>
     
-    <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Add library link</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Add link to...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">All configured websites</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Search link to...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuSortLinks">Sort links by name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Añadir enlace de biblioteca</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Añadir enlace a...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Todas las webs configuradas</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Buscar enlace a...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSortLinks">Ordenar enlaces por nombre</sys:String>
     
-    <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Adding library links...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesProgressLink">Adding links...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Sorting links...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Adding links to configured websites...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Añadir enlaces a bibliotecas...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressLink">Añadiendo enlaces...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Ordenando enlaces...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Añadiendo enlaces hacia webs configuradas...</sys:String>
     
     <sys:String x:Key="LOCLinkUtilitiesSettingsItchApiKey">API-Key para Itch.io (necesario para obtener el enlace de la libreria)</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Sort links after the game meta data was updated</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Ordenar enlaces después de que los metadatos del juego hayan sido actualizados</sys:String>
 </ResourceDictionary>
