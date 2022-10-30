@@ -57,7 +57,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="Helper\ParseHelper.cs" />
     <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="LinkActions\AddLibraryLinks.cs" />
@@ -66,7 +65,6 @@
     <Compile Include="Linker\IGameLibrary.cs" />
     <Compile Include="Linker\ILink.cs" />
     <Compile Include="Linker\Link.cs" />
-    <Compile Include="Linker\LinkSources\LinkIGDB.cs" />
     <Compile Include="Linker\LinkSources\LinkMobyGames.cs" />
     <Compile Include="Linker\Libraries.cs" />
     <Compile Include="Linker\Libraries\LibraryLinkGog.cs" />
@@ -77,8 +75,6 @@
     <Compile Include="Linker\Links.cs" />
     <Compile Include="Linker\LinkSources\LinkWikipedia.cs" />
     <Compile Include="Logging.cs" />
-    <Compile Include="Models\IGDBAuthResponse.cs" />
-    <Compile Include="Models\IGDBSearchResult.cs" />
     <Compile Include="Models\ItchMetaData.cs" />
     <Compile Include="Models\GogMetaData.cs" />
     <Compile Include="Helper\LinkHelper.cs" />

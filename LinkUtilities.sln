@@ -8,7 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B424CED3-F815-445E-BCCE-7A79779F5EE8}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		Source\ConstantsSample.cs = Source\ConstantsSample.cs
 		crowdin.yml = crowdin.yml
 		Manifest\HerrKnarz_LinkUtilities.yaml = Manifest\HerrKnarz_LinkUtilities.yaml
 		LICENSE.txt = LICENSE.txt

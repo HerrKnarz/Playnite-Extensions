@@ -1,6 +1,8 @@
-﻿using Playnite.SDK;
+﻿using HtmlAgilityPack;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -127,14 +129,27 @@ namespace LinkUtilities
         {
             try
             {
-                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-                request.Method = "HEAD";
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                response.Close();
-                return (response.StatusCode == HttpStatusCode.OK);
+                HtmlWeb web = new HtmlWeb
+                {
+                    UseCookies = true
+                };
+
+                HtmlDocument doc = web.Load(url);
+
+                return web.StatusCode == HttpStatusCode.OK;
             }
-            catch
+            catch (WebException ex)
             {
+                if (ex.Response != null)
+                {
+                    WebResponse response = ex.Response;
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    string details = reader.ReadToEnd();
+
+                    Log.Error(ex, details);
+                }
+
                 return false;
             }
         }
