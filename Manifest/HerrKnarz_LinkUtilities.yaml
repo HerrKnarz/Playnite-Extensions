@@ -1,5 +1,13 @@
 ﻿AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 0.5
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-10-30
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v0.5-alpha/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_0_5.pext
+    Changelog:
+      - fixed duplication bug when adding new games
+      - added translations to spanish (thx Madcore) and partially czech (thx saVantCZ)
+      - unfortunately had to remove IGDB for the time being because it didn't really work and wasn't following their terms of service. It will hopefully be added again at a later date!
   - Version: 0.4
     RequiredApiVersion: 6.5.0
     ReleaseDate: 2022-10-26
