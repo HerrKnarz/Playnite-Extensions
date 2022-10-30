@@ -18,7 +18,6 @@ namespace LinkUtilities
         public LinkUtilities(IPlayniteAPI api) : base(api)
         {
             Settings = new LinkUtilitiesSettingsViewModel(this);
-            api.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
             Properties = new GenericPluginProperties
             {
@@ -144,23 +143,6 @@ namespace LinkUtilities
             {
                 List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
                 DoForAll(games, sortLinks);
-            }
-        }
-
-        /// <summary>
-        /// Event that get's triggered after games are added or deleted. Is used to sort Links for new games.
-        /// </summary>
-        /// <param name="sender">Sender of the event</param>
-        /// <param name="args">Event arguments. Contains a list of all added games.</param>
-        public void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> args)
-        {
-            if (Settings.Settings.SortAfterChange && !IsUpdating)
-            {
-                if (args.AddedItems.Count > 0)
-                {
-                    List<Game> games = args.AddedItems.Distinct().ToList();
-                    DoForAll(games, sortLinks);
-                }
             }
         }
 
