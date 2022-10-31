@@ -5,7 +5,7 @@ Packages:
     ReleaseDate: 2022-10-31
     PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v0.6.1-alpha/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_0_6_1.pext
     Changelog:
-      - fix: Add link to GOG always also added links to games not available on GOG
+      - fix: Add link to GOG always also added links to games not available on GOG.
       - fix: Add link to all configured websites tried to add links to sites without add option resulting in error message.
   - Version: 0.6
     RequiredApiVersion: 6.5.0
