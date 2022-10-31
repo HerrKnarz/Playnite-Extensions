@@ -84,7 +84,7 @@ namespace LinkUtilities.Linker
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Error loading data from PCGamingWiki");
+                Log.Error(ex, $"Error loading data from {LinkName}");
             }
 
             return base.SearchLink(searchTerm);

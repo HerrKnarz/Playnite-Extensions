@@ -5,17 +5,18 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LinkUtilities.Linker
 {
     /// <summary>
     /// Adds a link to MobyGames.
     /// </summary>
-    class LinkMobyGames : Link
+    class LinkHG101 : Link
     {
-        public override string LinkName { get; } = "MobyGames";
-        public override string BaseUrl { get; } = "https://www.mobygames.com/game/{0}";
-        public override string SearchUrl { get; } = "https://www.mobygames.com/search/quick?q={0}";
+        public override string LinkName { get; } = "Hardcore Gaming 101";
+        public override string BaseUrl { get; } = "http://www.hardcoregaming101.net/{0}";
+        public override string SearchUrl { get; } = "http://www.hardcoregaming101.net/?s={0}";
 
         public override bool AddLink(Game game)
         {
@@ -52,22 +53,25 @@ namespace LinkUtilities.Linker
                 HtmlWeb web = new HtmlWeb();
                 HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm.UrlEncode()));
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='searchResult']");
+                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//header[@class='entry-header']");
 
                 if (htmlNodes != null && htmlNodes.Count > 0)
                 {
                     foreach (HtmlNode node in htmlNodes)
                     {
-                        HtmlNode searchData = node.SelectSingleNode("./div[@class='searchData']");
+                        HtmlNodeCollection reviewNodes = node.SelectNodes("./div[@class='index-entry-meta']/div[a='Review']");
 
-                        SearchResults.Add(new SearchResult
+                        if (reviewNodes != null && reviewNodes.Count > 0)
                         {
-                            Name = node.SelectSingleNode("./div[@class='searchNumber']").InnerText + " " + searchData.SelectSingleNode("./div[@class='searchTitle']/a").InnerText,
-                            Url = searchData.SelectSingleNode("./div[@class='searchTitle']/a").GetAttributeValue("href", ""),
-                            Description = searchData.SelectSingleNode("./div[@class='searchDetails']").InnerText
+                            SearchResults.Add(new SearchResult
+                            {
+                                Name = node.SelectSingleNode("./h2/a").InnerHtml,
+                                Url = node.SelectSingleNode("./h2/a").GetAttributeValue("href", ""),
+                                Description = node.SelectNodes("./div[@class='index-entry-meta']/div/a").Select(tagNode => tagNode.InnerText).Aggregate((total, part) => total + ", " + part)
+                            });
                         }
-                        );
                     }
+
                 }
             }
             catch (Exception ex)
@@ -78,7 +82,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkMobyGames(LinkUtilitiesSettings settings) : base(settings)
+        public LinkHG101(LinkUtilitiesSettings settings) : base(settings)
         {
         }
     }

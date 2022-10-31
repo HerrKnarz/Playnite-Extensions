@@ -75,7 +75,7 @@ namespace LinkUtilities.Linker
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Error loading data from Wikipedia");
+                Log.Error(ex, $"Error loading data from {LinkName}");
             }
 
             return base.SearchLink(searchTerm);
