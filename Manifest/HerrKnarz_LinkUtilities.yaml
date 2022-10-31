@@ -1,5 +1,16 @@
 ﻿AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 0.6
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-10-31
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v0.6-alpha/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_0_6.pext
+    Changelog:
+      - added support for Hardcore Gaming 101 (add/search)
+      - added support for MetaCritic (add one link for each platform/no search because no scraping allowed)
+      - extended support for steam (search)
+      - extended support for itch.io (search)
+      - extended support for GOG (add/search)
+      - completed translation to czech (thx saVantCZ)
   - Version: 0.5
     RequiredApiVersion: 6.5.0
     ReleaseDate: 2022-10-30
