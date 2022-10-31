@@ -30,6 +30,7 @@ namespace LinkUtilities.Linker
         public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLink";
         public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
         public LinkUtilitiesSettings Settings { get; set; }
+
         /// <summary>
         /// Results of the last search for the link. Is used to get the right link after closing the search dialog, because the dialog
         /// only returns a GenericItemOption, that doesn't have an URL.
@@ -72,7 +73,35 @@ namespace LinkUtilities.Linker
 
         public virtual bool AddLink(Game game)
         {
-            return false;
+            if (!LinkHelper.LinkExists(game, LinkName))
+            {
+                LinkUrl = $"{BaseUrl}{GetGamePath(game)}";
+
+                if (LinkHelper.CheckUrl(LinkUrl))
+                {
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
+                }
+                else
+                {
+                    LinkUrl = string.Empty;
+
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines the game path part of the link.
+        /// </summary>
+        /// <param name="game">Game the link will be added to</param>
+        /// <returns>Path that can be added to the BaseUrl to get the full link</returns>
+        public virtual string GetGamePath(Game game)
+        {
+            return game.Name;
         }
 
         public virtual bool Execute(Game game, string actionModifier = "")

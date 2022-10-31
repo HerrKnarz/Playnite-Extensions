@@ -19,35 +19,15 @@ namespace LinkUtilities.Linker
         public override string BaseUrl { get; } = "https://www.gog.com/en/game/";
         public override string SearchUrl { get; } = "https://embed.gog.com/games/ajax/filtered?mediaType=game&search=";
 
-        public override bool AddLink(Game game)
+        public override string GetGamePath(Game game)
         {
-            if (!LinkHelper.LinkExists(game, LinkName))
-            {
-                // GOG Links need the game name in lowercase without special characters and underscores instead of white spaces.
-                string gameName = game.Name.RemoveDiacritics()
-                    .RemoveSpecialChars()
-                    .CollapseWhitespaces()
-                    .Replace("-", "")
-                    .Replace(" ", "_")
-                    .ToLower();
-
-                LinkUrl = $"{BaseUrl}{gameName}";
-
-                if (LinkHelper.CheckUrl(LinkUrl))
-                {
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
-                }
-                else
-                {
-                    LinkUrl = string.Empty;
-
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
+            // GOG Links need the game name in lowercase without special characters and underscores instead of white spaces.
+            return game.Name.RemoveDiacritics()
+                .RemoveSpecialChars()
+                .CollapseWhitespaces()
+                .Replace("-", "")
+                .Replace(" ", "_")
+                .ToLower();
         }
 
         public override bool AddLibraryLink(Game game)

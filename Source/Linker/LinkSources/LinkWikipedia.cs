@@ -18,30 +18,10 @@ namespace LinkUtilities.Linker
         public override string BaseUrl { get; } = "https://en.wikipedia.org/wiki/";
         public override string SearchUrl { get; } = "https://en.wikipedia.org/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
 
-        public override bool AddLink(Game game)
+        public override string GetGamePath(Game game)
         {
-            if (!LinkHelper.LinkExists(game, LinkName))
-            {
-                // PCGamingWiki Links need the game simply encoded.
-                string gameName = game.Name.EscapeDataString();
-
-                LinkUrl = $"{BaseUrl}{gameName}";
-
-                if (LinkHelper.CheckUrl(LinkUrl))
-                {
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
-                }
-                else
-                {
-                    LinkUrl = string.Empty;
-
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
+            // Wikipedia Links need the game simply encoded.
+            return game.Name.EscapeDataString();
         }
 
         public override List<GenericItemOption> SearchLink(string searchTerm)

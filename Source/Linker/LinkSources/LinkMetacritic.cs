@@ -51,8 +51,7 @@ namespace LinkUtilities.Linker
         {
             bool result = false;
 
-            // Metacritic Links need the game name in lowercase without special characters and hyphens instead of white spaces.
-            string gameName = game.Name.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
+            string gameName = GetGamePath(game);
 
             bool addPlatformName = game.Platforms.Count > 1;
 
@@ -93,6 +92,12 @@ namespace LinkUtilities.Linker
             }
 
             return result;
+        }
+
+        public override string GetGamePath(Game game)
+        {
+            // Metacritic Links need the game name in lowercase without special characters and hyphens instead of white spaces.
+            return game.Name.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
         }
 
         public LinkMetacritic(LinkUtilitiesSettings settings) : base(settings)
