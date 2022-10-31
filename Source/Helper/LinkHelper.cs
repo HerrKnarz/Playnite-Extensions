@@ -121,17 +121,33 @@ namespace LinkUtilities
         }
 
         /// <summary>
+        /// PreRequest event for the HtmlWeb class. Is used to desable redirects,
+        /// </summary>
+        /// <param name="request">The request to be executed</param>
+        /// <returns>True, if the request can be executed.</returns>
+        private static bool OnPreRequest(HttpWebRequest request)
+        {
+            request.AllowAutoRedirect = AllowRedirects;
+            return true;
+        }
+
+        private static bool AllowRedirects = true;
+
+        /// <summary>
         /// Checks if an URL is reachable and returns OK
         /// </summary>
         /// <param name="url">URL to check</param>
-        /// <returns>True, if the URL is reachable</returns>
-        public static bool CheckUrl(string url)
+        /// <returns>True, if the URL is reachable</returns>        
+        public static bool CheckUrl(string url, bool allowRedirects = true)
         {
+            AllowRedirects = allowRedirects;
+
             try
             {
                 HtmlWeb web = new HtmlWeb
                 {
-                    UseCookies = true
+                    UseCookies = true,
+                    PreRequest = OnPreRequest
                 };
 
                 HtmlDocument doc = web.Load(url);

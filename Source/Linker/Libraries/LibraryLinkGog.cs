@@ -18,7 +18,7 @@ namespace LinkUtilities.Linker
         public override string LinkName { get; } = "GOG";
         public override string BaseUrl { get; } = "https://www.gog.com/en/game/";
         public override string SearchUrl { get; } = "https://embed.gog.com/games/ajax/filtered?mediaType=game&search=";
-
+        public override bool AllowRedirects { get; set; } = false;
         public override string GetGamePath(Game game)
         {
             // GOG Links need the game name in lowercase without special characters and underscores instead of white spaces.

@@ -26,6 +26,11 @@ namespace LinkUtilities.Linker
         /// Specifys, if the link is searchable (e.g. a search function via SearchUrl is implemented)
         /// </summary>
         public virtual bool IsSearchable { get { return !string.IsNullOrWhiteSpace(SearchUrl); } }
+        /// <summary>
+        /// Specifys, if a redirect is allowed while checking the url. Some sites redirect to the homepage if the link isn't valid.
+        /// In that case this should be set to false.
+        /// </summary>
+        public virtual bool AllowRedirects { get; set; } = true;
         public virtual string LinkUrl { get; set; } = string.Empty;
         public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLink";
         public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
@@ -77,7 +82,7 @@ namespace LinkUtilities.Linker
             {
                 LinkUrl = $"{BaseUrl}{GetGamePath(game)}";
 
-                if (LinkHelper.CheckUrl(LinkUrl))
+                if (LinkHelper.CheckUrl(LinkUrl, AllowRedirects))
                 {
                     return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
                 }

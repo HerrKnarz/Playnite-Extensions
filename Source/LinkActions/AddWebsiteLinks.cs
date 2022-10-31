@@ -30,11 +30,11 @@ namespace LinkUtilities.LinkActions
 
             foreach (Linker.Link link in Links)
             {
-                if (actionModifier == "add")
+                if (actionModifier == "add" & link.IsAddable)
                 {
                     result = link.AddLink(game) || result;
                 }
-                else
+                else if (actionModifier == "search" & link.IsSearchable)
                 {
                     result = link.AddSearchedLink(game) || result;
                 }
