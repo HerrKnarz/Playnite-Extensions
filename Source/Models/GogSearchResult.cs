@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 // Contains all the classes needed to deserialize the JSON fetched from the gog embed url.
-namespace LinkUtilities.Models
+namespace LinkUtilities.Models.Gog
 {
     public class Availability
     {

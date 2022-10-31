@@ -11,7 +11,10 @@ namespace LinkUtilities.Linker
         {
             Add(new LibraryLinkSteam(settings));
             Add(new LibraryLinkGog(settings));
-            Add(new LibraryLinkItch(settings));
+            if (!string.IsNullOrWhiteSpace(settings.ItchApiKey))
+            {
+                Add(new LibraryLinkItch(settings));
+            }
         }
     }
 }

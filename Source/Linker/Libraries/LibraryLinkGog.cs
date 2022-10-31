@@ -51,7 +51,7 @@ namespace LinkUtilities.Linker
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Error loading data from GOG");
+                    Log.Error(ex, $"Error loading data from {LinkName}");
 
                     return false;
                 }

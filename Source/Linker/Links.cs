@@ -11,9 +11,14 @@ namespace LinkUtilities.Linker
         {
             Add(new LibraryLinkGog(settings));
             Add(new LinkHG101(settings));
+            if (!string.IsNullOrWhiteSpace(settings.ItchApiKey))
+            {
+                Add(new LibraryLinkItch(settings));
+            }
             Add(new LinkMetacritic(settings));
             Add(new LinkMobyGames(settings));
             Add(new LinkPCGamingWiki(settings));
+            Add(new LibraryLinkSteam(settings));
             Add(new LinkWikipedia(settings));
         }
     }
