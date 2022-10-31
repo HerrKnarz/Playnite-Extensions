@@ -10,7 +10,6 @@ This is an extension for the superb open source video game library manager and l
 
 - Sort links by name via game menu or optionally automatically after meta data change.
 - Add links to the following websites directly via game name or search dialog:
-  - IGDB
   - MobyGames
   - PCGamingWiki
   - Wikipedia
@@ -29,6 +28,7 @@ This is an extension for the superb open source video game library manager and l
   - Sega Retro
   - Lemon Amiga
   - VGMdb
+  - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
 - (maybe) search for screenshots with configurable resolution
 
 If you have more ideas for this extension, feel free to suggest them by opening an issue!
