@@ -14,6 +14,11 @@ namespace LinkUtilities.Linker
 
         public override bool AddLink(Game game)
         {
+            throw new NotImplementedException();
+        }
+
+        public override bool AddLibraryLink(Game game)
+        {
             // Adding a link to steam is extremely simple. You only have to add the GameId to the base URL.
             LinkUrl = string.Format(BaseUrl, game.GameId);
             return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);

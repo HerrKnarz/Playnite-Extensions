@@ -15,6 +15,11 @@ namespace LinkUtilities.Linker
 
         public override bool AddLink(Game game)
         {
+            throw new NotImplementedException();
+        }
+
+        public override bool AddLibraryLink(Game game)
+        {
             if (!LinkHelper.LinkExists(game, LinkName))
             {
                 try

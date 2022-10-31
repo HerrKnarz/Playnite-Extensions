@@ -34,7 +34,7 @@ namespace LinkUtilities.LinkActions
 
             if (library is object)
             {
-                result = library.AddLink(game);
+                result = library.AddLibraryLink(game);
             }
             return result;
         }

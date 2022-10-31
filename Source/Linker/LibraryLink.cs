@@ -16,6 +16,8 @@ namespace LinkUtilities.Linker
 
         public abstract bool AddLink(Game game);
 
+        public abstract bool AddLibraryLink(Game game);
+
         public LibraryLink(LinkUtilitiesSettings settings)
         {
             Settings = settings;

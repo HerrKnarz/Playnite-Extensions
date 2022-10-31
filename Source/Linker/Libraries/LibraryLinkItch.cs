@@ -15,6 +15,11 @@ namespace LinkUtilities.Linker
 
         public override bool AddLink(Game game)
         {
+            throw new NotImplementedException();
+        }
+
+        public override bool AddLibraryLink(Game game)
+        {
             // To get the link to a game on the itch website, you need an API key and request the game data from their api.
             if (!string.IsNullOrWhiteSpace(Settings.ItchApiKey) && !LinkHelper.LinkExists(game, LinkName))
             {
