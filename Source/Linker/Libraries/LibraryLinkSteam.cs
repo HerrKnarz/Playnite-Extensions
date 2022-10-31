@@ -10,7 +10,7 @@ namespace LinkUtilities.Linker
     {
         public override Guid LibraryId { get; } = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         public override string LinkName { get; } = "Steam";
-        public override string BaseUrl { get; } = "https://store.steampowered.com/app/{0}/";
+        public override string BaseUrl { get; } = "https://store.steampowered.com/app/";
 
         public override bool AddLink(Game game)
         {
@@ -20,7 +20,7 @@ namespace LinkUtilities.Linker
         public override bool AddLibraryLink(Game game)
         {
             // Adding a link to steam is extremely simple. You only have to add the GameId to the base URL.
-            LinkUrl = string.Format(BaseUrl, game.GameId);
+            LinkUrl = $"{BaseUrl}{game.GameId}";
             return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
         }
 

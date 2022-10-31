@@ -14,7 +14,7 @@ namespace LinkUtilities.Linker
     class LinkPCGamingWiki : Link
     {
         public override string LinkName { get; } = "PCGamingWiki";
-        public override string BaseUrl { get; } = "https://www.pcgamingwiki.com/wiki/{0}";
+        public override string BaseUrl { get; } = "https://www.pcgamingwiki.com/wiki/";
         public override string SearchUrl { get; } = "https://www.pcgamingwiki.com/w/index.php?search={0}&fulltext=1";
 
         internal string WebsiteUrl = "https://www.pcgamingwiki.com";
@@ -26,7 +26,7 @@ namespace LinkUtilities.Linker
                 // PCGamingWiki Links need the game simply encoded.
                 string gameName = game.Name.EscapeDataString();
 
-                LinkUrl = string.Format(BaseUrl, gameName);
+                LinkUrl = $"{BaseUrl}{gameName}";
 
                 if (LinkHelper.CheckUrl(LinkUrl))
                 {

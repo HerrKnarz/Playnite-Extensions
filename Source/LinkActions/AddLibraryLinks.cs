@@ -26,7 +26,7 @@ namespace LinkUtilities.LinkActions
 
         public bool Execute(Game game, string actionModifier = "")
         {
-            LibraryLink library;
+            ILibraryLink library;
             bool result = false;
 
             // Find the library of the game and add a link, if possible.

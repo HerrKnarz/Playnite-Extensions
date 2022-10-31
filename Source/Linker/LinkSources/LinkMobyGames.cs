@@ -14,8 +14,8 @@ namespace LinkUtilities.Linker
     class LinkMobyGames : Link
     {
         public override string LinkName { get; } = "MobyGames";
-        public override string BaseUrl { get; } = "https://www.mobygames.com/game/{0}";
-        public override string SearchUrl { get; } = "https://www.mobygames.com/search/quick?q={0}";
+        public override string BaseUrl { get; } = "https://www.mobygames.com/game/";
+        public override string SearchUrl { get; } = "https://www.mobygames.com/search/quick?q=";
 
         public override bool AddLink(Game game)
         {
@@ -24,7 +24,7 @@ namespace LinkUtilities.Linker
                 // MobyGames Links need the game name in lowercase without special characters and hyphens instead of white spaces.
                 string gameName = game.Name.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
 
-                LinkUrl = string.Format(BaseUrl, gameName);
+                LinkUrl = $"{BaseUrl}{gameName}";
 
                 if (LinkHelper.CheckUrl(LinkUrl))
                 {
@@ -50,7 +50,7 @@ namespace LinkUtilities.Linker
             try
             {
                 HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm.UrlEncode()));
+                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
                 HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='searchResult']");
 

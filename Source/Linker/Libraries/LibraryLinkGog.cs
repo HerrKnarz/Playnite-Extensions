@@ -1,6 +1,10 @@
-﻿using LinkUtilities.Models.Gog;
+﻿using LinkUtilities.Helper;
+using LinkUtilities.Models;
+using LinkUtilities.Models.Gog;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace LinkUtilities.Linker
@@ -8,14 +12,42 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to the gog page of the game, if it is part of the steam library.
     /// </summary>
-    class LibraryLinkGog : LibraryLink
+    class LibraryLinkGog : LinkAndLibrary
     {
         public override Guid LibraryId { get; } = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
         public override string LinkName { get; } = "GOG";
+        public override string BaseUrl { get; } = "https://www.gog.com/en/game/";
+        public override string SearchUrl { get; } = "https://embed.gog.com/games/ajax/filtered?mediaType=game&search=";
 
         public override bool AddLink(Game game)
         {
-            throw new NotImplementedException();
+            if (!LinkHelper.LinkExists(game, LinkName))
+            {
+                // GOG Links need the game name in lowercase without special characters and underscores instead of white spaces.
+                string gameName = game.Name.RemoveDiacritics()
+                    .RemoveSpecialChars()
+                    .CollapseWhitespaces()
+                    .Replace("-", "")
+                    .Replace(" ", "_")
+                    .ToLower();
+
+                LinkUrl = $"{BaseUrl}{gameName}";
+
+                if (LinkHelper.CheckUrl(LinkUrl))
+                {
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
+                }
+                else
+                {
+                    LinkUrl = string.Empty;
+
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public override bool AddLibraryLink(Game game)
@@ -29,11 +61,11 @@ namespace LinkUtilities.Linker
 
                     client.Headers.Add("Accept", "application/json");
 
-                    string jsonResult = client.DownloadString("https://api.gog.com/v2/games/" + game.GameId);
+                    string jsonResult = client.DownloadString("https://api.gog.com/products/" + game.GameId);
 
                     GogMetaData gogMetaData = Newtonsoft.Json.JsonConvert.DeserializeObject<GogMetaData>(jsonResult);
 
-                    LinkUrl = gogMetaData.Links.Store.Href;
+                    LinkUrl = $"{BaseUrl}{gogMetaData.Slug}";
 
                     return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
                 }
@@ -48,6 +80,54 @@ namespace LinkUtilities.Linker
             {
                 return false;
             }
+        }
+
+        public override List<GenericItemOption> SearchLink(string searchTerm)
+        {
+            SearchResults.Clear();
+
+            try
+            {
+                WebClient client = new WebClient();
+
+                client.Headers.Add("Accept", "application/json");
+
+                string jsonResult = client.DownloadString($"{SearchUrl}{searchTerm.UrlEncode()}");
+
+                GogSearchResult gogSearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<GogSearchResult>(jsonResult);
+
+                int counter = 0;
+
+                foreach (Product product in gogSearchResult.Products)
+                {
+                    counter++;
+
+                    string releaseDate = string.Empty;
+
+                    if (product.GlobalReleaseDate.HasValue)
+                    {
+                        releaseDate = MiscHelper.UnixTimeStampToDateTime(product.GlobalReleaseDate.Value).Date.ToString();
+                    }
+                    else if (product.ReleaseDate.HasValue)
+                    {
+                        releaseDate = MiscHelper.UnixTimeStampToDateTime(product.ReleaseDate.Value).Date.ToString();
+                    }
+
+                    SearchResults.Add(new SearchResult
+                    {
+                        Name = $"{counter}. {product.Title}",
+                        Url = $"{BaseUrl}{product.Slug}",
+                        Description = releaseDate
+                    }
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error loading data from {LinkName}");
+            }
+
+            return base.SearchLink(searchTerm);
         }
 
         public LibraryLinkGog(LinkUtilitiesSettings settings) : base(settings)

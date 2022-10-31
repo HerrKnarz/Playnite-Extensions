@@ -15,8 +15,8 @@ namespace LinkUtilities.Linker
     class LinkHG101 : Link
     {
         public override string LinkName { get; } = "Hardcore Gaming 101";
-        public override string BaseUrl { get; } = "http://www.hardcoregaming101.net/{0}";
-        public override string SearchUrl { get; } = "http://www.hardcoregaming101.net/?s={0}";
+        public override string BaseUrl { get; } = "http://www.hardcoregaming101.net/";
+        public override string SearchUrl { get; } = "http://www.hardcoregaming101.net/?s=";
 
         public override bool AddLink(Game game)
         {
@@ -25,7 +25,7 @@ namespace LinkUtilities.Linker
                 // HG101 Links need the game name in lowercase without special characters and hyphens instead of white spaces.
                 string gameName = game.Name.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
 
-                LinkUrl = string.Format(BaseUrl, gameName);
+                LinkUrl = $"{BaseUrl}{gameName}";
 
                 if (LinkHelper.CheckUrl(LinkUrl))
                 {
@@ -51,7 +51,7 @@ namespace LinkUtilities.Linker
             try
             {
                 HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load(string.Format(SearchUrl, searchTerm.UrlEncode()));
+                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
                 HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//header[@class='entry-header']");
 

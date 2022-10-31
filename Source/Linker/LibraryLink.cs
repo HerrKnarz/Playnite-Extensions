@@ -6,7 +6,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Base class for a library link
     /// </summary>
-    public abstract class LibraryLink : ILink, IGameLibrary
+    public abstract class LibraryLink : ILibraryLink
     {
         public abstract Guid LibraryId { get; }
         public abstract string LinkName { get; }

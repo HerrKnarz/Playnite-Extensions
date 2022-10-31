@@ -15,7 +15,7 @@ namespace LinkUtilities.Linker
     class LinkWikipedia : Link
     {
         public override string LinkName { get; } = "Wikipedia";
-        public override string BaseUrl { get; } = "https://en.wikipedia.org/wiki/{0}";
+        public override string BaseUrl { get; } = "https://en.wikipedia.org/wiki/";
         public override string SearchUrl { get; } = "https://en.wikipedia.org/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
 
         public override bool AddLink(Game game)
@@ -25,7 +25,7 @@ namespace LinkUtilities.Linker
                 // PCGamingWiki Links need the game simply encoded.
                 string gameName = game.Name.EscapeDataString();
 
-                LinkUrl = string.Format(BaseUrl, gameName);
+                LinkUrl = $"{BaseUrl}{gameName}";
 
                 if (LinkHelper.CheckUrl(LinkUrl))
                 {

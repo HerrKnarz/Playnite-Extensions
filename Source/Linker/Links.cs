@@ -9,6 +9,7 @@ namespace LinkUtilities.Linker
     {
         public Links(LinkUtilitiesSettings settings)
         {
+            Add(new LibraryLinkGog(settings));
             Add(new LinkHG101(settings));
             Add(new LinkMetacritic(settings));
             Add(new LinkMobyGames(settings));
