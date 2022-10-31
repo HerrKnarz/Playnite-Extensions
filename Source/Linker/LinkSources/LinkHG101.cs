@@ -22,7 +22,7 @@ namespace LinkUtilities.Linker
         {
             if (!LinkHelper.LinkExists(game, LinkName))
             {
-                // MobyGames Links need the game name in lowercase without special characters and hyphens instead of white spaces.
+                // HG101 Links need the game name in lowercase without special characters and hyphens instead of white spaces.
                 string gameName = game.Name.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
 
                 LinkUrl = string.Format(BaseUrl, gameName);

@@ -65,6 +65,7 @@
     <Compile Include="Linker\IGameLibrary.cs" />
     <Compile Include="Linker\ILink.cs" />
     <Compile Include="Linker\Link.cs" />
+    <Compile Include="Linker\LinkSources\LinkMetacritic.cs" />
     <Compile Include="Linker\LinkSources\LinkHG101.cs" />
     <Compile Include="Linker\LinkSources\LinkMobyGames.cs" />
     <Compile Include="Linker\Libraries.cs" />
