@@ -9,6 +9,7 @@ namespace LinkUtilities.Linker
     {
         public Links(LinkUtilitiesSettings settings)
         {
+            Add(new LinkEpic(settings));
             Add(new LibraryLinkGog(settings));
             Add(new LinkHG101(settings));
             if (!string.IsNullOrWhiteSpace(settings.ItchApiKey))

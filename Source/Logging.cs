@@ -31,7 +31,7 @@ namespace LinkUtilities
                 Message = $"Error on {traceInfos.InitialCaller}()";
             }
 
-            Message += $"{Message}|{traceInfos.FileName}|{traceInfos.LineNumber}";
+            Message += $"|{traceInfos.FileName}|{traceInfos.LineNumber}";
 
             logger.Error(ex, $"{Message}");
 

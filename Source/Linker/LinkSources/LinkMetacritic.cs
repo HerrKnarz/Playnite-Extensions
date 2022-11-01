@@ -8,7 +8,7 @@ using System.Text;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to MobyGames.
+    /// Adds a link to Metacritic.
     /// </summary>
     class LinkMetacritic : Link
     {

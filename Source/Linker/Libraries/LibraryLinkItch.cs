@@ -10,7 +10,7 @@ using Game = Playnite.SDK.Models.Game;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to the itch.io page of the game, if it is part of the steam library.
+    /// Adds a link to itch.io.
     /// </summary>
     class LibraryLinkItch : LinkAndLibrary
     {

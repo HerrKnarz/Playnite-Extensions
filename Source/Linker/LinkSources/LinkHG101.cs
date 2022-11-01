@@ -10,7 +10,7 @@ using System.Linq;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to MobyGames.
+    /// Adds a link to Hardcore Gaming 101.
     /// </summary>
     class LinkHG101 : Link
     {

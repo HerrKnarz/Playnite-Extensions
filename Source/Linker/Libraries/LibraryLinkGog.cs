@@ -10,7 +10,7 @@ using System.Net;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to the gog page of the game, if it is part of the steam library.
+    /// Adds a link to GOG.
     /// </summary>
     class LibraryLinkGog : LinkAndLibrary
     {
