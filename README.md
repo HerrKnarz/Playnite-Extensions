@@ -15,22 +15,22 @@ This is an extension for the superb open source video game library manager and l
 
 The following websites are supported:
 
-| **Website**         | **Add**                                   | **Search**                | **Library** |
-|---------------------|-------------------------------------------|---------------------------|-------------|
-| GOG                 | yes                                       | yes                       | yes         |
-| Hardcore Gaming 101 | yes                                       | yes                       | no          |
-| itch.io             | no (link contains several variable parts) | yes                       | yes         |
-| MetaCritic          | yes (for each platform the game has)      | no (scraping not allowed) | no          |
-| MobyGames           | yes                                       | yes                       | no          |
-| PCGamingWiki        | yes                                       | yes                       | no          |
-| Steam               | no (link contains game id)                | yes                       | yes         |
-| Wikipedia           | yes                                       | yes                       | no          |
+| **Website**         | **Add**                                   | **Search**                | **Library**                                    |
+|---------------------|-------------------------------------------|---------------------------|------------------------------------------------|
+| Epic                | yes                                       | yes                       | no (can't find a way to get a definitive link) |
+| GOG                 | yes                                       | yes                       | yes                                            |
+| Hardcore Gaming 101 | yes                                       | yes                       | no                                             |
+| itch.io             | no (link contains several variable parts) | yes                       | yes                                            |
+| MetaCritic          | yes (for each platform the game has)      | no (scraping not allowed) | no                                             |
+| MobyGames           | yes                                       | yes                       | no                                             |
+| PCGamingWiki        | yes                                       | yes                       | no                                             |
+| Steam               | no (link contains game id)                | yes                       | yes                                            |
+| Wikipedia           | yes                                       | yes                       | no                                             |
 
 ## Planned features
 - check if links are still working, optional removal of dead links
 - add link to active browser window via bookmarklet (nearly done, but currently broken in playnite API)
 - add links to more websites. The following are already planned:
-  - Epic
   - Sega Retro
   - Lemon Amiga
   - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
