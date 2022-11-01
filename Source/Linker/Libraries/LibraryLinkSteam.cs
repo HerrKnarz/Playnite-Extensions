@@ -34,12 +34,19 @@ namespace LinkUtilities.Linker
             {
                 WebClient client = new WebClient();
 
-                string jsonResult = client.DownloadString($"{SearchUrl}{searchTerm.UrlEncode()}");
+                string url = $"{SearchUrl}{searchTerm.UrlEncode()}";
+
+                Log.Debug(url);
+
+                string jsonResult = client.DownloadString(url);
+
+                Log.Debug(jsonResult);
 
                 List<SteamSearchResult> games = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SteamSearchResult>>(jsonResult);
 
                 if (games != null && games.Count > 0)
                 {
+                    Log.Debug($"Games found: {games.Count}");
                     int counter = 0;
 
                     foreach (SteamSearchResult game in games)
