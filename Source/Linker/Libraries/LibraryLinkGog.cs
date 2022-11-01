@@ -47,7 +47,7 @@ namespace LinkUtilities.Linker
 
                     LinkUrl = $"{BaseUrl}{gogMetaData.Slug}";
 
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin.Settings.Settings);
                 }
                 catch (Exception ex)
                 {
@@ -110,7 +110,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LibraryLinkGog(LinkUtilitiesSettings settings) : base(settings)
+        public LibraryLinkGog(LinkUtilities plugin) : base(plugin)
         {
         }
     }

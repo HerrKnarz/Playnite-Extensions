@@ -20,9 +20,9 @@ namespace LinkUtilities.Linker
         /// </summary>
         string LinkUrl { get; set; }
         /// <summary>
-        /// Settings to be used
+        /// instance of the extension to access settings etc.
         /// </summary>
-        LinkUtilitiesSettings Settings { get; set; }
+        LinkUtilities Plugin { get; }
 
         /// <summary>
         /// Adds a link to the specific game page of the specified website.

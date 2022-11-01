@@ -34,7 +34,9 @@ namespace LinkUtilities.Linker
         public virtual string LinkUrl { get; set; } = string.Empty;
         public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLink";
         public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
-        public LinkUtilitiesSettings Settings { get; set; }
+
+        private readonly LinkUtilities plugin;
+        public LinkUtilities Plugin { get { return plugin; } }
 
         /// <summary>
         /// Results of the last search for the link. Is used to get the right link after closing the search dialog, because the dialog
@@ -57,7 +59,7 @@ namespace LinkUtilities.Linker
 
             if (result != null)
             {
-                return LinkHelper.AddLink(game, LinkName, SearchResults.Find(x => x.Name == result.Name).Url, Settings, false);
+                return LinkHelper.AddLink(game, LinkName, SearchResults.Find(x => x.Name == result.Name).Url, plugin.Settings.Settings, false);
             }
             else
             {
@@ -84,7 +86,7 @@ namespace LinkUtilities.Linker
 
                 if (LinkHelper.CheckUrl(LinkUrl, AllowRedirects))
                 {
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, plugin.Settings.Settings);
                 }
                 else
                 {
@@ -121,9 +123,9 @@ namespace LinkUtilities.Linker
             }
         }
 
-        public Link(LinkUtilitiesSettings settings)
+        public Link(LinkUtilities plugin)
         {
-            Settings = settings;
+            this.plugin = plugin;
         }
     }
 }

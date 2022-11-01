@@ -70,7 +70,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkPCGamingWiki(LinkUtilitiesSettings settings) : base(settings)
+        public LinkPCGamingWiki(LinkUtilities plugin) : base(plugin)
         {
         }
     }

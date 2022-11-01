@@ -86,7 +86,7 @@ namespace LinkUtilities.Linker
 
                     if (LinkHelper.CheckUrl(LinkUrl))
                     {
-                        result = LinkHelper.AddLink(game, linkName, LinkUrl, Settings) || result;
+                        result = LinkHelper.AddLink(game, linkName, LinkUrl, Plugin.Settings.Settings) || result;
                     }
                 }
             }
@@ -100,7 +100,7 @@ namespace LinkUtilities.Linker
             return game.Name.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
         }
 
-        public LinkMetacritic(LinkUtilitiesSettings settings) : base(settings)
+        public LinkMetacritic(LinkUtilities plugin) : base(plugin)
         {
         }
     }

@@ -12,15 +12,16 @@ namespace LinkUtilities.Linker
         public abstract string LinkName { get; }
         public virtual string BaseUrl { get => string.Empty; }
         public virtual string LinkUrl { get; set; } = string.Empty;
-        public LinkUtilitiesSettings Settings { get; set; }
+        private readonly LinkUtilities plugin;
+        public LinkUtilities Plugin { get { return plugin; } }
 
         public abstract bool AddLink(Game game);
 
         public abstract bool AddLibraryLink(Game game);
 
-        public LibraryLink(LinkUtilitiesSettings settings)
+        public LibraryLink(LinkUtilities plugin)
         {
-            Settings = settings;
+            this.plugin = plugin;
         }
     }
 }

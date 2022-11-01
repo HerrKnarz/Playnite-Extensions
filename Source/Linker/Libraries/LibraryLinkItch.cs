@@ -22,11 +22,11 @@ namespace LinkUtilities.Linker
         public override bool AddLibraryLink(Game game)
         {
             // To get the link to a game on the itch website, you need an API key and request the game data from their api.
-            if (!string.IsNullOrWhiteSpace(Settings.ItchApiKey) && !LinkHelper.LinkExists(game, LinkName))
+            if (!string.IsNullOrWhiteSpace(Plugin.Settings.Settings.ItchApiKey) && !LinkHelper.LinkExists(game, LinkName))
             {
                 try
                 {
-                    string apiUrl = string.Format(LibraryUrl, Settings.ItchApiKey, game.GameId);
+                    string apiUrl = string.Format(LibraryUrl, Plugin.Settings.Settings.ItchApiKey, game.GameId);
 
                     WebClient client = new WebClient();
 
@@ -36,7 +36,7 @@ namespace LinkUtilities.Linker
 
                     LinkUrl = itchMetaData.Game.Url;
 
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin.Settings.Settings);
                 }
                 catch (Exception ex)
                 {
@@ -55,11 +55,11 @@ namespace LinkUtilities.Linker
         {
             SearchResults.Clear();
 
-            if (!string.IsNullOrWhiteSpace(Settings.ItchApiKey))
+            if (!string.IsNullOrWhiteSpace(Plugin.Settings.Settings.ItchApiKey))
             {
                 try
                 {
-                    string apiUrl = string.Format(SearchUrl, Settings.ItchApiKey, searchTerm.UrlEncode());
+                    string apiUrl = string.Format(SearchUrl, Plugin.Settings.Settings.ItchApiKey, searchTerm.UrlEncode());
 
                     WebClient client = new WebClient();
 
@@ -94,7 +94,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LibraryLinkItch(LinkUtilitiesSettings settings) : base(settings)
+        public LibraryLinkItch(LinkUtilities plugin) : base(plugin)
         {
         }
     }

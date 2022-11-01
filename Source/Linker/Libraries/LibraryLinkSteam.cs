@@ -23,7 +23,7 @@ namespace LinkUtilities.Linker
         {
             // Adding a link to steam is extremely simple. You only have to add the GameId to the base URL.
             LinkUrl = $"{LibraryUrl}{game.GameId}";
-            return LinkHelper.AddLink(game, LinkName, LinkUrl, Settings);
+            return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin.Settings.Settings);
         }
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
@@ -72,7 +72,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LibraryLinkSteam(LinkUtilitiesSettings settings) : base(settings)
+        public LibraryLinkSteam(LinkUtilities plugin) : base(plugin)
         {
         }
     }

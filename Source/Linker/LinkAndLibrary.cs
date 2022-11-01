@@ -7,7 +7,7 @@ namespace LinkUtilities.Linker
     /// </summary>
     public abstract class LinkAndLibrary : Link, ILibraryLink
     {
-        protected LinkAndLibrary(LinkUtilitiesSettings settings) : base(settings)
+        protected LinkAndLibrary(LinkUtilities plugin) : base(plugin)
         {
         }
 

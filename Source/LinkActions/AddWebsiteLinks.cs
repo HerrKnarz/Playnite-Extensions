@@ -6,25 +6,22 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to add a link to all available websites in the Links list, if a definitive link was found.
     /// </summary>
-    public class AddWebsiteLinks : ILinkAction
+    public class AddWebsiteLinks : LinkAction
     {
         /// <summary>
         /// contains all website Links that can be added.
         /// </summary>
         public readonly Links Links;
 
-        public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
-        public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
-        public LinkUtilitiesSettings Settings { get; set; }
+        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
+        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
-        public AddWebsiteLinks(LinkUtilitiesSettings settings)
+        public AddWebsiteLinks(LinkUtilities plugin) : base(plugin)
         {
-            Settings = settings;
-
-            Links = new Links(Settings);
+            Links = new Links(Plugin);
         }
 
-        public bool Execute(Game game, string actionModifier = "")
+        public override bool Execute(Game game, string actionModifier = "")
         {
             bool result = false;
 

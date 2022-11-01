@@ -5,18 +5,16 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Sorts the Links of a game.
     /// </summary>
-    public class SortLinks : ILinkAction
+    public class SortLinks : LinkAction
     {
-        public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressSortLinks";
-        public string ResultMessage { get; } = "LOCLinkUtilitiesDialogSortedMessage";
-        public LinkUtilitiesSettings Settings { get; set; }
-
-        public SortLinks(LinkUtilitiesSettings settings)
+        public SortLinks(LinkUtilities plugin) : base(plugin)
         {
-            Settings = settings;
         }
 
-        public bool Execute(Game game, string actionModifier = "")
+        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressSortLinks";
+        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogSortedMessage";
+
+        public override bool Execute(Game game, string actionModifier = "")
         {
             return LinkHelper.SortLinks(game);
         }

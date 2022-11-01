@@ -7,20 +7,20 @@ namespace LinkUtilities.Linker
     /// </summary>
     public class Links : List<Link>
     {
-        public Links(LinkUtilitiesSettings settings)
+        public Links(LinkUtilities plugin)
         {
-            Add(new LinkEpic(settings));
-            Add(new LibraryLinkGog(settings));
-            Add(new LinkHG101(settings));
-            if (!string.IsNullOrWhiteSpace(settings.ItchApiKey))
+            Add(new LinkEpic(plugin));
+            Add(new LibraryLinkGog(plugin));
+            Add(new LinkHG101(plugin));
+            if (!string.IsNullOrWhiteSpace(plugin.Settings.Settings.ItchApiKey))
             {
-                Add(new LibraryLinkItch(settings));
+                Add(new LibraryLinkItch(plugin));
             }
-            Add(new LinkMetacritic(settings));
-            Add(new LinkMobyGames(settings));
-            Add(new LinkPCGamingWiki(settings));
-            Add(new LibraryLinkSteam(settings));
-            Add(new LinkWikipedia(settings));
+            Add(new LinkMetacritic(plugin));
+            Add(new LinkMobyGames(plugin));
+            Add(new LinkPCGamingWiki(plugin));
+            Add(new LibraryLinkSteam(plugin));
+            Add(new LinkWikipedia(plugin));
         }
     }
 }

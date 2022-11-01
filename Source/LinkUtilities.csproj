@@ -55,6 +55,7 @@
     <Compile Include="LinkActions\AddLibraryLinks.cs" />
     <Compile Include="LinkActions\AddWebsiteLinks.cs" />
     <Compile Include="LinkActions\ILinkAction.cs" />
+    <Compile Include="LinkActions\LinkAction.cs" />
     <Compile Include="Linker\IGameLibrary.cs" />
     <Compile Include="Linker\ILibraryLink.cs" />
     <Compile Include="Linker\ILink.cs" />
@@ -84,6 +85,7 @@
       <DependentUpon>LinkUtilitiesSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\ItchSearchResult.cs" />
+    <Compile Include="Models\LinkSourceSettings.cs" />
     <Compile Include="Models\MediaWikiSearchSuggestion.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\SteamSearchResult.cs" />

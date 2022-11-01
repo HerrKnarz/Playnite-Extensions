@@ -7,13 +7,13 @@ namespace LinkUtilities.Linker
     /// </summary>
     class Libraries : List<ILibraryLink>
     {
-        public Libraries(LinkUtilitiesSettings settings)
+        public Libraries(LinkUtilities plugin)
         {
-            Add(new LibraryLinkSteam(settings));
-            Add(new LibraryLinkGog(settings));
-            if (!string.IsNullOrWhiteSpace(settings.ItchApiKey))
+            Add(new LibraryLinkSteam(plugin));
+            Add(new LibraryLinkGog(plugin));
+            if (!string.IsNullOrWhiteSpace(plugin.Settings.Settings.ItchApiKey))
             {
-                Add(new LibraryLinkItch(settings));
+                Add(new LibraryLinkItch(plugin));
             }
         }
     }

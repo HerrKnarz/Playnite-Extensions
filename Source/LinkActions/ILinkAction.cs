@@ -17,9 +17,9 @@ namespace LinkUtilities.LinkActions
         /// </summary>
         string ResultMessage { get; }
         /// <summary>
-        /// Settings to use for the action
+        /// instance of the extension to access settings etc.
         /// </summary>
-        LinkUtilitiesSettings Settings { get; set; }
+        LinkUtilities Plugin { get; }
 
         /// <summary>
         /// Executes the action on a game.

@@ -24,9 +24,9 @@ namespace LinkUtilities
                 HasSettings = true
             };
 
-            sortLinks = new SortLinks(Settings.Settings);
-            addLibraryLinks = new AddLibraryLinks(Settings.Settings);
-            addWebsiteLinks = new AddWebsiteLinks(Settings.Settings);
+            sortLinks = new SortLinks(this);
+            addLibraryLinks = new AddLibraryLinks(this);
+            addWebsiteLinks = new AddWebsiteLinks(this);
             IsUpdating = false;
 
             PlayniteApi.UriHandler.RegisterSource("LinkUtilities", (args) =>
@@ -53,6 +53,10 @@ namespace LinkUtilities
         /// Class to add a link to all available websites in the Links list, if a definitive link was found.
         /// </summary>
         private readonly AddWebsiteLinks addWebsiteLinks;
+        /// <summary>
+        /// Class to add a link to all available websites in the Links list, if a definitive link was found.
+        /// </summary>
+        public AddWebsiteLinks AddWebsiteLinks { get; }
 
         /// <summary>
         /// Is set to true, while the library is updated via the sortLinks function. Is used to avoid an endless loop in the function.
