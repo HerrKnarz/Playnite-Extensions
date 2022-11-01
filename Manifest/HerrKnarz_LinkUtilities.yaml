@@ -1,5 +1,12 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 0.7
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-11-01
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v0.7-alpha/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_0_7_0.pext
+    Changelog:
+      - added Epic support (add/search)
+      - fixed bug that prevented search in some cases
   - Version: 0.6.1
     RequiredApiVersion: 6.5.0
     ReleaseDate: 2022-10-31
