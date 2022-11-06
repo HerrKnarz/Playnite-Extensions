@@ -17,17 +17,18 @@ namespace LinkUtilities
     {
         public LinkUtilities(IPlayniteAPI api) : base(api)
         {
-            Settings = new LinkUtilitiesSettingsViewModel(this);
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
+
+            sortLinks = new SortLinks(this);
+            AddLibraryLinks = new AddLibraryLinks(this);
+            AddWebsiteLinks = new AddWebsiteLinks(this);
+            IsUpdating = false;
+
+            Settings = new LinkUtilitiesSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
             };
-
-            sortLinks = new SortLinks(this);
-            addLibraryLinks = new AddLibraryLinks(this);
-            addWebsiteLinks = new AddWebsiteLinks(this);
-            IsUpdating = false;
 
             PlayniteApi.UriHandler.RegisterSource("LinkUtilities", (args) =>
             {
@@ -47,12 +48,8 @@ namespace LinkUtilities
         /// <summary>
         /// Class to add a link to the store page in the library of a game
         /// </summary>
-        private readonly AddLibraryLinks addLibraryLinks;
+        public AddLibraryLinks AddLibraryLinks { get; }
 
-        /// <summary>
-        /// Class to add a link to all available websites in the Links list, if a definitive link was found.
-        /// </summary>
-        private readonly AddWebsiteLinks addWebsiteLinks;
         /// <summary>
         /// Class to add a link to all available websites in the Links list, if a definitive link was found.
         /// </summary>
@@ -177,7 +174,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, addLibraryLinks, true);
+                        DoForAll(games, AddLibraryLinks, true);
                     }
                 },
                 // Adds the "All configured websites" item to the "add link to" submenu.
@@ -188,7 +185,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, addWebsiteLinks, true, "add");
+                        DoForAll(games, AddWebsiteLinks, true, "add");
                     }
                 },
                 // Adds a separator to the "add link to" submenu
@@ -205,7 +202,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, addWebsiteLinks, true, "search");
+                        DoForAll(games, AddWebsiteLinks, true, "search");
                     }
                 },
                 // Adds a separator to the "search link to" submenu
@@ -217,7 +214,7 @@ namespace LinkUtilities
             };
 
             // Adds all linkable websites to the "add link to" and "search link to" submenus.
-            foreach (Linker.Link link in addWebsiteLinks.Links)
+            foreach (Linker.Link link in AddWebsiteLinks.Links)
             {
                 if (link.IsAddable)
                 {

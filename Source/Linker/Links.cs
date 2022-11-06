@@ -12,10 +12,7 @@ namespace LinkUtilities.Linker
             Add(new LinkEpic(plugin));
             Add(new LibraryLinkGog(plugin));
             Add(new LinkHG101(plugin));
-            if (!string.IsNullOrWhiteSpace(plugin.Settings.Settings.ItchApiKey))
-            {
-                Add(new LibraryLinkItch(plugin));
-            }
+            Add(new LibraryLinkItch(plugin));
             Add(new LinkMetacritic(plugin));
             Add(new LinkMobyGames(plugin));
             Add(new LinkPCGamingWiki(plugin));

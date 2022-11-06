@@ -16,13 +16,18 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
             <CheckBox Grid.Row="0" Grid.ColumnSpan="2" Name="CheckPSNMigration"
                   IsChecked="{Binding Settings.SortAfterChange}"
                   Content="{DynamicResource LOCLinkUtilitiesSettingsSortAfterChange}"
                   Margin="0,0,0,10"/>
+
             <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource LOCLinkUtilitiesSettingsItchApiKey}" Margin="0,0,0,10" />
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.ItchApiKey}" Margin="10,0,0,10"/>
+
+            <DataGrid Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Settings.LinkSourceSettings}" AutoGenerateColumns="True" />
         </Grid>
     </StackPanel>
 </UserControl>

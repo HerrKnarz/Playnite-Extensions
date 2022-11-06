@@ -1,6 +1,8 @@
-﻿using Playnite.SDK;
+﻿using LinkUtilities.Models;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LinkUtilities
 {
@@ -11,6 +13,7 @@ namespace LinkUtilities
     {
         private bool sortAfterChange = false;
         private string itchApiKey = string.Empty;
+        private LinkSourceSettings linkSourceSettings;
 
         /// <summary>
         /// sets whether the Links shall be sorted after a game is updated in the database
@@ -21,6 +24,45 @@ namespace LinkUtilities
         /// API key used to get game information from itch.io
         /// </summary>
         public string ItchApiKey { get => itchApiKey; set => SetValue(ref itchApiKey, value); }
+
+        public LinkSourceSettings LinkSourceSettings { get => linkSourceSettings; set => SetValue(ref linkSourceSettings, value); }
+
+        public LinkUtilitiesSettings()
+        {
+            linkSourceSettings = new LinkSourceSettings();
+        }
+
+        public void RefreshLinkSources(LinkUtilities plugin)
+        {
+            LinkSourceSettings newSources = new LinkSourceSettings();
+            newSources.PopulateLinkSources(plugin);
+
+            foreach (LinkSourceSetting item in linkSourceSettings.Where(x1 => newSources.All(x2 => x2.LinkName != x1.LinkName)).ToList())
+            {
+                LinkSourceSettings.Remove(item);
+            }
+
+            foreach (LinkSourceSetting itemNew in newSources)
+            {
+                LinkSourceSetting itemOld = linkSourceSettings.FirstOrDefault(x => x.LinkName == itemNew.LinkName);
+
+                if (itemOld != null)
+                {
+                    if (itemNew.IsAddable is null)
+                    {
+                        itemOld.IsAddable = null;
+                    }
+                    if (itemNew.IsSearchable is null)
+                    {
+                        itemOld.IsSearchable = null;
+                    }
+                }
+                else
+                {
+                    linkSourceSettings.Add(itemNew);
+                }
+            }
+        }
     }
 
     public class LinkUtilitiesSettingsViewModel : ObservableObject, ISettings
@@ -51,10 +93,12 @@ namespace LinkUtilities
             if (savedSettings != null)
             {
                 Settings = savedSettings;
+                Settings.RefreshLinkSources(plugin);
             }
             else
             {
                 Settings = new LinkUtilitiesSettings();
+                Settings.LinkSourceSettings.PopulateLinkSources(plugin);
             }
         }
 

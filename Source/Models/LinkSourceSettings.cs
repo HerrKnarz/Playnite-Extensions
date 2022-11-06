@@ -1,30 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace LinkUtilities.Models
 {
     public class LinkSourceSetting
     {
-        /// <summary>
-        /// Name of the link source - corresponds to the LinkName property of Link objects.
-        /// </summary>
+        [JsonProperty("linkName")]
         public string LinkName { get; set; }
+        [JsonProperty("isAddable")]
         public bool? IsAddable { get; set; }
+        [JsonProperty("isSearchable")]
         public bool? IsSearchable { get; set; }
     }
 
-    public class LinkSourceSettings : Dictionary<string, LinkSourceSetting>
+    public class LinkSourceSettings : ObservableCollection<LinkSourceSetting>
     {
-        public LinkSourceSettings(LinkUtilities plugin)
+        public void PopulateLinkSources(LinkUtilities plugin)
         {
-            foreach (Linker.Link link in plugin.AddWebsiteLinks.Links)
+            if (plugin != null)
             {
-                Add(link.LinkName, new LinkSourceSetting
+                foreach (Linker.Link link in plugin.AddWebsiteLinks.Links)
                 {
-                    LinkName = link.LinkName,
-                    IsAddable = link.IsAddable ? true : (bool?)null,
-                    IsSearchable = link.IsSearchable ? true : (bool?)null
-                });
+                    Add(new LinkSourceSetting
+                    {
+                        LinkName = link.LinkName,
+                        IsAddable = link.IsAddable ? true : (bool?)null,
+                        IsSearchable = link.IsSearchable ? true : (bool?)null
+                    });
+                }
             }
         }
+
     }
 }
