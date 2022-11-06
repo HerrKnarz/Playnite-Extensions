@@ -5,6 +5,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace LinkUtilities.Linker
 {
@@ -53,7 +54,7 @@ namespace LinkUtilities.Linker
 
                             SearchResults.Add(new SearchResult
                             {
-                                Name = $"{counter}. {node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText}",
+                                Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText)}",
                                 Url = WebsiteUrl + node.SelectSingleNode("./div[@class='mw-search-result-heading']/a").GetAttributeValue("href", ""),
                                 Description = ""
                             }

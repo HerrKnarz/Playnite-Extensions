@@ -6,6 +6,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace LinkUtilities.Linker
 {
@@ -45,9 +46,9 @@ namespace LinkUtilities.Linker
                         {
                             SearchResults.Add(new SearchResult
                             {
-                                Name = node.SelectSingleNode("./h2/a").InnerHtml,
+                                Name = WebUtility.HtmlDecode(node.SelectSingleNode("./h2/a").InnerText),
                                 Url = node.SelectSingleNode("./h2/a").GetAttributeValue("href", ""),
-                                Description = node.SelectNodes("./div[@class='index-entry-meta']/div/a").Select(tagNode => tagNode.InnerText).Aggregate((total, part) => total + ", " + part)
+                                Description = WebUtility.HtmlDecode(node.SelectNodes("./div[@class='index-entry-meta']/div/a").Select(tagNode => tagNode.InnerText).Aggregate((total, part) => total + ", " + part))
                             });
                         }
                     }

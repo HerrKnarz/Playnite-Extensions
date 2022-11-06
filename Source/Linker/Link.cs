@@ -55,7 +55,7 @@ namespace LinkUtilities.Linker
                 new List<GenericItemOption>(),
                 (a) => SearchLink(a),
                 game.Name,
-                ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame"));
+                $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
 
             if (result != null)
             {
