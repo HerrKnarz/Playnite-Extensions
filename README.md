@@ -8,32 +8,38 @@
 
 This is an extension for the superb open source video game library manager and launcher [Playnite](http://playnite.link/). At the moment it can do the following:
 
-- Sort links by name via game menu or optionally automatically after meta data change.
-- Add links to websites directly via game name or search dialog
+- Sort links by name via game menu or optionally automatically after metadata change.
+- Add links to several websites directly by trying to find a valid link using the game name
 - Search for games on several websites to add links via search dialog
-- Add library links - add links to the game page of its library
+- Add library links: add links to the game page of its library
 
 The following websites are supported:
 
-| **Website**         | **Add**                                   | **Search**                | **Library** |
-|---------------------|-------------------------------------------|---------------------------|-------------|
-| GOG                 | yes                                       | yes                       | yes         |
-| Hardcore Gaming 101 | yes                                       | yes                       | no          |
-| itch.io             | no (link contains several variable parts) | yes                       | yes         |
-| MetaCritic          | yes (for each platform the game has)      | no (scraping not allowed) | no          |
-| MobyGames           | yes                                       | yes                       | no          |
-| PCGamingWiki        | yes                                       | yes                       | no          |
-| Steam               | no (link contains game id)                | yes                       | yes         |
-| Wikipedia           | yes                                       | yes                       | no          |
+| **Website**         | **Add**                                   | **Search**                | **Library**                                    |
+|---------------------|-------------------------------------------|---------------------------|------------------------------------------------|
+| Epic                | yes                                       | yes                       | no (can't find a way to get a definitive link) |
+| GOG                 | yes                                       | yes                       | yes                                            |
+| Hardcore Gaming 101 | yes                                       | yes                       | no                                             |
+| itch.io             | no (link contains several variable parts) | yes                       | yes                                            |
+| MetaCritic          | yes (for each platform the game has)      | no (scraping not allowed) | no                                             |
+| MobyGames           | yes                                       | yes                       | no                                             |
+| PCGamingWiki        | yes                                       | yes                       | no                                             |
+| Steam               | no (link contains game id)                | yes                       | yes                                            |
+| Wikipedia           | yes                                       | yes                       | no                                             |
 
 ## Planned features
 - check if links are still working, optional removal of dead links
+- option to deactivate unwanted link sources in the settings
 - add link to active browser window via bookmarklet (nearly done, but currently broken in playnite API)
 - add links to more websites. The following are already planned:
-  - Epic
-  - Sega Retro
-  - Lemon Amiga
+  - Sega Retro (only for sega consoles)
+  - Lemon Amiga (only for amiga games)
+  - RAWG
+  - How Long To Beat
+  - StrategyWiki
   - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
+  - Nexus Mods (maybe - could replace the nexus mods add-on)
+  - Is There Any Deal (maybe - don't really see many use cases, when the game already is in the library)
 - (maybe) search for screenshots with configurable resolution
 
 If you have more ideas for this extension, feel free to suggest them by opening an issue!
