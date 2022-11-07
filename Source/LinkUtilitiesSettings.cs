@@ -2,6 +2,7 @@
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace LinkUtilities
@@ -13,7 +14,7 @@ namespace LinkUtilities
     {
         private bool sortAfterChange = false;
         private string itchApiKey = string.Empty;
-        private LinkSourceSettings linkSourceSettings;
+        private ObservableCollection<LinkSourceSetting> linkSourceSettings;
 
         /// <summary>
         /// sets whether the Links shall be sorted after a game is updated in the database
@@ -25,17 +26,16 @@ namespace LinkUtilities
         /// </summary>
         public string ItchApiKey { get => itchApiKey; set => SetValue(ref itchApiKey, value); }
 
-        public LinkSourceSettings LinkSourceSettings { get => linkSourceSettings; set => SetValue(ref linkSourceSettings, value); }
+        public ObservableCollection<LinkSourceSetting> LinkSourceSettings { get => linkSourceSettings; set => SetValue(ref linkSourceSettings, value); }
 
         public LinkUtilitiesSettings()
         {
-            linkSourceSettings = new LinkSourceSettings();
+            linkSourceSettings = new ObservableCollection<LinkSourceSetting>();
         }
 
         public void RefreshLinkSources(LinkUtilities plugin)
         {
-            LinkSourceSettings newSources = new LinkSourceSettings();
-            newSources.PopulateLinkSources(plugin);
+            ObservableCollection<LinkSourceSetting> newSources = GetLinkSources(plugin);
 
             foreach (LinkSourceSetting item in linkSourceSettings.Where(x1 => newSources.All(x2 => x2.LinkName != x1.LinkName)).ToList())
             {
@@ -62,6 +62,27 @@ namespace LinkUtilities
                     linkSourceSettings.Add(itemNew);
                 }
             }
+
+            LinkSourceSettings = new ObservableCollection<LinkSourceSetting>(LinkSourceSettings.OrderBy(x => x.LinkName));
+        }
+
+        public ObservableCollection<LinkSourceSetting> GetLinkSources(LinkUtilities plugin)
+        {
+            ObservableCollection<LinkSourceSetting> result = new ObservableCollection<LinkSourceSetting>();
+
+            if (plugin != null)
+            {
+                foreach (Linker.Link link in plugin.AddWebsiteLinks.Links)
+                {
+                    result.Add(new LinkSourceSetting
+                    {
+                        LinkName = link.LinkName,
+                        IsAddable = link.IsAddable ? true : (bool?)null,
+                        IsSearchable = link.IsSearchable ? true : (bool?)null
+                    });
+                }
+            }
+            return result;
         }
     }
 
@@ -98,7 +119,7 @@ namespace LinkUtilities
             else
             {
                 Settings = new LinkUtilitiesSettings();
-                Settings.LinkSourceSettings.PopulateLinkSources(plugin);
+                Settings.LinkSourceSettings = Settings.GetLinkSources(plugin);
             }
         }
 
