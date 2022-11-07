@@ -76,7 +76,7 @@
     <Compile Include="Linker\LinkSources\LinkSegaRetro.cs" />
     <Compile Include="Linker\LinkSources\LinkStrategyWiki.cs" />
     <Compile Include="Linker\LinkSources\LinkWikipedia.cs" />
-    <Compile Include="Linker\LinkSources\NECRetro.cs" />
+    <Compile Include="Linker\LinkSources\LinkNECRetro.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Models\EpicSearchResult.cs" />
     <Compile Include="Models\GogSearchResult.cs" />
