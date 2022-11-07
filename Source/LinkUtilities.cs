@@ -1,4 +1,5 @@
 ﻿using LinkUtilities.LinkActions;
+using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
@@ -216,34 +217,39 @@ namespace LinkUtilities
             // Adds all linkable websites to the "add link to" and "search link to" submenus.
             foreach (Linker.Link link in AddWebsiteLinks.Links)
             {
-                if (link.IsAddable)
-                {
-                    menuItems.Add(
-                    new GameMenuItem
-                    {
-                        Description = link.LinkName,
-                        MenuSection = $"{menuSection}|{menuAddLinks}",
-                        Action = a =>
-                        {
-                            List<Game> games = args.Games.Distinct().ToList();
-                            DoForAll(games, link, true, "add");
-                        }
-                    });
-                }
+                LinkSourceSetting linkSetting = Settings.Settings.LinkSourceSettings.FirstOrDefault(x => x.LinkName == link.LinkName);
 
-                if (link.IsSearchable)
+                if (linkSetting != null)
                 {
-                    menuItems.Add(
-                    new GameMenuItem
+                    if (linkSetting.IsAddable == true & link.IsAddable)
                     {
-                        Description = link.LinkName,
-                        MenuSection = $"{menuSection}|{menuSearchLinks}",
-                        Action = a =>
+                        menuItems.Add(
+                        new GameMenuItem
                         {
-                            List<Game> games = args.Games.Distinct().ToList();
-                            DoForAll(games, link, true, "search");
-                        }
-                    });
+                            Description = link.LinkName,
+                            MenuSection = $"{menuSection}|{menuAddLinks}",
+                            Action = a =>
+                            {
+                                List<Game> games = args.Games.Distinct().ToList();
+                                DoForAll(games, link, true, "add");
+                            }
+                        });
+                    }
+
+                    if (linkSetting.IsSearchable == true & link.IsSearchable)
+                    {
+                        menuItems.Add(
+                        new GameMenuItem
+                        {
+                            Description = link.LinkName,
+                            MenuSection = $"{menuSection}|{menuSearchLinks}",
+                            Action = a =>
+                            {
+                                List<Game> games = args.Games.Distinct().ToList();
+                                DoForAll(games, link, true, "search");
+                            }
+                        });
+                    }
                 }
             }
 

@@ -1,5 +1,7 @@
 ﻿using LinkUtilities.Linker;
+using LinkUtilities.Models;
 using Playnite.SDK.Models;
+using System.Linq;
 
 namespace LinkUtilities.LinkActions
 {
@@ -27,13 +29,18 @@ namespace LinkUtilities.LinkActions
 
             foreach (Linker.Link link in Links)
             {
-                if (actionModifier == "add" & link.IsAddable)
+                LinkSourceSetting linkSetting = Plugin.Settings.Settings.LinkSourceSettings.FirstOrDefault(x => x.LinkName == link.LinkName);
+
+                if (linkSetting != null)
                 {
-                    result = link.AddLink(game) || result;
-                }
-                else if (actionModifier == "search" & link.IsSearchable)
-                {
-                    result = link.AddSearchedLink(game) || result;
+                    if (actionModifier == "add" & linkSetting.IsAddable == true & link.IsAddable)
+                    {
+                        result = link.AddLink(game) || result;
+                    }
+                    else if (actionModifier == "search" & linkSetting.IsSearchable == true & link.IsSearchable)
+                    {
+                        result = link.AddSearchedLink(game) || result;
+                    }
                 }
             }
 
