@@ -19,6 +19,7 @@ namespace LinkUtilities.Linker
             Add(new LinkPCGamingWiki(plugin));
             Add(new LinkSegaRetro(plugin));
             Add(new LibraryLinkSteam(plugin));
+            Add(new LinkStrategyWiki(plugin));
             Add(new LinkWikipedia(plugin));
         }
     }

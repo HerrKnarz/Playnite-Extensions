@@ -48,7 +48,7 @@ namespace LinkUtilities.Linker
                     {
                         Name = $"{counter}. {item.Text.Value}",
                         Url = item.Url.Value,
-                        Description = ""
+                        Description = item.Url.Value
                     }
                     );
                 }

@@ -74,6 +74,7 @@
     <Compile Include="Linker\LinkSources\LinkPCGamingWiki.cs" />
     <Compile Include="Linker\Links.cs" />
     <Compile Include="Linker\LinkSources\LinkSegaRetro.cs" />
+    <Compile Include="Linker\LinkSources\LinkStrategyWiki.cs" />
     <Compile Include="Linker\LinkSources\LinkWikipedia.cs" />
     <Compile Include="Linker\LinkSources\NECRetro.cs" />
     <Compile Include="Logging.cs" />

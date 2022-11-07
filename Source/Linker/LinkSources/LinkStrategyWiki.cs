@@ -5,24 +5,25 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to PCGamingWiki.
+    /// Adds a link to StrategyWiki.
     /// </summary>
-    class LinkPCGamingWiki : Link
+    class LinkStrategyWiki : Link
     {
-        public override string LinkName { get; } = "PCGamingWiki";
-        public override string BaseUrl { get; } = "https://www.pcgamingwiki.com/wiki/";
-        public override string SearchUrl { get; } = "https://www.pcgamingwiki.com/w/index.php?search={0}&fulltext=1";
+        public override string LinkName { get; } = "StrategyWiki";
+        public override string BaseUrl { get; } = "https://strategywiki.org/wiki/";
+        public override string SearchUrl { get; } = "https://strategywiki.org/w/index.php?search={0}&fulltext=1";
 
-        internal string WebsiteUrl = "https://www.pcgamingwiki.com";
+        internal string WebsiteUrl = "https://strategywiki.org";
 
         public override string GetGamePath(Game game)
         {
-            // PCGamingWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
+            // StrategyWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
             return game.Name.CollapseWhitespaces().Replace(" ", "_").EscapeDataString();
         }
 
@@ -31,7 +32,7 @@ namespace LinkUtilities.Linker
             SearchResults.Clear();
 
             // We could use the Media Wiki API here, but unfortunately the search results aren't good enough because the version on the
-            // PCGamingWiki doesn't support search profiles yet.
+            // StrategyWiki doesn't support search profiles yet.
 
             try
             {
@@ -52,15 +53,21 @@ namespace LinkUtilities.Linker
                         {
                             string url = node.SelectSingleNode("./div[@class='mw-search-result-heading']/a").GetAttributeValue("href", "");
 
-                            counter++;
-
-                            SearchResults.Add(new SearchResult
+                            // Sega Retro returns subbages to games in the results, so we simply count the shashes to filter them out.
+                            if (url.Count(x => x == '/') < 3)
                             {
-                                Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText)}",
-                                Url = WebsiteUrl + url,
-                                Description = WebsiteUrl + url
+                                string redirect = (node.SelectSingleNode("./div[@class='searchresult']").InnerText.StartsWith("#REDIRECT")) ? "(REDIRECT) " : "";
+
+                                counter++;
+
+                                SearchResults.Add(new SearchResult
+                                {
+                                    Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText)}",
+                                    Url = WebsiteUrl + url,
+                                    Description = redirect + WebsiteUrl + url
+                                }
+                                );
                             }
-                            );
                         }
                     }
                 }
@@ -73,7 +80,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkPCGamingWiki(LinkUtilities plugin) : base(plugin)
+        public LinkStrategyWiki(LinkUtilities plugin) : base(plugin)
         {
         }
     }
