@@ -15,6 +15,7 @@ namespace LinkUtilities.Linker
             Add(new LibraryLinkItch(plugin));
             Add(new LinkMetacritic(plugin));
             Add(new LinkMobyGames(plugin));
+            Add(new LinkNECRetro(plugin));
             Add(new LinkPCGamingWiki(plugin));
             Add(new LinkSegaRetro(plugin));
             Add(new LibraryLinkSteam(plugin));
