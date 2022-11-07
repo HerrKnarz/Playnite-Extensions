@@ -16,6 +16,7 @@ namespace LinkUtilities.Linker
             Add(new LinkMetacritic(plugin));
             Add(new LinkMobyGames(plugin));
             Add(new LinkPCGamingWiki(plugin));
+            Add(new LinkSegaRetro(plugin));
             Add(new LibraryLinkSteam(plugin));
             Add(new LinkWikipedia(plugin));
         }

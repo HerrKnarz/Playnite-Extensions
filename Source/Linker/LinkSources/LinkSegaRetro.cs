@@ -5,22 +5,23 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to Wikipedia.
+    /// Adds a link to Sega Retro.
     /// </summary>
-    class LinkWikipedia : Link
+    class LinkSegaRetro : Link
     {
-        public override string LinkName { get; } = "Wikipedia";
-        public override string BaseUrl { get; } = "https://en.wikipedia.org/wiki/";
-        public override string SearchUrl { get; } = "https://en.wikipedia.org/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
+        public override string LinkName { get; } = "Sega Retro";
+        public override string BaseUrl { get; } = "https://segaretro.org/";
+        public override string SearchUrl { get; } = "https://segaretro.org/api.php?action=opensearch&format=xml&search={0}&limit=50";
 
         public override string GetGamePath(Game game)
         {
-            // Wikipedia Links need the game with underscores instead of whitespaces and special characters simply encoded.
+            // Sega Retro Links need the game with underscores instead of whitespaces and special characters simply encoded.
             return game.Name.CollapseWhitespaces().Replace(" ", "_").EscapeDataString();
         }
 
@@ -42,15 +43,20 @@ namespace LinkUtilities.Linker
 
                 foreach (SearchSuggestionItem item in searchResults.Section)
                 {
-                    counter++;
-
-                    SearchResults.Add(new SearchResult
+                    // Sega Retro returns subbages to games in the results, so we simply count the shashes to filter them out.
+                    if (item.Url.Value.Count(x => x == '/') < 4)
                     {
-                        Name = $"{counter}. {item.Text.Value}",
-                        Url = item.Url.Value,
-                        Description = ""
+                        counter++;
+
+                        SearchResults.Add(new SearchResult
+                        {
+                            Name = $"{counter}. {item.Text.Value}",
+                            Url = item.Url.Value,
+                            Description = ""
+                        }
+
+                        );
                     }
-                    );
                 }
             }
             catch (Exception ex)
@@ -61,7 +67,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkWikipedia(LinkUtilities plugin) : base(plugin)
+        public LinkSegaRetro(LinkUtilities plugin) : base(plugin)
         {
         }
     }

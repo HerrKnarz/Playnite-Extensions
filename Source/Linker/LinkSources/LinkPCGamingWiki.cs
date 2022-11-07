@@ -22,8 +22,8 @@ namespace LinkUtilities.Linker
 
         public override string GetGamePath(Game game)
         {
-            // PCGamingWiki Links need the game simply encoded.
-            return game.Name.EscapeDataString();
+            // PCGamingWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
+            return game.Name.CollapseWhitespaces().Replace(" ", "_").EscapeDataString();
         }
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
