@@ -13,6 +13,7 @@ namespace LinkUtilities.Linker
             Add(new LibraryLinkGog(plugin));
             Add(new LinkHG101(plugin));
             Add(new LibraryLinkItch(plugin));
+            Add(new LinkLemonAmiga(plugin));
             Add(new LinkMetacritic(plugin));
             Add(new LinkMobyGames(plugin));
             Add(new LinkNECRetro(plugin));
