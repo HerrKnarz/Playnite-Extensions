@@ -18,7 +18,9 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Přidat odkazy...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Třídit odkazy...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Přidat odkazy nastavených web-stránek...</sys:String>
-    
-    <sys:String x:Key="LOCLinkUtilitiesSettingsItchApiKey">API-Klíč pro Itch.io (potřeba pro odkaz knihovny)</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsItchApiKey">API-Key for Itch.io</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsItchApiKeyToolTip">needed to fetch the library link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Třídit odkazy poté, co metadata hry byly aktualizovány</sys:String>
 </ResourceDictionary>
