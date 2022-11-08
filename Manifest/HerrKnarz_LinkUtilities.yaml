@@ -5,12 +5,12 @@ Packages:
     ReleaseDate: 2022-11-08
     PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v1.0/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_1_0_0.pext
     Changelog:
-      - added settings for each link source:
+      - added settings for each link source
         - option to disable "add link"
         - option to disable "search link"
         - option to hide from menu
         - API key for itch.io and RAWG. The itch.io key needs to be added again when updating from a version before 1.0!
-      - added new link sources:
+      - added new link sources
         - StrategyWiki (add/search)
         - Sega Retro (add/search)
         - NEC Retro (add/search)
