@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Models;
+﻿using LinkUtilities.Linker;
+using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
@@ -13,73 +14,77 @@ namespace LinkUtilities
     public class LinkUtilitiesSettings : ObservableObject
     {
         private bool sortAfterChange = false;
-        private string itchApiKey = string.Empty;
-        private ObservableCollection<LinkSourceSetting> linkSourceSettings;
+        private ObservableCollection<LinkSourceSettings> linkSettings;
 
         /// <summary>
         /// sets whether the Links shall be sorted after a game is updated in the database
         /// </summary>
         public bool SortAfterChange { get => sortAfterChange; set => SetValue(ref sortAfterChange, value); }
-
         /// <summary>
-        /// API key used to get game information from itch.io
+        /// Collection with the settings of all link sources
         /// </summary>
-        public string ItchApiKey { get => itchApiKey; set => SetValue(ref itchApiKey, value); }
-
-        public ObservableCollection<LinkSourceSetting> LinkSourceSettings { get => linkSourceSettings; set => SetValue(ref linkSourceSettings, value); }
+        public ObservableCollection<LinkSourceSettings> LinkSettings { get => linkSettings; set => SetValue(ref linkSettings, value); }
 
         public LinkUtilitiesSettings()
         {
-            linkSourceSettings = new ObservableCollection<LinkSourceSetting>();
+            linkSettings = new ObservableCollection<LinkSourceSettings>();
         }
 
-        public void RefreshLinkSources(LinkUtilities plugin)
+        /// <summary>
+        /// Refreshes a LinkSourceCollecion with the actual link sources present in the plugin. Is needed after updates when
+        /// link sources get added or had to be removed.
+        /// </summary>
+        /// <param name="links">Link sources to be added</param>
+        public void RefreshLinkSources(Links links)
         {
-            ObservableCollection<LinkSourceSetting> newSources = GetLinkSources(plugin);
+            ObservableCollection<LinkSourceSettings> newSources = GetLinkSources(links);
 
-            foreach (LinkSourceSetting item in linkSourceSettings.Where(x1 => newSources.All(x2 => x2.LinkName != x1.LinkName)).ToList())
+            foreach (LinkSourceSettings item in linkSettings.Where(x1 => newSources.All(x2 => x2.LinkName != x1.LinkName)).ToList())
             {
-                LinkSourceSettings.Remove(item);
+                LinkSettings.Remove(item);
             }
 
-            foreach (LinkSourceSetting itemNew in newSources)
+            foreach (LinkSourceSettings itemNew in newSources)
             {
-                LinkSourceSetting itemOld = linkSourceSettings.FirstOrDefault(x => x.LinkName == itemNew.LinkName);
+                LinkSourceSettings itemOld = linkSettings.FirstOrDefault(x => x.LinkName == itemNew.LinkName);
 
                 if (itemOld != null)
                 {
-                    if (itemNew.IsAddable is null)
+                    if (itemNew.IsAddable != null)
                     {
-                        itemOld.IsAddable = null;
+                        itemNew.IsAddable = itemOld.IsAddable;
                     }
-                    if (itemNew.IsSearchable is null)
+
+                    if (itemNew.IsSearchable != null)
                     {
-                        itemOld.IsSearchable = null;
+                        itemNew.IsSearchable = itemOld.IsSearchable;
                     }
+
+                    itemNew.ShowInMenus = itemOld.ShowInMenus;
+                    itemNew.ApiKey = itemOld.ApiKey;
+                    itemNew.NeedsApiKey = itemOld.NeedsApiKey;
+
+                    linkSettings.Remove(itemOld);
                 }
-                else
-                {
-                    linkSourceSettings.Add(itemNew);
-                }
+                linkSettings.Add(itemNew);
             }
 
-            LinkSourceSettings = new ObservableCollection<LinkSourceSetting>(LinkSourceSettings.OrderBy(x => x.LinkName));
+            LinkSettings = new ObservableCollection<LinkSourceSettings>(LinkSettings.OrderBy(x => x.LinkName));
         }
-
-        public ObservableCollection<LinkSourceSetting> GetLinkSources(LinkUtilities plugin)
+        /// <summary>
+        /// Gets a collection of the settings to all link sources in the plugin.
+        /// </summary>
+        /// <param name="links">Link sources to be added</param>
+        /// <returns>Collection of the settings to all link sources in the plugin</returns>
+        public ObservableCollection<LinkSourceSettings> GetLinkSources(Links links)
         {
-            ObservableCollection<LinkSourceSetting> result = new ObservableCollection<LinkSourceSetting>();
+            ObservableCollection<LinkSourceSettings> result = new ObservableCollection<LinkSourceSettings>();
 
-            if (plugin != null)
+            if (links != null)
             {
-                foreach (Linker.Link link in plugin.AddWebsiteLinks.Links)
+                foreach (Link link in links)
                 {
-                    result.Add(new LinkSourceSetting
-                    {
-                        LinkName = link.LinkName,
-                        IsAddable = link.IsAddable ? true : (bool?)null,
-                        IsSearchable = link.IsSearchable ? true : (bool?)null
-                    });
+                    result.Add(link.Settings);
                 }
             }
             return result;
@@ -114,12 +119,12 @@ namespace LinkUtilities
             if (savedSettings != null)
             {
                 Settings = savedSettings;
-                Settings.RefreshLinkSources(plugin);
+                Settings.RefreshLinkSources(plugin.AddWebsiteLinks.Links);
             }
             else
             {
                 Settings = new LinkUtilitiesSettings();
-                Settings.LinkSourceSettings = Settings.GetLinkSources(plugin);
+                Settings.LinkSettings = Settings.GetLinkSources(plugin.AddWebsiteLinks.Links);
             }
         }
 
@@ -139,7 +144,6 @@ namespace LinkUtilities
         public void EndEdit()
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
             plugin.SavePluginSettings(Settings);
         }
 

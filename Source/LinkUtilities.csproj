@@ -58,10 +58,8 @@
     <Compile Include="LinkActions\ILinkAction.cs" />
     <Compile Include="LinkActions\LinkAction.cs" />
     <Compile Include="Linker\IGameLibrary.cs" />
-    <Compile Include="Linker\ILibraryLink.cs" />
     <Compile Include="Linker\ILink.cs" />
     <Compile Include="Linker\Link.cs" />
-    <Compile Include="Linker\LinkAndLibrary.cs" />
     <Compile Include="Linker\LinkSources\LinkEpic.cs" />
     <Compile Include="Linker\LinkSources\LinkLemonAmiga.cs" />
     <Compile Include="Linker\LinkSources\LinkMetacritic.cs" />

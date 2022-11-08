@@ -8,24 +8,10 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <DockPanel Margin="10">
-        <Grid DockPanel.Dock="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <CheckBox Grid.Row="0" Grid.ColumnSpan="2" Name="CheckPSNMigration" IsChecked="{Binding Settings.SortAfterChange}"
+        <CheckBox DockPanel.Dock="Top" Name="CheckPSNMigration" IsChecked="{Binding Settings.SortAfterChange}"
                       Content="{DynamicResource LOCLinkUtilitiesSettingsSortAfterChange}" Margin="0,0,0,10"/>
-            <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource LOCLinkUtilitiesSettingsItchApiKey}" Margin="0,0,0,10"
-                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsItchApiKeyToolTip}" />
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.ItchApiKey}" Margin="10,0,0,10"/>
-        </Grid>
         <Label Content="{DynamicResource LOCLinkUtilitiesSettingsConfigureWebsites}" DockPanel.Dock="Top" />
-        <DataGrid ItemsSource="{Binding Settings.LinkSourceSettings}" AutoGenerateColumns="False" CanUserResizeRows="False"
+        <DataGrid ItemsSource="{Binding Settings.LinkSettings}" AutoGenerateColumns="False" CanUserResizeRows="False"
                   SelectionUnit="Cell" CanUserAddRows="False" DockPanel.Dock="Top" GridLinesVisibility="Horizontal">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource LOCLinkUtilitiesSettingsLinkSource}" Binding="{Binding LinkName}" 
@@ -43,6 +29,22 @@
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding IsSearchable, UpdateSourceTrigger=PropertyChanged}"
                                       HorizontalAlignment="Center" Visibility="{Binding IsSearchableVisible}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsShowInMenus}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding ShowInMenus, UpdateSourceTrigger=PropertyChanged}"
+                                      HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsApiKey}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}"
+                                     Visibility="{Binding IsApiKeyVisible}" Background="{DynamicResource NormalBrushDark}" MinWidth="150"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

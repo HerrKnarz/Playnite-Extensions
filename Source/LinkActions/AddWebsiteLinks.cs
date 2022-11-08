@@ -1,7 +1,5 @@
 ﻿using LinkUtilities.Linker;
-using LinkUtilities.Models;
 using Playnite.SDK.Models;
-using System.Linq;
 
 namespace LinkUtilities.LinkActions
 {
@@ -13,7 +11,7 @@ namespace LinkUtilities.LinkActions
         /// <summary>
         /// contains all website Links that can be added.
         /// </summary>
-        public readonly Links Links;
+        public Links Links;
 
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
@@ -29,18 +27,13 @@ namespace LinkUtilities.LinkActions
 
             foreach (Linker.Link link in Links)
             {
-                LinkSourceSetting linkSetting = Plugin.Settings.Settings.LinkSourceSettings.FirstOrDefault(x => x.LinkName == link.LinkName);
-
-                if (linkSetting != null)
+                if (actionModifier == "add" & link.Settings.IsAddable == true)
                 {
-                    if (actionModifier == "add" & linkSetting.IsAddable == true & link.IsAddable)
-                    {
-                        result = link.AddLink(game) || result;
-                    }
-                    else if (actionModifier == "search" & linkSetting.IsSearchable == true & link.IsSearchable)
-                    {
-                        result = link.AddSearchedLink(game) || result;
-                    }
+                    result = link.AddLink(game) || result;
+                }
+                else if (actionModifier == "search" & link.Settings.IsSearchable == true)
+                {
+                    result = link.AddSearchedLink(game) || result;
                 }
             }
 

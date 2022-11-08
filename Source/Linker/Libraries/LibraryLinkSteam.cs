@@ -12,7 +12,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Steam.
     /// </summary>
-    class LibraryLinkSteam : LinkAndLibrary
+    class LibraryLinkSteam : LibraryLink
     {
         public override Guid LibraryId { get; } = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         public override string LinkName { get; } = "Steam";

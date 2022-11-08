@@ -12,7 +12,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to itch.io.
     /// </summary>
-    class LibraryLinkItch : LinkAndLibrary
+    class LibraryLinkItch : LibraryLink
     {
         public override Guid LibraryId { get; } = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
         public override string LinkName { get; } = "Itch";
@@ -22,11 +22,11 @@ namespace LinkUtilities.Linker
         public override bool AddLibraryLink(Game game)
         {
             // To get the link to a game on the itch website, you need an API key and request the game data from their api.
-            if (!string.IsNullOrWhiteSpace(Plugin.Settings.Settings.ItchApiKey) && !LinkHelper.LinkExists(game, LinkName))
+            if (!string.IsNullOrWhiteSpace(Settings.ApiKey) && !LinkHelper.LinkExists(game, LinkName))
             {
                 try
                 {
-                    string apiUrl = string.Format(LibraryUrl, Plugin.Settings.Settings.ItchApiKey, game.GameId);
+                    string apiUrl = string.Format(LibraryUrl, Settings.ApiKey, game.GameId);
 
                     WebClient client = new WebClient();
 
@@ -55,11 +55,11 @@ namespace LinkUtilities.Linker
         {
             SearchResults.Clear();
 
-            if (!string.IsNullOrWhiteSpace(Plugin.Settings.Settings.ItchApiKey))
+            if (!string.IsNullOrWhiteSpace(Settings.ApiKey))
             {
                 try
                 {
-                    string apiUrl = string.Format(SearchUrl, Plugin.Settings.Settings.ItchApiKey, searchTerm.UrlEncode());
+                    string apiUrl = string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode());
 
                     WebClient client = new WebClient();
 
@@ -96,6 +96,7 @@ namespace LinkUtilities.Linker
 
         public LibraryLinkItch(LinkUtilities plugin) : base(plugin)
         {
+            Settings.NeedsApiKey = true;
         }
     }
 }

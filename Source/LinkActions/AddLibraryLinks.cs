@@ -23,7 +23,7 @@ namespace LinkUtilities.LinkActions
 
         public override bool Execute(Game game, string actionModifier = "")
         {
-            ILibraryLink library;
+            LibraryLink library;
             bool result = false;
 
             // Find the library of the game and add a link, if possible.
