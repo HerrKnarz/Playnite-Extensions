@@ -18,6 +18,7 @@ namespace LinkUtilities.Linker
             Add(new LinkMobyGames(plugin));
             Add(new LinkNECRetro(plugin));
             Add(new LinkPCGamingWiki(plugin));
+            Add(new LinkRAWG(plugin));
             Add(new LinkSegaRetro(plugin));
             Add(new LibraryLinkSteam(plugin));
             Add(new LinkStrategyWiki(plugin));

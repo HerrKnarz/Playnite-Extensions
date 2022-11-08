@@ -10,9 +10,10 @@
     <DockPanel Margin="10">
         <CheckBox DockPanel.Dock="Top" Name="CheckPSNMigration" IsChecked="{Binding Settings.SortAfterChange}"
                       Content="{DynamicResource LOCLinkUtilitiesSettingsSortAfterChange}" Margin="0,0,0,10"/>
-        <Label Content="{DynamicResource LOCLinkUtilitiesSettingsConfigureWebsites}" DockPanel.Dock="Top" />
+        <Label Content="{DynamicResource LOCLinkUtilitiesSettingsConfigureWebsites}" DockPanel.Dock="Top" Margin="0,0,0,10" />
         <DataGrid ItemsSource="{Binding Settings.LinkSettings}" AutoGenerateColumns="False" CanUserResizeRows="False"
-                  SelectionUnit="Cell" CanUserAddRows="False" DockPanel.Dock="Top" GridLinesVisibility="Horizontal">
+                  SelectionUnit="Cell" CanUserAddRows="False" DockPanel.Dock="Top" GridLinesVisibility="Horizontal"
+                  HeadersVisibility="Column">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource LOCLinkUtilitiesSettingsLinkSource}" Binding="{Binding LinkName}" 
                                     IsReadOnly="True" SortDirection="Ascending"/>
@@ -40,11 +41,12 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsApiKey}">
+                <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsApiKey}" Width="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBox Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}"
-                                     Visibility="{Binding IsApiKeyVisible}" Background="{DynamicResource NormalBrushDark}" MinWidth="150"/>
+                                     Visibility="{Binding IsApiKeyVisible}" Background="{DynamicResource NormalBrushDark}"
+                                      HorizontalAlignment="Stretch"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

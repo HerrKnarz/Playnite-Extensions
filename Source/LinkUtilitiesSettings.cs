@@ -62,7 +62,6 @@ namespace LinkUtilities
 
                     itemNew.ShowInMenus = itemOld.ShowInMenus;
                     itemNew.ApiKey = itemOld.ApiKey;
-                    itemNew.NeedsApiKey = itemOld.NeedsApiKey;
 
                     linkSettings.Remove(itemOld);
                 }
@@ -130,28 +129,42 @@ namespace LinkUtilities
 
         public void BeginEdit()
         {
-            // Code executed when settings view is opened and user starts editing values.
             EditingClone = Serialization.GetClone(Settings);
         }
 
         public void CancelEdit()
         {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-            Settings = EditingClone;
+            Settings.SortAfterChange = EditingClone.SortAfterChange;
+
+            foreach (LinkSourceSettings originalItem in Settings.LinkSettings)
+            {
+                LinkSourceSettings clonedItem = EditingClone.LinkSettings.FirstOrDefault(x => x.LinkName == originalItem.LinkName);
+
+                if (clonedItem != null)
+                {
+                    if (originalItem.IsAddable != null)
+                    {
+                        originalItem.IsAddable = clonedItem.IsAddable;
+                    }
+
+                    if (originalItem.IsSearchable != null)
+                    {
+                        originalItem.IsSearchable = clonedItem.IsSearchable;
+                    }
+
+                    originalItem.ShowInMenus = clonedItem.ShowInMenus;
+                    originalItem.ApiKey = clonedItem.ApiKey;
+                }
+            }
         }
 
         public void EndEdit()
         {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
             plugin.SavePluginSettings(Settings);
         }
 
         public bool VerifySettings(out List<string> errors)
         {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
         }

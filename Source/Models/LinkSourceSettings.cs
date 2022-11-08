@@ -44,7 +44,7 @@ namespace LinkUtilities.Models
         /// Indicates if the websites needs an APIKey to function
         /// </summary>
         [JsonIgnore]
-        public bool NeedsApiKey { get; set; } = false;
+        public bool NeedsApiKey { get; set; }
 
         /// <summary>
         /// Visibility property for the "Add link" check box in the settings window. Will be hidden, if the site doesn't have an

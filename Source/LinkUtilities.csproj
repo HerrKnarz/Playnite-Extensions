@@ -72,6 +72,7 @@
     <Compile Include="Linker\LibraryLink.cs" />
     <Compile Include="Linker\LinkSources\LinkPCGamingWiki.cs" />
     <Compile Include="Linker\Links.cs" />
+    <Compile Include="Linker\LinkSources\LinkRAWG.cs" />
     <Compile Include="Linker\LinkSources\LinkSegaRetro.cs" />
     <Compile Include="Linker\LinkSources\LinkStrategyWiki.cs" />
     <Compile Include="Linker\LinkSources\LinkWikipedia.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Models\ItchSearchResult.cs" />
     <Compile Include="Models\LinkSourceSettings.cs" />
     <Compile Include="Models\MediaWikiSearchSuggestion.cs" />
+    <Compile Include="Models\RawgSearchResult.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\SteamSearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
