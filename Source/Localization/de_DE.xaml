@@ -20,10 +20,10 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Füge Links zu konfigurierten Webseiten hinzu...</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Link hinzufügen</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Key</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Schlüssel</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Webseiten konfigurieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link-Quelle</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Link suchen</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Show in menu</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Links sortieren, nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Im Menü zeigen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Links sortieren, nachdem die Spiel-Metadaten aktualisiert wurden</sys:String>
 </ResourceDictionary>
