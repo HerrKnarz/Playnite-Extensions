@@ -20,10 +20,10 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Añadiendo enlaces hacia webs configuradas...</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Add link</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Key</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsItchApiKey">API-Key for Itch.io</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsItchApiKeyToolTip">needed to fetch the library link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link source</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Search link</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Show in menu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Ordenar enlaces después de que los metadatos del juego hayan sido actualizados</sys:String>
 </ResourceDictionary>
