@@ -5,7 +5,6 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Windows.Controls;
 
 namespace LinkUtilities
@@ -22,6 +21,7 @@ namespace LinkUtilities
             sortLinks = new SortLinks(this);
             AddLibraryLinks = new AddLibraryLinks(this);
             AddWebsiteLinks = new AddWebsiteLinks(this);
+            HandleUriActions = new HandleUriActions(this);
             IsUpdating = false;
 
             Settings = new LinkUtilitiesSettingsViewModel(this);
@@ -32,10 +32,11 @@ namespace LinkUtilities
 
             PlayniteApi.UriHandler.RegisterSource("LinkUtilities", (args) =>
             {
-                // UNDONE: put this into a proper DoForAll class. Waits for the bugfix in argument parsing for now...
-                foreach (Game game in PlayniteApi.MainView.SelectedGames)
+                if (HandleUriActions.ProcessArgs(args))
                 {
-                    LinkHelper.AddLink(game, args.Arguments[1], WebUtility.UrlDecode(args.Arguments[2]), Settings.Settings);
+                    List<Game> games = PlayniteApi.MainView.SelectedGames.ToList();
+
+                    DoForAll(games, HandleUriActions, true, HandleUriActions.Action);
                 }
             });
         }
@@ -54,6 +55,8 @@ namespace LinkUtilities
         /// Class to add a link to all available websites in the Links list, if a definitive link was found.
         /// </summary>
         public AddWebsiteLinks AddWebsiteLinks { get; }
+
+        public HandleUriActions HandleUriActions { get; }
 
         /// <summary>
         /// Is set to true, while the library is updated via the sortLinks function. Is used to avoid an endless loop in the function.

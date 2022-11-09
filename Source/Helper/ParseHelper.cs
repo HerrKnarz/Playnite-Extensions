@@ -34,7 +34,7 @@ namespace LinkUtilities.Helper
         /// <summary>
         /// Deserializes an XML string into an object
         /// </summary>
-        /// <typeparam name="T">Object the XML will be deserualized to.</typeparam>
+        /// <typeparam name="T">Object the XML will be deserialized to.</typeparam>
         /// <param name="this">XML string</param>
         /// <returns>The deserialized XML</returns>
         public static T ParseXML<T>(this string @this) where T : class

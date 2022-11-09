@@ -8,7 +8,7 @@ using System.Linq;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Base class for a website link, that's both used as an item in the Links list and 
+    /// Base class for a website link 
     /// </summary>
     public abstract class Link : ILink, ILinkAction
     {

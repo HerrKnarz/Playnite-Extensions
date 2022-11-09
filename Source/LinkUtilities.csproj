@@ -53,6 +53,7 @@
     <Compile Include="Helper\MiscHelper.cs" />
     <Compile Include="Helper\ParseHelper.cs" />
     <Compile Include="Helper\StringHelper.cs" />
+    <Compile Include="LinkActions\HandleUriActions.cs" />
     <Compile Include="LinkActions\AddLibraryLinks.cs" />
     <Compile Include="LinkActions\AddWebsiteLinks.cs" />
     <Compile Include="LinkActions\ILinkAction.cs" />
