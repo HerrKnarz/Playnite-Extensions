@@ -13,7 +13,7 @@ This is an extension for the superb open source video game library manager and l
 - Search for games on several websites to add links via search dialog
 - Add library links: add links to the game page of its library
 
-The following websites are supported:
+The following websites are supported (and can be toggled in the settings):
 
 | **Website**         | **Add**                                   | **Search**                | **Library**                                    |
 |---------------------|-------------------------------------------|---------------------------|------------------------------------------------|
@@ -21,10 +21,15 @@ The following websites are supported:
 | GOG                 | yes                                       | yes                       | yes                                            |
 | Hardcore Gaming 101 | yes                                       | yes                       | no                                             |
 | itch.io             | no (link contains several variable parts) | yes                       | yes                                            |
+| Lemon Amiga         | no (link doesn't contain game name)       | yes                       | no                                             |
 | MetaCritic          | yes (for each platform the game has)      | no (scraping not allowed) | no                                             |
 | MobyGames           | yes                                       | yes                       | no                                             |
+| NEC Retro           | yes                                       | yes                       | no                                             |
 | PCGamingWiki        | yes                                       | yes                       | no                                             |
+| RAWG                | yes                                       | yes                       | no                                             |
+| Sega Retro          | yes                                       | yes                       | no                                             |
 | Steam               | no (link contains game id)                | yes                       | yes                                            |
+| StrategyWiki        | yes                                       | yes                       | no                                             |
 | Wikipedia           | yes                                       | yes                       | no                                             |
 
 ## Planned features
@@ -32,11 +37,7 @@ The following websites are supported:
 - option to deactivate unwanted link sources in the settings
 - add link to active browser window via bookmarklet (nearly done, but currently broken in playnite API)
 - add links to more websites. The following are already planned:
-  - Sega Retro (only for sega consoles)
-  - Lemon Amiga (only for amiga games)
-  - RAWG
   - How Long To Beat
-  - StrategyWiki
   - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
   - Nexus Mods (maybe - could replace the nexus mods add-on)
   - Is There Any Deal (maybe - don't really see many use cases, when the game already is in the library)
