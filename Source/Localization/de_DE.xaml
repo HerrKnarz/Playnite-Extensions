@@ -3,8 +3,8 @@
     <sys:String x:Key="LOCLinkUtilitiesName">Linkwerkzeuge</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Links zu {0} Spielen hinzugefügt!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Name the link</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Please enter a name for the link!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Link benennen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Bitte einen Namen für den Link eingeben!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Ein Link zu {0} existiert bereits. Möchten Sie ihn ersetzen?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Suche Spiel</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Option wählen</sys:String>
