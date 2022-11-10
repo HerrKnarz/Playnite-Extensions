@@ -3,17 +3,19 @@
     <sys:String x:Key="LOCLinkUtilitiesName">Nástroj pro odkazy</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Odkazy přidány do {0} her!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Name the link</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Please enter a name for the link!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Odkaz na {0} již existuje. Chcete jej nahradit?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Vyhledat hru</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Vyberte možnost</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Odkazy {0} her seřazeny!</sys:String>
-    
+
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Přidat odkaz knihovny</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Přidat odkaz...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Všechny nastavené web-stránky</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Vyhledat odkaz...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinks">Třídit odkazy dle jména</sys:String>
-    
+
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Přidat odkazy knihovny...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Přidat odkazy...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Třídit odkazy...</sys:String>
