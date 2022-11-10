@@ -34,13 +34,11 @@ The following websites are supported (and can be toggled in the settings):
 
 ## Planned features
 - check if links are still working, optional removal of dead links
-- option to deactivate unwanted link sources in the settings
 - add link to active browser window via bookmarklet (nearly done, but currently broken in playnite API)
 - add links to more websites. The following are already planned:
   - How Long To Beat
   - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
   - Nexus Mods (maybe - could replace the nexus mods add-on)
   - Is There Any Deal (maybe - don't really see many use cases, when the game already is in the library)
-- (maybe) search for screenshots with configurable resolution
 
 If you have more ideas for this extension, feel free to suggest them by opening an issue!
