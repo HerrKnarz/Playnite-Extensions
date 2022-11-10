@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Events;
+﻿using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using System.Linq;
 using System.Net;
@@ -43,6 +44,16 @@ namespace LinkUtilities.LinkActions
                 {
                     LinkName = args.Arguments[1];
                     LinkUrl = WebUtility.UrlDecode(args.Arguments[2]);
+
+                    StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
+                        ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkText"),
+                        ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkCaption"),
+                        LinkName);
+
+                    if (selectResult.Result)
+                    {
+                        LinkName = selectResult.SelectedString;
+                    }
 
                     result = true;
                 }
