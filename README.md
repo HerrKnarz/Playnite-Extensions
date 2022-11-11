@@ -39,6 +39,13 @@ The following websites are supported (and can be toggled in the settings):
   - How Long To Beat
   - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
   - Nexus Mods (maybe - could replace the nexus mods add-on)
-  - Is There Any Deal (maybe - don't really see many use cases, when the game already is in the library)
+  - Nintendo Fandom
+  - SNK Wiki
+  - GameFAQs
+  - Arcade History
+  - Gamer Guides
+  - Gamepressure Guides
+  - IGN
+  - IGN Guides
 
 If you have more ideas for this extension, feel free to suggest them by opening an issue!
