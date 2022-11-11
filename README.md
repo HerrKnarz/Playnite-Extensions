@@ -47,5 +47,6 @@ The following websites are supported (and can be toggled in the settings):
   - Gamepressure Guides
   - IGN
   - IGN Guides
+  - Reddit
 
 If you have more ideas for this extension, feel free to suggest them by opening an issue!
