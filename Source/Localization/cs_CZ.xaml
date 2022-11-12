@@ -5,7 +5,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Odkazy přidány do {0} her!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Name the link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Please enter a name for the link!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Odkaz na {0} již existuje. Chcete jej nahradit?</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">A link to {0} already exists. You can replace the existing link or add a new one by entering a new link name.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Vyhledat hru</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Vyberte možnost</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Odkazy {0} her seřazeny!</sys:String>
