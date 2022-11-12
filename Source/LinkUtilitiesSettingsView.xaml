@@ -48,7 +48,7 @@
                                 <DataTemplate>
                                     <TextBox Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}"
                                              Visibility="{Binding IsApiKeyVisible}" Background="{DynamicResource NormalBrushDark}"
-                                              HorizontalAlignment="Stretch"/>
+                                             HorizontalAlignment="Stretch"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -58,15 +58,30 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCLinkUtilitiesSettingsTabBookmarklet}">
             <DockPanel Margin="10">
-                <DataGrid ItemsSource="{Binding Settings.LinkNamePatterns}" AutoGenerateColumns="False" CanUserResizeRows="False"
-                          SelectionUnit="Cell" CanUserAddRows="False" DockPanel.Dock="Top" GridLinesVisibility="Horizontal"
-                          HeadersVisibility="Column">
+                <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap"
+                           Text="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletDescription}" />
+                <TextBlock VerticalAlignment="Center" Margin="0,10,0,0" DockPanel.Dock="Top">
+                    <Hyperlink NavigateUri="https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities"
+                               RequestNavigate="Hyperlink_RequestNavigate">
+                        <Run Text="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletInformationLink}" />
+                    </Hyperlink>
+                </TextBlock>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
+                    <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonAdd}"
+                            Command="{Binding AddPatternCommand}"/>
+                    <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}" Margin="10,0,0,0"
+                            Command="{Binding RemovePatternCommand}"
+                            CommandParameter="{Binding SelectedItem, ElementName=GridPatterns}"/>
+                </StackPanel>
+                <DataGrid Name="GridPatterns" ItemsSource="{Binding Settings.LinkNamePatterns}" AutoGenerateColumns="False"
+                          CanUserResizeRows="False" CanUserAddRows="False" DockPanel.Dock="Top" GridLinesVisibility="Horizontal"
+                          HeadersVisibility="Column" Margin="0,10,0,0" SelectionMode="Single">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletLinkName}" Width="200">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox Text="{Binding LinkName, UpdateSourceTrigger=PropertyChanged}"
-                                              Background="{DynamicResource NormalBrushDark}" HorizontalAlignment="Stretch"/>
+                                             Background="{DynamicResource NormalBrushDark}" HorizontalAlignment="Stretch"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -74,7 +89,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox Text="{Binding NamePattern, UpdateSourceTrigger=PropertyChanged}"
-                                              Background="{DynamicResource NormalBrushDark}" HorizontalAlignment="Stretch"/>
+                                             Background="{DynamicResource NormalBrushDark}" HorizontalAlignment="Stretch"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -82,7 +97,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox Text="{Binding UrlPattern, UpdateSourceTrigger=PropertyChanged}"
-                                              Background="{DynamicResource NormalBrushDark}" HorizontalAlignment="Stretch"/>
+                                             Background="{DynamicResource NormalBrushDark}" HorizontalAlignment="Stretch"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

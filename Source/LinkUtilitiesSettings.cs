@@ -75,6 +75,7 @@ namespace LinkUtilities
 
             LinkSettings = new ObservableCollection<LinkSourceSettings>(LinkSettings.OrderBy(x => x.LinkName));
         }
+
         /// <summary>
         /// Gets a collection of the settings to all link sources in the plugin.
         /// </summary>
@@ -120,6 +121,22 @@ namespace LinkUtilities
             }
         }
 
+        public RelayCommand AddPatternCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                Settings.LinkNamePatterns.Add(new LinkNamePattern());
+            });
+        }
+
+        public RelayCommand<LinkNamePattern> RemovePatternCommand
+        {
+            get => new RelayCommand<LinkNamePattern>((a) =>
+            {
+                Settings.LinkNamePatterns.Remove(a);
+            });
+        }
+
         public LinkUtilitiesSettingsViewModel(LinkUtilities plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
@@ -144,6 +161,8 @@ namespace LinkUtilities
             {
                 Settings.FillDefaultLinkNamePatterns();
             }
+
+            Settings.LinkNamePatterns = new ObservableCollection<LinkNamePattern>(Settings.LinkNamePatterns.OrderBy(x => x.LinkName));
         }
 
         public void BeginEdit()
