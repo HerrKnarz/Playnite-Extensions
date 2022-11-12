@@ -23,9 +23,14 @@
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Add link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Key</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletLinkName">Link name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletNamePattern">Name pattern</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletUrlPattern">URL pattern</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link source</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Search link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Show in menu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Sort links after the game meta data was updated</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">General settings</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarklet">Bookmarklet</sys:String>
 </ResourceDictionary>
