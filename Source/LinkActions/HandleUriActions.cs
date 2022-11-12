@@ -2,11 +2,9 @@
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
-using System.Collections.Generic;
-using System.IO;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 
 namespace LinkUtilities.LinkActions
 {
@@ -38,16 +36,7 @@ namespace LinkUtilities.LinkActions
         /// <summary>
         /// List of patterns to find the right link name for a given set of url and link title
         /// </summary>
-        public static List<LinkNamePattern> LinkNamePatterns { get; set; }
-
-        /// <summary>
-        /// Fills the pattern list with default values
-        /// </summary>
-        public void FillDefaultLinkNamePatterns()
-        {
-            string json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "DefaultLinkNamePatterns.json"));
-            LinkNamePatterns = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LinkNamePattern>>(json);
-        }
+        public ObservableCollection<LinkNamePattern> LinkNamePatterns { get; set; }
 
         /// <summary>
         /// Processes the arguments received from the UriHandler. 
@@ -98,8 +87,6 @@ namespace LinkUtilities.LinkActions
 
         public HandleUriActions(LinkUtilities plugin) : base(plugin)
         {
-            //TODO: Move to Settings!
-            FillDefaultLinkNamePatterns();
         }
 
         public override bool Execute(Game game, string actionModifier = "")

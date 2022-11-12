@@ -30,6 +30,9 @@ namespace LinkUtilities
                 HasSettings = true
             };
 
+            HandleUriActions.LinkNamePatterns = Settings.Settings.LinkNamePatterns;
+
+
             PlayniteApi.UriHandler.RegisterSource("LinkUtilities", (args) =>
             {
                 if (HandleUriActions.ProcessArgs(args))

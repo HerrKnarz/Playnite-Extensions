@@ -4,7 +4,9 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace LinkUtilities
 {
@@ -15,6 +17,7 @@ namespace LinkUtilities
     {
         private bool sortAfterChange = false;
         private ObservableCollection<LinkSourceSettings> linkSettings;
+        private ObservableCollection<LinkNamePattern> linkNamePatterns;
 
         /// <summary>
         /// sets whether the Links shall be sorted after a game is updated in the database
@@ -24,6 +27,8 @@ namespace LinkUtilities
         /// Collection with the settings of all link sources
         /// </summary>
         public ObservableCollection<LinkSourceSettings> LinkSettings { get => linkSettings; set => SetValue(ref linkSettings, value); }
+
+        public ObservableCollection<LinkNamePattern> LinkNamePatterns { get => linkNamePatterns; set => SetValue(ref linkNamePatterns, value); }
 
         public LinkUtilitiesSettings()
         {
@@ -88,6 +93,15 @@ namespace LinkUtilities
             }
             return result;
         }
+
+        /// <summary>
+        /// Fills the pattern list with default values
+        /// </summary>
+        public void FillDefaultLinkNamePatterns()
+        {
+            string json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "DefaultLinkNamePatterns.json"));
+            LinkNamePatterns = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<LinkNamePattern>>(json);
+        }
     }
 
     public class LinkUtilitiesSettingsViewModel : ObservableObject, ISettings
@@ -125,6 +139,11 @@ namespace LinkUtilities
                 Settings = new LinkUtilitiesSettings();
                 Settings.LinkSettings = Settings.GetLinkSources(plugin.AddWebsiteLinks.Links);
             }
+
+            if (Settings.LinkNamePatterns == null || Settings.LinkNamePatterns.Count == 0)
+            {
+                Settings.FillDefaultLinkNamePatterns();
+            }
         }
 
         public void BeginEdit()
@@ -135,6 +154,7 @@ namespace LinkUtilities
         public void CancelEdit()
         {
             Settings.SortAfterChange = EditingClone.SortAfterChange;
+            Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;
 
             foreach (LinkSourceSettings originalItem in Settings.LinkSettings)
             {
@@ -161,6 +181,8 @@ namespace LinkUtilities
         public void EndEdit()
         {
             plugin.SavePluginSettings(Settings);
+
+            plugin.HandleUriActions.LinkNamePatterns = Settings.LinkNamePatterns;
         }
 
         public bool VerifySettings(out List<string> errors)
