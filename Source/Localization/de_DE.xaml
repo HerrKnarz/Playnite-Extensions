@@ -5,7 +5,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Links zu {0} Spielen hinzugefügt!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Link benennen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Bitte einen Namen für den Link eingeben!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Ein Link zu {0} existiert bereits. Möchten Sie ihn ersetzen?</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">A link to {0} already exists. You can replace the existing link or add a new one by entering a new link name.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Suche Spiel</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Option wählen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Links von {0} Spielen sortiert!</sys:String>
