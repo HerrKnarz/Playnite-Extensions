@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace LinkUtilities.LinkActions
 {
@@ -18,15 +17,19 @@ namespace LinkUtilities.LinkActions
     public class HandleUriActions : LinkAction
     {
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
+
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
+
         /// <summary>
         /// Url of the link to be added in the "AddLink" action
         /// </summary>
         public string LinkUrl { get; set; }
+
         /// <summary>
         /// Name of the link to be added in the "AddLink" action
         /// </summary>
         public string LinkName { get; set; }
+
         /// <summary>
         /// Action that will be executed 
         /// </summary>
@@ -46,7 +49,6 @@ namespace LinkUtilities.LinkActions
             LinkNamePatterns = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LinkNamePattern>>(json);
         }
 
-
         /// <summary>
         /// Processes the arguments received from the UriHandler. 
         /// </summary>
@@ -65,7 +67,7 @@ namespace LinkUtilities.LinkActions
                     string tempLinkName = args.Arguments[1];
                     LinkUrl = WebUtility.UrlDecode(args.Arguments[2]);
 
-                    LinkNamePattern pattern = LinkNamePatterns.FirstOrDefault(x => (x.NamePattern == string.Empty || Regex.IsMatch(tempLinkName, x.NameRegEx)) && (x.UrlPattern == string.Empty || Regex.IsMatch(LinkUrl, x.UrlRegEx)));
+                    LinkNamePattern pattern = LinkNamePatterns.FirstOrDefault(x => x.LinkMatch(tempLinkName, LinkUrl));
                     if (pattern != null)
                     {
                         LinkName = pattern.LinkName;
@@ -83,7 +85,10 @@ namespace LinkUtilities.LinkActions
                             LinkName = selectResult.SelectedString;
                             result = true;
                         }
-                        else result = false;
+                        else
+                        {
+                            result = false;
+                        }
                     }
                 }
             }
@@ -101,7 +106,7 @@ namespace LinkUtilities.LinkActions
         {
             if (actionModifier == "AddLink")
             {
-                return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin.Settings.Settings);
+                return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin.Settings.Settings, false);
             }
             else
             {

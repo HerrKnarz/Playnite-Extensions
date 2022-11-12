@@ -1,5 +1,6 @@
 ﻿using LinkUtilities.Helper;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace LinkUtilities.Models
 {
@@ -37,5 +38,11 @@ namespace LinkUtilities.Models
         /// </summary>
         [JsonIgnore]
         public string NameRegEx { get => ParseHelper.WildCardToRegular(NamePattern); }
+
+        public bool LinkMatch(string linkName, string linkUrl)
+        {
+            return (NamePattern == string.Empty || Regex.IsMatch(linkName, NameRegEx)) &&
+                (UrlPattern == string.Empty || Regex.IsMatch(linkUrl, UrlRegEx));
+        }
     }
 }

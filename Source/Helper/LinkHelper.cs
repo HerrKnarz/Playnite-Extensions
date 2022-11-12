@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Windows;
 
 namespace LinkUtilities
 {
@@ -37,8 +36,40 @@ namespace LinkUtilities
             // otherwise we'll check if a link with the specified name is already present. If not, we'll add the link and return true.
             else
             {
+                bool addNewLink = false;
 
                 if (game.Links.Count(x => x.Name == linkName) == 0)
+                {
+                    addNewLink = true;
+                }
+                else if (!ignoreExisting)
+                {
+                    StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
+                            ResourceProvider.GetString("LOCLinkUtilitiesDialogReplaceLink"),
+                            ResourceProvider.GetString("LOCLinkUtilitiesDialogSelectOption"),
+                            linkName);
+
+                    if (selectResult.Result)
+                    {
+                        if (linkName != selectResult.SelectedString)
+                        {
+                            link.Name = selectResult.SelectedString;
+                            addNewLink = true;
+
+                        }
+                        else
+                        {
+                            API.Instance.MainView.UIDispatcher.Invoke(delegate
+                            {
+                                game.Links.Single(x => x.Name == linkName).Url = linkUrl;
+                            });
+
+                            mustUpdate = true;
+                        }
+                    }
+                }
+
+                if (addNewLink)
                 {
                     API.Instance.MainView.UIDispatcher.Invoke(delegate
                     {
@@ -52,23 +83,6 @@ namespace LinkUtilities
                     }
 
                     mustUpdate = true;
-                }
-
-                else if (!ignoreExisting)
-                {
-                    if (API.Instance.Dialogs.ShowMessage(
-                        string.Format(ResourceProvider.GetString("LOCLinkUtilitiesDialogReplaceLink"), linkName),
-                        ResourceProvider.GetString("LOCLinkUtilitiesDialogSelectOption"),
-                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            game.Links.Single(x => x.Name == linkName).Url = linkUrl;
-                        });
-
-                        mustUpdate = true;
-                    }
                 }
             }
 
