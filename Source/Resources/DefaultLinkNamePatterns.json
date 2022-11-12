@@ -1,0 +1,77 @@
+[
+    {
+        "linkName": "Epic",
+        "urlPattern": "*epicgames.com*",
+        "namePattern": "*Epic Games*"
+    },
+    {
+        "linkName": "GOG",
+        "urlPattern": "*gog.com*",
+        "namePattern": "*GOG.com*"
+    },
+    {
+        "linkName": "Hardcore Gaming 101",
+        "urlPattern": "*hardcoregaming101.net*",
+        "namePattern": "*Hardcore Gaming 101*"
+    },
+    {
+        "linkName": "IGDB",
+        "urlPattern": "*igdb.com*",
+        "namePattern": ""
+    },
+    {
+        "linkName": "itch",
+        "urlPattern": "*itch.io*",
+        "namePattern": ""
+    },
+    {
+        "linkName": "Lemon Amiga",
+        "urlPattern": "*lemonamiga.com*",
+        "namePattern": "*Lemon Amiga*"
+    },
+    {
+        "linkName": "Metacritic",
+        "urlPattern": "*metacritic.com*",
+        "namePattern": "*Metacritic*"
+    },
+    {
+        "linkName": "MobyGames",
+        "urlPattern": "*mobygames.com*",
+        "namePattern": "*MobyGames*"
+    },
+    {
+        "linkName": "NEC Retro",
+        "urlPattern": "*necretro.org*",
+        "namePattern": "*NEC Retro*"
+    },
+    {
+        "linkName": "PCGamingWiki",
+        "urlPattern": "*pcgamingwiki.com*",
+        "namePattern": "*PCGamingWiki*"
+    },
+    {
+        "linkName": "RAWG",
+        "urlPattern": "*rawg.io*",
+        "namePattern": "*RAWG*"
+    },
+    {
+        "linkName": "Sega Retro",
+        "urlPattern": "*segaretro.org*",
+        "namePattern": "*Sega Retro*"
+    },
+    {
+        "linkName": "Steam",
+        "urlPattern": "*steampowered.com*",
+        "namePattern": "*Steam*"
+    },
+    {
+        "linkName": "StrategyWiki",
+        "urlPattern": "*strategywiki.org*",
+        "namePattern": "*StrategyWiki*"
+    },
+    {
+        "linkName": "Wikipedia",
+        "urlPattern": "*wikipedia.org*",
+        "namePattern": "*Wikipedia*"
+    }
+]

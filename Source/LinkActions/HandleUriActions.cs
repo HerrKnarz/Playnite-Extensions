@@ -1,8 +1,13 @@
-﻿using Playnite.SDK;
+﻿using LinkUtilities.Models;
+using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace LinkUtilities.LinkActions
 {
@@ -28,6 +33,21 @@ namespace LinkUtilities.LinkActions
         public string Action { get; set; }
 
         /// <summary>
+        /// List of patterns to find the right link name for a given set of url and link title
+        /// </summary>
+        public static List<LinkNamePattern> LinkNamePatterns { get; set; }
+
+        /// <summary>
+        /// Fills the pattern list with default values
+        /// </summary>
+        public void FillDefaultLinkNamePatterns()
+        {
+            string json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "DefaultLinkNamePatterns.json"));
+            LinkNamePatterns = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LinkNamePattern>>(json);
+        }
+
+
+        /// <summary>
         /// Processes the arguments received from the UriHandler. 
         /// </summary>
         /// <param name="args">Arguments to process</param>
@@ -42,20 +62,29 @@ namespace LinkUtilities.LinkActions
             {
                 if (args.Arguments.Count() == 3)
                 {
-                    LinkName = args.Arguments[1];
+                    string tempLinkName = args.Arguments[1];
                     LinkUrl = WebUtility.UrlDecode(args.Arguments[2]);
 
-                    StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
-                        ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkText"),
-                        ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkCaption"),
-                        LinkName);
-
-                    if (selectResult.Result)
+                    LinkNamePattern pattern = LinkNamePatterns.FirstOrDefault(x => (x.NamePattern == string.Empty || Regex.IsMatch(tempLinkName, x.NameRegEx)) && (x.UrlPattern == string.Empty || Regex.IsMatch(LinkUrl, x.UrlRegEx)));
+                    if (pattern != null)
                     {
-                        LinkName = selectResult.SelectedString;
+                        LinkName = pattern.LinkName;
+                        result = true;
                     }
+                    else
+                    {
+                        StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
+                            ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkText"),
+                            ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkCaption"),
+                            tempLinkName);
 
-                    result = true;
+                        if (selectResult.Result)
+                        {
+                            LinkName = selectResult.SelectedString;
+                            result = true;
+                        }
+                        else result = false;
+                    }
                 }
             }
 
@@ -64,6 +93,8 @@ namespace LinkUtilities.LinkActions
 
         public HandleUriActions(LinkUtilities plugin) : base(plugin)
         {
+            //TODO: Move to Settings!
+            FillDefaultLinkNamePatterns();
         }
 
         public override bool Execute(Game game, string actionModifier = "")

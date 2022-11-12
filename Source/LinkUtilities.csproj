@@ -90,6 +90,7 @@
       <DependentUpon>LinkUtilitiesSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\ItchSearchResult.cs" />
+    <Compile Include="Models\LinkNamePattern.cs" />
     <Compile Include="Models\LinkSourceSettings.cs" />
     <Compile Include="Models\MediaWikiSearchSuggestion.cs" />
     <Compile Include="Models\RawgSearchResult.cs" />
@@ -267,6 +268,9 @@
     <None Include="icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Resources\DefaultLinkNamePatterns.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack">

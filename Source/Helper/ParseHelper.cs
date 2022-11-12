@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -149,6 +150,18 @@ namespace LinkUtilities.Helper
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Converts a wildcard pattern to a regular expression.
+        /// * is interpreted as zero or more characters,
+        /// ? is interpreted as exactly one character.
+        /// </summary>
+        /// <param name="value">Pattern to convert</param>
+        /// <returns>The resulting regular expression</returns>
+        public static string WildCardToRegular(string value)
+        {
+            return "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
         }
     }
 }
