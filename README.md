@@ -33,6 +33,9 @@ The following websites are supported (and can be toggled in the settings):
 | Wikipedia           | yes                                       | yes                       | no                                             |
 
 ## Planned features
+- option to delete unwanted links (e.g. social media links added by IGDB)
+- option to rename links (e.g. change wikipedia to wiki)
+- option to define a custom sort order
 - check if links are still working, optional removal of dead links
 - add link to active browser window via bookmarklet (nearly done, but currently broken in playnite API)
 - add links to more websites. The following are already planned:
@@ -48,5 +51,7 @@ The following websites are supported (and can be toggled in the settings):
   - IGN
   - IGN Guides
   - Reddit
+  - Co-optimus
+  - OpenCritic
 
 If you have more ideas for this extension, feel free to suggest them by opening an issue!
