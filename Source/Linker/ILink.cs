@@ -37,7 +37,7 @@ namespace LinkUtilities.Linker
         /// <summary>
         /// represents the settings for this specific link
         /// </summary>
-        LinkSourceSettings Settings { get; set; }
+        LinkSourceSetting Settings { get; set; }
         /// <summary>
         /// Specifys, if a redirect is allowed while checking the url. Some sites redirect to the homepage if the link isn't valid.
         /// In that case this should be set to false.

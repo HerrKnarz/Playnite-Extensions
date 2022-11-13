@@ -91,13 +91,15 @@
     </Compile>
     <Compile Include="Models\ItchSearchResult.cs" />
     <Compile Include="Models\LinkNamePattern.cs" />
-    <Compile Include="Models\LinkSourceSettings.cs" />
+    <Compile Include="Models\LinkSourceSetting.cs" />
     <Compile Include="Models\MediaWikiSearchSuggestion.cs" />
     <Compile Include="Models\RawgSearchResult.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\SteamSearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LinkActions\SortLinks.cs" />
+    <Compile Include="Settings\LinkNamePatterns.cs" />
+    <Compile Include="Settings\LinkSourceSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="extension.yaml">

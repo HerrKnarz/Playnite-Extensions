@@ -18,7 +18,7 @@ namespace LinkUtilities.Linker
         public virtual string LinkUrl { get; set; } = string.Empty;
         public virtual bool CanBeAdded { get { return !string.IsNullOrWhiteSpace(BaseUrl); } }
         public virtual bool CanBeSearched { get { return !string.IsNullOrWhiteSpace(SearchUrl); } }
-        public LinkSourceSettings Settings { get; set; }
+        public LinkSourceSetting Settings { get; set; }
         public virtual bool AllowRedirects { get; set; } = true;
         public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLink";
         public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
@@ -93,7 +93,7 @@ namespace LinkUtilities.Linker
         public Link(LinkUtilities plugin)
         {
             this.plugin = plugin;
-            Settings = new LinkSourceSettings()
+            Settings = new LinkSourceSetting()
             {
                 LinkName = LinkName,
                 IsAddable = CanBeAdded ? true : (bool?)null,

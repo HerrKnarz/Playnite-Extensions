@@ -1,8 +1,7 @@
-﻿using LinkUtilities.Models;
+﻿using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 
@@ -36,7 +35,7 @@ namespace LinkUtilities.LinkActions
         /// <summary>
         /// List of patterns to find the right link name for a given set of url and link title
         /// </summary>
-        public ObservableCollection<LinkNamePattern> LinkNamePatterns { get; set; }
+        public LinkNamePatterns LinkNamePatterns { get; set; }
 
         /// <summary>
         /// Processes the arguments received from the UriHandler. 
@@ -56,10 +55,9 @@ namespace LinkUtilities.LinkActions
                     string tempLinkName = args.Arguments[1];
                     LinkUrl = WebUtility.UrlDecode(args.Arguments[2]);
 
-                    LinkNamePattern pattern = LinkNamePatterns.FirstOrDefault(x => x.LinkMatch(tempLinkName, LinkUrl));
-                    if (pattern != null)
+                    if (LinkNamePatterns.LinkMatch(ref tempLinkName, LinkUrl))
                     {
-                        LinkName = pattern.LinkName;
+                        LinkName = tempLinkName;
                         result = true;
                     }
                     else

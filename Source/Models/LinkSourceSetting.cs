@@ -6,7 +6,7 @@ namespace LinkUtilities.Models
     /// <summary>
     /// Contains all needed settings for a link
     /// </summary>
-    public class LinkSourceSettings
+    public class LinkSourceSetting
     {
         /// <summary>
         /// Name of the link. Is a bit redundant, but it's needed to find the right settings from the config file.

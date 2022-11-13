@@ -44,8 +44,10 @@ namespace LinkUtilities
                 }
                 else if (!ignoreExisting)
                 {
+                    string message = string.Format(ResourceProvider.GetString("LOCLinkUtilitiesDialogReplaceLink"), linkName);
+
                     StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
-                            ResourceProvider.GetString("LOCLinkUtilitiesDialogReplaceLink"),
+                            message,
                             ResourceProvider.GetString("LOCLinkUtilitiesDialogSelectOption"),
                             linkName);
 

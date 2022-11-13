@@ -1,12 +1,9 @@
-﻿using LinkUtilities.Linker;
-using LinkUtilities.Models;
+﻿using LinkUtilities.Models;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace LinkUtilities
 {
@@ -16,8 +13,8 @@ namespace LinkUtilities
     public class LinkUtilitiesSettings : ObservableObject
     {
         private bool sortAfterChange = false;
-        private ObservableCollection<LinkSourceSettings> linkSettings;
-        private ObservableCollection<LinkNamePattern> linkNamePatterns;
+        private LinkSourceSettings linkSettings;
+        private LinkNamePatterns linkPatterns;
 
         /// <summary>
         /// sets whether the Links shall be sorted after a game is updated in the database
@@ -26,82 +23,13 @@ namespace LinkUtilities
         /// <summary>
         /// Collection with the settings of all link sources
         /// </summary>
-        public ObservableCollection<LinkSourceSettings> LinkSettings { get => linkSettings; set => SetValue(ref linkSettings, value); }
+        public LinkSourceSettings LinkSettings { get => linkSettings; set => SetValue(ref linkSettings, value); }
 
-        public ObservableCollection<LinkNamePattern> LinkNamePatterns { get => linkNamePatterns; set => SetValue(ref linkNamePatterns, value); }
+        public LinkNamePatterns LinkNamePatterns { get => linkPatterns; set => SetValue(ref linkPatterns, value); }
 
         public LinkUtilitiesSettings()
         {
-            linkSettings = new ObservableCollection<LinkSourceSettings>();
-        }
-
-        /// <summary>
-        /// Refreshes a LinkSourceCollecion with the actual link sources present in the plugin. Is needed after updates when
-        /// link sources get added or had to be removed.
-        /// </summary>
-        /// <param name="links">Link sources to be added</param>
-        public void RefreshLinkSources(Links links)
-        {
-            ObservableCollection<LinkSourceSettings> newSources = GetLinkSources(links);
-
-            foreach (LinkSourceSettings item in linkSettings.Where(x1 => newSources.All(x2 => x2.LinkName != x1.LinkName)).ToList())
-            {
-                LinkSettings.Remove(item);
-            }
-
-            foreach (LinkSourceSettings itemNew in newSources)
-            {
-                LinkSourceSettings itemOld = linkSettings.FirstOrDefault(x => x.LinkName == itemNew.LinkName);
-
-                if (itemOld != null)
-                {
-                    if (itemNew.IsAddable != null)
-                    {
-                        itemNew.IsAddable = itemOld.IsAddable;
-                    }
-
-                    if (itemNew.IsSearchable != null)
-                    {
-                        itemNew.IsSearchable = itemOld.IsSearchable;
-                    }
-
-                    itemNew.ShowInMenus = itemOld.ShowInMenus;
-                    itemNew.ApiKey = itemOld.ApiKey;
-
-                    linkSettings.Remove(itemOld);
-                }
-                linkSettings.Add(itemNew);
-            }
-
-            LinkSettings = new ObservableCollection<LinkSourceSettings>(LinkSettings.OrderBy(x => x.LinkName));
-        }
-
-        /// <summary>
-        /// Gets a collection of the settings to all link sources in the plugin.
-        /// </summary>
-        /// <param name="links">Link sources to be added</param>
-        /// <returns>Collection of the settings to all link sources in the plugin</returns>
-        public ObservableCollection<LinkSourceSettings> GetLinkSources(Links links)
-        {
-            ObservableCollection<LinkSourceSettings> result = new ObservableCollection<LinkSourceSettings>();
-
-            if (links != null)
-            {
-                foreach (Link link in links)
-                {
-                    result.Add(link.Settings);
-                }
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Fills the pattern list with default values
-        /// </summary>
-        public List<LinkNamePattern> GetDefaultLinkNamePatterns()
-        {
-            string json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "DefaultLinkNamePatterns.json"));
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<LinkNamePattern>>(json);
+            linkSettings = new LinkSourceSettings();
         }
     }
 
@@ -133,17 +61,7 @@ namespace LinkUtilities
         {
             get => new RelayCommand(() =>
             {
-                List<LinkNamePattern> patterns = Settings.LinkNamePatterns.ToList();
-
-                foreach (LinkNamePattern item in Settings.GetDefaultLinkNamePatterns())
-                {
-                    if (!patterns.Any(x => x.LinkName == item.LinkName))
-                    {
-                        patterns.Add(item);
-                    }
-                }
-
-                Settings.LinkNamePatterns = new ObservableCollection<LinkNamePattern>(patterns.Distinct().OrderBy(x => x.LinkName));
+                Settings.LinkNamePatterns.AddDefaultPatterns();
             });
         }
 
@@ -170,20 +88,23 @@ namespace LinkUtilities
             if (savedSettings != null)
             {
                 Settings = savedSettings;
-                Settings.RefreshLinkSources(plugin.AddWebsiteLinks.Links);
+                Settings.LinkSettings.RefreshLinkSources(plugin.AddWebsiteLinks.Links);
+                Settings.LinkSettings = new LinkSourceSettings(Settings.LinkSettings.OrderBy(x => x.LinkName).ToList());
             }
             else
             {
-                Settings = new LinkUtilitiesSettings();
-                Settings.LinkSettings = Settings.GetLinkSources(plugin.AddWebsiteLinks.Links);
+                Settings = new LinkUtilitiesSettings
+                {
+                    LinkSettings = LinkSourceSettings.GetLinkSources(plugin.AddWebsiteLinks.Links)
+                };
             }
 
             if (Settings.LinkNamePatterns == null)
             {
-                Settings.LinkNamePatterns = new ObservableCollection<LinkNamePattern>();
+                Settings.LinkNamePatterns = new LinkNamePatterns();
             }
 
-            Settings.LinkNamePatterns = new ObservableCollection<LinkNamePattern>(Settings.LinkNamePatterns.OrderBy(x => x.LinkName));
+            Settings.LinkNamePatterns = new LinkNamePatterns(Settings.LinkNamePatterns.OrderBy(x => x.LinkName).ToList());
         }
 
         public void BeginEdit()
@@ -196,9 +117,9 @@ namespace LinkUtilities
             Settings.SortAfterChange = EditingClone.SortAfterChange;
             Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;
 
-            foreach (LinkSourceSettings originalItem in Settings.LinkSettings)
+            foreach (LinkSourceSetting originalItem in Settings.LinkSettings)
             {
-                LinkSourceSettings clonedItem = EditingClone.LinkSettings.FirstOrDefault(x => x.LinkName == originalItem.LinkName);
+                LinkSourceSetting clonedItem = EditingClone.LinkSettings.FirstOrDefault(x => x.LinkName == originalItem.LinkName);
 
                 if (clonedItem != null)
                 {
