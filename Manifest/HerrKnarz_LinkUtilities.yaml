@@ -1,5 +1,11 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 1.1
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-11-13
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v1.1/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_1_1_0.pext
+    Changelog:
+      - added option to add links directly from your web browser using a bookmarklet. For more information visit the wiki on the GitHub page!
   - Version: 1.0
     RequiredApiVersion: 6.5.0
     ReleaseDate: 2022-11-08
