@@ -23,19 +23,19 @@
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Link hinzufügen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Schlüssel</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Using a bookmarklet you can add the active website in your browser directly to the selected games in Playnite. To find a suiting link name, you can define patterns for the URL and link title here. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">For more information on the bookmarklet click here.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletLinkName">Link name</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletNamePattern">Name pattern</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletUrlPattern">URL pattern</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Add</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Add defaults</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remove</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Mit einem Bookmarklet kannst du die aktive Webseite in deinem Browser direkt zu den ausgewählten Spielen in Playnite hinzufügen. Um einen passenden Link-Namen zu finden, kannst du hier Muster für die URL und den Link-Titel definieren. Die Muster können Platzhalter enthalten. Ein * kann null oder mehr Zeichen sein, ein ? muss genau ein Zeichen sein.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Klicke hie für weitere Informationen zum Bookmarklet.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletLinkName">Link-Name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletNamePattern">Namensmuster</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletUrlPattern">URL-Muster</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Neu</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Standardwerte hinzufügen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Löschen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Webseiten konfigurieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link-Quelle</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Link suchen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Im Menü zeigen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Links sortieren, nachdem die Spiel-Metadaten aktualisiert wurden</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">General settings</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Allgemeine Einstellungen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarklet">Bookmarklet</sys:String>
 </ResourceDictionary>
