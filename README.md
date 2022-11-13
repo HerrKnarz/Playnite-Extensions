@@ -12,6 +12,7 @@ This is an extension for the superb open source video game library manager and l
 - Add links to several websites directly by trying to find a valid link using the game name
 - Search for games on several websites to add links via search dialog
 - Add library links: add links to the game page of its library
+- add link to active website in your browser via bookmarklet (see [wiki](https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/wiki/URL-handler-and-bookmarklet#bookmarklet) for more information). Works with any website.
 
 The following websites are supported (and can be toggled in the settings):
 
@@ -37,7 +38,6 @@ The following websites are supported (and can be toggled in the settings):
 - option to rename links (e.g. change wikipedia to wiki)
 - option to define a custom sort order
 - check if links are still working, optional removal of dead links
-- add link to active browser window via bookmarklet (nearly done, but currently broken in playnite API)
 - add links to more websites. The following are already planned:
   - How Long To Beat
   - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
