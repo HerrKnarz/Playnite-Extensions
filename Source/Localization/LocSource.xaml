@@ -29,6 +29,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletNamePattern">Name pattern</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletUrlPattern">URL pattern</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Add</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Add defaults</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remove</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link source</sys:String>

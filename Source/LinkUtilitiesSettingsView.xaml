@@ -10,50 +10,49 @@
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
         <TabItem Header="{DynamicResource LOCLinkUtilitiesSettingsTabGeneral}">
             <DockPanel Margin="10">
-                <CheckBox DockPanel.Dock="Top" Name="CheckPSNMigration" IsChecked="{Binding Settings.SortAfterChange}"
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.SortAfterChange}"
                               Content="{DynamicResource LOCLinkUtilitiesSettingsSortAfterChange}" Margin="0,0,0,10"/>
                 <Label Content="{DynamicResource LOCLinkUtilitiesSettingsConfigureWebsites}" DockPanel.Dock="Top" Margin="0,0,0,10" />
-                <DataGrid ItemsSource="{Binding Settings.LinkSettings}" AutoGenerateColumns="False" CanUserResizeRows="False"
-                          SelectionUnit="Cell" CanUserAddRows="False" DockPanel.Dock="Top" GridLinesVisibility="Horizontal"
-                          HeadersVisibility="Column">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource LOCLinkUtilitiesSettingsLinkSource}"
-                                            Binding="{Binding LinkName}" IsReadOnly="True" SortDirection="Ascending"/>
-                        <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsAddLink}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsAddable, UpdateSourceTrigger=PropertyChanged}"
-                                              HorizontalAlignment="Center" Visibility="{Binding IsAddableVisible}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsSearchLink}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsSearchable, UpdateSourceTrigger=PropertyChanged}"
-                                              HorizontalAlignment="Center" Visibility="{Binding IsSearchableVisible}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsShowInMenus}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding ShowInMenus, UpdateSourceTrigger=PropertyChanged}"
-                                              HorizontalAlignment="Center"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsApiKey}" Width="200">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}"
-                                             Visibility="{Binding IsApiKeyVisible}" Background="{DynamicResource NormalBrushDark}"
-                                             HorizontalAlignment="Stretch"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <ListView Name="LinkSources" SelectionMode="Single" DockPanel.Dock="Top" 
+                              ItemsSource="{Binding Settings.LinkSettings}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsLinkSource}"
+                                            DisplayMemberBinding="{Binding LinkName}" />
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsAddLink}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsAddable, UpdateSourceTrigger=PropertyChanged}"
+                                                  Visibility="{Binding IsAddableVisible}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsSearchLink}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsSearchable, UpdateSourceTrigger=PropertyChanged}"
+                                                  Visibility="{Binding IsSearchableVisible}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsShowInMenus}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding ShowInMenus, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="200" Header="{DynamicResource LOCLinkUtilitiesSettingsApiKey}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}"
+                                                 Visibility="{Binding IsApiKeyVisible}" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </DockPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCLinkUtilitiesSettingsTabBookmarklet}">
@@ -70,39 +69,42 @@
                     <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonAdd}"
                             Command="{Binding AddPatternCommand}"/>
                     <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}" Margin="10,0,0,0"
-                            Command="{Binding RemovePatternCommand}"
-                            CommandParameter="{Binding SelectedItem, ElementName=GridPatterns}"/>
+                            Command="{Binding RemovePatternsCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=GridPatterns}"/>
+                    <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonAddDefaults}" Margin="10,0,0,0"
+                            Command="{Binding AddDefaultPatternsCommand}"/>
                 </StackPanel>
-                <DataGrid Name="GridPatterns" ItemsSource="{Binding Settings.LinkNamePatterns}" AutoGenerateColumns="False"
-                          CanUserResizeRows="False" CanUserAddRows="False" DockPanel.Dock="Top" GridLinesVisibility="Horizontal"
-                          HeadersVisibility="Column" Margin="0,10,0,0" SelectionMode="Single">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletLinkName}" Width="200">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding LinkName, UpdateSourceTrigger=PropertyChanged}"
-                                             Background="{DynamicResource NormalBrushDark}" HorizontalAlignment="Stretch"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletNamePattern}" Width="200">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding NamePattern, UpdateSourceTrigger=PropertyChanged}"
-                                             Background="{DynamicResource NormalBrushDark}" HorizontalAlignment="Stretch"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletUrlPattern}" Width="200">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding UrlPattern, UpdateSourceTrigger=PropertyChanged}"
-                                             Background="{DynamicResource NormalBrushDark}" HorizontalAlignment="Stretch"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <ListView Name="GridPatterns" SelectionMode="Extended" Margin="0,10,0,0" DockPanel.Dock="Top" 
+                              ItemsSource="{Binding Settings.LinkNamePatterns}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="200" Header="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletLinkName}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding LinkName, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="200" Header="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletNamePattern}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding NamePattern, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="200"  Header="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletUrlPattern}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding UrlPattern, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </DockPanel>
         </TabItem>
     </TabControl>

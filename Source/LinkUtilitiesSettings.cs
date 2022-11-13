@@ -98,10 +98,10 @@ namespace LinkUtilities
         /// <summary>
         /// Fills the pattern list with default values
         /// </summary>
-        public void FillDefaultLinkNamePatterns()
+        public List<LinkNamePattern> GetDefaultLinkNamePatterns()
         {
             string json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "DefaultLinkNamePatterns.json"));
-            LinkNamePatterns = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<LinkNamePattern>>(json);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<LinkNamePattern>>(json);
         }
     }
 
@@ -129,12 +129,33 @@ namespace LinkUtilities
             });
         }
 
-        public RelayCommand<LinkNamePattern> RemovePatternCommand
+        public RelayCommand AddDefaultPatternsCommand
         {
-            get => new RelayCommand<LinkNamePattern>((a) =>
+            get => new RelayCommand(() =>
             {
-                Settings.LinkNamePatterns.Remove(a);
+                List<LinkNamePattern> patterns = Settings.LinkNamePatterns.ToList();
+
+                foreach (LinkNamePattern item in Settings.GetDefaultLinkNamePatterns())
+                {
+                    if (!patterns.Any(x => x.LinkName == item.LinkName))
+                    {
+                        patterns.Add(item);
+                    }
+                }
+
+                Settings.LinkNamePatterns = new ObservableCollection<LinkNamePattern>(patterns.Distinct().OrderBy(x => x.LinkName));
             });
+        }
+
+        public RelayCommand<IList<object>> RemovePatternsCommand
+        {
+            get => new RelayCommand<IList<object>>((items) =>
+            {
+                foreach (LinkNamePattern linkPattern in items.ToList().Cast<LinkNamePattern>())
+                {
+                    Settings.LinkNamePatterns.Remove(linkPattern);
+                }
+            }, (items) => items != null && items.Count > 0);
         }
 
         public LinkUtilitiesSettingsViewModel(LinkUtilities plugin)
@@ -157,9 +178,9 @@ namespace LinkUtilities
                 Settings.LinkSettings = Settings.GetLinkSources(plugin.AddWebsiteLinks.Links);
             }
 
-            if (Settings.LinkNamePatterns == null || Settings.LinkNamePatterns.Count == 0)
+            if (Settings.LinkNamePatterns == null)
             {
-                Settings.FillDefaultLinkNamePatterns();
+                Settings.LinkNamePatterns = new ObservableCollection<LinkNamePattern>();
             }
 
             Settings.LinkNamePatterns = new ObservableCollection<LinkNamePattern>(Settings.LinkNamePatterns.OrderBy(x => x.LinkName));
