@@ -3,17 +3,19 @@
     <sys:String x:Key="LOCLinkUtilitiesName">Utilidades de Enlaces</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">¡Enlaces añadidos a {0} juegos!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Ya existe un enlace hacia {0}. ¿Deseas reemplazarlo?</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Name the link</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Please enter a name for the link!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">A link to {0} already exists. You can replace the existing link or add a new one by entering a new link name.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Buscar juego</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Elegir opción</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">¡Ordenados los enlaces de {0} juegos!</sys:String>
-    
+
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Añadir enlace de biblioteca</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Añadir enlace a...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Todas las webs configuradas</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Buscar enlace a...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinks">Ordenar enlaces por nombre</sys:String>
-    
+
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Añadir enlaces a bibliotecas...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Añadiendo enlaces...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Ordenando enlaces...</sys:String>
@@ -21,9 +23,19 @@
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Add link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Key</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Using a bookmarklet you can add the active website in your browser directly to the selected games in Playnite. To find a suiting link name, you can define patterns for the URL and link title here. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">For more information on the bookmarklet click here.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletLinkName">Link name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletNamePattern">Name pattern</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletUrlPattern">URL pattern</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Add</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Add defaults</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remove</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link source</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Search link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Show in menu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Ordenar enlaces después de que los metadatos del juego hayan sido actualizados</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">General settings</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarklet">Bookmarklet</sys:String>
 </ResourceDictionary>
