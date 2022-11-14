@@ -14,6 +14,7 @@
     {
         "linkName": "iPad/iPhone",
         "urlPattern": "*itunes.apple.com*",
+        "namePattern": "",
         "partialMatch": false
     },
     {
