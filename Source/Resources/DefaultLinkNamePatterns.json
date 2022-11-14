@@ -1,8 +1,18 @@
 [
     {
+        "linkName": "Co-Optimus",
+        "urlPattern": "*co-optimus.com*",
+        "namePattern": "Co-Optimus*"
+    },
+    {
         "linkName": "Epic",
         "urlPattern": "*epicgames.com*",
         "namePattern": "*Epic Games*"
+    },
+    {
+        "linkName": "Gamer Guides",
+        "urlPattern": "*gamerguides.com*",
+        "namePattern": "*Gamer Guides*"
     },
     {
         "linkName": "GOG",
