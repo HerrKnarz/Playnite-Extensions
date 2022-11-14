@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Links zu {0} Spielen hinzugefügt!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Link benennen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Bitte einen Namen für den Link eingeben!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Unwanted links of {0} games removed!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Ein Link zu {0} existiert bereits. Du kannst den bestehenden Link ersetzen oder einen neuen hinzufügen, indem du einen neuen Link-Namen eingibst.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Suche Spiel</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Option wählen</sys:String>
@@ -13,11 +14,13 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Bibliothekslink hinzufügen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Link hinzufügen zu...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Alle konfigurierten Webseiten</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Remove unwanted links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Link suchen zu...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinks">Links nach Namen sortieren</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Füge Bibliothekslinks hinzu...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Füge Links hinzu...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressRemoveLinks">Removing unwanted links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Sortiere Links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Füge Links zu konfigurierten Webseiten hinzu...</sys:String>
 
@@ -25,17 +28,22 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Schlüssel</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Mit einem Bookmarklet kannst du die aktive Webseite in deinem Browser direkt zu den ausgewählten Spielen in Playnite hinzufügen. Um einen passenden Link-Namen zu finden, kannst du hier Muster für die URL und den Link-Titel definieren. Die Muster können Platzhalter enthalten. Ein * kann null oder mehr Zeichen sein, ein ? muss genau ein Zeichen sein.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Klicke hie für weitere Informationen zum Bookmarklet.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletLinkName">Link-Name</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletNamePattern">Namensmuster</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletUrlPattern">URL-Muster</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">Often metadata providers automatically add links to some websites you don't want. Here you can define patterns for those links you want to remove. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Neu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Standardwerte hinzufügen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddRemoveDefaults">Add default unwanted links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Löschen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Webseiten konfigurieren</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Link name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link-Quelle</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">Name pattern</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatch">Partial match</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">When checked only one of both patterns has to match.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Link suchen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Im Menü zeigen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Links sortieren, nachdem die Spiel-Metadaten aktualisiert wurden</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Allgemeine Einstellungen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarklet">Bookmarklet</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Remove links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">URL pattern</sys:String>
 </ResourceDictionary>
