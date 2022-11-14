@@ -45,7 +45,6 @@ The following websites are supported for add/search functions (and can be toggle
   - Nexus Mods (maybe - could replace the nexus mods add-on)
   - Nintendo Fandom
   - SNK Wiki
-  - GameFAQs
   - Arcade History
   - Gamer Guides
   - Gamepressure Guides
@@ -54,5 +53,8 @@ The following websites are supported for add/search functions (and can be toggle
   - Reddit
   - Co-optimus
   - OpenCritic
+
+### Websites I won't support:
+- GameFAQs: They don't allow scraping, have no public API and the game links contain variable parts unknown to Playnite.
 
 If you have more ideas for this extension, feel free to suggest them by opening an issue!
