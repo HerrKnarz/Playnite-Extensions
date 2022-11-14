@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-// Contains all the classes needed to deserialize the JSON fetched from the gog embed url.
+// Contains all the classes needed to deserialize the JSON fetched from the gog embed URL.
 namespace LinkUtilities.Models.Gog
 {
     public class Availability

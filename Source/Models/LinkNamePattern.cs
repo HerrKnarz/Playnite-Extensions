@@ -28,7 +28,7 @@ namespace LinkUtilities.Models
         public string NamePattern { get; set; }
 
         /// <summary>
-        /// If true only one of both patterns has to match. If false both habe to match.
+        /// If true only one of both patterns has to match. If false both have to match.
         /// </summary>
         [JsonProperty("partialMatch")]
         public bool PartialMatch { get; set; }

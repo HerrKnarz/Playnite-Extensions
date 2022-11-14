@@ -62,7 +62,7 @@ namespace LinkUtilities.Linker
 
                 client.Headers.Add("Accept", "application/json");
 
-                // We use replace instead of format, because the url already contains several braces.
+                // We use replace instead of format, because the URL already contains several braces.
                 string url = SearchUrl
                     .Replace("{SearchString}", searchTerm.UrlEncode())
                     .Replace("{DateUntil}", DateTime.Now.AddDays(5).ToString("yyyy-MM-dd"));

@@ -16,7 +16,7 @@ namespace LinkUtilities.LinkActions
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogRemovedMessage";
 
         /// <summary>
-        /// List of patterns to find the links to delete based on url or link name
+        /// List of patterns to find the links to delete based on URL or link name
         /// </summary>
         public LinkNamePatterns RemovePatterns { get; set; }
 

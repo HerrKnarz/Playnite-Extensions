@@ -80,11 +80,11 @@ namespace LinkUtilities
         /// </summary>
         public ParameterInfo[] CallerParams { get; set; }
         /// <summary>
-        /// Name of the file the error occured in.
+        /// Name of the file the error occurred in.
         /// </summary>
         public string FileName { get; set; }
         /// <summary>
-        /// Number of the line the error occured in.
+        /// Number of the line the error occurred in.
         /// </summary>
         public int LineNumber { get; set; }
 

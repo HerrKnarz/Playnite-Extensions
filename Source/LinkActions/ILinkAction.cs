@@ -9,11 +9,11 @@ namespace LinkUtilities.LinkActions
     public interface ILinkAction
     {
         /// <summary>
-        /// Ressource for the localized text in the progress bar
+        /// Resource for the localized text in the progress bar
         /// </summary>
         string ProgressMessage { get; }
         /// <summary>
-        /// Ressource for the localized text in the result dialog. Should contain placeholder for the number of affected games.
+        /// Resource for the localized text in the result dialog. Should contain placeholder for the number of affected games.
         /// </summary>
         string ResultMessage { get; }
         /// <summary>

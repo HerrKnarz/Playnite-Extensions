@@ -19,8 +19,8 @@ namespace LinkUtilities
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
 
             IsUpdating = false;
-
-            sortLinks = new SortLinks(this);
+            DoAfterChange = new DoAfterChange(this);
+            SortLinks = new SortLinks(this);
             AddLibraryLinks = new AddLibraryLinks(this);
             AddWebsiteLinks = new AddWebsiteLinks(this);
             RemoveLinks = new RemoveLinks(this);
@@ -47,9 +47,14 @@ namespace LinkUtilities
         }
 
         /// <summary>
+        /// Class to execute specific actions after the meta data of a game changes
+        /// </summary>
+        public DoAfterChange DoAfterChange { get; }
+
+        /// <summary>
         /// Class to sort the Links of a game
         /// </summary>
-        private readonly SortLinks sortLinks;
+        public SortLinks SortLinks { get; }
 
         /// <summary>
         /// Class to add a link to the store page in the library of a game
@@ -84,7 +89,7 @@ namespace LinkUtilities
         /// <param name="linkAction">Instance of the action to be executed</param>
         private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false, string actionModifier = "")
         {
-            // While sorting Links we set IsUpdating to true, so the libraby update event knows it doesn't need to sort again.
+            // While sorting Links we set IsUpdating to true, so the library update event knows it doesn't need to sort again.
             IsUpdating = true;
 
             try
@@ -159,7 +164,7 @@ namespace LinkUtilities
             if (Settings.Settings.SortAfterChange && !IsUpdating)
             {
                 List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
-                DoForAll(games, sortLinks);
+                DoForAll(games, DoAfterChange);
             }
         }
 
@@ -179,7 +184,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, sortLinks, true);
+                        DoForAll(games, SortLinks, true);
                     }
                 },
                 // Adds the "add library Links" item to the game menu.
@@ -193,7 +198,7 @@ namespace LinkUtilities
                         DoForAll(games, AddLibraryLinks, true);
                     }
                 },
-                // Adds the "All configured websites" item to the "add link to" submenu.
+                // Adds the "All configured websites" item to the "add link to" sub menu.
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllConfiguredWebsites"),
@@ -204,13 +209,13 @@ namespace LinkUtilities
                         DoForAll(games, AddWebsiteLinks, true, "add");
                     }
                 },
-                // Adds a separator to the "add link to" submenu
+                // Adds a separator to the "add link to" sub menu
                 new GameMenuItem
                 {
                     Description = "-",
                     MenuSection = $"{menuSection}|{menuAddLinks}"
                 },
-                // Adds the "All configured websites" item to the "search link to" submenu.
+                // Adds the "All configured websites" item to the "search link to" sub menu.
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllConfiguredWebsites"),
@@ -221,7 +226,7 @@ namespace LinkUtilities
                         DoForAll(games, AddWebsiteLinks, true, "search");
                     }
                 },
-                // Adds a separator to the "search link to" submenu
+                // Adds a separator to the "search link to" sub menu
                 new GameMenuItem
                 {
                     Description = "-",
@@ -229,7 +234,7 @@ namespace LinkUtilities
                 }
             };
 
-            // Adds all linkable websites to the "add link to" and "search link to" submenus.
+            // Adds all linkable websites to the "add link to" and "search link to" sub menus.
             foreach (Linker.Link link in AddWebsiteLinks.Links)
             {
                 if (link.Settings.ShowInMenus & link.CanBeAdded)

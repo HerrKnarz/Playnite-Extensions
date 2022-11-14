@@ -27,11 +27,11 @@ namespace LinkUtilities.Linker
         /// </summary>
         string LinkUrl { get; set; }
         /// <summary>
-        /// Specifys, if the link can be added without a search dialog (e.g. an add function via BaseUrl is implemented)
+        /// Specifies, if the link can be added without a search dialog (e.g. an add function via BaseUrl is implemented)
         /// </summary>
         bool CanBeAdded { get; }
         /// <summary>
-        /// Specifys, if the link is searchable (e.g. a search function via SearchUrl is implemented)
+        /// Specifies, if the link is searchable (e.g. a search function via SearchUrl is implemented)
         /// </summary>
         bool CanBeSearched { get; }
         /// <summary>
@@ -39,7 +39,7 @@ namespace LinkUtilities.Linker
         /// </summary>
         LinkSourceSetting Settings { get; set; }
         /// <summary>
-        /// Specifys, if a redirect is allowed while checking the url. Some sites redirect to the homepage if the link isn't valid.
+        /// Specifies, if a redirect is allowed while checking the URL. Some sites redirect to the homepage if the link isn't valid.
         /// In that case this should be set to false.
         /// </summary>
         bool AllowRedirects { get; set; }
@@ -60,7 +60,7 @@ namespace LinkUtilities.Linker
         /// <returns>True, if a link was added</returns>
         bool AddSearchedLink(Game game);
         /// <summary>
-        /// Searches the website and returns a list of found games via GenericItemOption. An extended list with Url is also written to
+        /// Searches the website and returns a list of found games via GenericItemOption. An extended list with URL is also written to
         /// the list SearchResults. Must be implemented in the derived class or the result will be an empty list.
         /// </summary>
         /// <param name="searchTerm">Term to be searched for. Is usually the name of the game.</param>

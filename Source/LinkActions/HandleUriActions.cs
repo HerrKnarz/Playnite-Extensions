@@ -18,7 +18,7 @@ namespace LinkUtilities.LinkActions
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
         /// <summary>
-        /// Url of the link to be added in the "AddLink" action
+        /// URL of the link to be added in the "AddLink" action
         /// </summary>
         public string LinkUrl { get; set; }
 
@@ -33,7 +33,7 @@ namespace LinkUtilities.LinkActions
         public string Action { get; set; }
 
         /// <summary>
-        /// List of patterns to find the right link name for a given set of url and link title
+        /// List of patterns to find the right link name for a given set of URL and link title
         /// </summary>
         public LinkNamePatterns LinkNamePatterns { get; set; }
 

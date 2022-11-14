@@ -137,7 +137,7 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        /// PreRequest event for the HtmlWeb class. Is used to desable redirects,
+        /// PreRequest event for the HtmlWeb class. Is used to disable redirects,
         /// </summary>
         /// <param name="request">The request to be executed</param>
         /// <returns>True, if the request can be executed.</returns>

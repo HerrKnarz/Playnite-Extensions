@@ -15,14 +15,14 @@ namespace LinkUtilities.Models
         public string LinkName { get; set; }
 
         /// <summary>
-        /// Specifys if the link will be automatically added when clicking "all configured websites". Null indicates, that the
+        /// Specifies if the link will be automatically added when clicking "all configured websites". Null indicates, that the
         /// link has no add functionality.
         /// </summary>
         [JsonProperty("isAddable")]
         public bool? IsAddable { get; set; }
 
         /// <summary>
-        /// Specifys if the link will be automatically searched when clicking "all configured websites". Null indicates, that the
+        /// Specifies if the link will be automatically searched when clicking "all configured websites". Null indicates, that the
         /// link has no search functionality.
         /// </summary>
         [JsonProperty("isSearchable")]

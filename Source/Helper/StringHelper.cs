@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace LinkUtilities.Helper
 {
     /// <summary>
-    /// Helper class with extensions for the string datatype
+    /// Helper class with extensions for the string data type
     /// </summary>
     internal static class StringHelper
     {
@@ -34,7 +34,7 @@ namespace LinkUtilities.Helper
         {
             StringBuilder stringBuilder = new StringBuilder(str.Normalize(NormalizationForm.FormD));
 
-            // Replace certain special chars with special combinations of ascii chars (eg. german double s)
+            // Replace certain special chars with special combinations of ASCII chars (e.g. German double s)
             foreach (KeyValuePair<string, string> keyValuePair in SPECIAL_DIACRITICS)
             {
                 stringBuilder.Replace(keyValuePair.Key, keyValuePair.Value);

@@ -13,17 +13,15 @@ namespace LinkUtilities
     public class LinkUtilitiesSettings : ObservableObject
     {
         private bool sortAfterChange = false;
+        private bool removeLinksAfterChange = false;
         private LinkSourceSettings linkSettings;
         private LinkNamePatterns linkPatterns;
         private LinkNamePatterns removePatterns;
 
-        /// <summary>
-        /// sets whether the Links shall be sorted after a game is updated in the database
-        /// </summary>
         public bool SortAfterChange { get => sortAfterChange; set => SetValue(ref sortAfterChange, value); }
-        /// <summary>
-        /// Collection with the settings of all link sources
-        /// </summary>
+
+        public bool RemoveLinksAfterChange { get => removeLinksAfterChange; set => SetValue(ref removeLinksAfterChange, value); }
+
         public LinkSourceSettings LinkSettings { get => linkSettings; set => SetValue(ref linkSettings, value); }
 
         public LinkNamePatterns LinkNamePatterns { get => linkPatterns; set => SetValue(ref linkPatterns, value); }
@@ -108,13 +106,10 @@ namespace LinkUtilities
 
         public LinkUtilitiesSettingsViewModel(LinkUtilities plugin)
         {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
 
-            // Load saved settings.
             LinkUtilitiesSettings savedSettings = plugin.LoadPluginSettings<LinkUtilitiesSettings>();
 
-            // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
             {
                 Settings = savedSettings;
@@ -152,6 +147,7 @@ namespace LinkUtilities
         public void CancelEdit()
         {
             Settings.SortAfterChange = EditingClone.SortAfterChange;
+            Settings.RemoveLinksAfterChange = EditingClone.RemoveLinksAfterChange;
             Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;
             Settings.RemovePatterns = EditingClone.RemovePatterns;
 

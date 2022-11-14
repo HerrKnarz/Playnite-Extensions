@@ -76,7 +76,7 @@ namespace LinkUtilities.Helper
                         {
                             string url = node.SelectSingleNode("./div[@class='mw-search-result-heading']/a").GetAttributeValue("href", "");
 
-                            // MediaWiki returns subbages to games in the results, so we simply count the shashes to filter them out.
+                            // MediaWiki returns subpages to games in the results, so we simply count the slashes to filter them out.
                             if (url.Count(x => x == '/') < slashCount)
                             {
                                 string redirect = string.Empty;
