@@ -11,6 +11,7 @@ namespace LinkUtilities.Linker
         {
             Add(new LinkCoOptimus(plugin));
             Add(new LinkEpic(plugin));
+            Add(new LinkGamerGuides(plugin));
             Add(new LibraryLinkGog(plugin));
             Add(new LinkHG101(plugin));
             Add(new LibraryLinkItch(plugin));

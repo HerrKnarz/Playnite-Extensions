@@ -54,7 +54,7 @@ The following websites are supported for add/search functions (and can be toggle
   - Co-optimus
   - OpenCritic
 
-### Websites I won't support:
+### Websites I won't add to the extension:
 - GameFAQs: They don't allow scraping, have no public API and the game links contain variable parts unknown to Playnite.
 
 If you have more ideas for this extension, feel free to suggest them by opening an issue!

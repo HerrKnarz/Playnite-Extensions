@@ -14,7 +14,7 @@ namespace LinkUtilities.Linker
     class LinkCoOptimus : Link
     {
         public override string LinkName { get; } = "Co-Optimus";
-        public override string BaseUrl { get; } = "";
+        public override string BaseUrl { get; } = string.Empty;
         public override string SearchUrl { get; } = "https://api.co-optimus.com/games.php?search=true&name=";
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
