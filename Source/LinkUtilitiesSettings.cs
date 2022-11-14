@@ -15,6 +15,7 @@ namespace LinkUtilities
         private bool sortAfterChange = false;
         private LinkSourceSettings linkSettings;
         private LinkNamePatterns linkPatterns;
+        private LinkNamePatterns removePatterns;
 
         /// <summary>
         /// sets whether the Links shall be sorted after a game is updated in the database
@@ -26,6 +27,8 @@ namespace LinkUtilities
         public LinkSourceSettings LinkSettings { get => linkSettings; set => SetValue(ref linkSettings, value); }
 
         public LinkNamePatterns LinkNamePatterns { get => linkPatterns; set => SetValue(ref linkPatterns, value); }
+
+        public LinkNamePatterns RemovePatterns { get => removePatterns; set => SetValue(ref removePatterns, value); }
 
         public LinkUtilitiesSettings()
         {
@@ -49,7 +52,7 @@ namespace LinkUtilities
             }
         }
 
-        public RelayCommand AddPatternCommand
+        public RelayCommand AddLinkNamePatternCommand
         {
             get => new RelayCommand(() =>
             {
@@ -57,21 +60,48 @@ namespace LinkUtilities
             });
         }
 
-        public RelayCommand AddDefaultPatternsCommand
+        public RelayCommand AddDefaultLinkNamePatternsCommand
         {
             get => new RelayCommand(() =>
             {
-                Settings.LinkNamePatterns.AddDefaultPatterns();
+                Settings.LinkNamePatterns.AddDefaultPatterns(PatternTypes.LinkNamePattern);
             });
         }
 
-        public RelayCommand<IList<object>> RemovePatternsCommand
+        public RelayCommand<IList<object>> RemoveLinkNamePatternsCommand
         {
             get => new RelayCommand<IList<object>>((items) =>
             {
                 foreach (LinkNamePattern linkPattern in items.ToList().Cast<LinkNamePattern>())
                 {
                     Settings.LinkNamePatterns.Remove(linkPattern);
+                }
+            }, (items) => items != null && items.Count > 0);
+        }
+
+        public RelayCommand AddRemovePatternCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                Settings.RemovePatterns.Add(new LinkNamePattern());
+            });
+        }
+
+        public RelayCommand AddDefaultRemovePatternsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                Settings.RemovePatterns.AddDefaultPatterns(PatternTypes.RemovePattern);
+            });
+        }
+
+        public RelayCommand<IList<object>> RemoveRemovePatternsCommand
+        {
+            get => new RelayCommand<IList<object>>((items) =>
+            {
+                foreach (LinkNamePattern removePattern in items.ToList().Cast<LinkNamePattern>())
+                {
+                    Settings.RemovePatterns.Remove(removePattern);
                 }
             }, (items) => items != null && items.Count > 0);
         }
@@ -105,6 +135,13 @@ namespace LinkUtilities
             }
 
             Settings.LinkNamePatterns = new LinkNamePatterns(Settings.LinkNamePatterns.OrderBy(x => x.LinkName).ToList());
+
+            if (Settings.RemovePatterns == null)
+            {
+                Settings.RemovePatterns = new LinkNamePatterns();
+            }
+
+            Settings.RemovePatterns = new LinkNamePatterns(Settings.RemovePatterns.OrderBy(x => x.NamePattern).ThenBy(x => x.UrlPattern).ToList());
         }
 
         public void BeginEdit()
@@ -116,6 +153,7 @@ namespace LinkUtilities
         {
             Settings.SortAfterChange = EditingClone.SortAfterChange;
             Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;
+            Settings.RemovePatterns = EditingClone.RemovePatterns;
 
             foreach (LinkSourceSetting originalItem in Settings.LinkSettings)
             {
@@ -144,6 +182,7 @@ namespace LinkUtilities
             plugin.SavePluginSettings(Settings);
 
             plugin.HandleUriActions.LinkNamePatterns = Settings.LinkNamePatterns;
+            plugin.RemoveLinks.RemovePatterns = Settings.RemovePatterns;
         }
 
         public bool VerifySettings(out List<string> errors)

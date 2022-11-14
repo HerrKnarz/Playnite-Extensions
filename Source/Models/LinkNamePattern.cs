@@ -28,6 +28,12 @@ namespace LinkUtilities.Models
         public string NamePattern { get; set; }
 
         /// <summary>
+        /// If true only one of both patterns has to match. If false both habe to match.
+        /// </summary>
+        [JsonProperty("partialMatch")]
+        public bool PartialMatch { get; set; }
+
+        /// <summary>
         /// Regular expression of the UrlPattern
         /// </summary>
         [JsonIgnore]
@@ -41,8 +47,22 @@ namespace LinkUtilities.Models
 
         public bool LinkMatch(string linkName, string linkUrl)
         {
-            return (NamePattern == string.Empty || Regex.IsMatch(linkName, NameRegEx)) &&
-                (UrlPattern == string.Empty || Regex.IsMatch(linkUrl, UrlRegEx));
+            if (PartialMatch)
+            {
+                if (string.IsNullOrEmpty(NamePattern) | string.IsNullOrEmpty(UrlPattern))
+                {
+                    return false;
+                }
+                else
+                {
+                    return Regex.IsMatch(linkName, NameRegEx) || Regex.IsMatch(linkUrl, UrlRegEx);
+                }
+            }
+            else
+            {
+                return (string.IsNullOrEmpty(NamePattern) || Regex.IsMatch(linkName, NameRegEx)) &&
+                    (string.IsNullOrEmpty(UrlPattern) || Regex.IsMatch(linkUrl, UrlRegEx));
+            }
         }
     }
 }

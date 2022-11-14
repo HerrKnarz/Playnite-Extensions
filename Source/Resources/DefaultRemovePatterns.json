@@ -1,0 +1,43 @@
+[
+    {
+        "linkName": "Facebook",
+        "urlPattern": "*facebook.com*",
+        "namePattern": "*Facebook*",
+        "partialMatch": true
+    },
+    {
+        "linkName": "Instagram",
+        "urlPattern": "*instagram.com*",
+        "namePattern": "*Instagram*",
+        "partialMatch": true
+    },
+    {
+        "linkName": "iPad/iPhone",
+        "urlPattern": "*itunes.apple.com*",
+        "partialMatch": false
+    },
+    {
+        "linkName": "Android",
+        "urlPattern": "*play.google.com*",
+        "namePattern": "",
+        "partialMatch": false
+    },
+    {
+        "linkName": "Twitch",
+        "urlPattern": "*twitch.tv*",
+        "namePattern": "*Twitch*",
+        "partialMatch": true
+    },
+    {
+        "linkName": "Twitter",
+        "urlPattern": "*twitter.com*",
+        "namePattern": "*Twitter*",
+        "partialMatch": true
+    },
+    {
+        "linkName": "Youtube",
+        "urlPattern": "*youtube.com*",
+        "namePattern": "*Youtube*",
+        "partialMatch": true
+    }
+]

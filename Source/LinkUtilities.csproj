@@ -58,6 +58,7 @@
     <Compile Include="LinkActions\AddWebsiteLinks.cs" />
     <Compile Include="LinkActions\ILinkAction.cs" />
     <Compile Include="LinkActions\LinkAction.cs" />
+    <Compile Include="LinkActions\RemoveLinks.cs" />
     <Compile Include="Linker\IGameLibrary.cs" />
     <Compile Include="Linker\ILink.cs" />
     <Compile Include="Linker\Link.cs" />
@@ -271,6 +272,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Resources\DefaultLinkNamePatterns.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\DefaultRemovePatterns.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

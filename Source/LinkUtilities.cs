@@ -18,11 +18,13 @@ namespace LinkUtilities
         {
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
 
+            IsUpdating = false;
+
             sortLinks = new SortLinks(this);
             AddLibraryLinks = new AddLibraryLinks(this);
             AddWebsiteLinks = new AddWebsiteLinks(this);
+            RemoveLinks = new RemoveLinks(this);
             HandleUriActions = new HandleUriActions(this);
-            IsUpdating = false;
 
             Settings = new LinkUtilitiesSettingsViewModel(this);
             Properties = new GenericPluginProperties
@@ -31,7 +33,7 @@ namespace LinkUtilities
             };
 
             HandleUriActions.LinkNamePatterns = Settings.Settings.LinkNamePatterns;
-
+            RemoveLinks.RemovePatterns = Settings.Settings.RemovePatterns;
 
             PlayniteApi.UriHandler.RegisterSource("LinkUtilities", (args) =>
             {
@@ -59,6 +61,14 @@ namespace LinkUtilities
         /// </summary>
         public AddWebsiteLinks AddWebsiteLinks { get; }
 
+        /// <summary>
+        /// Handles UriHandler actions.
+        /// </summary>
+        public RemoveLinks RemoveLinks { get; }
+
+        /// <summary>
+        /// Handles UriHandler actions.
+        /// </summary>
         public HandleUriActions HandleUriActions { get; }
 
         /// <summary>
@@ -224,8 +234,7 @@ namespace LinkUtilities
             {
                 if (link.Settings.ShowInMenus & link.CanBeAdded)
                 {
-                    menuItems.Add(
-                    new GameMenuItem
+                    menuItems.Add(new GameMenuItem
                     {
                         Description = link.LinkName,
                         MenuSection = $"{menuSection}|{menuAddLinks}",
@@ -239,8 +248,7 @@ namespace LinkUtilities
 
                 if (link.Settings.ShowInMenus & link.CanBeSearched)
                 {
-                    menuItems.Add(
-                    new GameMenuItem
+                    menuItems.Add(new GameMenuItem
                     {
                         Description = link.LinkName,
                         MenuSection = $"{menuSection}|{menuSearchLinks}",
@@ -252,6 +260,21 @@ namespace LinkUtilities
                     });
 
                 }
+            }
+
+            // Adds the "Remove unwanted links" item to the game menu.
+            if (RemoveLinks.RemovePatterns != null && RemoveLinks.RemovePatterns.Count > 0)
+            {
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveUnwantedLinks"),
+                    MenuSection = menuSection,
+                    Action = a =>
+                    {
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, RemoveLinks, true);
+                    }
+                });
             }
 
             return menuItems;

@@ -8,6 +8,11 @@ using System.Reflection;
 namespace LinkUtilities.Settings
 {
     /// <summary>
+    /// Types of patterns that can be matched.
+    /// </summary>
+    public enum PatternTypes { LinkNamePattern, RemovePattern, RenamePattern }
+
+    /// <summary>
     /// Handles the Patterns to find link names for URL/link title combinations
     /// </summary>
     public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
@@ -31,20 +36,43 @@ namespace LinkUtilities.Settings
         /// <summary>
         /// Gets a list of default patterns.
         /// </summary>
-        public static List<LinkNamePattern> GetDefaultLinkNamePatterns()
+        /// <param name="type">
+        /// Type of the pattern to be added
+        /// </param>
+        public static List<LinkNamePattern> GetDefaultLinkNamePatterns(PatternTypes type)
         {
-            string json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "DefaultLinkNamePatterns.json"));
+            string fileName = string.Empty;
+
+            switch (type)
+            {
+                case PatternTypes.LinkNamePattern:
+                    {
+                        fileName = "DefaultLinkNamePatterns.json";
+                        break;
+                    }
+                case PatternTypes.RemovePattern:
+                    {
+                        fileName = "DefaultRemovePatterns.json";
+                        break;
+                    }
+                default: break;
+            }
+
+            string json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", fileName));
             return Newtonsoft.Json.JsonConvert.DeserializeObject<List<LinkNamePattern>>(json);
         }
 
         /// <summary>
         /// Adds the default patterns to the list and sorts it afterwards.
         /// </summary>
-        public void AddDefaultPatterns()
+        /// <param name="type">
+        /// Type of the pattern to be added
+        /// </param>
+        public void AddDefaultPatterns(PatternTypes type)
         {
             List<LinkNamePattern> patterns = this.ToList();
 
-            foreach (LinkNamePattern item in GetDefaultLinkNamePatterns())
+            foreach (LinkNamePattern item in GetDefaultLinkNamePatterns(type))
             {
                 if (!patterns.Any(x => x.LinkName == item.LinkName))
                 {
