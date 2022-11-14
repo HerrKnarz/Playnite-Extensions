@@ -39,6 +39,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">Name pattern</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatch">Partial match</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">When checked only one of both patterns has to match.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksAfterChange">Remove unwanted links after the game meta data was updated</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Search link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Show in menu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Ordenar enlaces después de que los metadatos del juego hayan sido actualizados</sys:String>
