@@ -63,6 +63,7 @@
     <Compile Include="Linker\IGameLibrary.cs" />
     <Compile Include="Linker\ILink.cs" />
     <Compile Include="Linker\Link.cs" />
+    <Compile Include="Linker\LinkSources\LinkCoOptimus.cs" />
     <Compile Include="Linker\LinkSources\LinkEpic.cs" />
     <Compile Include="Linker\LinkSources\LinkLemonAmiga.cs" />
     <Compile Include="Linker\LinkSources\LinkMetacritic.cs" />

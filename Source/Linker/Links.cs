@@ -9,6 +9,7 @@ namespace LinkUtilities.Linker
     {
         public Links(LinkUtilities plugin)
         {
+            Add(new LinkCoOptimus(plugin));
             Add(new LinkEpic(plugin));
             Add(new LibraryLinkGog(plugin));
             Add(new LinkHG101(plugin));
