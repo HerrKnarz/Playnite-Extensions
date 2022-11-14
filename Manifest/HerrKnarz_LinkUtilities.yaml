@@ -1,5 +1,11 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 1.2
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-11-14
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v1.2/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_1_2_0.pext
+    Changelog:
+      - added option to remove unwanted links (automatically or manually). Can be configured in the settings!
   - Version: 1.1
     RequiredApiVersion: 6.5.0
     ReleaseDate: 2022-11-13
