@@ -128,7 +128,7 @@
                             Command="{Binding AddRemovePatternCommand}"/>
                     <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}" Margin="10,0,0,0"
                             Command="{Binding RemoveRemovePatternsCommand}"
-                            CommandParameter="{Binding SelectedItems, ElementName=GridPatterns}"/>
+                            CommandParameter="{Binding SelectedItems, ElementName=GridRemovePatterns}"/>
                     <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonAddRemoveDefaults}" Margin="10,0,0,0"
                             Command="{Binding AddDefaultRemovePatternsCommand}"/>
                 </StackPanel>
