@@ -20,7 +20,9 @@ The following websites are supported for add/search functions (and can be toggle
 
 | **Website**         | **Add**                                   | **Search**                | **Library**                                    |
 |---------------------|-------------------------------------------|---------------------------|------------------------------------------------|
+| Co-Optimus          | no (link contains several variable parts) | yes                       | no                                            |
 | Epic                | yes                                       | yes                       | no (can't find a way to get a definitive link) |
+| Gamer Guides        | yes                                       | no (scraping not allowed) | no                                             |
 | GOG                 | yes                                       | yes                       | yes                                            |
 | Hardcore Gaming 101 | yes                                       | yes                       | no                                             |
 | itch.io             | no (link contains several variable parts) | yes                       | yes                                            |
@@ -46,12 +48,10 @@ The following websites are supported for add/search functions (and can be toggle
   - Nintendo Fandom
   - SNK Wiki
   - Arcade History
-  - Gamer Guides
   - Gamepressure Guides
   - IGN
   - IGN Guides
   - Reddit
-  - Co-optimus
   - OpenCritic
 
 ### Websites I won't add to the extension:
