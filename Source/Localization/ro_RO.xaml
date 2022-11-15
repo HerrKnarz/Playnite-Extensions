@@ -12,13 +12,16 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Select option</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Links of {0} games sorted!</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">You have duplicates in your sort order. Please make sure every link name is unique.</sys:String>
+
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Add library link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Add link to...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">All configured websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Remove unwanted links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Rename links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Search link to...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuSortLinks">Sort links by name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Sort links by name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Sort links by sort order</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Adding library links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Adding links...</sys:String>
@@ -34,7 +37,9 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Add</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Add defaults</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remove</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sort</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Define custom sort order</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Link name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link source</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">Name pattern</sys:String>
@@ -48,9 +53,12 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Search link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Show in menu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Sort links after the game meta data was updated</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">General settings</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSortPosition">Position</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarklet">Bookmarklet</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">General settings</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Remove links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Rename links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Sorting</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">URL pattern</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Use custom sort order on automatic sort</sys:String>
 </ResourceDictionary>
