@@ -1,5 +1,12 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 1.4
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-11-15
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v1.4/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_1_4_0.pext
+    Changelog:
+      - added option to rename links (automatically or manually).
+      - added option to define a custom sort order.
   - Version: 1.3
     RequiredApiVersion: 6.5.0
     ReleaseDate: 2022-11-14

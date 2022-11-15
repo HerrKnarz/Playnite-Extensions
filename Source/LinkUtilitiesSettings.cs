@@ -68,7 +68,18 @@ namespace LinkUtilities
         {
             get => new RelayCommand(() =>
             {
-                Settings.SortOrder.Add(new SortItem());
+                int position = 1;
+
+                if (Settings.SortOrder.Count > 0)
+                {
+                    position = Settings.SortOrder.Max(x => x.Position) + 1;
+                }
+
+                Settings.SortOrder.Add(new SortItem()
+                {
+                    LinkName = "",
+                    Position = position
+                });
             });
         }
 
