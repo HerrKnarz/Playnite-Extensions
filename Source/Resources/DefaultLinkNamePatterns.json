@@ -2,86 +2,103 @@
     {
         "linkName": "Co-Optimus",
         "urlPattern": "*co-optimus.com*",
-        "namePattern": "Co-Optimus*"
+        "namePattern": "Co-Optimus*",
+        "partialMatch": false
     },
     {
         "linkName": "Epic",
         "urlPattern": "*epicgames.com*",
-        "namePattern": "*Epic Games*"
+        "namePattern": "*Epic Games*",
+        "partialMatch": false
     },
     {
         "linkName": "Gamer Guides",
         "urlPattern": "*gamerguides.com*",
-        "namePattern": "*Gamer Guides*"
+        "namePattern": "*Gamer Guides*",
+        "partialMatch": false
     },
     {
         "linkName": "GOG",
         "urlPattern": "*gog.com*",
-        "namePattern": "*GOG.com*"
+        "namePattern": "*GOG.com*",
+        "partialMatch": false
     },
     {
         "linkName": "Hardcore Gaming 101",
         "urlPattern": "*hardcoregaming101.net*",
-        "namePattern": "*Hardcore Gaming 101*"
+        "namePattern": "*Hardcore Gaming 101*",
+        "partialMatch": false
     },
     {
         "linkName": "IGDB",
         "urlPattern": "*igdb.com*",
-        "namePattern": ""
+        "namePattern": "",
+        "partialMatch": false
     },
     {
         "linkName": "itch",
         "urlPattern": "*itch.io*",
-        "namePattern": ""
+        "namePattern": "",
+        "partialMatch": false
     },
     {
         "linkName": "Lemon Amiga",
         "urlPattern": "*lemonamiga.com*",
-        "namePattern": "*Lemon Amiga*"
+        "namePattern": "*Lemon Amiga*",
+        "partialMatch": false
     },
     {
         "linkName": "Metacritic",
         "urlPattern": "*metacritic.com*",
-        "namePattern": "*Metacritic*"
+        "namePattern": "*Metacritic*",
+        "partialMatch": false
     },
     {
         "linkName": "MobyGames",
         "urlPattern": "*mobygames.com*",
-        "namePattern": "*MobyGames*"
+        "namePattern": "*MobyGames*",
+        "partialMatch": false
     },
     {
         "linkName": "NEC Retro",
         "urlPattern": "*necretro.org*",
-        "namePattern": "*NEC Retro*"
+        "namePattern": "*NEC Retro*",
+        "partialMatch": false
     },
     {
         "linkName": "PCGamingWiki",
         "urlPattern": "*pcgamingwiki.com*",
-        "namePattern": "*PCGamingWiki*"
+        "namePattern": "*PCGamingWiki*",
+        "partialMatch": false
     },
     {
         "linkName": "RAWG",
         "urlPattern": "*rawg.io*",
-        "namePattern": "*RAWG*"
+        "namePattern": "*RAWG*",
+        "partialMatch": false
     },
     {
         "linkName": "Sega Retro",
         "urlPattern": "*segaretro.org*",
-        "namePattern": "*Sega Retro*"
+        "namePattern": "*Sega Retro*",
+        "partialMatch": false
     },
     {
         "linkName": "Steam",
         "urlPattern": "*steampowered.com*",
-        "namePattern": "*Steam*"
+        "namePattern": "*Steam*",
+        "partialMatch": false
     },
     {
         "linkName": "StrategyWiki",
         "urlPattern": "*strategywiki.org*",
-        "namePattern": "*StrategyWiki*"
+        "namePattern": "*StrategyWiki*",
+        "partialMatch": false
     },
     {
         "linkName": "Wikipedia",
         "urlPattern": "*wikipedia.org*",
-        "namePattern": "*Wikipedia*"
+        "namePattern": "*Wikipedia*",
+        "partialMatch": false
     }
 ]

@@ -55,6 +55,11 @@ namespace LinkUtilities.Settings
                         fileName = "DefaultRemovePatterns.json";
                         break;
                     }
+                case PatternTypes.RenamePattern:
+                    {
+                        fileName = "DefaultRenamePatterns.json";
+                        break;
+                    }
                 default: break;
             }
 

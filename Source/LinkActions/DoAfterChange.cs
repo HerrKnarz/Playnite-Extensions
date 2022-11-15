@@ -18,6 +18,11 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
+            if (Plugin.Settings.Settings.RenameLinksAfterChange && Plugin.RenameLinks.RenamePatterns != null && Plugin.RenameLinks.RenamePatterns.Count > 0)
+            {
+                result = Plugin.RenameLinks.Execute(game, actionModifier);
+            }
+
             if (Plugin.Settings.Settings.RemoveLinksAfterChange && Plugin.RemoveLinks.RemovePatterns != null && Plugin.RemoveLinks.RemovePatterns.Count > 0)
             {
                 result = Plugin.RemoveLinks.Execute(game, actionModifier);

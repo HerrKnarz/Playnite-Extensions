@@ -24,6 +24,7 @@ namespace LinkUtilities
             AddLibraryLinks = new AddLibraryLinks(this);
             AddWebsiteLinks = new AddWebsiteLinks(this);
             RemoveLinks = new RemoveLinks(this);
+            RenameLinks = new RenameLinks(this);
             HandleUriActions = new HandleUriActions(this);
 
             Settings = new LinkUtilitiesSettingsViewModel(this);
@@ -34,6 +35,7 @@ namespace LinkUtilities
 
             HandleUriActions.LinkNamePatterns = Settings.Settings.LinkNamePatterns;
             RemoveLinks.RemovePatterns = Settings.Settings.RemovePatterns;
+            RenameLinks.RenamePatterns = Settings.Settings.RenamePatterns;
 
             PlayniteApi.UriHandler.RegisterSource("LinkUtilities", (args) =>
             {
@@ -67,9 +69,14 @@ namespace LinkUtilities
         public AddWebsiteLinks AddWebsiteLinks { get; }
 
         /// <summary>
-        /// Handles UriHandler actions.
+        /// Class to remove unwanted links.
         /// </summary>
         public RemoveLinks RemoveLinks { get; }
+
+        /// <summary>
+        /// Class to rename links.
+        /// </summary>
+        public RenameLinks RenameLinks { get; }
 
         /// <summary>
         /// Handles UriHandler actions.
@@ -281,9 +288,22 @@ namespace LinkUtilities
                     }
                 });
             }
+            // Adds the "Rename links" item to the game menu.
+            if (RenameLinks.RenamePatterns != null && RenameLinks.RenamePatterns.Count > 0)
+            {
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRenameLinks"),
+                    MenuSection = menuSection,
+                    Action = a =>
+                    {
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, RenameLinks, true);
+                    }
+                });
+            }
 
             return menuItems;
-            ;
         }
 
         /// <summary>

@@ -1,0 +1,38 @@
+[
+    {
+        "linkName": "Epic",
+        "urlPattern": "*epicgames.com*",
+        "namePattern": "",
+        "partialMatch": false
+    },
+    {
+        "linkName": "GOG",
+        "urlPattern": "*gog.com*",
+        "namePattern": "",
+        "partialMatch": false
+    },
+    {
+        "linkName": "itch",
+        "urlPattern": "*itch.io*",
+        "namePattern": "",
+        "partialMatch": false
+    },
+    {
+        "linkName": "Official Website",
+        "urlPattern": "",
+        "namePattern": "Website",
+        "partialMatch": false
+    },
+    {
+        "linkName": "Steam",
+        "urlPattern": "*steampowered.com*",
+        "namePattern": "",
+        "partialMatch": false
+    },
+    {
+        "linkName": "Wikipedia",
+        "urlPattern": "*wikipedia.org*",
+        "namePattern": "",
+        "partialMatch": false
+    }
+]
