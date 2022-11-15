@@ -8,8 +8,9 @@
 
 This is an extension for the superb open source video game library manager and launcher [Playnite](http://playnite.link/). At the moment it can do the following:
 
-- Sort links by name via game menu or optionally automatically after metadata change.
+- Sort links by name or custom sort order via game menu or optionally automatically after metadata change.
 - Remove unwanted links (e.g. social media links added by IGDB) via game menu or optionally automatically after metadata change.
+- Rename links (e.g. shorten wikipedia to wiki) via game menu or optionally automatically after metadata change.
 - Add links to several websites directly by trying to find a valid link using the game name
 - Search for games on several websites to add links via search dialog
 - Add library links: add links to the game page of its library
@@ -38,9 +39,6 @@ The following websites are supported for add/search functions (and can be toggle
 | Wikipedia           | yes                                       | yes                       | no                                             |
 
 ## Planned features
-- option to rename links (e.g. change wikipedia to wiki)
-- option to define a custom sort order
-- check if links are still working, optional removal of dead links
 - add links to more websites. The following are already planned:
   - How Long To Beat
   - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
@@ -53,6 +51,7 @@ The following websites are supported for add/search functions (and can be toggle
   - IGN Guides
   - Reddit
   - OpenCritic
+- check if links are still working, optional removal of dead links (postponed for now, because several sites return 403 when checked without real browser)
 
 ### Websites I won't add to the extension:
 - GameFAQs: They don't allow scraping, have no public API and the game links contain variable parts unknown to Playnite.
