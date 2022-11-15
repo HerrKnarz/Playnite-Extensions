@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK.Models;
+using System.Collections.Generic;
 
 namespace LinkUtilities.LinkActions
 {
@@ -14,9 +15,18 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressSortLinks";
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogSortedMessage";
 
+        public Dictionary<string, int> SortOrder { get; set; }
+
         public override bool Execute(Game game, string actionModifier = "")
         {
-            return LinkHelper.SortLinks(game);
+            if (actionModifier == "SortOrder" || (actionModifier == "" && Plugin.Settings.Settings.UseCustomSortOrder))
+            {
+                return LinkHelper.SortLinks(game, SortOrder);
+            }
+            else
+            {
+                return LinkHelper.SortLinks(game);
+            }
         }
     }
 }

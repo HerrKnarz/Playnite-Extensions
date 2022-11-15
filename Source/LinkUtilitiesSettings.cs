@@ -4,6 +4,7 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace LinkUtilities
@@ -14,8 +15,10 @@ namespace LinkUtilities
     public class LinkUtilitiesSettings : ObservableObject
     {
         private bool sortAfterChange = false;
+        private bool useCustomSortOrder = false;
         private bool removeLinksAfterChange = false;
         private bool renameLinksAfterChange = false;
+        private ObservableCollection<SortItem> sortOrder;
         private LinkSourceSettings linkSettings;
         private LinkNamePatterns linkPatterns;
         private LinkNamePatterns removePatterns;
@@ -23,9 +26,13 @@ namespace LinkUtilities
 
         public bool SortAfterChange { get => sortAfterChange; set => SetValue(ref sortAfterChange, value); }
 
+        public bool UseCustomSortOrder { get => useCustomSortOrder; set => SetValue(ref useCustomSortOrder, value); }
+
         public bool RemoveLinksAfterChange { get => removeLinksAfterChange; set => SetValue(ref removeLinksAfterChange, value); }
 
         public bool RenameLinksAfterChange { get => renameLinksAfterChange; set => SetValue(ref renameLinksAfterChange, value); }
+
+        public ObservableCollection<SortItem> SortOrder { get => sortOrder; set => SetValue(ref sortOrder, value); }
 
         public LinkSourceSettings LinkSettings { get => linkSettings; set => SetValue(ref linkSettings, value); }
 
@@ -55,6 +62,33 @@ namespace LinkUtilities
                 settings = value;
                 OnPropertyChanged();
             }
+        }
+
+        public RelayCommand AddSortItemCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                Settings.SortOrder.Add(new SortItem());
+            });
+        }
+
+        public RelayCommand<IList<object>> RemoveSortItemsCommand
+        {
+            get => new RelayCommand<IList<object>>((items) =>
+            {
+                foreach (SortItem item in items.ToList().Cast<SortItem>())
+                {
+                    Settings.SortOrder.Remove(item);
+                }
+            }, (items) => items != null && items.Count > 0);
+        }
+
+        public RelayCommand SortSortItemsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                SortSortItems();
+            });
         }
 
         public RelayCommand AddLinkNamePatternCommand
@@ -147,6 +181,22 @@ namespace LinkUtilities
                 .ToList());
         }
 
+        private void SortSortItems()
+        {
+            Settings.SortOrder = new ObservableCollection<SortItem>(Settings.SortOrder
+                .OrderBy(x => x.Position)
+                .ThenBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
+                .ToList());
+        }
+
+        public void WriteSettingsToLinkActions()
+        {
+            plugin.SortLinks.SortOrder = Settings.SortOrder.ToDictionary(x => x.LinkName, x => x.Position);
+            plugin.HandleUriActions.LinkNamePatterns = Settings.LinkNamePatterns;
+            plugin.RemoveLinks.RemovePatterns = Settings.RemovePatterns;
+            plugin.RenameLinks.RenamePatterns = Settings.RenamePatterns;
+        }
+
         public LinkUtilitiesSettingsViewModel(LinkUtilities plugin)
         {
             this.plugin = plugin;
@@ -167,24 +217,41 @@ namespace LinkUtilities
                 };
             }
 
+            if (Settings.SortOrder == null)
+            {
+                Settings.SortOrder = new ObservableCollection<SortItem>();
+            }
+            else
+            {
+                SortSortItems();
+            }
+
             if (Settings.LinkNamePatterns == null)
             {
                 Settings.LinkNamePatterns = new LinkNamePatterns();
+            }
+            else
+            {
+                PreparePatterns(Settings.LinkNamePatterns);
             }
 
             if (Settings.RemovePatterns == null)
             {
                 Settings.RemovePatterns = new LinkNamePatterns();
             }
+            else
+            {
+                PreparePatterns(Settings.RemovePatterns);
+            }
 
             if (Settings.RenamePatterns == null)
             {
                 Settings.RenamePatterns = new LinkNamePatterns();
             }
-
-            PreparePatterns(Settings.LinkNamePatterns);
-            PreparePatterns(Settings.RemovePatterns);
-            PreparePatterns(Settings.RenamePatterns);
+            else
+            {
+                PreparePatterns(Settings.RenamePatterns);
+            }
         }
 
         public void BeginEdit()
@@ -195,8 +262,10 @@ namespace LinkUtilities
         public void CancelEdit()
         {
             Settings.SortAfterChange = EditingClone.SortAfterChange;
+            Settings.UseCustomSortOrder = EditingClone.UseCustomSortOrder;
             Settings.RemoveLinksAfterChange = EditingClone.RemoveLinksAfterChange;
             Settings.RenameLinksAfterChange = EditingClone.RenameLinksAfterChange;
+            Settings.SortOrder = EditingClone.SortOrder;
             Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;
             Settings.RemovePatterns = EditingClone.RemovePatterns;
             Settings.RenamePatterns = EditingClone.RenamePatterns;
@@ -227,14 +296,23 @@ namespace LinkUtilities
         {
             plugin.SavePluginSettings(Settings);
 
-            plugin.HandleUriActions.LinkNamePatterns = Settings.LinkNamePatterns;
-            plugin.RemoveLinks.RemovePatterns = Settings.RemovePatterns;
-            plugin.RenameLinks.RenamePatterns = Settings.RenamePatterns;
+            WriteSettingsToLinkActions();
         }
 
         public bool VerifySettings(out List<string> errors)
         {
             errors = new List<string>();
+
+            HashSet<string> hashset = new HashSet<string>();
+            foreach (SortItem item in Settings.SortOrder)
+            {
+                if (!hashset.Add(item.LinkName))
+                {
+                    errors.Add(ResourceProvider.GetString("LOCLinkUtilitiesErrorDuplicates"));
+                    return false;
+                }
+            }
+
             return true;
         }
     }

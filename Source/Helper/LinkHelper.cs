@@ -1,6 +1,8 @@
 ﻿using HtmlAgilityPack;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -118,8 +120,8 @@ namespace LinkUtilities
         /// <summary>
         /// Sorts the Links of a game alphabetically by the link name.
         /// </summary>
-        /// <param name="game"></param>
-        /// <returns></returns>
+        /// <param name="game">Game in which the links will be sorted.</param>
+        /// <returns>True, if the links could be sorted</returns>
         public static bool SortLinks(Game game)
         {
             if (game.Links != null && game.Links.Count > 0)
@@ -133,6 +135,48 @@ namespace LinkUtilities
             else
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Sorts the Links of a game according to a defined sort order.
+        /// </summary>
+        /// <param name="game">Game in which the links will be sorted.</param>
+        /// <param name="sortOrder">Dictionary that contains the sort order.</param>
+        /// <returns>True, if the links could be sorted</returns>
+        public static bool SortLinks(Game game, Dictionary<string, int> sortOrder)
+        {
+            if (game.Links != null && game.Links.Count > 0)
+            {
+                game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => GetSortPosition(x.Name, sortOrder)).ThenBy(x => x.Name));
+
+                API.Instance.Database.Games.Update(game);
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets the sort position of a link name in the dictionary. If nothing is found, max int is returned, so the link will
+        /// be last.
+        /// </summary>
+        /// <param name="linkName">Name of the link to be sorted</param>
+        /// <param name="sortOrder">Dictionary that contains the sort order.</param>
+        /// <returns>Position in the sort order. The max int is returned, if the link name is not in the dictionary. That way
+        /// those links will always appear after the defined order.</returns>
+        private static int? GetSortPosition(string linkName, Dictionary<string, int> sortOrder)
+        {
+            if (sortOrder.TryGetValue(linkName, out int position))
+            {
+                return position;
+            }
+            else
+            {
+                return Int32.MaxValue;
             }
         }
 

@@ -33,9 +33,7 @@ namespace LinkUtilities
                 HasSettings = true
             };
 
-            HandleUriActions.LinkNamePatterns = Settings.Settings.LinkNamePatterns;
-            RemoveLinks.RemovePatterns = Settings.Settings.RemovePatterns;
-            RenameLinks.RenamePatterns = Settings.Settings.RenamePatterns;
+            Settings.WriteSettingsToLinkActions();
 
             PlayniteApi.UriHandler.RegisterSource("LinkUtilities", (args) =>
             {
@@ -183,17 +181,6 @@ namespace LinkUtilities
 
             List<GameMenuItem> menuItems = new List<GameMenuItem>
             {
-                // Adds the "sort Links" item to the game menu.
-                new GameMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinks"),
-                    MenuSection = menuSection,
-                    Action = a =>
-                    {
-                        List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks, true);
-                    }
-                },
                 // Adds the "add library Links" item to the game menu.
                 new GameMenuItem
                 {
@@ -238,8 +225,34 @@ namespace LinkUtilities
                 {
                     Description = "-",
                     MenuSection = $"{menuSection}|{menuSearchLinks}"
+                },
+                // Adds the "sort Links by name" item to the game menu.
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
+                    MenuSection = menuSection,
+                    Action = a =>
+                    {
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, SortLinks, true, "Name");
+                    }
                 }
             };
+
+            // Adds the "sort Links by sort order" item to the game menu.
+            if (SortLinks.SortOrder != null && SortLinks.SortOrder.Count > 0)
+            {
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksBySortOrder"),
+                    MenuSection = menuSection,
+                    Action = a =>
+                    {
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, SortLinks, true, "SortOrder");
+                    }
+                });
+            }
 
             // Adds all linkable websites to the "add link to" and "search link to" sub menus.
             foreach (Linker.Link link in AddWebsiteLinks.Links)
