@@ -40,17 +40,19 @@ The following websites are supported for add/search functions (and can be toggle
 
 ## Planned features
 - add links to more websites. The following are already planned:
+  - Arcade History
+  - Arcade Database (arcadeitalia.net)
+  - Gamepressure Guides
   - How Long To Beat
   - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
-  - Nexus Mods (maybe - could replace the nexus mods add-on)
-  - Nintendo Fandom
-  - SNK Wiki
-  - Arcade History
-  - Gamepressure Guides
   - IGN
   - IGN Guides
-  - Reddit
+  - mamedb.com
+  - Nexus Mods (maybe - could replace the nexus mods add-on)
+  - Nintendo Fandom
   - OpenCritic
+  - Reddit
+  - SNK Wiki
 - check if links are still working, optional removal of dead links (postponed for now, because several sites return 403 when checked without real browser)
 
 ### Websites I won't add to the extension:
