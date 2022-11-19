@@ -1,5 +1,12 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 1.5
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-11-19
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v1.5/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_1_5_0.pext
+    Changelog:
+      - added support for Arcade Database (add/search)
+      - small bug fixes
   - Version: 1.4
     RequiredApiVersion: 6.5.0
     ReleaseDate: 2022-11-15
@@ -71,14 +78,14 @@ Packages:
       - extended support for steam (search)
       - extended support for itch.io (search)
       - extended support for GOG (add/search)
-      - completed translation to czech (thx saVantCZ)
+      - completed translation to Czech (thx saVantCZ)
   - Version: 0.5
     RequiredApiVersion: 6.5.0
     ReleaseDate: 2022-10-30
     PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v0.5-alpha/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_0_5.pext
     Changelog:
       - fixed duplication bug when adding new games
-      - added translations to spanish (thx Madcore) and partially czech (thx saVantCZ)
+      - added translations to Spanish (thx Madcore) and partially Czech (thx saVantCZ)
       - unfortunately had to remove IGDB for the time being because it didn't really work and wasn't following their terms of service. It will hopefully be added again at a later date!
   - Version: 0.4
     RequiredApiVersion: 6.5.0

@@ -1,5 +1,11 @@
 [
     {
+        "linkName": "Arcade Database",
+        "urlPattern": "*adb.arcadeitalia.net*",
+        "namePattern": "",
+        "partialMatch": false
+    },
+    {
         "linkName": "Co-Optimus",
         "urlPattern": "*co-optimus.com*",
         "namePattern": "Co-Optimus*",
