@@ -30,11 +30,14 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes != null && htmlNodes.Count > 0)
                 {
+                    int counter = 0;
                     foreach (HtmlNode node in htmlNodes)
                     {
+                        counter++;
+
                         SearchResults.Add(new SearchResult
                         {
-                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./title").InnerText),
+                            Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./title").InnerText)}",
                             Url = node.SelectSingleNode("./url").InnerText,
                             Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./system").InnerText)} - {WebUtility.HtmlDecode(node.SelectSingleNode("./publisher").InnerText)} ({node.SelectSingleNode("./releasedate").InnerText})"
                         });
