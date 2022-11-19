@@ -81,7 +81,7 @@
         "linkName": "Sega Retro",
         "urlPattern": "*segaretro.org*",
         "namePattern": "*Sega Retro*",
-        "partialMatch": false
+        "partialMatch": true
     },
     {
         "linkName": "Steam",

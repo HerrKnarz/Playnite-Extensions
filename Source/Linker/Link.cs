@@ -56,7 +56,7 @@ namespace LinkUtilities.Linker
             {
                 LinkUrl = $"{BaseUrl}{GetGamePath(game)}";
 
-                if (LinkHelper.CheckUrl(LinkUrl, AllowRedirects))
+                if (CheckLink(LinkUrl))
                 {
                     return LinkHelper.AddLink(game, LinkName, LinkUrl, plugin.Settings.Settings);
                 }
@@ -71,6 +71,11 @@ namespace LinkUtilities.Linker
             {
                 return false;
             }
+        }
+
+        public virtual bool CheckLink(string link)
+        {
+            return LinkHelper.CheckUrl(link, AllowRedirects);
         }
 
         public virtual string GetGamePath(Game game)

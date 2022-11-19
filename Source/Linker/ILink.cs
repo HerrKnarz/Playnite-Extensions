@@ -75,6 +75,12 @@ namespace LinkUtilities.Linker
         /// </returns>
         bool AddLink(Game game);
         /// <summary>
+        /// Checks if the link is valid.
+        /// </summary>
+        /// <param name="link">The link to check</param>
+        /// <returns></returns>
+        bool CheckLink(string link);
+        /// <summary>
         /// Determines the game path part of the link.
         /// </summary>
         /// <param name="game">Game the link will be added to</param>

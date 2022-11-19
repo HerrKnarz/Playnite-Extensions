@@ -84,7 +84,7 @@ namespace LinkUtilities.Linker
 
                     LinkUrl = $"{BaseUrl}{platformNormalized}/{gameName}";
 
-                    if (LinkHelper.CheckUrl(LinkUrl))
+                    if (CheckLink(LinkUrl))
                     {
                         result = LinkHelper.AddLink(game, linkName, LinkUrl, Plugin.Settings.Settings) || result;
                     }
