@@ -48,7 +48,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">Wenn diese Option aktiviert ist, muss nur eines der beiden Muster übereinstimmen.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksAfterChange">Entferne unerwünschte Links, nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">Oft fügen Metadaten-Anbieter automatisch Links zu Webseiten hinzu, die du nicht möchtest. Hier kannst du Muster für die Links definieren, die du entfernen möchtest. Die Muster können Platzhalter enthalten. Ein * kann Null oder mehr Zeichen sein, ein ? muss genau ein Zeichen sein.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksAfterChange">Benenne Links um, nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksAfterChange">Links umbenennen, nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksDescription">Wenn du den Namen spezifischer Links ändern möchtest, da sie nicht deinen Bedürfnissen entsprechen, kannst du das mit diesen Mustern tun. Sie können Platzhalter enthalten. Ein * kann null oder mehr Zeichen sein, ein ? muss genau ein Zeichen sein.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Link suchen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Im Menü zeigen</sys:String>
