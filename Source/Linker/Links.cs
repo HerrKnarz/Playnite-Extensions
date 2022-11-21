@@ -26,6 +26,7 @@ namespace LinkUtilities.Linker
             Add(new LibraryLinkSteam(plugin));
             Add(new LinkStrategyWiki(plugin));
             Add(new LinkWikipedia(plugin));
+            Add(new LinkZopharsDomain(plugin));
         }
     }
 }

@@ -106,5 +106,11 @@
         "urlPattern": "*wikipedia.org*",
         "namePattern": "*Wikipedia*",
         "partialMatch": false
+    },
+    {
+        "linkName": "Zophar (Music)",
+        "urlPattern": "*zophar.net/music*",
+        "namePattern": "*Zophar's Domain",
+        "partialMatch": false
     }
 ]
