@@ -50,7 +50,6 @@ The following websites are supported for add/search functions (and can be toggle
   - Nexus Mods (maybe - could replace the nexus mods add-on)
   - Nintendo Fandom
   - OpenCritic
-  - Reddit
   - SNK Wiki
   - Zophar's Domain (Music)
 - check if links are still working, optional removal of dead links (postponed for now, because several sites return 403 when checked without real browser)
