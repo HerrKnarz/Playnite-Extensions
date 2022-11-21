@@ -46,12 +46,13 @@ The following websites are supported for add/search functions (and can be toggle
   - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
   - IGN
   - IGN Guides
-  - mamedb.com
+  - MAME Smart Database
   - Nexus Mods (maybe - could replace the nexus mods add-on)
   - Nintendo Fandom
   - OpenCritic
   - Reddit
   - SNK Wiki
+  - Zophar's Domain (Music)
 - check if links are still working, optional removal of dead links (postponed for now, because several sites return 403 when checked without real browser)
 
 ### Websites I won't add to the extension:
