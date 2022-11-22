@@ -68,6 +68,7 @@
     <Compile Include="Linker\LinkSources\LinkCoOptimus.cs" />
     <Compile Include="Linker\LinkSources\LinkEpic.cs" />
     <Compile Include="Linker\LinkSources\LinkGamerGuides.cs" />
+    <Compile Include="Linker\LinkSources\LinkIGN.cs" />
     <Compile Include="Linker\LinkSources\LinkLemonAmiga.cs" />
     <Compile Include="Linker\LinkSources\LinkMetacritic.cs" />
     <Compile Include="Linker\LinkSources\LinkHG101.cs" />

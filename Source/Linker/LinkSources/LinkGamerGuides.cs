@@ -10,7 +10,6 @@ namespace LinkUtilities.Linker
     {
         public override string LinkName { get; } = "Gamer Guides";
         public override string BaseUrl { get; } = "https://www.gamerguides.com/";
-        public override string SearchUrl { get; } = string.Empty;
 
         public override string GetGamePath(Game game)
         {

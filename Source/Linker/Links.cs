@@ -15,6 +15,7 @@ namespace LinkUtilities.Linker
             Add(new LinkGamerGuides(plugin));
             Add(new LibraryLinkGog(plugin));
             Add(new LinkHG101(plugin));
+            Add(new LinkIGN(plugin));
             Add(new LibraryLinkItch(plugin));
             Add(new LinkLemonAmiga(plugin));
             Add(new LinkMetacritic(plugin));

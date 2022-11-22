@@ -49,19 +49,13 @@ namespace LinkUtilities.Models
         {
             if (PartialMatch)
             {
-                if (string.IsNullOrEmpty(NamePattern) | string.IsNullOrEmpty(UrlPattern))
-                {
-                    return false;
-                }
-                else
-                {
-                    return Regex.IsMatch(linkName, NameRegEx) || Regex.IsMatch(linkUrl, UrlRegEx);
-                }
+                return ((!string.IsNullOrWhiteSpace(NamePattern) && Regex.IsMatch(linkName, NameRegEx)) ||
+                    (!string.IsNullOrWhiteSpace(UrlPattern) && Regex.IsMatch(linkUrl, UrlRegEx)));
             }
             else
             {
-                return (string.IsNullOrEmpty(NamePattern) || Regex.IsMatch(linkName, NameRegEx)) &&
-                    (string.IsNullOrEmpty(UrlPattern) || Regex.IsMatch(linkUrl, UrlRegEx));
+                return (string.IsNullOrWhiteSpace(NamePattern) || Regex.IsMatch(linkName, NameRegEx)) &&
+                    (string.IsNullOrWhiteSpace(UrlPattern) || Regex.IsMatch(linkUrl, UrlRegEx));
             }
         }
     }
