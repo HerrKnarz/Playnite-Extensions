@@ -21,9 +21,11 @@ namespace LinkUtilities.Linker
             Add(new LinkMetacritic(plugin));
             Add(new LinkMobyGames(plugin));
             Add(new LinkNECRetro(plugin));
+            Add(new LinkNintendoWiki(plugin));
             Add(new LinkPCGamingWiki(plugin));
             Add(new LinkRAWG(plugin));
             Add(new LinkSegaRetro(plugin));
+            Add(new LinkSNKWiki(plugin));
             Add(new LibraryLinkSteam(plugin));
             Add(new LinkStrategyWiki(plugin));
             Add(new LinkWikipedia(plugin));

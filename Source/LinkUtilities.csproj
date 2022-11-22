@@ -78,6 +78,7 @@
     <Compile Include="Linker\Libraries\LibraryLinkItch.cs" />
     <Compile Include="Linker\Libraries\LibraryLinkSteam.cs" />
     <Compile Include="Linker\LibraryLink.cs" />
+    <Compile Include="Linker\LinkSources\LinkNintendoWiki.cs" />
     <Compile Include="Linker\LinkSources\LinkPCGamingWiki.cs" />
     <Compile Include="Linker\Links.cs" />
     <Compile Include="Linker\LinkSources\LinkRAWG.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Linker\LinkSources\LinkWikipedia.cs" />
     <Compile Include="Linker\LinkSources\LinkNECRetro.cs" />
     <Compile Include="Linker\LinkSources\LinkZopharsDomain.cs" />
+    <Compile Include="Linker\LinkSources\SNKWiki.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Models\ApiResults\EpicSearchResult.cs" />
     <Compile Include="Models\ApiResults\GogSearchResult.cs" />

@@ -42,6 +42,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "IGN",
+        "urlPattern": "*ign.com*",
+        "namePattern": "*- IGN",
+        "partialMatch": false
+    },
+    {
         "linkName": "itch",
         "urlPattern": "*itch.io*",
         "namePattern": "",
@@ -72,6 +78,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "Nintendo Wiki",
+        "urlPattern": "*nintendo.fandom.com*",
+        "namePattern": "",
+        "partialMatch": false
+    },
+    {
         "linkName": "PCGamingWiki",
         "urlPattern": "*pcgamingwiki.com*",
         "namePattern": "*PCGamingWiki*",
@@ -88,6 +100,12 @@
         "urlPattern": "*segaretro.org*",
         "namePattern": "*Sega Retro*",
         "partialMatch": true
+    },
+    {
+        "linkName": "SNK Wiki",
+        "urlPattern": "*snk.fandom.com*",
+        "namePattern": "",
+        "partialMatch": false
     },
     {
         "linkName": "Steam",
