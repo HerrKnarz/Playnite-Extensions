@@ -16,7 +16,7 @@ This is an extension for the superb open source video game library manager and l
 - Add library links: add links to the game page of its library
 - Add link to active website in your browser via bookmarklet (see [wiki](https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/wiki/URL-handler-and-bookmarklet#bookmarklet) for more information). Works with any website.
 
-To see which websites are already supported or planned to be added see the [wiki](https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/wiki/URL-handler-and-bookmarklet#bookmarklet)!
+To see which websites are already supported or planned to be added see the [wiki](https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/wiki/Supported-websites-for-add-search-function)!
 
 ## Planned features
 - add links to more websites.
