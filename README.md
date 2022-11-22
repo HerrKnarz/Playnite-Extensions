@@ -46,11 +46,10 @@ The following websites are supported for add/search functions (and can be toggle
   - IGDB (was included till 0.4 but had to be removed because it wasn't working as intended)
   - IGN
   - IGN Guides
-  - MAME Smart Database
+  - MAME Smart Database (maybe not, because the site can't be scraped and returns 200 even on non valid links - could only work with a list of mame rom names)
   - Nexus Mods (maybe - could replace the nexus mods add-on)
   - Nintendo Fandom
   - OpenCritic
-  - Reddit
   - SNK Wiki
   - Zophar's Domain (Music)
 - check if links are still working, optional removal of dead links (postponed for now, because several sites return 403 when checked without real browser)
