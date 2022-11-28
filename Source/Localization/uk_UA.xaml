@@ -6,7 +6,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Назвіть посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Будь ласка, введіть назву для посилання!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Небажані посилання в {0} іграх видалені!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplicate links of {0} games removed!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Повторювані посилання видалені з {0} ігор!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Посилання {0} ігор перейменовано!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Посилання на {0} вже існує. Ви можете замінити наявне посилання або додати нове, ввівши нове ім'я посилання.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Пошук гри</sys:String>
@@ -18,7 +18,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Додати посилання бібліотеки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Додати посилання до...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Всі налаштовані сайти</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Remove duplicate links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Прибрати повторювані посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Прибрати небажані посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Перейменувати посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Шукати посилання на...</sys:String>
@@ -28,7 +28,7 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Додавання посилання бібліотеки...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Додавання посилань...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRemoveLinks">Прибирання небажаних посилань...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesProgressRemoveDuplicates">Removing duplicate links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressRemoveDuplicates">Прибирання повторюваних посилань...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRenameLinks">Перейменування посилань...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Сортування посилань...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Додавання посилань на налаштовані сайти...</sys:String>
@@ -43,10 +43,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Сортувати</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Налаштувати сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Визначити довільний порядок сортування</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Remove duplicate links after the game meta data was updated</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionType">Remove duplicate links with same</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">link name and URL</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">link name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Прибрати повторювані посилання після оновлення метаданих</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionType">Прибрати повторювані посилання з однаковою</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">назвою посилання та URL-адресою</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">назвою посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Назва посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Джерело посилання</sys:String>
