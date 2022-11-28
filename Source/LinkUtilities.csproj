@@ -110,6 +110,7 @@
     <Compile Include="Models\ApiResults\SteamSearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LinkActions\SortLinks.cs" />
+    <Compile Include="Settings\DuplicateTypes.cs" />
     <Compile Include="Settings\LinkNamePatterns.cs" />
     <Compile Include="Settings\LinkSourceSettings.cs" />
   </ItemGroup>

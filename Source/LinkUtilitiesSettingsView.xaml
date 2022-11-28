@@ -7,16 +7,15 @@
              d:DataContext="{d:DesignInstance Type=linkutilities:LinkUtilitiesSettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch">
         <TabItem Header="{DynamicResource LOCLinkUtilitiesSettingsTabGeneral}">
             <DockPanel Margin="10">
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left">
                     <Label Content="{DynamicResource LOCLinkUtilitiesSettingsDuplicatesCaptionType}"/>
-                    <ComboBox Margin="10,0,0,0" SelectedIndex="{Binding Settings.RemoveDuplicatesType}">
-                        <ComboBoxItem Content="{DynamicResource LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl}" />
-                        <ComboBoxItem Content="{DynamicResource LOCLinkUtilitiesSettingsDuplicatesRemoveName}" />
-                        <ComboBoxItem Content="{DynamicResource LOCLinkUtilitiesSettingsDuplicatesRemoveUrl}" />
-                    </ComboBox>
+                    <ComboBox Margin="10,0,0,0" ItemsSource="{Binding Path=Settings.DuplicateTypesWithCaptions}"
+                              DisplayMemberPath="Value" SelectedValuePath="Key"
+                              SelectedValue="{Binding Path=Settings.RemoveDuplicatesType}"/>
                 </StackPanel>
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RemoveDuplicatesAfterChange}"
                           Content="{DynamicResource LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange}" Margin="0,10,0,0"/>

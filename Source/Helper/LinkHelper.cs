@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -164,9 +165,9 @@ namespace LinkUtilities
         /// Removes duplicate links from a game
         /// </summary>
         /// <param name="game">Game in which the duplicates will be removed.</param>
-        /// <param name="removeType">Specifies, if the duplicates will be identified by name, URL or both..</param>
+        /// <param name="duplicateType">Specifies, if the duplicates will be identified by name, URL or both..</param>
         /// <returns>True, if duplicates were removed. Returns false if there weren't duplicates to begin with.</returns>
-        public static bool RemoveDuplicateLinks(Game game, int removeType)
+        public static bool RemoveDuplicateLinks(Game game, DuplicateTypes duplicateType)
         {
             if (game.Links != null && game.Links.Count > 0)
             {
@@ -174,15 +175,15 @@ namespace LinkUtilities
 
                 ObservableCollection<Link> newLinks;
 
-                switch (removeType)
+                switch (duplicateType)
                 {
-                    case 0:
+                    case DuplicateTypes.NameAndUrl:
                         newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => new { x.Name, x.Url }).Select(x => x.First()));
                         break;
-                    case 1:
+                    case DuplicateTypes.Name:
                         newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => x.Name).Select(x => x.First()));
                         break;
-                    case 2:
+                    case DuplicateTypes.Url:
                         newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => x.Url).Select(x => x.First()));
                         break;
                     default:
