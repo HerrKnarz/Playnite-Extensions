@@ -28,6 +28,11 @@ namespace LinkUtilities.LinkActions
                 result = Plugin.RemoveLinks.Execute(game, actionModifier);
             }
 
+            if (Plugin.Settings.Settings.RemoveDuplicatesAfterChange)
+            {
+                result = Plugin.RemoveDuplicates.Execute(game, actionModifier);
+            }
+
             if (Plugin.Settings.Settings.SortAfterChange)
             {
                 result = Plugin.SortLinks.Execute(game, actionModifier) || result;

@@ -16,6 +16,8 @@ namespace LinkUtilities
     {
         private bool sortAfterChange = false;
         private bool useCustomSortOrder = false;
+        private bool removeDuplicatesAfterChange = false;
+        private DuplicateTypes removeDuplicatesType = DuplicateTypes.NameAndUrl;
         private bool removeLinksAfterChange = false;
         private bool renameLinksAfterChange = false;
         private ObservableCollection<SortItem> sortOrder;
@@ -24,9 +26,16 @@ namespace LinkUtilities
         private LinkNamePatterns removePatterns;
         private LinkNamePatterns renamePatterns;
 
+        [DontSerialize]
+        public DuplicateTypesWithCaptions DuplicateTypesWithCaptions { get; }
+
         public bool SortAfterChange { get => sortAfterChange; set => SetValue(ref sortAfterChange, value); }
 
         public bool UseCustomSortOrder { get => useCustomSortOrder; set => SetValue(ref useCustomSortOrder, value); }
+
+        public bool RemoveDuplicatesAfterChange { get => removeDuplicatesAfterChange; set => SetValue(ref removeDuplicatesAfterChange, value); }
+
+        public DuplicateTypes RemoveDuplicatesType { get => removeDuplicatesType; set => SetValue(ref removeDuplicatesType, value); }
 
         public bool RemoveLinksAfterChange { get => removeLinksAfterChange; set => SetValue(ref removeLinksAfterChange, value); }
 
@@ -45,6 +54,7 @@ namespace LinkUtilities
         public LinkUtilitiesSettings()
         {
             linkSettings = new LinkSourceSettings();
+            DuplicateTypesWithCaptions = new DuplicateTypesWithCaptions();
         }
     }
 
@@ -274,6 +284,8 @@ namespace LinkUtilities
         {
             Settings.SortAfterChange = EditingClone.SortAfterChange;
             Settings.UseCustomSortOrder = EditingClone.UseCustomSortOrder;
+            Settings.RemoveDuplicatesAfterChange = EditingClone.RemoveDuplicatesAfterChange;
+            Settings.RemoveDuplicatesType = EditingClone.RemoveDuplicatesType;
             Settings.RemoveLinksAfterChange = EditingClone.RemoveLinksAfterChange;
             Settings.RenameLinksAfterChange = EditingClone.RenameLinksAfterChange;
             Settings.SortOrder = EditingClone.SortOrder;

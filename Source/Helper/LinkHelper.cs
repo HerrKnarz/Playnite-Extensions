@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -153,6 +154,54 @@ namespace LinkUtilities
                 API.Instance.Database.Games.Update(game);
 
                 return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Removes duplicate links from a game
+        /// </summary>
+        /// <param name="game">Game in which the duplicates will be removed.</param>
+        /// <param name="duplicateType">Specifies, if the duplicates will be identified by name, URL or both..</param>
+        /// <returns>True, if duplicates were removed. Returns false if there weren't duplicates to begin with.</returns>
+        public static bool RemoveDuplicateLinks(Game game, DuplicateTypes duplicateType)
+        {
+            if (game.Links != null && game.Links.Count > 0)
+            {
+                int linkCount = game.Links.Count;
+
+                ObservableCollection<Link> newLinks;
+
+                switch (duplicateType)
+                {
+                    case DuplicateTypes.NameAndUrl:
+                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => new { x.Name, x.Url }).Select(x => x.First()));
+                        break;
+                    case DuplicateTypes.Name:
+                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => x.Name).Select(x => x.First()));
+                        break;
+                    case DuplicateTypes.Url:
+                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => x.Url).Select(x => x.First()));
+                        break;
+                    default:
+                        return false;
+                }
+
+                if (newLinks.Count < linkCount)
+                {
+                    game.Links = newLinks;
+
+                    API.Instance.Database.Games.Update(game);
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {

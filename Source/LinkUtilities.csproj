@@ -54,6 +54,7 @@
     <Compile Include="Helper\ParseHelper.cs" />
     <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
+    <Compile Include="LinkActions\RemoveDuplicates.cs" />
     <Compile Include="LinkActions\HandleUriActions.cs" />
     <Compile Include="LinkActions\AddLibraryLinks.cs" />
     <Compile Include="LinkActions\AddWebsiteLinks.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Models\ApiResults\SteamSearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LinkActions\SortLinks.cs" />
+    <Compile Include="Settings\DuplicateTypes.cs" />
     <Compile Include="Settings\LinkNamePatterns.cs" />
     <Compile Include="Settings\LinkSourceSettings.cs" />
   </ItemGroup>

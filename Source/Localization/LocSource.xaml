@@ -6,6 +6,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Name the link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Please enter a name for the link!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Unwanted links of {0} games removed!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplicate links of {0} games removed!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Links of {0} games renamed!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">A link to {0} already exists. You can replace the existing link or add a new one by entering a new link name.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Search game</sys:String>
@@ -17,6 +18,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Add library link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Add link to...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">All configured websites</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Remove duplicate links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Remove unwanted links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Rename links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Search link to...</sys:String>
@@ -26,6 +28,7 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Adding library links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Adding links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRemoveLinks">Removing unwanted links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressRemoveDuplicates">Removing duplicate links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRenameLinks">Renaming links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Sorting links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Adding links to configured websites...</sys:String>
@@ -40,6 +43,11 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sort</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Define custom sort order</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Remove duplicate links after the game meta data was updated</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionType">Remove duplicate links with same</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">link name and URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">link name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Link name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link source</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">Name pattern</sys:String>
