@@ -23,6 +23,7 @@ namespace LinkUtilities
             SortLinks = new SortLinks(this);
             AddLibraryLinks = new AddLibraryLinks(this);
             AddWebsiteLinks = new AddWebsiteLinks(this);
+            RemoveDuplicates = new RemoveDuplicates(this);
             RemoveLinks = new RemoveLinks(this);
             RenameLinks = new RenameLinks(this);
             HandleUriActions = new HandleUriActions(this);
@@ -65,6 +66,11 @@ namespace LinkUtilities
         /// Class to add a link to all available websites in the Links list, if a definitive link was found.
         /// </summary>
         public AddWebsiteLinks AddWebsiteLinks { get; }
+
+        /// <summary>
+        /// Class to remove duplicate links.
+        /// </summary>
+        public RemoveDuplicates RemoveDuplicates { get; }
 
         /// <summary>
         /// Class to remove unwanted links.
@@ -286,6 +292,18 @@ namespace LinkUtilities
 
                 }
             }
+
+            // Adds the "Remove duplicate links" item to the game menu.
+            menuItems.Add(new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
+                MenuSection = menuSection,
+                Action = a =>
+                {
+                    List<Game> games = args.Games.Distinct().ToList();
+                    DoForAll(games, RemoveDuplicates, true);
+                }
+            });
 
             // Adds the "Remove unwanted links" item to the game menu.
             if (RemoveLinks.RemovePatterns != null && RemoveLinks.RemovePatterns.Count > 0)
