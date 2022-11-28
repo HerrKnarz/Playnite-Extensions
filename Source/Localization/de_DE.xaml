@@ -6,7 +6,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Link benennen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Bitte einen Namen für den Link eingeben!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Unerwünschte Links von {0} Spielen entfernt!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplicate links of {0} games removed!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Doppelte Links von {0} Spielen entfernt!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Links von {0} Spielen umbenannt!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Ein Link zu {0} existiert bereits. Du kannst den bestehenden Link ersetzen oder einen neuen hinzufügen, indem du einen neuen Link-Namen eingibst.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Suche Spiel</sys:String>
@@ -18,7 +18,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Bibliothekslink hinzufügen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Link hinzufügen zu...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Alle konfigurierten Webseiten</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Remove duplicate links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Doppelte Links entfernen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Unerwünschte Links entfernen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Links umbenennen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Link suchen zu...</sys:String>
@@ -28,7 +28,7 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Füge Bibliothekslinks hinzu...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Füge Links hinzu...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRemoveLinks">Entferne unerwünschte Links...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesProgressRemoveDuplicates">Removing duplicate links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressRemoveDuplicates">Entferne doppelte Links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRenameLinks">Links werden umbenannt...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Sortiere Links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Füge Links zu konfigurierten Webseiten hinzu...</sys:String>
@@ -43,10 +43,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sortieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Webseiten konfigurieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Sortierreihenfolge festlegen</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Remove duplicate links after the game meta data was updated</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionType">Remove duplicate links with same</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">link name and URL</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">link name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Entferne doppelte Links, nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionType">Entferne doppelte Links nach</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">Link-Name und URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">Link-Name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Link-Name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link-Quelle</sys:String>
