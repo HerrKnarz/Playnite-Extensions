@@ -10,6 +10,7 @@ This is an extension for the superb open source video game library manager and l
 
 - Sort links by name or custom sort order via game menu or optionally automatically after metadata change.
 - Remove unwanted links (e.g. social media links added by IGDB) via game menu or optionally automatically after metadata change.
+- Remove duplicate links via game menu or optionally automatically after metadata change.
 - Rename links (e.g. shorten wikipedia to wiki) via game menu or optionally automatically after metadata change.
 - Add links to several websites directly by trying to find a valid link using the game name
 - Search for games on several websites to add links via search dialog
