@@ -3,17 +3,17 @@
     <sys:String x:Key="LOCLinkUtilitiesName">Nástroj pro odkazy</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Odkazy přidány do {0} her!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Name the link</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Please enter a name for the link!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Unwanted links of {0} games removed!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplicate links of {0} games removed!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Links of {0} games renamed!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">A link to {0} already exists. You can replace the existing link or add a new one by entering a new link name.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Pojmenovat odkaz</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Prosím vložte název odkazu!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Nežádoucí odkazy odstraněny z {0} hry/her!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplikáty odkazů odstraněny z {0} hry/her!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Odkazy {0} her přejmenováný!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Odkaz pro {0} již existuje. Můžete nahradit existující odkaz, nebo zadáním nového názvu odkazu vytvoříte nový.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Vyhledat hru</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Vyberte možnost</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Odkazy {0} her seřazeny!</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">You have duplicates in your sort order. Please make sure every link name is unique.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Máte duplikáty v seznamu řazení. Ujistěte se, že každý název odkazu je unikátní.</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Přidat odkaz knihovny</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Přidat odkaz...</sys:String>
