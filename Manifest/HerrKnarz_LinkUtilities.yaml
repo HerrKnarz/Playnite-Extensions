@@ -1,8 +1,8 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
-  - Version: 1.7
+  - Version: 1.7.1
     RequiredApiVersion: 6.5.0
-    ReleaseDate: 2022-11-28
+    ReleaseDate: 2022-12-05
     PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v1.7.1/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_1_7_1.pext
     Changelog:
       - completed Ukrainian translation (thx SmithMD24)
