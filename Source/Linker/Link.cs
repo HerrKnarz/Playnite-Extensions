@@ -52,25 +52,25 @@ namespace LinkUtilities.Linker
 
         public virtual bool AddLink(Game game)
         {
+            LinkUrl = string.Empty;
+            bool result = false;
+
             if (!LinkHelper.LinkExists(game, LinkName))
             {
-                LinkUrl = $"{BaseUrl}{GetGamePath(game)}";
+                string gameName = GetGamePath(game);
 
-                if (CheckLink(LinkUrl))
+                if (!string.IsNullOrEmpty(gameName))
                 {
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, plugin.Settings.Settings);
-                }
-                else
-                {
-                    LinkUrl = string.Empty;
+                    LinkUrl = $"{BaseUrl}{GetGamePath(game)}";
 
-                    return false;
+                    if (CheckLink(LinkUrl))
+                    {
+                        result = LinkHelper.AddLink(game, LinkName, LinkUrl, plugin.Settings.Settings);
+                    }
                 }
             }
-            else
-            {
-                return false;
-            }
+
+            return result;
         }
 
         public virtual bool CheckLink(string link)
