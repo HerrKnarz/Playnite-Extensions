@@ -36,10 +36,18 @@ namespace LinkUtilities.Linker
                     foreach (HtmlNode node in htmlNodes)
                     {
                         counter++;
+                        string suffix = string.Empty;
+
+                        HtmlNode suffixNode = node.SelectSingleNode("./div/div[@class='game-grid-title']/a/img");
+
+                        if (suffixNode != null)
+                        {
+                            suffix = $" ({suffixNode.GetAttributeValue("alt", "")})";
+                        }
 
                         SearchResults.Add(new SearchResult
                         {
-                            Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-title']/a").InnerText)}",
+                            Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-title']/a").InnerText)}{suffix}",
                             Url = $"{WebsiteUrl}{node.SelectSingleNode("./div/div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
                             Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-info']").InnerText)}{WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-category']").InnerText)}"
                         }
