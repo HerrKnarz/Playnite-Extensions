@@ -179,6 +179,172 @@ namespace LinkUtilities
             }
         }
 
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            string menuSection = ResourceProvider.GetString("LOCLinkUtilitiesName");
+            string menuFilteredGames = ResourceProvider.GetString("LOCLinkUtilitiesMenuFilteredGames");
+            string menuAllGames = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllGames");
+
+            List<MainMenuItem> menuItems = new List<MainMenuItem>
+            {
+                // Adds the "clean up" item to the main menu.
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, DoAfterChange, true);
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, DoAfterChange, true);
+                    }
+                },
+                // Adds a separator
+                new MainMenuItem
+                {
+                    Description = "-",
+                    MenuSection = $"@{menuSection}|{menuAllGames}"
+                },
+                new MainMenuItem
+                {
+                    Description = "-",
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}"
+                },
+                // Adds the "sort Links by name" item to the main menu.
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, SortLinks, true, "Name");
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, SortLinks, true, "Name");
+                    }
+                }
+            };
+
+            // Adds the "sort Links by sort order" item to the main menu.
+            if (SortLinks.SortOrder != null && SortLinks.SortOrder.Count > 0)
+            {
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksBySortOrder"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, SortLinks, true, "SortOrder");
+                    }
+                });
+
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksBySortOrder"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, SortLinks, true, "SortOrder");
+                    }
+                });
+            }
+
+            // Adds the "Remove duplicate links" item to the main menu.
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
+                MenuSection = $"@{menuSection}|{menuAllGames}",
+                Action = a =>
+                {
+                    List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                    DoForAll(games, RemoveDuplicates, true);
+                }
+            });
+
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
+                MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                Action = a =>
+                {
+                    List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                    DoForAll(games, RemoveDuplicates, true);
+                }
+            });
+
+            // Adds the "Remove unwanted links" item to the main menu.
+            if (RemoveLinks.RemovePatterns != null && RemoveLinks.RemovePatterns.Count > 0)
+            {
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveUnwantedLinks"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, RemoveLinks, true);
+                    }
+                });
+
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveUnwantedLinks"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, RemoveLinks, true);
+                    }
+                });
+            }
+            // Adds the "Rename links" item to the main menu.
+            if (RenameLinks.RenamePatterns != null && RenameLinks.RenamePatterns.Count > 0)
+            {
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRenameLinks"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, RenameLinks, true);
+                    }
+                });
+
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRenameLinks"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, RenameLinks, true);
+                    }
+                });
+            }
+
+            return menuItems;
+        }
+
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             string menuSection = ResourceProvider.GetString("LOCLinkUtilitiesName");
@@ -231,6 +397,28 @@ namespace LinkUtilities
                 {
                     Description = "-",
                     MenuSection = $"{menuSection}|{menuSearchLinks}"
+                },
+                // Adds a separator to the game menu
+                new GameMenuItem
+                {
+                    Description = "-",
+                    MenuSection = menuSection
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
+                    MenuSection = menuSection,
+                    Action = a =>
+                    {
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, DoAfterChange, true);
+                    }
+                },
+                // Adds a separator to the game menu
+                new GameMenuItem
+                {
+                    Description = "-",
+                    MenuSection = menuSection
                 },
                 // Adds the "sort Links by name" item to the game menu.
                 new GameMenuItem
