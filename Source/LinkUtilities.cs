@@ -98,7 +98,7 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="games">List of games to be processed</param>
         /// <param name="linkAction">Instance of the action to be executed</param>
-        private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false, string actionModifier = "")
+        private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
         {
             // While sorting Links we set IsUpdating to true, so the library update event knows it doesn't need to sort again.
             IsUpdating = true;
@@ -229,7 +229,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, "Name");
+                        DoForAll(games, SortLinks, true, ActionModifierTypes.Name);
                     }
                 },
                 new MainMenuItem
@@ -239,7 +239,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, "Name");
+                        DoForAll(games, SortLinks, true, ActionModifierTypes.Name);
                     }
                 }
             };
@@ -254,7 +254,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, "SortOrder");
+                        DoForAll(games, SortLinks, true, ActionModifierTypes.SortOrder);
                     }
                 });
 
@@ -265,7 +265,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, "SortOrder");
+                        DoForAll(games, SortLinks, true, ActionModifierTypes.SortOrder);
                     }
                 });
             }
@@ -374,7 +374,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, AddWebsiteLinks, true, "add");
+                        DoForAll(games, AddWebsiteLinks, true, ActionModifierTypes.Add);
                     }
                 },
                 // Adds a separator to the "add link to" sub menu
@@ -391,7 +391,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, AddWebsiteLinks, true, "search");
+                        DoForAll(games, AddWebsiteLinks, true, ActionModifierTypes.Search);
                     }
                 },
                 // Adds a separator to the "search link to" sub menu
@@ -430,7 +430,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, "Name");
+                        DoForAll(games, SortLinks, true, ActionModifierTypes.Name);
                     }
                 }
             };
@@ -445,7 +445,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, "SortOrder");
+                        DoForAll(games, SortLinks, true, ActionModifierTypes.SortOrder);
                     }
                 });
             }
@@ -462,7 +462,7 @@ namespace LinkUtilities
                         Action = a =>
                         {
                             List<Game> games = args.Games.Distinct().ToList();
-                            DoForAll(games, link, true, "add");
+                            DoForAll(games, link, true, ActionModifierTypes.Add);
                         }
                     });
                 }
@@ -476,7 +476,7 @@ namespace LinkUtilities
                         Action = a =>
                         {
                             List<Game> games = args.Games.Distinct().ToList();
-                            DoForAll(games, link, true, "search");
+                            DoForAll(games, link, true, ActionModifierTypes.Search);
                         }
                     });
 

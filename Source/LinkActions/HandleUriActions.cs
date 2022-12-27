@@ -30,7 +30,7 @@ namespace LinkUtilities.LinkActions
         /// <summary>
         /// Action that will be executed 
         /// </summary>
-        public string Action { get; set; }
+        public ActionModifierTypes Action { get; set; }
 
         /// <summary>
         /// List of patterns to find the right link name for a given set of URL and link title
@@ -46,9 +46,17 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
-            Action = args.Arguments[0];
+            switch (args.Arguments[0])
+            {
+                case "AddLink":
+                    Action = ActionModifierTypes.Add;
+                    break;
+                default:
+                    Action = ActionModifierTypes.None;
+                    break;
+            }
 
-            if (Action == "AddLink")
+            if (Action == ActionModifierTypes.Add)
             {
                 if (args.Arguments.Count() == 3)
                 {
@@ -87,15 +95,14 @@ namespace LinkUtilities.LinkActions
         {
         }
 
-        public override bool Execute(Game game, string actionModifier = "", bool isBulkAction = true)
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            if (actionModifier == "AddLink")
+            switch (actionModifier)
             {
-                return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin, false);
-            }
-            else
-            {
-                return false;
+                case ActionModifierTypes.Add:
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin, false);
+                default:
+                    return false;
             }
         }
     }

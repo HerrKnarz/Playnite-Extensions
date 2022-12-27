@@ -21,7 +21,7 @@ namespace LinkUtilities.LinkActions
             libraries = new Libraries(Plugin);
         }
 
-        public override bool Execute(Game game, string actionModifier = "", bool isBulkAction = true)
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
             LibraryLink library;
             bool result = false;

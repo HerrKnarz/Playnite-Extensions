@@ -2,6 +2,8 @@
 
 namespace LinkUtilities.LinkActions
 {
+    public enum ActionModifierTypes { None, Add, Search, Name, SortOrder }
+
     /// <summary>
     /// Interface for classes, that can be used as a link action. Contains texts for the progress bar, result dialog and the action to
     /// execute.
@@ -29,6 +31,6 @@ namespace LinkUtilities.LinkActions
         /// <param name="isBulkAction">If true the action is executed for more than one game in a loop. Can be used to do things 
         /// differently if only one game is processed.</param>
         /// <returns>true, if the action was successful</returns>
-        bool Execute(Game game, string actionModifier = "", bool isBulkAction = true);
+        bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true);
     }
 }

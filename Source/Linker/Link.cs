@@ -83,15 +83,16 @@ namespace LinkUtilities.Linker
             return game.Name;
         }
 
-        public virtual bool Execute(Game game, string actionModifier = "", bool isBulkAction = true)
+        public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            if (actionModifier == "add")
+            switch (actionModifier)
             {
-                return AddLink(game);
-            }
-            else
-            {
-                return AddSearchedLink(game);
+                case ActionModifierTypes.Add:
+                    return AddLink(game);
+                case ActionModifierTypes.Search:
+                    return AddSearchedLink(game);
+                default:
+                    return false;
             }
         }
 

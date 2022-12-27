@@ -23,23 +23,20 @@ namespace LinkUtilities.LinkActions
             Links = new Links(Plugin);
         }
 
-        public bool AddLink(Game game, Linker.Link link, string actionModifier)
+        public bool AddLink(Game game, Linker.Link link, ActionModifierTypes actionModifier)
         {
-            if (actionModifier == "add" & link.Settings.IsAddable == true)
+            switch (actionModifier)
             {
-                return link.AddLink(game);
-            }
-            else if (actionModifier == "search" & link.Settings.IsSearchable == true)
-            {
-                return link.AddSearchedLink(game);
-            }
-            else
-            {
-                return false;
+                case ActionModifierTypes.Add:
+                    return link.AddLink(game);
+                case ActionModifierTypes.Search:
+                    return link.AddSearchedLink(game);
+                default:
+                    return false;
             }
         }
 
-        public override bool Execute(Game game, string actionModifier = "", bool isBulkAction = true)
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
             bool result = false;
 
