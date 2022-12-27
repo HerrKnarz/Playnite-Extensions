@@ -18,6 +18,9 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Přidat odkaz knihovny</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Přidat odkaz...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Všechny nastavené web-stránky</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">All games</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Clean up links (rename, remove, sort)</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Filtered games</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Odstranit duplicitní odkazy</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Odstranit nežádoucí odkazy</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Přejmenovat odkazy</sys:String>
