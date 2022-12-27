@@ -177,13 +177,13 @@ namespace LinkUtilities
                 switch (duplicateType)
                 {
                     case DuplicateTypes.NameAndUrl:
-                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => new { x.Name, x.Url }).Select(x => x.First()));
+                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => new { x.Name, url = CleanUpUrl(x.Url) }).Select(x => x.First()));
                         break;
                     case DuplicateTypes.Name:
                         newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => x.Name).Select(x => x.First()));
                         break;
                     case DuplicateTypes.Url:
-                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => x.Url).Select(x => x.First()));
+                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => CleanUpUrl(x.Url)).Select(x => x.First()));
                         break;
                     default:
                         return false;
@@ -205,6 +205,32 @@ namespace LinkUtilities
             else
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Removes the scheme of an URL and adds a missing trailing slash. Is used to compare URLs with different schemes
+        /// </summary>
+        /// <param name="url">URL to clean up</param>
+        /// <returns>cleaned up URL</returns>
+        public static string CleanUpUrl(string url)
+        {
+            try
+            {
+                Uri uri = new Uri(url);
+
+                string urlWithoutScheme = uri.Host + uri.PathAndQuery + uri.Fragment;
+
+                if (!url.EndsWith("/"))
+                {
+                    urlWithoutScheme += "/";
+                }
+
+                return urlWithoutScheme;
+            }
+            catch (Exception)
+            {
+                return url;
             }
         }
 
