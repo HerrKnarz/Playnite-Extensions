@@ -248,6 +248,14 @@
                           ItemsSource="{Binding Settings.RenamePatterns}">
                     <ListView.View>
                         <GridView>
+                            <GridViewColumn Width="50" Header="{DynamicResource LOCLinkUtilitiesSettingsSortPosition}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
+                                                 PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Width="150" Header="{DynamicResource LOCLinkUtilitiesSettingsLinkName}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>

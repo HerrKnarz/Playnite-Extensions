@@ -116,7 +116,7 @@ namespace LinkUtilities
         {
             get => new RelayCommand(() =>
             {
-                PreparePatterns(Settings.LinkNamePatterns);
+                Settings.LinkNamePatterns.SortPatterns();
             });
         }
 
@@ -124,7 +124,7 @@ namespace LinkUtilities
         {
             get => new RelayCommand(() =>
             {
-                PreparePatterns(Settings.RemovePatterns);
+                Settings.RemovePatterns.SortPatterns();
             });
         }
 
@@ -132,7 +132,7 @@ namespace LinkUtilities
         {
             get => new RelayCommand(() =>
             {
-                PreparePatterns(Settings.RenamePatterns);
+                Settings.RenamePatterns.SortPatterns();
             });
         }
 
@@ -217,11 +217,6 @@ namespace LinkUtilities
             }, (items) => items != null && items.Count > 0);
         }
 
-        private void PreparePatterns(LinkNamePatterns patterns)
-        {
-            patterns.SortPatterns();
-        }
-
         private void SortSortItems()
         {
             Settings.SortOrder = new ObservableCollection<SortItem>(Settings.SortOrder
@@ -273,7 +268,7 @@ namespace LinkUtilities
             }
             else
             {
-                PreparePatterns(Settings.LinkNamePatterns);
+                Settings.LinkNamePatterns.SortPatterns();
             }
 
             if (Settings.RemovePatterns == null)
@@ -282,7 +277,7 @@ namespace LinkUtilities
             }
             else
             {
-                PreparePatterns(Settings.RemovePatterns);
+                Settings.RemovePatterns.SortPatterns();
             }
 
             if (Settings.RenamePatterns == null)
@@ -291,7 +286,7 @@ namespace LinkUtilities
             }
             else
             {
-                PreparePatterns(Settings.RenamePatterns);
+                Settings.RenamePatterns.SortPatterns();
             }
         }
 
@@ -337,6 +332,8 @@ namespace LinkUtilities
 
         public void EndEdit()
         {
+            Settings.RenamePatterns.SortPatterns();
+
             plugin.SavePluginSettings(Settings);
 
             WriteSettingsToLinkActions();

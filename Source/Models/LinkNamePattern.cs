@@ -10,6 +10,12 @@ namespace LinkUtilities.Models
     public class LinkNamePattern
     {
         /// <summary>
+        /// Position used to sort the patterns
+        /// </summary>
+        [JsonProperty("position")]
+        public int? Position { get; set; }
+
+        /// <summary>
         /// Name to use for the link if the patterns match
         /// </summary>
         [JsonProperty("linkName")]

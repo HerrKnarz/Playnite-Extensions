@@ -18,22 +18,48 @@ namespace LinkUtilities.Settings
     /// </summary>
     public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
     {
+        public bool SortByPosition { get; set; }
+
         /// <summary>
         /// Creates an empty instance
         /// </summary>
         public LinkNamePatterns()
         {
+            SortByPosition = false;
+        }
+
+        /// <summary>
+        /// Creates an empty instance, but sets the SortByPosition property to the desired value.
+        /// </summary>
+        /// <param name="sortByPosition">If true the list is sorted by the position property.</param>
+        public LinkNamePatterns(bool sortByPosition = false)
+        {
+            SortByPosition = sortByPosition;
         }
 
         public void SortPatterns()
         {
             List<LinkNamePattern> patterns = this.ToList();
             Clear();
-            this.AddMissing(patterns.Distinct()
-                .OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
-                .ThenBy(x => x.NamePattern, StringComparer.CurrentCultureIgnoreCase)
-                .ThenBy(x => x.UrlPattern, StringComparer.CurrentCultureIgnoreCase)
-                .ToList());
+
+            if (SortByPosition)
+            {
+                this.AddMissing(patterns.Distinct()
+                    .OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
+                    .ThenBy(x => x.NamePattern, StringComparer.CurrentCultureIgnoreCase)
+                    .ThenBy(x => x.UrlPattern, StringComparer.CurrentCultureIgnoreCase)
+                    .ToList());
+            }
+            else
+            {
+                this.AddMissing(patterns.Distinct()
+                    .OrderBy(x => x.Position)
+                    .ThenBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
+                    .ThenBy(x => x.NamePattern, StringComparer.CurrentCultureIgnoreCase)
+                    .ThenBy(x => x.UrlPattern, StringComparer.CurrentCultureIgnoreCase)
+                    .ToList());
+
+            }
         }
 
         /// <summary>
