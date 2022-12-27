@@ -25,10 +25,11 @@ namespace LinkUtilities
         /// <returns>
         /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
         /// </returns>
-        public static bool AddLink(Game game, string linkName, string linkUrl, LinkUtilitiesSettings settings, bool ignoreExisting = true)
+        public static bool AddLink(Game game, string linkName, string linkUrl, LinkUtilities plugin, bool ignoreExisting = true)
         {
             Link link = new Link(linkName, linkUrl);
             bool mustUpdate = false;
+            bool addNewLink = false;
 
             // If the game doesn't have any Links yet, we have to add the collection itself.
             if (game.Links is null)
@@ -39,8 +40,6 @@ namespace LinkUtilities
             // otherwise we'll check if a link with the specified name is already present. If not, we'll add the link and return true.
             else
             {
-                bool addNewLink = false;
-
                 if (game.Links.Count(x => x.Name == linkName) == 0)
                 {
                     addNewLink = true;
@@ -81,12 +80,6 @@ namespace LinkUtilities
                         game.Links.Add(link);
                     });
 
-                    // We sort the Links automatically if the setting SortAfterChange is true.
-                    if (settings.SortAfterChange)
-                    {
-                        game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => x.Name));
-                    }
-
                     mustUpdate = true;
                 }
             }
@@ -95,6 +88,12 @@ namespace LinkUtilities
             if (mustUpdate)
             {
                 API.Instance.Database.Games.Update(game);
+
+                // We sort the Links automatically if the setting SortAfterChange is true.
+                if (addNewLink && plugin.Settings.Settings.SortAfterChange)
+                {
+                    plugin.SortLinks.Execute(game);
+                }
             }
 
             return mustUpdate;
