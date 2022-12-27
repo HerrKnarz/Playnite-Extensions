@@ -22,7 +22,7 @@ namespace LinkUtilities.LinkActions
         {
         }
 
-        public override bool Execute(Game game, string actionModifier = "")
+        public bool Rename(Game game, bool updateDB = true)
         {
             bool mustUpdate = false;
 
@@ -48,10 +48,23 @@ namespace LinkUtilities.LinkActions
 
                 if (mustUpdate)
                 {
-                    API.Instance.Database.Games.Update(game);
+                    // We start another renaming run, because there could be more links to rename after the last run
+                    // renamed some links already.
+                    Rename(game, false);
+
+                    if (updateDB)
+                    {
+                        API.Instance.Database.Games.Update(game);
+                    }
                 }
             }
+
             return mustUpdate;
+        }
+
+        public override bool Execute(Game game, string actionModifier = "")
+        {
+            return Rename(game);
         }
     }
 }
