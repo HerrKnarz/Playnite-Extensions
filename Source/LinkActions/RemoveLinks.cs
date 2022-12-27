@@ -24,7 +24,7 @@ namespace LinkUtilities.LinkActions
         {
         }
 
-        public override bool Execute(Game game, string actionModifier = "")
+        public override bool Execute(Game game, string actionModifier = "", bool isBulkAction = true)
         {
             bool mustUpdate = false;
 

@@ -11,7 +11,7 @@ namespace LinkUtilities.LinkActions
         private readonly LinkUtilities plugin;
         public LinkUtilities Plugin { get { return plugin; } }
 
-        public abstract bool Execute(Game game, string actionModifier = "");
+        public abstract bool Execute(Game game, string actionModifier = "", bool isBulkAction = true);
 
         public LinkAction(LinkUtilities plugin)
         {

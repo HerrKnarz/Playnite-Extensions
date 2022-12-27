@@ -1,5 +1,7 @@
 ﻿using LinkUtilities.Linker;
+using Playnite.SDK;
 using Playnite.SDK.Models;
+using System;
 
 namespace LinkUtilities.LinkActions
 {
@@ -21,20 +23,70 @@ namespace LinkUtilities.LinkActions
             Links = new Links(Plugin);
         }
 
-        public override bool Execute(Game game, string actionModifier = "")
+        public bool AddLink(Game game, Linker.Link link, string actionModifier)
+        {
+            if (actionModifier == "add" & link.Settings.IsAddable == true)
+            {
+                return link.AddLink(game);
+            }
+            else if (actionModifier == "search" & link.Settings.IsSearchable == true)
+            {
+                return link.AddSearchedLink(game);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override bool Execute(Game game, string actionModifier = "", bool isBulkAction = true)
         {
             bool result = false;
 
-            foreach (Linker.Link link in Links)
+            if (isBulkAction)
             {
-                if (actionModifier == "add" & link.Settings.IsAddable == true)
+                foreach (Linker.Link link in Links)
                 {
-                    result = link.AddLink(game) || result;
+                    result = AddLink(game, link, actionModifier) || result;
                 }
-                else if (actionModifier == "search" & link.Settings.IsSearchable == true)
+            }
+            else
+            {
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                    $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(ProgressMessage)}",
+                    true
+                )
                 {
-                    result = link.AddSearchedLink(game) || result;
-                }
+                    IsIndeterminate = false
+                };
+
+                API.Instance.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+                {
+                    try
+                    {
+                        activateGlobalProgress.ProgressMaxValue = Links.Count;
+
+                        foreach (Linker.Link link in Links)
+                        {
+                            activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(ProgressMessage)} ({link.LinkName})";
+
+                            if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                result = AddLink(game, link, actionModifier) || result;
+                            }
+
+                            activateGlobalProgress.CurrentProgressValue++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                }, globalProgressOptions);
             }
 
             return result;

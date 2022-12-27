@@ -14,7 +14,7 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressSortLinks";
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogSortedMessage";
 
-        public override bool Execute(Game game, string actionModifier = "")
+        public override bool Execute(Game game, string actionModifier = "", bool isBulkAction = true)
         {
             bool result = false;
 

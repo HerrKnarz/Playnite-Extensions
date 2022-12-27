@@ -26,7 +26,9 @@ namespace LinkUtilities.LinkActions
         /// </summary>
         /// <param name="game">The game to be processed</param>
         /// <param name="actionModifier">Optional modifier for the underlying class to do different things in the execute method</param>
+        /// <param name="isBulkAction">If true the action is executed for more than one game in a loop. Can be used to do things 
+        /// differently if only one game is processed.</param>
         /// <returns>true, if the action was successful</returns>
-        bool Execute(Game game, string actionModifier = "");
+        bool Execute(Game game, string actionModifier = "", bool isBulkAction = true);
     }
 }

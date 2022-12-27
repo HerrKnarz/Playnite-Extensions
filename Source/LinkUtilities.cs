@@ -107,7 +107,7 @@ namespace LinkUtilities
             {
                 if (games.Count == 1)
                 {
-                    linkAction.Execute(games.First(), actionModifier);
+                    linkAction.Execute(games.First(), actionModifier, false);
                 }
                 // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
                 else if (games.Count > 1)
@@ -117,7 +117,7 @@ namespace LinkUtilities
                     using (PlayniteApi.Database.BufferedUpdate())
                     {
                         GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                            $"LinkUtilities - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
+                            $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
                             true
                         )
                         {
@@ -132,6 +132,8 @@ namespace LinkUtilities
 
                                 foreach (Game game in games)
                                 {
+                                    activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(linkAction.ProgressMessage)} ({game.Name})";
+
                                     if (activateGlobalProgress.CancelToken.IsCancellationRequested)
                                     {
                                         break;

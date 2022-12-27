@@ -83,7 +83,7 @@ namespace LinkUtilities.Linker
             return game.Name;
         }
 
-        public virtual bool Execute(Game game, string actionModifier = "")
+        public virtual bool Execute(Game game, string actionModifier = "", bool isBulkAction = true)
         {
             if (actionModifier == "add")
             {
