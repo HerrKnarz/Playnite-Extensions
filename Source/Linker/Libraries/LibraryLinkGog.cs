@@ -47,7 +47,7 @@ namespace LinkUtilities.Linker
 
                     LinkUrl = $"{BaseUrl}{gogMetaData.Slug}";
 
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin.Settings.Settings);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin);
                 }
                 catch (Exception ex)
                 {

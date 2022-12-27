@@ -1,4 +1,5 @@
 ﻿using LinkUtilities.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -18,19 +19,21 @@ namespace LinkUtilities.Settings
     public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
     {
         /// <summary>
-        /// Creates an instance with the given items
-        /// </summary>
-        /// <param name="items">items to add to the collection</param>
-        public LinkNamePatterns(List<LinkNamePattern> items)
-        {
-            this.AddMissing(items);
-        }
-
-        /// <summary>
         /// Creates an empty instance
         /// </summary>
         public LinkNamePatterns()
         {
+        }
+
+        public void SortPatterns()
+        {
+            List<LinkNamePattern> patterns = this.ToList();
+            Clear();
+            this.AddMissing(patterns.Distinct()
+                .OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
+                .ThenBy(x => x.NamePattern, StringComparer.CurrentCultureIgnoreCase)
+                .ThenBy(x => x.UrlPattern, StringComparer.CurrentCultureIgnoreCase)
+                .ToList());
         }
 
         /// <summary>
@@ -75,18 +78,15 @@ namespace LinkUtilities.Settings
         /// </param>
         public void AddDefaultPatterns(PatternTypes type)
         {
-            List<LinkNamePattern> patterns = this.ToList();
-
             foreach (LinkNamePattern item in GetDefaultLinkNamePatterns(type))
             {
-                if (!patterns.Any(x => x.LinkName == item.LinkName))
+                if (!this.Any(x => x.LinkName == item.LinkName))
                 {
-                    patterns.Add(item);
+                    Add(item);
                 }
             }
 
-            Clear();
-            this.AddMissing(patterns.Distinct().OrderBy(x => x.LinkName));
+            SortPatterns();
         }
 
         public bool LinkMatch(ref string linkName, string linkUrl)

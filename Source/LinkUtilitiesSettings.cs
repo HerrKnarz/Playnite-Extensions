@@ -112,6 +112,30 @@ namespace LinkUtilities
             });
         }
 
+        public RelayCommand SortBookmarkletItemsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                PreparePatterns(Settings.LinkNamePatterns);
+            });
+        }
+
+        public RelayCommand SortRemoveItemsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                PreparePatterns(Settings.RemovePatterns);
+            });
+        }
+
+        public RelayCommand SortRenameItemsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                PreparePatterns(Settings.RenamePatterns);
+            });
+        }
+
         public RelayCommand AddLinkNamePatternCommand
         {
             get => new RelayCommand(() =>
@@ -195,11 +219,7 @@ namespace LinkUtilities
 
         private void PreparePatterns(LinkNamePatterns patterns)
         {
-            patterns = new LinkNamePatterns(patterns
-                .OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
-                .OrderBy(x => x.NamePattern, StringComparer.CurrentCultureIgnoreCase)
-                .ThenBy(x => x.UrlPattern, StringComparer.CurrentCultureIgnoreCase)
-                .ToList());
+            patterns.SortPatterns();
         }
 
         private void SortSortItems()

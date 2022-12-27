@@ -36,7 +36,7 @@ namespace LinkUtilities.Linker
 
                     LinkUrl = itchMetaData.Game.Url;
 
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin.Settings.Settings);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin);
                 }
                 catch (Exception ex)
                 {

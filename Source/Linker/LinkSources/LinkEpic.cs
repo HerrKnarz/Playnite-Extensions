@@ -43,7 +43,7 @@ namespace LinkUtilities.Linker
             {
                 string _ = client.DownloadString(url);
                 LinkUrl = $"{BaseUrl}{gameSlug}";
-                return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin.Settings.Settings);
+                return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin);
             }
             catch
             {

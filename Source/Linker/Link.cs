@@ -37,7 +37,7 @@ namespace LinkUtilities.Linker
 
             if (result != null)
             {
-                return LinkHelper.AddLink(game, LinkName, SearchResults.Find(x => x.Name == result.Name).Url, plugin.Settings.Settings, false);
+                return LinkHelper.AddLink(game, LinkName, SearchResults.Find(x => x.Name == result.Name).Url, plugin, false);
             }
             else
             {
@@ -65,7 +65,7 @@ namespace LinkUtilities.Linker
 
                     if (CheckLink(LinkUrl))
                     {
-                        result = LinkHelper.AddLink(game, LinkName, LinkUrl, plugin.Settings.Settings);
+                        result = LinkHelper.AddLink(game, LinkName, LinkUrl, plugin);
                     }
                 }
             }

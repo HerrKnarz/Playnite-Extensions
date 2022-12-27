@@ -86,7 +86,7 @@ namespace LinkUtilities.Linker
 
                     if (CheckLink(LinkUrl))
                     {
-                        result = LinkHelper.AddLink(game, linkName, LinkUrl, Plugin.Settings.Settings) || result;
+                        result = LinkHelper.AddLink(game, linkName, LinkUrl, Plugin) || result;
                     }
                 }
             }

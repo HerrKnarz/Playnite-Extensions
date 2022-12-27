@@ -91,7 +91,7 @@ namespace LinkUtilities.LinkActions
         {
             if (actionModifier == "AddLink")
             {
-                return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin.Settings.Settings, false);
+                return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin, false);
             }
             else
             {
