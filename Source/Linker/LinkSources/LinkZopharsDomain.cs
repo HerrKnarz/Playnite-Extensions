@@ -14,7 +14,7 @@ namespace LinkUtilities.Linker
     class LinkZopharsDomain : Link
     {
         public override string LinkName { get; } = "Zophar (Music)";
-        public override string BaseUrl { get; } = string.Empty;
+        public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://www.zophar.net/music/search?search=";
 
         internal string WebsiteUrl = "https://www.zophar.net";

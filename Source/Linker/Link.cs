@@ -16,7 +16,7 @@ namespace LinkUtilities.Linker
         public virtual string BaseUrl { get; } = string.Empty;
         public virtual string SearchUrl { get; } = string.Empty;
         public virtual string LinkUrl { get; set; } = string.Empty;
-        public virtual bool CanBeAdded { get { return !string.IsNullOrWhiteSpace(BaseUrl); } }
+        public virtual LinkAddTypes AddType { get; } = LinkAddTypes.UrlMatch;
         public virtual bool CanBeSearched { get { return !string.IsNullOrWhiteSpace(SearchUrl); } }
         public LinkSourceSetting Settings { get; set; }
         public virtual bool AllowRedirects { get; set; } = true;
@@ -57,17 +57,25 @@ namespace LinkUtilities.Linker
 
             if (!LinkHelper.LinkExists(game, LinkName))
             {
-                string gameName = GetGamePath(game);
-
-                if (!string.IsNullOrEmpty(gameName))
+                switch (AddType)
                 {
-                    LinkUrl = $"{BaseUrl}{GetGamePath(game)}";
+                    case LinkAddTypes.SingleSearchResult:
+                        LinkUrl = GetGamePath(game);
+                        break;
+                    case LinkAddTypes.UrlMatch:
+                        string gameName = GetGamePath(game);
 
-                    if (CheckLink(LinkUrl))
-                    {
-                        result = LinkHelper.AddLink(game, LinkName, LinkUrl, plugin);
-                    }
+                        if (!string.IsNullOrEmpty(gameName) && (CheckLink($"{BaseUrl}{GetGamePath(game)}")))
+                        {
+                            LinkUrl = $"{BaseUrl}{GetGamePath(game)}";
+                        }
+                        break;
                 }
+            }
+
+            if (!string.IsNullOrEmpty(LinkUrl))
+            {
+                result = LinkHelper.AddLink(game, LinkName, LinkUrl, plugin);
             }
 
             return result;
@@ -80,7 +88,30 @@ namespace LinkUtilities.Linker
 
         public virtual string GetGamePath(Game game)
         {
-            return game.Name;
+            string result = string.Empty;
+
+            if (!string.IsNullOrEmpty(game.Name))
+            {
+                switch (AddType)
+                {
+                    case LinkAddTypes.UrlMatch:
+                        result = game.Name;
+                        break;
+                    case LinkAddTypes.SingleSearchResult:
+                        if (CanBeSearched)
+                        {
+                            _ = SearchLink(game.Name);
+
+                            if (SearchResults.Count() == 1)
+                            {
+                                return SearchResults.FirstOrDefault().Url;
+                            }
+                        }
+                        break;
+                }
+            }
+
+            return result;
         }
 
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
@@ -102,7 +133,7 @@ namespace LinkUtilities.Linker
             Settings = new LinkSourceSetting()
             {
                 LinkName = LinkName,
-                IsAddable = CanBeAdded ? true : (bool?)null,
+                IsAddable = AddType != LinkAddTypes.None ? true : (bool?)null,
                 IsSearchable = CanBeSearched ? true : (bool?)null,
                 ShowInMenus = true,
                 ApiKey = null,

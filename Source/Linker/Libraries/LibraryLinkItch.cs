@@ -16,6 +16,7 @@ namespace LinkUtilities.Linker
     {
         public override Guid LibraryId { get; } = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
         public override string LinkName { get; } = "Itch";
+        public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://itch.io/api/1/{0}/search/games?query={1}";
         public string LibraryUrl { get; } = "https://itch.io/api/1/{0}/game/{1}";
 

@@ -6,6 +6,11 @@ using System.Collections.Generic;
 namespace LinkUtilities.Linker
 {
     /// <summary>
+    /// Defines the way a link can be added.
+    /// </summary>
+    public enum LinkAddTypes { None, SingleSearchResult, UrlMatch }
+
+    /// <summary>
     /// Interface for all the websites a link can be added to
     /// </summary>
     interface ILink
@@ -27,9 +32,9 @@ namespace LinkUtilities.Linker
         /// </summary>
         string LinkUrl { get; set; }
         /// <summary>
-        /// Specifies, if the link can be added without a search dialog (e.g. an add function via BaseUrl is implemented)
+        /// Specifies, if and how the link can be added without a search dialog
         /// </summary>
-        bool CanBeAdded { get; }
+        LinkAddTypes AddType { get; }
         /// <summary>
         /// Specifies, if the link is searchable (e.g. a search function via SearchUrl is implemented)
         /// </summary>

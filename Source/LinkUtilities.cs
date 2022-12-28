@@ -453,7 +453,7 @@ namespace LinkUtilities
             // Adds all linkable websites to the "add link to" and "search link to" sub menus.
             foreach (Linker.Link link in AddWebsiteLinks.Links)
             {
-                if (link.Settings.ShowInMenus & link.CanBeAdded)
+                if (link.Settings.ShowInMenus & link.AddType != Linker.LinkAddTypes.None)
                 {
                     menuItems.Add(new GameMenuItem
                     {

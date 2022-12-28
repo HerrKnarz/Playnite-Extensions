@@ -39,7 +39,7 @@ namespace LinkUtilities.Settings
                 {
                     if (itemNew.IsAddable != null)
                     {
-                        itemNew.IsAddable = itemOld.IsAddable;
+                        itemNew.IsAddable = itemOld.IsAddable == true;
                     }
 
                     if (itemNew.IsSearchable != null)

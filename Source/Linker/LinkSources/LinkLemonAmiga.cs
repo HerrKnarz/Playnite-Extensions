@@ -14,6 +14,7 @@ namespace LinkUtilities.Linker
     class LinkLemonAmiga : Link
     {
         public override string LinkName { get; } = "Lemon Amiga";
+        public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://www.lemonamiga.com/games/list.php?list_title=";
 
         internal string WebsiteUrl = "https://www.lemonamiga.com/games/";

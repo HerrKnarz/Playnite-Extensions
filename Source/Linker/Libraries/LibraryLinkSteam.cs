@@ -16,6 +16,7 @@ namespace LinkUtilities.Linker
     {
         public override Guid LibraryId { get; } = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         public override string LinkName { get; } = "Steam";
+        public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://steamcommunity.com/actions/SearchApps/";
         public string LibraryUrl { get; } = "https://store.steampowered.com/app/";
 
