@@ -24,6 +24,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "Giant Bomb",
+        "urlPattern": "*giantbomb.com*",
+        "namePattern": "*Giant Bomb*",
+        "partialMatch": false
+    },
+    {
         "linkName": "GOG",
         "urlPattern": "*gog.com*",
         "namePattern": "*GOG.com*",
