@@ -35,6 +35,9 @@ namespace LinkUtilities.Models.GiantBomb
 
         [JsonProperty("site_detail_url")]
         public string SiteDetailUrl;
+
+        [JsonProperty("resource_type")]
+        public string ResourceType;
     }
 
     public class GiantBombSearchResult

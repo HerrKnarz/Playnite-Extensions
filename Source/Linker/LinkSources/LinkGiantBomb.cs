@@ -16,7 +16,7 @@ namespace LinkUtilities.Linker
     {
         public override string LinkName { get; } = "Giant Bomb";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl { get; } = "https://www.giantbomb.com/api/games/?api_key={0}&format=json&field_list=name,platforms,site_detail_url,original_release_date&filter=name:{1}";
+        public override string SearchUrl { get; } = "https://www.giantbomb.com/api/search/?api_key={0}&format=json&query={1}&resources=game&field_list=name,platforms,site_detail_url,original_release_date&limit=50";
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {
@@ -29,6 +29,8 @@ namespace LinkUtilities.Linker
                     string apiUrl = string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode());
 
                     WebClient client = new WebClient();
+
+                    client.Headers.Add("user-agent", "Playnite LinkUtilities AddOn");
 
                     string jsonResult = client.DownloadString(apiUrl);
 
