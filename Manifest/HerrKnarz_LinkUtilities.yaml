@@ -1,5 +1,22 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 1.8
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2022-12-28
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v1.8/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_1_8.pext
+    Changelog:
+      - Added support for Giant Bomb
+      - bumped up to SDK version 6.8 (requires Playnite 10.9 now!)
+      - every link source that can't be added by constructing a link with the game name can now be automatically added if the search function only returns one result for the game name. Will be refined in future versions.
+      - Added options for rename, remove and sort functions to the extensions main menu for filtered or all games.
+      - Added option 'Clean up links (rename, remove, sort)' to game menu and extension main menu.
+      - Added position field to the rename patterns to enable better recursive renaming routines.
+      - Added button to all settings list views to sort the entries (rename patterns by position, all others by name)
+      - 97% translation to French (thx Anthell) and 100% to Ukrainian (thx SmithMD24)
+      - Remove duplicates function now ignores differences in scheme (http vs https) or if one link ends with a slash.
+      - Added version info to Lemon Amiga games (CD32 and AGA) because the links couldn't be differentiated otherwise.
+      - Added progress bar to Add links function, when only one game is processed.
+      - fixed bug that ignored sort order and sorted links alphabetically after adding one via bookmarklet, library link, Epic or MetaCritic.
   - Version: 1.7.2
     RequiredApiVersion: 6.5.0
     ReleaseDate: 2022-12-12
