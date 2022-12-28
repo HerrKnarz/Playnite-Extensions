@@ -16,8 +16,7 @@ namespace LinkUtilities.Linker
         public override string LinkName { get; } = "Zophar (Music)";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://www.zophar.net/music/search?search=";
-
-        internal string WebsiteUrl = "https://www.zophar.net";
+        public override string BaseUrl { get; } = "https://www.zophar.net";
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {
@@ -40,7 +39,7 @@ namespace LinkUtilities.Linker
                         SearchResults.Add(new SearchResult
                         {
                             Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./td[@class='name']").InnerText)}",
-                            Url = $"{WebsiteUrl}{node.SelectSingleNode("./td[@class='name']/a").GetAttributeValue("href", "")}",
+                            Url = $"{BaseUrl}{node.SelectSingleNode("./td[@class='name']/a").GetAttributeValue("href", "")}",
                             Description = WebUtility.HtmlDecode(node.SelectSingleNode("./td[@class='console']").InnerText)
                         });
                     }

@@ -17,7 +17,7 @@ namespace LinkUtilities.Linker
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://www.lemonamiga.com/games/list.php?list_title=";
 
-        internal string WebsiteUrl = "https://www.lemonamiga.com/games/";
+        public override string BaseUrl { get; } = "https://www.lemonamiga.com/games/";
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {
@@ -49,7 +49,7 @@ namespace LinkUtilities.Linker
                         SearchResults.Add(new SearchResult
                         {
                             Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-title']/a").InnerText)}{suffix}",
-                            Url = $"{WebsiteUrl}{node.SelectSingleNode("./div/div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
+                            Url = $"{BaseUrl}{node.SelectSingleNode("./div/div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
                             Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-info']").InnerText)}{WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-category']").InnerText)}"
                         }
                         );

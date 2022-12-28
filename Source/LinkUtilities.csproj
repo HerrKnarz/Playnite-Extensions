@@ -69,6 +69,7 @@
     <Compile Include="Linker\LinkSources\LinkCoOptimus.cs" />
     <Compile Include="Linker\LinkSources\LinkEpic.cs" />
     <Compile Include="Linker\LinkSources\LinkGamerGuides.cs" />
+    <Compile Include="Linker\LinkSources\LinkGiantBomb.cs" />
     <Compile Include="Linker\LinkSources\LinkIGN.cs" />
     <Compile Include="Linker\LinkSources\LinkLemonAmiga.cs" />
     <Compile Include="Linker\LinkSources\LinkMetacritic.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Linker\LinkSources\SNKWiki.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Models\ApiResults\EpicSearchResult.cs" />
+    <Compile Include="Models\ApiResults\GiantBombSearchResult.cs" />
     <Compile Include="Models\ApiResults\GogSearchResult.cs" />
     <Compile Include="Models\ApiResults\ItchMetaData.cs" />
     <Compile Include="Models\ApiResults\GogMetaData.cs" />
