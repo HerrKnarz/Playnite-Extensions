@@ -44,10 +44,17 @@ namespace LinkUtilities.Linker
                         {
                             counter++;
 
-                            string platforms = string.Empty;
+                            string description = result.OriginalReleaseDate;
+
+
                             if (result.Platforms != null && result.Platforms.Count > 0)
                             {
-                                platforms = result.Platforms.Select(platform => platform.Name).
+                                if (!string.IsNullOrEmpty(description))
+                                {
+                                    description += Environment.NewLine;
+                                }
+
+                                description += result.Platforms.Select(platform => platform.Name).
                                 Aggregate((total, part) => total + ", " + part);
                             }
 
@@ -55,7 +62,7 @@ namespace LinkUtilities.Linker
                             {
                                 Name = $"{counter}. {result.Name}",
                                 Url = $"{result.SiteDetailUrl}",
-                                Description = $"{result.OriginalReleaseDate}{Environment.NewLine}{platforms}"
+                                Description = description
                             }
                             );
                         }
