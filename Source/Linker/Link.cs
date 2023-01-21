@@ -29,15 +29,22 @@ namespace LinkUtilities.Linker
 
         public virtual bool AddSearchedLink(Game game)
         {
-            GenericItemOption result = API.Instance.Dialogs.ChooseItemWithSearch(
-                new List<GenericItemOption>(),
-                (a) => SearchLink(a),
-                game.Name,
-                $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
-
-            if (result != null)
+            if (Settings.IsSearchable == true)
             {
-                return LinkHelper.AddLink(game, LinkName, SearchResults.Find(x => x.Name == result.Name).Url, plugin, false);
+                GenericItemOption result = API.Instance.Dialogs.ChooseItemWithSearch(
+                    new List<GenericItemOption>(),
+                    (a) => SearchLink(a),
+                    game.Name,
+                    $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
+
+                if (result != null)
+                {
+                    return LinkHelper.AddLink(game, LinkName, SearchResults.Find(x => x.Name == result.Name).Url, plugin, false);
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {

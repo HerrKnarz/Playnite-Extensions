@@ -2,6 +2,8 @@
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace LinkUtilities.LinkActions
 {
@@ -61,9 +63,21 @@ namespace LinkUtilities.LinkActions
                 {
                     try
                     {
-                        activateGlobalProgress.ProgressMaxValue = Links.Count;
+                        ObservableCollection<Linker.Link> linkList = null;
 
-                        foreach (Linker.Link link in Links)
+                        switch (actionModifier)
+                        {
+                            case ActionModifierTypes.Add:
+                                linkList = new ObservableCollection<Linker.Link>(Links.Where(x => x.Settings.IsAddable == true).ToList());
+                                break;
+                            case ActionModifierTypes.Search:
+                                linkList = new ObservableCollection<Linker.Link>(Links.Where(x => x.Settings.IsSearchable == true).ToList());
+                                break;
+                        }
+
+                        activateGlobalProgress.ProgressMaxValue = linkList.Count;
+
+                        foreach (Linker.Link link in linkList)
                         {
                             activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(ProgressMessage)} ({link.LinkName})";
 
@@ -79,10 +93,12 @@ namespace LinkUtilities.LinkActions
                             activateGlobalProgress.CurrentProgressValue++;
                         }
                     }
+
                     catch (Exception ex)
                     {
                         Log.Error(ex);
                     }
+
                 }, globalProgressOptions);
             }
 
