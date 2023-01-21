@@ -1,4 +1,10 @@
 [
+     {
+        "linkName": "NewLink",
+        "urlPattern": "NewUrl",
+        "namePattern": "NewLink",
+        "partialMatch": false
+    },       
     {
         "linkName": "Facebook",
         "urlPattern": "*facebook.com*",
