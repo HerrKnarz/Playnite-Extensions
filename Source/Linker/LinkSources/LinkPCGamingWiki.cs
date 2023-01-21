@@ -22,6 +22,41 @@ namespace LinkUtilities.Linker
             return game.Name.CollapseWhitespaces().Replace(" ", "_").EscapeDataString();
         }
 
+        public override bool AddLink(Game game)
+        {
+            LinkUrl = string.Empty;
+            bool result = false;
+
+            if (!LinkHelper.LinkExists(game, LinkName))
+            {
+                string gameName = GetGamePath(game);
+
+                if (!string.IsNullOrEmpty(gameName))
+                {
+                    if (CheckLink($"{BaseUrl}{gameName}"))
+                    {
+                        LinkUrl = $"{BaseUrl}{gameName}";
+                    }
+                    // if the first try didn't find a link, we try it with the capitalized game name. 
+                    else
+                    {
+                        string gameNameCapitalized = game.Name.CollapseWhitespaces().ToTitleCase().Replace(" ", "_").EscapeDataString();
+
+                        if (gameNameCapitalized != gameName && CheckLink($"{BaseUrl}{gameNameCapitalized}"))
+                        {
+                            LinkUrl = $"{BaseUrl}{gameNameCapitalized}";
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(LinkUrl))
+                {
+                    result = LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin);
+                }
+            }
+            return result;
+        }
+
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {
             SearchResults = ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, WebsiteUrl, LinkName);
