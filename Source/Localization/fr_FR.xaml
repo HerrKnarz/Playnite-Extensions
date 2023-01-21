@@ -12,6 +12,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Rechercher un jeu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Sélectionner une option</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Liens de {0} jeux triés !</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Missing links of {0} games tagged!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Vous avez des doublons dans votre ordre de tri. Veuillez vous assurer que chaque nom de lien est unique.</sys:String>
 
@@ -27,6 +28,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Rechercher un lien vers...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Trier les liens par nom</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Trier les liens par ordre de tri</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Tag missing links</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Ajout des liens de la bibliothèque...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Ajout des liens...</sys:String>
@@ -34,6 +36,7 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressRemoveDuplicates">Suppression des liens en double...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRenameLinks">Changement du nom des liens...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Tri des liens...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">Tagging missing links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Ajout de liens vers les sites Web configurés...</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Ajouter un lien</sys:String>
@@ -70,6 +73,9 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Supprimer les liens</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Renommer les liens</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Tri</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Tag missing links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">To keep track which games are missing links to specific websites, you can add link names and url patterns here. If no link of a game matches the pattern, a tag with the name of the pattern will be added to the game. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Tag missing links after the game meta data was updated</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">Modèle d'URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Utiliser l'ordre de tri personnalisé lors du tri automatique</sys:String>
 </ResourceDictionary>
