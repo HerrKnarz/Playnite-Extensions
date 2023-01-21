@@ -38,6 +38,11 @@ namespace LinkUtilities.LinkActions
                 result = Plugin.SortLinks.Execute(game, actionModifier) || result;
             }
 
+            if (Plugin.Settings.Settings.TagMissingLinksAfterChange)
+            {
+                result = Plugin.TagMissingLinks.Execute(game, actionModifier) || result;
+            }
+
             return result;
         }
     }

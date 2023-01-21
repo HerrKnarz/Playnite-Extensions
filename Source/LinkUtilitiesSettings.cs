@@ -20,11 +20,13 @@ namespace LinkUtilities
         private DuplicateTypes removeDuplicatesType = DuplicateTypes.NameAndUrl;
         private bool removeLinksAfterChange = false;
         private bool renameLinksAfterChange = false;
+        private bool tagMissingLinksAfterChange = false;
         private ObservableCollection<SortItem> sortOrder;
         private LinkSourceSettings linkSettings;
         private LinkNamePatterns linkPatterns;
         private LinkNamePatterns removePatterns;
         private LinkNamePatterns renamePatterns;
+        private LinkNamePatterns missingLinkPatterns;
 
         [DontSerialize]
         public DuplicateTypesWithCaptions DuplicateTypesWithCaptions { get; }
@@ -41,6 +43,8 @@ namespace LinkUtilities
 
         public bool RenameLinksAfterChange { get => renameLinksAfterChange; set => SetValue(ref renameLinksAfterChange, value); }
 
+        public bool TagMissingLinksAfterChange { get => tagMissingLinksAfterChange; set => SetValue(ref tagMissingLinksAfterChange, value); }
+
         public ObservableCollection<SortItem> SortOrder { get => sortOrder; set => SetValue(ref sortOrder, value); }
 
         public LinkSourceSettings LinkSettings { get => linkSettings; set => SetValue(ref linkSettings, value); }
@@ -50,6 +54,7 @@ namespace LinkUtilities
         public LinkNamePatterns RemovePatterns { get => removePatterns; set => SetValue(ref removePatterns, value); }
 
         public LinkNamePatterns RenamePatterns { get => renamePatterns; set => SetValue(ref renamePatterns, value); }
+        public LinkNamePatterns MissingLinkPatterns { get => missingLinkPatterns; set => SetValue(ref missingLinkPatterns, value); }
 
         public LinkUtilitiesSettings()
         {
@@ -136,6 +141,14 @@ namespace LinkUtilities
             });
         }
 
+        public RelayCommand SortMissingLinkItemsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                Settings.MissingLinkPatterns.SortPatterns();
+            });
+        }
+
         public RelayCommand AddLinkNamePatternCommand
         {
             get => new RelayCommand(() =>
@@ -217,6 +230,25 @@ namespace LinkUtilities
             }, (items) => items != null && items.Count > 0);
         }
 
+        public RelayCommand AddMissingLinkPatternCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                Settings.MissingLinkPatterns.Add(new LinkNamePattern());
+            });
+        }
+
+        public RelayCommand<IList<object>> RemoveMissingLinkPatternsCommand
+        {
+            get => new RelayCommand<IList<object>>((items) =>
+            {
+                foreach (LinkNamePattern missingLinkPattern in items.ToList().Cast<LinkNamePattern>())
+                {
+                    Settings.MissingLinkPatterns.Remove(missingLinkPattern);
+                }
+            }, (items) => items != null && items.Count > 0);
+        }
+
         private void SortSortItems()
         {
             Settings.SortOrder = new ObservableCollection<SortItem>(Settings.SortOrder
@@ -231,6 +263,7 @@ namespace LinkUtilities
             plugin.HandleUriActions.LinkNamePatterns = Settings.LinkNamePatterns;
             plugin.RemoveLinks.RemovePatterns = Settings.RemovePatterns;
             plugin.RenameLinks.RenamePatterns = Settings.RenamePatterns;
+            plugin.TagMissingLinks.MissingLinkPatterns = Settings.MissingLinkPatterns;
         }
 
         public LinkUtilitiesSettingsViewModel(LinkUtilities plugin)
@@ -288,6 +321,15 @@ namespace LinkUtilities
             {
                 Settings.RenamePatterns.SortPatterns();
             }
+
+            if (Settings.MissingLinkPatterns == null)
+            {
+                Settings.MissingLinkPatterns = new LinkNamePatterns();
+            }
+            else
+            {
+                Settings.MissingLinkPatterns.SortPatterns();
+            }
         }
 
         public void BeginEdit()
@@ -303,10 +345,12 @@ namespace LinkUtilities
             Settings.RemoveDuplicatesType = EditingClone.RemoveDuplicatesType;
             Settings.RemoveLinksAfterChange = EditingClone.RemoveLinksAfterChange;
             Settings.RenameLinksAfterChange = EditingClone.RenameLinksAfterChange;
+            Settings.TagMissingLinksAfterChange = EditingClone.TagMissingLinksAfterChange;
             Settings.SortOrder = EditingClone.SortOrder;
             Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;
             Settings.RemovePatterns = EditingClone.RemovePatterns;
             Settings.RenamePatterns = EditingClone.RenamePatterns;
+            Settings.MissingLinkPatterns = EditingClone.MissingLinkPatterns;
 
             foreach (LinkSourceSetting originalItem in Settings.LinkSettings)
             {

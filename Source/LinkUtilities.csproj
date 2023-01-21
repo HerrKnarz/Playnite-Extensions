@@ -62,6 +62,7 @@
     <Compile Include="LinkActions\LinkAction.cs" />
     <Compile Include="LinkActions\RemoveLinks.cs" />
     <Compile Include="LinkActions\RenameLinks.cs" />
+    <Compile Include="LinkActions\TagMissingLinks.cs" />
     <Compile Include="Linker\IGameLibrary.cs" />
     <Compile Include="Linker\ILink.cs" />
     <Compile Include="Linker\Link.cs" />

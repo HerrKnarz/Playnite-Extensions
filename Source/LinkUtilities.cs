@@ -26,6 +26,7 @@ namespace LinkUtilities
             RemoveDuplicates = new RemoveDuplicates(this);
             RemoveLinks = new RemoveLinks(this);
             RenameLinks = new RenameLinks(this);
+            TagMissingLinks = new TagMissingLinks(this);
             HandleUriActions = new HandleUriActions(this);
 
             Settings = new LinkUtilitiesSettingsViewModel(this);
@@ -81,6 +82,11 @@ namespace LinkUtilities
         /// Class to rename links.
         /// </summary>
         public RenameLinks RenameLinks { get; }
+
+        /// <summary>
+        /// Class to tag missing links.
+        /// </summary>
+        public TagMissingLinks TagMissingLinks { get; }
 
         /// <summary>
         /// Handles UriHandler actions.
@@ -343,6 +349,31 @@ namespace LinkUtilities
                     }
                 });
             }
+            // Adds the "Tag missing links" item to the main menu.
+            if (TagMissingLinks.MissingLinkPatterns != null && TagMissingLinks.MissingLinkPatterns.Count > 0)
+            {
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, TagMissingLinks, true);
+                    }
+                });
+
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Action = a =>
+                    {
+                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, TagMissingLinks, true);
+                    }
+                });
+            }
 
             return menuItems;
         }
@@ -520,6 +551,20 @@ namespace LinkUtilities
                     {
                         List<Game> games = args.Games.Distinct().ToList();
                         DoForAll(games, RenameLinks, true);
+                    }
+                });
+            }
+            // Adds the "Tag missing links" item to the game menu.
+            if (TagMissingLinks.MissingLinkPatterns != null && TagMissingLinks.MissingLinkPatterns.Count > 0)
+            {
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
+                    MenuSection = menuSection,
+                    Action = a =>
+                    {
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, TagMissingLinks, true);
                     }
                 });
             }
