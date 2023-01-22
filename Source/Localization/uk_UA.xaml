@@ -12,7 +12,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Пошук гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Виберіть варіант</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Посилання {0} ігор сортовано!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Missing links of {0} games tagged!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Відсутні посилання {0} ігор позначені тегом!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">У вас є дублікати в списку сортування. Переконайтеся, що кожна назва посилання унікальна.</sys:String>
 
@@ -28,7 +28,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Шукати посилання на...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Сортувати посилання за назвою</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Сортувати посилання за порядком сортування</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Tag missing links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Позначити тегом відсутні посилання</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Додавання посилання бібліотеки...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Додавання посилань...</sys:String>
