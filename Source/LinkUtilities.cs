@@ -1,5 +1,6 @@
 ﻿using LinkUtilities.LinkActions;
 using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
@@ -183,8 +184,23 @@ namespace LinkUtilities
             if (Settings.Settings.SortAfterChange && !IsUpdating)
             {
                 List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
+                TagMissingLinks.TagsCache.Clear();
                 DoForAll(games, DoAfterChange);
             }
+        }
+
+        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
+        {
+            //if (Settings.AutoDownload)
+            //{
+            List<Game> games = PlayniteApi.Database.Games
+                .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
+
+            DoForAll(games, AddWebsiteLinks, false, ActionModifierTypes.Add);
+            //}
+
+            Settings.Settings.LastAutoLibUpdate = DateTime.Now;
+            SavePluginSettings(Settings);
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
@@ -203,6 +219,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                        TagMissingLinks.TagsCache.Clear();
                         DoForAll(games, DoAfterChange, true);
                     }
                 },
@@ -213,6 +230,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        TagMissingLinks.TagsCache.Clear();
                         DoForAll(games, DoAfterChange, true);
                     }
                 },
@@ -359,6 +377,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                        TagMissingLinks.TagsCache.Clear();
                         DoForAll(games, TagMissingLinks, true);
                     }
                 });
@@ -370,6 +389,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        TagMissingLinks.TagsCache.Clear();
                         DoForAll(games, TagMissingLinks, true);
                     }
                 });
@@ -444,6 +464,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
+                        TagMissingLinks.TagsCache.Clear();
                         DoForAll(games, DoAfterChange, true);
                     }
                 },
@@ -564,6 +585,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
+                        TagMissingLinks.TagsCache.Clear();
                         DoForAll(games, TagMissingLinks, true);
                     }
                 });

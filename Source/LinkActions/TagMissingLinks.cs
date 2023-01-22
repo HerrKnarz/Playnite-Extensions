@@ -9,7 +9,7 @@ using System.Linq;
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    /// Class to rename links based on patterns.
+    /// Class to add tags to games for missing links based on patterns.
     /// </summary>
     public class TagMissingLinks : LinkAction
     {
@@ -18,11 +18,14 @@ namespace LinkUtilities.LinkActions
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogTaggedMissingLinksMessage";
 
         /// <summary>
-        /// List of patterns to find the links to rename based on URL or link name
+        /// List of patterns to check for missing links
         /// </summary>
         public LinkNamePatterns MissingLinkPatterns { get; set; }
 
-        private Dictionary<string, Tag> TagsCache = new Dictionary<string, Tag>();
+        /// <summary>
+        /// Cache for the tags so they don't have to be retrieved from the database every time.
+        /// </summary>
+        public Dictionary<string, Tag> TagsCache = new Dictionary<string, Tag>();
 
         public TagMissingLinks(LinkUtilities plugin) : base(plugin)
         {

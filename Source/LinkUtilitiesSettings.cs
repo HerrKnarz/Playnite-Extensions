@@ -22,6 +22,7 @@ namespace LinkUtilities
         private bool renameLinksAfterChange = false;
         private bool tagMissingLinksAfterChange = false;
         private string missingLinkPrefix = ResourceProvider.GetString("LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue");
+        private DateTime lastAutoLibUpdate = DateTime.Now;
         private ObservableCollection<SortItem> sortOrder;
         private LinkSourceSettings linkSettings;
         private LinkNamePatterns linkPatterns;
@@ -48,6 +49,8 @@ namespace LinkUtilities
 
         public string MissingLinkPrefix { get => missingLinkPrefix; set => SetValue(ref missingLinkPrefix, value); }
 
+        public DateTime LastAutoLibUpdate { get => lastAutoLibUpdate; set => SetValue(ref lastAutoLibUpdate, value); }
+
         public ObservableCollection<SortItem> SortOrder { get => sortOrder; set => SetValue(ref sortOrder, value); }
 
         public LinkSourceSettings LinkSettings { get => linkSettings; set => SetValue(ref linkSettings, value); }
@@ -57,6 +60,7 @@ namespace LinkUtilities
         public LinkNamePatterns RemovePatterns { get => removePatterns; set => SetValue(ref removePatterns, value); }
 
         public LinkNamePatterns RenamePatterns { get => renamePatterns; set => SetValue(ref renamePatterns, value); }
+
         public LinkNamePatterns MissingLinkPatterns { get => missingLinkPatterns; set => SetValue(ref missingLinkPatterns, value); }
 
         public LinkUtilitiesSettings()
