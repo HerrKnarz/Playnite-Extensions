@@ -35,6 +35,8 @@ namespace LinkUtilities.LinkActions
         /// <returns>The found or created tag</returns>
         private Tag GetTag(string key)
         {
+            key = $"{Plugin.Settings.Settings.MissingLinkPrefix} {key}";
+
             if (TagsCache.TryGetValue(key, out Tag cachedTag))
             {
                 return cachedTag;

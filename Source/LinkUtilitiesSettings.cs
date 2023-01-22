@@ -21,6 +21,7 @@ namespace LinkUtilities
         private bool removeLinksAfterChange = false;
         private bool renameLinksAfterChange = false;
         private bool tagMissingLinksAfterChange = false;
+        private string missingLinkPrefix = ResourceProvider.GetString("LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue");
         private ObservableCollection<SortItem> sortOrder;
         private LinkSourceSettings linkSettings;
         private LinkNamePatterns linkPatterns;
@@ -44,6 +45,8 @@ namespace LinkUtilities
         public bool RenameLinksAfterChange { get => renameLinksAfterChange; set => SetValue(ref renameLinksAfterChange, value); }
 
         public bool TagMissingLinksAfterChange { get => tagMissingLinksAfterChange; set => SetValue(ref tagMissingLinksAfterChange, value); }
+
+        public string MissingLinkPrefix { get => missingLinkPrefix; set => SetValue(ref missingLinkPrefix, value); }
 
         public ObservableCollection<SortItem> SortOrder { get => sortOrder; set => SetValue(ref sortOrder, value); }
 
@@ -238,6 +241,14 @@ namespace LinkUtilities
             });
         }
 
+        public RelayCommand AddDefaultMissingLinkPatternsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                Settings.MissingLinkPatterns.AddDefaultPatterns(PatternTypes.LinkNamePattern);
+            });
+        }
+
         public RelayCommand<IList<object>> RemoveMissingLinkPatternsCommand
         {
             get => new RelayCommand<IList<object>>((items) =>
@@ -346,6 +357,7 @@ namespace LinkUtilities
             Settings.RemoveLinksAfterChange = EditingClone.RemoveLinksAfterChange;
             Settings.RenameLinksAfterChange = EditingClone.RenameLinksAfterChange;
             Settings.TagMissingLinksAfterChange = EditingClone.TagMissingLinksAfterChange;
+            Settings.MissingLinkPrefix = EditingClone.MissingLinkPrefix;
             Settings.SortOrder = EditingClone.SortOrder;
             Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;
             Settings.RemovePatterns = EditingClone.RemovePatterns;
