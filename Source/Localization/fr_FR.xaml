@@ -40,6 +40,7 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Ajout de liens vers les sites Web configurés...</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Ajouter un lien</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Automatically add links to newly added games</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">Clé d'API</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">En utilisant un bookmarklet, vous pouvez ajouter le site Web actif dans votre navigateur directement aux jeux sélectionnés dans Playnite. Pour trouver un nom de lien adapté, vous pouvez définir des modèles pour l'URL et le titre du lien ici. Les masques peuvent contenir des jokers. Un &quot;*&quot; représente zéro ou plusieurs caractères, un &quot;?&quot; représente un seul caractère.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Pour plus d'informations sur le bookmarklet, cliquez ici.</sys:String>
