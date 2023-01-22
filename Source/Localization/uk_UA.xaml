@@ -40,7 +40,7 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Додавання посилань на налаштовані сайти...</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Додати посилання</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Automatically add links to newly added games</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Автоматично додавати посилання до нещодавно доданих ігор</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">Ключ API</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Використовуючи букмарклет, ви можете додати активний сайт у своєму браузері безпосередньо до вибраних ігор у Playnite. Щоб знайти відповідну назву посилання, тут можна визначити шаблони для URL-адреси та назви посилання. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Для отримання додаткової інформації про букмарклет натисніть тут.</sys:String>
