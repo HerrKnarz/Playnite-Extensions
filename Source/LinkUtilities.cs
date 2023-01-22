@@ -139,7 +139,7 @@ namespace LinkUtilities
 
                                 foreach (Game game in games)
                                 {
-                                    activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(linkAction.ProgressMessage)} ({game.Name})";
+                                    activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(linkAction.ProgressMessage)}{Environment.NewLine}{game.Name}";
 
                                     if (activateGlobalProgress.CancelToken.IsCancellationRequested)
                                     {
@@ -191,16 +191,16 @@ namespace LinkUtilities
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
-            //if (Settings.AutoDownload)
-            //{
-            List<Game> games = PlayniteApi.Database.Games
-                .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
+            if (Settings.Settings.AddLinksToNewGames)
+            {
+                List<Game> games = PlayniteApi.Database.Games
+                    .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
 
-            DoForAll(games, AddWebsiteLinks, false, ActionModifierTypes.Add);
-            //}
+                DoForAll(games, AddWebsiteLinks, false, ActionModifierTypes.Add);
+            }
 
             Settings.Settings.LastAutoLibUpdate = DateTime.Now;
-            SavePluginSettings(Settings);
+            SavePluginSettings(Settings.Settings);
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)

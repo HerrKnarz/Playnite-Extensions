@@ -15,6 +15,7 @@ namespace LinkUtilities
     public class LinkUtilitiesSettings : ObservableObject
     {
         private bool sortAfterChange = false;
+        private bool addLinksToNewGames = false;
         private bool useCustomSortOrder = false;
         private bool removeDuplicatesAfterChange = false;
         private DuplicateTypes removeDuplicatesType = DuplicateTypes.NameAndUrl;
@@ -34,6 +35,8 @@ namespace LinkUtilities
         public DuplicateTypesWithCaptions DuplicateTypesWithCaptions { get; }
 
         public bool SortAfterChange { get => sortAfterChange; set => SetValue(ref sortAfterChange, value); }
+
+        public bool AddLinksToNewGames { get => addLinksToNewGames; set => SetValue(ref addLinksToNewGames, value); }
 
         public bool UseCustomSortOrder { get => useCustomSortOrder; set => SetValue(ref useCustomSortOrder, value); }
 
@@ -355,6 +358,7 @@ namespace LinkUtilities
         public void CancelEdit()
         {
             Settings.SortAfterChange = EditingClone.SortAfterChange;
+            Settings.AddLinksToNewGames = EditingClone.AddLinksToNewGames;
             Settings.UseCustomSortOrder = EditingClone.UseCustomSortOrder;
             Settings.RemoveDuplicatesAfterChange = EditingClone.RemoveDuplicatesAfterChange;
             Settings.RemoveDuplicatesType = EditingClone.RemoveDuplicatesType;

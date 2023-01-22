@@ -52,7 +52,7 @@ namespace LinkUtilities.LinkActions
             else
             {
                 GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(ProgressMessage)}",
+                    $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}",
                     true
                 )
                 {
@@ -79,7 +79,7 @@ namespace LinkUtilities.LinkActions
 
                         foreach (Linker.Link link in linkList)
                         {
-                            activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(ProgressMessage)} ({link.LinkName})";
+                            activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}{Environment.NewLine}{link.LinkName}";
 
                             if (activateGlobalProgress.CancelToken.IsCancellationRequested)
                             {
