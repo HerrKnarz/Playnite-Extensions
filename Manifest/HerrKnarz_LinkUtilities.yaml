@@ -1,5 +1,16 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 2-0
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-01-22
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v2.0/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_2_0.pext
+    Changelog:
+      - Added feature to add a tag to games that are missing specific links and remove them, when the link was added. Can be configured in the settings.
+      - Added option to add links automatically after a new game was added.
+      - Added default remove pattern for NewLink (thx chocolatechipcats)
+      - Fixed bug that all link sources would be searched, even if they aren't searchable or activated in the settings.
+      - On PCGamingWiki most games have links with capitalized word, so AddLink now additionally checks for those, if no link is found in the first run.
+      - additional translations to Ukrainian (thx SmithMD24)
   - Version: 1.8
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2022-12-28
