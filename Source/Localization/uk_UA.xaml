@@ -12,6 +12,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Пошук гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Виберіть варіант</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Посилання {0} ігор сортовано!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Відсутні посилання {0} ігор позначені тегом!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">У вас є дублікати в списку сортування. Переконайтеся, що кожна назва посилання унікальна.</sys:String>
 
@@ -27,6 +28,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Шукати посилання на...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Сортувати посилання за назвою</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Сортувати посилання за порядком сортування</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Позначити тегом відсутні посилання</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Додавання посилання бібліотеки...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Додавання посилань...</sys:String>
@@ -34,11 +36,13 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressRemoveDuplicates">Прибирання повторюваних посилань...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRenameLinks">Перейменування посилань...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Сортування посилань...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">Позначання тегом відсутні посилання...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Додавання посилань на налаштовані сайти...</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Додати посилання</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Автоматично додавати посилання до нещодавно доданих ігор</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">Ключ API</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Використовуючи букмарклет, ви можете додати активний сайт у своєму браузері безпосередньо до вибраних ігор у Playnite. Щоб знайти відповідну назву посилання, тут можна визначити шаблони для URL-адреси та назви посилання. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, a ? має бути рівно одним символом.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Використовуючи букмарклет, ви можете додати активний сайт у своєму браузері безпосередньо до вибраних ігор у Playnite. Щоб знайти відповідну назву посилання, тут можна визначити шаблони для URL-адреси та назви посилання. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Для отримання додаткової інформації про букмарклет натисніть тут.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Додати</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Додати типові</sys:String>
@@ -53,14 +57,16 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Назва посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Джерело посилання</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Відсутнє посилання]</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">Шаблон назви</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsOnlyUsedToSort">Використовується лише як опис і для сортування цієї сітки.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatch">Частковий збіг</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">Якщо позначено лише один з обох шаблонів має збігатися.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsPrefixMissingLinkTag">Префікс для тегів відсутніх посилань</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksAfterChange">Прибрати небажані посилання після оновлення метаданих</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">Часто постачальники метаданих автоматично додають посилання на не потрібні вам сайти. Тут ви можете визначити шаблони для посилань, які хочете видалити. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, a ? має бути рівно одним символом.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">Часто постачальники метаданих автоматично додають посилання на не потрібні вам сайти. Тут ви можете визначити шаблони для посилань, які хочете видалити. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksAfterChange">Перейменувати посилання після оновлення метаданих</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksDescription">Якщо ви хочете змінити назву певних посилань, тому що вони не відповідають вашим потребам, ви можете зробити це за допомогою цих шаблонів. Вони можуть містити символи підставлення. * може бути нуль або більше символів, a ? має бути рівно одним символом.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksDescription">Якщо ви хочете змінити назву певних посилань, тому що вони не відповідають вашим потребам, ви можете зробити це за допомогою цих шаблонів. Вони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Шукати посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Показати в меню</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Сортувати посилання після оновлення метаданих</sys:String>
@@ -70,6 +76,9 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Вилучити посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Перейменувати посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Сортування</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Позначити тегом відсутні посилання</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">Щоб відстежувати які з ігор мають відсутні посилання на конкретні сайти, ви можете додати назви посилання і шаблони Url-адрес. Якщо жодне з посилані гри не відповідає шаблонові, тег з назвою шаблону буде додано до гри. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Позначити тегом відсутні посилання після оновлення метаданих гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">Шаблон URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Використовувати власний порядок сортування при автоматичному сортуванні</sys:String>
 </ResourceDictionary>
