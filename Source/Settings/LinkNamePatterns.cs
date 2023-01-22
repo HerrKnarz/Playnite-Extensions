@@ -11,7 +11,7 @@ namespace LinkUtilities.Settings
     /// <summary>
     /// Types of patterns that can be matched.
     /// </summary>
-    public enum PatternTypes { LinkNamePattern, RemovePattern, RenamePattern }
+    public enum PatternTypes { LinkNamePattern, RemovePattern, RenamePattern, MissingLinkPatterns }
 
     /// <summary>
     /// Handles the Patterns to find link names for URL/link title combinations
@@ -87,6 +87,11 @@ namespace LinkUtilities.Settings
                 case PatternTypes.RenamePattern:
                     {
                         fileName = "DefaultRenamePatterns.json";
+                        break;
+                    }
+                case PatternTypes.MissingLinkPatterns:
+                    {
+                        fileName = "DefaultMissingLinkPatterns.json";
                         break;
                     }
                 default: break;

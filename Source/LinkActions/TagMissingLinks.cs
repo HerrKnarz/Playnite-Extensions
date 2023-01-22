@@ -76,7 +76,7 @@ namespace LinkUtilities.LinkActions
             return false;
         }
 
-        public bool Tag(Game game, bool updateDB = true)
+        public bool Tag(Game game)
         {
             bool mustUpdate = false;
 
@@ -94,6 +94,13 @@ namespace LinkUtilities.LinkActions
                 if (isMissing)
                 {
                     mustUpdate |= AddTagToGame(game, tag);
+                }
+                else
+                {
+                    if (game.Tags != null && game.Tags.Count > 0)
+                    {
+                        mustUpdate |= game.TagIds.Remove(tag.Id);
+                    }
                 }
             }
 

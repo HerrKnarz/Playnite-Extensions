@@ -252,7 +252,7 @@ namespace LinkUtilities
         {
             get => new RelayCommand(() =>
             {
-                Settings.MissingLinkPatterns.AddDefaultPatterns(PatternTypes.LinkNamePattern);
+                Settings.MissingLinkPatterns.AddDefaultPatterns(PatternTypes.MissingLinkPatterns);
             });
         }
 

@@ -94,6 +94,11 @@ namespace LinkUtilities
                 {
                     plugin.SortLinks.Execute(game);
                 }
+                // We add/remove tags for missing links automatically if the setting TagMissingLinksAfterChange is true.
+                if (addNewLink && plugin.Settings.Settings.TagMissingLinksAfterChange)
+                {
+                    plugin.TagMissingLinks.Execute(game);
+                }
             }
 
             return mustUpdate;
