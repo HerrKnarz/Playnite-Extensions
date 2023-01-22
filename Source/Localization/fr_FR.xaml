@@ -56,10 +56,12 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Nom du lien</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Source du lien</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Missing link]</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">Modèle de nom</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsOnlyUsedToSort">Utilisé uniquement comme une description et pour trier cette grille.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatch">Correspondance partielle</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">Lorsque cette case est cochée, seul un des deux modèles doit correspondre.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsPrefixMissingLinkTag">Prefix for missing link tags</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksAfterChange">Supprimer les liens indésirables après la mise à jour des métadonnées du jeu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">Souvent, les fournisseurs de métadonnées ajoutent automatiquement des liens vers certains sites Web que vous ne voulez pas. Ici, vous pouvez définir des modèles pour les liens que vous voulez supprimer. Les masques peuvent contenir des jokers. Un &quot;*&quot; represente zéro ou plusieurs caractères, un &quot;?&quot; représente un seul caractère.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksAfterChange">Renommer les liens après la mise à jour des métadonnées du jeu</sys:String>
