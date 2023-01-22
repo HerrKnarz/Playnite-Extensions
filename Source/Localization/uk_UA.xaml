@@ -56,12 +56,12 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Назва посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Джерело посилання</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Missing link]</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Відсутнє посилання]</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">Шаблон назви</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsOnlyUsedToSort">Використовується лише як опис і для сортування цієї сітки.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatch">Частковий збіг</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">Якщо позначено лише один з обох шаблонів має збігатися.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsPrefixMissingLinkTag">Prefix for missing link tags</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsPrefixMissingLinkTag">Префікс для тегів відсутніх посилань</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksAfterChange">Прибрати небажані посилання після оновлення метаданих</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">Часто постачальники метаданих автоматично додають посилання на не потрібні вам сайти. Тут ви можете визначити шаблони для посилань, які хочете видалити. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksAfterChange">Перейменувати посилання після оновлення метаданих</sys:String>
