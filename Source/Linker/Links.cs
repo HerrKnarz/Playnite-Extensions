@@ -9,6 +9,7 @@ namespace LinkUtilities.Linker
     {
         public Links(LinkUtilities plugin)
         {
+            Add(new LinkAdventureGamers(plugin));
             Add(new LinkArcadeDatabase(plugin));
             Add(new LinkCoOptimus(plugin));
             Add(new LinkEpic(plugin));

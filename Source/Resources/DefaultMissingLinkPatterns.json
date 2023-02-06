@@ -1,5 +1,11 @@
 [
     {
+        "linkName": "Adventure Gamers",
+        "urlPattern": "*adventuregamers.com*",
+        "namePattern": "Adventure Gamers",
+        "partialMatch": false
+    },
+    {
         "linkName": "Arcade Database",
         "urlPattern": "*adb.arcadeitalia.net*",
         "namePattern": "Arcade Database",

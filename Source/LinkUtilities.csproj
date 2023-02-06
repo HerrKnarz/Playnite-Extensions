@@ -66,6 +66,7 @@
     <Compile Include="Linker\IGameLibrary.cs" />
     <Compile Include="Linker\ILink.cs" />
     <Compile Include="Linker\Link.cs" />
+    <Compile Include="Linker\LinkSources\LinkAdventureGamers.cs" />
     <Compile Include="Linker\LinkSources\LinkArcadeDatabase.cs" />
     <Compile Include="Linker\LinkSources\LinkCoOptimus.cs" />
     <Compile Include="Linker\LinkSources\LinkEpic.cs" />
