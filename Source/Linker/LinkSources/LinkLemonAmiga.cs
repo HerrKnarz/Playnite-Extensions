@@ -9,7 +9,7 @@ using System.Net;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to MobyGames.
+    /// Adds a link to Lemon Amiga.
     /// </summary>
     class LinkLemonAmiga : Link
     {

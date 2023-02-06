@@ -42,6 +42,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "HowLongToBeat",
+        "urlPattern": "*howlongtobeat.com*",
+        "namePattern": "*HowLongToBeat",
+        "partialMatch": false
+    },
+    {
         "linkName": "IGN",
         "urlPattern": "*ign.com*",
         "namePattern": "IGN",

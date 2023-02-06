@@ -16,6 +16,7 @@ namespace LinkUtilities.Linker
             Add(new LinkGiantBomb(plugin));
             Add(new LibraryLinkGog(plugin));
             Add(new LinkHG101(plugin));
+            Add(new LinkHowLongToBeat(plugin));
             Add(new LinkIGN(plugin));
             Add(new LinkIsThereAnyDeal(plugin));
             Add(new LibraryLinkItch(plugin));
