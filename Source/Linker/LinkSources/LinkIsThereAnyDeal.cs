@@ -15,18 +15,33 @@ namespace LinkUtilities.Linker
     class LinkIsThereAnyDeal : Link
     {
         public override string LinkName { get; } = "IsThereAnyDeal";
-        public override string BaseUrl { get; } = "https://isthereanydeal.com/game/";
+        public override string BaseUrl => baseUrl;
+
+        string baseUrl;
+
+        string steamUrl { get; } = "https://isthereanydeal.com/steam/app/";
+        string standardUrl { get; } = "https://isthereanydeal.com/game/";
         public override string SearchUrl { get; } = "https://api.isthereanydeal.com/v02/search/search/?key={0}&q={1}&limit=20&strict=0";
 
         public override string GetGamePath(Game game)
         {
-            // IsThereAnyDeal Links need the result name in lowercase without special characters and white spaces with numbers translated to roman numbers.
-            return game.Name.RemoveDiacritics()
+            // IsThereAnyDeal provides links to steam games directly via the game id.
+            if (game.PluginId == Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab"))
+            {
+                baseUrl = steamUrl;
+                return game.GameId;
+            }
+            // For all other libraries links need the result name in lowercase without special characters and white spaces with numbers translated to roman numbers.
+            else
+            {
+                baseUrl = standardUrl;
+                return game.Name.RemoveDiacritics()
                 .RemoveSpecialChars()
                 .Replace("-", "")
                 .Replace(" ", "")
                 .DigitsToRomanNumbers()
                 .ToLower();
+            }
         }
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
@@ -56,7 +71,7 @@ namespace LinkUtilities.Linker
                             SearchResults.Add(new SearchResult
                             {
                                 Name = $"{counter}. {result.Title}",
-                                Url = $"{BaseUrl}{result.Plain}",
+                                Url = $"{standardUrl}{result.Plain}",
                                 Description = $"{result.Id}"
                             }
                             );
