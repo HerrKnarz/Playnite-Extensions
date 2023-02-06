@@ -1,5 +1,13 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 2.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-02-06
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities/releases/download/v2.1/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_2_1.pext
+    Changelog:
+      - Added support for Adventure Gamers
+      - Added support for HowLongToBeat
+      - Added support for IsThereAndDeal
   - Version: 2.0
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-01-22
