@@ -48,6 +48,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "IsThereAnyDeal",
+        "urlPattern": "*isthereanydeal.com*",
+        "namePattern": "IsThereAnyDeal",
+        "partialMatch": false
+    },
+    {
         "linkName": "itch",
         "urlPattern": "*itch.io*",
         "namePattern": "itch",

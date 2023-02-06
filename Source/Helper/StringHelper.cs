@@ -89,5 +89,23 @@ namespace LinkUtilities.Helper
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(title.ToLower());
         }
+
+        /// <summary>
+        /// Substitutes every digit to its counterpart in roman notation.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public static string DigitsToRomanNumbers(this string str)
+        {
+            return str.Replace("1", "I")
+                .Replace("2", "II")
+                .Replace("3", "III")
+                .Replace("4", "IV")
+                .Replace("5", "V")
+                .Replace("6", "VI")
+                .Replace("7", "VII")
+                .Replace("8", "VIII")
+                .Replace("9", "IX");
+        }
     }
 }
