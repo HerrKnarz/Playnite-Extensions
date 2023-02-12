@@ -1,4 +1,5 @@
 ﻿using LinkUtilities.Models;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -97,8 +98,7 @@ namespace LinkUtilities.Settings
                 default: break;
             }
 
-            string json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", fileName));
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<LinkNamePattern>>(json);
+            return Serialization.FromJsonFile<List<LinkNamePattern>>(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", fileName));
         }
 
         /// <summary>

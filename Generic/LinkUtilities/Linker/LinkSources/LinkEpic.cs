@@ -2,6 +2,7 @@
 using LinkUtilities.Models;
 using LinkUtilities.Models.Epic;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,7 @@ namespace LinkUtilities.Linker
 
                 string jsonResult = client.DownloadString(url);
 
-                EpicSearchResult epicSearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<EpicSearchResult>(jsonResult);
+                EpicSearchResult epicSearchResult = Serialization.FromJson<EpicSearchResult>(jsonResult);
 
                 int counter = 0;
 

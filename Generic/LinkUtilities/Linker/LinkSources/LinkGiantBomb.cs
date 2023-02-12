@@ -2,6 +2,7 @@
 using LinkUtilities.Models;
 using LinkUtilities.Models.GiantBomb;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace LinkUtilities.Linker
 
                     string jsonResult = client.DownloadString(apiUrl);
 
-                    GiantBombSearchResult giantBombSearchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<GiantBombSearchResult>(jsonResult);
+                    GiantBombSearchResult giantBombSearchResult = Serialization.FromJson<GiantBombSearchResult>(jsonResult);
 
                     if (giantBombSearchResult.Error == "OK" && giantBombSearchResult.NumberOfTotalResults > 0)
                     {

@@ -2,6 +2,7 @@
 using LinkUtilities.Models;
 using LinkUtilities.Models.HowLongToBeat;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,7 @@ namespace LinkUtilities.Linker
 
                 string jsonResult = response.Content.ReadAsStringAsync().Result;
 
-                HowLongToBeatSearchResult searchResult = Newtonsoft.Json.JsonConvert.DeserializeObject<HowLongToBeatSearchResult>(jsonResult);
+                HowLongToBeatSearchResult searchResult = Serialization.FromJson<HowLongToBeatSearchResult>(jsonResult);
 
                 if (searchResult.Data != null && searchResult.Data.Count > 0)
                 {

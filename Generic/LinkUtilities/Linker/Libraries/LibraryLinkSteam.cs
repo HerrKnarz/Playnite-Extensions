@@ -2,6 +2,7 @@
 using LinkUtilities.Models;
 using LinkUtilities.Models.Steam;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace LinkUtilities.Linker
 
                 Log.Debug(jsonResult);
 
-                List<SteamSearchResult> games = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SteamSearchResult>>(jsonResult);
+                List<SteamSearchResult> games = Serialization.FromJson<List<SteamSearchResult>>(jsonResult);
 
                 if (games != null && games.Count > 0)
                 {
