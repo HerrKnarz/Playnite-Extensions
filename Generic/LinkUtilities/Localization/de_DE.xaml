@@ -1,0 +1,84 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCLinkUtilitiesName">Linkwerkzeuge</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Links zu {0} Spielen hinzugefügt!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Link benennen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Bitte einen Namen für den Link eingeben!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Unerwünschte Links von {0} Spielen entfernt!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Doppelte Links von {0} Spielen entfernt!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Links von {0} Spielen umbenannt!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Ein Link zu {0} existiert bereits. Du kannst den bestehenden Link ersetzen oder einen neuen hinzufügen, indem du einen neuen Link-Namen eingibst.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Suche Spiel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Option wählen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Links von {0} Spielen sortiert!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Fehlende Links von {0} Spielen getaggt!</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Du hast Duplikate in deiner Sortierreihenfolge. Bitte stelle sicher, dass jeder Link-Name eindeutig ist.</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Bibliothekslink hinzufügen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Link hinzufügen zu...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Alle konfigurierten Webseiten</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Alle Spiele</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Links bereinigen (umbenennen, entfernen, sortieren)</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Gefilterte Spiele</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Doppelte Links entfernen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Unerwünschte Links entfernen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Links umbenennen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Link suchen zu...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Links nach Namen sortieren</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Links nach Sortierreihenfolge sortieren</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Fehlende Links taggen</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Füge Bibliothekslinks hinzu...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressLink">Füge Links hinzu...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressRemoveLinks">Entferne unerwünschte Links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressRemoveDuplicates">Entferne doppelte Links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressRenameLinks">Links werden umbenannt...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Sortiere Links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">Fehlende Links werden getaggt...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Füge Links zu konfigurierten Webseiten hinzu...</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Link hinzufügen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Automatisch Links zu neu hinzugefügten Spielen hinzufügen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Schlüssel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Mit einem Bookmarklet kannst du die aktive Webseite in deinem Browser direkt zu den ausgewählten Spielen in Playnite hinzufügen. Um einen passenden Link-Namen zu finden, kannst du hier Muster für die URL und den Link-Titel definieren. Die Muster können Platzhalter enthalten. Ein * kann null oder mehr Zeichen sein, ein ? muss genau ein Zeichen sein.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Klicke hie für weitere Informationen zum Bookmarklet.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Neu</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Standardwerte hinzufügen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Löschen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sortieren</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Webseiten konfigurieren</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Sortierreihenfolge festlegen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Entferne doppelte Links, nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionType">Entferne doppelte Links nach</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">Link-Name und URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">Link-Name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Link-Name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link-Quelle</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Fehlender Link]</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">Namensmuster</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsOnlyUsedToSort">Nur als Beschreibung und zur Sortierung dieser Liste verwendet.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatch">Teilweise Übereinstimmung</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">Wenn diese Option aktiviert ist, muss nur eines der beiden Muster übereinstimmen.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsPrefixMissingLinkTag">Präfix für fehlende Link-Tags</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksAfterChange">Entferne unerwünschte Links, nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">Oft fügen Metadaten-Anbieter automatisch Links zu Webseiten hinzu, die du nicht möchtest. Hier kannst du Muster für die Links definieren, die du entfernen möchtest. Die Muster können Platzhalter enthalten. Ein * kann Null oder mehr Zeichen sein, ein ? muss genau ein Zeichen sein.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksAfterChange">Links umbenennen, nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksDescription">Wenn du den Namen spezifischer Links ändern möchtest, da sie nicht deinen Bedürfnissen entsprechen, kannst du das mit diesen Mustern tun. Sie können Platzhalter enthalten. Ein * kann null oder mehr Zeichen sein, ein ? muss genau ein Zeichen sein.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Link suchen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Im Menü zeigen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Links sortieren, nachdem die Spiel-Metadaten aktualisiert wurden</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSortPosition">Position</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarklet">Bookmarklet</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Allgemeine Einstellungen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Links entfernen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Links umbenennen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Sortieren</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Fehlende Links taggen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">Um den Überblick zu behalten, welche Spiele keine Links zu bestimmten Websites enthalten, können Sie hier Link-Namen und Url-Muster hinzufügen. Wenn kein Link eines Spiels mit dem Muster übereinstimmt, wird dem Spiel ein Tag mit dem Namen des Spiels hinzugefügt. Die Muster können Platzhalter enthalten. Ein * kann null oder mehr Zeichen sein, ein ? muss genau ein Zeichen sein.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Tagge fehlende Links nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">URL-Muster</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Verwende benutzerdefinierte Sortierreihenfolge bei automatischer Sortierung</sys:String>
+</ResourceDictionary>
