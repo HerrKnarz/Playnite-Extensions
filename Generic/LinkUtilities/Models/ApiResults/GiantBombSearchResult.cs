@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Playnite.SDK.Data;
 using System.Collections.Generic;
 
 namespace LinkUtilities.Models.GiantBomb
@@ -6,64 +6,64 @@ namespace LinkUtilities.Models.GiantBomb
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Platform
     {
-        [JsonProperty("api_detail_url")]
+        [SerializationPropertyName("api_detail_url")]
         public string ApiDetailUrl;
 
-        [JsonProperty("id")]
+        [SerializationPropertyName("id")]
         public int Id;
 
-        [JsonProperty("name")]
+        [SerializationPropertyName("name")]
         public string Name;
 
-        [JsonProperty("site_detail_url")]
+        [SerializationPropertyName("site_detail_url")]
         public string SiteDetailUrl;
 
-        [JsonProperty("abbreviation")]
+        [SerializationPropertyName("abbreviation")]
         public string Abbreviation;
     }
 
     public class Result
     {
-        [JsonProperty("name")]
+        [SerializationPropertyName("name")]
         public string Name;
 
-        [JsonProperty("original_release_date")]
+        [SerializationPropertyName("original_release_date")]
         public string OriginalReleaseDate;
 
-        [JsonProperty("platforms")]
+        [SerializationPropertyName("platforms")]
         public List<Platform> Platforms;
 
-        [JsonProperty("site_detail_url")]
+        [SerializationPropertyName("site_detail_url")]
         public string SiteDetailUrl;
 
-        [JsonProperty("resource_type")]
+        [SerializationPropertyName("resource_type")]
         public string ResourceType;
     }
 
     public class GiantBombSearchResult
     {
-        [JsonProperty("error")]
+        [SerializationPropertyName("error")]
         public string Error;
 
-        [JsonProperty("limit")]
+        [SerializationPropertyName("limit")]
         public int Limit;
 
-        [JsonProperty("offset")]
+        [SerializationPropertyName("offset")]
         public int Offset;
 
-        [JsonProperty("number_of_page_results")]
+        [SerializationPropertyName("number_of_page_results")]
         public int NumberOfPageResults;
 
-        [JsonProperty("number_of_total_results")]
+        [SerializationPropertyName("number_of_total_results")]
         public int NumberOfTotalResults;
 
-        [JsonProperty("status_code")]
+        [SerializationPropertyName("status_code")]
         public int StatusCode;
 
-        [JsonProperty("results")]
+        [SerializationPropertyName("results")]
         public List<Result> Results;
 
-        [JsonProperty("version")]
+        [SerializationPropertyName("version")]
         public string Version;
     }
 }

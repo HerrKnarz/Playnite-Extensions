@@ -1,5 +1,5 @@
 ﻿using LinkUtilities.Helper;
-using Newtonsoft.Json;
+using Playnite.SDK.Data;
 using System.Text.RegularExpressions;
 
 namespace LinkUtilities.Models
@@ -12,43 +12,43 @@ namespace LinkUtilities.Models
         /// <summary>
         /// Position used to sort the patterns
         /// </summary>
-        [JsonProperty("position")]
+        [SerializationPropertyName("position")]
         public int? Position { get; set; }
 
         /// <summary>
         /// Name to use for the link if the patterns match
         /// </summary>
-        [JsonProperty("linkName")]
+        [SerializationPropertyName("linkName")]
         public string LinkName { get; set; }
 
         /// <summary>
         /// Pattern the URL has to match. Can contain wildcards * (zero or more characters) or ? (exactly one character).
         /// </summary>
-        [JsonProperty("urlPattern")]
+        [SerializationPropertyName("urlPattern")]
         public string UrlPattern { get; set; }
 
         /// <summary>
         /// Pattern the link title has to match. Can contain wildcards * (zero or more characters) or ? (exactly one character).
         /// </summary>
-        [JsonProperty("namePattern")]
+        [SerializationPropertyName("namePattern")]
         public string NamePattern { get; set; }
 
         /// <summary>
         /// If true only one of both patterns has to match. If false both have to match.
         /// </summary>
-        [JsonProperty("partialMatch")]
+        [SerializationPropertyName("partialMatch")]
         public bool PartialMatch { get; set; }
 
         /// <summary>
         /// Regular expression of the UrlPattern
         /// </summary>
-        [JsonIgnore]
+        [DontSerialize]
         public string UrlRegEx { get => ParseHelper.WildCardToRegular(UrlPattern); }
 
         /// <summary>
         /// Regular expression of the NamePattern
         /// </summary>
-        [JsonIgnore]
+        [DontSerialize]
         public string NameRegEx { get => ParseHelper.WildCardToRegular(NamePattern); }
 
         public bool LinkMatch(string linkName, string linkUrl)

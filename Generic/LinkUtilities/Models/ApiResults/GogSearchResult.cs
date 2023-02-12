@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Playnite.SDK.Data;
 using System.Collections.Generic;
 
 // Contains all the classes needed to deserialize the JSON fetched from the gog embed URL.
@@ -6,244 +6,244 @@ namespace LinkUtilities.Models.Gog
 {
     public class Availability
     {
-        [JsonProperty("isAvailable")]
+        [SerializationPropertyName("isAvailable")]
         public bool IsAvailable;
 
-        [JsonProperty("isAvailableInAccount")]
+        [SerializationPropertyName("isAvailableInAccount")]
         public bool IsAvailableInAccount;
     }
 
     public class FromObject
     {
-        [JsonProperty("date")]
+        [SerializationPropertyName("date")]
         public string Date;
 
-        [JsonProperty("timezone_type")]
+        [SerializationPropertyName("timezone_type")]
         public int TimezoneType;
 
-        [JsonProperty("timezone")]
+        [SerializationPropertyName("timezone")]
         public string Timezone;
     }
 
     public class Price
     {
-        [JsonProperty("amount")]
+        [SerializationPropertyName("amount")]
         public string Amount;
 
-        [JsonProperty("baseAmount")]
+        [SerializationPropertyName("baseAmount")]
         public string BaseAmount;
 
-        [JsonProperty("finalAmount")]
+        [SerializationPropertyName("finalAmount")]
         public string FinalAmount;
 
-        [JsonProperty("isDiscounted")]
+        [SerializationPropertyName("isDiscounted")]
         public bool IsDiscounted;
 
-        [JsonProperty("discountPercentage")]
+        [SerializationPropertyName("discountPercentage")]
         public int DiscountPercentage;
 
-        [JsonProperty("discountDifference")]
+        [SerializationPropertyName("discountDifference")]
         public string DiscountDifference;
 
-        [JsonProperty("symbol")]
+        [SerializationPropertyName("symbol")]
         public string Symbol;
 
-        [JsonProperty("isFree")]
+        [SerializationPropertyName("isFree")]
         public bool IsFree;
 
-        [JsonProperty("discount")]
+        [SerializationPropertyName("discount")]
         public int Discount;
 
-        [JsonProperty("isBonusStoreCreditIncluded")]
+        [SerializationPropertyName("isBonusStoreCreditIncluded")]
         public bool IsBonusStoreCreditIncluded;
 
-        [JsonProperty("bonusStoreCreditAmount")]
+        [SerializationPropertyName("bonusStoreCreditAmount")]
         public string BonusStoreCreditAmount;
 
-        [JsonProperty("promoId")]
+        [SerializationPropertyName("promoId")]
         public string PromoId;
     }
 
     public class Product
     {
-        [JsonProperty("customAttributes")]
+        [SerializationPropertyName("customAttributes")]
         public List<object> CustomAttributes;
 
-        [JsonProperty("developer")]
+        [SerializationPropertyName("developer")]
         public string Developer;
 
-        [JsonProperty("publisher")]
+        [SerializationPropertyName("publisher")]
         public string Publisher;
 
-        [JsonProperty("gallery")]
+        [SerializationPropertyName("gallery")]
         public List<string> Gallery;
 
-        [JsonProperty("video")]
+        [SerializationPropertyName("video")]
         public Video Video;
 
-        [JsonProperty("supportedOperatingSystems")]
+        [SerializationPropertyName("supportedOperatingSystems")]
         public List<string> SupportedOperatingSystems;
 
-        [JsonProperty("genres")]
+        [SerializationPropertyName("genres")]
         public List<string> Genres;
 
-        [JsonProperty("globalReleaseDate")]
+        [SerializationPropertyName("globalReleaseDate")]
         public int? GlobalReleaseDate;
 
-        [JsonProperty("isTBA")]
+        [SerializationPropertyName("isTBA")]
         public bool IsTBA;
 
-        [JsonProperty("price")]
+        [SerializationPropertyName("price")]
         public Price Price;
 
-        [JsonProperty("isDiscounted")]
+        [SerializationPropertyName("isDiscounted")]
         public bool IsDiscounted;
 
-        [JsonProperty("isInDevelopment")]
+        [SerializationPropertyName("isInDevelopment")]
         public bool IsInDevelopment;
 
-        [JsonProperty("id")]
+        [SerializationPropertyName("id")]
         public int Id;
 
-        [JsonProperty("releaseDate")]
+        [SerializationPropertyName("releaseDate")]
         public int? ReleaseDate;
 
-        [JsonProperty("availability")]
+        [SerializationPropertyName("availability")]
         public Availability Availability;
 
-        [JsonProperty("salesVisibility")]
+        [SerializationPropertyName("salesVisibility")]
         public SalesVisibility SalesVisibility;
 
-        [JsonProperty("buyable")]
+        [SerializationPropertyName("buyable")]
         public bool Buyable;
 
-        [JsonProperty("title")]
+        [SerializationPropertyName("title")]
         public string Title;
 
-        [JsonProperty("image")]
+        [SerializationPropertyName("image")]
         public string Image;
 
-        [JsonProperty("url")]
+        [SerializationPropertyName("url")]
         public string Url;
 
-        [JsonProperty("supportUrl")]
+        [SerializationPropertyName("supportUrl")]
         public string SupportUrl;
 
-        [JsonProperty("forumUrl")]
+        [SerializationPropertyName("forumUrl")]
         public string ForumUrl;
 
-        [JsonProperty("worksOn")]
+        [SerializationPropertyName("worksOn")]
         public WorksOn WorksOn;
 
-        [JsonProperty("category")]
+        [SerializationPropertyName("category")]
         public string Category;
 
-        [JsonProperty("originalCategory")]
+        [SerializationPropertyName("originalCategory")]
         public string OriginalCategory;
 
-        [JsonProperty("rating")]
+        [SerializationPropertyName("rating")]
         public int Rating;
 
-        [JsonProperty("type")]
+        [SerializationPropertyName("type")]
         public int Type;
 
-        [JsonProperty("isComingSoon")]
+        [SerializationPropertyName("isComingSoon")]
         public bool IsComingSoon;
 
-        [JsonProperty("isPriceVisible")]
+        [SerializationPropertyName("isPriceVisible")]
         public bool IsPriceVisible;
 
-        [JsonProperty("isMovie")]
+        [SerializationPropertyName("isMovie")]
         public bool IsMovie;
 
-        [JsonProperty("isGame")]
+        [SerializationPropertyName("isGame")]
         public bool IsGame;
 
-        [JsonProperty("slug")]
+        [SerializationPropertyName("slug")]
         public string Slug;
 
-        [JsonProperty("isWishlistable")]
+        [SerializationPropertyName("isWishlistable")]
         public bool IsWishlistable;
 
-        [JsonProperty("extraInfo")]
+        [SerializationPropertyName("extraInfo")]
         public List<object> ExtraInfo;
 
-        [JsonProperty("ageLimit")]
+        [SerializationPropertyName("ageLimit")]
         public int AgeLimit;
     }
 
     public class GogSearchResult
     {
-        [JsonProperty("products")]
+        [SerializationPropertyName("products")]
         public List<Product> Products;
 
-        [JsonProperty("ts")]
+        [SerializationPropertyName("ts")]
         public object Ts;
 
-        [JsonProperty("page")]
+        [SerializationPropertyName("page")]
         public int Page;
 
-        [JsonProperty("totalPages")]
+        [SerializationPropertyName("totalPages")]
         public int TotalPages;
 
-        [JsonProperty("totalResults")]
+        [SerializationPropertyName("totalResults")]
         public string TotalResults;
 
-        [JsonProperty("totalGamesFound")]
+        [SerializationPropertyName("totalGamesFound")]
         public int TotalGamesFound;
 
-        [JsonProperty("totalMoviesFound")]
+        [SerializationPropertyName("totalMoviesFound")]
         public int TotalMoviesFound;
     }
 
     public class SalesVisibility
     {
-        [JsonProperty("isActive")]
+        [SerializationPropertyName("isActive")]
         public bool IsActive;
 
-        [JsonProperty("fromObject")]
+        [SerializationPropertyName("fromObject")]
         public FromObject FromObject;
 
-        [JsonProperty("from")]
+        [SerializationPropertyName("from")]
         public int From;
 
-        [JsonProperty("toObject")]
+        [SerializationPropertyName("toObject")]
         public ToObject ToObject;
 
-        [JsonProperty("to")]
+        [SerializationPropertyName("to")]
         public int To;
     }
 
     public class ToObject
     {
-        [JsonProperty("date")]
+        [SerializationPropertyName("date")]
         public string Date;
 
-        [JsonProperty("timezone_type")]
+        [SerializationPropertyName("timezone_type")]
         public int TimezoneType;
 
-        [JsonProperty("timezone")]
+        [SerializationPropertyName("timezone")]
         public string Timezone;
     }
 
     public class Video
     {
-        [JsonProperty("id")]
+        [SerializationPropertyName("id")]
         public string Id;
 
-        [JsonProperty("provider")]
+        [SerializationPropertyName("provider")]
         public string Provider;
     }
 
     public class WorksOn
     {
-        [JsonProperty("Windows")]
+        [SerializationPropertyName("Windows")]
         public bool Windows;
 
-        [JsonProperty("Mac")]
+        [SerializationPropertyName("Mac")]
         public bool Mac;
 
-        [JsonProperty("Linux")]
+        [SerializationPropertyName("Linux")]
         public bool Linux;
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 
@@ -7,118 +7,118 @@ namespace LinkUtilities.Models.Gog
 {
     public class ContentSystemCompatibility
     {
-        [JsonProperty("windows")]
+        [SerializationPropertyName("windows")]
         public bool Windows;
 
-        [JsonProperty("osx")]
+        [SerializationPropertyName("osx")]
         public bool Osx;
 
-        [JsonProperty("linux")]
+        [SerializationPropertyName("linux")]
         public bool Linux;
     }
 
     public class Images
     {
-        [JsonProperty("background")]
+        [SerializationPropertyName("background")]
         public string Background;
 
-        [JsonProperty("logo")]
+        [SerializationPropertyName("logo")]
         public string Logo;
 
-        [JsonProperty("logo2x")]
+        [SerializationPropertyName("logo2x")]
         public string Logo2x;
 
-        [JsonProperty("icon")]
+        [SerializationPropertyName("icon")]
         public string Icon;
 
-        [JsonProperty("sidebarIcon")]
+        [SerializationPropertyName("sidebarIcon")]
         public string SidebarIcon;
 
-        [JsonProperty("sidebarIcon2x")]
+        [SerializationPropertyName("sidebarIcon2x")]
         public string SidebarIcon2x;
 
-        [JsonProperty("menuNotificationAv")]
+        [SerializationPropertyName("menuNotificationAv")]
         public string MenuNotificationAv;
 
-        [JsonProperty("menuNotificationAv2")]
+        [SerializationPropertyName("menuNotificationAv2")]
         public string MenuNotificationAv2;
     }
 
     public class InDevelopment
     {
-        [JsonProperty("active")]
+        [SerializationPropertyName("active")]
         public bool Active;
 
-        [JsonProperty("until")]
+        [SerializationPropertyName("until")]
         public object Until;
     }
 
     public class Languages
     {
-        [JsonProperty("en")]
+        [SerializationPropertyName("en")]
         public string En;
     }
 
     public class Links
     {
-        [JsonProperty("purchase_link")]
+        [SerializationPropertyName("purchase_link")]
         public string PurchaseLink;
 
-        [JsonProperty("product_card")]
+        [SerializationPropertyName("product_card")]
         public string ProductCard;
 
-        [JsonProperty("support")]
+        [SerializationPropertyName("support")]
         public string Support;
 
-        [JsonProperty("forum")]
+        [SerializationPropertyName("forum")]
         public string Forum;
     }
 
     public class GogMetaData
     {
-        [JsonProperty("id")]
+        [SerializationPropertyName("id")]
         public int Id;
 
-        [JsonProperty("title")]
+        [SerializationPropertyName("title")]
         public string Title;
 
-        [JsonProperty("purchase_link")]
+        [SerializationPropertyName("purchase_link")]
         public string PurchaseLink;
 
-        [JsonProperty("slug")]
+        [SerializationPropertyName("slug")]
         public string Slug;
 
-        [JsonProperty("content_system_compatibility")]
+        [SerializationPropertyName("content_system_compatibility")]
         public ContentSystemCompatibility ContentSystemCompatibility;
 
-        [JsonProperty("languages")]
+        [SerializationPropertyName("languages")]
         public Languages Languages;
 
-        [JsonProperty("links")]
+        [SerializationPropertyName("links")]
         public Links Links;
 
-        [JsonProperty("in_development")]
+        [SerializationPropertyName("in_development")]
         public InDevelopment InDevelopment;
 
-        [JsonProperty("is_secret")]
+        [SerializationPropertyName("is_secret")]
         public bool IsSecret;
 
-        [JsonProperty("is_installable")]
+        [SerializationPropertyName("is_installable")]
         public bool IsInstallable;
 
-        [JsonProperty("game_type")]
+        [SerializationPropertyName("game_type")]
         public string GameType;
 
-        [JsonProperty("is_pre_order")]
+        [SerializationPropertyName("is_pre_order")]
         public bool IsPreOrder;
 
-        [JsonProperty("release_date")]
+        [SerializationPropertyName("release_date")]
         public DateTime ReleaseDate;
 
-        [JsonProperty("images")]
+        [SerializationPropertyName("images")]
         public Images Images;
 
-        [JsonProperty("dlcs")]
+        [SerializationPropertyName("dlcs")]
         public List<object> Dlcs;
     }
 }

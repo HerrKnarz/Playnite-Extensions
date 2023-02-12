@@ -1,149 +1,149 @@
-﻿using Newtonsoft.Json;
+﻿using Playnite.SDK.Data;
 using System.Collections.Generic;
 
 namespace LinkUtilities.Models.HowLongToBeat
 {
     public class Datum
     {
-        [JsonProperty("count")]
+        [SerializationPropertyName("count")]
         public int Count;
 
-        [JsonProperty("game_id")]
+        [SerializationPropertyName("game_id")]
         public int GameId;
 
-        [JsonProperty("game_name")]
+        [SerializationPropertyName("game_name")]
         public string GameName;
 
-        [JsonProperty("game_name_date")]
+        [SerializationPropertyName("game_name_date")]
         public int GameNameDate;
 
-        [JsonProperty("game_alias")]
+        [SerializationPropertyName("game_alias")]
         public string GameAlias;
 
-        [JsonProperty("game_type")]
+        [SerializationPropertyName("game_type")]
         public string GameType;
 
-        [JsonProperty("game_image")]
+        [SerializationPropertyName("game_image")]
         public string GameImage;
 
-        [JsonProperty("comp_lvl_combine")]
+        [SerializationPropertyName("comp_lvl_combine")]
         public int CompLvlCombine;
 
-        [JsonProperty("comp_lvl_sp")]
+        [SerializationPropertyName("comp_lvl_sp")]
         public int CompLvlSp;
 
-        [JsonProperty("comp_lvl_co")]
+        [SerializationPropertyName("comp_lvl_co")]
         public int CompLvlCo;
 
-        [JsonProperty("comp_lvl_mp")]
+        [SerializationPropertyName("comp_lvl_mp")]
         public int CompLvlMp;
 
-        [JsonProperty("comp_lvl_spd")]
+        [SerializationPropertyName("comp_lvl_spd")]
         public int CompLvlSpd;
 
-        [JsonProperty("comp_main")]
+        [SerializationPropertyName("comp_main")]
         public int CompMain;
 
-        [JsonProperty("comp_plus")]
+        [SerializationPropertyName("comp_plus")]
         public int CompPlus;
 
-        [JsonProperty("comp_100")]
+        [SerializationPropertyName("comp_100")]
         public int Comp100;
 
-        [JsonProperty("comp_all")]
+        [SerializationPropertyName("comp_all")]
         public int CompAll;
 
-        [JsonProperty("comp_main_count")]
+        [SerializationPropertyName("comp_main_count")]
         public int CompMainCount;
 
-        [JsonProperty("comp_plus_count")]
+        [SerializationPropertyName("comp_plus_count")]
         public int CompPlusCount;
 
-        [JsonProperty("comp_100_count")]
+        [SerializationPropertyName("comp_100_count")]
         public int Comp100Count;
 
-        [JsonProperty("comp_all_count")]
+        [SerializationPropertyName("comp_all_count")]
         public int CompAllCount;
 
-        [JsonProperty("invested_co")]
+        [SerializationPropertyName("invested_co")]
         public int InvestedCo;
 
-        [JsonProperty("invested_mp")]
+        [SerializationPropertyName("invested_mp")]
         public int InvestedMp;
 
-        [JsonProperty("invested_co_count")]
+        [SerializationPropertyName("invested_co_count")]
         public int InvestedCoCount;
 
-        [JsonProperty("invested_mp_count")]
+        [SerializationPropertyName("invested_mp_count")]
         public int InvestedMpCount;
 
-        [JsonProperty("count_comp")]
+        [SerializationPropertyName("count_comp")]
         public int CountComp;
 
-        [JsonProperty("count_speedrun")]
+        [SerializationPropertyName("count_speedrun")]
         public int CountSpeedrun;
 
-        [JsonProperty("count_backlog")]
+        [SerializationPropertyName("count_backlog")]
         public int CountBacklog;
 
-        [JsonProperty("count_review")]
+        [SerializationPropertyName("count_review")]
         public int CountReview;
 
-        [JsonProperty("review_score")]
+        [SerializationPropertyName("review_score")]
         public int ReviewScore;
 
-        [JsonProperty("count_playing")]
+        [SerializationPropertyName("count_playing")]
         public int CountPlaying;
 
-        [JsonProperty("count_retired")]
+        [SerializationPropertyName("count_retired")]
         public int CountRetired;
 
-        [JsonProperty("profile_dev")]
+        [SerializationPropertyName("profile_dev")]
         public string ProfileDev;
 
-        [JsonProperty("profile_popular")]
+        [SerializationPropertyName("profile_popular")]
         public int ProfilePopular;
 
-        [JsonProperty("profile_steam")]
+        [SerializationPropertyName("profile_steam")]
         public int ProfileSteam;
 
-        [JsonProperty("profile_platform")]
+        [SerializationPropertyName("profile_platform")]
         public string ProfilePlatform;
 
-        [JsonProperty("release_world")]
+        [SerializationPropertyName("release_world")]
         public int ReleaseWorld;
     }
 
     public class HowLongToBeatSearchResult
     {
-        [JsonProperty("color")]
+        [SerializationPropertyName("color")]
         public string Color;
 
-        [JsonProperty("title")]
+        [SerializationPropertyName("title")]
         public string Title;
 
-        [JsonProperty("category")]
+        [SerializationPropertyName("category")]
         public string Category;
 
-        [JsonProperty("count")]
+        [SerializationPropertyName("count")]
         public int Count;
 
-        [JsonProperty("pageCurrent")]
+        [SerializationPropertyName("pageCurrent")]
         public int PageCurrent;
 
-        [JsonProperty("pageTotal")]
+        [SerializationPropertyName("pageTotal")]
         public int PageTotal;
 
-        [JsonProperty("pageSize")]
+        [SerializationPropertyName("pageSize")]
         public int PageSize;
 
-        [JsonProperty("data")]
+        [SerializationPropertyName("data")]
         public List<Datum> Data;
 
-        [JsonProperty("userData")]
+        [SerializationPropertyName("userData")]
         public List<object> UserData;
 
-        [JsonProperty("displayModifier")]
+        [SerializationPropertyName("displayModifier")]
         public object DisplayModifier;
     }
 }

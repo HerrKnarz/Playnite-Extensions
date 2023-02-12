@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Playnite.SDK.Data;
 using System.Collections.Generic;
 
 // Contains all the classes needed to deserialize the JSON fetched from the Epic graphql api.
@@ -6,25 +6,25 @@ namespace LinkUtilities.Models.Epic
 {
     public class Catalog
     {
-        [JsonProperty("searchStore")]
+        [SerializationPropertyName("searchStore")]
         public SearchStore SearchStore;
     }
 
     public class Data
     {
-        [JsonProperty("Catalog")]
+        [SerializationPropertyName("Catalog")]
         public Catalog Catalog;
     }
 
     public class Element
     {
-        [JsonProperty("title")]
+        [SerializationPropertyName("title")]
         public string Title;
 
-        [JsonProperty("urlSlug")]
+        [SerializationPropertyName("urlSlug")]
         public string UrlSlug;
 
-        [JsonProperty("seller")]
+        [SerializationPropertyName("seller")]
         public Seller Seller;
     }
 
@@ -34,22 +34,22 @@ namespace LinkUtilities.Models.Epic
 
     public class EpicSearchResult
     {
-        [JsonProperty("data")]
+        [SerializationPropertyName("data")]
         public Data Data;
 
-        [JsonProperty("extensions")]
+        [SerializationPropertyName("extensions")]
         public Extensions Extensions;
     }
 
     public class SearchStore
     {
-        [JsonProperty("elements")]
+        [SerializationPropertyName("elements")]
         public List<Element> Elements;
     }
 
     public class Seller
     {
-        [JsonProperty("name")]
+        [SerializationPropertyName("name")]
         public string Name;
     }
 

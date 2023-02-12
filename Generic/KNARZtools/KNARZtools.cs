@@ -23,7 +23,7 @@ namespace KNARZtools
             settings = new KNARZtoolsSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = true
+                HasSettings = false
             };
         }
 
