@@ -16,7 +16,7 @@ namespace CompanyCompanion
 
         public string Option1 { get => option1; set => SetValue(ref option1, value); }
         public bool Option2 { get => option2; set => SetValue(ref option2, value); }
-        // Playnite serializes settings object to a JSON object and saves it as text file.
+        // Playnite serializes Settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         [DontSerialize]
         public bool OptionThatWontBeSaved { get => optionThatWontBeSaved; set => SetValue(ref optionThatWontBeSaved, value); }
@@ -43,7 +43,7 @@ namespace CompanyCompanion
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
 
-            // Load saved settings.
+            // Load saved Settings.
             var savedSettings = plugin.LoadPluginSettings<CompanyCompanionSettings>();
 
             // LoadPluginSettings returns null if no saved data is available.
@@ -59,7 +59,7 @@ namespace CompanyCompanion
 
         public void BeginEdit()
         {
-            // Code executed when settings view is opened and user starts editing values.
+            // Code executed when Settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
         }
 
@@ -73,7 +73,7 @@ namespace CompanyCompanion
         public void EndEdit()
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
+            // This method should save Settings made to Option1 and Option2.
             plugin.SavePluginSettings(Settings);
         }
 
