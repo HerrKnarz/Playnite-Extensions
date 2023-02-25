@@ -38,7 +38,7 @@ New extension to manage game companies (see Developer and Publisher fields in Pl
 
 - Merge duplicate companies
 - Remove Business entitiy descriptions like Ltd. or Co.
-- Find similar named companies (by soundex and other means) and provide functionality to merge them.
+- Find similar named companies by removing special characters and generic strings like "Interactive", "Games", "Studios" and optionally fuzzy search and provide functionality to merge them.
 - Maybe add additional information to companies like descriptions and links (via own dialog window).
 
 ## KNARZtools
