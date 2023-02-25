@@ -27,14 +27,14 @@ namespace CompanyCompanion
         {
             try
             {
-                MergeCompaniesView mergeView = new MergeCompaniesView(this);
+                MergeCompaniesView mergeView = new MergeCompaniesView();
                 Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                 {
                     ShowMinimizeButton = false,
                 });
 
-                window.Height = 550;
-                window.Width = 650;
+                window.Height = 800;
+                window.Width = 800;
                 window.Title = "Company Merger";
                 window.Content = mergeView;
                 window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
@@ -60,6 +60,15 @@ namespace CompanyCompanion
                     Action = a =>
                     {
                         ShowMergeView();
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = "Merge duplicates",
+                    MenuSection = $"@Company Companion",
+                    Action = a =>
+                    {
+                        MergeCompanies.MergeDuplicates();
                     }
                 }
             };

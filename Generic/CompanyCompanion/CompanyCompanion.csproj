@@ -54,8 +54,11 @@
       <DependentUpon>CompanyCompanionSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logging.cs" />
-    <Compile Include="MergeCompanies.cs" />
-    <Compile Include="Models\MergeItem.cs" />
+    <Compile Include="ViewModels\MergeCompanies.cs" />
+    <Compile Include="ViewModels\MergeCompaniesViewModel.cs" />
+    <Compile Include="ViewModels\MergeGroup.cs" />
+    <Compile Include="ViewModels\MergeItem.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MergeCompaniesView.xaml.cs">
       <DependentUpon>MergeCompaniesView.xaml</DependentUpon>
