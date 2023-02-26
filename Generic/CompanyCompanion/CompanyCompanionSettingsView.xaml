@@ -6,14 +6,17 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <CheckBox Grid.Row="0" IsChecked="{Binding Settings.ShowGroupKey}" Content="Show group key in merge window."/>
-        <DockPanel Grid.Row="1" Margin="0,10,0,0">
-            <Label DockPanel.Dock="Top" Content="Business entity descriptors" />
+        <CheckBox Grid.ColumnSpan="2" Grid.Row="0" IsChecked="{Binding Settings.ShowGroupKey}" Content="Show group key in merge window."/>
+        <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,10,5,0">
+            <Label DockPanel.Dock="Top" Content="Business entity descriptors:" />
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
                 <Button Content="Add"
                         Command="{Binding AddBusinessEntityDescriptorCommand}" />
@@ -24,8 +27,8 @@
             <ListBox DockPanel.Dock="Top" Name="ListBoxBusinessEntityDescriptors" Margin="0,10,0,0" SelectionMode="Extended"
                      ItemsSource="{Binding Settings.BusinessEntityDescriptors}" />
         </DockPanel>
-        <DockPanel Grid.Row="2" Margin="0,10,0,0">
-            <Label DockPanel.Dock="Top" Content="Words to ignore" />
+        <DockPanel Grid.Column="1" Grid.Row="1" Margin="5,10,0,0">
+            <Label DockPanel.Dock="Top" Content="Words to ignore to find similar companies:" />
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
                 <Button Content="Add"
                         Command="{Binding AddIgnoreWordCommand}" />
