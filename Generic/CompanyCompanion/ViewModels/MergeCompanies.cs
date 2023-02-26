@@ -118,7 +118,7 @@ namespace CompanyCompanion
             int gameCount = 0;
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                   $"CompanyCompanion - updating companies",
+                   $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionSettingsProgressUpdating")}",
                    true
                )
             {
@@ -203,7 +203,9 @@ namespace CompanyCompanion
                 }, globalProgressOptions);
             }
 
-            API.Instance.Dialogs.ShowMessage($"Updated companies in {gameCount} games and merged {groups.Select(g => g.Companies.Where(c => c.Merge).ToList().Count).Sum()} companies");
+            API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogUpdated"),
+                gameCount,
+                groups.Select(g => g.Companies.Where(c => c.Merge).ToList().Count).Sum()));
 
             groups = null;
 
@@ -226,7 +228,7 @@ namespace CompanyCompanion
             }
             else
             {
-                API.Instance.Dialogs.ShowMessage("No duplicate companies were found.");
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogNoDuplicates"));
             }
         }
         public static void RemoveBusinessEntityDescriptors(CompanyCompanion plugin)
@@ -241,7 +243,7 @@ namespace CompanyCompanion
             }
             else
             {
-                API.Instance.Dialogs.ShowMessage("No companies with business entity descriptors found.");
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogNoDescriptors"));
             }
         }
     }

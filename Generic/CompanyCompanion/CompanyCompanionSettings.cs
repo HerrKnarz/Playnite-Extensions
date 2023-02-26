@@ -11,6 +11,7 @@ namespace CompanyCompanion
         private bool showGroupKey = false;
         private ObservableCollection<string> businessEntityDescriptors;
         private ObservableCollection<string> ignoreWords;
+
         public bool ShowGroupKey { get => showGroupKey; set => SetValue(ref showGroupKey, value); }
         public ObservableCollection<string> BusinessEntityDescriptors { get => businessEntityDescriptors; set => SetValue(ref businessEntityDescriptors, value); }
         public ObservableCollection<string> IgnoreWords { get => ignoreWords; set => SetValue(ref ignoreWords, value); }
@@ -27,7 +28,7 @@ namespace CompanyCompanion
         {
             get => new RelayCommand(() =>
             {
-                string value = API.Instance.Dialogs.SelectString("", "Add value", "").SelectedString;
+                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogAddValue"), "").SelectedString;
 
                 Settings.BusinessEntityDescriptors.AddMissing(value);
                 Settings.BusinessEntityDescriptors = new ObservableCollection<string>(Settings.BusinessEntityDescriptors.OrderBy(x => x));
@@ -49,7 +50,7 @@ namespace CompanyCompanion
         {
             get => new RelayCommand(() =>
             {
-                string value = API.Instance.Dialogs.SelectString("", "Add value", "").SelectedString;
+                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogAddValue"), "").SelectedString;
 
                 Settings.IgnoreWords.AddMissing(value);
                 Settings.IgnoreWords = new ObservableCollection<string>(Settings.IgnoreWords.OrderBy(x => x));

@@ -14,13 +14,13 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <CheckBox Grid.ColumnSpan="2" Grid.Row="0" IsChecked="{Binding Settings.ShowGroupKey}" Content="Show group key in merge window."/>
+        <CheckBox Grid.ColumnSpan="2" Grid.Row="0" IsChecked="{Binding Settings.ShowGroupKey}" Content="{DynamicResource LOCCompanyCompanionSettingsShowKey}"/>
         <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,10,5,0">
-            <Label DockPanel.Dock="Top" Content="Business entity descriptors:" />
+            <Label DockPanel.Dock="Top" Content="{DynamicResource LOCCompanyCompanionSettingsDescriptors}" />
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
-                <Button Content="Add"
+                <Button Content="{DynamicResource LOCCompanyCompanionSettingsAdd}"
                         Command="{Binding AddBusinessEntityDescriptorCommand}" />
-                <Button Content="Remove" Margin="10,0,0,0"
+                <Button Content="{DynamicResource LOCCompanyCompanionSettingsRemove}" Margin="10,0,0,0"
                         Command="{Binding RemoveBusinessEntityDescriptorCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=ListBoxBusinessEntityDescriptors}"/>
             </StackPanel>
@@ -28,11 +28,11 @@
                      ItemsSource="{Binding Settings.BusinessEntityDescriptors}" />
         </DockPanel>
         <DockPanel Grid.Column="1" Grid.Row="1" Margin="5,10,0,0">
-            <Label DockPanel.Dock="Top" Content="Words to ignore to find similar companies:" />
+            <Label DockPanel.Dock="Top" Content="{DynamicResource LOCCompanyCompanionSettingsIngoreWords}" />
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
-                <Button Content="Add"
+                <Button Content="{DynamicResource LOCCompanyCompanionSettingsAdd}"
                         Command="{Binding AddIgnoreWordCommand}" />
-                <Button Content="Remove" Margin="10,0,0,0"
+                <Button Content="{DynamicResource LOCCompanyCompanionSettingsRemove}" Margin="10,0,0,0"
                         Command="{Binding RemoveIgnoreWordCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=ListBoxIgnoreWord}"/>
             </StackPanel>

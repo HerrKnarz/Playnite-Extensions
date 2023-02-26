@@ -35,7 +35,7 @@ namespace CompanyCompanion
 
                 window.Height = 800;
                 window.Width = 800;
-                window.Title = "Company Merger";
+                window.Title = ResourceProvider.GetString("LOCCompanyCompanionMergeWindowName");
                 window.Content = mergeView;
                 window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
                 window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -50,13 +50,15 @@ namespace CompanyCompanion
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
+            string menuSection = ResourceProvider.GetString("LOCCompanyCompanionName");
+
             List<MainMenuItem> menuItems = new List<MainMenuItem>
             {
                 // Adds the "clean up" item to the main menu.
                 new MainMenuItem
                 {
-                    Description = "Show Company Merger",
-                    MenuSection = $"@Company Companion",
+                    Description = ResourceProvider.GetString("LOCCompanyCompanionMenuShowMerger"),
+                    MenuSection = $"@{menuSection}",
                     Action = a =>
                     {
                         ShowMergeView();
@@ -64,8 +66,8 @@ namespace CompanyCompanion
                 },
                 new MainMenuItem
                 {
-                    Description = "Merge duplicates",
-                    MenuSection = $"@Company Companion",
+                    Description = ResourceProvider.GetString("LOCCompanyCompanionMenuMergeDuplicates"),
+                    MenuSection = $"@{menuSection}",
                     Action = a =>
                     {
                         MergeCompanies.MergeDuplicates(this);
@@ -73,8 +75,8 @@ namespace CompanyCompanion
                 },
                 new MainMenuItem
                 {
-                    Description = "Remove business entity descriptors",
-                    MenuSection = $"@Company Companion",
+                    Description = ResourceProvider.GetString("LOCCompanyCompanionMenuRemoveDescriptors"),
+                    MenuSection = $"@{menuSection}",
                     Action = a =>
                     {
                         MergeCompanies.RemoveBusinessEntityDescriptors(this);
