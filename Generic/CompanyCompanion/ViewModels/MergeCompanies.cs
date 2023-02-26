@@ -12,6 +12,8 @@ namespace CompanyCompanion
     {
         private ObservableCollection<MergeGroup> mergeList;
 
+        private readonly CompanyCompanion plugin;
+
         public ObservableCollection<MergeGroup> MergeList
         {
             get
@@ -25,47 +27,28 @@ namespace CompanyCompanion
             }
         }
 
-        internal List<string> BusinessEntityDescriptors { get; } = new List<string>()
-        {
-            "Co",
-            "Corp",
-            "GmbH",
-            "Inc",
-            "LLC",
-            "Ltd",
-            "srl",
-            "sro",
-        };
-
-        internal List<string> GenericDescriptors { get; } = new List<string>()
-        {
-            "Corporation",
-            "Digital",
-            "Entertainment",
-            "Games",
-            "Interactive",
-            "Multimedia",
-            "Productions",
-            "Publishing",
-            "Software",
-            "Studios",
-            "The",
-        };
-
-        public MergeCompanies()
+        public MergeCompanies(CompanyCompanion plugin)
         {
             MergeList = new ObservableCollection<MergeGroup>();
+            this.plugin = plugin;
         }
 
-        internal string RemoveWords(string name, List<string> wordList)
+        internal string RemoveWords(string name, ObservableCollection<string> wordList)
         {
-            return string.Join(" ", name.Split().Where(w => !wordList.Contains(w.RemoveSpecialChars().Replace("-", ""), StringComparer.InvariantCultureIgnoreCase)));
+            if (name != null)
+            {
+                return string.Join(" ", name.Split().Where(w => !wordList.Contains(w.RemoveSpecialChars().Replace("-", ""), StringComparer.InvariantCultureIgnoreCase)));
+            }
+            else
+            {
+                return string.Empty;
+            }
 
         }
 
         public string CleanUpCompanyName(string name)
         {
-            name = RemoveWords(name, BusinessEntityDescriptors).CollapseWhitespaces().Trim();
+            name = RemoveWords(name, plugin.Settings.Settings.BusinessEntityDescriptors).CollapseWhitespaces().Trim();
 
             if (name.EndsWith(","))
             {
@@ -87,7 +70,7 @@ namespace CompanyCompanion
                         Id = c.Id,
                         Name = c.Name,
                         CleanedUpName = (cleanUpName) ? CleanUpCompanyName(c.Name) : c.Name,
-                        GroupName = (findSimilar) ? RemoveWords(CleanUpCompanyName(c.Name), GenericDescriptors)
+                        GroupName = (findSimilar) ? RemoveWords(CleanUpCompanyName(c.Name), plugin.Settings.Settings.IgnoreWords)
                             .RemoveDiacritics()
                             .RemoveSpecialChars()
                             .ToLower()
@@ -108,6 +91,7 @@ namespace CompanyCompanion
 
                 MergeList = mergeGroups.Select(g => new MergeGroup
                 {
+                    Plugin = plugin,
                     Owner = this,
                     Key = g.Key,
                     CompanyName = g.First().CleanedUpName,
@@ -230,9 +214,9 @@ namespace CompanyCompanion
 
         }
 
-        public static void MergeDuplicates()
+        public static void MergeDuplicates(CompanyCompanion plugin)
         {
-            MergeCompanies merger = new MergeCompanies();
+            MergeCompanies merger = new MergeCompanies(plugin);
 
             merger.GetMergeList();
 
@@ -243,6 +227,21 @@ namespace CompanyCompanion
             else
             {
                 API.Instance.Dialogs.ShowMessage("No duplicate companies were found.");
+            }
+        }
+        public static void RemoveBusinessEntityDescriptors(CompanyCompanion plugin)
+        {
+            MergeCompanies merger = new MergeCompanies(plugin);
+
+            merger.GetMergeList(true);
+
+            if (merger.MergeList.Count > 0)
+            {
+                merger.Merge();
+            }
+            else
+            {
+                API.Instance.Dialogs.ShowMessage("No companies with business entity descriptors found.");
             }
         }
     }

@@ -28,12 +28,14 @@
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <Label Content="{Binding DisplayName}" Grid.Column="0" FontWeight="Bold"/>
-                            <TextBox Text="{Binding CompanyName}" Grid.Column="1"/>
-                            <Button Grid.Column="2" Content="Merge group" Command="{Binding MergeGroupCommand}" Margin="5,0,0,0"/>
+                            <Label Grid.Column="1" Content="New name:" />
+                            <TextBox Grid.Column="2" Text="{Binding CompanyName}" Margin="5,0,0,0"/>
+                            <Button Grid.Column="3" Content="Merge group" Command="{Binding MergeGroupCommand}" Margin="5,0,0,0"/>
                         </Grid>
                     </Border>
                     <HierarchicalDataTemplate.ItemTemplate>

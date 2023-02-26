@@ -14,6 +14,8 @@ namespace CompanyCompanion
         private string companyName = string.Empty;
         private Guid companyId = Guid.Empty;
 
+        public CompanyCompanion Plugin { get; set; }
+
         /// <summary>
         /// Owner of the group. Used to merge one group.
         /// </summary>
@@ -44,7 +46,14 @@ namespace CompanyCompanion
         {
             get
             {
-                return $"{Key} ({Companies.Count})";
+                if (Plugin.Settings.Settings.ShowGroupKey)
+                {
+                    return $"{Key} ({Companies.Count})";
+                }
+                else
+                {
+                    return $"{CompanyName} ({Companies.Count})";
+                }
             }
         }
         /// <summary>

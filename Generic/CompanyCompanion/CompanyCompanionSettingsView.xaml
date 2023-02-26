@@ -5,10 +5,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="Description for Option1:"/>
-        <TextBox Text="{Binding Settings.Option1}"/>
-        <TextBlock Text="Description for Option2:"/>
-        <CheckBox IsChecked="{Binding Settings.Option2}"/>
-    </StackPanel>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <CheckBox Grid.Row="0" IsChecked="{Binding Settings.ShowGroupKey}" Content="Show group key in merge window."/>
+        <DockPanel Grid.Row="1" Margin="0,10,0,0">
+            <Label DockPanel.Dock="Top" Content="Business entity descriptors" />
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                <Button Content="Add"
+                        Command="{Binding AddBusinessEntityDescriptorCommand}" />
+                <Button Content="Remove" Margin="10,0,0,0"
+                        Command="{Binding RemoveBusinessEntityDescriptorCommand}"
+                        CommandParameter="{Binding SelectedItems, ElementName=ListBoxBusinessEntityDescriptors}"/>
+            </StackPanel>
+            <ListBox DockPanel.Dock="Top" Name="ListBoxBusinessEntityDescriptors" Margin="0,10,0,0" SelectionMode="Extended"
+                     ItemsSource="{Binding Settings.BusinessEntityDescriptors}" />
+        </DockPanel>
+        <DockPanel Grid.Row="2" Margin="0,10,0,0">
+            <Label DockPanel.Dock="Top" Content="Words to ignore" />
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                <Button Content="Add"
+                        Command="{Binding AddIgnoreWordCommand}" />
+                <Button Content="Remove" Margin="10,0,0,0"
+                        Command="{Binding RemoveIgnoreWordCommand}"
+                        CommandParameter="{Binding SelectedItems, ElementName=ListBoxIgnoreWord}"/>
+            </StackPanel>
+            <ListBox DockPanel.Dock="Top" Name="ListBoxIgnoreWord" Margin="0,10,0,0" SelectionMode="Extended"
+                     ItemsSource="{Binding Settings.IgnoreWords}" />
+        </DockPanel>
+    </Grid>
 </UserControl>

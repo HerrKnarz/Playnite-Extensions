@@ -8,11 +8,12 @@ namespace CompanyCompanion
     /// </summary>
     public partial class MergeCompaniesView : UserControl
     {
-        public MergeCompaniesView()
+        public MergeCompaniesView(CompanyCompanion plugin)
         {
             try
             {
                 InitializeComponent();
+                ((MergeCompaniesViewModel)DataContext).Plugin = plugin;
             }
             catch (Exception E)
             {

@@ -10,7 +10,7 @@ namespace CompanyCompanion
 {
     public class CompanyCompanion : GenericPlugin
     {
-        private CompanyCompanionSettingsViewModel Settings { get; set; }
+        public CompanyCompanionSettingsViewModel Settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("b76edaec-1aa8-48ef-83a4-2a49ab031029");
 
@@ -19,7 +19,7 @@ namespace CompanyCompanion
             Settings = new CompanyCompanionSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = false
+                HasSettings = true
             };
         }
 
@@ -27,7 +27,7 @@ namespace CompanyCompanion
         {
             try
             {
-                MergeCompaniesView mergeView = new MergeCompaniesView();
+                MergeCompaniesView mergeView = new MergeCompaniesView(this);
                 Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                 {
                     ShowMinimizeButton = false,
@@ -68,7 +68,16 @@ namespace CompanyCompanion
                     MenuSection = $"@Company Companion",
                     Action = a =>
                     {
-                        MergeCompanies.MergeDuplicates();
+                        MergeCompanies.MergeDuplicates(this);
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = "Remove business entity descriptors",
+                    MenuSection = $"@Company Companion",
+                    Action = a =>
+                    {
+                        MergeCompanies.RemoveBusinessEntityDescriptors(this);
                     }
                 }
             };
