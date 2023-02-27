@@ -6,10 +6,10 @@
     <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Unternehmensnamen bereinigen.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Suche nach passenden Unternehmen</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Suche nach ähnlichen Unternehmen.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">game</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">Spiel</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">Spiele</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Gruppe zusammenführen</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Untick, if this company shouldn't be merged with the others.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Abhaken, wenn dieses Unternehmen nicht mit den anderen zusammengeführt werden soll.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Unternehmenszusammenführung</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">Neuer Name:</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Als Name verwenden</sys:String>
@@ -24,12 +24,12 @@
     <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Entfernen</sys:String>
     <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Gruppenschlüssel im Zusammenführungsfenster anzeigen.</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">Führe Unternehmen zusammen</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">Suche nach zusammenführbaren Unternehmen</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">Aktualisiere Spiele</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Add value</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">No companies with business entity descriptors found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">No duplicate companies were found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Updated companies in {0} games and merged {1} companies</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Wert hinzufügen</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">Keine Unternehmen mit Gesellschaftsform-Bezeichnern gefunden.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">Es wurden keine doppelten Unternehmen gefunden.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Unternehmen in {0} Spielen aktualisiert und {1} Unternehmen zusammengeführt</sys:String>
 </ResourceDictionary>
