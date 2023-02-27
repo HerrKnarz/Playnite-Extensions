@@ -17,6 +17,12 @@ namespace CompanyCompanion
 
         private readonly CompanyCompanion plugin;
 
+        private List<Game> gameList;
+
+        private ObservableCollection<MergeGroup> groups;
+
+        private int gameCount = 0;
+
         /// <summary>
         /// List of business entity descriptors with special characters removed.
         /// </summary>
@@ -93,53 +99,118 @@ namespace CompanyCompanion
         /// <param name="findSimilar">True, if also similar companies will be searched, where only words in the ignore list differ.</param>
         public void GetMergeList(bool cleanUpName = false, bool findSimilar = false)
         {
+            List<MergeGroup> mergeList = new List<MergeGroup>();
+
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                       $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionProgressSearching")}",
+                       false
+                   )
+            {
+                IsIndeterminate = true
+            };
+
+            API.Instance.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+            {
+                try
+                {
+                    List<MergeItem> companyList = API.Instance.Database.Companies
+                        .Select(c => new MergeItem
+                        {
+                            Id = c.Id,
+                            Name = c.Name,
+                            CleanedUpName = (cleanUpName) ? CleanUpCompanyName(c.Name) : c.Name,
+                            GroupName = (findSimilar) ? RemoveWords(CleanUpCompanyName(c.Name), plugin.Settings.Settings.IgnoreWords.ToList())
+                                .RemoveDiacritics()
+                                .RemoveSpecialChars()
+                                .ToLower()
+                                .Replace(" ", "") : c.Name,
+                            Merge = true
+                        }).OrderBy(c => c.CleanedUpName).ToList();
+
+                    companyList.RemoveAll(c => c.GroupName == "");
+
+                    IEnumerable<IGrouping<string, MergeItem>> mergeGroups;
+
+                    if (cleanUpName)
+                    {
+                        mergeGroups = companyList.GroupBy(c => c.GroupName).Where(g => g.Count() > 1 || g.First().Name != g.First().CleanedUpName);
+                    }
+                    else
+                    {
+                        mergeGroups = companyList.GroupBy(c => c.GroupName).Where(g => g.Count() > 1);
+                    }
+
+                    mergeList = mergeGroups.Select(g => new MergeGroup
+                    {
+                        Plugin = plugin,
+                        Owner = this,
+                        Key = g.Key,
+                        CompanyName = g.First().CleanedUpName,
+                        CompanyId = g.First().Id,
+                        Companies = g.ToList(),
+                    }).OrderBy(g => g.Key).ToList();
+
+                    foreach (MergeGroup group in mergeList)
+                    {
+                        foreach (MergeItem item in group.Companies)
+                        {
+                            item.Owner = group;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "", true);
+                }
+            }, globalProgressOptions);
+
+            MergeList.Clear();
+            MergeList = mergeList.ToObservable();
+        }
+
+        /// <summary>
+        /// Merges the selected groups - used as a progress bar action.
+        /// </summary>
+        /// <param name="progressArgs">Arguments of the progress bar</param>
+        internal void ProcessGroups(GlobalProgressActionArgs progressArgs)
+        {
             try
             {
-                MergeList.Clear();
+                progressArgs.ProgressMaxValue = gameList.Count;
 
-                List<MergeItem> companyList = API.Instance.Database.Companies
-                    .Select(c => new MergeItem
+                foreach (Game game in gameList)
+                {
+                    if (progressArgs.CancelToken.IsCancellationRequested)
                     {
-                        Id = c.Id,
-                        Name = c.Name,
-                        CleanedUpName = (cleanUpName) ? CleanUpCompanyName(c.Name) : c.Name,
-                        GroupName = (findSimilar) ? RemoveWords(CleanUpCompanyName(c.Name), plugin.Settings.Settings.IgnoreWords.ToList())
-                            .RemoveDiacritics()
-                            .RemoveSpecialChars()
-                            .ToLower()
-                            .Replace(" ", "") : c.Name,
-                        Merge = true
-                    }).OrderBy(c => c.CleanedUpName).ToList();
-
-                companyList.RemoveAll(c => c.GroupName == "");
-
-                IEnumerable<IGrouping<string, MergeItem>> mergeGroups;
-
-                if (cleanUpName)
-                {
-                    mergeGroups = companyList.GroupBy(c => c.GroupName).Where(g => g.Count() > 1 || g.First().Name != g.First().CleanedUpName);
-                }
-                else
-                {
-                    mergeGroups = companyList.GroupBy(c => c.GroupName).Where(g => g.Count() > 1);
-                }
-
-                MergeList = mergeGroups.Select(g => new MergeGroup
-                {
-                    Plugin = plugin,
-                    Owner = this,
-                    Key = g.Key,
-                    CompanyName = g.First().CleanedUpName,
-                    CompanyId = g.First().Id,
-                    Companies = g.ToList(),
-                }).OrderBy(g => g.Key).ToList().ToObservable();
-
-                foreach (MergeGroup group in mergeList)
-                {
-                    foreach (MergeItem item in group.Companies)
-                    {
-                        item.Owner = group;
+                        break;
                     }
+
+                    bool mustUpdateGame = false;
+
+
+                    foreach (MergeGroup group in groups)
+                    {
+                        mustUpdateGame = group.UpdateGame(game) || mustUpdateGame;
+                    }
+
+
+                    if (mustUpdateGame)
+                    {
+                        API.Instance.Database.Games.Update(game);
+
+                        gameCount++;
+                    }
+
+                    progressArgs.CurrentProgressValue++;
+                }
+
+                progressArgs.CurrentProgressValue = 0;
+                progressArgs.ProgressMaxValue = groups.Count;
+                progressArgs.Text = $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionProgressMerging")}";
+
+                foreach (MergeGroup group in groups)
+                {
+                    group.CleanUpCompanies();
                 }
             }
             catch (Exception ex)
@@ -154,18 +225,6 @@ namespace CompanyCompanion
         /// <param name="mergeGroup">Group to merge</param>
         public void Merge(MergeGroup mergeGroup = null)
         {
-            int gameCount = 0;
-
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                   $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionSettingsProgressUpdating")}",
-                   true
-               )
-            {
-                IsIndeterminate = false
-            };
-
-            List<Game> gameList;
-
             if (mergeGroup == null)
             {
                 gameList = API.Instance.Database.Games.ToList();
@@ -173,19 +232,17 @@ namespace CompanyCompanion
             else
             {
                 gameList = API.Instance.Database.Games
-                    .Where(g =>
-                        (
-                            g.DeveloperIds != null &&
-                            g.DeveloperIds.Intersect(mergeGroup.Companies.Select(c => c.Id).ToList()).Any()
-                        ) ||
-                        (
-                            g.PublisherIds != null &&
-                            g.PublisherIds.Intersect(mergeGroup.Companies.Select(c => c.Id).ToList()).Any()
-                        )
-                    ).ToList();
+                .Where(g =>
+                    (
+                        g.DeveloperIds != null &&
+                        g.DeveloperIds.Intersect(mergeGroup.Companies.Select(c => c.Id).ToList()).Any()
+                    ) ||
+                    (
+                        g.PublisherIds != null &&
+                        g.PublisherIds.Intersect(mergeGroup.Companies.Select(c => c.Id).ToList()).Any()
+                    )
+                ).ToList();
             }
-
-            ObservableCollection<MergeGroup> groups;
 
             if (mergeGroup == null)
             {
@@ -198,48 +255,15 @@ namespace CompanyCompanion
 
             if (groups.Count > 0)
             {
-                API.Instance.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                       $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionProgressUpdating")}",
+                       true
+                   )
                 {
-                    try
-                    {
-                        activateGlobalProgress.ProgressMaxValue = gameList.Count;
+                    IsIndeterminate = false
+                };
 
-                        foreach (Game game in gameList)
-                        {
-                            if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                            {
-                                break;
-                            }
-
-                            bool mustUpdateGame = false;
-
-
-                            foreach (MergeGroup group in groups)
-                            {
-                                mustUpdateGame = group.UpdateGame(game) || mustUpdateGame;
-                            }
-
-
-                            if (mustUpdateGame)
-                            {
-                                API.Instance.Database.Games.Update(game);
-
-                                gameCount++;
-                            }
-
-                            activateGlobalProgress.CurrentProgressValue++;
-                        }
-
-                        foreach (MergeGroup group in groups)
-                        {
-                            group.CleanUpCompanies();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex, "", true);
-                    }
-                }, globalProgressOptions);
+                API.Instance.Dialogs.ActivateGlobalProgress(ProcessGroups, globalProgressOptions);
             }
 
             API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCCompanyCompanionDialogUpdated"),
