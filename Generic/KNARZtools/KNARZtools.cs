@@ -23,20 +23,8 @@ namespace KNARZtools
             settings = new KNARZtoolsSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = true
+                HasSettings = false
             };
-        }
-
-        /// <summary>
-        /// Retrieves a tag by its name and creates it, of none is found.
-        /// </summary>
-        /// <param name="key">Name of the tag</param>
-        /// <returns>The found or created tag</returns>
-        private Tag GetTag(string key)
-        {
-            Tag tag = API.Instance.Database.Tags.FirstOrDefault(t => t.Name == key);
-
-            return tag;
         }
 
         public void RenameTags()

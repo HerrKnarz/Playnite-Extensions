@@ -1,5 +1,13 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 2.2
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-02-12
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-02-12/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_2_2.pext
+    Changelog:
+      - Changed code structure to make stuff reusable for additional add-ons
+      - Replaced direct dependency to Newtonsoft JSON with the built in functionality of Playnite
+      - Changed the link to the Bookmarklet-Wiki.
   - Version: 2.1
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-02-06

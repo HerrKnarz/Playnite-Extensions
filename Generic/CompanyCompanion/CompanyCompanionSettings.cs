@@ -1,33 +1,78 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
-using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompanyCompanion
 {
     public class CompanyCompanionSettings : ObservableObject
     {
-        private string option1 = string.Empty;
-        private bool option2 = false;
-        private bool optionThatWontBeSaved = false;
+        private bool showGroupKey = false;
+        private ObservableCollection<string> businessEntityDescriptors;
+        private ObservableCollection<string> ignoreWords;
 
-        public string Option1 { get => option1; set => SetValue(ref option1, value); }
-        public bool Option2 { get => option2; set => SetValue(ref option2, value); }
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
-        [DontSerialize]
-        public bool OptionThatWontBeSaved { get => optionThatWontBeSaved; set => SetValue(ref optionThatWontBeSaved, value); }
+        public bool ShowGroupKey { get => showGroupKey; set => SetValue(ref showGroupKey, value); }
+        public ObservableCollection<string> BusinessEntityDescriptors { get => businessEntityDescriptors; set => SetValue(ref businessEntityDescriptors, value); }
+        public ObservableCollection<string> IgnoreWords { get => ignoreWords; set => SetValue(ref ignoreWords, value); }
     }
 
     public class CompanyCompanionSettingsViewModel : ObservableObject, ISettings
     {
         private readonly CompanyCompanion plugin;
-        private CompanyCompanionSettings editingClone { get; set; }
+        private CompanyCompanionSettings EditingClone { get; set; }
 
         private CompanyCompanionSettings settings;
+
+        public RelayCommand AddBusinessEntityDescriptorCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogAddValue"), "").SelectedString;
+
+                Settings.BusinessEntityDescriptors.AddMissing(value);
+                Settings.BusinessEntityDescriptors = new ObservableCollection<string>(Settings.BusinessEntityDescriptors.OrderBy(x => x));
+            });
+        }
+
+        public RelayCommand<IList<object>> RemoveBusinessEntityDescriptorCommand
+        {
+            get => new RelayCommand<IList<object>>((items) =>
+            {
+                foreach (string item in items.ToList().Cast<string>())
+                {
+                    Settings.BusinessEntityDescriptors.Remove(item);
+                }
+            }, (items) => items != null && items.Count > 0);
+        }
+
+        public RelayCommand AddIgnoreWordCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogAddValue"), "").SelectedString;
+
+                Settings.IgnoreWords.AddMissing(value);
+                Settings.IgnoreWords = new ObservableCollection<string>(Settings.IgnoreWords.OrderBy(x => x));
+            });
+        }
+
+        public RelayCommand<IList<object>> RemoveIgnoreWordCommand
+        {
+            get => new RelayCommand<IList<object>>((items) =>
+            {
+                foreach (string item in items.ToList().Cast<string>())
+                {
+                    Settings.IgnoreWords.Remove(item);
+                }
+            }, (items) => items != null && items.Count > 0);
+        }
+
+        internal void SortCollection(ref ObservableCollection<string> collection)
+        {
+            collection = new ObservableCollection<string>(collection.OrderBy(x => x));
+        }
+
         public CompanyCompanionSettings Settings
         {
             get => settings;
@@ -43,8 +88,8 @@ namespace CompanyCompanion
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
 
-            // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<CompanyCompanionSettings>();
+            // Load saved Settings.
+            CompanyCompanionSettings savedSettings = plugin.LoadPluginSettings<CompanyCompanionSettings>();
 
             // LoadPluginSettings returns null if no saved data is available.
             if (savedSettings != null)
@@ -55,33 +100,66 @@ namespace CompanyCompanion
             {
                 Settings = new CompanyCompanionSettings();
             }
+
+            if (Settings.BusinessEntityDescriptors == null)
+            {
+                Settings.BusinessEntityDescriptors = new ObservableCollection<string>()
+                {
+                    "Co",
+                    "Corp",
+                    "GmbH",
+                    "Inc",
+                    "LLC",
+                    "Ltd",
+                    "srl",
+                    "sro",
+                };
+            }
+            else
+            {
+                Settings.BusinessEntityDescriptors = new ObservableCollection<string>(Settings.BusinessEntityDescriptors.OrderBy(x => x));
+            }
+
+            if (Settings.IgnoreWords == null)
+            {
+                Settings.IgnoreWords = new ObservableCollection<string>()
+                {
+                    "Corporation",
+                    "Digital",
+                    "Entertainment",
+                    "Games",
+                    "Interactive",
+                    "Multimedia",
+                    "Productions",
+                    "Publishing",
+                    "Software",
+                    "Studios",
+                    "The",
+                };
+            }
+            else
+            {
+                Settings.IgnoreWords = new ObservableCollection<string>(Settings.IgnoreWords.OrderBy(x => x));
+            }
         }
 
         public void BeginEdit()
         {
-            // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
+            EditingClone = Serialization.GetClone(Settings);
         }
 
         public void CancelEdit()
         {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
+            Settings = EditingClone;
         }
 
         public void EndEdit()
         {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
             plugin.SavePluginSettings(Settings);
         }
 
         public bool VerifySettings(out List<string> errors)
         {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
         }

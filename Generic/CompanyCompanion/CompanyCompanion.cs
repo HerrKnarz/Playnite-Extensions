@@ -1,84 +1,85 @@
-﻿using CompanyCompanion.Helper;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Events;
-using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace CompanyCompanion
 {
     public class CompanyCompanion : GenericPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-
-        private CompanyCompanionSettingsViewModel settings { get; set; }
+        public CompanyCompanionSettingsViewModel Settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("b76edaec-1aa8-48ef-83a4-2a49ab031029");
 
         public CompanyCompanion(IPlayniteAPI api) : base(api)
         {
-            settings = new CompanyCompanionSettingsViewModel(this);
+            Settings = new CompanyCompanionSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = false
+                HasSettings = true
             };
         }
 
-        public void FindBusinessEntityDescriptors()
+        public void ShowMergeView()
         {
-            List<string> badWords = new List<string>()
+            try
             {
-                "Co",
-                "Corp",
-                "GmbH",
-                "Inc",
-                "LLC",
-                "Ltd",
-                "srl",
-                "sro",
-
-            };
-
-            // Für Duplikatsuche eventuell Dinge wie Studios, Games, Interactive, Productions, Multimedia, The, Digital, Corporation, Software, Entertainment, Publishing etc zum Suchen entfernen, damit die als potentielle Duplikate erscheinen.
-
-            string names = string.Empty;
-
-            foreach (Company c in API.Instance.Database.Companies)
-            {
-                string newName = c.Name;
-
-
-                newName = string.Join(" ", newName.Split().Where(w => !badWords.Contains(w.RemoveSpecialChars().Replace("-", "").Replace(" ", ""), StringComparer.InvariantCultureIgnoreCase)));
-
-                if (newName != c.Name)
+                MergeCompaniesView mergeView = new MergeCompaniesView(this);
+                Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                 {
-                    if (newName.EndsWith(","))
-                    {
-                        newName = newName.Substring(0, newName.Length - 1);
-                    }
+                    ShowMinimizeButton = false,
+                });
 
-                    names += $"{c.Name} => {newName}{Environment.NewLine}";
-                }
+                window.Height = 800;
+                window.Width = 800;
+                window.Title = ResourceProvider.GetString("LOCCompanyCompanionMergeWindowName");
+                window.Content = mergeView;
+                window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                window.ShowDialog();
             }
-
-            API.Instance.Dialogs.ShowMessage(names);
+            catch (Exception E)
+            {
+                Log.Error(E, "Error during initializing MergeCompaniesView", true);
+            }
         }
+
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
+            string menuSection = ResourceProvider.GetString("LOCCompanyCompanionName");
+
             List<MainMenuItem> menuItems = new List<MainMenuItem>
             {
                 // Adds the "clean up" item to the main menu.
                 new MainMenuItem
                 {
-                    Description = "Find business entity descriptors",
-                    MenuSection = $"@Company Companion",
+                    Description = ResourceProvider.GetString("LOCCompanyCompanionMenuShowMerger"),
+                    MenuSection = $"@{menuSection}",
                     Action = a =>
                     {
-                        FindBusinessEntityDescriptors();
+                        ShowMergeView();
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCCompanyCompanionMenuMergeDuplicates"),
+                    MenuSection = $"@{menuSection}",
+                    Action = a =>
+                    {
+                        MergeCompanies.MergeDuplicates(this);
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCCompanyCompanionMenuRemoveDescriptors"),
+                    MenuSection = $"@{menuSection}",
+                    Action = a =>
+                    {
+                        MergeCompanies.RemoveBusinessEntityDescriptors(this);
                     }
                 }
             };
@@ -93,7 +94,7 @@ namespace CompanyCompanion
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            return settings;
+            return Settings;
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)
