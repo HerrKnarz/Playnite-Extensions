@@ -2,6 +2,9 @@
 
 namespace CompanyCompanion
 {
+    /// <summary>
+    /// View model for the merge companies window
+    /// </summary>
     public class MergeCompaniesViewModel : ViewModelBase
     {
         private MergeCompanies mergeCompanies;

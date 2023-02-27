@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KNARZhelper;
+using System;
 using System.Windows.Controls;
 
 namespace CompanyCompanion

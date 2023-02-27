@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Plugins;
 using System;
@@ -8,6 +9,9 @@ using System.Windows.Controls;
 
 namespace CompanyCompanion
 {
+    /// <summary>
+    /// Class of the actual playnite extension
+    /// </summary>
     public class CompanyCompanion : GenericPlugin
     {
         public CompanyCompanionSettingsViewModel Settings { get; set; }
@@ -23,6 +27,9 @@ namespace CompanyCompanion
             };
         }
 
+        /// <summary>
+        /// Shows the merge companies window.
+        /// </summary>
         public void ShowMergeView()
         {
             try
@@ -46,7 +53,6 @@ namespace CompanyCompanion
                 Log.Error(E, "Error during initializing MergeCompaniesView", true);
             }
         }
-
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {

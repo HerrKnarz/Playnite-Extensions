@@ -12,6 +12,7 @@ namespace CompanyCompanion
     public class MergeItem : ViewModelBase
     {
         private bool merge = true;
+
         /// <summary>
         /// Owner of the company. Used to set group name.
         /// </summary>
@@ -32,9 +33,13 @@ namespace CompanyCompanion
         /// Name by which the companies will be grouped.
         /// </summary>
         public string GroupName { get; set; }
-
+        /// <summary>
+        /// Info about the games from that company (number of games and names of the first 10)
+        /// </summary>
         public string GameInfo { get; set; }
-
+        /// <summary>
+        /// Display name of the company. Includes info for cleaned up name.
+        /// </summary>
         public string DisplayName
         {
             get
@@ -74,6 +79,9 @@ namespace CompanyCompanion
             });
         }
 
+        /// <summary>
+        /// Fetches game infos for the company.
+        /// </summary>
         public void PrepareGameInfo()
         {
             List<Game> gameList = API.Instance.Database.Games

@@ -12,8 +12,17 @@ namespace CompanyCompanion
         private ObservableCollection<string> businessEntityDescriptors;
         private ObservableCollection<string> ignoreWords;
 
+        /// <summary>
+        /// Defines, if the group key will be shown in the merge companies window.
+        /// </summary>
         public bool ShowGroupKey { get => showGroupKey; set => SetValue(ref showGroupKey, value); }
+        /// <summary>
+        /// List of words that will be removed from the games as business entity descriptors.
+        /// </summary>
         public ObservableCollection<string> BusinessEntityDescriptors { get => businessEntityDescriptors; set => SetValue(ref businessEntityDescriptors, value); }
+        /// <summary>
+        /// List of words than will be ignored when searching for similar companies.
+        /// </summary>
         public ObservableCollection<string> IgnoreWords { get => ignoreWords; set => SetValue(ref ignoreWords, value); }
     }
 
@@ -68,11 +77,6 @@ namespace CompanyCompanion
             }, (items) => items != null && items.Count > 0);
         }
 
-        internal void SortCollection(ref ObservableCollection<string> collection)
-        {
-            collection = new ObservableCollection<string>(collection.OrderBy(x => x));
-        }
-
         public CompanyCompanionSettings Settings
         {
             get => settings;
@@ -111,8 +115,9 @@ namespace CompanyCompanion
                     "Inc",
                     "LLC",
                     "Ltd",
+                    "S.A.",
+                    "s.r.o.",
                     "srl",
-                    "sro",
                 };
             }
             else

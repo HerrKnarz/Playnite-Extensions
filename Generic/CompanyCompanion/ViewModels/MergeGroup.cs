@@ -14,8 +14,10 @@ namespace CompanyCompanion
         private string companyName = string.Empty;
         private Guid companyId = Guid.Empty;
 
+        /// <summary>
+        /// Company Companion plugin. Used to access settings etc.
+        /// </summary>
         public CompanyCompanion Plugin { get; set; }
-
         /// <summary>
         /// Owner of the group. Used to merge one group.
         /// </summary>
@@ -39,7 +41,6 @@ namespace CompanyCompanion
                 OnPropertyChanged("CompanyName");
             }
         }
-
         /// <summary>
         /// Name to display
         /// </summary>
@@ -57,7 +58,6 @@ namespace CompanyCompanion
                 }
             }
         }
-
         /// <summary>
         /// Id of the masterCompany
         /// </summary>
@@ -73,12 +73,16 @@ namespace CompanyCompanion
                 OnPropertyChanged("CompanyId");
             }
         }
-
         /// <summary>
         /// Collection of all companies that will be merged.
         /// </summary>
         public List<MergeItem> Companies { get; set; }
 
+        /// <summary>
+        /// Switches the companies of the merge group in a game to the master company.
+        /// </summary>
+        /// <param name="game">game to process</param>
+        /// <returns></returns>
         public bool UpdateGame(Game game)
         {
             bool updatedDeveloper = false;
@@ -113,6 +117,9 @@ namespace CompanyCompanion
             return updatedDeveloper || updatedPublisher;
         }
 
+        /// <summary>
+        /// Cleans up all companies of the merge group.
+        /// </summary>
         public void CleanUpCompanies()
         {
             foreach (MergeItem company in Companies.Where(c => c.Merge && c.Id != CompanyId))
@@ -127,6 +134,9 @@ namespace CompanyCompanion
             API.Instance.Database.Companies.Update(masterCompany);
         }
 
+        /// <summary>
+        /// Merges this specific group.
+        /// </summary>
         public RelayCommand MergeGroupCommand
         {
             get => new RelayCommand(() =>
