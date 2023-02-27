@@ -32,9 +32,9 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label Content="{Binding DisplayName}" Grid.Column="0" FontWeight="Bold"/>
-                            <Label Grid.Column="1" Content="{DynamicResource LOCCompanyCompanionMergeWindowNewName}" />
-                            <TextBox Grid.Column="2" Text="{Binding CompanyName}" Margin="5,0,0,0"/>
+                            <Label Content="{Binding DisplayName}" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
+                            <Label Grid.Column="1" Content="{DynamicResource LOCCompanyCompanionMergeWindowNewName}" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="2" Text="{Binding CompanyName}" Margin="5,0,0,0" VerticalAlignment="Center"/>
                             <Button Grid.Column="3" Content="{DynamicResource LOCCompanyCompanionMergeWindowMergeGroup}" Command="{Binding MergeGroupCommand}" Margin="5,0,0,0"/>
                         </Grid>
                     </Border>
@@ -42,13 +42,13 @@
                         <HierarchicalDataTemplate DataType="{x:Type VM:MergeItem}">
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Content="{Binding DisplayName}"/>
-                                <Button Grid.Column="1" Content="{DynamicResource LOCCompanyCompanionMergeWindowUseAsName}" Command="{Binding UseAsNameCommand}" Margin="5,0,0,0"/>
-                                <CheckBox Grid.Column="2" IsChecked="{Binding Merge}" Content="" ToolTip="{DynamicResource LOCCompanyCompanionMergeWindowMergeToolTip}" Margin="5,0,0,0"/>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding Merge}" Content="" ToolTip="{DynamicResource LOCCompanyCompanionMergeWindowMergeToolTip}" Margin="5,0,0,0"/>
+                                <Label Grid.Column="1" Content="{Binding DisplayName}"/>
+                                <Button Grid.Column="2" Content="{DynamicResource LOCCompanyCompanionMergeWindowUseAsName}" Command="{Binding UseAsNameCommand}" Margin="5,0,0,0"/>
                             </Grid>
                         </HierarchicalDataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>

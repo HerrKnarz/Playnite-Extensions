@@ -8,12 +8,23 @@ using System.Linq;
 
 namespace CompanyCompanion
 {
+    /// <summary>
+    /// Class to handle finding of company groups and merging them.
+    /// </summary>
     public class MergeCompanies : ViewModelBase
     {
         private ObservableCollection<MergeGroup> mergeList;
 
         private readonly CompanyCompanion plugin;
 
+        /// <summary>
+        /// List of business entity descriptors with special characters removed.
+        /// </summary>
+        private readonly List<string> cleanBusinessEntityDescriptors;
+
+        /// <summary>
+        /// Contains all companies that can be merged.
+        /// </summary>
         public ObservableCollection<MergeGroup> MergeList
         {
             get
@@ -27,13 +38,25 @@ namespace CompanyCompanion
             }
         }
 
+        /// <summary>
+        /// Initializes the merge class.
+        /// </summary>
+        /// <param name="plugin">The plugin itself to have access to the settings etc.</param>
         public MergeCompanies(CompanyCompanion plugin)
         {
             MergeList = new ObservableCollection<MergeGroup>();
             this.plugin = plugin;
+
+            cleanBusinessEntityDescriptors = plugin.Settings.Settings.BusinessEntityDescriptors.Select(w => w.RemoveSpecialChars().Replace("-", "")).ToList();
         }
 
-        internal string RemoveWords(string name, ObservableCollection<string> wordList)
+        /// <summary>
+        /// Removes words from the company name.
+        /// </summary>
+        /// <param name="name">Name to clean.</param>
+        /// <param name="wordList">List of words to remove.</param>
+        /// <returns>Name with the words removed</returns>
+        internal string RemoveWords(string name, List<string> wordList)
         {
             if (name != null)
             {
@@ -46,9 +69,14 @@ namespace CompanyCompanion
 
         }
 
+        /// <summary>
+        /// Cleans up a company name by removing business entity descriptors etc.
+        /// </summary>
+        /// <param name="name">Name of the company</param>
+        /// <returns>cleaned up name</returns>
         public string CleanUpCompanyName(string name)
         {
-            name = RemoveWords(name, plugin.Settings.Settings.BusinessEntityDescriptors).CollapseWhitespaces().Trim();
+            name = RemoveWords(name, cleanBusinessEntityDescriptors).CollapseWhitespaces().Trim();
 
             if (name.EndsWith(","))
             {
@@ -58,6 +86,11 @@ namespace CompanyCompanion
             return name;
         }
 
+        /// <summary>
+        /// Creates the list of companies to merge.
+        /// </summary>
+        /// <param name="cleanUpName">True, if the company names should be cleaned up.</param>
+        /// <param name="findSimilar">True, if also similar companies will be searched, where only words in the ignore list differ.</param>
         public void GetMergeList(bool cleanUpName = false, bool findSimilar = false)
         {
             try
@@ -70,13 +103,15 @@ namespace CompanyCompanion
                         Id = c.Id,
                         Name = c.Name,
                         CleanedUpName = (cleanUpName) ? CleanUpCompanyName(c.Name) : c.Name,
-                        GroupName = (findSimilar) ? RemoveWords(CleanUpCompanyName(c.Name), plugin.Settings.Settings.IgnoreWords)
+                        GroupName = (findSimilar) ? RemoveWords(CleanUpCompanyName(c.Name), plugin.Settings.Settings.IgnoreWords.ToList())
                             .RemoveDiacritics()
                             .RemoveSpecialChars()
                             .ToLower()
                             .Replace(" ", "") : c.Name,
                         Merge = true
                     }).OrderBy(c => c.CleanedUpName).ToList();
+
+                companyList.RemoveAll(c => c.GroupName == "");
 
                 IEnumerable<IGrouping<string, MergeItem>> mergeGroups;
 
@@ -113,6 +148,10 @@ namespace CompanyCompanion
             }
         }
 
+        /// <summary>
+        /// Merges the companies of a merge group.
+        /// </summary>
+        /// <param name="mergeGroup">Group to merge</param>
         public void Merge(MergeGroup mergeGroup = null)
         {
             int gameCount = 0;
@@ -203,7 +242,7 @@ namespace CompanyCompanion
                 }, globalProgressOptions);
             }
 
-            API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogUpdated"),
+            API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCCompanyCompanionDialogUpdated"),
                 gameCount,
                 groups.Select(g => g.Companies.Where(c => c.Merge).ToList().Count).Sum()));
 
@@ -216,6 +255,10 @@ namespace CompanyCompanion
 
         }
 
+        /// <summary>
+        /// Merges all simple duplicates.
+        /// </summary>
+        /// <param name="plugin">The plugin itself to have access to the settings etc.</param>
         public static void MergeDuplicates(CompanyCompanion plugin)
         {
             MergeCompanies merger = new MergeCompanies(plugin);
@@ -228,9 +271,14 @@ namespace CompanyCompanion
             }
             else
             {
-                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogNoDuplicates"));
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCCompanyCompanionDialogNoDuplicates"));
             }
         }
+
+        /// <summary>
+        /// Removes business entity descriptor from all companies.
+        /// </summary>
+        /// <param name="plugin">The plugin itself to have access to the settings etc.</param>
         public static void RemoveBusinessEntityDescriptors(CompanyCompanion plugin)
         {
             MergeCompanies merger = new MergeCompanies(plugin);
@@ -243,7 +291,7 @@ namespace CompanyCompanion
             }
             else
             {
-                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogNoDescriptors"));
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCCompanyCompanionDialogNoDescriptors"));
             }
         }
     }
