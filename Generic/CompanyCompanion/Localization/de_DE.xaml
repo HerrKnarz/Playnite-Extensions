@@ -6,6 +6,8 @@
     <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Unternehmensnamen bereinigen.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Suche nach passenden Unternehmen</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Suche nach ähnlichen Unternehmen.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">game</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">games</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Gruppe zusammenführen</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Untick, if this company shouldn't be merged with the others.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Unternehmenszusammenführung</sys:String>
