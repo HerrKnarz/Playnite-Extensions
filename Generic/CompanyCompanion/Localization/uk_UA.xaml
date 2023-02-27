@@ -20,11 +20,11 @@
     <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Дескриптори суб'єктів господарювання:</sys:String>
     <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Слова, які ігнорувати для пошуку подібних компаній:</sys:String>
     <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Вилучити</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Показати ключ групи у вікні злиття.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Показати ключ групи у вікні об'єднання.</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">об'єднання компаній</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">пошук компаній для об'єднання</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">оновлення ігор</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Додати значення</sys:String>
     <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">Компаній з дескрипторами суб’єктів господарювання не знайдено.</sys:String>
