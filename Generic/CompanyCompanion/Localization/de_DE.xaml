@@ -1,0 +1,33 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCCompanyCompanionName">Company Companion</sys:String>
+
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Unternehmensnamen bereinigen.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Suche nach passenden Unternehmen</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Suche nach ähnlichen Unternehmen.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Gruppe zusammenführen</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Untick, if this company shouldn't be merged with the others.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Unternehmenszusammenführung</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">Neuer Name:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Als Name verwenden</sys:String>
+
+    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Duplikate zusammenführen</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Gesellschaftsform-Bezeichner entfernen</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Unternehmenszusammenführung anzeigen</sys:String>
+
+    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Neu</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Gesellschaftsform-Bezeichner:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Worte, die ignoriert werden, um ähnliche Unternehmen zu finden:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Entfernen</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Gruppenschlüssel im Zusammenführungsfenster anzeigen.</sys:String>
+
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
+
+    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Add value</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">No companies with business entity descriptors found.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">No duplicate companies were found.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Updated companies in {0} games and merged {1} companies</sys:String>
+</ResourceDictionary>

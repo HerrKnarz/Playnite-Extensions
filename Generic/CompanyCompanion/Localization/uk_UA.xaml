@@ -1,0 +1,33 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCCompanyCompanionName">Company Companion</sys:String>
+
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Очистити назви компаній.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Знайти компанії для збігу</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Знайти схожі компанії для збігу.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Об'єднати групу</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Зніміть позначку, якщо цю компанію не слід об’єднувати з іншими.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Об'єднувач компаній</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">Нова назва:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Використовувати як назву</sys:String>
+
+    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Обʼєднати дублікати</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Видалити дескриптори суб’єктів господарювання</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Показати Об'єднувач компаній</sys:String>
+
+    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Додати</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Дескриптори суб'єктів господарювання:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Слова, які ігнорувати для пошуку подібних компаній:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Вилучити</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Показати ключ групи у вікні об'єднання.</sys:String>
+
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">об'єднання компаній</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">пошук компаній для об'єднання</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">оновлення ігор</sys:String>
+
+    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Додати значення</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">Компаній з дескрипторами суб’єктів господарювання не знайдено.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">Не знайдено компаній-дублікатів.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Оновлено компанії в {0} іграх та об'єднано {1} компаній</sys:String>
+</ResourceDictionary>
