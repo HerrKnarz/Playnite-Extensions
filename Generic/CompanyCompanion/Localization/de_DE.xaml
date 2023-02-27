@@ -22,7 +22,9 @@
     <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Entfernen</sys:String>
     <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Gruppenschlüssel im Zusammenführungsfenster anzeigen.</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionSettingsProgressUpdating">aktualisiere Unternehmen</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Add value</sys:String>
     <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">No companies with business entity descriptors found.</sys:String>
