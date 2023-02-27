@@ -6,7 +6,7 @@
 
 # Playnite Extensions
 
-Thsi repository hosts all my extensions for the superb open source video game library manager and launcher [Playnite](http://playnite.link/). Only Link Utilities is released yet, but I'm working on a new extension to manage company names and have some ideas for other extensions as well, that will end up here.
+Thsi repository hosts all my extensions for the superb open source video game library manager and launcher [Playnite](http://playnite.link/). Only Link Utilities and Company Companion are released yet, but I have some ideas for other extensions as well, that will end up here.
 
 If you want to use my extensions, I strongly recommend to install them via the add-ons menu in Playnite or the [official add-on database](https://playnite.link/addons.html) and not use the releases here on github, because they only consist of the add-ons that were changed lately and not all of them every time. 
 
