@@ -34,12 +34,18 @@ To see which websites are already supported or planned to be added see the [wiki
 
 ## Company Companion
 
-New extension to manage game companies (see Developer and Publisher fields in Playnite), that's in a very early stage. I have the following features planned:
+Extension to manage game companies (see Developer and Publisher fields in Playnite). It can do the following:
 
 - Merge duplicate companies
 - Remove Business entitiy descriptions like Ltd. or Co.
-- Find similar named companies by removing special characters and generic strings like "Interactive", "Games", "Studios" and optionally fuzzy search and provide functionality to merge them.
-- Maybe add additional information to companies like descriptions and links (via own dialog window).
+- Find and merge similar named companies by removing special characters and generic strings like "Interactive", "Games", "Studios"
+
+### Planned features
+- optional fuzzy search to find similar companies
+- ignore list to keep specific companies from being merged with similar ones.
+- option to save merge groups to automatically merge them again, when games were added or updated.
+- option to find and manually split comma separated companies.
+- maybe add additional information to companies like descriptions and links (via own dialog window).
 
 ## KNARZtools
 
