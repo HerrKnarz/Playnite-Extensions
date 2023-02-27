@@ -34,7 +34,7 @@ namespace CompanyCompanion
                 });
 
                 window.Height = 800;
-                window.Width = 800;
+                window.Width = 1200;
                 window.Title = ResourceProvider.GetString("LOCCompanyCompanionMergeWindowName");
                 window.Content = mergeView;
                 window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();

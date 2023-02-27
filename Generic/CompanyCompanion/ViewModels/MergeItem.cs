@@ -1,5 +1,8 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CompanyCompanion
 {
@@ -29,6 +32,8 @@ namespace CompanyCompanion
         /// Name by which the companies will be grouped.
         /// </summary>
         public string GroupName { get; set; }
+
+        public string GameInfo { get; set; }
 
         public string DisplayName
         {
@@ -67,6 +72,42 @@ namespace CompanyCompanion
                 Owner.CompanyName = CleanedUpName;
                 Owner.CompanyId = Id;
             });
+        }
+
+        public void PrepareGameInfo()
+        {
+            List<Game> gameList = API.Instance.Database.Games
+                    .Where(g =>
+                        (
+                            g.DeveloperIds != null &&
+                            g.DeveloperIds.Contains(Id)
+                        ) ||
+                        (
+                            g.PublisherIds != null &&
+                            g.PublisherIds.Contains(Id)
+                        )
+                    ).ToList();
+
+            string games = string.Join(", ", gameList
+                .OrderByDescending(g => g.Favorite)
+                .ThenByDescending(g => g.Playtime)
+                .ThenBy(g => g.SortingName)
+                .Take(10)
+                .Select(g => g.Name)
+                .ToList());
+
+            if (gameList.Count == 0)
+            {
+                GameInfo = $"0 {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGames")}";
+            }
+            else if (gameList.Count == 1)
+            {
+                GameInfo = $"1 {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGame")}: {games}";
+            }
+            else
+            {
+                GameInfo = $"{gameList.Count} {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGames")}: {games}";
+            }
         }
     }
 }

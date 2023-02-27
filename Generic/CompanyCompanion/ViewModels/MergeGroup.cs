@@ -39,6 +39,7 @@ namespace CompanyCompanion
                 OnPropertyChanged("CompanyName");
             }
         }
+
         /// <summary>
         /// Name to display
         /// </summary>
@@ -56,6 +57,7 @@ namespace CompanyCompanion
                 }
             }
         }
+
         /// <summary>
         /// Id of the masterCompany
         /// </summary>

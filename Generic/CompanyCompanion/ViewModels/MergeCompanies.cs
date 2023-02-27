@@ -155,6 +155,7 @@ namespace CompanyCompanion
                         foreach (MergeItem item in group.Companies)
                         {
                             item.Owner = group;
+                            item.PrepareGameInfo();
                         }
                     }
                 }
