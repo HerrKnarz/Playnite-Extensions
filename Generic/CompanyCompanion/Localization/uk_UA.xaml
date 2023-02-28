@@ -6,8 +6,8 @@
     <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Очистити назви компаній.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Знайти компанії для збігу</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Знайти схожі компанії для збігу.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">game</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">гра</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">гри</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Об'єднати групу</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Зніміть позначку, якщо цю компанію не слід об’єднувати з іншими.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Об'єднувач компаній</sys:String>
