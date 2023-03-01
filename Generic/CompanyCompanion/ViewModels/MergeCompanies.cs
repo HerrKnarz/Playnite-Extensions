@@ -226,6 +226,8 @@ namespace CompanyCompanion
         /// <param name="mergeGroup">Group to merge</param>
         public void Merge(MergeGroup mergeGroup = null)
         {
+            gameCount = 0;
+
             if (mergeGroup == null)
             {
                 gameList = API.Instance.Database.Games.ToList();
@@ -277,7 +279,6 @@ namespace CompanyCompanion
             {
                 MergeList.Remove(mergeGroup);
             }
-
         }
 
         /// <summary>

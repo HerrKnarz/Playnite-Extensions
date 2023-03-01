@@ -34,9 +34,13 @@ namespace CompanyCompanion
         /// </summary>
         public string GroupName { get; set; }
         /// <summary>
-        /// Info about the games from that company (number of games and names of the first 10)
+        /// Info about the games from that company (number of games and names of the first 10) to show in the window.
         /// </summary>
         public string GameInfo { get; set; }
+        /// <summary>
+        /// List of all games for the tooltip.
+        /// </summary>
+        public string GameList { get; set; }
         /// <summary>
         /// Display name of the company. Includes info for cleaned up name.
         /// </summary>
@@ -99,9 +103,10 @@ namespace CompanyCompanion
             string games = string.Join(", ", gameList
                 .OrderByDescending(g => g.Favorite)
                 .ThenByDescending(g => g.Playtime)
-                .ThenBy(g => g.SortingName)
-                .Take(10)
+                .ThenBy(g => (g.SortingName != "") ? g.SortingName : g.Name)
                 .Select(g => g.Name)
+                .Distinct()
+                .Take(10)
                 .ToList());
 
             if (gameList.Count == 0)
@@ -116,6 +121,13 @@ namespace CompanyCompanion
             {
                 GameInfo = $"{gameList.Count} {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGames")}: {games}";
             }
+
+            GameList = string.Join(Environment.NewLine, gameList
+                .OrderBy(g => (g.SortingName != null && g.SortingName != "") ? g.SortingName : g.Name)
+                .Select(g => g.Name)
+                .Distinct()
+                .ToList());
+
         }
     }
 }

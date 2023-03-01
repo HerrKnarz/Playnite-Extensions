@@ -58,9 +58,9 @@
                                 <CheckBox Grid.Column="0" IsChecked="{Binding Merge}" Content="" 
                                           ToolTip="{DynamicResource LOCCompanyCompanionMergeWindowMergeToolTip}" Margin="5,0,0,0"/>
                                 <Label Grid.Column="1"  Content="{Binding DisplayName}" Margin="0,0,10,0"/>
-                                <Label Grid.Column="2" x:Name="Wrapper">
+                                <Label Grid.Column="2">
                                     <TextBlock Text="{Binding GameInfo}" HorizontalAlignment="Stretch"
-                                               Width="{Binding ActualWidth, ElementName=Wrapper}" TextTrimming="CharacterEllipsis"/>
+                                               ToolTip="{Binding GameList}" TextTrimming="CharacterEllipsis"/>
                                 </Label>
                                 <Button Grid.Column="3" Content="{DynamicResource LOCCompanyCompanionMergeWindowUseAsName}"
                                         Command="{Binding UseAsNameCommand}" Margin="10,0,0,0"/>
