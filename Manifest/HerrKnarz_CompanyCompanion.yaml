@@ -1,5 +1,14 @@
 AddonId: CompanyCompanion_b76edaec-1aa8-48ef-83a4-2a49ab031029
 Packages:
+  - Version: 0.3
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-01
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-03-01/CompanyCompanion_b76edaec-1aa8-48ef-83a4-2a49ab031029_0_3.pext
+    Changelog:
+      - Optimized performance and visual appearance of the merge window (especially when resizing the window)
+      - Added a list of all games of a company in a tool tip in the merge window
+      - reset game count after each action to 0
+      - 100% translation to Ukrainian (thx SmithMD24)
   - Version: 0.2
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-02-27
