@@ -10,14 +10,18 @@
         <VM:MergeCompaniesViewModel/>
     </UserControl.DataContext>
     <DockPanel Margin="10">
-        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding CleanUpNames}"
-                          Content="{DynamicResource LOCCompanyCompanionMergeWindowCleanUpNames}" Margin="0,10,0,0"/>
-        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding FindSimilar}"
-                          Content="{DynamicResource LOCCompanyCompanionMergeWindowFindSimilar}" Margin="0,10,0,0"/>
-        <Button DockPanel.Dock="Top" Content="{DynamicResource LOCCompanyCompanionMergeWindowFindCompanies}"  Margin="0,10,0,0"
-                            Command="{Binding FindCompaniesCommand}"/>
+        <Border DockPanel.Dock="Top" x:Name="TestBorder" Margin="80,0,0,0" HorizontalAlignment="Stretch" Height="0"/>
 
-        <TreeView x:Name="MainTreeView" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Margin="0,10,0,0" VerticalAlignment="Stretch" ItemsSource="{Binding MergeCompanies.MergeList}">
+        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding CleanUpNames}"
+                  Content="{DynamicResource LOCCompanyCompanionMergeWindowCleanUpNames}" Margin="0,10,0,0"/>
+        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding FindSimilar}"
+                  Content="{DynamicResource LOCCompanyCompanionMergeWindowFindSimilar}" Margin="0,10,0,0"/>
+        <Button DockPanel.Dock="Top" Content="{DynamicResource LOCCompanyCompanionMergeWindowFindCompanies}"  Margin="0,10,0,0"
+                Command="{Binding FindCompaniesCommand}"/>
+
+        <TreeView x:Name="MainTreeView" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Margin="0,10,0,0"
+                  VerticalAlignment="Stretch" ItemsSource="{Binding MergeCompanies.MergeList}" VirtualizingPanel.ScrollUnit="Pixel" 
+                  VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
                     <Setter Property="IsExpanded" Value="True" />
@@ -25,7 +29,8 @@
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Companies}" DataType="{x:Type VM:MergeGroup}">
-                    <Border BorderThickness="0, 1, 0, 0" BorderBrush="{DynamicResource NormalBorderBrush}" HorizontalAlignment="Stretch" Padding="8,5,8,5" Margin="5,0,0,0" Background="{DynamicResource HoverBrush}" >
+                    <Border BorderThickness="0, 1, 0, 0" BorderBrush="{DynamicResource NormalBorderBrush}" HorizontalAlignment="Stretch"
+                            Padding="8,5,8,5" Margin="5,0,0,0" Background="{DynamicResource HoverBrush}" >
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
@@ -33,27 +38,32 @@
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label Content="{Binding DisplayName}" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <Label Content="{Binding DisplayName}" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"
+                                   Margin="0,0,10,0"/>
                             <Label Grid.Column="1" Content="{DynamicResource LOCCompanyCompanionMergeWindowNewName}" VerticalAlignment="Center"/>
                             <TextBox Grid.Column="2" Text="{Binding CompanyName}" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                            <Button Grid.Column="3" Content="{DynamicResource LOCCompanyCompanionMergeWindowMergeGroup}" Command="{Binding MergeGroupCommand}" Margin="5,0,0,0"/>
+                            <Button Grid.Column="3" Content="{DynamicResource LOCCompanyCompanionMergeWindowMergeGroup}"
+                                    Command="{Binding MergeGroupCommand}" Margin="5,0,0,0"/>
                         </Grid>
                     </Border>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type VM:MergeItem}">
-                            <Grid HorizontalAlignment="Stretch">
+                            <Grid HorizontalAlignment="Stretch" Width="{Binding ElementName=TestBorder, Path=ActualWidth}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="5*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <CheckBox Grid.Column="0" IsChecked="{Binding Merge}" Content="" ToolTip="{DynamicResource LOCCompanyCompanionMergeWindowMergeToolTip}" Margin="5,0,0,0"/>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding Merge}" Content="" 
+                                          ToolTip="{DynamicResource LOCCompanyCompanionMergeWindowMergeToolTip}" Margin="5,0,0,0"/>
                                 <Label Grid.Column="1"  Content="{Binding DisplayName}" Margin="0,0,10,0"/>
                                 <Label Grid.Column="2" x:Name="Wrapper">
-                                    <TextBlock Text="{Binding GameInfo}" HorizontalAlignment="Stretch" Width="{Binding ActualWidth, ElementName=Wrapper}" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding GameInfo}" HorizontalAlignment="Stretch"
+                                               Width="{Binding ActualWidth, ElementName=Wrapper}" TextTrimming="CharacterEllipsis"/>
                                 </Label>
-                                <Button Grid.Column="3" Content="{DynamicResource LOCCompanyCompanionMergeWindowUseAsName}" Command="{Binding UseAsNameCommand}" Margin="10,0,0,0"/>
+                                <Button Grid.Column="3" Content="{DynamicResource LOCCompanyCompanionMergeWindowUseAsName}"
+                                        Command="{Binding UseAsNameCommand}" Margin="10,0,0,0"/>
                             </Grid>
                         </HierarchicalDataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
