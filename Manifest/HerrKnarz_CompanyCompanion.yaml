@@ -8,7 +8,7 @@ Packages:
       - Optimized performance and visual appearance of the merge window (especially when resizing the window)
       - Added a list of all games of a company in a tool tip in the merge window
       - reset game count after each action to 0
-      - 100% translation to Ukrainian (thx SmithMD24)
+      - complete translation to Ukrainian (thx SmithMD24)
   - Version: 0.2
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-02-27
