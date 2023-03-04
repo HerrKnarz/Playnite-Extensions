@@ -15,23 +15,24 @@ namespace WikipediaMetadata
         public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
         {
             MetadataField.Name,
-            MetadataField.Description,
-            MetadataField.Platform,
-            MetadataField.CriticScore,
-            //MetadataField.Tags,
-            //MetadataField.Series,
-            //MetadataField.CommunityScore,
             MetadataField.ReleaseDate,
-            //MetadataField.AgeRating,
             MetadataField.Genres,
             MetadataField.Developers,
             MetadataField.Publishers,
+            MetadataField.Features,
+            MetadataField.Tags,
+            MetadataField.Links,
+            MetadataField.Series,
+            MetadataField.Platform,
             MetadataField.CoverImage,
-            MetadataField.Links
+            //MetadataField.CriticScore,
+            //MetadataField.CommunityScore,
+            //MetadataField.AgeRating,
+            MetadataField.Description,
         };
 
         // Change to something more appropriate
-        public override string Name => "Wikipedia Metadata";
+        public override string Name => "Wikipedia";
 
         public WikipediaMetadata(IPlayniteAPI api) : base(api)
         {

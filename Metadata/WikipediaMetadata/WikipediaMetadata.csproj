@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Models\WikipediaGameData.cs" />
     <Compile Include="Models\WikipediaItemOption.cs" />
+    <Compile Include="Models\WikipediaGameMetadata.cs" />
     <Compile Include="Models\WikipediaSearchResult.cs" />
     <Compile Include="WikipediaMetadata.cs" />
     <Compile Include="WikipediaMetadataProvider.cs" />
@@ -78,6 +79,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CXuesong.MW.MwParserFromScratch">
+      <Version>0.2.1</Version>
+    </PackageReference>
     <PackageReference Include="PlayniteSDK">
       <Version>6.8.0</Version>
     </PackageReference>
