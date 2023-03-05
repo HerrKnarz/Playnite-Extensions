@@ -4,6 +4,7 @@ using MwParserFromScratch.Nodes;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace WikipediaMetadata.Models
@@ -27,11 +28,10 @@ namespace WikipediaMetadata.Models
             //MetadataField.AgeRating,
             MetadataField.Description,
          */
-        private readonly string[] templateNames = { "unbulleted list", "ubl", "collapsible list" };
-
-        private readonly string[] stringSpearators = { "<br />", "<br>", "," };
-
+        private readonly string[] templateNames = { "unbulleted list", "ubl", "collapsible list", "flatlist" };
+        private readonly string[] stringSpearators = { "<br />", "<br>", ",", "\n" };
         private readonly string[] windowsPlatform = { "Microsoft Windows", "Windows" };
+        private readonly string[] dateFormatStrings = new string[] { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy" };
 
         public string Name { get; set; } = string.Empty;
         public ReleaseDate? ReleaseDate { get; set; }
@@ -80,6 +80,7 @@ namespace WikipediaMetadata.Models
 
                         Tags.AddRange(GetValues(infoBox, "engine", false, "[engine]"));
                         Tags.AddRange(GetValues(infoBox, "director", false, "[people] director:"));
+                        Tags.AddRange(GetValues(infoBox, "producer", false, "[people] producer:"));
                         Tags.AddRange(GetValues(infoBox, "designer", false, "[people] designer:"));
                         Tags.AddRange(GetValues(infoBox, "programmer", false, "[people] programmer:"));
                         Tags.AddRange(GetValues(infoBox, "artist", false, "[people] artist:"));
@@ -137,10 +138,12 @@ namespace WikipediaMetadata.Models
                                 dateString = dateTitle.Value.ToPlainText(NodePlainTextOptions.RemoveRefTags);
                             }
 
-                            DateTime dateTime = DateTime.ParseExact(dateString, "MMMM d, yyyy",
-                                System.Globalization.CultureInfo.InvariantCulture);
+                            DateTime dateTime;
 
-                            return new ReleaseDate(dateTime);
+                            if (DateTime.TryParseExact(dateString, dateFormatStrings, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+                            {
+                                return new ReleaseDate(dateTime);
+                            }
                         }
                     }
                 }
@@ -167,14 +170,10 @@ namespace WikipediaMetadata.Models
                     {
                         foreach (TemplateArgument listArgument in template.Arguments)
                         {
-                            string value = listArgument.Value.ToPlainText(NodePlainTextOptions.RemoveRefTags);
-
-                            if (removeParentheses && value.IndexOf("(") > 0)
+                            if (listArgument.Name == null || listArgument.Name.ToPlainText() == "title")
                             {
-                                value = value.Substring(0, value.IndexOf("(") - 1).Trim();
+                                values.AddRange(Split(listArgument.Value.ToString(), field, removeParentheses));
                             }
-
-                            values.AddRange(Split(value, field, removeParentheses));
                         }
                     }
 
@@ -203,7 +202,7 @@ namespace WikipediaMetadata.Models
                 Log.Error(ex, $"Error parsing argument '{field}'");
             }
 
-            return null;
+            return new List<MetadataProperty>();
         }
         private List<Link> GetLinks(WikipediaGameData gameData)
         {
@@ -219,23 +218,29 @@ namespace WikipediaMetadata.Models
         {
             List<MetadataNameProperty> values = new List<MetadataNameProperty>();
 
+            if (removeParentheses)
+            {
+                while (value.IndexOf("(") > 0)
+                {
+                    value = value.Remove(value.IndexOf("("), value.IndexOf(")") - value.IndexOf("(") + 1).Trim();
+                }
+            }
+
             foreach (string segment in value.Split(stringSpearators, 100, StringSplitOptions.RemoveEmptyEntries))
             {
                 WikitextParser parser = new WikitextParser();
 
                 string segmentEditable = parser.Parse(segment).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim();
 
-                if (removeParentheses && segment.IndexOf("(") > 0)
-                {
-                    segmentEditable = segmentEditable.Substring(0, segment.IndexOf("(") - 1).Trim();
-                }
-
                 if (field == "platforms" && windowsPlatform.Contains(segmentEditable))
                 {
                     segmentEditable = "PC (Windows)";
                 }
 
-                values.Add(new MetadataNameProperty(segmentEditable));
+                if (segmentEditable.Length > 0)
+                {
+                    values.Add(new MetadataNameProperty(segmentEditable));
+                }
             }
 
             return values;
