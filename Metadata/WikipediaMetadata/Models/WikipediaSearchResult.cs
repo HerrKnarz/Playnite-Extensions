@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Data;
+﻿using KNARZhelper;
+using Playnite.SDK.Data;
 using System.Collections.Generic;
 
 namespace WikipediaMetadata.Models
@@ -10,6 +11,9 @@ namespace WikipediaMetadata.Models
 
         [SerializationPropertyName("key")]
         public string Key;
+
+        [DontSerialize]
+        public string KeyMatch { get => Key.RemoveSpecialChars().ToLower().Replace(" ", ""); }
 
         [SerializationPropertyName("title")]
         public string Title;

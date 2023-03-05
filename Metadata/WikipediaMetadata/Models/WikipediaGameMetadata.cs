@@ -11,29 +11,13 @@ namespace WikipediaMetadata.Models
 {
     public class WikipediaGameMetadata
     {
-        /*
-            MetadataField.Name,
-            MetadataField.ReleaseDate,
-            MetadataField.Genres,
-            MetadataField.Developers,
-            MetadataField.Publishers,
-            MetadataField.Features,
-            MetadataField.Tags,
-            MetadataField.Links,
-            MetadataField.Series,
-            MetadataField.Platform,
-            MetadataField.CoverImage,
-            //MetadataField.CriticScore,
-            //MetadataField.CommunityScore,
-            //MetadataField.AgeRating,
-            MetadataField.Description,
-         */
         private readonly string[] listTemplateNames = { "unbulleted list", "ubl", "collapsible list", "flatlist", "vgrelease" };
         private readonly string[] stringSeparators = { "<br />", "<br/>", "<br>", "\n" };
         private readonly string[] windowsPlatform = { "Microsoft Windows", "Windows" };
         private readonly string[] dateFormatStrings = new string[] { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy" };
 
         public string Name { get; set; } = string.Empty;
+        public string Key { get; set; } = string.Empty;
         public ReleaseDate? ReleaseDate { get; set; }
         public List<MetadataProperty> Genres { get; set; }
         public List<MetadataProperty> Developers { get; set; }
@@ -43,7 +27,6 @@ namespace WikipediaMetadata.Models
         public List<Link> Links { get; set; }
         public List<MetadataProperty> Series { get; set; }
         public List<MetadataProperty> Platforms { get; set; }
-        public string Description { get; set; } = string.Empty;
 
         public WikipediaGameMetadata(WikipediaGameData gameData)
         {
@@ -55,9 +38,7 @@ namespace WikipediaMetadata.Models
                     string text = gameData.Source;
                     Wikitext ast = parser.Parse(text);
 
-                    Name = gameData.Title;
-
-                    Description = ast.ToPlainText(NodePlainTextOptions.RemoveRefTags);
+                    Key = gameData.Key;
 
                     Template infoBox = ast.EnumDescendants().OfType<Template>()
                         .Where(t => MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower() == "infobox video game").First();
@@ -160,6 +141,12 @@ namespace WikipediaMetadata.Models
 
                     if (values.Count == 0)
                     {
+                        foreach (Template x in argument.EnumDescendants().OfType<Template>()
+                            .Where(t => MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower() == "efn"))
+                        {
+                            x.Remove();
+                        }
+
                         values.AddRange(Split(argument.Value.ToString(), field, removeParentheses));
                     }
 
@@ -185,6 +172,7 @@ namespace WikipediaMetadata.Models
 
             return new List<MetadataProperty>();
         }
+
         private List<Link> GetLinks(WikipediaGameData gameData)
         {
             List<Link> links = new List<Link>

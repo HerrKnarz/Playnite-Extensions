@@ -1,4 +1,5 @@
-﻿using KNARZhelper;
+﻿using HtmlAgilityPack;
+using KNARZhelper;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
@@ -19,10 +20,11 @@ namespace WikipediaMetadata
         private readonly string baseUrl = "https://en.wikipedia.org/w/rest.php/v1/";
         private string SearchUrl { get => baseUrl + "search/page?q={0}&limit={1}"; }
         private string PageUrl { get => baseUrl + "page/{0}"; }
+        private readonly string pageHtmlUrl = "https://en.wikipedia.org/api/rest_v1/page/html/{0}";
 
         private WikipediaGameMetadata foundGame;
 
-        public override List<MetadataField> AvailableFields => throw new NotImplementedException();
+        public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
         public WikipediaMetadataProvider(MetadataRequestOptions options, WikipediaMetadata plugin)
         {
@@ -38,6 +40,7 @@ namespace WikipediaMetadata
             }
 
             WikipediaGameData page = new WikipediaGameData();
+            string pageHtml = string.Empty;
 
             try
             {
@@ -55,12 +58,24 @@ namespace WikipediaMetadata
                 {
                     if (options.IsBackgroundDownload)
                     {
-                        // TODO: Check for title suffixes like (video game) and prefer those!
                         // TODO: Maybe look for existing wikipedia link and use that as the base!
 
-                        key = searchResult.Pages[0].Key;
+                        string wikiName = options.GameData.Name + " (video game)";
 
-                        if (key.RemoveSpecialChars() != options.GameData.Name.RemoveSpecialChars())
+                        wikiName = wikiName.RemoveSpecialChars().ToLower().Replace(" ", "");
+
+                        Page foundPage = searchResult.Pages.Where(p => p.KeyMatch == wikiName).FirstOrDefault();
+
+                        if (foundPage == null)
+                        {
+                            foundPage = searchResult.Pages.Where(p => p.KeyMatch == options.GameData.Name.RemoveSpecialChars().ToLower().Replace(" ", "")).FirstOrDefault();
+                        }
+
+                        if (foundPage != null)
+                        {
+                            key = foundPage.Key;
+                        }
+                        else
                         {
                             key = string.Empty;
                         }
@@ -179,7 +194,91 @@ namespace WikipediaMetadata
         }
         public override string GetDescription(GetMetadataFieldArgs args)
         {
-            return FindGame().Description ?? base.GetDescription(args);
+            string apiUrl = string.Format(pageHtmlUrl, FindGame().Key.UrlEncode());
+
+            HtmlWeb web = new HtmlWeb();
+            HtmlDocument doc = web.Load(apiUrl);
+
+            HtmlNodeCollection topLevelSections = doc.DocumentNode.SelectNodes("//body/section");
+
+            string description = string.Empty;
+
+            foreach (HtmlNode topLevelSection in topLevelSections)
+            {
+                string[] allowdSecondLevelNodes = { "h2", "p", "ul", "ol", "section" };
+
+                List<HtmlNode> secondLevelNodes = topLevelSection.ChildNodes.Where(c => allowdSecondLevelNodes.Contains(c.Name)).ToList();
+
+                foreach (HtmlNode secondLevelNode in secondLevelNodes)
+                {
+                    string[] unwantedParagraphs = { "see also", "notes", "references", "external links", "further reading", "sources" };
+
+                    if (secondLevelNode.Name == "h2" && unwantedParagraphs.Contains(secondLevelNode.InnerText.ToLower()))
+                    {
+                        break;
+                    }
+                    else if (secondLevelNode.Name == "section")
+                    {
+                        string[] allowdThirdLevelNodes = { "h3", "p", "ul", "ol", "section" };
+
+                        List<HtmlNode> thirdLevelNodes = secondLevelNode.ChildNodes.Where(c => allowdThirdLevelNodes.Contains(c.Name)).ToList();
+
+                        foreach (HtmlNode thirdLevelNode in thirdLevelNodes)
+                        {
+                            if (thirdLevelNode.Name == "ul" || thirdLevelNode.Name == "ol")
+                            {
+                                description += GetList(thirdLevelNode) + Environment.NewLine;
+                            }
+                            else
+                            {
+                                description += $"<{thirdLevelNode.Name}>{RemoveAnnotationMarks(thirdLevelNode).InnerText}</{thirdLevelNode.Name}>" + Environment.NewLine;
+                            }
+                        }
+                    }
+                    else if (secondLevelNode.Name == "ul" || secondLevelNode.Name == "ol")
+                    {
+                        description += GetList(secondLevelNode) + Environment.NewLine;
+                    }
+                    else if (secondLevelNode.InnerText.RemoveSpecialChars().Trim().Length > 0)
+                    {
+                        description += $"<{secondLevelNode.Name}>{RemoveAnnotationMarks(secondLevelNode).InnerText}</{secondLevelNode.Name}>" + Environment.NewLine;
+                    }
+                }
+            }
+
+            return description ?? base.GetDescription(args);
+        }
+
+        public string GetList(HtmlNode htmlList)
+        {
+            string result = $"<{htmlList.Name}>" + Environment.NewLine;
+
+            foreach (HtmlNode listNode in htmlList.SelectNodes("./li"))
+            {
+                result += $"  <{listNode.Name}>{RemoveAnnotationMarks(listNode).InnerText}</{listNode.Name}>" + Environment.NewLine;
+            }
+
+            result += $"</{htmlList.Name}>";
+
+            return result;
+        }
+
+        public HtmlNode RemoveAnnotationMarks(HtmlNode text)
+        {
+            HtmlNodeCollection supNodes = text.SelectNodes("./sup");
+
+            if (supNodes != null && supNodes.Count > 0)
+            {
+                foreach (HtmlNode annotation in supNodes)
+                {
+                    if (annotation.SelectSingleNode("./a/span[@class='mw-reflink-text']") != null)
+                    {
+                        annotation.Remove();
+                    }
+                }
+            }
+
+            return text;
         }
     }
 }
