@@ -27,7 +27,11 @@ namespace WikipediaMetadata.Models
             //MetadataField.AgeRating,
             MetadataField.Description,
          */
-        private readonly string[] templateNames = new[] { "unbulleted list", "ubl", "collapsible list" };
+        private readonly string[] templateNames = { "unbulleted list", "ubl", "collapsible list" };
+
+        private readonly string[] stringSpearators = { "<br />", "<br>", "," };
+
+        private readonly string[] windowsPlatform = { "Microsoft Windows", "Windows" };
 
         public string Name { get; set; } = string.Empty;
         public ReleaseDate? ReleaseDate { get; set; }
@@ -60,14 +64,40 @@ namespace WikipediaMetadata.Models
 
                     if (infoBox != null)
                     {
+                        TemplateArgument gameTitle = infoBox.Arguments["title"];
+                        if (gameTitle != null)
+                        {
+                            Name = gameTitle.Value.ToPlainText(NodePlainTextOptions.RemoveRefTags);
+                        }
+
                         ReleaseDate = GetDate(infoBox);
                         Genres = GetValues(infoBox, "genre");
-                        Developers = GetValues(infoBox, "developer");
-                        Publishers = GetValues(infoBox, "publisher");
+                        Developers = GetValues(infoBox, "developer", true);
+                        Publishers = GetValues(infoBox, "publisher", true);
                         Features = GetValues(infoBox, "modes");
+
+                        Tags = new List<MetadataProperty>();
+
+                        Tags.AddRange(GetValues(infoBox, "engine", false, "[engine]"));
+                        Tags.AddRange(GetValues(infoBox, "director", false, "[people] director:"));
+                        Tags.AddRange(GetValues(infoBox, "designer", false, "[people] designer:"));
+                        Tags.AddRange(GetValues(infoBox, "programmer", false, "[people] programmer:"));
+                        Tags.AddRange(GetValues(infoBox, "artist", false, "[people] artist:"));
+                        Tags.AddRange(GetValues(infoBox, "writer", false, "[people] writer:"));
+                        Tags.AddRange(GetValues(infoBox, "composer", false, "[people] composer:"));
+
                         Links = GetLinks(gameData);
                         Series = GetValues(infoBox, "series");
-                        Platforms = GetValues(infoBox, "platforms");
+
+                        Platforms = new List<MetadataProperty>();
+
+                        Platforms.AddRange(GetValues(infoBox, "platforms"));
+                        Platforms.AddRange(GetValues(infoBox, "arcade system"));
+                    }
+
+                    if (Name == string.Empty || Name == null)
+                    {
+                        Name = gameData.Title.Replace("(video game)", "").Trim();
                     }
                 }
                 catch (Exception ex)
@@ -123,7 +153,7 @@ namespace WikipediaMetadata.Models
             return null;
         }
 
-        private List<MetadataProperty> GetValues(Template infoBox, string field)
+        private List<MetadataProperty> GetValues(Template infoBox, string field, bool removeParentheses = false, string prefix = "")
         {
             try
             {
@@ -137,13 +167,32 @@ namespace WikipediaMetadata.Models
                     {
                         foreach (TemplateArgument listArgument in template.Arguments)
                         {
-                            values.Add(new MetadataNameProperty(listArgument.Value.ToPlainText(NodePlainTextOptions.RemoveRefTags)));
+                            string value = listArgument.Value.ToPlainText(NodePlainTextOptions.RemoveRefTags);
+
+                            if (removeParentheses && value.IndexOf("(") > 0)
+                            {
+                                value = value.Substring(0, value.IndexOf("(") - 1).Trim();
+                            }
+
+                            values.AddRange(Split(value, field, removeParentheses));
                         }
                     }
 
                     if (values.Count == 0)
                     {
-                        values.Add(new MetadataNameProperty(argument.Value.ToPlainText(NodePlainTextOptions.RemoveRefTags)));
+                        values.AddRange(Split(argument.Value.ToString(), field, removeParentheses));
+                    }
+
+                    if (prefix != string.Empty && prefix != null)
+                    {
+                        List<MetadataProperty> prefixedValues = new List<MetadataProperty>();
+
+                        foreach (MetadataProperty value in values)
+                        {
+                            prefixedValues.Add(new MetadataNameProperty($"{prefix} {value}"));
+                        }
+
+                        return prefixedValues;
                     }
 
                     return values;
@@ -164,6 +213,32 @@ namespace WikipediaMetadata.Models
             };
 
             return links;
+        }
+
+        private List<MetadataNameProperty> Split(string value, string field, bool removeParentheses = false)
+        {
+            List<MetadataNameProperty> values = new List<MetadataNameProperty>();
+
+            foreach (string segment in value.Split(stringSpearators, 100, StringSplitOptions.RemoveEmptyEntries))
+            {
+                WikitextParser parser = new WikitextParser();
+
+                string segmentEditable = parser.Parse(segment).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim();
+
+                if (removeParentheses && segment.IndexOf("(") > 0)
+                {
+                    segmentEditable = segmentEditable.Substring(0, segment.IndexOf("(") - 1).Trim();
+                }
+
+                if (field == "platforms" && windowsPlatform.Contains(segmentEditable))
+                {
+                    segmentEditable = "PC (Windows)";
+                }
+
+                values.Add(new MetadataNameProperty(segmentEditable));
+            }
+
+            return values;
         }
     }
 }
