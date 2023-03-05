@@ -28,8 +28,8 @@ namespace WikipediaMetadata.Models
             //MetadataField.AgeRating,
             MetadataField.Description,
          */
-        private readonly string[] templateNames = { "unbulleted list", "ubl", "collapsible list", "flatlist" };
-        private readonly string[] stringSpearators = { "<br />", "<br>", ",", "\n" };
+        private readonly string[] listTemplateNames = { "unbulleted list", "ubl", "collapsible list", "flatlist", "vgrelease" };
+        private readonly string[] stringSeparators = { "<br />", "<br/>", "<br>", "\n" };
         private readonly string[] windowsPlatform = { "Microsoft Windows", "Windows" };
         private readonly string[] dateFormatStrings = new string[] { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy" };
 
@@ -112,40 +112,21 @@ namespace WikipediaMetadata.Models
         {
             try
             {
-                TemplateArgument releaseDate = infoBox.Arguments["released"];
-                if (releaseDate != null)
+                List<MetadataProperty> list = GetValues(infoBox, "released");
+
+                List<DateTime> dates = new List<DateTime>();
+
+                foreach (MetadataProperty property in list)
                 {
-                    Template dateBox = releaseDate.Value.EnumDescendants().OfType<Template>()
-                        .Where(t => MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower() == "collapsible list").First();
-
-                    if (dateBox != null)
+                    if (DateTime.TryParseExact(property.ToString(), dateFormatStrings, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateTime))
                     {
-                        TemplateArgument dateTitle = dateBox.Arguments["title"];
-                        if (dateTitle != null)
-                        {
-                            Template date = dateTitle.Value.EnumDescendants().OfType<Template>()
-                                .Where(t => MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower() == "nobold").FirstOrDefault();
-
-                            string dateString = string.Empty;
-
-                            if (date != null)
-                            {
-                                dateString = date.Arguments.First().Value.ToPlainText(NodePlainTextOptions.RemoveRefTags);
-
-                            }
-                            else
-                            {
-                                dateString = dateTitle.Value.ToPlainText(NodePlainTextOptions.RemoveRefTags);
-                            }
-
-                            DateTime dateTime;
-
-                            if (DateTime.TryParseExact(dateString, dateFormatStrings, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
-                            {
-                                return new ReleaseDate(dateTime);
-                            }
-                        }
+                        dates.Add(dateTime);
                     }
+                }
+
+                if (dates.Count > 0)
+                {
+                    return new ReleaseDate(dates.Min());
                 }
             }
             catch (Exception ex)
@@ -166,7 +147,7 @@ namespace WikipediaMetadata.Models
                     List<MetadataProperty> values = new List<MetadataProperty>();
 
                     foreach (Template template in argument.EnumDescendants().OfType<Template>()
-                            .Where(t => templateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower())))
+                            .Where(t => listTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower())))
                     {
                         foreach (TemplateArgument listArgument in template.Arguments)
                         {
@@ -226,7 +207,16 @@ namespace WikipediaMetadata.Models
                 }
             }
 
-            foreach (string segment in value.Split(stringSpearators, 100, StringSplitOptions.RemoveEmptyEntries))
+            List<string> separators = new List<string>();
+
+            separators.AddRange(stringSeparators);
+
+            if (field != "released")
+            {
+                separators.AddMissing(",");
+            }
+
+            foreach (string segment in value.Split(separators.ToArray(), 100, StringSplitOptions.RemoveEmptyEntries))
             {
                 WikitextParser parser = new WikitextParser();
 
