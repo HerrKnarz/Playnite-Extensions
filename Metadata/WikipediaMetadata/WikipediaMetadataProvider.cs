@@ -1,13 +1,15 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
+using System.Reflection;
+using System.Text;
 using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
@@ -20,7 +22,6 @@ namespace WikipediaMetadata
         private readonly string baseUrl = "https://en.wikipedia.org/w/rest.php/v1/";
         private string SearchUrl { get => baseUrl + "search/page?q={0}&limit={1}"; }
         private string PageUrl { get => baseUrl + "page/{0}"; }
-        private readonly string pageHtmlUrl = "https://en.wikipedia.org/api/rest_v1/page/html/{0}";
 
         private WikipediaGameMetadata foundGame;
 
@@ -48,6 +49,14 @@ namespace WikipediaMetadata
 
                 WebClient client = new WebClient();
 
+                Assembly thisAssem = typeof(WikipediaMetadata).Assembly;
+                AssemblyName thisAssemName = thisAssem.GetName();
+
+                Version version = thisAssemName.Version;
+
+                client.Headers.Add("user-agent", $"Playnite Wikipedia Metadata Addon/{version} (alex@knarzwerk.de)");
+                client.Encoding = Encoding.UTF8;
+
                 string jsonResult = client.DownloadString(apiUrl);
 
                 string key = string.Empty;
@@ -56,20 +65,18 @@ namespace WikipediaMetadata
 
                 if (searchResult.Pages != null && searchResult.Pages.Count > 0)
                 {
+                    string wikiNameVideoGame = (options.GameData.Name + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
+                    string wikiName = options.GameData.Name.RemoveSpecialChars().ToLower().Replace(" ", "");
+                    string wikiStart = wikiName.Substring(0, (wikiName.Length > 5) ? 5 : wikiName.Length);
+
+
                     if (options.IsBackgroundDownload)
                     {
                         // TODO: Maybe look for existing wikipedia link and use that as the base!
 
-                        string wikiName = options.GameData.Name + " (video game)";
 
-                        wikiName = wikiName.RemoveSpecialChars().ToLower().Replace(" ", "");
-
-                        Page foundPage = searchResult.Pages.Where(p => p.KeyMatch == wikiName).FirstOrDefault();
-
-                        if (foundPage == null)
-                        {
-                            foundPage = searchResult.Pages.Where(p => p.KeyMatch == options.GameData.Name.RemoveSpecialChars().ToLower().Replace(" ", "")).FirstOrDefault();
-                        }
+                        Page foundPage = searchResult.Pages.Where(p => p.KeyMatch == wikiNameVideoGame).FirstOrDefault() ??
+                            searchResult.Pages.Where(p => p.KeyMatch == options.GameData.Name.RemoveSpecialChars().ToLower().Replace(" ", "")).FirstOrDefault();
 
                         if (foundPage != null)
                         {
@@ -82,9 +89,15 @@ namespace WikipediaMetadata
                     }
                     else
                     {
+
                         GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, s =>
                         {
-                            return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult).ToList<GenericItemOption>();
+                            return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
+                                .OrderByDescending(o => o.Description != null && o.Description.Contains("video game"))
+                                .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiNameVideoGame))
+                                .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiStart))
+                                .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(wikiName))
+                                .ToList<GenericItemOption>();
                         }, options.GameData.Name, "Wikipedia: select game");
 
 
@@ -194,91 +207,7 @@ namespace WikipediaMetadata
         }
         public override string GetDescription(GetMetadataFieldArgs args)
         {
-            string apiUrl = string.Format(pageHtmlUrl, FindGame().Key.UrlEncode());
-
-            HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(apiUrl);
-
-            HtmlNodeCollection topLevelSections = doc.DocumentNode.SelectNodes("//body/section");
-
-            string description = string.Empty;
-
-            foreach (HtmlNode topLevelSection in topLevelSections)
-            {
-                string[] allowdSecondLevelNodes = { "h2", "p", "ul", "ol", "section" };
-
-                List<HtmlNode> secondLevelNodes = topLevelSection.ChildNodes.Where(c => allowdSecondLevelNodes.Contains(c.Name)).ToList();
-
-                foreach (HtmlNode secondLevelNode in secondLevelNodes)
-                {
-                    string[] unwantedParagraphs = { "see also", "notes", "references", "external links", "further reading", "sources" };
-
-                    if (secondLevelNode.Name == "h2" && unwantedParagraphs.Contains(secondLevelNode.InnerText.ToLower()))
-                    {
-                        break;
-                    }
-                    else if (secondLevelNode.Name == "section")
-                    {
-                        string[] allowdThirdLevelNodes = { "h3", "p", "ul", "ol", "section" };
-
-                        List<HtmlNode> thirdLevelNodes = secondLevelNode.ChildNodes.Where(c => allowdThirdLevelNodes.Contains(c.Name)).ToList();
-
-                        foreach (HtmlNode thirdLevelNode in thirdLevelNodes)
-                        {
-                            if (thirdLevelNode.Name == "ul" || thirdLevelNode.Name == "ol")
-                            {
-                                description += GetList(thirdLevelNode) + Environment.NewLine;
-                            }
-                            else
-                            {
-                                description += $"<{thirdLevelNode.Name}>{RemoveAnnotationMarks(thirdLevelNode).InnerText}</{thirdLevelNode.Name}>" + Environment.NewLine;
-                            }
-                        }
-                    }
-                    else if (secondLevelNode.Name == "ul" || secondLevelNode.Name == "ol")
-                    {
-                        description += GetList(secondLevelNode) + Environment.NewLine;
-                    }
-                    else if (secondLevelNode.InnerText.RemoveSpecialChars().Trim().Length > 0)
-                    {
-                        description += $"<{secondLevelNode.Name}>{RemoveAnnotationMarks(secondLevelNode).InnerText}</{secondLevelNode.Name}>" + Environment.NewLine;
-                    }
-                }
-            }
-
-            return description ?? base.GetDescription(args);
-        }
-
-        public string GetList(HtmlNode htmlList)
-        {
-            string result = $"<{htmlList.Name}>" + Environment.NewLine;
-
-            foreach (HtmlNode listNode in htmlList.SelectNodes("./li"))
-            {
-                result += $"  <{listNode.Name}>{RemoveAnnotationMarks(listNode).InnerText}</{listNode.Name}>" + Environment.NewLine;
-            }
-
-            result += $"</{htmlList.Name}>";
-
-            return result;
-        }
-
-        public HtmlNode RemoveAnnotationMarks(HtmlNode text)
-        {
-            HtmlNodeCollection supNodes = text.SelectNodes("./sup");
-
-            if (supNodes != null && supNodes.Count > 0)
-            {
-                foreach (HtmlNode annotation in supNodes)
-                {
-                    if (annotation.SelectSingleNode("./a/span[@class='mw-reflink-text']") != null)
-                    {
-                        annotation.Remove();
-                    }
-                }
-            }
-
-            return text;
+            return new DescriptionParser(FindGame().Key).Description ?? base.GetDescription(args);
         }
     }
 }

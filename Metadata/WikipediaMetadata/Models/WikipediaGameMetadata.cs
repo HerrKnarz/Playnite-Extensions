@@ -11,10 +11,12 @@ namespace WikipediaMetadata.Models
 {
     public class WikipediaGameMetadata
     {
-        private readonly string[] listTemplateNames = { "unbulleted list", "ubl", "collapsible list", "flatlist", "vgrelease" };
+        private readonly string[] listTemplateNames = { "unbulleted list", "ubl", "collapsible list", "flatlist", "plainlist", "vgrelease", "video game release" };
+        private readonly string[] vgReleaseTemplateNames = { "vgrelease", "video game release" };
+        private readonly string[] unwantedTemplateNames = { "efn", "cite web" };
         private readonly string[] stringSeparators = { "<br />", "<br/>", "<br>", "\n" };
         private readonly string[] windowsPlatform = { "Microsoft Windows", "Windows" };
-        private readonly string[] dateFormatStrings = new string[] { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy" };
+        private readonly string[] dateFormatStrings = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy" };
 
         public string Name { get; set; } = string.Empty;
         public string Key { get; set; } = string.Empty;
@@ -130,25 +132,36 @@ namespace WikipediaMetadata.Models
                     foreach (Template template in argument.EnumDescendants().OfType<Template>()
                             .Where(t => listTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower())))
                     {
+                        // In the template vgrelease the first argument is supposed to be the country.
+                        if (vgReleaseTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(template.Name).ToLower()))
+                        {
+                            TemplateArgument arg = template.Arguments.FirstNode;
+
+                            if (arg != null)
+                            {
+                                arg.Remove();
+                            }
+                        }
+
                         foreach (TemplateArgument listArgument in template.Arguments)
                         {
                             if (listArgument.Name == null || listArgument.Name.ToPlainText() == "title")
                             {
-                                values.AddRange(Split(listArgument.Value.ToString(), field, removeParentheses));
+                                values.AddRange(Split(StripUnwantedElements(listArgument).Value.ToString(), field, removeParentheses));
                             }
                         }
                     }
 
-                    if (values.Count == 0)
+                    // We now remove all sub templates to get the value itself, that won't be added otherwise.
+                    foreach (Template template in argument.EnumDescendants().OfType<Template>())
                     {
-                        foreach (Template x in argument.EnumDescendants().OfType<Template>()
-                            .Where(t => MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower() == "efn"))
-                        {
-                            x.Remove();
-                        }
-
-                        values.AddRange(Split(argument.Value.ToString(), field, removeParentheses));
+                        template.Remove();
                     }
+
+                    argument = StripUnwantedElements(argument);
+
+                    values.AddMissing(Split(argument.Value.ToString(), field, removeParentheses));
+
 
                     if (prefix != string.Empty && prefix != null)
                     {
@@ -222,6 +235,29 @@ namespace WikipediaMetadata.Models
             }
 
             return values;
+        }
+
+        private TemplateArgument StripUnwantedElements(TemplateArgument argument)
+        {
+            IEnumerable<Template> templates = argument.EnumDescendants().OfType<Template>();
+
+            foreach (Template x in argument.EnumDescendants().OfType<Template>()
+                            .Where(t => unwantedTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower())))
+            {
+                x.Remove();
+            }
+
+            foreach (LineNode line in argument.Value.Lines)
+            {
+                foreach (Node inline in line.EnumDescendants())
+                {
+                    if (inline.ToString().StartsWith("<ref>"))
+                    {
+                        inline.Remove();
+                    }
+                }
+            }
+            return argument;
         }
     }
 }
