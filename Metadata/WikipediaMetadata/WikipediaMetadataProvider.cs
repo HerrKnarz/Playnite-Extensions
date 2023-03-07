@@ -1,15 +1,11 @@
 ﻿using KNARZhelper;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Text;
 using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
@@ -18,10 +14,6 @@ namespace WikipediaMetadata
     {
         private readonly MetadataRequestOptions options;
         private readonly WikipediaMetadata plugin;
-
-        private readonly string baseUrl = "https://en.wikipedia.org/w/rest.php/v1/";
-        private string SearchUrl { get => baseUrl + "search/page?q={0}&limit={1}"; }
-        private string PageUrl { get => baseUrl + "page/{0}"; }
 
         private WikipediaGameMetadata foundGame;
 
@@ -45,23 +37,9 @@ namespace WikipediaMetadata
 
             try
             {
-                string apiUrl = string.Format(SearchUrl, options.GameData.Name.UrlEncode(), 50);
-
-                WebClient client = new WebClient();
-
-                Assembly thisAssem = typeof(WikipediaMetadata).Assembly;
-                AssemblyName thisAssemName = thisAssem.GetName();
-
-                Version version = thisAssemName.Version;
-
-                client.Headers.Add("user-agent", $"Playnite Wikipedia Metadata Addon/{version} (alex@knarzwerk.de)");
-                client.Encoding = Encoding.UTF8;
-
-                string jsonResult = client.DownloadString(apiUrl);
+                WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(options.GameData.Name);
 
                 string key = string.Empty;
-
-                WikipediaSearchResult searchResult = Serialization.FromJson<WikipediaSearchResult>(jsonResult);
 
                 if (searchResult.Pages != null && searchResult.Pages.Count > 0)
                 {
@@ -109,11 +87,7 @@ namespace WikipediaMetadata
 
                     if (key != string.Empty)
                     {
-                        apiUrl = string.Format(PageUrl, key.UrlEncode());
-
-                        jsonResult = client.DownloadString(apiUrl);
-
-                        page = Serialization.FromJson<WikipediaGameData>(jsonResult);
+                        page = WikipediaApiCaller.GetGameData(key);
                     }
                 }
             }
@@ -165,9 +139,16 @@ namespace WikipediaMetadata
 
         }
 
+        public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
+        {
+            string coverImageUrl = FindGame().CoverImageUrl;
+            return string.IsNullOrEmpty(coverImageUrl) ? base.GetCoverImage(args) : new MetadataFile(coverImageUrl);
+        }
+
         public override string GetName(GetMetadataFieldArgs args)
         {
-            return FindGame().Name ?? base.GetName(args);
+            string name = FindGame().Name;
+            return string.IsNullOrEmpty(name) ? base.GetName(args) : name;
         }
         public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args)
         {
@@ -175,39 +156,48 @@ namespace WikipediaMetadata
         }
         public override IEnumerable<MetadataProperty> GetGenres(GetMetadataFieldArgs args)
         {
-            return FindGame().Genres ?? base.GetGenres(args);
+            List<MetadataProperty> genres = FindGame().Genres;
+            return (genres?.Any() ?? false) ? genres : base.GetGenres(args);
         }
         public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
         {
-            return FindGame().Developers ?? base.GetDevelopers(args);
+            List<MetadataProperty> developers = FindGame().Developers;
+            return (developers?.Any() ?? false) ? developers : base.GetDevelopers(args);
         }
         public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
         {
-            return FindGame().Publishers ?? base.GetPublishers(args);
+            List<MetadataProperty> publishers = FindGame().Publishers;
+            return (publishers?.Any() ?? false) ? publishers : base.GetPublishers(args);
         }
         public override IEnumerable<MetadataProperty> GetFeatures(GetMetadataFieldArgs args)
         {
-            return FindGame().Features ?? base.GetFeatures(args);
+            List<MetadataProperty> features = FindGame().Features;
+            return (features?.Any() ?? false) ? features : base.GetFeatures(args);
         }
         public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)
         {
-            return FindGame().Tags ?? base.GetTags(args);
+            List<MetadataProperty> tags = FindGame().Tags;
+            return (tags?.Any() ?? false) ? tags : base.GetTags(args);
         }
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
         {
-            return FindGame().Links ?? base.GetLinks(args);
+            List<Link> links = FindGame().Links;
+            return (links?.Any() ?? false) ? links : base.GetLinks(args);
         }
         public override IEnumerable<MetadataProperty> GetSeries(GetMetadataFieldArgs args)
         {
-            return FindGame().Series ?? base.GetSeries(args);
+            List<MetadataProperty> series = FindGame().Series;
+            return (series?.Any() ?? false) ? series : base.GetSeries(args);
         }
         public override IEnumerable<MetadataProperty> GetPlatforms(GetMetadataFieldArgs args)
         {
-            return FindGame().Platforms ?? base.GetPlatforms(args);
+            List<MetadataProperty> platforms = FindGame().Platforms;
+            return (platforms?.Any() ?? false) ? platforms : base.GetPlatforms(args);
         }
         public override string GetDescription(GetMetadataFieldArgs args)
         {
-            return new DescriptionParser(FindGame().Key).Description ?? base.GetDescription(args);
+            string description = new DescriptionParser(FindGame().Key).Description;
+            return string.IsNullOrEmpty(description) ? base.GetDescription(args) : description;
         }
     }
 }

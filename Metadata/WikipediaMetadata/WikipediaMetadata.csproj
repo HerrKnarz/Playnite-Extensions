@@ -47,9 +47,11 @@
   <ItemGroup>
     <Compile Include="DescriptionParser.cs" />
     <Compile Include="Models\WikipediaGameData.cs" />
+    <Compile Include="Models\WikipediaImage.cs" />
     <Compile Include="Models\WikipediaItemOption.cs" />
     <Compile Include="Models\WikipediaGameMetadata.cs" />
     <Compile Include="Models\WikipediaSearchResult.cs" />
+    <Compile Include="WikipediaApiCaller.cs" />
     <Compile Include="WikipediaMetadata.cs" />
     <Compile Include="WikipediaMetadataProvider.cs" />
     <Compile Include="WikipediaMetadataSettings.cs" />

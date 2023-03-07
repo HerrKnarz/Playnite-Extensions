@@ -26,7 +26,6 @@ namespace WikipediaMetadata
             MetadataField.Platform,
             MetadataField.CoverImage,
             //MetadataField.CriticScore,
-            //MetadataField.CommunityScore,
             //MetadataField.AgeRating,
             MetadataField.Description,
         };

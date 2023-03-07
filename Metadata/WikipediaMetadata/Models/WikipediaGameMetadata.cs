@@ -17,9 +17,11 @@ namespace WikipediaMetadata.Models
         private readonly string[] stringSeparators = { "<br />", "<br/>", "<br>", "\n" };
         private readonly string[] windowsPlatform = { "Microsoft Windows", "Windows" };
         private readonly string[] dateFormatStrings = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy" };
+        private readonly string imageApiUrl = "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&pilicense=any&titles=";
 
         public string Name { get; set; } = string.Empty;
         public string Key { get; set; } = string.Empty;
+        public string CoverImageUrl { get; set; }
         public ReleaseDate? ReleaseDate { get; set; }
         public List<MetadataProperty> Genres { get; set; }
         public List<MetadataProperty> Developers { get; set; }
@@ -53,6 +55,7 @@ namespace WikipediaMetadata.Models
                             Name = gameTitle.Value.ToPlainText(NodePlainTextOptions.RemoveRefTags);
                         }
 
+                        CoverImageUrl = GetImageUrl(Key);
                         ReleaseDate = GetDate(infoBox);
                         Genres = GetValues(infoBox, "genre");
                         Developers = GetValues(infoBox, "developer", true);
@@ -79,7 +82,7 @@ namespace WikipediaMetadata.Models
                         Platforms.AddRange(GetValues(infoBox, "arcade system"));
                     }
 
-                    if (Name == string.Empty || Name == null)
+                    if (string.IsNullOrEmpty(Name))
                     {
                         Name = gameData.Title.Replace("(video game)", "").Trim();
                     }
@@ -258,6 +261,22 @@ namespace WikipediaMetadata.Models
                 }
             }
             return argument;
+        }
+
+        private string GetImageUrl(string key)
+        {
+            WikipediaImage imageData = WikipediaApiCaller.GetImage(key);
+
+            if (imageData != null && imageData.Query != null)
+            {
+                ImagePage page = imageData.Query.Pages.FirstOrDefault();
+
+                if (page != null && page.Original != null)
+                {
+                    return page.Original.Source;
+                }
+            }
+            return null;
         }
     }
 }
