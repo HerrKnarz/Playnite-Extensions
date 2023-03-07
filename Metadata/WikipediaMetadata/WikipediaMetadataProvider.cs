@@ -194,6 +194,12 @@ namespace WikipediaMetadata
             List<MetadataProperty> platforms = FindGame().Platforms;
             return (platforms?.Any() ?? false) ? platforms : base.GetPlatforms(args);
         }
+        public override int? GetCriticScore(GetMetadataFieldArgs args)
+        {
+            int criticScore = FindGame().CriticScore;
+            return (criticScore > -1) ? criticScore : base.GetCriticScore(args);
+        }
+
         public override string GetDescription(GetMetadataFieldArgs args)
         {
             string description = new DescriptionParser(FindGame().Key).Description;

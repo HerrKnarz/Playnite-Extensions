@@ -25,12 +25,10 @@ namespace WikipediaMetadata
             MetadataField.Series,
             MetadataField.Platform,
             MetadataField.CoverImage,
-            //MetadataField.CriticScore,
-            //MetadataField.AgeRating,
+            MetadataField.CriticScore,
             MetadataField.Description,
         };
 
-        // Change to something more appropriate
         public override string Name => "Wikipedia";
 
         public WikipediaMetadata(IPlayniteAPI api) : base(api)

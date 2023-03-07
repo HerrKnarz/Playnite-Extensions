@@ -17,7 +17,6 @@ namespace WikipediaMetadata.Models
         private readonly string[] stringSeparators = { "<br />", "<br/>", "<br>", "\n" };
         private readonly string[] windowsPlatform = { "Microsoft Windows", "Windows" };
         private readonly string[] dateFormatStrings = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy" };
-        private readonly string imageApiUrl = "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&pilicense=any&titles=";
 
         public string Name { get; set; } = string.Empty;
         public string Key { get; set; } = string.Empty;
@@ -31,6 +30,7 @@ namespace WikipediaMetadata.Models
         public List<Link> Links { get; set; }
         public List<MetadataProperty> Series { get; set; }
         public List<MetadataProperty> Platforms { get; set; }
+        public int CriticScore { get; set; }
 
         public WikipediaGameMetadata(WikipediaGameData gameData)
         {
@@ -45,7 +45,7 @@ namespace WikipediaMetadata.Models
                     Key = gameData.Key;
 
                     Template infoBox = ast.EnumDescendants().OfType<Template>()
-                        .Where(t => MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower() == "infobox video game").First();
+                        .Where(t => CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)) == "infobox video game").FirstOrDefault();
 
                     if (infoBox != null)
                     {
@@ -86,6 +86,8 @@ namespace WikipediaMetadata.Models
                     {
                         Name = gameData.Title.Replace("(video game)", "").Trim();
                     }
+
+                    CriticScore = GetCriticScore(ast);
                 }
                 catch (Exception ex)
                 {
@@ -133,7 +135,7 @@ namespace WikipediaMetadata.Models
                     List<MetadataProperty> values = new List<MetadataProperty>();
 
                     foreach (Template template in argument.EnumDescendants().OfType<Template>()
-                            .Where(t => listTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower())))
+                            .Where(t => listTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
                     {
                         // In the template vgrelease the first argument is supposed to be the country.
                         if (vgReleaseTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(template.Name).ToLower()))
@@ -155,7 +157,7 @@ namespace WikipediaMetadata.Models
                         }
                     }
 
-                    // We now remove all sub templates to get the value itself, that won't be added otherwise.
+                    // We now remove all sub templates to get the name itself, that won't be added otherwise.
                     foreach (Template template in argument.EnumDescendants().OfType<Template>())
                     {
                         template.Remove();
@@ -215,7 +217,7 @@ namespace WikipediaMetadata.Models
 
             separators.AddRange(stringSeparators);
 
-            if (field != "released")
+            if (field != "released" && field != "MC")
             {
                 separators.AddMissing(",");
             }
@@ -245,7 +247,7 @@ namespace WikipediaMetadata.Models
             IEnumerable<Template> templates = argument.EnumDescendants().OfType<Template>();
 
             foreach (Template x in argument.EnumDescendants().OfType<Template>()
-                            .Where(t => unwantedTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower())))
+                            .Where(t => unwantedTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
             {
                 x.Remove();
             }
@@ -254,7 +256,7 @@ namespace WikipediaMetadata.Models
             {
                 foreach (Node inline in line.EnumDescendants())
                 {
-                    if (inline.ToString().StartsWith("<ref>"))
+                    if (inline.ToString().StartsWith("<ref"))
                     {
                         inline.Remove();
                     }
@@ -277,6 +279,62 @@ namespace WikipediaMetadata.Models
                 }
             }
             return null;
+        }
+
+        private int GetCriticScore(Wikitext ast)
+        {
+            Template infoBox = ast.EnumDescendants().OfType<Template>()
+                .Where(t => CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)) == "video game reviews").FirstOrDefault();
+            if (infoBox != null)
+            {
+                List<MetadataProperty> list = GetValues(infoBox, "MC", true);
+
+                List<int> ratings = new List<int>();
+
+                foreach (MetadataProperty property in list)
+                {
+                    string value = property.ToString();
+
+                    if (value.IndexOf(":") > 0)
+                    {
+                        value = value.Substring(value.IndexOf(":") + 1).Trim();
+                    }
+
+                    if (value.IndexOf("/") > 0)
+                    {
+                        if (int.TryParse(value.Substring(0, value.IndexOf("/")), out int rating))
+                        {
+                            ratings.Add(rating);
+                        };
+                    }
+                }
+
+                if (ratings.Count > 0)
+                {
+                    return (int)Math.Ceiling(ratings.Average());
+                }
+
+
+
+            }
+
+            return -1;
+        }
+
+        public string CleanTemplateName(string name)
+        {
+            if (name.IndexOf("\n") > 0)
+            {
+                name = name.Substring(0, name.IndexOf("\n")).Trim();
+            }
+
+            if (name.Contains("<!--"))
+            {
+                int start = name.IndexOf("<!--");
+                int end = name.IndexOf("-->", start) + 3;
+                name = name.Remove(start, end - start);
+            }
+            return name.ToLower();
         }
     }
 }
