@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using MwParserFromScratch;
 using MwParserFromScratch.Nodes;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,6 @@ namespace WikipediaMetadata.Models
         private readonly string[] vgReleaseTemplateNames = { "vgrelease", "video game release" };
         private readonly string[] unwantedTemplateNames = { "efn", "cite web" };
         private readonly string[] stringSeparators = { "<br />", "<br/>", "<br>", "\n" };
-        private readonly string[] windowsPlatform = { "Microsoft Windows", "Windows" };
         private readonly string[] dateFormatStrings = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy" };
 
         public string Name { get; set; } = string.Empty;
@@ -76,10 +76,14 @@ namespace WikipediaMetadata.Models
                         Links = GetLinks(gameData);
                         Series = GetValues(infoBox, "series");
 
-                        Platforms = new List<MetadataProperty>();
+                        List<MetadataProperty> platforms = new List<MetadataProperty>();
 
-                        Platforms.AddRange(GetValues(infoBox, "platforms"));
-                        Platforms.AddRange(GetValues(infoBox, "arcade system"));
+                        platforms.AddRange(GetValues(infoBox, "platforms"));
+                        platforms.AddRange(GetValues(infoBox, "arcade system"));
+
+                        PlatformHelper platformHelper = new PlatformHelper(API.Instance);
+
+                        Platforms = platforms.SelectMany(p => platformHelper.GetPlatforms(p.ToString())).ToList();
                     }
 
                     if (string.IsNullOrEmpty(Name))
@@ -227,11 +231,6 @@ namespace WikipediaMetadata.Models
                 WikitextParser parser = new WikitextParser();
 
                 string segmentEditable = parser.Parse(segment).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim();
-
-                if (field == "platforms" && windowsPlatform.Contains(segmentEditable))
-                {
-                    segmentEditable = "PC (Windows)";
-                }
 
                 if (segmentEditable.Length > 0)
                 {

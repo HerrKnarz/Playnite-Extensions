@@ -99,46 +99,6 @@ namespace WikipediaMetadata
             }
 
             return foundGame = new WikipediaGameMetadata(page);
-
-
-
-
-
-
-
-            /*       var deflatedSearchGameName = options.GameData.Name.Deflate();
-            List<string> platformSpecs = options.GameData.Platforms?.Where(p => p.SpecificationId != null).Select(p => p.SpecificationId).ToList();
-            List<string> platformNames = options.GameData.Platforms?.Select(p => p.Name).ToList();
-            foreach (var game in results)
-            {
-                var deflatedMatchedGameName = game.MatchedName.Deflate();
-                if (!deflatedSearchGameName.Equals(deflatedMatchedGameName, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    continue;
-                }
-
-                if (options.GameData.Platforms?.Count > 0)
-                {
-                    var platforms = platformUtility.GetPlatforms(game.Platform);
-                    foreach (var platform in platforms)
-                    {
-                        if (platform is MetadataSpecProperty specPlatform && platformSpecs.Contains(specPlatform.Id))
-                        {
-                            return foundGame = game;
-                        }
-                        else if (platform is MetadataNameProperty namePlatform && platformNames.Contains(namePlatform.Name))
-                        {
-                            return foundGame = game;
-                        }
-                    }
-                }
-                else
-                {
-                    //no platforms to match, so consider a name match a success
-                    return foundGame = game;
-                }
-            }*/
-
         }
 
         private WikipediaHtmlParser ParseHtml(string key)
