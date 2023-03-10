@@ -1,17 +1,41 @@
 ﻿using HtmlAgilityPack;
 using KNARZhelper;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace WikipediaMetadata
 {
-    public class DescriptionParser
+    public class LinkPair
+    {
+        public string Contains { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class WikipediaHtmlParser
     {
         private readonly string pageHtmlUrl = "https://en.wikipedia.org/api/rest_v1/page/html/{0}";
+        private readonly string[] unwantedParagraphs = { "see also", "notes", "references", "further reading", "sources", "external linkList" };
+        private readonly List<LinkPair> LinkPairs = new List<LinkPair>()
+        {
+            new LinkPair { Contains = "imdb.com",
+            Name = "IMDb"},
+            new LinkPair { Contains = "mobygames.com",
+            Name = "MobyGames"},
+            new LinkPair { Contains = "gamefaqs.gamespot.com",
+            Name = "GameFAQs"},
+            new LinkPair { Contains = "giantbomb.com",
+            Name = "Giant Bomb"},
+            new LinkPair { Contains = "arcade-museum.com",
+            Name = "Killer List of Videogames"},
+        };
 
         public string Description { get; } = string.Empty;
-        public DescriptionParser(string gameKey)
+
+        public List<Link> Links { get; } = new List<Link>();
+        public WikipediaHtmlParser(string gameKey)
         {
             string apiUrl = string.Format(pageHtmlUrl, gameKey.UrlEncode());
 
@@ -22,14 +46,47 @@ namespace WikipediaMetadata
 
             foreach (HtmlNode topLevelSection in topLevelSections)
             {
+                HtmlNode linkNode = topLevelSection.SelectSingleNode("./h2");
+
+                if (linkNode != null && linkNode.InnerText.ToLower() == "external links")
+                {
+                    HtmlNode linkList = topLevelSection.SelectSingleNode("./ul") ?? topLevelSection.SelectSingleNode("./ol");
+
+                    if (linkList != null)
+                    {
+                        HtmlNodeCollection listItems = linkList.SelectNodes("./li");
+                        if (listItems != null && listItems.Count > 0)
+                        {
+                            foreach (HtmlNode listItem in listItems)
+                            {
+                                HtmlNode link = listItem.Descendants("a").FirstOrDefault();
+                                if (link != null)
+                                {
+                                    string name = WebUtility.HtmlDecode(link.InnerText);
+                                    LinkPair pair = LinkPairs.Where(p => link.GetAttributeValue("href", "").Contains(p.Contains)).FirstOrDefault();
+
+                                    if (pair != null)
+                                    {
+                                        name = pair.Name;
+                                    }
+
+                                    Links.Add(new Link()
+                                    {
+                                        Name = name,
+                                        Url = link.GetAttributeValue("href", ""),
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+
                 string[] allowdSecondLevelNodes = { "h2", "p", "ul", "ol", "section" };
 
                 List<HtmlNode> secondLevelNodes = topLevelSection.ChildNodes.Where(c => allowdSecondLevelNodes.Contains(c.Name)).ToList();
 
                 foreach (HtmlNode secondLevelNode in secondLevelNodes)
                 {
-                    string[] unwantedParagraphs = { "see also", "notes", "references", "external links", "further reading", "sources" };
-
                     if (secondLevelNode.Name == "h2" && unwantedParagraphs.Contains(secondLevelNode.InnerText.ToLower()))
                     {
                         break;

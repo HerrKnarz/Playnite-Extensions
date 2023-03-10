@@ -64,14 +64,14 @@ namespace WikipediaMetadata.Models
 
                         Tags = new List<MetadataProperty>();
 
-                        Tags.AddRange(GetValues(infoBox, "engine", false, "[engine]"));
-                        Tags.AddRange(GetValues(infoBox, "director", false, "[people] director:"));
-                        Tags.AddRange(GetValues(infoBox, "producer", false, "[people] producer:"));
-                        Tags.AddRange(GetValues(infoBox, "designer", false, "[people] designer:"));
-                        Tags.AddRange(GetValues(infoBox, "programmer", false, "[people] programmer:"));
-                        Tags.AddRange(GetValues(infoBox, "artist", false, "[people] artist:"));
-                        Tags.AddRange(GetValues(infoBox, "writer", false, "[people] writer:"));
-                        Tags.AddRange(GetValues(infoBox, "composer", false, "[people] composer:"));
+                        Tags.AddRange(GetValues(infoBox, "engine", false, "[Game Engine]"));
+                        Tags.AddRange(GetValues(infoBox, "director", false, "[People] director:"));
+                        Tags.AddRange(GetValues(infoBox, "producer", false, "[People] producer:"));
+                        Tags.AddRange(GetValues(infoBox, "designer", false, "[People] designer:"));
+                        Tags.AddRange(GetValues(infoBox, "programmer", false, "[People] programmer:"));
+                        Tags.AddRange(GetValues(infoBox, "artist", false, "[People] artist:"));
+                        Tags.AddRange(GetValues(infoBox, "writer", false, "[People] writer:"));
+                        Tags.AddRange(GetValues(infoBox, "composer", false, "[People] composer:"));
 
                         Links = GetLinks(gameData);
                         Series = GetValues(infoBox, "series");

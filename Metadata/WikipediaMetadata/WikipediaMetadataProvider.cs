@@ -17,6 +17,8 @@ namespace WikipediaMetadata
 
         private WikipediaGameMetadata foundGame;
 
+        private WikipediaHtmlParser htmlParser;
+
         public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
         public WikipediaMetadataProvider(MetadataRequestOptions options, WikipediaMetadata plugin)
@@ -139,6 +141,18 @@ namespace WikipediaMetadata
 
         }
 
+        private WikipediaHtmlParser ParseHtml(string key)
+        {
+            if (htmlParser != null)
+            {
+                return htmlParser;
+            }
+            else
+            {
+                return htmlParser = new WikipediaHtmlParser(key);
+            }
+        }
+
         public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
         {
             string coverImageUrl = FindGame().CoverImageUrl;
@@ -182,6 +196,9 @@ namespace WikipediaMetadata
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
         {
             List<Link> links = FindGame().Links;
+
+            links.AddMissing(ParseHtml(FindGame().Key).Links);
+
             return (links?.Any() ?? false) ? links : base.GetLinks(args);
         }
         public override IEnumerable<MetadataProperty> GetSeries(GetMetadataFieldArgs args)
@@ -202,7 +219,7 @@ namespace WikipediaMetadata
 
         public override string GetDescription(GetMetadataFieldArgs args)
         {
-            string description = new DescriptionParser(FindGame().Key).Description;
+            string description = ParseHtml(FindGame().Key).Description;
             return string.IsNullOrEmpty(description) ? base.GetDescription(args) : description;
         }
     }
