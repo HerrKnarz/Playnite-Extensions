@@ -15,6 +15,8 @@ namespace WikipediaMetadata.Models
     /// </summary>
     public class WikipediaGameMetadata
     {
+        private readonly WikipediaMetadata plugin;
+
         /// <summary>
         /// names of all list templates used to split values.
         /// </summary>
@@ -58,14 +60,16 @@ namespace WikipediaMetadata.Models
         public List<Link> Links { get; set; }
         public List<MetadataProperty> Series { get; set; }
         public List<MetadataProperty> Platforms { get; set; }
-        public int CriticScore { get; set; }
+        public int CriticScore { get; set; } = -1;
 
         /// <summary>
         /// Creates an instance of the class and fills the parameters by parsing the wikitext.
         /// </summary>
         /// <param name="gameData">Page object from wikipedia containing the wikitext and other data.</param>
-        public WikipediaGameMetadata(WikipediaGameData gameData)
+        public WikipediaGameMetadata(WikipediaGameData gameData, WikipediaMetadata plugin)
         {
+            this.plugin = plugin;
+
             if (gameData.Source != null)
             {
                 try
@@ -98,6 +102,7 @@ namespace WikipediaMetadata.Models
 
                         Tags = new List<MetadataProperty>();
 
+                        Tags.AddRange(GetValues(infoBox, "arcade system", false, "[Arcade System]"));
                         Tags.AddRange(GetValues(infoBox, "engine", false, "[Game Engine]"));
                         Tags.AddRange(GetValues(infoBox, "director", false, "[People] director:"));
                         Tags.AddRange(GetValues(infoBox, "producer", false, "[People] producer:"));
@@ -113,7 +118,11 @@ namespace WikipediaMetadata.Models
                         List<MetadataProperty> platforms = new List<MetadataProperty>();
 
                         platforms.AddRange(GetValues(infoBox, "platforms"));
-                        platforms.AddRange(GetValues(infoBox, "arcade system"));
+
+                        if (plugin.Settings.Settings.ArcadeSystemAsPlatform)
+                        {
+                            platforms.AddRange(GetValues(infoBox, "arcade system"));
+                        }
 
                         PlatformHelper platformHelper = new PlatformHelper(API.Instance);
 
@@ -157,10 +166,15 @@ namespace WikipediaMetadata.Models
                     }
                 }
 
-                // If dates were found, We'll return the earliest one.
+                // If dates were found, We'll return the one depending on the settings.
                 if (dates.Count > 0)
                 {
-                    return new ReleaseDate(dates.Min());
+                    switch (plugin.Settings.Settings.DateToUse)
+                    {
+                        case DateToUse.Earliest: return new ReleaseDate(dates.Min());
+                        case DateToUse.Latest: return new ReleaseDate(dates.Max());
+                        case DateToUse.First: return new ReleaseDate(dates.First());
+                    }
                 }
             }
             catch (Exception ex)
@@ -401,7 +415,12 @@ namespace WikipediaMetadata.Models
                 // If we found ratings, we return the average rating.
                 if (ratings.Count > 0)
                 {
-                    return (int)Math.Ceiling(ratings.Average());
+                    switch (plugin.Settings.Settings.RatingToUse)
+                    {
+                        case RatingToUse.Lowest: return ratings.Min();
+                        case RatingToUse.Highest: return ratings.Max();
+                        case RatingToUse.Average: return (int)Math.Ceiling(ratings.Average());
+                    }
                 }
             }
 

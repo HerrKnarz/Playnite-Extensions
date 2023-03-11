@@ -8,7 +8,7 @@ namespace WikipediaMetadata
 {
     public class WikipediaMetadata : MetadataPlugin
     {
-        private WikipediaMetadataSettingsViewModel Settings { get; set; }
+        public WikipediaMetadataSettingsViewModel Settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("6c1bdd62-77bf-4866-a264-11544508687c");
 
@@ -36,7 +36,7 @@ namespace WikipediaMetadata
             Settings = new WikipediaMetadataSettingsViewModel(this);
             Properties = new MetadataPluginProperties
             {
-                HasSettings = false
+                HasSettings = true
             };
         }
 

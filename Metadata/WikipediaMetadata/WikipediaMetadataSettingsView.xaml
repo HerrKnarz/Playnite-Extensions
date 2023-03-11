@@ -3,12 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:wikipediametadata="clr-namespace:WikipediaMetadata"
+             d:DataContext="{d:DesignInstance Type=wikipediametadata:WikipediaMetadataSettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="Description for Option1:"/>
-        <TextBox Text="{Binding Settings.Option1}"/>
-        <TextBlock Text="Description for Option2:"/>
-        <CheckBox IsChecked="{Binding Settings.Option2}"/>
-    </StackPanel>
+    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch">
+        <TabItem Header="general settings">
+            <DockPanel Margin="10">
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.AdvancedSearchResultSorting}"
+                          Content="Use advanced search result sorting (untick to use wikipedia default)."/>
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.ArcadeSystemAsPlatform}"
+                          Content="Add arcade system as platform." Margin="0,10,0,0"/>
+                <Grid DockPanel.Dock="Top"  Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Content="Release date to use"/>
+                    <ComboBox Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" ItemsSource="{Binding Path=DateToUseModes}"
+                              DisplayMemberPath="Value" SelectedValuePath="Key"
+                              SelectedValue="{Binding Path=Settings.DateToUse}"/>
+                    <Label Grid.Column="0" Grid.Row="1" Content="Metacritic score to use" Margin="0,10,0,0" />
+                    <ComboBox Grid.Column="1" Grid.Row="1" Margin="10,10,0,0" ItemsSource="{Binding Path=RatingToUseModes}"
+                              DisplayMemberPath="Value" SelectedValuePath="Key"
+                              SelectedValue="{Binding Path=Settings.RatingToUse}"/>
+                </Grid>
+            </DockPanel>
+        </TabItem>
+    </TabControl>
 </UserControl>

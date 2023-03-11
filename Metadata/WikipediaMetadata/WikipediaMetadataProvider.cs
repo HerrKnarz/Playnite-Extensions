@@ -75,18 +75,29 @@ namespace WikipediaMetadata
                     }
                     else
                     {
-                        // When displaying the search results, we order them differently to hopefully get the actual game as one
-                        // of the first results. First we order by containing "video game" in the short description, then by
-                        // titles starting with the game name, then by titles starting with the first five characters of the game
-                        // name and at last by page title itself.
-                        GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, s =>
+                        List<GenericItemOption> searchResults;
+
+                        if (plugin.Settings.Settings.AdvancedSearchResultSorting)
                         {
-                            return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
+                            // When displaying the search results, we order them differently to hopefully get the actual game as one
+                            // of the first results. First we order by containing "video game" in the short description, then by
+                            // titles starting with the game name, then by titles starting with the first five characters of the game
+                            // name and at last by page title itself.
+                            searchResults = searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
                                 .OrderByDescending(o => o.Description != null && o.Description.Contains("video game"))
                                 .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiNameVideoGame))
                                 .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiStart))
                                 .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(wikiName))
                                 .ToList<GenericItemOption>();
+                        }
+                        else
+                        {
+                            searchResults = searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult).ToList<GenericItemOption>();
+                        }
+
+                        GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, s =>
+                        {
+                            return searchResults;
                         }, options.GameData.Name, "Wikipedia: select game");
 
 
@@ -107,7 +118,7 @@ namespace WikipediaMetadata
                 Log.Error(ex, $"Error loading data from Wikipedia");
             }
 
-            return foundGame = new WikipediaGameMetadata(page);
+            return foundGame = new WikipediaGameMetadata(page, plugin);
         }
 
         /// <summary>
