@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace WikipediaMetadata
+namespace KNARZhelper
 {
     /// <summary>
     /// Class to match external platform names to the existing platforms in Playnite. Shamelessly partly copied from Jeshibu:
@@ -13,16 +13,12 @@ namespace WikipediaMetadata
     /// </summary>
     public class PlatformHelper
     {
-        private readonly IPlayniteAPI api;
-        private Dictionary<string, string[]> platformSpecNameByNormalName;
-
-        private static readonly Regex TrimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-        private static Regex TrimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private readonly Dictionary<string, string[]> platformSpecNameByNormalName;
+        private readonly Regex TrimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private readonly Regex TrimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         public PlatformHelper(IPlayniteAPI api)
         {
-            this.api = api;
-
             platformSpecNameByNormalName = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
 
             List<Platform> platforms = api.Database.Platforms.Where(p => p.SpecificationId != null).ToList();
@@ -53,7 +49,7 @@ namespace WikipediaMetadata
             TryAddPlatformByName(platformSpecNameByNormalName, "PS4/5", new[] { "sony_playstation4", "sony_playstation5" });
             TryAddPlatformByName(platformSpecNameByNormalName, "Playstation 4/5", new[] { "sony_playstation4", "sony_playstation5" });
             TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Sega Mega Drive", "Mega Drive" }, new[] { "sega_genesis" });
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "SNK Neo Geo MVS", "Neo Geo MVS" }, new[] { "snk_neo_geo" });
+            //TryAddPlatformByName(platformSpecNameByNormalName, new[] { "SNK Neo Geo MVS", "Neo Geo MVS" }, new[] { "snk_neo_geo" });
         }
         private bool TryAddPlatformByName(Dictionary<string, string[]> dict, string platformName, params string[] platformSpecNames)
         {
