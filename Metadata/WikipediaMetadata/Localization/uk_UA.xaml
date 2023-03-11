@@ -1,0 +1,26 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTabGeneral">Загальні налаштування</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTabDescription">Опис</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagTags">Теги</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsAdvancedSearch">Використовувати розширене сортування результатів пошуку (зніміть прапорець, щоб використовувати базовий пошук Вікіпедії).</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsArcadeSystem">Додати аркадну систему як платформу.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsReleaseDate">Дата релізу для використання</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsMetacritic">Оцінка Metacritic для використання</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionText">Тут ви можете визначити розділи сторінки Вікіпедії, які потрібно видалити під час отримання опису. Просто додайте назви заголовків, які вам не потрібні.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionAdd">Додати</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionRemove">Вилучити</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsText">Тут ви можете визначити, які значення ви хочете додати як теги, та вказати префікс для цього тегу.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsName">Назва</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsPrefix">Префікс</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateEarliest">Найраніша дата</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateLatest">Найпізніша дата</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateFirst">Перша дата в списку</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingLowest">Найнижчий рейтинг</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingHighest">Найвищий рейтинг</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingAverage">В середньому за всіма рейтингами</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsAddValue">Додати значення</sys:String>
+
+    <sys:String x:Key="LOCWikipediaMetadataSearchDialog">обрати гру</sys:String>
+</ResourceDictionary>
