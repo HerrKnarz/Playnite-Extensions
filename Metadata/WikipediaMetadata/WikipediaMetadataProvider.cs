@@ -27,8 +27,13 @@ namespace WikipediaMetadata
             this.plugin = plugin;
         }
 
+        /// <summary>
+        /// Gets the page to the game from Wikipedia
+        /// </summary>
+        /// <returns></returns>
         private WikipediaGameMetadata FindGame()
         {
+            // If we already found the game, we simply return it.
             if (foundGame != null)
             {
                 return foundGame;
@@ -39,6 +44,7 @@ namespace WikipediaMetadata
 
             try
             {
+                // We search for the game name on Wikipedia
                 WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(options.GameData.Name);
 
                 string key = string.Empty;
@@ -52,9 +58,9 @@ namespace WikipediaMetadata
 
                     if (options.IsBackgroundDownload)
                     {
-                        // TODO: Maybe look for existing wikipedia link and use that as the base!
-
-
+                        // Since name games have names, that aren't exclusive to video games, often "(video game)" is added to the
+                        // page title, so we try that first, before searching the name itself. Only if we get a 100% match, we'll
+                        // use the page in background mode.
                         Page foundPage = searchResult.Pages.Where(p => p.KeyMatch == wikiNameVideoGame).FirstOrDefault() ??
                             searchResult.Pages.Where(p => p.KeyMatch == options.GameData.Name.RemoveSpecialChars().ToLower().Replace(" ", "")).FirstOrDefault();
 
@@ -69,7 +75,10 @@ namespace WikipediaMetadata
                     }
                     else
                     {
-
+                        // When displaying the search results, we order them differently to hopefully get the actual game as one
+                        // of the first results. First we order by containing "video game" in the short description, then by
+                        // titles starting with the game name, then by titles starting with the first five characters of the game
+                        // name and at last by page title itself.
                         GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, s =>
                         {
                             return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
@@ -101,6 +110,11 @@ namespace WikipediaMetadata
             return foundGame = new WikipediaGameMetadata(page);
         }
 
+        /// <summary>
+        /// Similar to searching the game we only parse the html when needed (by requesting the description or links metadata)
+        /// </summary>
+        /// <param name="key">Page key to fetch the html</param>
+        /// <returns>Parsed result with the description and additional links</returns>
         private WikipediaHtmlParser ParseHtml(string key)
         {
             if (htmlParser != null)

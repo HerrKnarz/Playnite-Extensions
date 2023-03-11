@@ -71,12 +71,23 @@ namespace KNARZhelper
             }
             return success;
         }
-
+        /// <summary>
+        /// returns all platforms created in Playnite that fit the platform name 
+        /// </summary>
+        /// <param name="platformName">Name of the platform</param>
+        /// <returns>List of platforms</returns>
         public IEnumerable<MetadataProperty> GetPlatforms(string platformName)
         {
             return GetPlatforms(platformName, strict: false);
         }
 
+        /// <summary>
+        /// returns all platforms created in Playnite that fit the platform name 
+        /// </summary>
+        /// <param name="platformName">Name of the platform</param>
+        /// <param name="strict">If true, only matches will be returned. If false the function also returns all platforms,
+        /// that aren't found at all.</param>
+        /// <returns>List of platforms</returns>
         public IEnumerable<MetadataProperty> GetPlatforms(string platformName, bool strict)
         {
             if (string.IsNullOrWhiteSpace(platformName))

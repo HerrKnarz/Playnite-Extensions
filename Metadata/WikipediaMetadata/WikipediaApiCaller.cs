@@ -8,6 +8,9 @@ using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
 {
+    /// <summary>
+    /// Handles all API calls to Wikipedia
+    /// </summary>
     internal class WikipediaApiCaller
     {
         public static readonly string BaseUrl = "https://en.wikipedia.org/w/rest.php/v1/";

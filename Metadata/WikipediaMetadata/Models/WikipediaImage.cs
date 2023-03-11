@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK.Data;
 using System.Collections.Generic;
 
+/// Contains the classes needed to fetch images from a Wikipedia page.
 namespace WikipediaMetadata.Models
 {
     public class Normalized

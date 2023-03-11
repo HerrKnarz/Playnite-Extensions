@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK.Data;
 using System;
 
+/// Contains classes needed for the JOSN result to fetch a single page.
 namespace WikipediaMetadata.Models
 {
     public class Latest

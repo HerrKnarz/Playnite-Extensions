@@ -2,6 +2,7 @@
 using Playnite.SDK.Data;
 using System.Collections.Generic;
 
+/// Contains all the classes needed for the JOSN result of a search query.
 namespace WikipediaMetadata.Models
 {
     public class Page
