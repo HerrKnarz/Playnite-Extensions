@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{
 	ProjectSection(SolutionItems) = preProject
 		Manifest\HerrKnarz_CompanyCompanion.yaml = Manifest\HerrKnarz_CompanyCompanion.yaml
 		Manifest\HerrKnarz_LinkUtilities.yaml = Manifest\HerrKnarz_LinkUtilities.yaml
+		Manifest\HerrKnarz_WikipediaMetadata.yaml = Manifest\HerrKnarz_WikipediaMetadata.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{2F210C0E-167B-4B64-8084-FDF4FA3F93A4}"
