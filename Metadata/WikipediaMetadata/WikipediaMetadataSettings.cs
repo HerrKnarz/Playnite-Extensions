@@ -1,6 +1,8 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace WikipediaMetadata
 {
@@ -10,12 +12,13 @@ namespace WikipediaMetadata
         private RatingToUse ratingToUse = RatingToUse.Average;
         private bool advancedSearchResultSorting = true;
         private bool arcadeSystemAsPlatform = false;
+        private ObservableCollection<string> sectionsToRemove;
 
         public DateToUse DateToUse { get => dateToUse; set => SetValue(ref dateToUse, value); }
         public RatingToUse RatingToUse { get => ratingToUse; set => SetValue(ref ratingToUse, value); }
-
         public bool AdvancedSearchResultSorting { get => advancedSearchResultSorting; set => SetValue(ref advancedSearchResultSorting, value); }
         public bool ArcadeSystemAsPlatform { get => arcadeSystemAsPlatform; set => SetValue(ref arcadeSystemAsPlatform, value); }
+        public ObservableCollection<string> SectionsToRemove { get => sectionsToRemove; set => SetValue(ref sectionsToRemove, value); }
     }
 
     public enum DateToUse
@@ -63,6 +66,28 @@ namespace WikipediaMetadata
             { RatingToUse.Average, "Average of all ratings" },
         };
 
+        public RelayCommand AddSectionCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                string value = API.Instance.Dialogs.SelectString("", "Add value", "").SelectedString;
+
+                Settings.SectionsToRemove.AddMissing(value);
+                Settings.SectionsToRemove = new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
+            });
+        }
+
+        public RelayCommand<IList<object>> RemoveSectionCommand
+        {
+            get => new RelayCommand<IList<object>>((items) =>
+            {
+                foreach (string item in items.ToList().Cast<string>())
+                {
+                    Settings.SectionsToRemove.Remove(item);
+                }
+            }, (items) => items != null && items.Count > 0);
+        }
+
         public WikipediaMetadataSettingsViewModel(WikipediaMetadata plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
@@ -79,6 +104,15 @@ namespace WikipediaMetadata
             else
             {
                 Settings = new WikipediaMetadataSettings();
+            }
+
+            if (Settings.SectionsToRemove == null)
+            {
+                Settings.SectionsToRemove = new ObservableCollection<string>();
+            }
+            else
+            {
+                Settings.SectionsToRemove = new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
             }
         }
 

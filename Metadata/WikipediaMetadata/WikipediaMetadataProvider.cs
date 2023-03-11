@@ -134,7 +134,7 @@ namespace WikipediaMetadata
             }
             else
             {
-                return htmlParser = new WikipediaHtmlParser(key);
+                return htmlParser = new WikipediaHtmlParser(key, plugin);
             }
         }
 

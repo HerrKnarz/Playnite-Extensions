@@ -9,7 +9,7 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
-        <TabItem Header="general settings">
+        <TabItem Header="General settings">
             <DockPanel Margin="10">
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.AdvancedSearchResultSorting}"
                           Content="Use advanced search result sorting (untick to use wikipedia default)."/>
@@ -34,6 +34,20 @@
                               DisplayMemberPath="Value" SelectedValuePath="Key"
                               SelectedValue="{Binding Path=Settings.RatingToUse}"/>
                 </Grid>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Description">
+            <DockPanel Margin="10">
+                <TextBlock TextWrapping="Wrap" DockPanel.Dock="Top">Here you can define sections from the wikipedia page you want to remove when fetching the description. Just add the names of the headings you don't want.</TextBlock>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                    <Button Content="Add"
+                        Command="{Binding AddSectionCommand}" />
+                    <Button Content="Remove" Margin="10,0,0,0"
+                        Command="{Binding RemoveSectionCommand}"
+                        CommandParameter="{Binding SelectedItems, ElementName=ListBoxSections}"/>
+                </StackPanel>
+                <ListBox DockPanel.Dock="Top" Name="ListBoxSections" Margin="0,10,0,0" SelectionMode="Extended"
+                     ItemsSource="{Binding Settings.SectionsToRemove}" />
             </DockPanel>
         </TabItem>
     </TabControl>

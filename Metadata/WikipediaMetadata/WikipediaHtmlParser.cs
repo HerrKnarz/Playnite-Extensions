@@ -40,11 +40,6 @@ namespace WikipediaMetadata
         /// </summary>
         private readonly string[] allowdThirdLevelNodes = { "h3", "p", "ul", "ol", "section" };
         /// <summary>
-        /// All paragraphs we want to remove from the description by default.
-        /// </summary>
-        private readonly string[] unwantedParagraphs = { "see also", "notes", "references", "further reading", "sources", "external linkList" };
-
-        /// <summary>
         /// List of rename patterns for the links
         /// </summary>
         private readonly List<LinkPair> LinkPairs = new List<LinkPair>()
@@ -68,8 +63,14 @@ namespace WikipediaMetadata
         /// Creates an instance of the class, fetches the html code and parses it.
         /// </summary>
         /// <param name="gameKey">Key of the page we want to parse</param>
-        public WikipediaHtmlParser(string gameKey)
+        public WikipediaHtmlParser(string gameKey, WikipediaMetadata plugin)
         {
+            // All paragraphs we want to remove from the description by default.
+            List<string> unwantedParagraphs = new List<string>()
+              { "see also", "notes", "references", "further reading", "sources", "external linkList" };
+
+            unwantedParagraphs.AddMissing(plugin.Settings.Settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
+
             // We use HTML Agility Pack to fetch and parse the code. For the description we strip all bloat from the text and
             // build a simple new html string.
             string apiUrl = string.Format(pageHtmlUrl, gameKey.UrlEncode());
@@ -129,7 +130,7 @@ namespace WikipediaMetadata
                 foreach (HtmlNode secondLevelNode in secondLevelNodes)
                 {
                     // If the heading is one of the unwanted sections, we completely omit the section.
-                    if (secondLevelNode.Name == "h2" && unwantedParagraphs.Contains(secondLevelNode.InnerText.ToLower()))
+                    if (secondLevelNode.Name == "h2" && unwantedParagraphs.Contains(secondLevelNode.InnerText.ToLower().Trim()))
                     {
                         break;
                     }
