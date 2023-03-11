@@ -102,15 +102,10 @@ namespace WikipediaMetadata.Models
 
                         Tags = new List<MetadataProperty>();
 
-                        Tags.AddRange(GetValues(infoBox, "arcade system", false, "[Arcade System]"));
-                        Tags.AddRange(GetValues(infoBox, "engine", false, "[Game Engine]"));
-                        Tags.AddRange(GetValues(infoBox, "director", false, "[People] director:"));
-                        Tags.AddRange(GetValues(infoBox, "producer", false, "[People] producer:"));
-                        Tags.AddRange(GetValues(infoBox, "designer", false, "[People] designer:"));
-                        Tags.AddRange(GetValues(infoBox, "programmer", false, "[People] programmer:"));
-                        Tags.AddRange(GetValues(infoBox, "artist", false, "[People] artist:"));
-                        Tags.AddRange(GetValues(infoBox, "writer", false, "[People] writer:"));
-                        Tags.AddRange(GetValues(infoBox, "composer", false, "[People] composer:"));
+                        foreach (TagSetting tagSetting in plugin.Settings.Settings.TagSettings.Where(s => s.IsChecked))
+                        {
+                            Tags.AddRange(GetValues(infoBox, tagSetting.Name.ToLower(), false, tagSetting.Prefix));
+                        }
 
                         Links = GetLinks(gameData);
                         Series = GetValues(infoBox, "series");

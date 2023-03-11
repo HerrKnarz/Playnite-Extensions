@@ -3,6 +3,7 @@ using Playnite.SDK.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
 {
@@ -13,12 +14,14 @@ namespace WikipediaMetadata
         private bool advancedSearchResultSorting = true;
         private bool arcadeSystemAsPlatform = false;
         private ObservableCollection<string> sectionsToRemove;
+        private ObservableCollection<TagSetting> tagSettings;
 
         public DateToUse DateToUse { get => dateToUse; set => SetValue(ref dateToUse, value); }
         public RatingToUse RatingToUse { get => ratingToUse; set => SetValue(ref ratingToUse, value); }
         public bool AdvancedSearchResultSorting { get => advancedSearchResultSorting; set => SetValue(ref advancedSearchResultSorting, value); }
         public bool ArcadeSystemAsPlatform { get => arcadeSystemAsPlatform; set => SetValue(ref arcadeSystemAsPlatform, value); }
         public ObservableCollection<string> SectionsToRemove { get => sectionsToRemove; set => SetValue(ref sectionsToRemove, value); }
+        public ObservableCollection<TagSetting> TagSettings { get => tagSettings; set => SetValue(ref tagSettings, value); }
     }
 
     public enum DateToUse
@@ -113,6 +116,67 @@ namespace WikipediaMetadata
             else
             {
                 Settings.SectionsToRemove = new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
+            }
+
+            if (Settings.TagSettings == null)
+            {
+                Settings.TagSettings = new ObservableCollection<TagSetting>
+                {
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Arcade system",
+                        Prefix = "[Arcade System]"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Engine",
+                        Prefix = "[Game Engine]"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Director",
+                        Prefix = "[People] director:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Producer",
+                        Prefix = "[People] producer:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Designer",
+                        Prefix = "[People] designer:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Programmer",
+                        Prefix = "[People] programmer:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Artist",
+                        Prefix = "[People] artist:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Writer",
+                        Prefix = "[People] writer:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Composer",
+                        Prefix = "[People] composer:"
+                    },
+                };
             }
         }
 
