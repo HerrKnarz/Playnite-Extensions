@@ -1,0 +1,26 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTabGeneral">General settings</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTabDescription">Description</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagTags">Tags</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsAdvancedSearch">Use advanced search result sorting (untick to use wikipedia default).</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsArcadeSystem">Add arcade system as platform.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsReleaseDate">Release date to use</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsMetacritic">Metacritic score to use</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionText">Here you can define sections from the wikipedia page you want to remove when fetching the description. Just add the names of the headings you don't want.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionAdd">Add</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionRemove">Remove</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsText">Here you can define which values you want to add as tags and specify a prefix for the tag.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsName">Name</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsPrefix">Prefix</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateEarliest">Earliest date</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateLatest">Latest date</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateFirst">First date in the list</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingLowest">Lowest rating</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingHighest">Highest rating</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingAverage">Average of all ratings</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsAddValue">Add value</sys:String>
+
+    <sys:String x:Key="LOCWikipediaMetadataSearchDialog">select game</sys:String>
+</ResourceDictionary>
