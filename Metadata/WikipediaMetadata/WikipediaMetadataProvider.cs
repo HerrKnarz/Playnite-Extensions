@@ -98,7 +98,7 @@ namespace WikipediaMetadata
                         GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, s =>
                         {
                             return searchResults;
-                        }, options.GameData.Name, "Wikipedia: select game");
+                        }, options.GameData.Name, $"{plugin.Name}: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
 
 
                         if (chosen != null)

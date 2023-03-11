@@ -57,23 +57,23 @@ namespace WikipediaMetadata
 
         public Dictionary<DateToUse, string> DateToUseModes { get; } = new Dictionary<DateToUse, string>
         {
-            { DateToUse.Earliest, "Earliest date" },
-            { DateToUse.Latest, "Latest date" },
-            { DateToUse.First, "First date in the list" },
+            { DateToUse.Earliest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateEarliest") },
+            { DateToUse.Latest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateLatest") },
+            { DateToUse.First, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateFirst") },
         };
 
         public Dictionary<RatingToUse, string> RatingToUseModes { get; } = new Dictionary<RatingToUse, string>
         {
-            { RatingToUse.Lowest, "Lowest rating" },
-            { RatingToUse.Highest, "Highest rating" },
-            { RatingToUse.Average, "Average of all ratings" },
+            { RatingToUse.Lowest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingLowest") },
+            { RatingToUse.Highest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingHighest") },
+            { RatingToUse.Average, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingAverage") },
         };
 
         public RelayCommand AddSectionCommand
         {
             get => new RelayCommand(() =>
             {
-                string value = API.Instance.Dialogs.SelectString("", "Add value", "").SelectedString;
+                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCWikipediaMetadataSettingsAddValue"), "").SelectedString;
 
                 Settings.SectionsToRemove.AddMissing(value);
                 Settings.SectionsToRemove = new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));

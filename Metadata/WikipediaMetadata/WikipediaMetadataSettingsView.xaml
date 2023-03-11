@@ -9,12 +9,12 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
-        <TabItem Header="General settings">
+        <TabItem Header="{DynamicResource LOCWikipediaMetadataSettingsTabGeneral}">
             <DockPanel Margin="10">
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.AdvancedSearchResultSorting}"
-                          Content="Use advanced search result sorting (untick to use wikipedia default)."/>
+                          Content="{DynamicResource LOCWikipediaMetadataSettingsAdvancedSearch}"/>
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.ArcadeSystemAsPlatform}"
-                          Content="Add arcade system as platform." Margin="0,10,0,0"/>
+                          Content="{DynamicResource LOCWikipediaMetadataSettingsArcadeSystem}" Margin="0,10,0,0"/>
                 <Grid DockPanel.Dock="Top"  Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -25,24 +25,24 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0" Content="Release date to use"/>
+                    <Label Grid.Column="0" Grid.Row="0" Content="{DynamicResource LOCWikipediaMetadataSettingsReleaseDate}"/>
                     <ComboBox Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" ItemsSource="{Binding Path=DateToUseModes}"
                               DisplayMemberPath="Value" SelectedValuePath="Key"
                               SelectedValue="{Binding Path=Settings.DateToUse}"/>
-                    <Label Grid.Column="0" Grid.Row="1" Content="Metacritic score to use" Margin="0,10,0,0" />
+                    <Label Grid.Column="0" Grid.Row="1" Content="{DynamicResource LOCWikipediaMetadataSettingsMetacritic}" Margin="0,10,0,0" />
                     <ComboBox Grid.Column="1" Grid.Row="1" Margin="10,10,0,0" ItemsSource="{Binding Path=RatingToUseModes}"
                               DisplayMemberPath="Value" SelectedValuePath="Key"
                               SelectedValue="{Binding Path=Settings.RatingToUse}"/>
                 </Grid>
             </DockPanel>
         </TabItem>
-        <TabItem Header="Description">
+        <TabItem Header="{DynamicResource LOCWikipediaMetadataSettingsTabDescription}">
             <DockPanel Margin="10">
-                <TextBlock TextWrapping="Wrap" DockPanel.Dock="Top">Here you can define sections from the wikipedia page you want to remove when fetching the description. Just add the names of the headings you don't want.</TextBlock>
+                <TextBlock TextWrapping="Wrap" DockPanel.Dock="Top" Text="{DynamicResource LOCWikipediaMetadataSettingsDescriptionText}" />
                 <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
-                    <Button Content="Add"
+                    <Button Content="{DynamicResource LOCWikipediaMetadataSettingsDescriptionAdd}"
                         Command="{Binding AddSectionCommand}" />
-                    <Button Content="Remove" Margin="10,0,0,0"
+                    <Button Content="{DynamicResource LOCWikipediaMetadataSettingsDescriptionRemove}" Margin="10,0,0,0"
                         Command="{Binding RemoveSectionCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=ListBoxSections}"/>
                 </StackPanel>
@@ -50,9 +50,9 @@
                      ItemsSource="{Binding Settings.SectionsToRemove}" />
             </DockPanel>
         </TabItem>
-        <TabItem Header="Tags">
+        <TabItem Header="{DynamicResource LOCWikipediaMetadataSettingsTagTags}">
             <DockPanel Margin="10">
-                <TextBlock TextWrapping="Wrap" DockPanel.Dock="Top">Here you can define which values you want to add as tags and specify a prefix for the tag.</TextBlock>
+                <TextBlock TextWrapping="Wrap" DockPanel.Dock="Top" Text="{DynamicResource LOCWikipediaMetadataSettingsTagsText}" />
                 <ListView Name="GridTagSettings" SelectionMode="Single" Margin="0,10,0,0" DockPanel.Dock="Top" 
                           ItemsSource="{Binding Settings.TagSettings}">
                     <ListView.View>
@@ -65,9 +65,9 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="Auto" Header="Name"
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCWikipediaMetadataSettingsTagsName}"
                                             DisplayMemberBinding="{Binding Name}" />
-                            <GridViewColumn Width="300" Header="Prefix">
+                            <GridViewColumn Width="300" Header="{DynamicResource LOCWikipediaMetadataSettingsTagsPrefix}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding Prefix, UpdateSourceTrigger=PropertyChanged}"
