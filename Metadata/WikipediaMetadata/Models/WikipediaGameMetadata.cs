@@ -42,6 +42,12 @@ namespace WikipediaMetadata.Models
         /// </summary>
         private readonly string[] dateFormatStrings = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy" };
 
+        private readonly List<string> platformCodes = new List<string> {
+            "3DO", "3DS", "AMI", "ARC", "A2600", "JAG", "LYNX", "AST", "C64", "CD32", "CV", "DOS", "SDC", "DS", "GB",
+            "GBA", "GBC", "NGC", "GEN", "iOS", "MAC", "SMS", "MOB", "N-G", "N64", "NES", "NS", "PC", "VITA", "PS", "PS2",
+            "PS3", "PS4", "PS5", "PSP", "SSAT", "SMD", "SGG", "NSHI", "SNES", "TG16", "WII", "WIIU", "XBOX", "X360",
+            "XONE", "XSXS", "ZX", };
+
         /// <summary>
         /// Name of the game
         /// </summary>
@@ -148,7 +154,7 @@ namespace WikipediaMetadata.Models
             try
             {
                 // We use the GetValues function to fetch all values from the "released" section.
-                List<MetadataProperty> list = GetValues(infoBox, "released");
+                List<MetadataProperty> list = GetValues(infoBox, "released", true, "", true);
 
                 List<DateTime> dates = new List<DateTime>();
 
@@ -188,8 +194,9 @@ namespace WikipediaMetadata.Models
         /// <param name="removeParentheses">If true all values in parentheses will be removed. Those mostly contain the
         /// platforms in the developer or publisher fields.</param>
         /// <param name="prefix">Prefix to be added to the value. Is used to categorize the tags.</param>
+        /// <param name="removeSup">Removes values in superscripts.</param>
         /// <returns>List of all found values</returns>
-        private List<MetadataProperty> GetValues(Template infoBox, string field, bool removeParentheses = false, string prefix = "")
+        private List<MetadataProperty> GetValues(Template infoBox, string field, bool removeParentheses = false, string prefix = "", bool removeSup = false)
         {
             try
             {
@@ -218,7 +225,7 @@ namespace WikipediaMetadata.Models
                         {
                             if (listArgument.Name == null || listArgument.Name.ToPlainText() == "title")
                             {
-                                values.AddRange(Split(StripUnwantedElements(listArgument).Value.ToString(), field, removeParentheses));
+                                values.AddRange(Split(StripUnwantedElements(listArgument).Value.ToString(), field, removeParentheses, removeSup));
                             }
                         }
                     }
@@ -232,7 +239,7 @@ namespace WikipediaMetadata.Models
                     // All additional elements like cite etc. will be removed, too.
                     argument = StripUnwantedElements(argument);
 
-                    values.AddMissing(Split(argument.Value.ToString(), field, removeParentheses));
+                    values.AddMissing(Split(argument.Value.ToString(), field, removeParentheses, removeSup));
 
                     // Now we add the prefix to all 
                     if (prefix != string.Empty && prefix != null)
@@ -277,18 +284,29 @@ namespace WikipediaMetadata.Models
         /// <param name="field">name of the field. Is used to recognize fields, that can contain values that have commas
         /// we don't want to split.</param>
         /// <param name="removeParentheses">Removes values in parentheses.</param>
+        /// <param name="removeSup">Removes values in superscripts.</param>
         /// <returns>List of values</returns>
-        private List<MetadataNameProperty> Split(string value, string field, bool removeParentheses = false)
+        private List<MetadataNameProperty> Split(string value, string field, bool removeParentheses = false, bool removeSup = false)
         {
             List<MetadataNameProperty> values = new List<MetadataNameProperty>();
 
             // We remove all parentheses from the values.
             if (removeParentheses)
             {
-                while (value.IndexOf("(") > 0)
+                while (value.IndexOf("(") > -1)
                 {
                     value = value.Remove(value.IndexOf("("), value.IndexOf(")") - value.IndexOf("(") + 1).Trim();
                 }
+            }
+
+            // We remove all superscripts from the values.
+            if (removeSup)
+            {
+                while (value.IndexOf("<sup") > -1)
+                {
+                    value = value.Remove(value.IndexOf("<sup"), value.IndexOf("</sup>") - value.IndexOf("<sup") + 6);
+                }
+
             }
 
             // Now the build the list of separators to split the values by.
@@ -387,8 +405,16 @@ namespace WikipediaMetadata.Models
 
                 List<int> ratings = new List<int>();
 
-                // We go through each value, remove everything before a colon (those are platform names) and then get the
-                // integer value before the slash.
+                if (list.Count == 0)
+                {
+                    foreach (string code in platformCodes)
+                    {
+                        list.AddRange(GetValues(infoBox, $"MC_{code}", true));
+                    }
+                }
+
+                // We go through each value, remove everything before a colon (those are platform names) and
+                // then get the integer value before the slash or percent character.
                 foreach (MetadataProperty property in list)
                 {
                     string value = property.ToString();
@@ -401,6 +427,13 @@ namespace WikipediaMetadata.Models
                     if (value.IndexOf("/") > 0)
                     {
                         if (int.TryParse(value.Substring(0, value.IndexOf("/")), out int rating))
+                        {
+                            ratings.Add(rating);
+                        };
+                    }
+                    else if (value.IndexOf("%") > 0)
+                    {
+                        if (int.TryParse(value.Substring(0, value.IndexOf("%")), out int rating))
                         {
                             ratings.Add(rating);
                         };
