@@ -166,7 +166,6 @@ namespace WikipediaMetadata
                     }
                 }
             }
-
         }
 
         /// <summary>
@@ -201,6 +200,11 @@ namespace WikipediaMetadata
             {
                 foreach (HtmlNode annotation in supNodes)
                 {
+                    if (annotation.Attributes.Where(a => a.Name == "class" && a.Value.Contains("update")) != null)
+                    {
+                        annotation.Remove();
+                    }
+
                     if (annotation.SelectSingleNode("./a/span[@class='mw-reflink-text']") != null)
                     {
                         annotation.Remove();
