@@ -209,19 +209,28 @@ namespace WikipediaMetadata.Models
                     foreach (Template template in argument.EnumDescendants().OfType<Template>()
                             .Where(t => listTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
                     {
-                        // In the template vgrelease the first argument is supposed to be the country. We remove that, so it
-                        // doesn't appear as a plaform.
+                        List<TemplateArgument> arguments = new List<TemplateArgument>();
+
+                        // In the template vgrelease every odd argument is supposed to be the country. So we only use the even
+                        // ones as values.
                         if (vgReleaseTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(template.Name).ToLower()))
                         {
-                            TemplateArgument arg = template.Arguments.FirstNode;
-
-                            if (arg != null)
+                            int counter = 1;
+                            foreach (TemplateArgument arg in template.Arguments)
                             {
-                                arg.Remove();
+                                if (counter % 2 == 0)
+                                {
+                                    arguments.Add(arg);
+                                }
+                                counter++;
                             }
                         }
+                        else
+                        {
+                            arguments.AddRange(template.Arguments);
+                        }
 
-                        foreach (TemplateArgument listArgument in template.Arguments)
+                        foreach (TemplateArgument listArgument in arguments)
                         {
                             if (listArgument.Name == null || listArgument.Name.ToPlainText() == "title")
                             {
@@ -288,25 +297,28 @@ namespace WikipediaMetadata.Models
         /// <returns>List of values</returns>
         private List<MetadataNameProperty> Split(string value, string field, bool removeParentheses = false, bool removeSup = false)
         {
+            WikitextParser parser = new WikitextParser();
             List<MetadataNameProperty> values = new List<MetadataNameProperty>();
 
             // We remove all parentheses from the values.
             if (removeParentheses)
             {
-                while (value.IndexOf("(") > -1)
-                {
-                    value = value.Remove(value.IndexOf("("), value.IndexOf(")") - value.IndexOf("(") + 1).Trim();
-                }
+                value = value.RemoveTextBetween("(", ")").Trim();
             }
 
             // We remove all superscripts from the values.
             if (removeSup)
             {
-                while (value.IndexOf("<sup") > -1)
-                {
-                    value = value.Remove(value.IndexOf("<sup"), value.IndexOf("</sup>") - value.IndexOf("<sup") + 6);
-                }
+                value = value.RemoveTextBetween("<sup", "</sup>").Trim();
+            }
 
+            value = value.RemoveTextBetween("<!--", "-->");
+
+            // If the value is a single link, we don't need to split it.
+            if (value.Count(c => c == '[') == 2 && value.Count(c => c == ']') == 2)
+            {
+                values.Add(new MetadataNameProperty(parser.Parse(value).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim()));
+                return values;
             }
 
             // Now the build the list of separators to split the values by.
@@ -315,6 +327,7 @@ namespace WikipediaMetadata.Models
             separators.AddRange(stringSeparators);
 
             // Fields for release dates and metacritic contain commas we don't want to split, so we leave commas out of the list.
+            // We also don't split by comma, if the value is already from a list.
             if (field != "released" && field != "MC")
             {
                 separators.AddMissing(",");
@@ -323,8 +336,6 @@ namespace WikipediaMetadata.Models
             // Now we split the values by the list of separators and parse the result to get the plain text values.
             foreach (string segment in value.Split(separators.ToArray(), 100, StringSplitOptions.RemoveEmptyEntries))
             {
-                WikitextParser parser = new WikitextParser();
-
                 string segmentEditable = parser.Parse(segment).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim();
 
                 if (segmentEditable.Length > 0)
@@ -473,7 +484,7 @@ namespace WikipediaMetadata.Models
                 int end = name.IndexOf("-->", start) + 3;
                 name = name.Remove(start, end - start);
             }
-            return name.ToLower();
+            return name.RemoveTextBetween("<!--", "-->").ToLower();
         }
     }
 }

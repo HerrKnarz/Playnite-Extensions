@@ -107,5 +107,24 @@ namespace KNARZhelper
                 .Replace("8", "VIII")
                 .Replace("9", "IX");
         }
+
+        /// <summary>
+        /// Removes all values from a string that are between two substrings like parentheses or html tags.
+        /// </summary>
+        /// <param name="str">The string with parts to be removed</param>
+        /// <param name="from">The substring or character marking the beginning of the text, that will be removed</param>
+        /// <param name="to">The substring or character marking the end of the text, that will be removed</param>
+        /// <returns>String without the unwanted substrings</returns>
+        public static string RemoveTextBetween(this string str, string from, string to)
+        {
+            int lengthTo = to.Length;
+
+            while (str.IndexOf(from) > -1)
+            {
+                str = str.Remove(str.IndexOf(from), str.IndexOf(to) - str.IndexOf(from) + lengthTo);
+            }
+
+            return str;
+        }
     }
 }
