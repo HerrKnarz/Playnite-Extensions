@@ -93,7 +93,7 @@ namespace WikipediaMetadata
                 if (linkNode != null && linkNode.InnerText.ToLower() == "external links")
                 {
                     // We now fetch the ul or ol list and go through all list items to fetch the links.
-                    HtmlNode linkList = topLevelSection.SelectSingleNode("./ul") ?? topLevelSection.SelectSingleNode("./ol");
+                    HtmlNode linkList = topLevelSection.SelectSingleNode("./ul[not(contains(@class,'portalbox'))]") ?? topLevelSection.SelectSingleNode("./ol[not(contains(@class,'portalbox'))]");
 
                     if (linkList != null)
                     {
