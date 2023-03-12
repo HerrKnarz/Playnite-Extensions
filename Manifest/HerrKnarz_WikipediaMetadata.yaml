@@ -6,3 +6,11 @@ Packages:
     PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-03-11/WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c_1_0.pext
     Changelog:
       - initial release
+  - Version: 1.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-12
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-03-12/WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c_1_1.pext
+    Changelog:
+      - added more websites for link matching and platform names for platform matching
+      - fixed various bugs fetching the data wrong in certain conditions 
+      - fixed not being able to search for another string in the search dialog

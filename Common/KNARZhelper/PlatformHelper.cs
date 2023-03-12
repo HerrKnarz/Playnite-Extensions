@@ -49,6 +49,7 @@ namespace KNARZhelper
             TryAddPlatformByName(platformSpecNameByNormalName, "PS4/5", new[] { "sony_playstation4", "sony_playstation5" });
             TryAddPlatformByName(platformSpecNameByNormalName, "Playstation 4/5", new[] { "sony_playstation4", "sony_playstation5" });
             TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Sega Mega Drive", "Mega Drive" }, new[] { "sega_genesis" });
+            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Super NES", "Super Nintendo Entertainment System" }, new[] { "nintendo_super_nes" });
             //TryAddPlatformByName(platformSpecNameByNormalName, new[] { "SNK Neo Geo MVS", "Neo Geo MVS" }, new[] { "snk_neo_geo" });
         }
         private bool TryAddPlatformByName(Dictionary<string, string[]> dict, string platformName, params string[] platformSpecNames)
