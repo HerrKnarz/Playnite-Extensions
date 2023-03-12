@@ -44,19 +44,17 @@ namespace WikipediaMetadata
 
             try
             {
-                // We search for the game name on Wikipedia
-                WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(options.GameData.Name);
-
                 string key = string.Empty;
+                string wikiNameVideoGame = (options.GameData.Name + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
+                string wikiName = options.GameData.Name.RemoveSpecialChars().ToLower().Replace(" ", "");
+                string wikiStart = wikiName.Substring(0, (wikiName.Length > 5) ? 5 : wikiName.Length);
 
-                if (searchResult.Pages != null && searchResult.Pages.Count > 0)
+
+                if (options.IsBackgroundDownload)
                 {
-                    string wikiNameVideoGame = (options.GameData.Name + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
-                    string wikiName = options.GameData.Name.RemoveSpecialChars().ToLower().Replace(" ", "");
-                    string wikiStart = wikiName.Substring(0, (wikiName.Length > 5) ? 5 : wikiName.Length);
-
-
-                    if (options.IsBackgroundDownload)
+                    // We search for the game name on Wikipedia
+                    WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(options.GameData.Name);
+                    if (searchResult.Pages != null && searchResult.Pages.Count > 0)
                     {
                         // Since name games have names, that aren't exclusive to video games, often "(video game)" is added to the
                         // page title, so we try that first, before searching the name itself. Only if we get a 100% match, we'll
@@ -68,13 +66,15 @@ namespace WikipediaMetadata
                         {
                             key = foundPage.Key;
                         }
-                        else
-                        {
-                            key = string.Empty;
-                        }
                     }
-                    else
+                }
+                else
+                {
+                    GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, s =>
                     {
+                        // We search for the game name on Wikipedia
+                        WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(s);
+
                         List<GenericItemOption> searchResults;
 
                         if (plugin.Settings.Settings.AdvancedSearchResultSorting)
@@ -84,34 +84,32 @@ namespace WikipediaMetadata
                             // titles starting with the game name, then by titles starting with the first five characters of the game
                             // name and at last by page title itself.
                             searchResults = searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
-                                .OrderByDescending(o => o.Description != null && o.Description.Contains("video game"))
-                                .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiNameVideoGame))
-                                .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiStart))
-                                .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(wikiName))
-                                .ToList<GenericItemOption>();
+                                    .OrderByDescending(o => o.Description != null && o.Description.Contains("video game"))
+                                    .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiNameVideoGame))
+                                    .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiStart))
+                                    .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(wikiName))
+                                    .ToList<GenericItemOption>();
                         }
                         else
                         {
                             searchResults = searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult).ToList<GenericItemOption>();
                         }
-
-                        GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, s =>
-                        {
-                            return searchResults;
-                        }, options.GameData.Name, $"{plugin.Name}: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
+                        return searchResults;
+                    }, options.GameData.Name, $"{plugin.Name}: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
 
 
-                        if (chosen != null)
-                        {
-                            key = ((WikipediaItemOption)chosen).Key;
-                        }
-                    }
-
-                    if (key != string.Empty)
+                    if (chosen != null)
                     {
-                        page = WikipediaApiCaller.GetGameData(key);
+                        key = ((WikipediaItemOption)chosen).Key;
                     }
                 }
+
+
+                if (key != string.Empty)
+                {
+                    page = WikipediaApiCaller.GetGameData(key);
+                }
+
             }
             catch (Exception ex)
             {
