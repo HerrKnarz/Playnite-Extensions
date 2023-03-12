@@ -6,7 +6,7 @@
 
 # Playnite Extensions
 
-Thsi repository hosts all my extensions for the superb open source video game library manager and launcher [Playnite](http://playnite.link/). Only Link Utilities and Company Companion are released yet, but I have some ideas for other extensions as well, that will end up here.
+Thsi repository hosts all my extensions for the superb open source video game library manager and launcher [Playnite](http://playnite.link/).
 
 If you want to use my extensions, I strongly recommend to install them via the add-ons menu in Playnite or the [official add-on database](https://playnite.link/addons.html) and not use the releases here on github, because they only consist of the add-ons that were changed lately and not all of them every time. 
 
@@ -46,6 +46,24 @@ Extension to manage game companies (see Developer and Publisher fields in Playni
 - option to save merge groups to automatically merge them again, when games were added or updated.
 - option to find and manually split comma separated companies.
 - maybe add additional information to companies like descriptions and links (via own dialog window).
+
+## Wikipedia Metadata
+
+Extension to get metadata from wikipedia. The following fields are supported:
+
+- Name
+- Release Date
+- Genres
+- Developers
+- Publishers
+- Features
+- Tags (arcade system, engine, director, producer, designer, programmer, artist, writer, composer) Each can be toggled!
+- Links
+- Series
+- Platform
+- Cover image
+- Critic Score (Metacritic)
+- Description (with option to leave out certain sections)
 
 ## KNARZtools
 
