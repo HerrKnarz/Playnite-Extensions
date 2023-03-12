@@ -14,7 +14,7 @@ namespace WikipediaMetadata
     internal class WikipediaApiCaller
     {
         public static readonly string BaseUrl = "https://en.wikipedia.org/w/rest.php/v1/";
-        public static string SearchUrl { get => BaseUrl + "search/page?q={0}&limit={1}"; }
+        public static string SearchUrl { get => BaseUrl + "search/page?q={0}&limit=100"; }
         public static string PageUrl { get => BaseUrl + "page/{0}"; }
 
         public static readonly string ImageUrl = "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&pilicense=any&titles={0}";
@@ -37,7 +37,7 @@ namespace WikipediaMetadata
         {
             WebClient client = GetWebClient();
 
-            string apiUrl = string.Format(SearchUrl, name.UrlEncode(), 50);
+            string apiUrl = string.Format(SearchUrl, name.UrlEncode());
 
             string jsonResult = client.DownloadString(apiUrl);
 

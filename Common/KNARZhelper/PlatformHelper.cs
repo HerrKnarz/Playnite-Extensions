@@ -34,10 +34,10 @@ namespace KNARZhelper
                 }
             }
             TryAddPlatformByName(platformSpecNameByNormalName, "3DO", "3do");
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Microsoft Windows", "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM" }, new[] { "pc_windows" });
-            TryAddPlatformByName(platformSpecNameByNormalName, "DOS", "pc_dos");
+            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Microsoft Windows", "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows 95" }, new[] { "pc_windows" });
+            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "DOS", "MS-DOS" }, new[] { "pc_dos" });
             TryAddPlatformByName(platformSpecNameByNormalName, "Linux", "pc_linux");
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Mac", "OSX", "MacOS" }, new[] { "macintosh" });
+            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Mac", "OSX", "OS X", "MacOS", "Mac OS", "Mac OS X" }, new[] { "macintosh" });
             TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Microsoft Xbox Series X", "Microsoft Xbox Series S", "Xbox Series X", "Xbox Series S", "Microsoft Xbox Series X/S", "Microsoft Xbox Series S/X", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", }, new[] { "xbox_series" });
             TryAddPlatformByName(platformSpecNameByNormalName, new[] { "PS", "PS1", "PSX" }, new[] { "sony_playstation" });
             TryAddPlatformByName(platformSpecNameByNormalName, "PS2", "sony_playstation2");

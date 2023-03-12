@@ -44,16 +44,20 @@ namespace WikipediaMetadata
         /// </summary>
         private readonly List<LinkPair> LinkPairs = new List<LinkPair>()
         {
-            new LinkPair { Contains = "imdb.com",
-            Name = "IMDb"},
-            new LinkPair { Contains = "mobygames.com",
-            Name = "MobyGames"},
             new LinkPair { Contains = "gamefaqs.gamespot.com",
             Name = "GameFAQs"},
             new LinkPair { Contains = "giantbomb.com",
             Name = "Giant Bomb"},
+            new LinkPair { Contains = "imdb.com",
+            Name = "IMDb"},
             new LinkPair { Contains = "arcade-museum.com",
             Name = "Killer List of Videogames"},
+            new LinkPair { Contains = "metacritic.com",
+            Name = "Metacritic"},
+            new LinkPair { Contains = "mobygames.com",
+            Name = "MobyGames"},
+            new LinkPair { Contains = "steampowered.com",
+            Name = "Steam"},
         };
 
         public string Description { get; } = string.Empty;
@@ -67,7 +71,7 @@ namespace WikipediaMetadata
         {
             // All paragraphs we want to remove from the description by default.
             List<string> unwantedParagraphs = new List<string>()
-              { "see also", "notes", "references", "further reading", "sources", "external linkList" };
+              { "see also", "notes", "references", "further reading", "sources", "external links" };
 
             unwantedParagraphs.AddMissing(plugin.Settings.Settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
 
