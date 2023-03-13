@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WikipediaMetadata
 {
@@ -35,7 +36,12 @@ namespace WikipediaMetadata
         /// <summary>
         /// Typical date formats from wikipedia pages.
         /// </summary>
-        public static readonly string[] DateFormatStrings = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy", "yyyy-MM-dd" };
+        public static readonly string[] DateFormatStringsFull = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy", "yyyy-MM-dd" };
+
+        /// <summary>
+        /// Typical date formats from wikipedia pages.
+        /// </summary>
+        public static readonly string[] DateFormatStringsYearMonth = { "MM/yyyy", "MMMM, yyyy", "MMMM yyyy", "yyyy-MM" };
 
         /// <summary>
         /// List of all possible platform codes for metacritic ratings.
@@ -107,5 +113,31 @@ namespace WikipediaMetadata
         /// Desired name of the link.
         /// </summary>
         public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// Simple class for a pair of string values to rename links.
+    /// </summary>
+    public class PartialDate
+    {
+        /// <summary>
+        /// DateTime representation of the value
+        /// </summary>
+        public DateTime Date { get; set; }
+        /// <summary>
+        /// Specifies, if the day was present in the date
+        /// </summary>
+        public bool HasDay { get; set; }
+        /// <summary>
+        /// Specifies, if the month was present in the date
+        /// </summary>
+        public bool HasMonth { get; set; }
+
+        public PartialDate(DateTime date, bool hasDay = true, bool hasMonth = true)
+        {
+            Date = date;
+            HasMonth = hasMonth;
+            HasDay = hasDay;
+        }
     }
 }

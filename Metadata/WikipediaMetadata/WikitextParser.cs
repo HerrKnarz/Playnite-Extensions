@@ -161,14 +161,14 @@ namespace WikipediaMetadata
                                         {
                                             foreach (TemplateArgument sublistArgument in sublistTemplate.Arguments)
                                             {
-                                                values.AddRange(Split(StripUnwantedElements(sublistArgument).Value.ToString(), field, removeParentheses, removeSup));
+                                                values.AddRange(CleanUpAndSplit(sublistArgument, field, removeParentheses, removeSup));
                                             }
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    values.AddRange(Split(StripUnwantedElements(listArgument).Value.ToString(), field, removeParentheses, removeSup));
+                                    values.AddRange(CleanUpAndSplit(listArgument, field, removeParentheses, removeSup));
                                 }
                             }
                         }
@@ -181,9 +181,7 @@ namespace WikipediaMetadata
                     }
 
                     // All additional elements like cite etc. will be removed, too.
-                    argument = StripUnwantedElements(argument);
-
-                    values.AddMissing(Split(argument.Value.ToString(), field, removeParentheses, removeSup));
+                    values.AddMissing(CleanUpAndSplit(argument, field, removeParentheses, removeSup));
 
                     // Now we add the prefix to all 
                     if (prefix != string.Empty && prefix != null)
@@ -218,25 +216,59 @@ namespace WikipediaMetadata
                 // We use the GetValues function to fetch all values from the "released" section.
                 List<MetadataProperty> list = GetValues(infoBox, "released", true, "", true);
 
-                List<DateTime> dates = new List<DateTime>();
+                List<PartialDate> dates = new List<PartialDate>();
+
+                DateTime dateTime;
 
                 // We check each value for a valid date and at those to a datetime list.
                 foreach (MetadataProperty property in list)
                 {
-                    if (DateTime.TryParseExact(property.ToString(), Ressources.DateFormatStrings, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateTime))
+                    if (DateTime.TryParseExact(property.ToString(), Ressources.DateFormatStringsFull, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime))
                     {
-                        dates.Add(dateTime);
+                        dates.Add(new PartialDate(dateTime));
+                    }
+                    else if (DateTime.TryParseExact(property.ToString(), Ressources.DateFormatStringsYearMonth, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime))
+                    {
+                        dates.Add(new PartialDate(dateTime, false));
+                    }
+                    else if (DateTime.TryParseExact(property.ToString(), "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime))
+                    {
+                        dates.Add(new PartialDate(dateTime, false, false));
                     }
                 }
 
                 // If dates were found, We'll return the one depending on the settings.
                 if (dates.Count > 0)
                 {
+                    PartialDate dateToUse = null;
+
                     switch (plugin.Settings.Settings.DateToUse)
                     {
-                        case DateToUse.Earliest: return new ReleaseDate(dates.Min());
-                        case DateToUse.Latest: return new ReleaseDate(dates.Max());
-                        case DateToUse.First: return new ReleaseDate(dates.First());
+                        case DateToUse.Earliest:
+                            dateToUse = dates.OrderBy(d => d.Date).First();
+                            break;
+                        case DateToUse.Latest:
+                            dateToUse = dates.OrderByDescending(d => d.Date).First();
+                            break;
+                        case DateToUse.First:
+                            dateToUse = dates.First();
+                            break;
+                    }
+
+                    if (dateToUse != null)
+                    {
+                        if (dateToUse.HasDay)
+                        {
+                            return new ReleaseDate(dateToUse.Date);
+                        }
+                        else if (dateToUse.HasMonth)
+                        {
+                            return new ReleaseDate(dateToUse.Date.Year, dateToUse.Date.Month);
+                        }
+                        else
+                        {
+                            return new ReleaseDate(dateToUse.Date.Year);
+                        }
                     }
                 }
             }
@@ -367,7 +399,7 @@ namespace WikipediaMetadata
         }
 
         /// <summary>
-        /// Splits values, that are separated by line breaks or commas instead of list templates.
+        /// Cleans up a value and splits it by line breaks or commas instead of list templates.
         /// </summary>
         /// <param name="value">value to be split</param>
         /// <param name="field">name of the field. Is used to recognize fields, that can contain values that have commas
@@ -375,12 +407,12 @@ namespace WikipediaMetadata
         /// <param name="removeParentheses">Removes values in parentheses.</param>
         /// <param name="removeSup">Removes values in superscripts.</param>
         /// <returns>List of values</returns>
-        private List<MetadataNameProperty> Split(string value, string field, bool removeParentheses = false, bool removeSup = false)
+        private List<MetadataNameProperty> CleanUpAndSplit(TemplateArgument argument, string field, bool removeParentheses = false, bool removeSup = false)
         {
-            MwParserFromScratch.WikitextParser parser = new MwParserFromScratch.WikitextParser();
-            List<MetadataNameProperty> values = new List<MetadataNameProperty>();
+            // First we remove unwanted elements on template level and get the text value of the argument.
+            string value = StripUnwantedElements(argument).Value.ToString();
 
-            // We remove all parentheses from the values.
+            // Now we remove all parentheses from the values.
             if (removeParentheses)
             {
                 value = value.RemoveTextBetween("(", ")").Trim();
@@ -399,6 +431,9 @@ namespace WikipediaMetadata
             {
                 value = value.Remove(value.Length - "\n".Length).Trim();
             }
+
+            MwParserFromScratch.WikitextParser parser = new MwParserFromScratch.WikitextParser();
+            List<MetadataNameProperty> values = new List<MetadataNameProperty>();
 
             // If the value is the only one and is a link, we return it without splitting.
             if (value.Count(c => c == '[') == 2 && value.Count(c => c == ']') == 2 && value.EndsWith("]"))
