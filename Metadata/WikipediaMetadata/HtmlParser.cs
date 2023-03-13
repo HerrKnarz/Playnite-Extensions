@@ -17,12 +17,16 @@ namespace WikipediaMetadata
         public string Description { get; set; } = string.Empty;
         public List<Link> Links { get; } = new List<Link>();
 
+        private readonly WikipediaMetadata plugin;
+
         /// <summary>
         /// Creates an instance of the class, fetches the html code and parses it.
         /// </summary>
         /// <param name="gameKey">Key of the page we want to parse</param>
         public HtmlParser(string gameKey, WikipediaMetadata plugin)
         {
+            this.plugin = plugin;
+
             // All paragraphs we want to remove from the description by default.
             List<string> unwantedParagraphs = new List<string>()
               { "see also", "notes", "references", "further reading", "sources", "external links" };
@@ -87,6 +91,12 @@ namespace WikipediaMetadata
                     {
                         AddSectionToDescription(secondLevelNode);
                     }
+                }
+
+                // If we only want the overview, we directly break the loop after the first section.
+                if (plugin.Settings.Settings.DescriptionOverviewOnly)
+                {
+                    break;
                 }
             }
         }
@@ -227,7 +237,14 @@ namespace WikipediaMetadata
                     }
                 }
 
-                if (!acceptableTags.Contains(node.Name) && node.Name != "#text")
+                List<string> acceptableTagList = acceptableTags.ToList();
+
+                if (!plugin.Settings.Settings.RemoveDescriptionLinks)
+                {
+                    acceptableTagList.AddMissing("a");
+                }
+
+                if (!acceptableTagList.Contains(node.Name) && node.Name != "#text")
                 {
                     if (childNodes != null)
                     {

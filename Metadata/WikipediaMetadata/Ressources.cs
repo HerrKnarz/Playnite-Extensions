@@ -76,7 +76,7 @@ namespace WikipediaMetadata
         /// <summary>
         /// Array of all in a paragraph accepted tags.
         /// </summary>
-        public static readonly string[] AllowedParagraphTags = { "u", "b", "strong", "i", "em", "sub", "sup", "mark", "small", "del", "ins", "a" };
+        public static readonly string[] AllowedParagraphTags = { "u", "b", "strong", "i", "em", "sub", "sup", "mark", "small", "del", "ins" };
 
         /// <summary>
         /// List of rename patterns for the links

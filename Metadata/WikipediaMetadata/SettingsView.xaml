@@ -38,7 +38,11 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCWikipediaMetadataSettingsTabDescription}">
             <DockPanel Margin="10">
-                <TextBlock TextWrapping="Wrap" DockPanel.Dock="Top" Text="{DynamicResource LOCWikipediaMetadataSettingsDescriptionText}" />
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.DescriptionOverviewOnly}"
+                          Content="{DynamicResource LOCWikipediaMetadataSettingsDescriptionOverviewOnly}"/>
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RemoveDescriptionLinks}"
+                          Content="{DynamicResource LOCWikipediaMetadataSettingsRemoveDescriptionLinks}" Margin="0,10,0,0"/>
+                <TextBlock TextWrapping="Wrap" DockPanel.Dock="Top" Text="{DynamicResource LOCWikipediaMetadataSettingsDescriptionText}" Margin="0,10,0,0" />
                 <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
                     <Button Content="{DynamicResource LOCWikipediaMetadataSettingsDescriptionAdd}"
                         Command="{Binding AddSectionCommand}" />
