@@ -22,7 +22,7 @@ namespace WikipediaMetadata.Models
         public string Title;
     }
 
-    public class WikipediaGameData
+    public class WikipediaPage
     {
         [SerializationPropertyName("id")]
         public int Id;

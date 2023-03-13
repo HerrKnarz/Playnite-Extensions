@@ -7,7 +7,7 @@ using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
 {
-    public class WikipediaMetadataSettings : ObservableObject
+    public class Settings : ObservableObject
     {
         private DateToUse dateToUse = DateToUse.Earliest;
         private RatingToUse ratingToUse = RatingToUse.Average;
@@ -42,10 +42,10 @@ namespace WikipediaMetadata
     public class WikipediaMetadataSettingsViewModel : ObservableObject, ISettings
     {
         private readonly WikipediaMetadata plugin;
-        private WikipediaMetadataSettings EditingClone { get; set; }
+        private Settings EditingClone { get; set; }
 
-        private WikipediaMetadataSettings settings;
-        public WikipediaMetadataSettings Settings
+        private Settings settings;
+        public Settings Settings
         {
             get => settings;
             set
@@ -97,7 +97,7 @@ namespace WikipediaMetadata
             this.plugin = plugin;
 
             // Load saved settings.
-            WikipediaMetadataSettings savedSettings = plugin.LoadPluginSettings<WikipediaMetadataSettings>();
+            Settings savedSettings = plugin.LoadPluginSettings<Settings>();
 
             // LoadPluginSettings returns null if no saved data is available.
             if (savedSettings != null)
@@ -106,7 +106,7 @@ namespace WikipediaMetadata
             }
             else
             {
-                Settings = new WikipediaMetadataSettings();
+                Settings = new Settings();
             }
 
             if (Settings.SectionsToRemove == null)

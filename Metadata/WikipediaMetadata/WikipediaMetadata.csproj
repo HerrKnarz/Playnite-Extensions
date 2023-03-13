@@ -46,20 +46,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\TagSetting.cs" />
-    <Compile Include="WikipediaHtmlParser.cs" />
-    <Compile Include="Models\WikipediaGameData.cs" />
+    <Compile Include="Ressources.cs" />
+    <Compile Include="HtmlParser.cs" />
+    <Compile Include="Models\WikipediaPage.cs" />
     <Compile Include="Models\WikipediaImage.cs" />
     <Compile Include="Models\WikipediaItemOption.cs" />
     <Compile Include="Models\WikipediaGameMetadata.cs" />
     <Compile Include="Models\WikipediaSearchResult.cs" />
-    <Compile Include="WikipediaApiCaller.cs" />
+    <Compile Include="ApiCaller.cs" />
     <Compile Include="WikipediaMetadata.cs" />
-    <Compile Include="WikipediaMetadataProvider.cs" />
-    <Compile Include="WikipediaMetadataSettings.cs" />
-    <Compile Include="WikipediaMetadataSettingsView.xaml.cs">
-      <DependentUpon>WikipediaMetadataSettingsView.xaml</DependentUpon>
+    <Compile Include="MetadataProvider.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WikitextParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
@@ -227,7 +229,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Include="WikipediaMetadataSettingsView.xaml">
+    <Page Include="SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

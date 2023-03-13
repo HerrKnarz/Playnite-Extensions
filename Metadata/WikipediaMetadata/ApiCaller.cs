@@ -11,7 +11,7 @@ namespace WikipediaMetadata
     /// <summary>
     /// Handles all API calls to Wikipedia
     /// </summary>
-    internal class WikipediaApiCaller
+    internal class ApiCaller
     {
         public static readonly string BaseUrl = "https://en.wikipedia.org/w/rest.php/v1/";
         public static string SearchUrl { get => BaseUrl + "search/page?q={0}&limit=100"; }
@@ -43,7 +43,7 @@ namespace WikipediaMetadata
 
             return Serialization.FromJson<WikipediaSearchResult>(jsonResult);
         }
-        public static WikipediaGameData GetGameData(string key)
+        public static WikipediaPage GetGameData(string key)
         {
             WebClient client = GetWebClient();
 
@@ -51,7 +51,7 @@ namespace WikipediaMetadata
 
             string jsonResult = client.DownloadString(apiUrl);
 
-            return Serialization.FromJson<WikipediaGameData>(jsonResult);
+            return Serialization.FromJson<WikipediaPage>(jsonResult);
         }
         public static WikipediaImage GetImage(string key)
         {

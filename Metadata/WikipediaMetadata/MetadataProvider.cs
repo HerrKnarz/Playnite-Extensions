@@ -10,18 +10,18 @@ using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
 {
-    public class WikipediaMetadataProvider : OnDemandMetadataProvider
+    public class MetadataProvider : OnDemandMetadataProvider
     {
         private readonly MetadataRequestOptions options;
         private readonly WikipediaMetadata plugin;
 
         private WikipediaGameMetadata foundGame;
 
-        private WikipediaHtmlParser htmlParser;
+        private HtmlParser htmlParser;
 
         public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
-        public WikipediaMetadataProvider(MetadataRequestOptions options, WikipediaMetadata plugin)
+        public MetadataProvider(MetadataRequestOptions options, WikipediaMetadata plugin)
         {
             this.options = options;
             this.plugin = plugin;
@@ -39,7 +39,7 @@ namespace WikipediaMetadata
                 return foundGame;
             }
 
-            WikipediaGameData page = new WikipediaGameData();
+            WikipediaPage page = new WikipediaPage();
             string pageHtml = string.Empty;
 
             try
@@ -53,7 +53,7 @@ namespace WikipediaMetadata
                 if (options.IsBackgroundDownload)
                 {
                     // We search for the game name on Wikipedia
-                    WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(options.GameData.Name);
+                    WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(options.GameData.Name);
                     if (searchResult.Pages != null && searchResult.Pages.Count > 0)
                     {
                         // Since name games have names, that aren't exclusive to video games, often "(video game)" is added to the
@@ -73,7 +73,7 @@ namespace WikipediaMetadata
                     GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, s =>
                     {
                         // We search for the game name on Wikipedia
-                        WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(s);
+                        WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(s);
 
                         List<GenericItemOption> searchResults;
 
@@ -107,7 +107,7 @@ namespace WikipediaMetadata
 
                 if (key != string.Empty)
                 {
-                    page = WikipediaApiCaller.GetGameData(key);
+                    page = ApiCaller.GetGameData(key);
                 }
 
             }
@@ -116,7 +116,7 @@ namespace WikipediaMetadata
                 Log.Error(ex, $"Error loading data from Wikipedia");
             }
 
-            return foundGame = new WikipediaGameMetadata(page, plugin);
+            return foundGame = new WikitextParser(plugin, page).GameMetadata;
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="key">Page key to fetch the html</param>
         /// <returns>Parsed result with the description and additional links</returns>
-        private WikipediaHtmlParser ParseHtml(string key)
+        private HtmlParser ParseHtml(string key)
         {
             if (htmlParser != null)
             {
@@ -132,7 +132,7 @@ namespace WikipediaMetadata
             }
             else
             {
-                return htmlParser = new WikipediaHtmlParser(key, plugin);
+                return htmlParser = new HtmlParser(key, plugin);
             }
         }
 

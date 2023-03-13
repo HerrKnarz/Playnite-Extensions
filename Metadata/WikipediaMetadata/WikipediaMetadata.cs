@@ -42,7 +42,7 @@ namespace WikipediaMetadata
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new WikipediaMetadataProvider(options, this);
+            return new MetadataProvider(options, this);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
