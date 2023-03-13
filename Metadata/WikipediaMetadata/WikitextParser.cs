@@ -310,6 +310,20 @@ namespace WikipediaMetadata
                     }
                 }
 
+                // If no metacritc ratings were found, we'll try GameRankings
+                if (list.Count == 0)
+                {
+                    list.AddRange(GetValues(infoBox, "GR", true));
+                }
+
+                if (list.Count == 0)
+                {
+                    foreach (string code in Ressources.PlatformCodes)
+                    {
+                        list.AddRange(GetValues(infoBox, $"GR_{code}", true));
+                    }
+                }
+
                 // We go through each value, remove everything before a colon (those are platform names) and
                 // then get the integer value before the slash or percent character.
                 foreach (MetadataProperty property in list)
@@ -400,7 +414,7 @@ namespace WikipediaMetadata
 
             // Fields for release dates and metacritic contain commas we don't want to split, so we leave commas out of the list.
             // We also don't split by comma, if the value is already from a list.
-            if (field != "released" && field != "MC")
+            if (field != "released" && field != "MC" && field != "GR")
             {
                 // We only add a comma, if the string isn't already separated by one of the other separators to retain wanted
                 // commas in company names etc.. This is no perfect solution but better than always splitting by comma.
