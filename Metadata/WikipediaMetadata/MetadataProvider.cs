@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
@@ -52,15 +53,29 @@ namespace WikipediaMetadata
 
                 if (options.IsBackgroundDownload)
                 {
+                    RegexOptions regExOptions = RegexOptions.ExplicitCapture;
+                    regExOptions |= RegexOptions.Compiled;
+                    Regex ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", regExOptions | RegexOptions.IgnoreCase);
+                    Match match = ignoredEndWordsRegex.Match(options.GameData.Name);
+                    string searchName = options.GameData.Name.Remove(match.Index).Trim();
+
                     // We search for the game name on Wikipedia
-                    WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(options.GameData.Name);
+                    WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(searchName);
+
+                    string searchNameVideoGame = (searchName + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
+                    searchName = searchName.RemoveSpecialChars().ToLower().Replace(" ", "");
+
                     if (searchResult.Pages != null && searchResult.Pages.Count > 0)
                     {
                         // Since name games have names, that aren't exclusive to video games, often "(video game)" is added to the
                         // page title, so we try that first, before searching the name itself. Only if we get a 100% match, we'll
-                        // use the page in background mode.
-                        Page foundPage = searchResult.Pages.Where(p => p.KeyMatch == wikiNameVideoGame).FirstOrDefault() ??
-                            searchResult.Pages.Where(p => p.KeyMatch == options.GameData.Name.RemoveSpecialChars().ToLower().Replace(" ", "")).FirstOrDefault();
+                        // use the page in background mode. The description also needs to have the words "video game" in it to
+                        // avoid cases like "Doom", where a completely wrong page would be returned.
+                        Page foundPage =
+                            searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == wikiNameVideoGame).FirstOrDefault() ??
+                            searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == searchNameVideoGame).FirstOrDefault() ??
+                            searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == wikiName).FirstOrDefault() ??
+                            searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == searchName).FirstOrDefault();
 
                         if (foundPage != null)
                         {
