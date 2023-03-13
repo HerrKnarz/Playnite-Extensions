@@ -8,6 +8,8 @@
     <sys:String x:Key="LOCWikipediaMetadataSettingsArcadeSystem">Arcade-System als Plattform hinzufügen.</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsReleaseDate">Veröffentlichungsdatum</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsMetacritic">Metacritic-Wertung</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionOverviewOnly">Only use overview of the wiki page as description.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRemoveDescriptionLinks">Remove links from the description.</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionText">Hier können Sie Abschnitte aus der Wiki-Seite definieren, die Sie beim Abrufen der Beschreibung entfernen möchten. Fügen Sie einfach die Namen der Überschriften hinzu, die Sie nicht möchten.</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionAdd">Neu</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionRemove">Entfernen</sys:String>
