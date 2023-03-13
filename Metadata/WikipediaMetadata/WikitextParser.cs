@@ -99,48 +99,6 @@ namespace WikipediaMetadata
         }
 
         /// <summary>
-        /// Gets the earliest release date from all dates found in the infobox template.
-        /// </summary>
-        /// <param name="infoBox">Infobox template</param>
-        /// <returns></returns>
-        private ReleaseDate? GetDate(Template infoBox)
-        {
-            try
-            {
-                // We use the GetValues function to fetch all values from the "released" section.
-                List<MetadataProperty> list = GetValues(infoBox, "released", true, "", true);
-
-                List<DateTime> dates = new List<DateTime>();
-
-                // We check each value for a valid date and at those to a datetime list.
-                foreach (MetadataProperty property in list)
-                {
-                    if (DateTime.TryParseExact(property.ToString(), Ressources.DateFormatStrings, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateTime))
-                    {
-                        dates.Add(dateTime);
-                    }
-                }
-
-                // If dates were found, We'll return the one depending on the settings.
-                if (dates.Count > 0)
-                {
-                    switch (plugin.Settings.Settings.DateToUse)
-                    {
-                        case DateToUse.Earliest: return new ReleaseDate(dates.Min());
-                        case DateToUse.Latest: return new ReleaseDate(dates.Max());
-                        case DateToUse.First: return new ReleaseDate(dates.First());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Error parsing date");
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Gets all values from a field in the infobox template.
         /// </summary>
         /// <param name="infoBox">Infobox template</param>
@@ -188,7 +146,30 @@ namespace WikipediaMetadata
                         {
                             if (listArgument.Name == null || listArgument.Name.ToPlainText() == "title")
                             {
-                                values.AddRange(Split(StripUnwantedElements(listArgument).Value.ToString(), field, removeParentheses, removeSup));
+                                IEnumerable<Template> sublistTemplates = listArgument.EnumDescendants().OfType<Template>()
+                                    .Where(t => Ressources.AllowedSubListTemplates.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower()));
+
+                                if (sublistTemplates != null && sublistTemplates.Count() > 0)
+                                {
+                                    foreach (Template sublistTemplate in sublistTemplates)
+                                    {
+                                        if (MwParserUtility.NormalizeTemplateArgumentName(sublistTemplate.Name).ToLower() == "start date")
+                                        {
+                                            values.Add(new MetadataNameProperty(string.Join("-", sublistTemplate.Arguments)));
+                                        }
+                                        else
+                                        {
+                                            foreach (TemplateArgument sublistArgument in sublistTemplate.Arguments)
+                                            {
+                                                values.AddRange(Split(StripUnwantedElements(sublistArgument).Value.ToString(), field, removeParentheses, removeSup));
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    values.AddRange(Split(StripUnwantedElements(listArgument).Value.ToString(), field, removeParentheses, removeSup));
+                                }
                             }
                         }
                     }
@@ -226,6 +207,48 @@ namespace WikipediaMetadata
         }
 
         /// <summary>
+        /// Gets the earliest release date from all dates found in the infobox template.
+        /// </summary>
+        /// <param name="infoBox">Infobox template</param>
+        /// <returns></returns>
+        private ReleaseDate? GetDate(Template infoBox)
+        {
+            try
+            {
+                // We use the GetValues function to fetch all values from the "released" section.
+                List<MetadataProperty> list = GetValues(infoBox, "released", true, "", true);
+
+                List<DateTime> dates = new List<DateTime>();
+
+                // We check each value for a valid date and at those to a datetime list.
+                foreach (MetadataProperty property in list)
+                {
+                    if (DateTime.TryParseExact(property.ToString(), Ressources.DateFormatStrings, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateTime))
+                    {
+                        dates.Add(dateTime);
+                    }
+                }
+
+                // If dates were found, We'll return the one depending on the settings.
+                if (dates.Count > 0)
+                {
+                    switch (plugin.Settings.Settings.DateToUse)
+                    {
+                        case DateToUse.Earliest: return new ReleaseDate(dates.Min());
+                        case DateToUse.Latest: return new ReleaseDate(dates.Max());
+                        case DateToUse.First: return new ReleaseDate(dates.First());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error parsing date");
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Gets the link to the Wikipedia page
         /// </summary>
         /// <param name="gameData">game data with the key to the page</param>
@@ -238,97 +261,6 @@ namespace WikipediaMetadata
             };
 
             return links;
-        }
-
-        /// <summary>
-        /// Splits values, that are separated by line breaks or commas instead of list templates.
-        /// </summary>
-        /// <param name="value">value to be split</param>
-        /// <param name="field">name of the field. Is used to recognize fields, that can contain values that have commas
-        /// we don't want to split.</param>
-        /// <param name="removeParentheses">Removes values in parentheses.</param>
-        /// <param name="removeSup">Removes values in superscripts.</param>
-        /// <returns>List of values</returns>
-        private List<MetadataNameProperty> Split(string value, string field, bool removeParentheses = false, bool removeSup = false)
-        {
-            MwParserFromScratch.WikitextParser parser = new MwParserFromScratch.WikitextParser();
-            List<MetadataNameProperty> values = new List<MetadataNameProperty>();
-
-            // We remove all parentheses from the values.
-            if (removeParentheses)
-            {
-                value = value.RemoveTextBetween("(", ")").Trim();
-            }
-
-            // We remove all superscripts from the values.
-            if (removeSup)
-            {
-                value = value.RemoveTextBetween("<sup", "</sup>").Trim();
-            }
-
-            value = value.RemoveTextBetween("<!--", "-->");
-
-            // If the value is a single link, we don't need to split it.
-            if (value.Count(c => c == '[') == 2 && value.Count(c => c == ']') == 2)
-            {
-                values.Add(new MetadataNameProperty(parser.Parse(value).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim()));
-                return values;
-            }
-
-            // Now the build the list of separators to split the values by.
-            List<string> separators = new List<string>();
-
-            separators.AddRange(Ressources.StringSeparators);
-
-            // Fields for release dates and metacritic contain commas we don't want to split, so we leave commas out of the list.
-            // We also don't split by comma, if the value is already from a list.
-            if (field != "released" && field != "MC")
-            {
-                separators.AddMissing(",");
-            }
-
-            // Now we split the values by the list of separators and parse the result to get the plain text values.
-            foreach (string segment in value.Split(separators.ToArray(), 100, StringSplitOptions.RemoveEmptyEntries))
-            {
-                string segmentEditable = parser.Parse(segment).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim();
-
-                if (segmentEditable.Length > 0)
-                {
-                    values.Add(new MetadataNameProperty(segmentEditable));
-                }
-            }
-
-            return values;
-        }
-
-        /// <summary>
-        /// Strips an argument of unwanted elements
-        /// </summary>
-        /// <param name="argument">argument to clean up.</param>
-        /// <returns>The cleaned up argument</returns>
-        private TemplateArgument StripUnwantedElements(TemplateArgument argument)
-        {
-            IEnumerable<Template> templates = argument.EnumDescendants().OfType<Template>();
-
-            // First we remove every template we don't want.
-            foreach (Template x in argument.EnumDescendants().OfType<Template>()
-                            .Where(t => Ressources.UnwantedTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
-            {
-                x.Remove();
-            }
-
-            // Now we also remove <ref> tags, because those contain footnotes etc, we don't need.
-            foreach (LineNode line in argument.Value.Lines)
-            {
-                foreach (Node inline in line.EnumDescendants())
-                {
-                    if (inline.ToString().StartsWith("<ref"))
-                    {
-                        inline.Remove();
-                    }
-                }
-            }
-            return argument;
         }
 
         /// <summary>
@@ -418,6 +350,119 @@ namespace WikipediaMetadata
             }
 
             return -1;
+        }
+
+        /// <summary>
+        /// Splits values, that are separated by line breaks or commas instead of list templates.
+        /// </summary>
+        /// <param name="value">value to be split</param>
+        /// <param name="field">name of the field. Is used to recognize fields, that can contain values that have commas
+        /// we don't want to split.</param>
+        /// <param name="removeParentheses">Removes values in parentheses.</param>
+        /// <param name="removeSup">Removes values in superscripts.</param>
+        /// <returns>List of values</returns>
+        private List<MetadataNameProperty> Split(string value, string field, bool removeParentheses = false, bool removeSup = false)
+        {
+            MwParserFromScratch.WikitextParser parser = new MwParserFromScratch.WikitextParser();
+            List<MetadataNameProperty> values = new List<MetadataNameProperty>();
+
+            // We remove all parentheses from the values.
+            if (removeParentheses)
+            {
+                value = value.RemoveTextBetween("(", ")").Trim();
+            }
+
+            // We remove all superscripts from the values.
+            if (removeSup)
+            {
+                value = value.RemoveTextBetween("<sup", "</sup>").Trim();
+            }
+
+            value = value.RemoveTextBetween("<!--", "-->").Trim();
+
+            // Since we also split by new line and don't need to do that, if it's the last character, we remove that one.
+            if (value.EndsWith("\n"))
+            {
+                value = value.Remove(value.Length - "\n".Length).Trim();
+            }
+
+            // If the value is the only one and is a link, we return it without splitting.
+            if (value.Count(c => c == '[') == 2 && value.Count(c => c == ']') == 2 && value.EndsWith("]"))
+            {
+                values.Add(new MetadataNameProperty(parser.Parse(value).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim()));
+                return values;
+            }
+
+            // Now the build the list of separators to split the values by.
+            List<string> separators = new List<string>();
+
+            separators.AddRange(Ressources.StringSeparators);
+
+            // Fields for release dates and metacritic contain commas we don't want to split, so we leave commas out of the list.
+            // We also don't split by comma, if the value is already from a list.
+            if (field != "released" && field != "MC")
+            {
+                // We only add a comma, if the string isn't already separated by one of the other separators to retain wanted
+                // commas in company names etc.. This is no perfect solution but better than always splitting by comma.
+                bool addComma = true;
+
+                foreach (string separator in separators)
+                {
+                    if (value.IndexOf(separator) > -1)
+                    {
+                        addComma = false;
+                        break;
+                    }
+                }
+
+                if (addComma)
+                {
+                    separators.AddMissing(",");
+                }
+            }
+
+            // Now we split the values by the list of separators and parse the result to get the plain text values.
+            foreach (string segment in value.Split(separators.ToArray(), 100, StringSplitOptions.RemoveEmptyEntries))
+            {
+                string segmentEditable = parser.Parse(segment).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim();
+
+                if (segmentEditable.Length > 0)
+                {
+                    values.Add(new MetadataNameProperty(segmentEditable));
+                }
+            }
+
+            return values;
+        }
+
+        /// <summary>
+        /// Strips an argument of unwanted elements
+        /// </summary>
+        /// <param name="argument">argument to clean up.</param>
+        /// <returns>The cleaned up argument</returns>
+        private TemplateArgument StripUnwantedElements(TemplateArgument argument)
+        {
+            IEnumerable<Template> templates = argument.EnumDescendants().OfType<Template>();
+
+            // First we remove every template we don't want.
+            foreach (Template x in argument.EnumDescendants().OfType<Template>()
+                            .Where(t => Ressources.UnwantedTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
+            {
+                x.Remove();
+            }
+
+            // Now we also remove <ref> tags, because those contain footnotes etc, we don't need.
+            foreach (LineNode line in argument.Value.Lines)
+            {
+                foreach (Node inline in line.EnumDescendants())
+                {
+                    if (inline.ToString().StartsWith("<ref"))
+                    {
+                        inline.Remove();
+                    }
+                }
+            }
+            return argument;
         }
 
         /// <summary>

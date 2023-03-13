@@ -23,6 +23,11 @@ namespace WikipediaMetadata
         public static readonly string[] UnwantedTemplateNames = { "efn", "cite web" };
 
         /// <summary>
+        /// Templates that will treated like their own list of values.
+        /// </summary>
+        public static readonly string[] AllowedSubListTemplates = { "nobold", "nowrap", "start date" };
+
+        /// <summary>
         /// Array of strings to separate the values by.
         /// </summary>
         public static readonly string[] StringSeparators = { "<br />", "<br/>", "<br>", "\n" };
@@ -30,7 +35,7 @@ namespace WikipediaMetadata
         /// <summary>
         /// Typical date formats from wikipedia pages.
         /// </summary>
-        public static readonly string[] DateFormatStrings = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy" };
+        public static readonly string[] DateFormatStrings = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy", "yyyy-MM-dd" };
 
         /// <summary>
         /// List of all possible platform codes for metacritic ratings.
