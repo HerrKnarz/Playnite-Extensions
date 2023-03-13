@@ -14,3 +14,17 @@ Packages:
       - added more websites for link matching and platform names for platform matching
       - fixed various bugs fetching the data wrong in certain conditions 
       - fixed not being able to search for another string in the search dialog
+  - Version: 1.2
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-13
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-03-13/WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c_1_2.pext
+    Changelog:
+      - added support for GameRankings score if no Metacritic score can be found
+      - added support for partial release dates
+      - added option to only fetch the overview of the wiki page as description
+      - proper support for fourth level paragraphs in descriptions
+      - retain formatting like bold or italic and optional links in the description
+      - refined background search. Strings like Special Edition are now stripped and the description needs to have the words video game for a match.
+      - fixed bugs in parsing values with comma and other separators
+      - fixed fetching release date when start date template is used
+      - fixed fetching data in certain nested templates
