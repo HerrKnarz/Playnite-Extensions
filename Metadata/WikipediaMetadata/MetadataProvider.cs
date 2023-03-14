@@ -99,10 +99,10 @@ namespace WikipediaMetadata
                             // titles starting with the game name, then by titles starting with the first five characters of the game
                             // name and at last by page title itself.
                             searchResults = searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
-                                    .OrderByDescending(o => o.Description != null && o.Description.Contains("video game"))
-                                    .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiNameVideoGame))
+                                    .OrderByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiNameVideoGame))
                                     .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiStart))
                                     .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(wikiName))
+                                    .ThenByDescending(o => o.Description != null && o.Description.Contains("video game"))
                                     .ToList<GenericItemOption>();
                         }
                         else
