@@ -436,7 +436,7 @@ namespace WikipediaMetadata
             List<MetadataNameProperty> values = new List<MetadataNameProperty>();
 
             // If the value is the only one and is a link, we return it without splitting.
-            if (value.Count(c => c == '[') == 2 && value.Count(c => c == ']') == 2 && value.EndsWith("]"))
+            if (value.Count(c => c == '[') == 2 && value.Count(c => c == ']') == 2 && value.StartsWith("[") && value.EndsWith("]"))
             {
                 values.Add(new MetadataNameProperty(parser.Parse(value).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim()));
                 return values;
