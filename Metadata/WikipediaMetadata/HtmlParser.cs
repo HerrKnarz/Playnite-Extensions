@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
 {
@@ -17,21 +18,22 @@ namespace WikipediaMetadata
         public string Description { get; set; } = string.Empty;
         public List<Link> Links { get; } = new List<Link>();
 
-        private readonly WikipediaMetadata plugin;
+        private readonly PluginSettings settings;
 
         /// <summary>
         /// Creates an instance of the class, fetches the html code and parses it.
         /// </summary>
         /// <param name="gameKey">Key of the page we want to parse</param>
-        public HtmlParser(string gameKey, WikipediaMetadata plugin)
+        /// <param name="settings">Settings of the plugin</param>
+        public HtmlParser(string gameKey, PluginSettings settings)
         {
-            this.plugin = plugin;
+            this.settings = settings;
 
             // All paragraphs we want to remove from the description by default.
             List<string> unwantedParagraphs = new List<string>()
               { "see also", "notes", "references", "further reading", "sources", "external links" };
 
-            unwantedParagraphs.AddMissing(plugin.Settings.Settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
+            unwantedParagraphs.AddMissing(settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
 
             // We use HTML Agility Pack to fetch and parse the code. For the description we strip all bloat from the text and
             // build a simple new html string.
@@ -94,7 +96,7 @@ namespace WikipediaMetadata
                 }
 
                 // If we only want the overview, we directly break the loop after the first section.
-                if (plugin.Settings.Settings.DescriptionOverviewOnly)
+                if (settings.DescriptionOverviewOnly)
                 {
                     break;
                 }
@@ -239,7 +241,7 @@ namespace WikipediaMetadata
 
                 List<string> acceptableTagList = acceptableTags.ToList();
 
-                if (!plugin.Settings.Settings.RemoveDescriptionLinks)
+                if (!settings.RemoveDescriptionLinks)
                 {
                     acceptableTagList.AddMissing("a");
                 }

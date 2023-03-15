@@ -3,6 +3,20 @@ using System.Collections.Generic;
 
 namespace WikipediaMetadata
 {
+    public enum DateToUse
+    {
+        Earliest,
+        Latest,
+        First,
+    }
+
+    public enum RatingToUse
+    {
+        Lowest,
+        Highest,
+        Average,
+    }
+
     /// <summary>
     /// contains several resources needed to parse the wikipedia data
     /// </summary>

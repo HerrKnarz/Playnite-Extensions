@@ -7,49 +7,13 @@ using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
 {
-    public class Settings : ObservableObject
-    {
-        private DateToUse dateToUse = DateToUse.Earliest;
-        private RatingToUse ratingToUse = RatingToUse.Average;
-        private bool advancedSearchResultSorting = true;
-        private bool arcadeSystemAsPlatform = false;
-        private bool removeDescriptionLinks = false;
-        private bool descriptionOverviewOnly = false;
-        private ObservableCollection<string> sectionsToRemove;
-        private ObservableCollection<TagSetting> tagSettings;
-
-        public DateToUse DateToUse { get => dateToUse; set => SetValue(ref dateToUse, value); }
-        public RatingToUse RatingToUse { get => ratingToUse; set => SetValue(ref ratingToUse, value); }
-        public bool AdvancedSearchResultSorting { get => advancedSearchResultSorting; set => SetValue(ref advancedSearchResultSorting, value); }
-        public bool ArcadeSystemAsPlatform { get => arcadeSystemAsPlatform; set => SetValue(ref arcadeSystemAsPlatform, value); }
-        public bool RemoveDescriptionLinks { get => removeDescriptionLinks; set => SetValue(ref removeDescriptionLinks, value); }
-        public bool DescriptionOverviewOnly { get => descriptionOverviewOnly; set => SetValue(ref descriptionOverviewOnly, value); }
-        public ObservableCollection<string> SectionsToRemove { get => sectionsToRemove; set => SetValue(ref sectionsToRemove, value); }
-        public ObservableCollection<TagSetting> TagSettings { get => tagSettings; set => SetValue(ref tagSettings, value); }
-    }
-
-    public enum DateToUse
-    {
-        Earliest,
-        Latest,
-        First,
-    }
-
-    public enum RatingToUse
-    {
-        Lowest,
-        Highest,
-        Average,
-    }
-
-
     public class WikipediaMetadataSettingsViewModel : ObservableObject, ISettings
     {
         private readonly WikipediaMetadata plugin;
-        private Settings EditingClone { get; set; }
+        private PluginSettings EditingClone { get; set; }
 
-        private Settings settings;
-        public Settings Settings
+        private PluginSettings settings;
+        public PluginSettings Settings
         {
             get => settings;
             set
@@ -101,7 +65,7 @@ namespace WikipediaMetadata
             this.plugin = plugin;
 
             // Load saved settings.
-            Settings savedSettings = plugin.LoadPluginSettings<Settings>();
+            PluginSettings savedSettings = plugin.LoadPluginSettings<PluginSettings>();
 
             // LoadPluginSettings returns null if no saved data is available.
             if (savedSettings != null)
@@ -110,7 +74,7 @@ namespace WikipediaMetadata
             }
             else
             {
-                Settings = new Settings();
+                Settings = new PluginSettings();
             }
 
             if (Settings.SectionsToRemove == null)

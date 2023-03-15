@@ -76,7 +76,7 @@ namespace WikipediaMetadata
                 Log.Error(ex, $"Error loading data from Wikipedia");
             }
 
-            return foundGame = new WikitextParser(plugin.Settings.Settings, page).GameMetadata;
+            return foundGame = new WikitextParser(plugin.Settings.Settings, page, plugin.PlayniteApi.Database.Platforms).GameMetadata;
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace WikipediaMetadata
             }
             else
             {
-                return htmlParser = new HtmlParser(key, plugin);
+                return htmlParser = new HtmlParser(key, plugin.Settings.Settings);
             }
         }
 

@@ -12,12 +12,12 @@ namespace WikipediaMetadata
     /// </summary>
     public class GameFinder
     {
-        private readonly Settings settings;
+        private readonly PluginSettings settings;
         private string wikiNameVideoGame;
         private string wikiName;
         private string wikiStart;
 
-        public GameFinder(Settings settings)
+        public GameFinder(PluginSettings settings)
         {
             this.settings = settings;
         }

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameFinder.cs" />
+    <Compile Include="Models\PluginSettings.cs" />
     <Compile Include="Models\TagSetting.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="HtmlParser.cs" />

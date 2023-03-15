@@ -16,15 +16,17 @@ namespace WikipediaMetadata
     /// </summary>
     public class WikitextParser
     {
-        private readonly Settings settings;
+        private readonly PluginSettings settings;
 
         public WikipediaGameMetadata GameMetadata { get; set; }
 
         /// <summary>
         /// Creates an instance of the class and fills the parameters by parsing the wikitext.
         /// </summary>
+        /// <param name="settings">Settings of the plugin</param>
         /// <param name="gameData">Page object from wikipedia containing the wikitext and other data.</param>
-        public WikitextParser(Settings settings, WikipediaPage gameData)
+        /// <param name="platformList">List of all platforms in the database</param>
+        public WikitextParser(PluginSettings settings, WikipediaPage gameData, IItemCollection<Platform> platformList)
         {
             this.settings = settings;
 
@@ -79,7 +81,7 @@ namespace WikipediaMetadata
                             platforms.AddRange(GetValues(infoBox, "arcade system"));
                         }
 
-                        PlatformHelper platformHelper = new PlatformHelper(API.Instance);
+                        PlatformHelper platformHelper = new PlatformHelper(platformList);
 
                         GameMetadata.Platforms = platforms.SelectMany(p => platformHelper.GetPlatforms(p.ToString())).ToList();
                     }
@@ -208,7 +210,7 @@ namespace WikipediaMetadata
         /// Gets the earliest release date from all dates found in the infobox template.
         /// </summary>
         /// <param name="infoBox">Infobox template</param>
-        /// <returns></returns>
+        /// <returns>The found release date or null</returns>
         private ReleaseDate? GetDate(Template infoBox)
         {
             try
@@ -284,7 +286,7 @@ namespace WikipediaMetadata
         /// Gets the link to the Wikipedia page
         /// </summary>
         /// <param name="gameData">game data with the key to the page</param>
-        /// <returns></returns>
+        /// <returns>List of found links</returns>
         private List<Link> GetLinks(WikipediaPage gameData)
         {
             List<Link> links = new List<Link>
@@ -320,7 +322,7 @@ namespace WikipediaMetadata
         /// Gets the average metacritic score from all platforms mentioned in the video game reviews template.
         /// </summary>
         /// <param name="ast">Wikitext object that contains the review box.</param>
-        /// <returns></returns>
+        /// <returns>The found critic score</returns>
         private int GetCriticScore(Wikitext ast)
         {
             // We search for the first occurrence of a review template in the page.

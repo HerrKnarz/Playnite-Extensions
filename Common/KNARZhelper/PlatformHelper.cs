@@ -17,12 +17,11 @@ namespace KNARZhelper
         private readonly Regex TrimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
         private readonly Regex TrimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
-        public PlatformHelper(IPlayniteAPI api)
+        public PlatformHelper(IItemCollection<Platform> platforms)
         {
             platformSpecNameByNormalName = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
 
-            List<Platform> platforms = api.Database.Platforms.Where(p => p.SpecificationId != null).ToList();
-            foreach (Platform platform in platforms)
+            foreach (Platform platform in platforms.Where(p => p.SpecificationId != null))
             {
                 platformSpecNameByNormalName.Add(platform.Name, new[] { platform.SpecificationId });
 
