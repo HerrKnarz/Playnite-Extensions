@@ -4,9 +4,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text.RegularExpressions;
 using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
@@ -45,80 +43,27 @@ namespace WikipediaMetadata
 
             try
             {
+                GameFinder gameFinder = new GameFinder(plugin.Settings.Settings);
                 string key = string.Empty;
-                string wikiNameVideoGame = (options.GameData.Name + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
-                string wikiName = options.GameData.Name.RemoveSpecialChars().ToLower().Replace(" ", "");
-                string wikiStart = wikiName.Substring(0, (wikiName.Length > 5) ? 5 : wikiName.Length);
-
 
                 if (options.IsBackgroundDownload)
                 {
-                    RegexOptions regExOptions = RegexOptions.ExplicitCapture;
-                    regExOptions |= RegexOptions.Compiled;
-                    Regex ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", regExOptions | RegexOptions.IgnoreCase);
-                    Match match = ignoredEndWordsRegex.Match(options.GameData.Name);
-                    string searchName = options.GameData.Name.Remove(match.Index).Trim();
+                    Page foundPage = gameFinder.FindGame(options.GameData.Name);
 
-                    // We search for the game name on Wikipedia
-                    WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(searchName);
-
-                    string searchNameVideoGame = (searchName + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
-                    searchName = searchName.RemoveSpecialChars().ToLower().Replace(" ", "");
-
-                    if (searchResult.Pages != null && searchResult.Pages.Count > 0)
+                    if (foundPage != null)
                     {
-                        // Since name games have names, that aren't exclusive to video games, often "(video game)" is added to the
-                        // page title, so we try that first, before searching the name itself. Only if we get a 100% match, we'll
-                        // use the page in background mode. The description also needs to have the words "video game" in it to
-                        // avoid cases like "Doom", where a completely wrong page would be returned.
-                        Page foundPage =
-                            searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == wikiNameVideoGame).FirstOrDefault() ??
-                            searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == searchNameVideoGame).FirstOrDefault() ??
-                            searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == wikiName).FirstOrDefault() ??
-                            searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == searchName).FirstOrDefault();
-
-                        if (foundPage != null)
-                        {
-                            key = foundPage.Key;
-                        }
+                        key = foundPage.Key;
                     }
                 }
                 else
                 {
-                    GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, s =>
-                    {
-                        // We search for the game name on Wikipedia
-                        WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(s);
-
-                        List<GenericItemOption> searchResults;
-
-                        if (plugin.Settings.Settings.AdvancedSearchResultSorting)
-                        {
-                            // When displaying the search results, we order them differently to hopefully get the actual game as one
-                            // of the first results. First we order by containing "video game" in the short description, then by
-                            // titles starting with the game name, then by titles starting with the first five characters of the game
-                            // name and at last by page title itself.
-                            searchResults = searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
-                                    .OrderByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiNameVideoGame))
-                                    .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiStart))
-                                    .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(wikiName))
-                                    .ThenByDescending(o => o.Description != null && o.Description.Contains("video game"))
-                                    .ToList<GenericItemOption>();
-                        }
-                        else
-                        {
-                            searchResults = searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult).ToList<GenericItemOption>();
-                        }
-                        return searchResults;
-                    }, options.GameData.Name, $"{plugin.Name}: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
-
+                    GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, gameFinder.GetSearchResults, options.GameData.Name, $"{plugin.Name}: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
 
                     if (chosen != null)
                     {
                         key = ((WikipediaItemOption)chosen).Key;
                     }
                 }
-
 
                 if (key != string.Empty)
                 {
@@ -131,7 +76,7 @@ namespace WikipediaMetadata
                 Log.Error(ex, $"Error loading data from Wikipedia");
             }
 
-            return foundGame = new WikitextParser(plugin, page).GameMetadata;
+            return foundGame = new WikitextParser(plugin.Settings.Settings, page).GameMetadata;
         }
 
         /// <summary>

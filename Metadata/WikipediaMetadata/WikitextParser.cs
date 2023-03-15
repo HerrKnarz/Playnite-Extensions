@@ -16,7 +16,7 @@ namespace WikipediaMetadata
     /// </summary>
     public class WikitextParser
     {
-        private readonly WikipediaMetadata plugin;
+        private readonly Settings settings;
 
         public WikipediaGameMetadata GameMetadata { get; set; }
 
@@ -24,9 +24,9 @@ namespace WikipediaMetadata
         /// Creates an instance of the class and fills the parameters by parsing the wikitext.
         /// </summary>
         /// <param name="gameData">Page object from wikipedia containing the wikitext and other data.</param>
-        public WikitextParser(WikipediaMetadata plugin, WikipediaPage gameData)
+        public WikitextParser(Settings settings, WikipediaPage gameData)
         {
-            this.plugin = plugin;
+            this.settings = settings;
 
             GameMetadata = new WikipediaGameMetadata();
 
@@ -62,7 +62,7 @@ namespace WikipediaMetadata
 
                         GameMetadata.Tags = new List<MetadataProperty>();
 
-                        foreach (TagSetting tagSetting in plugin.Settings.Settings.TagSettings.Where(s => s.IsChecked))
+                        foreach (TagSetting tagSetting in settings.TagSettings.Where(s => s.IsChecked))
                         {
                             GameMetadata.Tags.AddRange(GetValues(infoBox, tagSetting.Name.ToLower(), false, tagSetting.Prefix));
                         }
@@ -74,7 +74,7 @@ namespace WikipediaMetadata
 
                         platforms.AddRange(GetValues(infoBox, "platforms"));
 
-                        if (plugin.Settings.Settings.ArcadeSystemAsPlatform)
+                        if (settings.ArcadeSystemAsPlatform)
                         {
                             platforms.AddRange(GetValues(infoBox, "arcade system"));
                         }
@@ -242,7 +242,7 @@ namespace WikipediaMetadata
                 {
                     PartialDate dateToUse = null;
 
-                    switch (plugin.Settings.Settings.DateToUse)
+                    switch (settings.DateToUse)
                     {
                         case DateToUse.Earliest:
                             dateToUse = dates.OrderBy(d => d.Date).First();
@@ -386,7 +386,7 @@ namespace WikipediaMetadata
                 // If we found ratings, we return the average rating.
                 if (ratings.Count > 0)
                 {
-                    switch (plugin.Settings.Settings.RatingToUse)
+                    switch (settings.RatingToUse)
                     {
                         case RatingToUse.Lowest: return ratings.Min();
                         case RatingToUse.Highest: return ratings.Max();
