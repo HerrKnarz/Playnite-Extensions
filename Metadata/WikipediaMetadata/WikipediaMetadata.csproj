@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\TagSetting.cs" />
-    <Compile Include="Ressources.cs" />
+    <Compile Include="Resources.cs" />
     <Compile Include="HtmlParser.cs" />
     <Compile Include="Models\WikipediaPage.cs" />
     <Compile Include="Models\WikipediaImage.cs" />

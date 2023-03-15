@@ -35,7 +35,7 @@ namespace WikipediaMetadata
 
             // We use HTML Agility Pack to fetch and parse the code. For the description we strip all bloat from the text and
             // build a simple new html string.
-            string apiUrl = string.Format(Ressources.PageHtmlUrl, gameKey.UrlEncode());
+            string apiUrl = string.Format(Resources.PageHtmlUrl, gameKey.UrlEncode());
 
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load(apiUrl);
@@ -54,7 +54,7 @@ namespace WikipediaMetadata
                 }
 
                 // Now we fetch all allowed second level nodes.
-                List<HtmlNode> secondLevelNodes = topLevelSection.ChildNodes.Where(c => Ressources.AllowedSecondLevelNodes.Contains(c.Name)).ToList();
+                List<HtmlNode> secondLevelNodes = topLevelSection.ChildNodes.Where(c => Resources.AllowedSecondLevelNodes.Contains(c.Name)).ToList();
 
                 foreach (HtmlNode secondLevelNode in secondLevelNodes)
                 {
@@ -66,7 +66,7 @@ namespace WikipediaMetadata
                     else if (secondLevelNode.Name == "section")
                     {
                         // We now look for third level nodes and add those to the description.
-                        List<HtmlNode> thirdLevelNodes = secondLevelNode.ChildNodes.Where(c => Ressources.AllowedThirdLevelNodes.Contains(c.Name)).ToList();
+                        List<HtmlNode> thirdLevelNodes = secondLevelNode.ChildNodes.Where(c => Resources.AllowedThirdLevelNodes.Contains(c.Name)).ToList();
 
                         foreach (HtmlNode thirdLevelNode in thirdLevelNodes)
                         {
@@ -74,7 +74,7 @@ namespace WikipediaMetadata
                             {
                                 // We now look for fourth level nodes and add those to the description. Since further levels are
                                 // very rarely used, we don't consider those for now.
-                                List<HtmlNode> fourthLevelNodes = thirdLevelNode.ChildNodes.Where(c => Ressources.AllowedFourthLevelNodes.Contains(c.Name)).ToList();
+                                List<HtmlNode> fourthLevelNodes = thirdLevelNode.ChildNodes.Where(c => Resources.AllowedFourthLevelNodes.Contains(c.Name)).ToList();
 
                                 foreach (HtmlNode fourthLevelNode in fourthLevelNodes)
                                 {
@@ -112,7 +112,7 @@ namespace WikipediaMetadata
 
             foreach (HtmlNode listNode in htmlList.SelectNodes("./li"))
             {
-                result += $"  <{listNode.Name}>{RemoveUnwantedTags(RemoveAnnotationMarks(listNode), Ressources.AllowedParagraphTags).InnerHtml}</{listNode.Name}>" + Environment.NewLine;
+                result += $"  <{listNode.Name}>{RemoveUnwantedTags(RemoveAnnotationMarks(listNode), Resources.AllowedParagraphTags).InnerHtml}</{listNode.Name}>" + Environment.NewLine;
             }
 
             result += $"</{htmlList.Name}>";
@@ -160,7 +160,7 @@ namespace WikipediaMetadata
             }
             else
             {
-                string text = RemoveUnwantedTags(RemoveAnnotationMarks(node), Ressources.AllowedParagraphTags).InnerHtml.Trim();
+                string text = RemoveUnwantedTags(RemoveAnnotationMarks(node), Resources.AllowedParagraphTags).InnerHtml.Trim();
 
                 if (text.Count() > 0)
                 {
@@ -193,7 +193,7 @@ namespace WikipediaMetadata
 
                             // Since the link text most of the time simply consist of the name of the game, try to
                             // match the url to popular web sites that are often linked here.
-                            LinkPair pair = Ressources.LinkPairs.Where(p => link.GetAttributeValue("href", "").Contains(p.Contains)).FirstOrDefault();
+                            LinkPair pair = Resources.LinkPairs.Where(p => link.GetAttributeValue("href", "").Contains(p.Contains)).FirstOrDefault();
 
                             if (pair != null)
                             {

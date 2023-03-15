@@ -119,13 +119,13 @@ namespace WikipediaMetadata
 
                     // We go through all list templates used in the field to fetch the single values in the list.
                     foreach (Template template in argument.EnumDescendants().OfType<Template>()
-                            .Where(t => Ressources.ListTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
+                            .Where(t => Resources.ListTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
                     {
                         List<TemplateArgument> arguments = new List<TemplateArgument>();
 
                         // In the template vgrelease every odd argument is supposed to be the country. So we only use the even
                         // ones as values.
-                        if (Ressources.VgReleaseTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(template.Name).ToLower()))
+                        if (Resources.VgReleaseTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(template.Name).ToLower()))
                         {
                             int counter = 1;
                             foreach (TemplateArgument arg in template.Arguments)
@@ -147,7 +147,7 @@ namespace WikipediaMetadata
                             if (listArgument.Name == null || listArgument.Name.ToPlainText() == "title")
                             {
                                 IEnumerable<Template> sublistTemplates = listArgument.EnumDescendants().OfType<Template>()
-                                    .Where(t => Ressources.AllowedSubListTemplates.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower()));
+                                    .Where(t => Resources.AllowedSubListTemplates.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower()));
 
                                 if (sublistTemplates != null && sublistTemplates.Count() > 0)
                                 {
@@ -223,11 +223,11 @@ namespace WikipediaMetadata
                 // We check each value for a valid date and at those to a datetime list.
                 foreach (MetadataProperty property in list)
                 {
-                    if (DateTime.TryParseExact(property.ToString(), Ressources.DateFormatStringsFull, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime))
+                    if (DateTime.TryParseExact(property.ToString(), Resources.DateFormatStringsFull, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime))
                     {
                         dates.Add(new PartialDate(dateTime));
                     }
-                    else if (DateTime.TryParseExact(property.ToString(), Ressources.DateFormatStringsYearMonth, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime))
+                    else if (DateTime.TryParseExact(property.ToString(), Resources.DateFormatStringsYearMonth, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime))
                     {
                         dates.Add(new PartialDate(dateTime, false));
                     }
@@ -336,7 +336,7 @@ namespace WikipediaMetadata
 
                 if (list.Count == 0)
                 {
-                    foreach (string code in Ressources.PlatformCodes)
+                    foreach (string code in Resources.PlatformCodes)
                     {
                         list.AddRange(GetValues(infoBox, $"MC_{code}", true));
                     }
@@ -350,7 +350,7 @@ namespace WikipediaMetadata
 
                 if (list.Count == 0)
                 {
-                    foreach (string code in Ressources.PlatformCodes)
+                    foreach (string code in Resources.PlatformCodes)
                     {
                         list.AddRange(GetValues(infoBox, $"GR_{code}", true));
                     }
@@ -445,7 +445,7 @@ namespace WikipediaMetadata
             // Now the build the list of separators to split the values by.
             List<string> separators = new List<string>();
 
-            separators.AddRange(Ressources.StringSeparators);
+            separators.AddRange(Resources.StringSeparators);
 
             // Fields for release dates and metacritic contain commas we don't want to split, so we leave commas out of the list.
             // We also don't split by comma, if the value is already from a list.
@@ -495,7 +495,7 @@ namespace WikipediaMetadata
 
             // First we remove every template we don't want.
             foreach (Template x in argument.EnumDescendants().OfType<Template>()
-                            .Where(t => Ressources.UnwantedTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
+                            .Where(t => Resources.UnwantedTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
             {
                 x.Remove();
             }

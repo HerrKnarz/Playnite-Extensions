@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace WikipediaMetadata
 {
     /// <summary>
-    /// contains several ressources needed to parse the wikipedia data
+    /// contains several resources needed to parse the wikipedia data
     /// </summary>
-    public static class Ressources
+    public static class Resources
     {
         /// <summary>
         /// names of all list templates used to split values.
