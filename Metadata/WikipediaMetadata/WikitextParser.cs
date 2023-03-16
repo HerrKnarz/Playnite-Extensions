@@ -81,7 +81,7 @@ namespace WikipediaMetadata
                             platforms.AddRange(GetValues(infoBox, "arcade system"));
                         }
 
-                        PlatformHelper platformHelper = new PlatformHelper(platformList);
+                        PlatformHelper platformHelper = new PlatformHelper(platformList.ToList());
 
                         GameMetadata.Platforms = platforms.SelectMany(p => platformHelper.GetPlatforms(p.ToString())).ToList();
                     }
