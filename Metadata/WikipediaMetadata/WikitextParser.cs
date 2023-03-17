@@ -242,6 +242,19 @@ namespace WikipediaMetadata
                 // If dates were found, We'll return the one depending on the settings.
                 if (dates.Count > 0)
                 {
+                    foreach (PartialDate date in dates)
+                    {
+                        if (!date.HasMonth)
+                        {
+                            date.Date = date.Date.AddMonths(11);
+                        }
+
+                        if (!date.HasDay)
+                        {
+                            date.Date = date.Date.EndOfMonth();
+                        }
+                    }
+
                     PartialDate dateToUse = null;
 
                     switch (settings.DateToUse)
@@ -517,7 +530,7 @@ namespace WikipediaMetadata
         }
 
         /// <summary>
-        /// Cleans up a template name, because sometimes those containt html comment blocks, and converts it to lower case.
+        /// Cleans up a template name, because sometimes those contain html comment blocks, and converts it to lower case.
         /// </summary>
         /// <param name="name">name of the template</param>
         /// <returns>The cleaned up name</returns>

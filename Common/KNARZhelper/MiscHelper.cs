@@ -16,5 +16,14 @@ namespace KNARZhelper
             dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
             return dateTime;
         }
+
+        public static DateTime StartOfMonth(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, 1);
+        }
+        public static DateTime EndOfMonth(this DateTime date)
+        {
+            return date.StartOfMonth().AddMonths(1).AddDays(-1);
+        }
     }
 }
