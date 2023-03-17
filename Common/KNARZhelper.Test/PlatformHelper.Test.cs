@@ -13,10 +13,18 @@ namespace KNARZhelper.Test
         [InlineData("Super NES", "nintendo_super_nes")]
         [InlineData("Android", "Android")]
         [InlineData("Playstation 4/5", "sony_playstation4,sony_playstation5")]
+        [InlineData("Neo Geo AES", "snk_neogeo_aes")]
+        [InlineData("Neo Geo MVS", "snk_neogeo_aes")]
         public void TestGetPlatforms(string platformToFind, string platformResult)
         {
             List<Platform> platforms = new List<Platform>
             {
+                new Platform()
+                {
+                    Name = "SNK Neo Geo",
+                    Id = new Guid("dabf46e5-bd45-409a-bac2-16c158f9cad2"),
+                    SpecificationId = "snk_neo_geo_aes"
+                },
                 new Platform()
                 {
                     Name = "Sony PlayStation 4",
