@@ -11,7 +11,7 @@ namespace WikipediaMetadata.Models
         private bool arcadeSystemAsPlatform = false;
         private bool removeDescriptionLinks = false;
         private bool descriptionOverviewOnly = false;
-        private ObservableCollection<string> sectionsToRemove;
+        private ObservableCollection<string> sectionsToRemove = new ObservableCollection<string>();
         private ObservableCollection<TagSetting> tagSettings;
 
         public DateToUse DateToUse { get => dateToUse; set => SetValue(ref dateToUse, value); }
@@ -22,5 +22,74 @@ namespace WikipediaMetadata.Models
         public bool DescriptionOverviewOnly { get => descriptionOverviewOnly; set => SetValue(ref descriptionOverviewOnly, value); }
         public ObservableCollection<string> SectionsToRemove { get => sectionsToRemove; set => SetValue(ref sectionsToRemove, value); }
         public ObservableCollection<TagSetting> TagSettings { get => tagSettings; set => SetValue(ref tagSettings, value); }
+
+        public PluginSettings()
+        {
+            PopulateTagSettings();
+        }
+
+        public void PopulateTagSettings()
+        {
+            if (tagSettings == null)
+            {
+                tagSettings = new ObservableCollection<TagSetting>
+                {
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Arcade system",
+                        Prefix = "[Arcade System]"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Engine",
+                        Prefix = "[Game Engine]"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Director",
+                        Prefix = "[People] director:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Producer",
+                        Prefix = "[People] producer:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Designer",
+                        Prefix = "[People] designer:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Programmer",
+                        Prefix = "[People] programmer:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Artist",
+                        Prefix = "[People] artist:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Writer",
+                        Prefix = "[People] writer:"
+                    },
+                    new TagSetting()
+                    {
+                        IsChecked = true,
+                        Name = "Composer",
+                        Prefix = "[People] composer:"
+                    },
+                };
+            }
+        }
     }
 }

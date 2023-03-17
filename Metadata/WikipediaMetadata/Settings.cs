@@ -88,63 +88,7 @@ namespace WikipediaMetadata
 
             if (Settings.TagSettings == null)
             {
-                Settings.TagSettings = new ObservableCollection<TagSetting>
-                {
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Arcade system",
-                        Prefix = "[Arcade System]"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Engine",
-                        Prefix = "[Game Engine]"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Director",
-                        Prefix = "[People] director:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Producer",
-                        Prefix = "[People] producer:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Designer",
-                        Prefix = "[People] designer:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Programmer",
-                        Prefix = "[People] programmer:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Artist",
-                        Prefix = "[People] artist:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Writer",
-                        Prefix = "[People] writer:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Composer",
-                        Prefix = "[People] composer:"
-                    },
-                };
+                Settings.PopulateTagSettings();
             }
         }
 

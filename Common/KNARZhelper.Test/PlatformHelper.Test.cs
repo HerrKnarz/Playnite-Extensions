@@ -56,7 +56,6 @@ namespace KNARZhelper.Test
                 },
             };
 
-
             PlatformHelper platformHelper = new PlatformHelper(platforms);
 
             Assert.Equal(platformResult, string.Join(",", platformHelper.GetPlatforms(platformToFind)));

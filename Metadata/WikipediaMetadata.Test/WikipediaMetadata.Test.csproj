@@ -19,4 +19,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\WikipediaMetadata\WikipediaMetadata.csproj" />
+    </ItemGroup>
+
 </Project>
