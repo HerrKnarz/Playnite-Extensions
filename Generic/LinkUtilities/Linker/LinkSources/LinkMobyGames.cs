@@ -16,7 +16,7 @@ namespace LinkUtilities.Linker
     {
         public override string LinkName { get; } = "MobyGames";
         public override string BaseUrl { get; } = "https://www.mobygames.com/game/";
-        public override string SearchUrl { get; } = "https://www.mobygames.com/search/quick?q=";
+        public override string SearchUrl { get; } = "https://www.mobygames.com/search/?type=game&q=";
 
         public override string GetGamePath(Game game)
         {
@@ -33,19 +33,25 @@ namespace LinkUtilities.Linker
                 HtmlWeb web = new HtmlWeb();
                 HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='searchResult']");
+                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//table/tr/td[last()]");
 
                 if (htmlNodes != null && htmlNodes.Count > 0)
                 {
                     foreach (HtmlNode node in htmlNodes)
                     {
-                        HtmlNode searchData = node.SelectSingleNode("./div[@class='searchData']");
+                        HtmlNodeCollection smallNodes = node.SelectNodes("./small");
+                        string details = string.Empty;
+
+                        if (smallNodes.Count > 1)
+                        {
+                            details = WebUtility.HtmlDecode(smallNodes[1].InnerText).CollapseWhitespaces();
+                        }
 
                         SearchResults.Add(new SearchResult
                         {
-                            Name = $"{node.SelectSingleNode("./div[@class='searchNumber']").InnerText} {WebUtility.HtmlDecode(searchData.SelectSingleNode("./div[@class='searchTitle']/a").InnerText)}",
-                            Url = searchData.SelectSingleNode("./div[@class='searchTitle']/a").GetAttributeValue("href", ""),
-                            Description = WebUtility.HtmlDecode(searchData.SelectSingleNode("./div[@class='searchDetails']").InnerText)
+                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./b/a").InnerText),
+                            Url = node.SelectSingleNode("./b/a").GetAttributeValue("href", ""),
+                            Description = details
                         }
                         );
                     }
