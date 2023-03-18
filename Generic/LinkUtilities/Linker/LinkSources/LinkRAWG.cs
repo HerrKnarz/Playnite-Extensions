@@ -20,10 +20,10 @@ namespace LinkUtilities.Linker
         public override string BaseUrl { get; } = "https://rawg.io/games/";
         public override string SearchUrl { get; } = "https://api.rawg.io/api/games?key={0}&search={1}&search_precise=true&page_size=50";
 
-        public override string GetGamePath(Game game)
+        public override string GetGamePath(Game game, string gameName = null)
         {
             // RAWG Links need the result name in lowercase without special characters and hyphens instead of white spaces.
-            return game.Name.RemoveDiacritics()
+            return (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()
                 .Replace("-", "")
                 .CollapseWhitespaces()

@@ -24,7 +24,7 @@ namespace LinkUtilities.Linker
         string standardUrl { get; } = "https://isthereanydeal.com/game/";
         public override string SearchUrl { get; } = "https://api.isthereanydeal.com/v02/search/search/?key={0}&q={1}&limit=20&strict=0";
 
-        public override string GetGamePath(Game game)
+        public override string GetGamePath(Game game, string gameName = null)
         {
             // IsThereAnyDeal provides links to steam games directly via the game id.
             if (game.PluginId == Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab"))
@@ -36,7 +36,7 @@ namespace LinkUtilities.Linker
             else
             {
                 baseUrl = standardUrl;
-                return game.Name.RemoveDiacritics()
+                return (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()
                 .Replace("-", "")
                 .Replace(" ", "")

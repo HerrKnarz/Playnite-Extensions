@@ -17,10 +17,10 @@ namespace LinkUtilities.Linker
 
         internal string WebsiteUrl = "https://strategywiki.org";
 
-        public override string GetGamePath(Game game)
+        public override string GetGamePath(Game game, string gameName = null)
         {
             // StrategyWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
-            return game.Name.CollapseWhitespaces().Replace(" ", "_").EscapeDataString();
+            return (gameName ?? game.Name).CollapseWhitespaces().Replace(" ", "_").EscapeDataString();
         }
 
         public override List<GenericItemOption> SearchLink(string searchTerm)

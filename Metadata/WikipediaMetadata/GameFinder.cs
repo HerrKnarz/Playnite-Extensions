@@ -2,7 +2,6 @@
 using Playnite.SDK;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
@@ -40,11 +39,7 @@ namespace WikipediaMetadata
 
             PrepareSearchTerms(gameName);
 
-            RegexOptions regExOptions = RegexOptions.ExplicitCapture;
-            regExOptions |= RegexOptions.Compiled;
-            Regex ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", regExOptions | RegexOptions.IgnoreCase);
-            Match match = ignoredEndWordsRegex.Match(gameName);
-            string searchName = gameName.Remove(match.Index).Trim();
+            string searchName = gameName.RemoveEditionSuffix();
 
             // We search for the game name on Wikipedia
             WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(searchName);

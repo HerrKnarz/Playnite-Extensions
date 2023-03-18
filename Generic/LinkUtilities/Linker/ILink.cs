@@ -89,7 +89,8 @@ namespace LinkUtilities.Linker
         /// Determines the game path part of the link.
         /// </summary>
         /// <param name="game">Game the link will be added to</param>
+        /// <param name="gameName">string we want to search for, if it's something else than the game name</param>
         /// <returns>Path that can be added to the BaseUrl to get the full link</returns>
-        string GetGamePath(Game game);
+        string GetGamePath(Game game, string gameName = null);
     }
 }

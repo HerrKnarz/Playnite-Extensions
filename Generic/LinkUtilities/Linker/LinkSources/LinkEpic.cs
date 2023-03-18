@@ -19,10 +19,10 @@ namespace LinkUtilities.Linker
 
         private readonly string CheckUrl = "https://store-content-ipv4.ak.epicgames.com/api/en-US/content/products/";
 
-        public override string GetGamePath(Game game)
+        public override string GetGamePath(Game game, string gameName = null)
         {
             // Epic Links need the game name in lowercase without special characters and underscores instead of white spaces.
-            return game.Name.RemoveDiacritics()
+            return (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()
                 .CollapseWhitespaces()
                 .Replace(" ", "-")

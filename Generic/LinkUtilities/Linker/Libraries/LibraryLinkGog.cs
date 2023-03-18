@@ -20,10 +20,10 @@ namespace LinkUtilities.Linker
         public override string BaseUrl { get; } = "https://www.gog.com/en/game/";
         public override string SearchUrl { get; } = "https://embed.gog.com/games/ajax/filtered?mediaType=game&search=";
         public override bool AllowRedirects { get; set; } = false;
-        public override string GetGamePath(Game game)
+        public override string GetGamePath(Game game, string gameName = null)
         {
             // GOG Links need the game name in lowercase without special characters and underscores instead of white spaces.
-            return game.Name.RemoveDiacritics()
+            return (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()
                 .CollapseWhitespaces()
                 .Replace("-", "")

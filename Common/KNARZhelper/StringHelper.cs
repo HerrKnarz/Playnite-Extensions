@@ -126,5 +126,19 @@ namespace KNARZhelper
 
             return str;
         }
+
+        /// <summary>
+        /// Removes stuff like "Special Edition" or HD from the end of a game name.
+        /// </summary>
+        /// <param name="str">string to process</param>
+        /// <returns>string without the edition suffix</returns>
+        public static string RemoveEditionSuffix(this string str)
+        {
+            RegexOptions regExOptions = RegexOptions.ExplicitCapture;
+            regExOptions |= RegexOptions.Compiled;
+            Regex ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", regExOptions | RegexOptions.IgnoreCase);
+            Match match = ignoredEndWordsRegex.Match(str);
+            return str.Remove(match.Index).Trim();
+        }
     }
 }

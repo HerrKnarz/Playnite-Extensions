@@ -36,7 +36,7 @@ namespace LinkUtilities.Linker
             }
         }
 
-        public override string GetGamePath(Game game)
+        public override string GetGamePath(Game game, string gameName = null)
         {
             // Arcade Database needs the name of the game file, because it follows the MAME naming scheme.
             if (game.IsInstalled && game.Roms != null && game.Roms.Count > 0)

@@ -66,9 +66,21 @@ namespace LinkUtilities.Linker
                     case LinkAddTypes.UrlMatch:
                         string gameName = GetGamePath(game);
 
-                        if (!string.IsNullOrEmpty(gameName) && (CheckLink($"{BaseUrl}{GetGamePath(game)}")))
+                        if (!string.IsNullOrEmpty(gameName))
                         {
-                            LinkUrl = $"{BaseUrl}{GetGamePath(game)}";
+                            if (CheckLink($"{BaseUrl}{gameName}"))
+                            {
+                                LinkUrl = $"{BaseUrl}{gameName}";
+                            }
+                            else
+                            {
+                                gameName = GetGamePath(game, game.Name.RemoveEditionSuffix());
+
+                                if (CheckLink($"{BaseUrl}{gameName}"))
+                                {
+                                    LinkUrl = $"{BaseUrl}{gameName}";
+                                }
+                            }
                         }
                         break;
                 }
@@ -87,40 +99,61 @@ namespace LinkUtilities.Linker
             return LinkHelper.CheckUrl(link, AllowRedirects);
         }
 
-        public virtual string GetGamePath(Game game)
+        public virtual string GetGamePath(Game game, string gameName = null)
         {
             string result = string.Empty;
 
-            if (!string.IsNullOrEmpty(game.Name))
+            if (gameName == null)
+            {
+                gameName = game.Name;
+            }
+
+            if (!string.IsNullOrEmpty(gameName))
             {
                 switch (AddType)
                 {
                     case LinkAddTypes.UrlMatch:
-                        result = game.Name;
+                        result = gameName;
                         break;
                     case LinkAddTypes.SingleSearchResult:
                         if (CanBeSearched)
                         {
-                            _ = SearchLink(game.Name);
-
-                            string searchName = game.Name.RemoveSpecialChars().Replace(" ", "");
-
-                            SearchResult foundGame = SearchResults.Where(r => r.Name.RemoveSpecialChars().Replace(" ", "") == searchName).FirstOrDefault();
-
-                            if (foundGame != null)
-                            {
-                                return foundGame.Url;
-                            }
-                            else if (SearchResults.Count() == 1)
-                            {
-                                return SearchResults[0].Url;
-                            }
+                            return TryToFindPerfectMatchingUrl(gameName) ??
+                                TryToFindPerfectMatchingUrl(gameName.RemoveEditionSuffix()) ??
+                                string.Empty;
                         }
                         break;
                 }
             }
-
             return result;
+        }
+
+        /// <summary>
+        /// Searches for a game by name and looks for a matching search result.
+        /// </summary>
+        /// <param name="gameName">Name of the game</param>
+        /// <returns>Url of the game. Returns null if no match was found.</returns>
+        private string TryToFindPerfectMatchingUrl(string gameName)
+        {
+            _ = SearchLink(gameName);
+
+            string searchName = gameName.RemoveSpecialChars().Replace(" ", "");
+
+            SearchResult foundGame = SearchResults.Where(r => r.Name.RemoveSpecialChars().Replace(" ", "") == searchName).FirstOrDefault();
+
+            if (foundGame != null)
+            {
+                return foundGame.Url;
+            }
+            else if (SearchResults.Count() == 1)
+            {
+                return SearchResults[0].Url;
+            }
+
+            else
+            {
+                return null;
+            }
         }
 
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
