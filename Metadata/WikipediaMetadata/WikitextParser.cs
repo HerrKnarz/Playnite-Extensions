@@ -32,6 +32,8 @@ namespace WikipediaMetadata
 
             GameMetadata = new WikipediaGameMetadata();
 
+            GameMetadata.Links = GetLinks(gameData);
+
             if (gameData.Source != null)
             {
                 try
@@ -45,7 +47,7 @@ namespace WikipediaMetadata
                     // Most of the game relevant data can be found in the "infobox video game" template. Most Wikipedia pages
                     // for games have one of those. Without it, only name, cover image, description and links can be fetched.
                     Template infoBox = ast.EnumDescendants().OfType<Template>()
-                        .Where(t => CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)) == "infobox video game").FirstOrDefault();
+                        .Where(t => Resources.InfoBoxVideoGameTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))).FirstOrDefault();
 
                     if (infoBox != null)
                     {
@@ -69,7 +71,6 @@ namespace WikipediaMetadata
                             GameMetadata.Tags.AddRange(GetValues(infoBox, tagSetting.Name.ToLower(), false, tagSetting.Prefix));
                         }
 
-                        GameMetadata.Links = GetLinks(gameData);
                         GameMetadata.Series = GetValues(infoBox, "series");
 
                         List<MetadataProperty> platforms = new List<MetadataProperty>();

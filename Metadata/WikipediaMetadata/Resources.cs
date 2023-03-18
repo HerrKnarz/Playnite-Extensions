@@ -23,6 +23,11 @@ namespace WikipediaMetadata
     public static class Resources
     {
         /// <summary>
+        /// Possible names for video game info box templates.
+        /// </summary>
+        public static readonly string[] InfoBoxVideoGameTemplateNames = { "infobox video game", "infobox vg" };
+
+        /// <summary>
         /// names of all list templates used to split values.
         /// </summary>
         public static readonly string[] ListTemplateNames = { "unbulleted list", "ubl", "collapsible list", "flatlist", "plainlist", "vgrelease", "video game release" };
