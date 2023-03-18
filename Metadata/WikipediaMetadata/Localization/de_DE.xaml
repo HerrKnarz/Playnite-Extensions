@@ -6,7 +6,7 @@
     <sys:String x:Key="LOCWikipediaMetadataSettingsTagTags">Schlagwörter</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsAdvancedSearch">Verbesserte Sortierung der Suchergebnisse verwenden (entfernen Sie den Haken, um Wikipedia-Standard zu verwenden).</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsArcadeSystem">Arcade-System als Plattform hinzufügen.</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsReleaseDate">Veröffentlichungsdatum</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsReleaseDate">Erscheinungsdatum</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsMetacritic">Metacritic-Wertung</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionOverviewOnly">Verwenden Sie nur die Übersicht der Wiki-Seite als Beschreibung.</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsRemoveDescriptionLinks">Links aus der Beschreibung entfernen.</sys:String>
