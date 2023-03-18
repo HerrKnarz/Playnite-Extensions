@@ -74,11 +74,16 @@ namespace LinkUtilities.Linker
                             }
                             else
                             {
-                                gameName = GetGamePath(game, game.Name.RemoveEditionSuffix());
+                                string baseName = game.Name.RemoveEditionSuffix();
 
-                                if (CheckLink($"{BaseUrl}{gameName}"))
+                                if (baseName != game.Name)
                                 {
-                                    LinkUrl = $"{BaseUrl}{gameName}";
+                                    gameName = GetGamePath(game, baseName);
+
+                                    if (CheckLink($"{BaseUrl}{gameName}"))
+                                    {
+                                        LinkUrl = $"{BaseUrl}{gameName}";
+                                    }
                                 }
                             }
                         }
@@ -118,9 +123,19 @@ namespace LinkUtilities.Linker
                     case LinkAddTypes.SingleSearchResult:
                         if (CanBeSearched)
                         {
-                            return TryToFindPerfectMatchingUrl(gameName) ??
-                                TryToFindPerfectMatchingUrl(gameName.RemoveEditionSuffix()) ??
-                                string.Empty;
+                            string baseName = gameName.RemoveEditionSuffix();
+
+                            if (baseName == gameName)
+                            {
+                                return TryToFindPerfectMatchingUrl(gameName) ??
+                                    string.Empty;
+                            }
+                            else
+                            {
+                                return TryToFindPerfectMatchingUrl(gameName) ??
+                                    TryToFindPerfectMatchingUrl(baseName) ??
+                                    string.Empty;
+                            }
                         }
                         break;
                 }
