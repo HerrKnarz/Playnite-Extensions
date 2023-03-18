@@ -1,5 +1,13 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 2.3
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-18
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-03-18/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_2_3.pext
+    Changelog:
+      - optimized add functionality by stripping edition suffixes like special edition from the name and searching again, when the first run didn't get a result.
+      - fixed search function for MobyGames after their site redesign. It's possible the add function breaks for new games though, because they also changed their url scheme.
+      - changed platform matching for MetaCritic to use Playnite specification id to better match different platform names.
   - Version: 2.2
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-02-12
