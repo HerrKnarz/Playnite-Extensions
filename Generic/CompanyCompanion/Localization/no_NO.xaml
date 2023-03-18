@@ -3,12 +3,12 @@
 
     <sys:String x:Key="LOCCompanyCompanionName">Company Companion</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Clean up company names.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Find companies to match</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Find similar companies to match.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">game</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">games</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Merge group</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Rydd opp i selskapsnavn.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Finn selskaper å matche</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Finn lignende selskaper å matche.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">spill</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">spill</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Slå sammen gruppe</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Untick, if this company shouldn't be merged with the others.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Company Merger</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">New name:</sys:String>
