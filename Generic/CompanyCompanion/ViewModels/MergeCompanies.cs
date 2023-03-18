@@ -129,6 +129,13 @@ namespace CompanyCompanion
 
                     companyList.RemoveAll(c => c.GroupName == "");
 
+
+                    foreach (MergeItem item in companyList)
+                    {
+                        item.PrepareGameInfo();
+                    }
+
+
                     IEnumerable<IGrouping<string, MergeItem>> mergeGroups;
 
                     if (cleanUpName)
@@ -145,8 +152,8 @@ namespace CompanyCompanion
                         Plugin = plugin,
                         Owner = this,
                         Key = g.Key,
-                        CompanyName = g.First().CleanedUpName,
-                        CompanyId = g.First().Id,
+                        CompanyName = g.OrderByDescending(c => (c.GameList != null) ? c.GameList.Count() : 0).ThenBy(c => c.CleanedUpName).First().CleanedUpName,
+                        CompanyId = g.OrderByDescending(c => (c.GameList != null) ? c.GameList.Count() : 0).ThenBy(c => c.CleanedUpName).First().Id,
                         Companies = g.ToList(),
                     }).OrderBy(g => g.Key).ToList();
 
@@ -155,7 +162,6 @@ namespace CompanyCompanion
                         foreach (MergeItem item in group.Companies)
                         {
                             item.Owner = group;
-                            item.PrepareGameInfo();
                         }
                     }
                 }
