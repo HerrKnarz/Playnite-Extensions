@@ -3,7 +3,6 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace LinkUtilities.Linker
 {
@@ -21,72 +20,66 @@ namespace LinkUtilities.Linker
         /// the platform in the link. 
         /// </summary>
         public static IReadOnlyDictionary<string, string> Platforms = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-                                                                   {
-                                                                        { "PC (Windows)", "pc" },
-                                                                        { "PC (DOS)", "pc" },
-                                                                        { "PC (Linux)", "pc" },
-                                                                        { "N64", "nintendo-64" },
-                                                                        { "Nintendo 3DS", "3ds" },
-                                                                        { "Nintendo DS", "ds" },
-                                                                        { "Nintendo Gamecube", "gamecube" },
-                                                                        { "Nintendo Wii", "wii" },
-                                                                        { "Nintendo Wii-U", "wii-u" },
-                                                                        { "Nintendo Switch", "switch" },
-                                                                        { "Playstation 1", "playstation" },
-                                                                        { "PS1", "playstation" },
-                                                                        { "PS One", "playstation" },
-                                                                        { "PS2", "playstation-2" },
-                                                                        { "PS3", "playstation-3" },
-                                                                        { "PS4", "playstation-4" },
-                                                                        { "PS5", "playstation-5" },
-                                                                        { "PSP", "psp" },
-                                                                        { "Playstation Portable", "psp" },
-                                                                        { "PS Vita", "playstation-vita" },
-                                                                        { "X360", "xbox-360" },
-                                                                        { "XOne", "xbox-one" },
-                                                                        { "XBSX", "xbox-series-x" },
-                                                                        { "Sega Dreamcast", "dreamcast" }
-                                                                   };
+        {
+            { "nintendo_3ds", "3ds" },
+            { "nintendo_64", "nintendo-64" },
+            { "nintendo_ds", "ds" },
+            { "nintendo_gameboyadvance", "gba" },
+            { "nintendo_gamecube", "gamecube" },
+            { "nintendo_switch", "switch" },
+            { "nintendo_wii", "wii" },
+            { "nintendo_wiiu", "wii-u" },
+            { "pc_dos", "pc" },
+            { "pc_linux", "pc" },
+            { "pc_windows", "pc" },
+            { "sega_dreamcast", "dreamcast" },
+            { "sony_playstation", "playstation" },
+            { "sony_playstation2", "playstation-2" },
+            { "sony_playstation3", "playstation-3" },
+            { "sony_playstation4", "playstation-4" },
+            { "sony_playstation5", "playstation-5" },
+            { "sony_psp", "psp" },
+            { "sony_vita", "playstation-vita" },
+            { "xbox", "xbox" },
+            { "xbox360", "xbox-360" },
+            { "xbox_one", "xbox-one" },
+            { "xbox_series", "xbox-series-x" },
+        };
         public override bool AddLink(Game game)
         {
             bool result = false;
-
-            string gameName = GetGamePath(game);
 
             bool addPlatformName = game.Platforms.Count > 1;
 
             string linkName = LinkName;
 
             // Since Metacritic has an own link for every platform, we'll go through all of them and add one for each.
-            foreach (string platformName in game.Platforms.Select(x => x.Name))
+            foreach (Platform platform in game.Platforms.Where(x => x.SpecificationId != null))
             {
                 if (addPlatformName)
                 {
-                    linkName = $"{LinkName} ({platformName})";
+                    linkName = $"{LinkName} ({platform.Name})";
                 }
 
                 if (!LinkHelper.LinkExists(game, linkName))
                 {
-                    StringBuilder sb = new StringBuilder(platformName);
-
-                    sb.Replace("Sony", "");
-                    sb.Replace("Microsoft", "");
-                    sb.Replace("Sega", "");
-
-                    string platformNormalized = sb.ToString();
-
-                    if (Platforms.ContainsKey(platformNormalized))
+                    if (Platforms.ContainsKey(platform.SpecificationId))
                     {
-                        platformNormalized = Platforms[platformNormalized];
-                    }
+                        LinkUrl = $"{BaseUrl}{Platforms[platform.SpecificationId]}/{GetGamePath(game)}";
 
-                    platformNormalized = platformNormalized.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
+                        if (CheckLink(LinkUrl))
+                        {
+                            result = LinkHelper.AddLink(game, linkName, LinkUrl, Plugin) || result;
+                        }
+                        else if (game.Name != game.Name.RemoveEditionSuffix())
+                        {
+                            LinkUrl = $"{BaseUrl}{Platforms[platform.SpecificationId]}/{GetGamePath(game, game.Name.RemoveEditionSuffix())}";
 
-                    LinkUrl = $"{BaseUrl}{platformNormalized}/{gameName}";
-
-                    if (CheckLink(LinkUrl))
-                    {
-                        result = LinkHelper.AddLink(game, linkName, LinkUrl, Plugin) || result;
+                            if (CheckLink(LinkUrl))
+                            {
+                                result = LinkHelper.AddLink(game, linkName, LinkUrl, Plugin) || result;
+                            }
+                        }
                     }
                 }
             }
