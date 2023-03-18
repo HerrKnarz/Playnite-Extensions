@@ -39,19 +39,11 @@ namespace LinkUtilities.Linker
                 {
                     foreach (HtmlNode node in htmlNodes)
                     {
-                        HtmlNodeCollection smallNodes = node.SelectNodes("./small");
-                        string details = string.Empty;
-
-                        if (smallNodes.Count > 1)
-                        {
-                            details = WebUtility.HtmlDecode(smallNodes[1].InnerText).CollapseWhitespaces();
-                        }
-
                         SearchResults.Add(new SearchResult
                         {
                             Name = WebUtility.HtmlDecode(node.SelectSingleNode("./b/a").InnerText),
                             Url = node.SelectSingleNode("./b/a").GetAttributeValue("href", ""),
-                            Description = details
+                            Description = WebUtility.HtmlDecode(node.SelectSingleNode("./small[last()]").InnerText).CollapseWhitespaces()
                         }
                         );
                     }
