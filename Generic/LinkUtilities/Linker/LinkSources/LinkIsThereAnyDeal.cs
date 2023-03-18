@@ -63,15 +63,11 @@ namespace LinkUtilities.Linker
 
                     if (searchResult.Data.Results != null && searchResult.Data.Results.Count > 0)
                     {
-                        int counter = 0;
-
                         foreach (Result result in searchResult.Data.Results)
                         {
-                            counter++;
-
                             SearchResults.Add(new SearchResult
                             {
-                                Name = $"{counter}. {result.Title}",
+                                Name = result.Title,
                                 Url = $"{standardUrl}{result.Plain}",
                                 Description = $"{result.Id}"
                             }

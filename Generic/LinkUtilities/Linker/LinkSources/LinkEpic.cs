@@ -72,17 +72,13 @@ namespace LinkUtilities.Linker
 
                 EpicSearchResult epicSearchResult = Serialization.FromJson<EpicSearchResult>(jsonResult);
 
-                int counter = 0;
-
                 foreach (Element element in epicSearchResult.Data.Catalog.SearchStore.Elements)
                 {
-                    counter++;
-
                     if (!string.IsNullOrEmpty(element.UrlSlug))
                     {
                         SearchResults.Add(new SearchResult
                         {
-                            Name = $"{counter}. {element.Title}",
+                            Name = element.Title,
                             Url = $"{BaseUrl}{element.UrlSlug}",
                             Description = element.Seller.Name
                         }

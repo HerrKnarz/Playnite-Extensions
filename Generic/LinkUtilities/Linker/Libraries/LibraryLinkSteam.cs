@@ -49,15 +49,12 @@ namespace LinkUtilities.Linker
                 if (games != null && games.Count > 0)
                 {
                     Log.Debug($"Games found: {games.Count}");
-                    int counter = 0;
 
                     foreach (SteamSearchResult game in games)
                     {
-                        counter++;
-
                         SearchResults.Add(new SearchResult
                         {
-                            Name = $"{counter}. {game.Name}",
+                            Name = game.Name,
                             Url = $"{LibraryUrl}{game.Appid}",
                             Description = game.Appid
                         }

@@ -71,15 +71,11 @@ namespace LinkUtilities.Linker
 
                     if (itchSearchResult.Games != null && itchSearchResult.Games.Count > 0)
                     {
-                        int counter = 0;
-
                         foreach (SearchedGame game in itchSearchResult.Games)
                         {
-                            counter++;
-
                             SearchResults.Add(new SearchResult
                             {
-                                Name = $"{counter}. {game.Title}",
+                                Name = game.Title,
                                 Url = game.Url,
                                 Description = game.PublishedAt
                             }

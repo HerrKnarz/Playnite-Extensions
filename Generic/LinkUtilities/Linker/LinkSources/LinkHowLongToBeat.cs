@@ -48,15 +48,11 @@ namespace LinkUtilities.Linker
 
                 if (searchResult.Data != null && searchResult.Data.Count > 0)
                 {
-                    int counter = 0;
-
                     foreach (Datum result in searchResult.Data)
                     {
-                        counter++;
-
                         SearchResults.Add(new SearchResult
                         {
-                            Name = $"{counter}. {result.GameName}",
+                            Name = result.GameName,
                             Url = $"{BaseUrl}{result.GameId}",
                             Description = $"{result.ReleaseWorld} {result.ProfileDev} - {result.ProfilePlatform}"
                         }

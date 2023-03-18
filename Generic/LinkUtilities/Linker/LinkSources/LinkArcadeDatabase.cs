@@ -62,15 +62,11 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes != null && htmlNodes.Count > 0)
                 {
-                    int counter = 0;
-
                     foreach (HtmlNode node in htmlNodes)
                     {
-                        counter++;
-
                         SearchResults.Add(new SearchResult
                         {
-                            Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='titolo_galleria']").InnerText)}",
+                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='titolo_galleria']").InnerText),
                             Url = $"{WebsiteUrl}{node.SelectSingleNode("./a").GetAttributeValue("href", "")}",
                             Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='romset_galleria']").InnerText)} - {WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='produttore_galleria']").InnerText)}"
                         }

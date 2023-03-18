@@ -77,12 +77,8 @@ namespace LinkUtilities.Linker
 
                 GogSearchResult gogSearchResult = Serialization.FromJson<GogSearchResult>(jsonResult);
 
-                int counter = 0;
-
                 foreach (Product product in gogSearchResult.Products)
                 {
-                    counter++;
-
                     string releaseDate = string.Empty;
 
                     if (product.GlobalReleaseDate.HasValue)
@@ -96,7 +92,7 @@ namespace LinkUtilities.Linker
 
                     SearchResults.Add(new SearchResult
                     {
-                        Name = $"{counter}. {product.Title}",
+                        Name = product.Title,
                         Url = $"{BaseUrl}{product.Slug}",
                         Description = releaseDate
                     }

@@ -71,8 +71,6 @@ namespace LinkUtilities.Helper
 
                     if (htmlNodes != null && htmlNodes.Count > 0)
                     {
-                        int counter = 0;
-
                         foreach (HtmlNode node in htmlNodes)
                         {
                             string url = node.SelectSingleNode("./div[@class='mw-search-result-heading']/a").GetAttributeValue("href", "");
@@ -87,11 +85,9 @@ namespace LinkUtilities.Helper
                                     redirect = (resultText.InnerText.StartsWith("#REDIRECT")) ? "(REDIRECT) " : string.Empty;
                                 }
 
-                                counter++;
-
                                 result.Add(new SearchResult
                                 {
-                                    Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText)}",
+                                    Name = WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText),
                                     Url = websiteUrl + url,
                                     Description = redirect + websiteUrl + url
                                 }
@@ -130,15 +126,11 @@ namespace LinkUtilities.Helper
 
                 SearchSuggestion searchResults = xml.ParseXML<SearchSuggestion>();
 
-                int counter = 0;
-
                 foreach (SearchSuggestionItem item in searchResults.Section)
                 {
-                    counter++;
-
                     result.Add(new SearchResult
                     {
-                        Name = $"{counter}. {item.Text.Value}",
+                        Name = item.Text.Value,
                         Url = item.Url.Value,
                         Description = item.Url.Value
                     }

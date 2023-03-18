@@ -31,14 +31,11 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes != null && htmlNodes.Count > 0)
                 {
-                    int counter = 0;
                     foreach (HtmlNode node in htmlNodes)
                     {
-                        counter++;
-
                         SearchResults.Add(new SearchResult
                         {
-                            Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./td[@class='name']").InnerText)}",
+                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./td[@class='name']").InnerText),
                             Url = $"{BaseUrl}{node.SelectSingleNode("./td[@class='name']/a").GetAttributeValue("href", "")}",
                             Description = WebUtility.HtmlDecode(node.SelectSingleNode("./td[@class='console']").InnerText)
                         });

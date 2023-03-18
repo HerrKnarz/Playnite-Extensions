@@ -1,4 +1,5 @@
-﻿using LinkUtilities.LinkActions;
+﻿using KNARZhelper;
+using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -37,7 +38,7 @@ namespace LinkUtilities.Linker
 
             if (result != null)
             {
-                return LinkHelper.AddLink(game, LinkName, SearchResults.Find(x => x.Name == result.Name).Url, plugin, false);
+                return LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, plugin, false);
             }
             else
             {
@@ -47,7 +48,7 @@ namespace LinkUtilities.Linker
 
         public virtual List<GenericItemOption> SearchLink(string searchTerm)
         {
-            return new List<GenericItemOption>(SearchResults.Select(x => new GenericItemOption(x.Name, x.Description)));
+            return SearchResults.ToList<GenericItemOption>();
         }
 
         public virtual bool AddLink(Game game)
@@ -102,9 +103,17 @@ namespace LinkUtilities.Linker
                         {
                             _ = SearchLink(game.Name);
 
-                            if (SearchResults.Count() == 1)
+                            string searchName = game.Name.RemoveSpecialChars().Replace(" ", "");
+
+                            SearchResult foundGame = SearchResults.Where(r => r.Name.RemoveSpecialChars().Replace(" ", "") == searchName).FirstOrDefault();
+
+                            if (foundGame != null)
                             {
-                                return SearchResults.FirstOrDefault().Url;
+                                return foundGame.Url;
+                            }
+                            else if (SearchResults.Count() == 1)
+                            {
+                                return SearchResults[0].Url;
                             }
                         }
                         break;

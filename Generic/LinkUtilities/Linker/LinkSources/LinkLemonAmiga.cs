@@ -32,11 +32,8 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes != null && htmlNodes.Count > 0)
                 {
-                    int counter = 0;
-
                     foreach (HtmlNode node in htmlNodes)
                     {
-                        counter++;
                         string suffix = string.Empty;
 
                         HtmlNode suffixNode = node.SelectSingleNode("./div/div[@class='game-grid-title']/a/img");
@@ -48,7 +45,7 @@ namespace LinkUtilities.Linker
 
                         SearchResults.Add(new SearchResult
                         {
-                            Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-title']/a").InnerText)}{suffix}",
+                            Name = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-title']/a").InnerText)}{suffix}",
                             Url = $"{BaseUrl}{node.SelectSingleNode("./div/div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
                             Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-info']").InnerText)}{WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-category']").InnerText)}"
                         }

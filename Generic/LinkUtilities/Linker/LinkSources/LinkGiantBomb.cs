@@ -39,12 +39,8 @@ namespace LinkUtilities.Linker
 
                     if (giantBombSearchResult.Error == "OK" && giantBombSearchResult.NumberOfTotalResults > 0)
                     {
-                        int counter = 0;
-
                         foreach (Result result in giantBombSearchResult.Results)
                         {
-                            counter++;
-
                             string description = result.OriginalReleaseDate;
 
 
@@ -61,7 +57,7 @@ namespace LinkUtilities.Linker
 
                             SearchResults.Add(new SearchResult
                             {
-                                Name = $"{counter}. {result.Name}",
+                                Name = result.Name,
                                 Url = $"{result.SiteDetailUrl}",
                                 Description = description
                             }

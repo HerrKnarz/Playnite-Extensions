@@ -74,8 +74,6 @@ namespace WikipediaMetadata
         /// <returns>List of found results</returns>
         public List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            List<GenericItemOption> searchResults;
-
             PrepareSearchTerms(searchTerm);
 
             // We search for the game name on Wikipedia
@@ -87,7 +85,7 @@ namespace WikipediaMetadata
                 // of the first results. First we order by containing "video game" in the short description, then by
                 // titles starting with the game name, then by titles starting with the first five characters of the game
                 // name and at last by page title itself.
-                searchResults = searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
+                return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
                         .OrderByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiNameVideoGame))
                         .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiStart))
                         .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(wikiName))
@@ -96,10 +94,8 @@ namespace WikipediaMetadata
             }
             else
             {
-                searchResults = searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult).ToList<GenericItemOption>();
+                return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult).ToList<GenericItemOption>();
             }
-
-            return searchResults;
         }
     }
 }

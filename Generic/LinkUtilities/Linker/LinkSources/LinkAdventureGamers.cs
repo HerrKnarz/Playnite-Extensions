@@ -32,15 +32,11 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes != null && htmlNodes.Count > 0)
                 {
-                    int counter = 0;
-
                     foreach (HtmlNode node in htmlNodes)
                     {
-                        counter++;
-
                         SearchResults.Add(new SearchResult
                         {
-                            Name = $"{counter}. {WebUtility.HtmlDecode(node.InnerText)}",
+                            Name = WebUtility.HtmlDecode(node.InnerText),
                             Url = $"{BaseUrl}{node.GetAttributeValue("href", "")}",
                             Description = string.Empty
                         }

@@ -38,19 +38,15 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes != null && htmlNodes.Count > 0)
                 {
-                    int counter = 0;
-
                     foreach (HtmlNode node in htmlNodes)
                     {
                         HtmlNodeCollection reviewNodes = node.SelectNodes("./div[@class='index-entry-meta']/div[a='Review']");
 
                         if (reviewNodes != null && reviewNodes.Count > 0)
                         {
-                            counter++;
-
                             SearchResults.Add(new SearchResult
                             {
-                                Name = $"{counter}. {WebUtility.HtmlDecode(node.SelectSingleNode("./h2/a").InnerText)}",
+                                Name = WebUtility.HtmlDecode(node.SelectSingleNode("./h2/a").InnerText),
                                 Url = node.SelectSingleNode("./h2/a").GetAttributeValue("href", ""),
                                 Description = WebUtility.HtmlDecode(node.SelectNodes("./div[@class='index-entry-meta']/div/a").Select(tagNode => tagNode.InnerText).Aggregate((total, part) => total + ", " + part))
                             });

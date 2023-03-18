@@ -49,12 +49,8 @@ namespace LinkUtilities.Linker
 
                     if (rawgSearchResult.Results != null && rawgSearchResult.Results.Count > 0)
                     {
-                        int counter = 0;
-
                         foreach (Result result in rawgSearchResult.Results)
                         {
-                            counter++;
-
                             string genres = string.Empty;
                             if (result.Genres != null && result.Genres.Count > 0)
                             {
@@ -64,7 +60,7 @@ namespace LinkUtilities.Linker
 
                             SearchResults.Add(new SearchResult
                             {
-                                Name = $"{counter}. {result.Name}",
+                                Name = result.Name,
                                 Url = $"{BaseUrl}{result.Slug}",
                                 Description = $"{result.Released}{Environment.NewLine}{genres}"
                             }
