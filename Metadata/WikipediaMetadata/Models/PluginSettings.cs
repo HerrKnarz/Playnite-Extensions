@@ -23,11 +23,6 @@ namespace WikipediaMetadata.Models
         public ObservableCollection<string> SectionsToRemove { get => sectionsToRemove; set => SetValue(ref sectionsToRemove, value); }
         public ObservableCollection<TagSetting> TagSettings { get => tagSettings; set => SetValue(ref tagSettings, value); }
 
-        public PluginSettings()
-        {
-            PopulateTagSettings();
-        }
-
         public void PopulateTagSettings()
         {
             if (tagSettings == null)

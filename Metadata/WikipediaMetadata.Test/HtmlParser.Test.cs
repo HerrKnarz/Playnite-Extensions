@@ -39,6 +39,8 @@ namespace WikipediaMetadata.Test
         [MemberData(nameof(DescriptionTestData))]
         public void TestDescription(PluginSettings settings, string gameKey, string expectedDescription)
         {
+            settings.PopulateTagSettings();
+
             HtmlParser htmlParser = new HtmlParser(gameKey, settings);
 
             Assert.Equal(expectedDescription, htmlParser.Description);
@@ -96,6 +98,8 @@ namespace WikipediaMetadata.Test
         [MemberData(nameof(LinkTestData))]
         public void TestLinks(PluginSettings settings, string gameKey, List<Link> expectedLinks)
         {
+            settings.PopulateTagSettings();
+
             HtmlParser htmlParser = new HtmlParser(gameKey, settings);
 
             Assert.Equal(expectedLinks, htmlParser.Links);

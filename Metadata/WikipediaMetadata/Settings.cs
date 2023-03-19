@@ -90,6 +90,14 @@ namespace WikipediaMetadata
             {
                 Settings.PopulateTagSettings();
             }
+            // Hotfix to a bug that duplicated the tag settings in version 1.3 and 1.4
+            else if (Settings.TagSettings.Count > 9)
+            {
+                while (Settings.TagSettings.Count > 9)
+                {
+                    Settings.TagSettings.RemoveAt(9);
+                }
+            }
         }
 
         public void BeginEdit()
