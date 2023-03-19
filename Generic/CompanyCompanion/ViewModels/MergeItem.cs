@@ -1,8 +1,6 @@
-﻿using Playnite.SDK;
-using Playnite.SDK.Models;
+﻿using CompanyCompanion.ViewModels;
+using Playnite.SDK;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CompanyCompanion
 {
@@ -34,13 +32,13 @@ namespace CompanyCompanion
         /// </summary>
         public string GroupName { get; set; }
         /// <summary>
-        /// Info about the games from that company (number of games and names of the first 10) to show in the window.
+        /// List of all games associated with the company as a developer
         /// </summary>
-        public string GameInfo { get; set; }
+        public GameList GamesAsDeveloper { get; set; }
         /// <summary>
-        /// List of all games for the tooltip.
+        /// List of all games associated with the company as a publisher
         /// </summary>
-        public string GameList { get; set; }
+        public GameList GamesAsPublisher { get; set; }
         /// <summary>
         /// Display name of the company. Includes info for cleaned up name.
         /// </summary>
@@ -88,70 +86,8 @@ namespace CompanyCompanion
         /// </summary>
         public void PrepareGameInfo()
         {
-            List<Game> gameList = API.Instance.Database.Games
-                    .Where(g =>
-                        (
-                            g.DeveloperIds != null &&
-                            g.DeveloperIds.Contains(Id)
-                        ) ||
-                        (
-                            g.PublisherIds != null &&
-                            g.PublisherIds.Contains(Id)
-                        )
-                    ).ToList();
-
-            string games = string.Join(", ", gameList
-                .OrderByDescending(g => g.Favorite)
-                .ThenByDescending(g => g.Playtime)
-                .ThenBy(g => (g.SortingName != "") ? g.SortingName : g.Name)
-                .Select(g => g.Name)
-                .Distinct()
-                .Take(10)
-                .ToList());
-
-            if (gameList.Count == 0)
-            {
-                GameInfo = $"0 {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGames")}";
-            }
-            else if (gameList.Count == 1)
-            {
-                GameInfo = $"1 {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGame")}: {games}";
-            }
-            else
-            {
-                GameInfo = $"{gameList.Count} {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGames")}: {games}";
-            }
-
-            string gamesAsDeveloper = string.Join(Environment.NewLine, API.Instance.Database.Games
-                .Where(g => g.DeveloperIds != null && g.DeveloperIds.Contains(Id))
-                .OrderBy(g => (g.SortingName != null && g.SortingName != "") ? g.SortingName : g.Name)
-                .Select(g => g.Name)
-                .Distinct()
-                .ToList());
-
-            string gamesAsPublisher = string.Join(Environment.NewLine, API.Instance.Database.Games
-                .Where(g => g.PublisherIds != null && g.PublisherIds.Contains(Id))
-                .OrderBy(g => (g.SortingName != null && g.SortingName != "") ? g.SortingName : g.Name)
-                .Select(g => g.Name)
-                .Distinct()
-                .ToList());
-
-            GameList = string.Empty;
-
-            if (gamesAsDeveloper.Length > 0)
-            {
-                GameList += $"{ResourceProvider.GetString("LOCDeveloperLabel")}:{Environment.NewLine}{gamesAsDeveloper}";
-            }
-
-            if (gamesAsPublisher.Length > 0)
-            {
-                if (GameList.Length > 0)
-                {
-                    GameList += Environment.NewLine + Environment.NewLine;
-                }
-
-                GameList += $"{ResourceProvider.GetString("LOCPublisherLabel")}:{Environment.NewLine}{gamesAsPublisher}";
-            }
+            GamesAsDeveloper = new GameList(Id);
+            GamesAsPublisher = new GameList(Id, false);
         }
     }
 }

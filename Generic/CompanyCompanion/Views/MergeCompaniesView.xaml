@@ -55,13 +55,28 @@
                                     <ColumnDefinition Width="5*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
                                 <CheckBox Grid.Column="0" IsChecked="{Binding Merge}" Content="" 
                                           ToolTip="{DynamicResource LOCCompanyCompanionMergeWindowMergeToolTip}" Margin="5,0,0,0"/>
                                 <Label Grid.Column="1"  Content="{Binding DisplayName}" Margin="0,0,10,0"/>
-                                <Label Grid.Column="2">
-                                    <TextBlock Text="{Binding GameInfo}" HorizontalAlignment="Stretch"
-                                               ToolTip="{Binding GameList}" TextTrimming="CharacterEllipsis"/>
-                                </Label>
+                                <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                    <Label Content="{DynamicResource LOCDeveloperLabel}" FontWeight="Bold" Margin="0,0,5,0"/>
+                                    <Label Grid.Column="2">
+                                        <TextBlock Text="{Binding GamesAsDeveloper.ShortInfo}" HorizontalAlignment="Stretch"
+                                               ToolTip="{Binding GamesAsDeveloper.Tooltip}" TextTrimming="CharacterEllipsis"/>
+                                    </Label>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1">
+                                    <Label Content="{DynamicResource LOCPublisherLabel}" FontWeight="Bold" Margin="0,0,5,0"/>
+                                    <Label>
+                                        <TextBlock Text="{Binding GamesAsPublisher.ShortInfo}" HorizontalAlignment="Stretch"
+                                               ToolTip="{Binding GamesAsPublisher.Tooltip}" TextTrimming="CharacterEllipsis"/>
+                                    </Label>
+                                </StackPanel>
                                 <Button Grid.Column="3" Content="{DynamicResource LOCCompanyCompanionMergeWindowUseAsName}"
                                         Command="{Binding UseAsNameCommand}" Margin="10,0,0,0"/>
                             </Grid>

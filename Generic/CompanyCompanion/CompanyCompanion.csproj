@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="CompanyCompanion.cs" />
     <Compile Include="CompanyCompanionSettings.cs" />
+    <Compile Include="ViewModels\GameList.cs" />
     <Compile Include="Views\CompanyCompanionSettingsView.xaml.cs">
       <DependentUpon>CompanyCompanionSettingsView.xaml</DependentUpon>
     </Compile>

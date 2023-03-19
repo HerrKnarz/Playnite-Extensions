@@ -152,8 +152,8 @@ namespace CompanyCompanion
                         Plugin = plugin,
                         Owner = this,
                         Key = g.Key,
-                        CompanyName = g.OrderByDescending(c => (c.GameList != null) ? c.GameList.Count() : 0).ThenBy(c => c.CleanedUpName).First().CleanedUpName,
-                        CompanyId = g.OrderByDescending(c => (c.GameList != null) ? c.GameList.Count() : 0).ThenBy(c => c.CleanedUpName).First().Id,
+                        CompanyName = g.OrderByDescending(c => c.GamesAsDeveloper.Games.Count() + c.GamesAsPublisher.Games.Count()).ThenBy(c => c.CleanedUpName).First().CleanedUpName,
+                        CompanyId = g.OrderByDescending(c => c.GamesAsDeveloper.Games.Count() + c.GamesAsPublisher.Games.Count()).ThenBy(c => c.CleanedUpName).First().Id,
                         Companies = g.ToList(),
                     }).OrderBy(g => g.Key).ToList();
 
