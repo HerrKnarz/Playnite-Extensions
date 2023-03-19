@@ -1,5 +1,14 @@
 AddonId: CompanyCompanion_b76edaec-1aa8-48ef-83a4-2a49ab031029
 Packages:
+  - Version: 0.4
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-19
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-03-19/CompanyCompanion_b76edaec-1aa8-48ef-83a4-2a49ab031029_0_4.pext
+    Changelog:
+      - Set company with most games as the suggested name in company merger
+      - Split list of games by developer and publisher in the merge window and tooltip
+      - 100% translation to Norwegian (thx. MeatBoy)
+      - updated helper dll, so it doesn't clash Link Utilities and Wikipedia Metadata.
   - Version: 0.3
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-03-01
