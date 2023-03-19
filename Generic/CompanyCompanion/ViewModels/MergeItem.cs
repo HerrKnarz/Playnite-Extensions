@@ -122,12 +122,36 @@ namespace CompanyCompanion
                 GameInfo = $"{gameList.Count} {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGames")}: {games}";
             }
 
-            GameList = string.Join(Environment.NewLine, gameList
+            string gamesAsDeveloper = string.Join(Environment.NewLine, API.Instance.Database.Games
+                .Where(g => g.DeveloperIds != null && g.DeveloperIds.Contains(Id))
                 .OrderBy(g => (g.SortingName != null && g.SortingName != "") ? g.SortingName : g.Name)
                 .Select(g => g.Name)
                 .Distinct()
                 .ToList());
 
+            string gamesAsPublisher = string.Join(Environment.NewLine, API.Instance.Database.Games
+                .Where(g => g.PublisherIds != null && g.PublisherIds.Contains(Id))
+                .OrderBy(g => (g.SortingName != null && g.SortingName != "") ? g.SortingName : g.Name)
+                .Select(g => g.Name)
+                .Distinct()
+                .ToList());
+
+            GameList = string.Empty;
+
+            if (gamesAsDeveloper.Length > 0)
+            {
+                GameList += $"{ResourceProvider.GetString("LOCDeveloperLabel")}:{Environment.NewLine}{gamesAsDeveloper}";
+            }
+
+            if (gamesAsPublisher.Length > 0)
+            {
+                if (GameList.Length > 0)
+                {
+                    GameList += Environment.NewLine + Environment.NewLine;
+                }
+
+                GameList += $"{ResourceProvider.GetString("LOCPublisherLabel")}:{Environment.NewLine}{gamesAsPublisher}";
+            }
         }
     }
 }
