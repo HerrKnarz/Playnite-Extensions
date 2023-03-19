@@ -122,16 +122,20 @@ namespace CompanyCompanion
         /// </summary>
         public void CleanUpCompanies()
         {
-            foreach (MergeItem company in Companies.Where(c => c.Merge && c.Id != CompanyId))
+            foreach (Guid id in Companies.Where(c => c.Merge && c.Id != CompanyId).Select(c => c.Id).ToList())
             {
-                API.Instance.Database.Companies.Remove(company.Id);
+                API.Instance.Database.Companies.Remove(id);
             }
 
             Company masterCompany = API.Instance.Database.Companies.First(c => c.Id == CompanyId);
 
             masterCompany.Name = CompanyName;
 
-            API.Instance.Database.Companies.Update(masterCompany);
+
+            API.Instance.MainView.UIDispatcher.Invoke(delegate
+            {
+                API.Instance.Database.Companies.Update(masterCompany);
+            });
         }
 
         /// <summary>

@@ -37,7 +37,7 @@ namespace CompanyCompanion
         {
             get => new RelayCommand(() =>
             {
-                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogAddValue"), "").SelectedString;
+                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCCompanyCompanionDialogAddValue"), "").SelectedString;
 
                 Settings.BusinessEntityDescriptors.AddMissing(value);
                 Settings.BusinessEntityDescriptors = new ObservableCollection<string>(Settings.BusinessEntityDescriptors.OrderBy(x => x));
@@ -59,7 +59,7 @@ namespace CompanyCompanion
         {
             get => new RelayCommand(() =>
             {
-                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCCompanyCompanionSettingsDialogAddValue"), "").SelectedString;
+                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCCompanyCompanionDialogAddValue"), "").SelectedString;
 
                 Settings.IgnoreWords.AddMissing(value);
                 Settings.IgnoreWords = new ObservableCollection<string>(Settings.IgnoreWords.OrderBy(x => x));
