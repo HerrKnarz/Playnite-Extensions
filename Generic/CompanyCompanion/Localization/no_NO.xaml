@@ -9,27 +9,27 @@
     <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">spill</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">spill</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Slå sammen gruppe</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Untick, if this company shouldn't be merged with the others.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Company Merger</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">New name:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Use as name</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Fjern avhukingen hvis dette selskapet ikke skal kombineres med de andre.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Selskapssammenslåing</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">Nytt navn:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Bruk som navn</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Merge duplicates</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Remove business entity descriptors</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Show Company Merger</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Slå sammen duplikater</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Fjern beskrivelser av selskaper</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Vis selskapssammenslåing</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Add</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Business entity descriptors:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Words to ignore to find similar companies:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Remove</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Show group key in merge window.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Legg til</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Selskapsbeskrivelser:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Ord som skal ignoreres for å finne lignende selskaper:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Fjern</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Vis gruppeknappen i sammenslåingsvinduet.</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">slå sammen selskaper</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">finn selskaper som skal slås sammen</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">oppdaterer spill</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Add value</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">No companies with business entity descriptors found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">No duplicate companies were found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Updated companies in {0} games and merged {1} companies</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Legg til verdi</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">Ingen selskaper med selskapsbeskrivelse ble funnet.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">Ingen duplikatselskaper ble funnet.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Oppdaterte selskaper for {0} spill og slo sammen {1} selskaper</sys:String>
 </ResourceDictionary>
