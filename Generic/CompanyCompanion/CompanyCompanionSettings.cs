@@ -109,13 +109,19 @@ namespace CompanyCompanion
             {
                 Settings.BusinessEntityDescriptors = new ObservableCollection<string>()
                 {
+                    "AB",
+                    "ACE",
                     "Co",
+                    "Co.,Ltd.",
                     "Corp",
                     "GmbH",
                     "Inc",
                     "LLC",
                     "Ltd",
+                    "Pte.",
+                    "Pty",
                     "S.A.",
+                    "S.L.",
                     "s.r.o.",
                     "srl",
                 };
@@ -134,6 +140,7 @@ namespace CompanyCompanion
                     "Entertainment",
                     "Games",
                     "Interactive",
+                    "Media",
                     "Multimedia",
                     "Productions",
                     "Publishing",
