@@ -14,10 +14,7 @@ namespace KNARZhelper
         /// <summary>
         /// Removes all characters that aren't part of the alphabet, a number, a whitespace or a hyphen.
         /// </summary>
-        public static string RemoveSpecialChars(this string str)
-        {
-            return Regex.Replace(str, @"[^a-zA-Z0-9\-\s]+", "");
-        }
+        public static string RemoveSpecialChars(this string str) => Regex.Replace(str, @"[^a-zA-Z0-9\-\s]+", "");
 
         /// <summary>
         /// Dictionary with special characters that need to be replaced before regular removing of diacritics. 
@@ -56,57 +53,39 @@ namespace KNARZhelper
         /// <summary>
         /// Replaces multiple whitespaces between characters with a single one and trims them from beginning and end of the string.
         /// </summary>
-        public static string CollapseWhitespaces(this string str)
-        {
-            return Regex.Replace(str, @"\s+", " ").Trim();
-        }
+        public static string CollapseWhitespaces(this string str) => Regex.Replace(str, @"\s+", " ").Trim();
 
         /// <summary>
         /// Escapes a string to be used in a URL.
         /// </summary>
-        public static string EscapeDataString(this string str)
-        {
-            return System.Uri.EscapeDataString(str);
-        }
+        public static string EscapeDataString(this string str) => System.Uri.EscapeDataString(str);
 
         /// <summary>
         /// Encodes an URL.
         /// </summary>
-        public static string UrlEncode(this string str)
-        {
-            return WebUtility.UrlEncode(str);
-        }
+        public static string UrlEncode(this string str) => WebUtility.UrlEncode(str);
 
         /// <summary>
         /// Escapes quotes in a string to \".
         /// </summary>
-        public static string EscapeQuotes(this string str)
-        {
-            return str.Replace("\"", "\\\"");
-        }
+        public static string EscapeQuotes(this string str) => str.Replace("\"", "\\\"");
 
-        public static string ToTitleCase(this string title)
-        {
-            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(title.ToLower());
-        }
+        public static string ToTitleCase(this string title) => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(title.ToLower());
 
         /// <summary>
         /// Substitutes every digit to its counterpart in roman notation.
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        public static string DigitsToRomanNumbers(this string str)
-        {
-            return str.Replace("1", "I")
-                .Replace("2", "II")
-                .Replace("3", "III")
-                .Replace("4", "IV")
-                .Replace("5", "V")
-                .Replace("6", "VI")
-                .Replace("7", "VII")
-                .Replace("8", "VIII")
-                .Replace("9", "IX");
-        }
+        public static string DigitsToRomanNumbers(this string str) => str.Replace("1", "I")
+            .Replace("2", "II")
+            .Replace("3", "III")
+            .Replace("4", "IV")
+            .Replace("5", "V")
+            .Replace("6", "VI")
+            .Replace("7", "VII")
+            .Replace("8", "VIII")
+            .Replace("9", "IX");
 
         /// <summary>
         /// Removes all values from a string that are between two substrings like parentheses or html tags.

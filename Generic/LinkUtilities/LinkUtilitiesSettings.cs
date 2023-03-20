@@ -121,58 +121,37 @@ namespace LinkUtilities
 
         public RelayCommand SortSortItemsCommand
         {
-            get => new RelayCommand(() =>
-            {
-                SortSortItems();
-            });
+            get => new RelayCommand(() => SortSortItems());
         }
 
         public RelayCommand SortBookmarkletItemsCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.LinkNamePatterns.SortPatterns();
-            });
+            get => new RelayCommand(() => Settings.LinkNamePatterns.SortPatterns());
         }
 
         public RelayCommand SortRemoveItemsCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.RemovePatterns.SortPatterns();
-            });
+            get => new RelayCommand(() => Settings.RemovePatterns.SortPatterns());
         }
 
         public RelayCommand SortRenameItemsCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.RenamePatterns.SortPatterns();
-            });
+            get => new RelayCommand(() => Settings.RenamePatterns.SortPatterns());
         }
 
         public RelayCommand SortMissingLinkItemsCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.MissingLinkPatterns.SortPatterns();
-            });
+            get => new RelayCommand(() => Settings.MissingLinkPatterns.SortPatterns());
         }
 
         public RelayCommand AddLinkNamePatternCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.LinkNamePatterns.Add(new LinkNamePattern());
-            });
+            get => new RelayCommand(() => Settings.LinkNamePatterns.Add(new LinkNamePattern()));
         }
 
         public RelayCommand AddDefaultLinkNamePatternsCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.LinkNamePatterns.AddDefaultPatterns(PatternTypes.LinkNamePattern);
-            });
+            get => new RelayCommand(() => Settings.LinkNamePatterns.AddDefaultPatterns(PatternTypes.LinkNamePattern));
         }
 
         public RelayCommand<IList<object>> RemoveLinkNamePatternsCommand
@@ -188,18 +167,12 @@ namespace LinkUtilities
 
         public RelayCommand AddRemovePatternCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.RemovePatterns.Add(new LinkNamePattern());
-            });
+            get => new RelayCommand(() => Settings.RemovePatterns.Add(new LinkNamePattern()));
         }
 
         public RelayCommand AddDefaultRemovePatternsCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.RemovePatterns.AddDefaultPatterns(PatternTypes.RemovePattern);
-            });
+            get => new RelayCommand(() => Settings.RemovePatterns.AddDefaultPatterns(PatternTypes.RemovePattern));
         }
 
         public RelayCommand<IList<object>> RemoveRemovePatternsCommand
@@ -215,18 +188,12 @@ namespace LinkUtilities
 
         public RelayCommand AddRenamePatternCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.RenamePatterns.Add(new LinkNamePattern());
-            });
+            get => new RelayCommand(() => Settings.RenamePatterns.Add(new LinkNamePattern()));
         }
 
         public RelayCommand AddDefaultRenamePatternsCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.RenamePatterns.AddDefaultPatterns(PatternTypes.RenamePattern);
-            });
+            get => new RelayCommand(() => Settings.RenamePatterns.AddDefaultPatterns(PatternTypes.RenamePattern));
         }
 
         public RelayCommand<IList<object>> RemoveRenamePatternsCommand
@@ -242,18 +209,12 @@ namespace LinkUtilities
 
         public RelayCommand AddMissingLinkPatternCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.MissingLinkPatterns.Add(new LinkNamePattern());
-            });
+            get => new RelayCommand(() => Settings.MissingLinkPatterns.Add(new LinkNamePattern()));
         }
 
         public RelayCommand AddDefaultMissingLinkPatternsCommand
         {
-            get => new RelayCommand(() =>
-            {
-                Settings.MissingLinkPatterns.AddDefaultPatterns(PatternTypes.MissingLinkPatterns);
-            });
+            get => new RelayCommand(() => Settings.MissingLinkPatterns.AddDefaultPatterns(PatternTypes.MissingLinkPatterns));
         }
 
         public RelayCommand<IList<object>> RemoveMissingLinkPatternsCommand
@@ -304,7 +265,7 @@ namespace LinkUtilities
                 };
             }
 
-            if (Settings.SortOrder == null)
+            if (Settings.SortOrder is null)
             {
                 Settings.SortOrder = new ObservableCollection<SortItem>();
             }
@@ -313,7 +274,7 @@ namespace LinkUtilities
                 SortSortItems();
             }
 
-            if (Settings.LinkNamePatterns == null)
+            if (Settings.LinkNamePatterns is null)
             {
                 Settings.LinkNamePatterns = new LinkNamePatterns();
             }
@@ -322,7 +283,7 @@ namespace LinkUtilities
                 Settings.LinkNamePatterns.SortPatterns();
             }
 
-            if (Settings.RemovePatterns == null)
+            if (Settings.RemovePatterns is null)
             {
                 Settings.RemovePatterns = new LinkNamePatterns();
             }
@@ -331,7 +292,7 @@ namespace LinkUtilities
                 Settings.RemovePatterns.SortPatterns();
             }
 
-            if (Settings.RenamePatterns == null)
+            if (Settings.RenamePatterns is null)
             {
                 Settings.RenamePatterns = new LinkNamePatterns();
             }
@@ -340,7 +301,7 @@ namespace LinkUtilities
                 Settings.RenamePatterns.SortPatterns();
             }
 
-            if (Settings.MissingLinkPatterns == null)
+            if (Settings.MissingLinkPatterns is null)
             {
                 Settings.MissingLinkPatterns = new LinkNamePatterns();
             }

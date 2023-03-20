@@ -15,10 +15,7 @@ namespace CompanyCompanion
 
         public MergeCompanies MergeCompanies
         {
-            get
-            {
-                return mergeCompanies;
-            }
+            get => mergeCompanies;
             set
             {
                 mergeCompanies = value;
@@ -32,10 +29,7 @@ namespace CompanyCompanion
         }
         public bool CleanUpNames
         {
-            get
-            {
-                return cleanUpNames;
-            }
+            get => cleanUpNames;
             set
             {
                 cleanUpNames = value;
@@ -44,10 +38,7 @@ namespace CompanyCompanion
         }
         public bool FindSimilar
         {
-            get
-            {
-                return findSimilar;
-            }
+            get => findSimilar;
             set
             {
                 findSimilar = value;
@@ -59,10 +50,7 @@ namespace CompanyCompanion
         }
         public RelayCommand FindCompaniesCommand
         {
-            get => new RelayCommand(() =>
-            {
-                MergeCompanies.GetMergeList(cleanUpNames, findSimilar);
-            });
+            get => new RelayCommand(() => MergeCompanies.GetMergeList(cleanUpNames, findSimilar));
         }
     }
 }

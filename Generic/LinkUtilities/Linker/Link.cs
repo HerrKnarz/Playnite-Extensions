@@ -40,21 +40,15 @@ namespace LinkUtilities.Linker
             {
                 return LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, plugin, false);
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
-        public virtual List<GenericItemOption> SearchLink(string searchTerm)
-        {
-            return SearchResults.ToList<GenericItemOption>();
-        }
+        public virtual List<GenericItemOption> SearchLink(string searchTerm) => SearchResults.ToList<GenericItemOption>();
 
         public virtual bool AddLink(Game game)
         {
             LinkUrl = string.Empty;
-            bool result = false;
 
             if (!LinkHelper.LinkExists(game, LinkName))
             {
@@ -92,23 +86,18 @@ namespace LinkUtilities.Linker
 
                 if (!string.IsNullOrEmpty(LinkUrl))
                 {
-                    result = LinkHelper.AddLink(game, LinkName, LinkUrl, plugin);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, plugin);
                 }
             }
 
-            return result;
+            return false;
         }
 
-        public virtual bool CheckLink(string link)
-        {
-            return LinkHelper.CheckUrl(link, AllowRedirects);
-        }
+        public virtual bool CheckLink(string link) => LinkHelper.CheckUrl(link, AllowRedirects);
 
         public virtual string GetGamePath(Game game, string gameName = null)
         {
-            string result = string.Empty;
-
-            if (gameName == null)
+            if (gameName is null)
             {
                 gameName = game.Name;
             }
@@ -118,8 +107,7 @@ namespace LinkUtilities.Linker
                 switch (AddType)
                 {
                     case LinkAddTypes.UrlMatch:
-                        result = gameName;
-                        break;
+                        return gameName;
                     case LinkAddTypes.SingleSearchResult:
                         if (CanBeSearched)
                         {
@@ -140,7 +128,7 @@ namespace LinkUtilities.Linker
                         break;
                 }
             }
-            return result;
+            return string.Empty;
         }
 
         /// <summary>
@@ -164,11 +152,7 @@ namespace LinkUtilities.Linker
             {
                 return SearchResults[0].Url;
             }
-
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)

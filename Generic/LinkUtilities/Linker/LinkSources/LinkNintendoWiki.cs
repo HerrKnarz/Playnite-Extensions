@@ -15,11 +15,11 @@ namespace LinkUtilities.Linker
         public override string BaseUrl { get; } = "https://nintendo.fandom.com/wiki/";
         public override string SearchUrl { get; } = "https://nintendo.fandom.com/api.php?action=opensearch&format=xml&search={0}&limit=50";
 
+        // Nintendo Wiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
-        {
-            // Nintendo Wiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
-            return (gameName ?? game.Name).CollapseWhitespaces().Replace(" ", "_").EscapeDataString();
-        }
+            => (gameName ?? game.Name).CollapseWhitespaces()
+                .Replace(" ", "_")
+                .EscapeDataString();
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {

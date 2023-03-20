@@ -217,7 +217,7 @@ namespace WikipediaMetadata
         {
             HtmlNodeCollection tryGetNodes = htmlNode.SelectNodes("./*|./text()");
 
-            if (tryGetNodes == null || !tryGetNodes.Any())
+            if (tryGetNodes is null || !tryGetNodes.Any())
             {
                 return htmlNode;
             }

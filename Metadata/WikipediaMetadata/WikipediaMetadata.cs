@@ -40,19 +40,10 @@ namespace WikipediaMetadata
             };
         }
 
-        public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
-        {
-            return new MetadataProvider(options, this);
-        }
+        public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, this);
 
-        public override ISettings GetSettings(bool firstRunSettings)
-        {
-            return Settings;
-        }
+        public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
-        public override UserControl GetSettingsView(bool firstRunSettings)
-        {
-            return new WikipediaMetadataSettingsView();
-        }
+        public override UserControl GetSettingsView(bool firstRunSettings) => new WikipediaMetadataSettingsView();
     }
 }

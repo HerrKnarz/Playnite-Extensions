@@ -107,10 +107,7 @@ namespace WikipediaMetadata
             string name = FindGame().Name;
             return string.IsNullOrEmpty(name) ? base.GetName(args) : name;
         }
-        public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args)
-        {
-            return FindGame().ReleaseDate ?? base.GetReleaseDate(args);
-        }
+        public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args) => FindGame().ReleaseDate ?? base.GetReleaseDate(args);
         public override IEnumerable<MetadataProperty> GetGenres(GetMetadataFieldArgs args)
         {
             List<MetadataProperty> genres = FindGame().Genres;

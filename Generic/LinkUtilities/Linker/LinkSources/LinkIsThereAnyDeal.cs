@@ -18,10 +18,9 @@ namespace LinkUtilities.Linker
         public override string LinkName { get; } = "IsThereAnyDeal";
         public override string BaseUrl => baseUrl;
 
-        string baseUrl;
-
-        string steamUrl { get; } = "https://isthereanydeal.com/steam/app/";
-        string standardUrl { get; } = "https://isthereanydeal.com/game/";
+        private string baseUrl;
+        private readonly string steamUrl = "https://isthereanydeal.com/steam/app/";
+        private readonly string standardUrl = "https://isthereanydeal.com/game/";
         public override string SearchUrl { get; } = "https://api.isthereanydeal.com/v02/search/search/?key={0}&q={1}&limit=20&strict=0";
 
         public override string GetGamePath(Game game, string gameName = null)

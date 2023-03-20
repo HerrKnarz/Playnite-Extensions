@@ -1,6 +1,5 @@
 ﻿using KNARZhelper;
 using Playnite.SDK;
-using Playnite.SDK.Events;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
@@ -93,19 +92,8 @@ namespace CompanyCompanion
             return menuItems;
         }
 
-        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
-        {
-            // Add code to be executed when library is updated.
-        }
+        public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
-        public override ISettings GetSettings(bool firstRunSettings)
-        {
-            return Settings;
-        }
-
-        public override UserControl GetSettingsView(bool firstRunSettings)
-        {
-            return new CompanyCompanionSettingsView();
-        }
+        public override UserControl GetSettingsView(bool firstRunSettings) => new CompanyCompanionSettingsView();
     }
 }

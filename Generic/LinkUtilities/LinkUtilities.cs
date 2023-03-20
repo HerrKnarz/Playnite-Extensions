@@ -610,19 +610,13 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="firstRunSettings">True, if it's the first time the settings are fetched</param>
         /// <returns>Settings interface</returns>
-        public override ISettings GetSettings(bool firstRunSettings)
-        {
-            return Settings;
-        }
+        public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
         /// <summary>
         /// Gets the settings view to be shown in playnite
         /// </summary>
         /// <param name="firstRunSettings">True, if it's the first time the settings view is fetched</param>
         /// <returns>Settings view</returns>
-        public override UserControl GetSettingsView(bool firstRunSettings)
-        {
-            return new LinkUtilitiesSettingsView();
-        }
+        public override UserControl GetSettingsView(bool firstRunSettings) => new LinkUtilitiesSettingsView();
     }
 }

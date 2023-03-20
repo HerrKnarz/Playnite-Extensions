@@ -28,7 +28,7 @@ namespace LinkUtilities.Linker
                 // Arcade Database returns code 200, if the game isn't found. So we have to check the HTML itself.
                 HtmlWeb web = new HtmlWeb();
                 HtmlDocument doc = web.Load(link);
-                return doc.DocumentNode.SelectSingleNode("//div[@id='game_not_found']") == null;
+                return doc.DocumentNode.SelectSingleNode("//div[@id='game_not_found']") is null;
             }
             catch
             {

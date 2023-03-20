@@ -33,10 +33,7 @@ namespace CompanyCompanion
         /// </summary>
         public ObservableCollection<MergeGroup> MergeList
         {
-            get
-            {
-                return mergeList;
-            }
+            get => mergeList;
             set
             {
                 mergeList = value;
@@ -234,7 +231,7 @@ namespace CompanyCompanion
         {
             gameCount = 0;
 
-            if (mergeGroup == null)
+            if (mergeGroup is null)
             {
                 gameList = API.Instance.Database.Games.ToList();
             }
@@ -253,7 +250,7 @@ namespace CompanyCompanion
                 ).ToList();
             }
 
-            if (mergeGroup == null)
+            if (mergeGroup is null)
             {
                 groups = MergeList;
             }

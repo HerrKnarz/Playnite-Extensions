@@ -11,11 +11,13 @@ namespace LinkUtilities.Linker
         public override string LinkName { get; } = "Gamer Guides";
         public override string BaseUrl { get; } = "https://www.gamerguides.com/";
 
+        // Gamer Guides Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
-        {
-            // Gamer Guides Links need the game name in lowercase without special characters and hyphens instead of white spaces.
-            return (gameName ?? game.Name).RemoveSpecialChars().Replace("_", " ").CollapseWhitespaces().Replace(" ", "-").ToLower();
-        }
+            => (gameName ?? game.Name).RemoveSpecialChars()
+                .Replace("_", " ")
+                .CollapseWhitespaces()
+                .Replace(" ", "-")
+                .ToLower();
 
         public LinkGamerGuides(LinkUtilities plugin) : base(plugin)
         {

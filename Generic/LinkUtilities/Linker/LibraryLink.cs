@@ -10,7 +10,6 @@ namespace LinkUtilities.Linker
     {
         public abstract Guid LibraryId { get; }
 
-
         public abstract bool AddLibraryLink(Game game);
 
         protected LibraryLink(LinkUtilities plugin) : base(plugin)

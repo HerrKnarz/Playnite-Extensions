@@ -68,16 +68,9 @@ namespace WikipediaMetadata
             PluginSettings savedSettings = plugin.LoadPluginSettings<PluginSettings>();
 
             // LoadPluginSettings returns null if no saved data is available.
-            if (savedSettings != null)
-            {
-                Settings = savedSettings;
-            }
-            else
-            {
-                Settings = new PluginSettings();
-            }
+            Settings = savedSettings ?? new PluginSettings();
 
-            if (Settings.SectionsToRemove == null)
+            if (Settings.SectionsToRemove is null)
             {
                 Settings.SectionsToRemove = new ObservableCollection<string>();
             }
@@ -86,7 +79,7 @@ namespace WikipediaMetadata
                 Settings.SectionsToRemove = new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
             }
 
-            if (Settings.TagSettings == null)
+            if (Settings.TagSettings is null)
             {
                 Settings.PopulateTagSettings();
             }

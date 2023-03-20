@@ -96,16 +96,10 @@ namespace CompanyCompanion
             CompanyCompanionSettings savedSettings = plugin.LoadPluginSettings<CompanyCompanionSettings>();
 
             // LoadPluginSettings returns null if no saved data is available.
-            if (savedSettings != null)
-            {
-                Settings = savedSettings;
-            }
-            else
-            {
-                Settings = new CompanyCompanionSettings();
-            }
 
-            if (Settings.BusinessEntityDescriptors == null)
+            Settings = savedSettings ?? new CompanyCompanionSettings();
+
+            if (Settings.BusinessEntityDescriptors is null)
             {
                 Settings.BusinessEntityDescriptors = new ObservableCollection<string>()
                 {
@@ -131,7 +125,7 @@ namespace CompanyCompanion
                 Settings.BusinessEntityDescriptors = new ObservableCollection<string>(Settings.BusinessEntityDescriptors.OrderBy(x => x));
             }
 
-            if (Settings.IgnoreWords == null)
+            if (Settings.IgnoreWords is null)
             {
                 Settings.IgnoreWords = new ObservableCollection<string>()
                 {

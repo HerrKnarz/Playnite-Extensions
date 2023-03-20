@@ -47,7 +47,7 @@ namespace LinkUtilities.LinkActions
 
             Tag tag = API.Instance.Database.Tags.FirstOrDefault(t => t.Name == key);
 
-            if (tag == null)
+            if (tag is null)
             {
                 tag = new Tag(key);
                 API.Instance.Database.Tags.Add(tag);
@@ -113,8 +113,6 @@ namespace LinkUtilities.LinkActions
         }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            return Tag(game);
-        }
+            => Tag(game);
     }
 }

@@ -87,11 +87,12 @@ namespace LinkUtilities.Linker
             return result;
         }
 
+        // Metacritic Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
-        {
-            // Metacritic Links need the game name in lowercase without special characters and hyphens instead of white spaces.
-            return (gameName ?? game.Name).RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
-        }
+            => (gameName ?? game.Name).RemoveSpecialChars()
+                .CollapseWhitespaces()
+                .Replace(" ", "-")
+                .ToLower();
 
         public LinkMetacritic(LinkUtilities plugin) : base(plugin)
         {

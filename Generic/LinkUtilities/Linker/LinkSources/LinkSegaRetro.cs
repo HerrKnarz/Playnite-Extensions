@@ -17,11 +17,11 @@ namespace LinkUtilities.Linker
 
         internal string WebsiteUrl = "https://segaretro.org";
 
+        // Sega Retro Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
-        {
-            // Sega Retro Links need the game with underscores instead of whitespaces and special characters simply encoded.
-            return (gameName ?? game.Name).CollapseWhitespaces().Replace(" ", "_").EscapeDataString();
-        }
+            => (gameName ?? game.Name).CollapseWhitespaces()
+                .Replace(" ", "_")
+                .EscapeDataString();
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {

@@ -18,11 +18,12 @@ namespace LinkUtilities.Linker
         public override string BaseUrl { get; } = "https://www.mobygames.com/game/";
         public override string SearchUrl { get; } = "https://www.mobygames.com/search/?type=game&q=";
 
+        // MobyGames Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
-        {
-            // MobyGames Links need the game name in lowercase without special characters and hyphens instead of white spaces.
-            return (gameName ?? game.Name).RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
-        }
+            => (gameName ?? game.Name).RemoveSpecialChars()
+                .CollapseWhitespaces()
+                .Replace(" ", "-")
+                .ToLower();
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {

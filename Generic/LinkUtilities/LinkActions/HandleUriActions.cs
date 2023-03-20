@@ -44,8 +44,6 @@ namespace LinkUtilities.LinkActions
         /// <returns>True if the arguments could be processed and fit a LinkUtilities action</returns>
         public bool ProcessArgs(PlayniteUriEventArgs args)
         {
-            bool result = false;
-
             switch (args.Arguments[0])
             {
                 case "AddLink":
@@ -66,7 +64,7 @@ namespace LinkUtilities.LinkActions
                     if (LinkNamePatterns.LinkMatch(ref tempLinkName, LinkUrl))
                     {
                         LinkName = tempLinkName;
-                        result = true;
+                        return true;
                     }
                     else
                     {
@@ -78,17 +76,13 @@ namespace LinkUtilities.LinkActions
                         if (selectResult.Result)
                         {
                             LinkName = selectResult.SelectedString;
-                            result = true;
-                        }
-                        else
-                        {
-                            result = false;
+                            return true;
                         }
                     }
                 }
             }
 
-            return result;
+            return false;
         }
 
         public HandleUriActions(LinkUtilities plugin) : base(plugin)

@@ -147,7 +147,7 @@ namespace WikipediaMetadata
 
                         foreach (TemplateArgument listArgument in arguments)
                         {
-                            if (listArgument.Name == null || listArgument.Name.ToPlainText() == "title")
+                            if (listArgument.Name is null || listArgument.Name.ToPlainText() == "title")
                             {
                                 IEnumerable<Template> sublistTemplates = listArgument.EnumDescendants().OfType<Template>()
                                     .Where(t => Resources.AllowedSubListTemplates.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower()));
@@ -301,15 +301,10 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="gameData">game data with the key to the page</param>
         /// <returns>List of found links</returns>
-        private List<Link> GetLinks(WikipediaPage gameData)
+        private List<Link> GetLinks(WikipediaPage gameData) => new List<Link>
         {
-            List<Link> links = new List<Link>
-            {
-                new Link("Wikipedia", "https://en.wikipedia.org/wiki/" + gameData.Key)
-            };
-
-            return links;
-        }
+            new Link("Wikipedia", "https://en.wikipedia.org/wiki/" + gameData.Key)
+        };
 
         /// <summary>
         /// Fetches the url of the main image from the page.

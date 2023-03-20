@@ -111,17 +111,7 @@ namespace LinkUtilities
         /// <param name="game">Game for which the Links will be checked</param>
         /// <param name="linkName">Name of the link</param>
         /// <returns>True, if a link with that name exists</returns>
-        public static bool LinkExists(Game game, string linkName)
-        {
-            if (game.Links is null)
-            {
-                return false;
-            }
-            else
-            {
-                return game.Links.Count(x => x.Name == linkName) > 0;
-            }
-        }
+        public static bool LinkExists(Game game, string linkName) => !(game.Links is null) && game.Links.Count(x => x.Name == linkName) > 0;
 
         /// <summary>
         /// Sorts the Links of a game alphabetically by the link name.
@@ -138,10 +128,8 @@ namespace LinkUtilities
 
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>
@@ -160,10 +148,8 @@ namespace LinkUtilities
 
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>
@@ -203,15 +189,9 @@ namespace LinkUtilities
 
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>
@@ -229,7 +209,7 @@ namespace LinkUtilities
 
                 if (!url.EndsWith("/"))
                 {
-                    urlWithoutScheme += "/";
+                    return urlWithoutScheme += "/";
                 }
 
                 return urlWithoutScheme;
@@ -248,17 +228,7 @@ namespace LinkUtilities
         /// <param name="sortOrder">Dictionary that contains the sort order.</param>
         /// <returns>Position in the sort order. The max int is returned, if the link name is not in the dictionary. That way
         /// those links will always appear after the defined order.</returns>
-        private static int? GetSortPosition(string linkName, Dictionary<string, int> sortOrder)
-        {
-            if (sortOrder.TryGetValue(linkName, out int position))
-            {
-                return position;
-            }
-            else
-            {
-                return Int32.MaxValue;
-            }
-        }
+        private static int? GetSortPosition(string linkName, Dictionary<string, int> sortOrder) => (sortOrder.TryGetValue(linkName, out int position)) ? position : int.MaxValue;
 
         /// <summary>
         /// PreRequest event for the HtmlWeb class. Is used to disable redirects,

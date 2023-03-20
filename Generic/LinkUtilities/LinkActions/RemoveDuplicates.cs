@@ -16,8 +16,6 @@ namespace LinkUtilities.LinkActions
         }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            return LinkHelper.RemoveDuplicateLinks(game, Plugin.Settings.Settings.RemoveDuplicatesType);
-        }
+            => LinkHelper.RemoveDuplicateLinks(game, Plugin.Settings.Settings.RemoveDuplicatesType);
     }
 }

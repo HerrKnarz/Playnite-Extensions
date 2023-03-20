@@ -25,7 +25,7 @@ namespace WikipediaMetadata.Models
 
         public void PopulateTagSettings()
         {
-            if (tagSettings == null)
+            if (tagSettings is null)
             {
                 tagSettings = new ObservableCollection<TagSetting>
                 {

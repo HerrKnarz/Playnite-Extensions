@@ -19,11 +19,12 @@ namespace LinkUtilities.Linker
         public override string BaseUrl { get; } = "http://www.hardcoregaming101.net/";
         public override string SearchUrl { get; } = "http://www.hardcoregaming101.net/?s=";
 
+        // HG101 Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
-        {
-            // HG101 Links need the game name in lowercase without special characters and hyphens instead of white spaces.
-            return (gameName ?? game.Name).RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "-").ToLower();
-        }
+            => (gameName ?? game.Name).RemoveSpecialChars()
+                .CollapseWhitespaces()
+                .Replace(" ", "-")
+                .ToLower();
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {

@@ -20,16 +20,14 @@ namespace LinkUtilities.Linker
         public override string BaseUrl { get; } = "https://www.gog.com/en/game/";
         public override string SearchUrl { get; } = "https://embed.gog.com/games/ajax/filtered?mediaType=game&search=";
         public override bool AllowRedirects { get; set; } = false;
+        // GOG Links need the game name in lowercase without special characters and underscores instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
-        {
-            // GOG Links need the game name in lowercase without special characters and underscores instead of white spaces.
-            return (gameName ?? game.Name).RemoveDiacritics()
+            => (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()
                 .CollapseWhitespaces()
                 .Replace("-", "")
                 .Replace(" ", "_")
                 .ToLower();
-        }
 
         public override bool AddLibraryLink(Game game)
         {
@@ -57,10 +55,7 @@ namespace LinkUtilities.Linker
                     return false;
                 }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public override List<GenericItemOption> SearchLink(string searchTerm)

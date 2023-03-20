@@ -31,10 +31,7 @@ namespace CompanyCompanion
         /// </summary>
         public string CompanyName
         {
-            get
-            {
-                return companyName;
-            }
+            get => companyName;
             set
             {
                 companyName = value;
@@ -63,10 +60,7 @@ namespace CompanyCompanion
         /// </summary>
         public Guid CompanyId
         {
-            get
-            {
-                return companyId;
-            }
+            get => companyId;
             set
             {
                 companyId = value;

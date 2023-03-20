@@ -47,10 +47,7 @@ namespace LinkUtilities.Linker
                     return false;
                 }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public override List<GenericItemOption> SearchLink(string searchTerm)

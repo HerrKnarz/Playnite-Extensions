@@ -152,9 +152,6 @@ namespace LinkUtilities.Helper
         /// </summary>
         /// <param name="value">Pattern to convert</param>
         /// <returns>The resulting regular expression</returns>
-        public static string WildCardToRegular(string value)
-        {
-            return "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
-        }
+        public static string WildCardToRegular(string value) => "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
     }
 }

@@ -44,27 +44,14 @@ namespace CompanyCompanion
         /// </summary>
         public string DisplayName
         {
-            get
-            {
-                if (Name == CleanedUpName)
-                {
-                    return Name;
-                }
-                else
-                {
-                    return $"{Name} → {CleanedUpName}";
-                }
-            }
+            get => (Name == CleanedUpName) ? Name : $"{Name} → {CleanedUpName}";
         }
         /// <summary>
         /// Specifies if the company will be merged with the others in the group.
         /// </summary>
         public bool Merge
         {
-            get
-            {
-                return merge;
-            }
+            get => merge;
             set
             {
                 merge = value;

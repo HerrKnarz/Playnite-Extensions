@@ -17,16 +17,15 @@ namespace LinkUtilities.Linker
 
         internal string WebsiteUrl = "https://www.pcgamingwiki.com";
 
+        // PCGamingWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
-        {
-            // PCGamingWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
-            return (gameName ?? game.Name).CollapseWhitespaces().Replace(" ", "_").EscapeDataString();
-        }
+            => (gameName ?? game.Name).CollapseWhitespaces()
+                .Replace(" ", "_")
+                .EscapeDataString();
 
         public override bool AddLink(Game game)
         {
             LinkUrl = string.Empty;
-            bool result = false;
 
             if (!LinkHelper.LinkExists(game, LinkName))
             {
@@ -52,10 +51,10 @@ namespace LinkUtilities.Linker
 
                 if (!string.IsNullOrEmpty(LinkUrl))
                 {
-                    result = LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin);
                 }
             }
-            return result;
+            return false;
         }
 
         public override List<GenericItemOption> SearchLink(string searchTerm)

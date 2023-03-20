@@ -60,10 +60,7 @@ namespace KNARZhelper
         /// Logs a debug message.
         /// </summary>
         /// <param name="Message">The Message to log</param>
-        public static void Debug(string Message)
-        {
-            logger.Debug($"{Message}");
-        }
+        public static void Debug(string Message) => logger.Debug($"{Message}");
     }
 
     /// <summary>
