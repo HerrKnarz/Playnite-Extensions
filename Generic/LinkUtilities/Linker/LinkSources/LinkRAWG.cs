@@ -14,7 +14,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to RAWG.io.
     /// </summary>
-    class LinkRAWG : Link
+    internal class LinkRAWG : Link
     {
         public override string LinkName { get; } = "RAWG";
         public override string BaseUrl { get; } = "https://rawg.io/games/";

@@ -13,13 +13,12 @@ namespace WikipediaMetadata
     /// </summary>
     internal class ApiCaller
     {
-        public static readonly string BaseUrl = "https://en.wikipedia.org/w/rest.php/v1/";
-        public static string SearchUrl { get => BaseUrl + "search/page?q={0}&limit=100"; }
-        public static string PageUrl { get => BaseUrl + "page/{0}"; }
+        private static readonly string _baseUrl = "https://en.wikipedia.org/w/rest.php/v1/";
+        private static readonly string _imageUrl = "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&pilicense=any&titles={0}";
+        private static string SearchUrl { get => _baseUrl + "search/page?q={0}&limit=100"; }
+        private static string PageUrl { get => _baseUrl + "page/{0}"; }
 
-        public static readonly string ImageUrl = "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&pilicense=any&titles={0}";
-
-        public static WebClient GetWebClient()
+        private static WebClient GetWebClient()
         {
             WebClient client = new WebClient();
 
@@ -33,7 +32,7 @@ namespace WikipediaMetadata
 
             return client;
         }
-        public static WikipediaSearchResult GetSearchResults(string name)
+        internal static WikipediaSearchResult GetSearchResults(string name)
         {
             WebClient client = GetWebClient();
 
@@ -43,7 +42,7 @@ namespace WikipediaMetadata
 
             return Serialization.FromJson<WikipediaSearchResult>(jsonResult);
         }
-        public static WikipediaPage GetGameData(string key)
+        internal static WikipediaPage GetGameData(string key)
         {
             WebClient client = GetWebClient();
 
@@ -53,11 +52,11 @@ namespace WikipediaMetadata
 
             return Serialization.FromJson<WikipediaPage>(jsonResult);
         }
-        public static WikipediaImage GetImage(string key)
+        internal static WikipediaImage GetImage(string key)
         {
             WebClient client = GetWebClient();
 
-            string apiUrl = string.Format(ImageUrl, key.UrlEncode());
+            string apiUrl = string.Format(_imageUrl, key.UrlEncode());
 
             string jsonResult = client.DownloadString(apiUrl);
 

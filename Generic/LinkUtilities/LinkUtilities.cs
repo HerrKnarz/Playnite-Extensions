@@ -53,52 +53,52 @@ namespace LinkUtilities
         /// <summary>
         /// Class to execute specific actions after the meta data of a game changes
         /// </summary>
-        public DoAfterChange DoAfterChange { get; }
+        internal DoAfterChange DoAfterChange { get; }
 
         /// <summary>
         /// Class to sort the Links of a game
         /// </summary>
-        public SortLinks SortLinks { get; }
+        internal SortLinks SortLinks { get; }
 
         /// <summary>
         /// Class to add a link to the store page in the library of a game
         /// </summary>
-        public AddLibraryLinks AddLibraryLinks { get; }
+        internal AddLibraryLinks AddLibraryLinks { get; }
 
         /// <summary>
         /// Class to add a link to all available websites in the Links list, if a definitive link was found.
         /// </summary>
-        public AddWebsiteLinks AddWebsiteLinks { get; }
+        internal AddWebsiteLinks AddWebsiteLinks { get; }
 
         /// <summary>
         /// Class to remove duplicate links.
         /// </summary>
-        public RemoveDuplicates RemoveDuplicates { get; }
+        internal RemoveDuplicates RemoveDuplicates { get; }
 
         /// <summary>
         /// Class to remove unwanted links.
         /// </summary>
-        public RemoveLinks RemoveLinks { get; }
+        internal RemoveLinks RemoveLinks { get; }
 
         /// <summary>
         /// Class to rename links.
         /// </summary>
-        public RenameLinks RenameLinks { get; }
+        internal RenameLinks RenameLinks { get; }
 
         /// <summary>
         /// Class to tag missing links.
         /// </summary>
-        public TagMissingLinks TagMissingLinks { get; }
+        internal TagMissingLinks TagMissingLinks { get; }
 
         /// <summary>
         /// Handles UriHandler actions.
         /// </summary>
-        public HandleUriActions HandleUriActions { get; }
+        internal HandleUriActions HandleUriActions { get; }
 
         /// <summary>
         /// Is set to true, while the library is updated via the sortLinks function. Is used to avoid an endless loop in the function.
         /// </summary>
-        public bool IsUpdating { get; set; }
+        internal bool IsUpdating { get; set; }
 
         /// <summary>
         /// Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update mode if the

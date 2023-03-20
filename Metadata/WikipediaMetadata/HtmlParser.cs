@@ -15,19 +15,19 @@ namespace WikipediaMetadata
     /// </summary>
     public class HtmlParser
     {
+        private readonly PluginSettings _settings;
+
         public string Description { get; set; } = string.Empty;
         public List<Link> Links { get; } = new List<Link>();
-
-        private readonly PluginSettings settings;
 
         /// <summary>
         /// Creates an instance of the class, fetches the html code and parses it.
         /// </summary>
         /// <param name="gameKey">Key of the page we want to parse</param>
-        /// <param name="settings">Settings of the plugin</param>
+        /// <param name="settings">Settings of the _plugin</param>
         public HtmlParser(string gameKey, PluginSettings settings)
         {
-            this.settings = settings;
+            _settings = settings;
 
             // All paragraphs we want to remove from the description by default.
             List<string> unwantedParagraphs = new List<string>()
@@ -175,7 +175,7 @@ namespace WikipediaMetadata
         /// Gets the external links from the provided node.
         /// </summary>
         /// <param name="node">Node with the links to add.</param>
-        public void GetExternalLinks(HtmlNode node)
+        private void GetExternalLinks(HtmlNode node)
         {
             // We now fetch the ul or ol list and go through all list items to fetch the links.
             HtmlNode linkList = node.SelectSingleNode("./ul[not(contains(@class,'portalbox'))]") ?? node.SelectSingleNode("./ol[not(contains(@class,'portalbox'))]");
@@ -241,7 +241,7 @@ namespace WikipediaMetadata
 
                 List<string> acceptableTagList = acceptableTags.ToList();
 
-                if (!settings.RemoveDescriptionLinks)
+                if (!_settings.RemoveDescriptionLinks)
                 {
                     acceptableTagList.AddMissing("a");
                 }

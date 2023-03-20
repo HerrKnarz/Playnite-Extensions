@@ -9,13 +9,13 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to StrategyWiki.
     /// </summary>
-    class LinkStrategyWiki : Link
+    internal class LinkStrategyWiki : Link
     {
         public override string LinkName { get; } = "StrategyWiki";
         public override string BaseUrl { get; } = "https://strategywiki.org/wiki/";
         public override string SearchUrl { get; } = "https://strategywiki.org/w/index.php?search={0}&fulltext=1";
 
-        internal string WebsiteUrl = "https://strategywiki.org";
+        private readonly string _websiteUrl = "https://strategywiki.org";
 
         // StrategyWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
@@ -25,7 +25,7 @@ namespace LinkUtilities.Linker
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {
-            SearchResults = ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, WebsiteUrl, LinkName);
+            SearchResults = ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName);
 
             return base.SearchLink(searchTerm);
         }

@@ -13,13 +13,13 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Arcade Database (arcadeitalia.net).
     /// </summary>
-    class LinkArcadeDatabase : Link
+    internal class LinkArcadeDatabase : Link
     {
+        private readonly string _WebsiteUrl = "http://adb.arcadeitalia.net/";
+
         public override string LinkName { get; } = "Arcade Database";
         public override string BaseUrl { get; } = "http://adb.arcadeitalia.net/dettaglio_mame.php?lang=en&game_name=";
         public override string SearchUrl { get; } = "http://adb.arcadeitalia.net/lista_mame.php?lang=en&ricerca=";
-
-        internal string WebsiteUrl = "http://adb.arcadeitalia.net/";
 
         public override bool CheckLink(string link)
         {
@@ -67,7 +67,7 @@ namespace LinkUtilities.Linker
                         SearchResults.Add(new SearchResult
                         {
                             Name = WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='titolo_galleria']").InnerText),
-                            Url = $"{WebsiteUrl}{node.SelectSingleNode("./a").GetAttributeValue("href", "")}",
+                            Url = $"{_WebsiteUrl}{node.SelectSingleNode("./a").GetAttributeValue("href", "")}",
                             Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='romset_galleria']").InnerText)} - {WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='produttore_galleria']").InnerText)}"
                         }
                         );

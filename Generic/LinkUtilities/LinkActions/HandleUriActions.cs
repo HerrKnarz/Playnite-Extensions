@@ -11,7 +11,7 @@ namespace LinkUtilities.LinkActions
     /// Class to handle the actions received from the UriHandler. At the moment only adding links to the active URL in the
     /// web browser.
     /// </summary>
-    public class HandleUriActions : LinkAction
+    internal class HandleUriActions : LinkAction
     {
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
 

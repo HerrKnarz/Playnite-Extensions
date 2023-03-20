@@ -5,29 +5,29 @@ namespace WikipediaMetadata.Models
 {
     public class PluginSettings : ObservableObject
     {
-        private DateToUse dateToUse = DateToUse.Earliest;
-        private RatingToUse ratingToUse = RatingToUse.Average;
-        private bool advancedSearchResultSorting = true;
-        private bool arcadeSystemAsPlatform = false;
-        private bool removeDescriptionLinks = false;
-        private bool descriptionOverviewOnly = false;
-        private ObservableCollection<string> sectionsToRemove = new ObservableCollection<string>();
-        private ObservableCollection<TagSetting> tagSettings;
+        private DateToUse _dateToUse = DateToUse.Earliest;
+        private RatingToUse _ratingToUse = RatingToUse.Average;
+        private bool _advancedSearchResultSorting = true;
+        private bool _arcadeSystemAsPlatform = false;
+        private bool _removeDescriptionLinks = false;
+        private bool _descriptionOverviewOnly = false;
+        private ObservableCollection<string> _sectionsToRemove = new ObservableCollection<string>();
+        private ObservableCollection<TagSetting> _tagSettings;
 
-        public DateToUse DateToUse { get => dateToUse; set => SetValue(ref dateToUse, value); }
-        public RatingToUse RatingToUse { get => ratingToUse; set => SetValue(ref ratingToUse, value); }
-        public bool AdvancedSearchResultSorting { get => advancedSearchResultSorting; set => SetValue(ref advancedSearchResultSorting, value); }
-        public bool ArcadeSystemAsPlatform { get => arcadeSystemAsPlatform; set => SetValue(ref arcadeSystemAsPlatform, value); }
-        public bool RemoveDescriptionLinks { get => removeDescriptionLinks; set => SetValue(ref removeDescriptionLinks, value); }
-        public bool DescriptionOverviewOnly { get => descriptionOverviewOnly; set => SetValue(ref descriptionOverviewOnly, value); }
-        public ObservableCollection<string> SectionsToRemove { get => sectionsToRemove; set => SetValue(ref sectionsToRemove, value); }
-        public ObservableCollection<TagSetting> TagSettings { get => tagSettings; set => SetValue(ref tagSettings, value); }
+        public DateToUse DateToUse { get => _dateToUse; set => SetValue(ref _dateToUse, value); }
+        public RatingToUse RatingToUse { get => _ratingToUse; set => SetValue(ref _ratingToUse, value); }
+        public bool AdvancedSearchResultSorting { get => _advancedSearchResultSorting; set => SetValue(ref _advancedSearchResultSorting, value); }
+        public bool ArcadeSystemAsPlatform { get => _arcadeSystemAsPlatform; set => SetValue(ref _arcadeSystemAsPlatform, value); }
+        public bool RemoveDescriptionLinks { get => _removeDescriptionLinks; set => SetValue(ref _removeDescriptionLinks, value); }
+        public bool DescriptionOverviewOnly { get => _descriptionOverviewOnly; set => SetValue(ref _descriptionOverviewOnly, value); }
+        public ObservableCollection<string> SectionsToRemove { get => _sectionsToRemove; set => SetValue(ref _sectionsToRemove, value); }
+        public ObservableCollection<TagSetting> TagSettings { get => _tagSettings; set => SetValue(ref _tagSettings, value); }
 
         public void PopulateTagSettings()
         {
-            if (tagSettings is null)
+            if (_tagSettings is null)
             {
-                tagSettings = new ObservableCollection<TagSetting>
+                _tagSettings = new ObservableCollection<TagSetting>
                 {
                     new TagSetting()
                     {

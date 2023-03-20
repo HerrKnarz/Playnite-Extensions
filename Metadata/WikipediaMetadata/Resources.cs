@@ -20,52 +20,52 @@ namespace WikipediaMetadata
     /// <summary>
     /// contains several resources needed to parse the wikipedia data
     /// </summary>
-    public static class Resources
+    internal static class Resources
     {
         /// <summary>
         /// Possible names for video game info box templates.
         /// </summary>
-        public static readonly string[] InfoBoxVideoGameTemplateNames = { "infobox video game", "infobox vg" };
+        internal static readonly string[] InfoBoxVideoGameTemplateNames = { "infobox video game", "infobox vg" };
 
         /// <summary>
         /// names of all list templates used to split values.
         /// </summary>
-        public static readonly string[] ListTemplateNames = { "unbulleted list", "ubl", "collapsible list", "flatlist", "plainlist", "vgrelease", "video game release" };
+        internal static readonly string[] ListTemplateNames = { "unbulleted list", "ubl", "collapsible list", "flatlist", "plainlist", "vgrelease", "video game release" };
 
         /// <summary>
         /// Possible names for video game release templates. Is needed to remove the country value from the list of platforms.
         /// </summary>
-        public static readonly string[] VgReleaseTemplateNames = { "vgrelease", "video game release" };
+        internal static readonly string[] VgReleaseTemplateNames = { "vgrelease", "video game release" };
 
         /// <summary>
         /// Templates that will be removed from the results.
         /// </summary>
-        public static readonly string[] UnwantedTemplateNames = { "efn", "cite web" };
+        internal static readonly string[] UnwantedTemplateNames = { "efn", "cite web" };
 
         /// <summary>
         /// Templates that will treated like their own list of values.
         /// </summary>
-        public static readonly string[] AllowedSubListTemplates = { "nobold", "nowrap", "start date" };
+        internal static readonly string[] AllowedSubListTemplates = { "nobold", "nowrap", "start date" };
 
         /// <summary>
         /// Array of strings to separate the values by.
         /// </summary>
-        public static readonly string[] StringSeparators = { "<br />", "<br/>", "<br>", "\n" };
+        internal static readonly string[] StringSeparators = { "<br />", "<br/>", "<br>", "\n" };
 
         /// <summary>
         /// Typical date formats from wikipedia pages.
         /// </summary>
-        public static readonly string[] DateFormatStringsFull = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy", "yyyy-MM-dd" };
+        internal static readonly string[] DateFormatStringsFull = { "MM/dd/yyyy", "MMMM d, yyyy", "d MMMM yyyy", "yyyy-MM-dd" };
 
         /// <summary>
         /// Typical date formats from wikipedia pages.
         /// </summary>
-        public static readonly string[] DateFormatStringsYearMonth = { "MM/yyyy", "MMMM, yyyy", "MMMM yyyy", "yyyy-MM" };
+        internal static readonly string[] DateFormatStringsYearMonth = { "MM/yyyy", "MMMM, yyyy", "MMMM yyyy", "yyyy-MM" };
 
         /// <summary>
         /// List of all possible platform codes for metacritic ratings.
         /// </summary>
-        public static readonly List<string> PlatformCodes = new List<string> {
+        internal static readonly List<string> PlatformCodes = new List<string> {
             "3DO", "3DS", "AMI", "ARC", "A2600", "JAG", "LYNX", "AST", "C64", "CD32", "CV", "DOS", "SDC", "DS", "GB",
             "GBA", "GBC", "NGC", "GEN", "iOS", "MAC", "SMS", "MOB", "N-G", "N64", "NES", "NS", "PC", "VITA", "PS", "PS2",
             "PS3", "PS4", "PS5", "PSP", "SSAT", "SMD", "SGG", "NSHI", "SNES", "TG16", "WII", "WIIU", "XBOX", "X360",
@@ -74,33 +74,33 @@ namespace WikipediaMetadata
         /// <summary>
         /// Url to fetch the HTML of a page.
         /// </summary>
-        public static readonly string PageHtmlUrl = "https://en.wikipedia.org/api/rest_v1/page/html/{0}";
+        internal static readonly string PageHtmlUrl = "https://en.wikipedia.org/api/rest_v1/page/html/{0}";
 
         /// <summary>
         /// We only fetch headings, paragraphs, lists and su sections from a section, because stuff like blockquotes or tables
         /// don't work well in Playnite and usually aren't essential to the description of a video game.
         /// </summary>
-        public static readonly string[] AllowedSecondLevelNodes = { "h2", "p", "ul", "ol", "section" };
+        internal static readonly string[] AllowedSecondLevelNodes = { "h2", "p", "ul", "ol", "section" };
 
         /// <summary>
         /// The same for third levels...
         /// </summary>
-        public static readonly string[] AllowedThirdLevelNodes = { "h3", "p", "ul", "ol", "section" };
+        internal static readonly string[] AllowedThirdLevelNodes = { "h3", "p", "ul", "ol", "section" };
 
         /// <summary>
         /// The same for fourth levels...
         /// </summary>
-        public static readonly string[] AllowedFourthLevelNodes = { "h4", "p", "ul", "ol" };
+        internal static readonly string[] AllowedFourthLevelNodes = { "h4", "p", "ul", "ol" };
 
         /// <summary>
         /// Array of all in a paragraph accepted tags.
         /// </summary>
-        public static readonly string[] AllowedParagraphTags = { "u", "b", "strong", "i", "em", "sub", "sup", "mark", "small", "del", "ins" };
+        internal static readonly string[] AllowedParagraphTags = { "u", "b", "strong", "i", "em", "sub", "sup", "mark", "small", "del", "ins" };
 
         /// <summary>
         /// List of rename patterns for the links
         /// </summary>
-        public static readonly List<LinkPair> LinkPairs = new List<LinkPair>()
+        internal static readonly List<LinkPair> LinkPairs = new List<LinkPair>()
         {
             new LinkPair { Contains = "gamefaqs.gamespot.com",
             Name = "GameFAQs"},
@@ -122,7 +122,7 @@ namespace WikipediaMetadata
     /// <summary>
     /// Simple class for a pair of string values to rename links.
     /// </summary>
-    public class LinkPair
+    internal class LinkPair
     {
         /// <summary>
         /// Value the link must contain
@@ -137,7 +137,7 @@ namespace WikipediaMetadata
     /// <summary>
     /// Simple class for a pair of string values to rename links.
     /// </summary>
-    public class PartialDate
+    internal class PartialDate
     {
         /// <summary>
         /// DateTime representation of the value

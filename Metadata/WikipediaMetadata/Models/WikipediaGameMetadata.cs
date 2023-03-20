@@ -6,7 +6,7 @@ namespace WikipediaMetadata.Models
     /// <summary>
     /// Class with all relevant metadata fields
     /// </summary>
-    public class WikipediaGameMetadata
+    internal class WikipediaGameMetadata
     {
         /// <summary>
         /// Name of the game

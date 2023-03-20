@@ -11,7 +11,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Base class for a website link 
     /// </summary>
-    public abstract class Link : ILink, ILinkAction
+    internal abstract class Link : ILink, ILinkAction
     {
         public abstract string LinkName { get; }
         public virtual string BaseUrl { get; } = string.Empty;
@@ -24,8 +24,8 @@ namespace LinkUtilities.Linker
         public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLink";
         public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
-        private readonly LinkUtilities plugin;
-        public LinkUtilities Plugin { get { return plugin; } }
+        private readonly LinkUtilities _plugin;
+        public LinkUtilities Plugin { get { return _plugin; } }
         public List<SearchResult> SearchResults { get; set; } = new List<SearchResult>();
 
         public virtual bool AddSearchedLink(Game game)
@@ -38,7 +38,7 @@ namespace LinkUtilities.Linker
 
             if (result != null)
             {
-                return LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, plugin, false);
+                return LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, _plugin, false);
             }
 
             return false;
@@ -86,7 +86,7 @@ namespace LinkUtilities.Linker
 
                 if (!string.IsNullOrEmpty(LinkUrl))
                 {
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, plugin);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, _plugin);
                 }
             }
 
@@ -170,7 +170,7 @@ namespace LinkUtilities.Linker
 
         public Link(LinkUtilities plugin)
         {
-            this.plugin = plugin;
+            this._plugin = plugin;
             Settings = new LinkSourceSetting()
             {
                 LinkName = LinkName,

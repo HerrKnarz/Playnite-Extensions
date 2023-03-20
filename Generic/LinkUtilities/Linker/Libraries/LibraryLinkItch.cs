@@ -13,13 +13,14 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to itch.io.
     /// </summary>
-    class LibraryLinkItch : LibraryLink
+    internal class LibraryLinkItch : LibraryLink
     {
+        private readonly string _libraryUrl = "https://itch.io/api/1/{0}/game/{1}";
+
         public override Guid LibraryId { get; } = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
         public override string LinkName { get; } = "Itch";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://itch.io/api/1/{0}/search/games?query={1}";
-        public string LibraryUrl { get; } = "https://itch.io/api/1/{0}/game/{1}";
 
         public override bool AddLibraryLink(Game game)
         {
@@ -28,7 +29,7 @@ namespace LinkUtilities.Linker
             {
                 try
                 {
-                    string apiUrl = string.Format(LibraryUrl, Settings.ApiKey, game.GameId);
+                    string apiUrl = string.Format(_libraryUrl, Settings.ApiKey, game.GameId);
 
                     WebClient client = new WebClient();
 

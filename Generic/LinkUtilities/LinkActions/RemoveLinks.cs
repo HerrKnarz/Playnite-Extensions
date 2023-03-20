@@ -9,7 +9,7 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to remove unwanted links based on patterns.
     /// </summary>
-    public class RemoveLinks : LinkAction
+    internal class RemoveLinks : LinkAction
     {
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressRemoveLinks";
 

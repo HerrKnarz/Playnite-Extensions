@@ -6,7 +6,7 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Sorts the Links of a game.
     /// </summary>
-    public class SortLinks : LinkAction
+    internal class SortLinks : LinkAction
     {
         public SortLinks(LinkUtilities plugin) : base(plugin)
         {

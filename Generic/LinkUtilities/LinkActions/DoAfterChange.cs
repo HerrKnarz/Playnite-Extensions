@@ -5,9 +5,9 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Sorts the Links of a game.
     /// </summary>
-    public class DoAfterChange : LinkAction
+    internal class DoAfterChange : LinkAction
     {
-        public DoAfterChange(LinkUtilities plugin) : base(plugin)
+        internal DoAfterChange(LinkUtilities plugin) : base(plugin)
         {
         }
 

@@ -5,11 +5,11 @@ using System;
 namespace CompanyCompanion
 {
     /// <summary>
-    /// Contains all relevant data to merge similar companies to one.
+    /// Contains all relevant data to _merge similar companies to one.
     /// </summary>
     public class MergeItem : ViewModelBase
     {
-        private bool merge = true;
+        private bool _merge = true;
 
         /// <summary>
         /// Owner of the company. Used to set group name.
@@ -51,10 +51,10 @@ namespace CompanyCompanion
         /// </summary>
         public bool Merge
         {
-            get => merge;
+            get => _merge;
             set
             {
-                merge = value;
+                _merge = value;
                 OnPropertyChanged("Merge");
             }
         }

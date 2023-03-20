@@ -5,7 +5,7 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to remove duplicate links.
     /// </summary>
-    public class RemoveDuplicates : LinkAction
+    internal class RemoveDuplicates : LinkAction
     {
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressRemoveDuplicates";
 

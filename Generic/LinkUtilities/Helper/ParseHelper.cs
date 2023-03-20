@@ -23,7 +23,7 @@ namespace LinkUtilities.Helper
         /// </summary>
         /// <param name="this">String to convert</param>
         /// <returns>Stream from the string</returns>
-        public static Stream ToStream(this string @this)
+        internal static Stream ToStream(this string @this)
         {
             MemoryStream stream = new MemoryStream();
             StreamWriter writer = new StreamWriter(stream);
@@ -39,7 +39,7 @@ namespace LinkUtilities.Helper
         /// <typeparam name="T">Object the XML will be deserialized to.</typeparam>
         /// <param name="this">XML string</param>
         /// <returns>The deserialized XML</returns>
-        public static T ParseXML<T>(this string @this) where T : class
+        internal static T ParseXML<T>(this string @this) where T : class
         {
             XmlReader reader = XmlReader.Create(@this.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document });
             return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
@@ -54,7 +54,7 @@ namespace LinkUtilities.Helper
         /// <param name="linkName">Name of the site for the error message</param>
         /// <param name="slashCount">Minimum of slashes in the relative URL to indicate, if it's a subpage</param>
         /// <returns>Search results for the search dialogs. Will be an empty list in case of an error.</returns>
-        public static List<SearchResult> GetMediaWikiResultsFromHtml(string searchUrl, string searchTerm, string websiteUrl, string linkName, int slashCount = 3)
+        internal static List<SearchResult> GetMediaWikiResultsFromHtml(string searchUrl, string searchTerm, string websiteUrl, string linkName, int slashCount = 3)
         {
             List<SearchResult> result = new List<SearchResult>();
 
@@ -112,7 +112,7 @@ namespace LinkUtilities.Helper
         /// <param name="searchTerm">Term to search for. Will be encoded in the function!</param>
         /// <param name="linkName">Name of the site for the error message</param>
         /// <returns>Search results for the search dialogs. Will be an empty list in case of an error.</returns>
-        public static List<SearchResult> GetMediaWikiResultsFromApi(string searchUrl, string searchTerm, string linkName)
+        internal static List<SearchResult> GetMediaWikiResultsFromApi(string searchUrl, string searchTerm, string linkName)
         {
             List<SearchResult> result = new List<SearchResult>();
 
@@ -152,6 +152,6 @@ namespace LinkUtilities.Helper
         /// </summary>
         /// <param name="value">Pattern to convert</param>
         /// <returns>The resulting regular expression</returns>
-        public static string WildCardToRegular(string value) => "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
+        internal static string WildCardToRegular(string value) => "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
     }
 }

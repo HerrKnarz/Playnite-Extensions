@@ -13,14 +13,14 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to IsThereAnyDeal.
     /// </summary>
-    class LinkIsThereAnyDeal : Link
+    internal class LinkIsThereAnyDeal : Link
     {
-        public override string LinkName { get; } = "IsThereAnyDeal";
-        public override string BaseUrl => baseUrl;
-
         private string baseUrl;
         private readonly string steamUrl = "https://isthereanydeal.com/steam/app/";
         private readonly string standardUrl = "https://isthereanydeal.com/game/";
+
+        public override string LinkName { get; } = "IsThereAnyDeal";
+        public override string BaseUrl => baseUrl;
         public override string SearchUrl { get; } = "https://api.isthereanydeal.com/v02/search/search/?key={0}&q={1}&limit=20&strict=0";
 
         public override string GetGamePath(Game game, string gameName = null)
@@ -31,7 +31,7 @@ namespace LinkUtilities.Linker
                 baseUrl = steamUrl;
                 return game.GameId;
             }
-            // For all other libraries links need the result name in lowercase without special characters and white spaces with numbers translated to roman numbers.
+            // For all other _libraries links need the result name in lowercase without special characters and white spaces with numbers translated to roman numbers.
             else
             {
                 baseUrl = standardUrl;

@@ -11,7 +11,7 @@ using System.Text;
 
 namespace LinkUtilities.Linker
 {
-    class LinkEpic : Link
+    internal class LinkEpic : Link
     {
         public override string LinkName { get; } = "Epic";
         public override string BaseUrl { get; } = "https://store.epicgames.com/en-US/p/";

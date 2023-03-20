@@ -14,7 +14,7 @@ namespace KNARZhelper
         /// <summary>
         /// Logger instance from playnite
         /// </summary>
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger _logger = LogManager.GetLogger();
 
         /// <summary>
         /// Logs an error message.
@@ -33,7 +33,7 @@ namespace KNARZhelper
 
             Message += $"|{traceInfos.FileName}|{traceInfos.LineNumber}";
 
-            logger.Error(ex, $"{Message}");
+            _logger.Error(ex, $"{Message}");
 
             if (showDialog)
             {
@@ -48,7 +48,7 @@ namespace KNARZhelper
         /// <param name="showDialog">Additionally shows the error message as a dialog if set to true.</param>
         public static void Info(string Message, bool showDialog = false)
         {
-            logger.Info($"{Message}");
+            _logger.Info($"{Message}");
 
             if (showDialog)
             {
@@ -60,7 +60,7 @@ namespace KNARZhelper
         /// Logs a debug message.
         /// </summary>
         /// <param name="Message">The Message to log</param>
-        public static void Debug(string Message) => logger.Debug($"{Message}");
+        public static void Debug(string Message) => _logger.Debug($"{Message}");
     }
 
     /// <summary>

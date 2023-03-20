@@ -91,7 +91,7 @@
     <Compile Include="Linker\LinkSources\LinkWikipedia.cs" />
     <Compile Include="Linker\LinkSources\LinkNECRetro.cs" />
     <Compile Include="Linker\LinkSources\LinkZopharsDomain.cs" />
-    <Compile Include="Linker\LinkSources\SNKWiki.cs" />
+    <Compile Include="Linker\LinkSources\LinkSNKWiki.cs" />
     <Compile Include="Models\ApiResults\EpicSearchResult.cs" />
     <Compile Include="Models\ApiResults\GiantBombSearchResult.cs" />
     <Compile Include="Models\ApiResults\GogSearchResult.cs" />

@@ -8,7 +8,7 @@ namespace LinkUtilities.LinkActions
     /// Interface for classes, that can be used as a link action. Contains texts for the progress bar, result dialog and the action to
     /// execute.
     /// </summary>
-    public interface ILinkAction
+    internal interface ILinkAction
     {
         /// <summary>
         /// Resource for the localized text in the progress bar

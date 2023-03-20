@@ -9,23 +9,23 @@ namespace WikipediaMetadata
     /// <summary>
     /// Provides Functionality to find a game on Wikipedia.
     /// </summary>
-    public class GameFinder
+    internal class GameFinder
     {
-        private readonly PluginSettings settings;
-        private string wikiNameVideoGame;
-        private string wikiName;
-        private string wikiStart;
+        private readonly PluginSettings _settings;
+        private string _wikiNameVideoGame;
+        private string _wikiName;
+        private string _wikiStart;
 
         public GameFinder(PluginSettings settings)
         {
-            this.settings = settings;
+            _settings = settings;
         }
 
-        internal void PrepareSearchTerms(string searchTerm)
+        private void PrepareSearchTerms(string searchTerm)
         {
-            wikiNameVideoGame = (searchTerm + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
-            wikiName = searchTerm.RemoveSpecialChars().ToLower().Replace(" ", "");
-            wikiStart = wikiName.Substring(0, (wikiName.Length > 5) ? 5 : wikiName.Length);
+            _wikiNameVideoGame = (searchTerm + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
+            _wikiName = searchTerm.RemoveSpecialChars().ToLower().Replace(" ", "");
+            _wikiStart = _wikiName.Substring(0, (_wikiName.Length > 5) ? 5 : _wikiName.Length);
         }
 
         /// <summary>
@@ -54,9 +54,9 @@ namespace WikipediaMetadata
                 // use the page in background mode. The description also needs to have the words "video game" in it to
                 // avoid cases like "Doom", where a completely wrong page would be returned.
                 foundPage =
-                    searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == wikiNameVideoGame).FirstOrDefault() ??
+                    searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == _wikiNameVideoGame).FirstOrDefault() ??
                     searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == searchNameVideoGame).FirstOrDefault() ??
-                    searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == wikiName).FirstOrDefault() ??
+                    searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == _wikiName).FirstOrDefault() ??
                     searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == searchName).FirstOrDefault();
             }
             return foundPage;
@@ -74,16 +74,16 @@ namespace WikipediaMetadata
             // We search for the game name on Wikipedia
             WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(searchTerm);
 
-            if (settings.AdvancedSearchResultSorting)
+            if (_settings.AdvancedSearchResultSorting)
             {
                 // When displaying the search results, we order them differently to hopefully get the actual game as one
                 // of the first results. First we order by containing "video game" in the short description, then by
                 // titles starting with the game name, then by titles starting with the first five characters of the game
                 // name and at last by page title itself.
                 return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
-                        .OrderByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiNameVideoGame))
-                        .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(wikiStart))
-                        .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(wikiName))
+                        .OrderByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(_wikiNameVideoGame))
+                        .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(_wikiStart))
+                        .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(_wikiName))
                         .ThenByDescending(o => o.Description != null && o.Description.Contains("video game"))
                         .ToList<GenericItemOption>();
             }

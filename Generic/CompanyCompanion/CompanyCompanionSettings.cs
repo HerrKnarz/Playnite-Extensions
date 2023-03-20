@@ -8,22 +8,22 @@ namespace CompanyCompanion
 {
     public class CompanyCompanionSettings : ObservableObject
     {
-        private bool showGroupKey = false;
-        private ObservableCollection<string> businessEntityDescriptors;
-        private ObservableCollection<string> ignoreWords;
+        private bool _showGroupKey = false;
+        private ObservableCollection<string> _businessEntityDescriptors;
+        private ObservableCollection<string> _ignoreWords;
 
         /// <summary>
-        /// Defines, if the group key will be shown in the merge companies window.
+        /// Defines, if the group key will be shown in the _merge companies window.
         /// </summary>
-        public bool ShowGroupKey { get => showGroupKey; set => SetValue(ref showGroupKey, value); }
+        public bool ShowGroupKey { get => _showGroupKey; set => SetValue(ref _showGroupKey, value); }
         /// <summary>
         /// List of words that will be removed from the games as business entity descriptors.
         /// </summary>
-        public ObservableCollection<string> BusinessEntityDescriptors { get => businessEntityDescriptors; set => SetValue(ref businessEntityDescriptors, value); }
+        public ObservableCollection<string> BusinessEntityDescriptors { get => _businessEntityDescriptors; set => SetValue(ref _businessEntityDescriptors, value); }
         /// <summary>
         /// List of words than will be ignored when searching for similar companies.
         /// </summary>
-        public ObservableCollection<string> IgnoreWords { get => ignoreWords; set => SetValue(ref ignoreWords, value); }
+        public ObservableCollection<string> IgnoreWords { get => _ignoreWords; set => SetValue(ref _ignoreWords, value); }
     }
 
     public class CompanyCompanionSettingsViewModel : ObservableObject, ISettings
@@ -89,7 +89,7 @@ namespace CompanyCompanion
 
         public CompanyCompanionSettingsViewModel(CompanyCompanion plugin)
         {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
+            // Injecting your _plugin instance is required for Save/Load method because Playnite saves data to a location based on what _plugin requested the operation.
             this.plugin = plugin;
 
             // Load saved Settings.

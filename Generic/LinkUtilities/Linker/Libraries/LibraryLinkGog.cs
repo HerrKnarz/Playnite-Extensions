@@ -13,7 +13,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to GOG.
     /// </summary>
-    class LibraryLinkGog : LibraryLink
+    internal class LibraryLinkGog : LibraryLink
     {
         public override Guid LibraryId { get; } = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
         public override string LinkName { get; } = "GOG";

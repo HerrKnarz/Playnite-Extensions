@@ -11,7 +11,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Zophar's Domain for game soundtracks.
     /// </summary>
-    class LinkZopharsDomain : Link
+    internal class LinkZopharsDomain : Link
     {
         public override string LinkName { get; } = "Zophar (Music)";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;

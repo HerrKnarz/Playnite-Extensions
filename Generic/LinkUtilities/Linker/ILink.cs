@@ -13,7 +13,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Interface for all the websites a link can be added to
     /// </summary>
-    interface ILink
+    internal interface ILink
     {
         /// <summary>
         /// Name the link will have in the games link collection

@@ -7,7 +7,7 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to rename links based on patterns.
     /// </summary>
-    public class RenameLinks : LinkAction
+    internal class RenameLinks : LinkAction
     {
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressRenameLinks";
 
@@ -22,7 +22,7 @@ namespace LinkUtilities.LinkActions
         {
         }
 
-        public bool Rename(Game game, bool updateDB = true)
+        private bool Rename(Game game, bool updateDB = true)
         {
             bool mustUpdate = false;
 

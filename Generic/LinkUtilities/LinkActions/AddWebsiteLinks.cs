@@ -11,7 +11,7 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to add a link to all available websites in the Links list, if a definitive link was found.
     /// </summary>
-    public class AddWebsiteLinks : LinkAction
+    internal class AddWebsiteLinks : LinkAction
     {
         /// <summary>
         /// contains all website Links that can be added.
@@ -26,7 +26,7 @@ namespace LinkUtilities.LinkActions
             Links = new Links(Plugin);
         }
 
-        public bool AddLink(Game game, Linker.Link link, ActionModifierTypes actionModifier)
+        private bool AddLink(Game game, Linker.Link link, ActionModifierTypes actionModifier)
         {
             switch (actionModifier)
             {

@@ -27,9 +27,9 @@ namespace CompanyCompanion
         }
 
         /// <summary>
-        /// Shows the merge companies window.
+        /// Shows the _merge companies window.
         /// </summary>
-        public void ShowMergeView()
+        private void ShowMergeView()
         {
             try
             {

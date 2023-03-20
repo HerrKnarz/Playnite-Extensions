@@ -11,19 +11,17 @@ namespace WikipediaMetadata
 {
     public class MetadataProvider : OnDemandMetadataProvider
     {
-        private readonly MetadataRequestOptions options;
-        private readonly WikipediaMetadata plugin;
+        private readonly MetadataRequestOptions _options;
+        private readonly WikipediaMetadata _plugin;
+        private WikipediaGameMetadata _foundGame;
+        private HtmlParser _htmlParser;
 
-        private WikipediaGameMetadata foundGame;
-
-        private HtmlParser htmlParser;
-
-        public override List<MetadataField> AvailableFields => plugin.SupportedFields;
+        public override List<MetadataField> AvailableFields => _plugin.SupportedFields;
 
         public MetadataProvider(MetadataRequestOptions options, WikipediaMetadata plugin)
         {
-            this.options = options;
-            this.plugin = plugin;
+            _options = options;
+            _plugin = plugin;
         }
 
         /// <summary>
@@ -33,9 +31,9 @@ namespace WikipediaMetadata
         private WikipediaGameMetadata FindGame()
         {
             // If we already found the game, we simply return it.
-            if (foundGame != null)
+            if (_foundGame != null)
             {
-                return foundGame;
+                return _foundGame;
             }
 
             WikipediaPage page = new WikipediaPage();
@@ -43,12 +41,12 @@ namespace WikipediaMetadata
 
             try
             {
-                GameFinder gameFinder = new GameFinder(plugin.Settings.Settings);
+                GameFinder gameFinder = new GameFinder(_plugin.Settings.Settings);
                 string key = string.Empty;
 
-                if (options.IsBackgroundDownload)
+                if (_options.IsBackgroundDownload)
                 {
-                    Page foundPage = gameFinder.FindGame(options.GameData.Name);
+                    Page foundPage = gameFinder.FindGame(_options.GameData.Name);
 
                     if (foundPage != null)
                     {
@@ -57,7 +55,7 @@ namespace WikipediaMetadata
                 }
                 else
                 {
-                    GenericItemOption chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, gameFinder.GetSearchResults, options.GameData.Name, $"{plugin.Name}: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
+                    GenericItemOption chosen = _plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, gameFinder.GetSearchResults, _options.GameData.Name, $"{_plugin.Name}: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
 
                     if (chosen != null)
                     {
@@ -76,7 +74,7 @@ namespace WikipediaMetadata
                 Log.Error(ex, $"Error loading data from Wikipedia");
             }
 
-            return foundGame = new WikitextParser(plugin.Settings.Settings, page, plugin.PlayniteApi.Database.Platforms).GameMetadata;
+            return _foundGame = new WikitextParser(_plugin.Settings.Settings, page, _plugin.PlayniteApi.Database.Platforms).GameMetadata;
         }
 
         /// <summary>
@@ -86,13 +84,13 @@ namespace WikipediaMetadata
         /// <returns>Parsed result with the description and additional links</returns>
         private HtmlParser ParseHtml(string key)
         {
-            if (htmlParser != null)
+            if (_htmlParser != null)
             {
-                return htmlParser;
+                return _htmlParser;
             }
             else
             {
-                return htmlParser = new HtmlParser(key, plugin.Settings.Settings);
+                return _htmlParser = new HtmlParser(key, _plugin.Settings.Settings);
             }
         }
 

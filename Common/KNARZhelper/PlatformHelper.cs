@@ -12,43 +12,43 @@ namespace KNARZhelper
     /// </summary>
     public class PlatformHelper
     {
-        private readonly Dictionary<string, string[]> platformSpecNameByNormalName;
-        private readonly Regex TrimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-        private readonly Regex TrimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private readonly Dictionary<string, string[]> _platformSpecNameByNormalName;
+        private readonly Regex _trimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private readonly Regex _trimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         public PlatformHelper(List<Platform> platforms)
         {
-            platformSpecNameByNormalName = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
+            _platformSpecNameByNormalName = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
 
             foreach (Platform platform in platforms.Where(p => p.SpecificationId != null))
             {
-                platformSpecNameByNormalName.Add(platform.Name, new[] { platform.SpecificationId });
+                _platformSpecNameByNormalName.Add(platform.Name, new[] { platform.SpecificationId });
 
-                string nameWithoutCompany = TrimCompanyName.Replace(platform.Name, string.Empty);
+                string nameWithoutCompany = _trimCompanyName.Replace(platform.Name, string.Empty);
 
-                if (!platformSpecNameByNormalName.ContainsKey(nameWithoutCompany))
+                if (!_platformSpecNameByNormalName.ContainsKey(nameWithoutCompany))
                 {
-                    platformSpecNameByNormalName.Add(nameWithoutCompany, new[] { platform.SpecificationId });
+                    _platformSpecNameByNormalName.Add(nameWithoutCompany, new[] { platform.SpecificationId });
                 }
             }
-            TryAddPlatformByName(platformSpecNameByNormalName, "3DO", "3do");
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Microsoft Windows", "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows 95" }, new[] { "pc_windows" });
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "DOS", "MS-DOS" }, new[] { "pc_dos" });
-            TryAddPlatformByName(platformSpecNameByNormalName, "Linux", "pc_linux");
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Mac", "OSX", "OS X", "MacOS", "Mac OS", "Mac OS X" }, new[] { "macintosh" });
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Microsoft Xbox Series X", "Microsoft Xbox Series S", "Xbox Series X", "Xbox Series S", "Microsoft Xbox Series X/S", "Microsoft Xbox Series S/X", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", }, new[] { "xbox_series" });
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "PS", "PS1", "PSX" }, new[] { "sony_playstation" });
-            TryAddPlatformByName(platformSpecNameByNormalName, "PS2", "sony_playstation2");
-            TryAddPlatformByName(platformSpecNameByNormalName, "PS3", "sony_playstation3");
-            TryAddPlatformByName(platformSpecNameByNormalName, "PS4", "sony_playstation4");
-            TryAddPlatformByName(platformSpecNameByNormalName, "PS5", "sony_playstation5");
-            TryAddPlatformByName(platformSpecNameByNormalName, "PSP", "sony_psp");
-            TryAddPlatformByName(platformSpecNameByNormalName, "Vita", "sony_vita");
-            TryAddPlatformByName(platformSpecNameByNormalName, "PS4/5", new[] { "sony_playstation4", "sony_playstation5" });
-            TryAddPlatformByName(platformSpecNameByNormalName, "Playstation 4/5", new[] { "sony_playstation4", "sony_playstation5" });
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Sega Mega Drive", "Mega Drive", "Mega Drive/Genesis" }, new[] { "sega_genesis" });
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "Super NES", "Super Nintendo Entertainment System" }, new[] { "nintendo_super_nes" });
-            TryAddPlatformByName(platformSpecNameByNormalName, new[] { "SNK Neo Geo MVS", "Neo Geo MVS", "SNK Neo Geo AES", "Neo Geo AES" }, new[] { "snk_neogeo_aes" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, "3DO", "3do");
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Microsoft Windows", "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows 95" }, new[] { "pc_windows" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "DOS", "MS-DOS" }, new[] { "pc_dos" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, "Linux", "pc_linux");
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Mac", "OSX", "OS X", "MacOS", "Mac OS", "Mac OS X" }, new[] { "macintosh" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Microsoft Xbox Series X", "Microsoft Xbox Series S", "Xbox Series X", "Xbox Series S", "Microsoft Xbox Series X/S", "Microsoft Xbox Series S/X", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", }, new[] { "xbox_series" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "PS", "PS1", "PSX" }, new[] { "sony_playstation" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, "PS2", "sony_playstation2");
+            TryAddPlatformByName(_platformSpecNameByNormalName, "PS3", "sony_playstation3");
+            TryAddPlatformByName(_platformSpecNameByNormalName, "PS4", "sony_playstation4");
+            TryAddPlatformByName(_platformSpecNameByNormalName, "PS5", "sony_playstation5");
+            TryAddPlatformByName(_platformSpecNameByNormalName, "PSP", "sony_psp");
+            TryAddPlatformByName(_platformSpecNameByNormalName, "Vita", "sony_vita");
+            TryAddPlatformByName(_platformSpecNameByNormalName, "PS4/5", new[] { "sony_playstation4", "sony_playstation5" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, "Playstation 4/5", new[] { "sony_playstation4", "sony_playstation5" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Sega Mega Drive", "Mega Drive", "Mega Drive/Genesis" }, new[] { "sega_genesis" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Super NES", "Super Nintendo Entertainment System" }, new[] { "nintendo_super_nes" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "SNK Neo Geo MVS", "Neo Geo MVS", "SNK Neo Geo AES", "Neo Geo AES" }, new[] { "snk_neogeo_aes" });
         }
         private bool TryAddPlatformByName(Dictionary<string, string[]> dict, string platformName, params string[] platformSpecNames)
         {
@@ -94,9 +94,9 @@ namespace KNARZhelper
                 return new List<MetadataProperty>();
             }
 
-            string sanitizedPlatformName = TrimInput.Replace(platformName, string.Empty);
+            string sanitizedPlatformName = _trimInput.Replace(platformName, string.Empty);
 
-            if (platformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds))
+            if (_platformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds))
             {
                 return specIds.Select(s => new MetadataSpecProperty(s)).ToList<MetadataProperty>();
             }

@@ -9,48 +9,48 @@ using System.Linq;
 namespace CompanyCompanion
 {
     /// <summary>
-    /// Class to handle finding of company groups and merging them.
+    /// Class to handle finding of company _groups and merging them.
     /// </summary>
     public class MergeCompanies : ViewModelBase
     {
-        private ObservableCollection<MergeGroup> mergeList;
+        private ObservableCollection<MergeGroup> _mergeList;
 
-        private readonly CompanyCompanion plugin;
+        private readonly CompanyCompanion _plugin;
 
-        private List<Game> gameList;
+        private List<Game> _gameList;
 
-        private ObservableCollection<MergeGroup> groups;
+        private ObservableCollection<MergeGroup> _groups;
 
-        private int gameCount = 0;
+        private int _gameCount = 0;
 
         /// <summary>
         /// List of business entity descriptors with special characters removed.
         /// </summary>
-        private readonly List<string> cleanBusinessEntityDescriptors;
+        private readonly List<string> _cleanBusinessEntityDescriptors;
 
         /// <summary>
         /// Contains all companies that can be merged.
         /// </summary>
         public ObservableCollection<MergeGroup> MergeList
         {
-            get => mergeList;
+            get => _mergeList;
             set
             {
-                mergeList = value;
+                _mergeList = value;
                 OnPropertyChanged("MergeList");
             }
         }
 
         /// <summary>
-        /// Initializes the merge class.
+        /// Initializes the _merge class.
         /// </summary>
-        /// <param name="plugin">The plugin itself to have access to the settings etc.</param>
+        /// <param name="plugin">The _plugin itself to have access to the settings etc.</param>
         public MergeCompanies(CompanyCompanion plugin)
         {
             MergeList = new ObservableCollection<MergeGroup>();
-            this.plugin = plugin;
+            this._plugin = plugin;
 
-            cleanBusinessEntityDescriptors = plugin.Settings.Settings.BusinessEntityDescriptors.Select(w => w.RemoveSpecialChars().Replace("-", "")).ToList();
+            _cleanBusinessEntityDescriptors = plugin.Settings.Settings.BusinessEntityDescriptors.Select(w => w.RemoveSpecialChars().Replace("-", "")).ToList();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace CompanyCompanion
         /// <param name="name">Name to clean.</param>
         /// <param name="wordList">List of words to remove.</param>
         /// <returns>Name with the words removed</returns>
-        internal string RemoveWords(string name, List<string> wordList)
+        private string RemoveWords(string name, List<string> wordList)
         {
             if (name != null)
             {
@@ -77,9 +77,9 @@ namespace CompanyCompanion
         /// </summary>
         /// <param name="name">Name of the company</param>
         /// <returns>cleaned up name</returns>
-        public string CleanUpCompanyName(string name)
+        private string CleanUpCompanyName(string name)
         {
-            name = RemoveWords(name, cleanBusinessEntityDescriptors).CollapseWhitespaces().Trim();
+            name = RemoveWords(name, _cleanBusinessEntityDescriptors).CollapseWhitespaces().Trim();
 
             if (name.EndsWith(","))
             {
@@ -90,7 +90,7 @@ namespace CompanyCompanion
         }
 
         /// <summary>
-        /// Creates the list of companies to merge.
+        /// Creates the list of companies to _merge.
         /// </summary>
         /// <param name="cleanUpName">True, if the company names should be cleaned up.</param>
         /// <param name="findSimilar">True, if also similar companies will be searched, where only words in the ignore list differ.</param>
@@ -116,7 +116,7 @@ namespace CompanyCompanion
                             Id = c.Id,
                             Name = c.Name,
                             CleanedUpName = (cleanUpName) ? CleanUpCompanyName(c.Name) : c.Name,
-                            GroupName = (findSimilar) ? RemoveWords(CleanUpCompanyName(c.Name), plugin.Settings.Settings.IgnoreWords.ToList())
+                            GroupName = (findSimilar) ? RemoveWords(CleanUpCompanyName(c.Name), _plugin.Settings.Settings.IgnoreWords.ToList())
                                 .RemoveDiacritics()
                                 .RemoveSpecialChars()
                                 .ToLower()
@@ -146,7 +146,7 @@ namespace CompanyCompanion
 
                     mergeList = mergeGroups.Select(g => new MergeGroup
                     {
-                        Plugin = plugin,
+                        Plugin = _plugin,
                         Owner = this,
                         Key = g.Key,
                         CompanyName = g.OrderByDescending(c => c.GamesAsDeveloper.Games.Count() + c.GamesAsPublisher.Games.Count()).ThenBy(c => c.CleanedUpName).First().CleanedUpName,
@@ -173,16 +173,16 @@ namespace CompanyCompanion
         }
 
         /// <summary>
-        /// Merges the selected groups - used as a progress bar action.
+        /// Merges the selected _groups - used as a progress bar action.
         /// </summary>
         /// <param name="progressArgs">Arguments of the progress bar</param>
-        internal void ProcessGroups(GlobalProgressActionArgs progressArgs)
+        private void ProcessGroups(GlobalProgressActionArgs progressArgs)
         {
             try
             {
-                progressArgs.ProgressMaxValue = gameList.Count;
+                progressArgs.ProgressMaxValue = _gameList.Count;
 
-                foreach (Game game in gameList)
+                foreach (Game game in _gameList)
                 {
                     if (progressArgs.CancelToken.IsCancellationRequested)
                     {
@@ -192,7 +192,7 @@ namespace CompanyCompanion
                     bool mustUpdateGame = false;
 
 
-                    foreach (MergeGroup group in groups)
+                    foreach (MergeGroup group in _groups)
                     {
                         mustUpdateGame = group.UpdateGame(game) || mustUpdateGame;
                     }
@@ -202,17 +202,17 @@ namespace CompanyCompanion
                     {
                         API.Instance.Database.Games.Update(game);
 
-                        gameCount++;
+                        _gameCount++;
                     }
 
                     progressArgs.CurrentProgressValue++;
                 }
 
                 progressArgs.CurrentProgressValue = 0;
-                progressArgs.ProgressMaxValue = groups.Count;
+                progressArgs.ProgressMaxValue = _groups.Count;
                 progressArgs.Text = $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionProgressMerging")}";
 
-                foreach (MergeGroup group in groups)
+                foreach (MergeGroup group in _groups)
                 {
                     group.CleanUpCompanies();
                 }
@@ -224,20 +224,20 @@ namespace CompanyCompanion
         }
 
         /// <summary>
-        /// Merges the companies of a merge group.
+        /// Merges the companies of a _merge group.
         /// </summary>
-        /// <param name="mergeGroup">Group to merge</param>
+        /// <param name="mergeGroup">Group to _merge</param>
         public void Merge(MergeGroup mergeGroup = null)
         {
-            gameCount = 0;
+            _gameCount = 0;
 
             if (mergeGroup is null)
             {
-                gameList = API.Instance.Database.Games.ToList();
+                _gameList = API.Instance.Database.Games.ToList();
             }
             else
             {
-                gameList = API.Instance.Database.Games
+                _gameList = API.Instance.Database.Games
                 .Where(g =>
                     (
                         g.DeveloperIds != null &&
@@ -252,14 +252,14 @@ namespace CompanyCompanion
 
             if (mergeGroup is null)
             {
-                groups = MergeList;
+                _groups = MergeList;
             }
             else
             {
-                groups = new ObservableCollection<MergeGroup> { mergeGroup };
+                _groups = new ObservableCollection<MergeGroup> { mergeGroup };
             }
 
-            if (groups.Count > 0)
+            if (_groups.Count > 0)
             {
                 GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                        $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionProgressUpdating")}",
@@ -273,10 +273,10 @@ namespace CompanyCompanion
             }
 
             API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCCompanyCompanionDialogUpdated"),
-                gameCount,
-                groups.Select(g => g.Companies.Where(c => c.Merge).ToList().Count).Sum()));
+                _gameCount,
+                _groups.Select(g => g.Companies.Where(c => c.Merge).ToList().Count).Sum()));
 
-            groups = null;
+            _groups = null;
 
             if (mergeGroup != null)
             {
@@ -287,7 +287,7 @@ namespace CompanyCompanion
         /// <summary>
         /// Merges all simple duplicates.
         /// </summary>
-        /// <param name="plugin">The plugin itself to have access to the settings etc.</param>
+        /// <param name="plugin">The _plugin itself to have access to the settings etc.</param>
         public static void MergeDuplicates(CompanyCompanion plugin)
         {
             MergeCompanies merger = new MergeCompanies(plugin);
@@ -307,7 +307,7 @@ namespace CompanyCompanion
         /// <summary>
         /// Removes business entity descriptor from all companies.
         /// </summary>
-        /// <param name="plugin">The plugin itself to have access to the settings etc.</param>
+        /// <param name="plugin">The _plugin itself to have access to the settings etc.</param>
         public static void RemoveBusinessEntityDescriptors(CompanyCompanion plugin)
         {
             MergeCompanies merger = new MergeCompanies(plugin);

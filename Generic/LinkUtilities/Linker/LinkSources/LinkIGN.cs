@@ -6,7 +6,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to IGN.
     /// </summary>
-    class LinkIGN : Link
+    internal class LinkIGN : Link
     {
         public override string LinkName { get; } = "IGN";
         public override string BaseUrl { get; } = "https://www.ign.com/games/";

@@ -9,16 +9,17 @@ namespace WikipediaMetadata
 {
     public class WikipediaMetadataSettingsViewModel : ObservableObject, ISettings
     {
-        private readonly WikipediaMetadata plugin;
+        private readonly WikipediaMetadata _plugin;
+        private PluginSettings _settings;
+
         private PluginSettings EditingClone { get; set; }
 
-        private PluginSettings settings;
         public PluginSettings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
@@ -61,10 +62,10 @@ namespace WikipediaMetadata
 
         public WikipediaMetadataSettingsViewModel(WikipediaMetadata plugin)
         {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
+            // Injecting your _plugin instance is required for Save/Load method because Playnite saves data to a location based on what _plugin requested the operation.
+            this._plugin = plugin;
 
-            // Load saved settings.
+            // Load saved _settings.
             PluginSettings savedSettings = plugin.LoadPluginSettings<PluginSettings>();
 
             // LoadPluginSettings returns null if no saved data is available.
@@ -83,7 +84,7 @@ namespace WikipediaMetadata
             {
                 Settings.PopulateTagSettings();
             }
-            // Hotfix to a bug that duplicated the tag settings in version 1.3 and 1.4
+            // Hotfix to a bug that duplicated the tag _settings in version 1.3 and 1.4
             else if (Settings.TagSettings.Count > 9)
             {
                 while (Settings.TagSettings.Count > 9)
@@ -95,7 +96,7 @@ namespace WikipediaMetadata
 
         public void BeginEdit()
         {
-            // Code executed when settings view is opened and user starts editing values.
+            // Code executed when _settings view is opened and user starts editing values.
             EditingClone = Serialization.GetClone(Settings);
         }
 
@@ -109,8 +110,8 @@ namespace WikipediaMetadata
         public void EndEdit()
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and ArcadeSystemAsPlatform.
-            plugin.SavePluginSettings(Settings);
+            // This method should save _settings made to Option1 and ArcadeSystemAsPlatform.
+            _plugin.SavePluginSettings(Settings);
         }
 
         public bool VerifySettings(out List<string> errors)

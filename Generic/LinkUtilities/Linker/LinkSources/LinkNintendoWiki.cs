@@ -9,7 +9,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Nintendo Wiki.
     /// </summary>
-    class LinkNintendoWiki : Link
+    internal class LinkNintendoWiki : Link
     {
         public override string LinkName { get; } = "Nintendo Wiki";
         public override string BaseUrl { get; } = "https://nintendo.fandom.com/wiki/";

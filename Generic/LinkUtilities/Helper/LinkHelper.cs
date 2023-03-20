@@ -17,6 +17,8 @@ namespace LinkUtilities
     /// </summary>
     internal static class LinkHelper
     {
+        private static bool _allowRedirects = true;
+
         /// <summary>
         /// Adds a link to the specified URL to a game.
         /// </summary>
@@ -26,7 +28,7 @@ namespace LinkUtilities
         /// <returns>
         /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
         /// </returns>
-        public static bool AddLink(Game game, string linkName, string linkUrl, LinkUtilities plugin, bool ignoreExisting = true)
+        internal static bool AddLink(Game game, string linkName, string linkUrl, LinkUtilities plugin, bool ignoreExisting = true)
         {
             Link link = new Link(linkName, linkUrl);
             bool mustUpdate = false;
@@ -111,14 +113,14 @@ namespace LinkUtilities
         /// <param name="game">Game for which the Links will be checked</param>
         /// <param name="linkName">Name of the link</param>
         /// <returns>True, if a link with that name exists</returns>
-        public static bool LinkExists(Game game, string linkName) => !(game.Links is null) && game.Links.Count(x => x.Name == linkName) > 0;
+        internal static bool LinkExists(Game game, string linkName) => !(game.Links is null) && game.Links.Count(x => x.Name == linkName) > 0;
 
         /// <summary>
         /// Sorts the Links of a game alphabetically by the link name.
         /// </summary>
         /// <param name="game">Game in which the links will be sorted.</param>
         /// <returns>True, if the links could be sorted</returns>
-        public static bool SortLinks(Game game)
+        internal static bool SortLinks(Game game)
         {
             if (game.Links != null && game.Links.Count > 0)
             {
@@ -138,7 +140,7 @@ namespace LinkUtilities
         /// <param name="game">Game in which the links will be sorted.</param>
         /// <param name="sortOrder">Dictionary that contains the sort order.</param>
         /// <returns>True, if the links could be sorted</returns>
-        public static bool SortLinks(Game game, Dictionary<string, int> sortOrder)
+        internal static bool SortLinks(Game game, Dictionary<string, int> sortOrder)
         {
             if (game.Links != null && game.Links.Count > 0)
             {
@@ -158,7 +160,7 @@ namespace LinkUtilities
         /// <param name="game">Game in which the duplicates will be removed.</param>
         /// <param name="duplicateType">Specifies, if the duplicates will be identified by name, URL or both..</param>
         /// <returns>True, if duplicates were removed. Returns false if there weren't duplicates to begin with.</returns>
-        public static bool RemoveDuplicateLinks(Game game, DuplicateTypes duplicateType)
+        internal static bool RemoveDuplicateLinks(Game game, DuplicateTypes duplicateType)
         {
             if (game.Links != null && game.Links.Count > 0)
             {
@@ -199,7 +201,7 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="url">URL to clean up</param>
         /// <returns>cleaned up URL</returns>
-        public static string CleanUpUrl(string url)
+        private static string CleanUpUrl(string url)
         {
             try
             {
@@ -237,20 +239,18 @@ namespace LinkUtilities
         /// <returns>True, if the request can be executed.</returns>
         private static bool OnPreRequest(HttpWebRequest request)
         {
-            request.AllowAutoRedirect = AllowRedirects;
+            request.AllowAutoRedirect = _allowRedirects;
             return true;
         }
-
-        private static bool AllowRedirects = true;
 
         /// <summary>
         /// Checks if an URL is reachable and returns OK
         /// </summary>
         /// <param name="url">URL to check</param>
         /// <returns>True, if the URL is reachable</returns>        
-        public static bool CheckUrl(string url, bool allowRedirects = true)
+        internal static bool CheckUrl(string url, bool allowRedirects = true)
         {
-            AllowRedirects = allowRedirects;
+            _allowRedirects = allowRedirects;
 
             try
             {

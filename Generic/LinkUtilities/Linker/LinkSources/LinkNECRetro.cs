@@ -9,13 +9,13 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to NEC Retro.
     /// </summary>
-    class LinkNECRetro : Link
+    internal class LinkNECRetro : Link
     {
         public override string LinkName { get; } = "NEC Retro";
         public override string BaseUrl { get; } = "https://necretro.org/";
         public override string SearchUrl { get; } = "https://necretro.org/index.php?search={0}&fulltext=1";
 
-        internal string WebsiteUrl = "https://necretro.org";
+        private readonly string _websiteUrl = "https://necretro.org";
 
         // NEC Retro Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
@@ -25,7 +25,7 @@ namespace LinkUtilities.Linker
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {
-            SearchResults = ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, WebsiteUrl, LinkName, 2);
+            SearchResults = ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName, 2);
 
             return base.SearchLink(searchTerm);
         }

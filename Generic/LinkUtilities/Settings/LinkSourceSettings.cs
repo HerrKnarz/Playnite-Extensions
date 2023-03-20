@@ -18,11 +18,11 @@ namespace LinkUtilities.Settings
         }
 
         /// <summary>
-        /// Refreshes a LinkSourceCollecion with the actual link sources present in the plugin. Is needed after updates when
+        /// Refreshes a LinkSourceCollecion with the actual link sources present in the _plugin. Is needed after updates when
         /// link sources get added or had to be removed.
         /// </summary>
         /// <param name="links">Link sources to be added</param>
-        public void RefreshLinkSources(Links links)
+        internal void RefreshLinkSources(Links links)
         {
             LinkSourceSettings newSources = GetLinkSources(links);
 
@@ -57,11 +57,11 @@ namespace LinkUtilities.Settings
         }
 
         /// <summary>
-        /// Gets a collection of the settings to all link sources in the plugin.
+        /// Gets a collection of the settings to all link sources in the _plugin.
         /// </summary>
         /// <param name="links">Link sources to be added</param>
-        /// <returns>Collection of the settings to all link sources in the plugin</returns>
-        public static LinkSourceSettings GetLinkSources(Links links)
+        /// <returns>Collection of the settings to all link sources in the _plugin</returns>
+        internal static LinkSourceSettings GetLinkSources(Links links)
         {
             LinkSourceSettings result = new LinkSourceSettings();
 

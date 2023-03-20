@@ -11,7 +11,7 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to add tags to games for missing links based on patterns.
     /// </summary>
-    public class TagMissingLinks : LinkAction
+    internal class TagMissingLinks : LinkAction
     {
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressTagMissingLinks";
 
@@ -25,7 +25,7 @@ namespace LinkUtilities.LinkActions
         /// <summary>
         /// Cache for the tags so they don't have to be retrieved from the database every time.
         /// </summary>
-        public Dictionary<string, Tag> TagsCache = new Dictionary<string, Tag>();
+        public Dictionary<string, Tag> TagsCache { get; set; } = new Dictionary<string, Tag>();
 
         public TagMissingLinks(LinkUtilities plugin) : base(plugin)
         {
@@ -76,7 +76,7 @@ namespace LinkUtilities.LinkActions
             return false;
         }
 
-        public bool Tag(Game game)
+        private bool Tag(Game game)
         {
             bool mustUpdate = false;
 

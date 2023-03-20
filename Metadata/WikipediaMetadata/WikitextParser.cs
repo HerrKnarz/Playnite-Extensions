@@ -14,21 +14,21 @@ namespace WikipediaMetadata
     /// <summary>
     /// Parses the given wikitext to get the relevant metadata informations.
     /// </summary>
-    public class WikitextParser
+    internal class WikitextParser
     {
-        private readonly PluginSettings settings;
+        private readonly PluginSettings _settings;
 
         public WikipediaGameMetadata GameMetadata { get; set; }
 
         /// <summary>
         /// Creates an instance of the class and fills the parameters by parsing the wikitext.
         /// </summary>
-        /// <param name="settings">Settings of the plugin</param>
+        /// <param name="settings">Settings of the _plugin</param>
         /// <param name="gameData">Page object from wikipedia containing the wikitext and other data.</param>
         /// <param name="platformList">List of all platforms in the database</param>
         public WikitextParser(PluginSettings settings, WikipediaPage gameData, IItemCollection<Platform> platformList)
         {
-            this.settings = settings;
+            this._settings = settings;
 
             GameMetadata = new WikipediaGameMetadata();
 
@@ -240,7 +240,7 @@ namespace WikipediaMetadata
                     }
                 }
 
-                // If dates were found, We'll return the one depending on the settings.
+                // If dates were found, We'll return the one depending on the _settings.
                 if (dates.Count > 0)
                 {
                     foreach (PartialDate date in dates)
@@ -258,7 +258,7 @@ namespace WikipediaMetadata
 
                     PartialDate dateToUse = null;
 
-                    switch (settings.DateToUse)
+                    switch (_settings.DateToUse)
                     {
                         case DateToUse.Earliest:
                             dateToUse = dates.OrderBy(d => d.Date).First();
@@ -397,7 +397,7 @@ namespace WikipediaMetadata
                 // If we found ratings, we return the average rating.
                 if (ratings.Count > 0)
                 {
-                    switch (settings.RatingToUse)
+                    switch (_settings.RatingToUse)
                     {
                         case RatingToUse.Lowest: return ratings.Min();
                         case RatingToUse.Highest: return ratings.Max();
@@ -530,7 +530,7 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="name">name of the template</param>
         /// <returns>The cleaned up name</returns>
-        public string CleanTemplateName(string name)
+        private string CleanTemplateName(string name)
         {
             if (name.IndexOf("\n") > 0)
             {

@@ -7,19 +7,19 @@ using System.Linq;
 namespace CompanyCompanion
 {
     /// <summary>
-    /// Contains all relevant data to merge similar companies to one.
+    /// Contains all relevant data to _merge similar companies to one.
     /// </summary>
     public class MergeGroup : ViewModelBase
     {
-        private string companyName = string.Empty;
-        private Guid companyId = Guid.Empty;
+        private string _companyName = string.Empty;
+        private Guid _companyId = Guid.Empty;
 
         /// <summary>
-        /// Company Companion plugin. Used to access settings etc.
+        /// Company Companion _plugin. Used to access settings etc.
         /// </summary>
         public CompanyCompanion Plugin { get; set; }
         /// <summary>
-        /// Owner of the group. Used to merge one group.
+        /// Owner of the group. Used to _merge one group.
         /// </summary>
         public MergeCompanies Owner { get; set; }
         /// <summary>
@@ -31,10 +31,10 @@ namespace CompanyCompanion
         /// </summary>
         public string CompanyName
         {
-            get => companyName;
+            get => _companyName;
             set
             {
-                companyName = value;
+                _companyName = value;
                 OnPropertyChanged("CompanyName");
             }
         }
@@ -60,10 +60,10 @@ namespace CompanyCompanion
         /// </summary>
         public Guid CompanyId
         {
-            get => companyId;
+            get => _companyId;
             set
             {
-                companyId = value;
+                _companyId = value;
                 OnPropertyChanged("CompanyId");
             }
         }
@@ -73,7 +73,7 @@ namespace CompanyCompanion
         public List<MergeItem> Companies { get; set; }
 
         /// <summary>
-        /// Switches the companies of the merge group in a game to the master company.
+        /// Switches the companies of the _merge group in a game to the master company.
         /// </summary>
         /// <param name="game">game to process</param>
         /// <returns></returns>
@@ -112,7 +112,7 @@ namespace CompanyCompanion
         }
 
         /// <summary>
-        /// Cleans up all companies of the merge group.
+        /// Cleans up all companies of the _merge group.
         /// </summary>
         public void CleanUpCompanies()
         {

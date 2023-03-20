@@ -3,45 +3,45 @@
 namespace CompanyCompanion
 {
     /// <summary>
-    /// View model for the merge companies window
+    /// View model for the _merge companies window
     /// </summary>
     public class MergeCompaniesViewModel : ViewModelBase
     {
-        private MergeCompanies mergeCompanies;
-        private bool cleanUpNames = true;
-        private bool findSimilar = true;
+        private MergeCompanies _mergeCompanies;
+        private bool _cleanUpNames = true;
+        private bool _findSimilar = true;
 
         public CompanyCompanion Plugin { set => InitializeView(value); }
 
         public MergeCompanies MergeCompanies
         {
-            get => mergeCompanies;
+            get => _mergeCompanies;
             set
             {
-                mergeCompanies = value;
+                _mergeCompanies = value;
                 OnPropertyChanged("MergeCompanies");
             }
         }
 
-        public void InitializeView(CompanyCompanion plugin)
+        private void InitializeView(CompanyCompanion plugin)
         {
             MergeCompanies = new MergeCompanies(plugin);
         }
         public bool CleanUpNames
         {
-            get => cleanUpNames;
+            get => _cleanUpNames;
             set
             {
-                cleanUpNames = value;
+                _cleanUpNames = value;
                 OnPropertyChanged("CleanUpNames");
             }
         }
         public bool FindSimilar
         {
-            get => findSimilar;
+            get => _findSimilar;
             set
             {
-                findSimilar = value;
+                _findSimilar = value;
                 OnPropertyChanged("FindSimilar");
             }
         }
@@ -50,7 +50,7 @@ namespace CompanyCompanion
         }
         public RelayCommand FindCompaniesCommand
         {
-            get => new RelayCommand(() => MergeCompanies.GetMergeList(cleanUpNames, findSimilar));
+            get => new RelayCommand(() => MergeCompanies.GetMergeList(_cleanUpNames, _findSimilar));
         }
     }
 }

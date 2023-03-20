@@ -5,7 +5,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// List of all website Links that can be added.
     /// </summary>
-    public class Links : List<Link>
+    internal class Links : List<Link>
     {
         public Links(LinkUtilities plugin)
         {

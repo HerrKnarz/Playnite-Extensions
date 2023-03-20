@@ -69,7 +69,7 @@ namespace LinkUtilities.Settings
         /// <param name="type">
         /// Type of the pattern to be added
         /// </param>
-        public static List<LinkNamePattern> GetDefaultLinkNamePatterns(PatternTypes type)
+        private static List<LinkNamePattern> GetDefaultLinkNamePatterns(PatternTypes type)
         {
             string fileName = string.Empty;
 

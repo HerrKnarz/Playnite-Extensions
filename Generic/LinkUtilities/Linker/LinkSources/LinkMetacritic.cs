@@ -9,17 +9,16 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Metacritic.
     /// </summary>
-    class LinkMetacritic : Link
+    internal class LinkMetacritic : Link
     {
         public override string LinkName { get; } = "Metacritic";
         public override string BaseUrl { get; } = "https://www.metacritic.com/game/";
         public override string SearchUrl { get; } = string.Empty;
 
         /// <summary>
-        /// Dictionary with possible platform names and their equivalents in metacritic links. Only needed for names that differ from
-        /// the platform in the link. 
+        /// Dictionary with playnite platform ids and their equivalents in metacritic links
         /// </summary>
-        public static IReadOnlyDictionary<string, string> Platforms = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        private readonly IReadOnlyDictionary<string, string> _platforms = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             { "nintendo_3ds", "3ds" },
             { "nintendo_64", "nintendo-64" },
@@ -45,6 +44,7 @@ namespace LinkUtilities.Linker
             { "xbox_one", "xbox-one" },
             { "xbox_series", "xbox-series-x" },
         };
+
         public override bool AddLink(Game game)
         {
             bool result = false;
@@ -63,9 +63,9 @@ namespace LinkUtilities.Linker
 
                 if (!LinkHelper.LinkExists(game, linkName))
                 {
-                    if (Platforms.ContainsKey(platform.SpecificationId))
+                    if (_platforms.ContainsKey(platform.SpecificationId))
                     {
-                        LinkUrl = $"{BaseUrl}{Platforms[platform.SpecificationId]}/{GetGamePath(game)}";
+                        LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game)}";
 
                         if (CheckLink(LinkUrl))
                         {
@@ -73,7 +73,7 @@ namespace LinkUtilities.Linker
                         }
                         else if (game.Name != game.Name.RemoveEditionSuffix())
                         {
-                            LinkUrl = $"{BaseUrl}{Platforms[platform.SpecificationId]}/{GetGamePath(game, game.Name.RemoveEditionSuffix())}";
+                            LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game, game.Name.RemoveEditionSuffix())}";
 
                             if (CheckLink(LinkUrl))
                             {
