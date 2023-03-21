@@ -12,20 +12,29 @@ namespace WikipediaMetadata
     internal class GameFinder
     {
         private readonly PluginSettings _settings;
-        private string _wikiNameVideoGame;
-        private string _wikiName;
-        private string _wikiStart;
 
         public GameFinder(PluginSettings settings)
         {
             _settings = settings;
         }
 
-        private void PrepareSearchTerms(string searchTerm)
+        /// <summary>
+        /// Prepares different strings for search functions
+        /// </summary>
+        /// <param name="searchTerm">Term to search for</param>
+        /// <returns> nameVideoGame = search term with " (video game)" added
+        /// compareName = search term without special characters and whitespaces to compare with results
+        /// startName = the first five characters of the search term to order by those.</returns>
+        private (string nameVideoGame, string compareName, string startName) PrepareSearchTerms(string searchTerm)
         {
-            _wikiNameVideoGame = (searchTerm + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
-            _wikiName = searchTerm.RemoveSpecialChars().ToLower().Replace(" ", "");
-            _wikiStart = _wikiName.Substring(0, (_wikiName.Length > 5) ? 5 : _wikiName.Length);
+            string compareName = searchTerm.RemoveSpecialChars().ToLower().Replace(" ", "");
+
+            return
+                (
+                    $"{searchTerm} (video game)".RemoveSpecialChars().ToLower().Replace(" ", ""),
+                    compareName,
+                    new string(compareName.Take(5).ToArray())
+                );
         }
 
         /// <summary>
@@ -37,7 +46,7 @@ namespace WikipediaMetadata
         {
             Page foundPage = null;
 
-            PrepareSearchTerms(gameName);
+            (string nameVideoGame, string compareName, _) = PrepareSearchTerms(gameName);
 
             string searchName = gameName.RemoveEditionSuffix();
 
@@ -53,11 +62,13 @@ namespace WikipediaMetadata
                 // page title, so we try that first, before searching the name itself. Only if we get a 100% match, we'll
                 // use the page in background mode. The description also needs to have the words "video game" in it to
                 // avoid cases like "Doom", where a completely wrong page would be returned.
+                List<Page> foundPages = searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game")).ToList();
+
                 foundPage =
-                    searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == _wikiNameVideoGame).FirstOrDefault() ??
-                    searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == searchNameVideoGame).FirstOrDefault() ??
-                    searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == _wikiName).FirstOrDefault() ??
-                    searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game") && p.KeyMatch == searchName).FirstOrDefault();
+                    foundPages.Where(p => p.KeyMatch == nameVideoGame).FirstOrDefault() ??
+                    foundPages.Where(p => p.KeyMatch == searchNameVideoGame).FirstOrDefault() ??
+                    foundPages.Where(p => p.KeyMatch == compareName).FirstOrDefault() ??
+                    foundPages.Where(p => p.KeyMatch == searchName).FirstOrDefault();
             }
             return foundPage;
         }
@@ -69,7 +80,7 @@ namespace WikipediaMetadata
         /// <returns>List of found results</returns>
         public List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            PrepareSearchTerms(searchTerm);
+            (string nameVideoGame, string compareName, string startName) = PrepareSearchTerms(searchTerm);
 
             // We search for the game name on Wikipedia
             WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(searchTerm);
@@ -81,16 +92,14 @@ namespace WikipediaMetadata
                 // titles starting with the game name, then by titles starting with the first five characters of the game
                 // name and at last by page title itself.
                 return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
-                        .OrderByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(_wikiNameVideoGame))
-                        .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(_wikiStart))
-                        .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(_wikiName))
+                        .OrderByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(nameVideoGame))
+                        .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(startName))
+                        .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(compareName))
                         .ThenByDescending(o => o.Description != null && o.Description.Contains("video game"))
                         .ToList<GenericItemOption>();
             }
-            else
-            {
-                return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult).ToList<GenericItemOption>();
-            }
+
+            return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult).ToList<GenericItemOption>();
         }
     }
 }

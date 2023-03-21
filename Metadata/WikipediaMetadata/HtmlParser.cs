@@ -39,13 +39,10 @@ namespace WikipediaMetadata
             // build a simple new html string.
             string apiUrl = string.Format(Resources.PageHtmlUrl, gameKey.UrlEncode());
 
-            HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(apiUrl);
+            HtmlDocument doc = new HtmlWeb().Load(apiUrl);
 
             // We go through all sections, because those typically contain the text sections of the page.
-            HtmlNodeCollection topLevelSections = doc.DocumentNode.SelectNodes("//body/section");
-
-            foreach (HtmlNode topLevelSection in topLevelSections)
+            foreach (HtmlNode topLevelSection in doc.DocumentNode.SelectNodes("//body/section"))
             {
                 // First we check, if the current section is the "external links block by fetching its heading.
                 HtmlNode linkNode = topLevelSection.SelectSingleNode("./h2");
@@ -56,9 +53,7 @@ namespace WikipediaMetadata
                 }
 
                 // Now we fetch all allowed second level nodes.
-                List<HtmlNode> secondLevelNodes = topLevelSection.ChildNodes.Where(c => Resources.AllowedSecondLevelNodes.Contains(c.Name)).ToList();
-
-                foreach (HtmlNode secondLevelNode in secondLevelNodes)
+                foreach (HtmlNode secondLevelNode in topLevelSection.ChildNodes.Where(c => Resources.AllowedSecondLevelNodes.Contains(c.Name)))
                 {
                     // If the heading is one of the unwanted sections, we completely omit the section.
                     if (secondLevelNode.Name == "h2" && unwantedParagraphs.Contains(secondLevelNode.InnerText.ToLower().Trim()))
@@ -68,17 +63,13 @@ namespace WikipediaMetadata
                     else if (secondLevelNode.Name == "section")
                     {
                         // We now look for third level nodes and add those to the description.
-                        List<HtmlNode> thirdLevelNodes = secondLevelNode.ChildNodes.Where(c => Resources.AllowedThirdLevelNodes.Contains(c.Name)).ToList();
-
-                        foreach (HtmlNode thirdLevelNode in thirdLevelNodes)
+                        foreach (HtmlNode thirdLevelNode in secondLevelNode.ChildNodes.Where(c => Resources.AllowedThirdLevelNodes.Contains(c.Name)))
                         {
                             if (thirdLevelNode.Name == "section")
                             {
                                 // We now look for fourth level nodes and add those to the description. Since further levels are
                                 // very rarely used, we don't consider those for now.
-                                List<HtmlNode> fourthLevelNodes = thirdLevelNode.ChildNodes.Where(c => Resources.AllowedFourthLevelNodes.Contains(c.Name)).ToList();
-
-                                foreach (HtmlNode fourthLevelNode in fourthLevelNodes)
+                                foreach (HtmlNode fourthLevelNode in thirdLevelNode.ChildNodes.Where(c => Resources.AllowedFourthLevelNodes.Contains(c.Name)))
                                 {
                                     AddSectionToDescription(fourthLevelNode);
                                 }
@@ -131,7 +122,7 @@ namespace WikipediaMetadata
         {
             HtmlNodeCollection supNodes = text.SelectNodes("./sup");
 
-            if (supNodes != null && supNodes.Count > 0)
+            if (supNodes?.Any() ?? false)
             {
                 foreach (HtmlNode annotation in supNodes)
                 {
@@ -183,7 +174,8 @@ namespace WikipediaMetadata
             if (linkList != null)
             {
                 HtmlNodeCollection listItems = linkList.SelectNodes("./li");
-                if (listItems != null && listItems.Count > 0)
+
+                if (listItems?.Any() ?? false)
                 {
                     foreach (HtmlNode listItem in listItems)
                     {
@@ -262,7 +254,7 @@ namespace WikipediaMetadata
                 {
                     if (node.Name == "a")
                     {
-                        if (node.Attributes != null && node.Attributes.Any())
+                        if (node.Attributes?.Any() ?? false)
                         {
                             foreach (HtmlAttribute attribute in node.Attributes.ToList())
                             {
