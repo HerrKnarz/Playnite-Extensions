@@ -1,5 +1,13 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 2.4
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-21
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-03-21/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_2_4.pext
+    Changelog:
+      - fixed bug that caused links to games without edition suffix not being found.
+      - 100% translation to Spanish (thx to darklinkpower)
+      - partial translation to Portuguese, Brazilian (thx SweetAnthony)
   - Version: 2.3
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-03-18
