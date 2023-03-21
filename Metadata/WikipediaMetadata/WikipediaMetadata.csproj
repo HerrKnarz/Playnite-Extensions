@@ -45,6 +45,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\KNARZhelper\Log.cs">
+      <Link>Shared\Log.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\MiscHelper.cs">
+      <Link>Shared\MiscHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\PlatformHelper.cs">
+      <Link>Shared\PlatformHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\StringHelper.cs">
+      <Link>Shared\StringHelper.cs</Link>
+    </Compile>
     <Compile Include="GameFinder.cs" />
     <Compile Include="Models\PluginSettings.cs" />
     <Compile Include="Models\TagSetting.cs" />
@@ -351,12 +363,6 @@
     <PackageReference Include="PlayniteSDK">
       <Version>6.8.0</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\KNARZhelper\KNARZhelper.csproj">
-      <Project>{E3E24870-27F7-400E-B411-47ACD9C8B562}</Project>
-      <Name>KNARZhelper</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

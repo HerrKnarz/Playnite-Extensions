@@ -13,7 +13,7 @@ namespace WikipediaMetadata
     /// <summary>
     /// Parser for the html code of a wikipedia page fetched by the rest api, to get the description and additional links.
     /// </summary>
-    public class HtmlParser
+    internal class HtmlParser
     {
         private readonly PluginSettings _settings;
 
