@@ -1,8 +1,8 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.RAWG;
+using Newtonsoft.Json;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -43,7 +43,7 @@ namespace LinkUtilities.Linker
 
                     string jsonResult = client.DownloadString(apiUrl);
 
-                    RawgSearchResult rawgSearchResult = Serialization.FromJson<RawgSearchResult>(jsonResult);
+                    RawgSearchResult rawgSearchResult = JsonConvert.DeserializeObject<RawgSearchResult>(jsonResult);
 
                     if (rawgSearchResult.Results != null && rawgSearchResult.Results.Count > 0)
                     {

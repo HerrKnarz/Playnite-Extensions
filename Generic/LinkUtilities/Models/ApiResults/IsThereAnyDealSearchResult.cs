@@ -1,38 +1,38 @@
-﻿using Playnite.SDK.Data;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace LinkUtilities.Models.IsThereAnyDeal
 {
     public class Data
     {
-        [SerializationPropertyName("results")]
+        [JsonProperty("results")]
         public List<Result> Results;
 
-        [SerializationPropertyName("urls")]
+        [JsonProperty("urls")]
         public Urls Urls;
     }
 
     public class Result
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("plain")]
+        [JsonProperty("plain")]
         public string Plain;
 
-        [SerializationPropertyName("title")]
+        [JsonProperty("title")]
         public string Title;
     }
 
     public class IsThereAnyDealSearchResult
     {
-        [SerializationPropertyName("data")]
+        [JsonProperty("data")]
         public Data Data;
     }
 
     public class Urls
     {
-        [SerializationPropertyName("search")]
+        [JsonProperty("search")]
         public string Search;
     }
 }

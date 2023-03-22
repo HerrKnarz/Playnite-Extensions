@@ -1,4 +1,4 @@
-﻿using Playnite.SDK.Data;
+﻿using Newtonsoft.Json;
 using System;
 
 /// Contains classes needed for the JOSN result to fetch a single page.
@@ -6,43 +6,43 @@ namespace WikipediaMetadata.Models
 {
     public class Latest
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("timestamp")]
+        [JsonProperty("timestamp")]
         public DateTime Timestamp;
     }
 
     public class License
     {
-        [SerializationPropertyName("url")]
+        [JsonProperty("url")]
         public string Url;
 
-        [SerializationPropertyName("title")]
+        [JsonProperty("title")]
         public string Title;
     }
 
     public class WikipediaPage
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("key")]
+        [JsonProperty("key")]
         public string Key;
 
-        [SerializationPropertyName("title")]
+        [JsonProperty("title")]
         public string Title;
 
-        [SerializationPropertyName("latest")]
+        [JsonProperty("latest")]
         public Latest Latest;
 
-        [SerializationPropertyName("content_model")]
+        [JsonProperty("content_model")]
         public string ContentModel;
 
-        [SerializationPropertyName("license")]
+        [JsonProperty("license")]
         public License License;
 
-        [SerializationPropertyName("source")]
+        [JsonProperty("source")]
         public string Source;
     }
 

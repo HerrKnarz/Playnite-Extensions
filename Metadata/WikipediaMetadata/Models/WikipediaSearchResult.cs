@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using Newtonsoft.Json;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
 
@@ -7,55 +8,55 @@ namespace WikipediaMetadata.Models
 {
     public class Page
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("key")]
+        [JsonProperty("key")]
         public string Key;
 
         [DontSerialize]
         public string KeyMatch { get => Key.RemoveSpecialChars().ToLower().Replace(" ", ""); }
 
-        [SerializationPropertyName("title")]
+        [JsonProperty("title")]
         public string Title;
 
-        [SerializationPropertyName("excerpt")]
+        [JsonProperty("excerpt")]
         public string Excerpt;
 
-        [SerializationPropertyName("matched_title")]
+        [JsonProperty("matched_title")]
         public object MatchedTitle;
 
-        [SerializationPropertyName("description")]
+        [JsonProperty("description")]
         public string Description;
 
-        [SerializationPropertyName("thumbnail")]
+        [JsonProperty("thumbnail")]
         public Thumbnail Thumbnail;
     }
 
     public class WikipediaSearchResult
     {
-        [SerializationPropertyName("pages")]
+        [JsonProperty("pages")]
         public List<Page> Pages;
     }
 
     public class Thumbnail
     {
-        [SerializationPropertyName("mimetype")]
+        [JsonProperty("mimetype")]
         public string Mimetype;
 
-        [SerializationPropertyName("size")]
+        [JsonProperty("size")]
         public object Size;
 
-        [SerializationPropertyName("width")]
+        [JsonProperty("width")]
         public int Width;
 
-        [SerializationPropertyName("height")]
+        [JsonProperty("height")]
         public int Height;
 
-        [SerializationPropertyName("duration")]
+        [JsonProperty("duration")]
         public object Duration;
 
-        [SerializationPropertyName("url")]
+        [JsonProperty("url")]
         public string Url;
     }
 

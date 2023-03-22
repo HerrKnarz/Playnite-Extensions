@@ -1,65 +1,65 @@
-﻿using Playnite.SDK.Data;
+﻿using Newtonsoft.Json;
 
 // Contains all the classes needed to deserialize the JSON fetched from the itch.io api.
 namespace LinkUtilities.Models.Itch
 {
     public class Embed
     {
-        [SerializationPropertyName("width")]
+        [JsonProperty("width")]
         public int Width { get; set; }
 
-        [SerializationPropertyName("height")]
+        [JsonProperty("height")]
         public int Height { get; set; }
 
-        [SerializationPropertyName("fullscreen")]
+        [JsonProperty("fullscreen")]
         public bool Fullscreen { get; set; }
     }
 
     public class Game
     {
-        [SerializationPropertyName("title")]
+        [JsonProperty("title")]
         public string Title { get; set; }
 
-        [SerializationPropertyName("user")]
+        [JsonProperty("user")]
         public User User { get; set; }
 
-        [SerializationPropertyName("published_at")]
+        [JsonProperty("published_at")]
         public string PublishedAt { get; set; }
 
-        [SerializationPropertyName("embed")]
+        [JsonProperty("embed")]
         public Embed Embed { get; set; }
 
-        [SerializationPropertyName("created_at")]
+        [JsonProperty("created_at")]
         public string CreatedAt { get; set; }
 
-        [SerializationPropertyName("classification")]
+        [JsonProperty("classification")]
         public string Classification { get; set; }
 
-        [SerializationPropertyName("traits")]
+        [JsonProperty("traits")]
         public Traits Traits { get; set; }
 
-        [SerializationPropertyName("url")]
+        [JsonProperty("url")]
         public string Url { get; set; }
 
-        [SerializationPropertyName("cover_url")]
+        [JsonProperty("cover_url")]
         public string CoverUrl { get; set; }
 
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id { get; set; }
 
-        [SerializationPropertyName("min_price")]
+        [JsonProperty("min_price")]
         public int MinPrice { get; set; }
 
-        [SerializationPropertyName("short_text")]
+        [JsonProperty("short_text")]
         public string ShortText { get; set; }
 
-        [SerializationPropertyName("type")]
+        [JsonProperty("type")]
         public string Type { get; set; }
     }
 
     public class ItchMetaData
     {
-        [SerializationPropertyName("game")]
+        [JsonProperty("game")]
         public Game Game { get; set; }
     }
 
@@ -69,19 +69,19 @@ namespace LinkUtilities.Models.Itch
 
     public class User
     {
-        [SerializationPropertyName("display_name")]
+        [JsonProperty("display_name")]
         public string DisplayName { get; set; }
 
-        [SerializationPropertyName("cover_url")]
+        [JsonProperty("cover_url")]
         public string CoverUrl { get; set; }
 
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id { get; set; }
 
-        [SerializationPropertyName("username")]
+        [JsonProperty("username")]
         public string Username { get; set; }
 
-        [SerializationPropertyName("url")]
+        [JsonProperty("url")]
         public string Url { get; set; }
     }
 }

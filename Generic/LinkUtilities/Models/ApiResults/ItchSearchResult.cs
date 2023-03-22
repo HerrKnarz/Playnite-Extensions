@@ -1,4 +1,4 @@
-﻿using Playnite.SDK.Data;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
 // Contains all the classes needed to deserialize the JSON fetched from the itch.io api search.
@@ -6,70 +6,70 @@ namespace LinkUtilities.Models.Itch
 {
     public class SearchedGame
     {
-        [SerializationPropertyName("cover_url")]
+        [JsonProperty("cover_url")]
         public string CoverUrl;
 
-        [SerializationPropertyName("p_windows")]
+        [JsonProperty("p_windows")]
         public bool PWindows;
 
-        [SerializationPropertyName("p_linux")]
+        [JsonProperty("p_linux")]
         public bool PLinux;
 
-        [SerializationPropertyName("p_osx")]
+        [JsonProperty("p_osx")]
         public bool POsx;
 
-        [SerializationPropertyName("p_android")]
+        [JsonProperty("p_android")]
         public bool PAndroid;
 
-        [SerializationPropertyName("published_at")]
+        [JsonProperty("published_at")]
         public string PublishedAt;
 
-        [SerializationPropertyName("created_at")]
+        [JsonProperty("created_at")]
         public string CreatedAt;
 
-        [SerializationPropertyName("can_be_bought")]
+        [JsonProperty("can_be_bought")]
         public bool CanBeBought;
 
-        [SerializationPropertyName("in_press_system")]
+        [JsonProperty("in_press_system")]
         public bool InPressSystem;
 
-        [SerializationPropertyName("short_text")]
+        [JsonProperty("short_text")]
         public string ShortText;
 
-        [SerializationPropertyName("url")]
+        [JsonProperty("url")]
         public string Url;
 
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("classification")]
+        [JsonProperty("classification")]
         public string Classification;
 
-        [SerializationPropertyName("min_price")]
+        [JsonProperty("min_price")]
         public int MinPrice;
 
-        [SerializationPropertyName("title")]
+        [JsonProperty("title")]
         public string Title;
 
-        [SerializationPropertyName("type")]
+        [JsonProperty("type")]
         public string Type;
 
-        [SerializationPropertyName("has_demo")]
+        [JsonProperty("has_demo")]
         public bool HasDemo;
 
-        [SerializationPropertyName("still_cover_url")]
+        [JsonProperty("still_cover_url")]
         public string StillCoverUrl;
     }
 
     public class ItchSearchResult
     {
-        [SerializationPropertyName("per_page")]
+        [JsonProperty("per_page")]
         public int PerPage;
 
-        [SerializationPropertyName("page")]
+        [JsonProperty("page")]
         public int Page;
 
-        [SerializationPropertyName("games")]
+        [JsonProperty("games")]
         public List<SearchedGame> Games;
     }
 }

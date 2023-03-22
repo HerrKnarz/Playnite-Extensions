@@ -1,8 +1,8 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.Epic;
+using Newtonsoft.Json;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -68,7 +68,7 @@ namespace LinkUtilities.Linker
 
                 string jsonResult = client.DownloadString(url);
 
-                EpicSearchResult epicSearchResult = Serialization.FromJson<EpicSearchResult>(jsonResult);
+                EpicSearchResult epicSearchResult = JsonConvert.DeserializeObject<EpicSearchResult>(jsonResult);
 
                 foreach (Element element in epicSearchResult.Data.Catalog.SearchStore.Elements)
                 {

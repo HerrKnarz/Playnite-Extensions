@@ -1,8 +1,8 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.Gog;
+using Newtonsoft.Json;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace LinkUtilities.Linker
 
                     string jsonResult = client.DownloadString("https://api.gog.com/products/" + game.GameId);
 
-                    GogMetaData gogMetaData = Serialization.FromJson<GogMetaData>(jsonResult);
+                    GogMetaData gogMetaData = JsonConvert.DeserializeObject<GogMetaData>(jsonResult);
 
                     LinkUrl = $"{BaseUrl}{gogMetaData.Slug}";
 
@@ -70,7 +70,7 @@ namespace LinkUtilities.Linker
 
                 string jsonResult = client.DownloadString($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                GogSearchResult gogSearchResult = Serialization.FromJson<GogSearchResult>(jsonResult);
+                GogSearchResult gogSearchResult = JsonConvert.DeserializeObject<GogSearchResult>(jsonResult);
 
                 foreach (Product product in gogSearchResult.Products)
                 {

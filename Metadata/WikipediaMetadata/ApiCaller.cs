@@ -1,5 +1,5 @@
 ﻿using KNARZhelper;
-using Playnite.SDK.Data;
+using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Reflection;
@@ -40,7 +40,7 @@ namespace WikipediaMetadata
 
             string jsonResult = client.DownloadString(apiUrl);
 
-            return Serialization.FromJson<WikipediaSearchResult>(jsonResult);
+            return JsonConvert.DeserializeObject<WikipediaSearchResult>(jsonResult);
         }
         internal static WikipediaPage GetGameData(string key)
         {
@@ -50,7 +50,7 @@ namespace WikipediaMetadata
 
             string jsonResult = client.DownloadString(apiUrl);
 
-            return Serialization.FromJson<WikipediaPage>(jsonResult);
+            return JsonConvert.DeserializeObject<WikipediaPage>(jsonResult);
         }
         internal static WikipediaImage GetImage(string key)
         {
@@ -60,7 +60,7 @@ namespace WikipediaMetadata
 
             string jsonResult = client.DownloadString(apiUrl);
 
-            return Serialization.FromJson<WikipediaImage>(jsonResult);
+            return JsonConvert.DeserializeObject<WikipediaImage>(jsonResult);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Playnite.SDK.Data;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -7,253 +7,253 @@ namespace LinkUtilities.Models.RAWG
 {
     public class AddedByStatus
     {
-        [SerializationPropertyName("yet")]
+        [JsonProperty("yet")]
         public int Yet;
 
-        [SerializationPropertyName("owned")]
+        [JsonProperty("owned")]
         public int Owned;
 
-        [SerializationPropertyName("beaten")]
+        [JsonProperty("beaten")]
         public int Beaten;
 
-        [SerializationPropertyName("toplay")]
+        [JsonProperty("toplay")]
         public int Toplay;
 
-        [SerializationPropertyName("dropped")]
+        [JsonProperty("dropped")]
         public int Dropped;
 
-        [SerializationPropertyName("playing")]
+        [JsonProperty("playing")]
         public int Playing;
     }
 
     public class EsrbRating
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("name")]
+        [JsonProperty("name")]
         public string Name;
 
-        [SerializationPropertyName("slug")]
+        [JsonProperty("slug")]
         public string Slug;
 
-        [SerializationPropertyName("name_en")]
+        [JsonProperty("name_en")]
         public string NameEn;
 
-        [SerializationPropertyName("name_ru")]
+        [JsonProperty("name_ru")]
         public string NameRu;
     }
 
     public class Genre
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("name")]
+        [JsonProperty("name")]
         public string Name;
 
-        [SerializationPropertyName("slug")]
+        [JsonProperty("slug")]
         public string Slug;
     }
 
     public class ParentPlatform
     {
-        [SerializationPropertyName("platform")]
+        [JsonProperty("platform")]
         public Platform Platform;
     }
 
     public class Platform
     {
-        [SerializationPropertyName("platform")]
+        [JsonProperty("platform")]
         public Platform PlatformSub;
     }
 
     public class Platform2
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("name")]
+        [JsonProperty("name")]
         public string Name;
 
-        [SerializationPropertyName("slug")]
+        [JsonProperty("slug")]
         public string Slug;
     }
 
     public class Rating
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("title")]
+        [JsonProperty("title")]
         public string Title;
 
-        [SerializationPropertyName("count")]
+        [JsonProperty("count")]
         public int Count;
 
-        [SerializationPropertyName("percent")]
+        [JsonProperty("percent")]
         public double Percent;
     }
 
     public class Result
     {
-        [SerializationPropertyName("slug")]
+        [JsonProperty("slug")]
         public string Slug;
 
-        [SerializationPropertyName("name")]
+        [JsonProperty("name")]
         public string Name;
 
-        [SerializationPropertyName("playtime")]
+        [JsonProperty("playtime")]
         public int Playtime;
 
-        [SerializationPropertyName("platforms")]
+        [JsonProperty("platforms")]
         public List<Platform> Platforms;
 
-        [SerializationPropertyName("stores")]
+        [JsonProperty("stores")]
         public List<Store> Stores;
 
-        [SerializationPropertyName("released")]
+        [JsonProperty("released")]
         public string Released;
 
-        [SerializationPropertyName("tba")]
+        [JsonProperty("tba")]
         public bool Tba;
 
-        [SerializationPropertyName("background_image")]
+        [JsonProperty("background_image")]
         public string BackgroundImage;
 
-        [SerializationPropertyName("rating")]
+        [JsonProperty("rating")]
         public double Rating;
 
-        [SerializationPropertyName("rating_top")]
+        [JsonProperty("rating_top")]
         public int RatingTop;
 
-        [SerializationPropertyName("ratings")]
+        [JsonProperty("ratings")]
         public List<Rating> Ratings;
 
-        [SerializationPropertyName("ratings_count")]
+        [JsonProperty("ratings_count")]
         public int RatingsCount;
 
-        [SerializationPropertyName("reviews_text_count")]
+        [JsonProperty("reviews_text_count")]
         public int ReviewsTextCount;
 
-        [SerializationPropertyName("added")]
+        [JsonProperty("added")]
         public int Added;
 
-        [SerializationPropertyName("added_by_status")]
+        [JsonProperty("added_by_status")]
         public AddedByStatus AddedByStatus;
 
-        [SerializationPropertyName("metacritic")]
+        [JsonProperty("metacritic")]
         public int? Metacritic;
 
-        [SerializationPropertyName("suggestions_count")]
+        [JsonProperty("suggestions_count")]
         public int SuggestionsCount;
 
-        [SerializationPropertyName("updated")]
+        [JsonProperty("updated")]
         public DateTime Updated;
 
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("score")]
+        [JsonProperty("score")]
         public string Score;
 
-        [SerializationPropertyName("clip")]
+        [JsonProperty("clip")]
         public object Clip;
 
-        [SerializationPropertyName("tags")]
+        [JsonProperty("tags")]
         public List<Tag> Tags;
 
-        [SerializationPropertyName("esrb_rating")]
+        [JsonProperty("esrb_rating")]
         public EsrbRating EsrbRating;
 
-        [SerializationPropertyName("user_game")]
+        [JsonProperty("user_game")]
         public object UserGame;
 
-        [SerializationPropertyName("reviews_count")]
+        [JsonProperty("reviews_count")]
         public int ReviewsCount;
 
-        [SerializationPropertyName("saturated_color")]
+        [JsonProperty("saturated_color")]
         public string SaturatedColor;
 
-        [SerializationPropertyName("dominant_color")]
+        [JsonProperty("dominant_color")]
         public string DominantColor;
 
-        [SerializationPropertyName("short_screenshots")]
+        [JsonProperty("short_screenshots")]
         public List<ShortScreenshot> ShortScreenshots;
 
-        [SerializationPropertyName("parent_platforms")]
+        [JsonProperty("parent_platforms")]
         public List<ParentPlatform> ParentPlatforms;
 
-        [SerializationPropertyName("genres")]
+        [JsonProperty("genres")]
         public List<Genre> Genres;
 
-        [SerializationPropertyName("community_rating")]
+        [JsonProperty("community_rating")]
         public int? CommunityRating;
     }
 
     public class RawgSearchResult
     {
-        [SerializationPropertyName("count")]
+        [JsonProperty("count")]
         public int Count;
 
-        [SerializationPropertyName("next")]
+        [JsonProperty("next")]
         public object Next;
 
-        [SerializationPropertyName("previous")]
+        [JsonProperty("previous")]
         public object Previous;
 
-        [SerializationPropertyName("results")]
+        [JsonProperty("results")]
         public List<Result> Results;
 
-        [SerializationPropertyName("user_platforms")]
+        [JsonProperty("user_platforms")]
         public bool UserPlatforms;
     }
 
     public class ShortScreenshot
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("image")]
+        [JsonProperty("image")]
         public string Image;
     }
 
     public class Store
     {
-        [SerializationPropertyName("store")]
+        [JsonProperty("store")]
         public Store StoreSub;
     }
 
     public class Store2
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("name")]
+        [JsonProperty("name")]
         public string Name;
 
-        [SerializationPropertyName("slug")]
+        [JsonProperty("slug")]
         public string Slug;
     }
 
     public class Tag
     {
-        [SerializationPropertyName("id")]
+        [JsonProperty("id")]
         public int Id;
 
-        [SerializationPropertyName("name")]
+        [JsonProperty("name")]
         public string Name;
 
-        [SerializationPropertyName("slug")]
+        [JsonProperty("slug")]
         public string Slug;
 
-        [SerializationPropertyName("language")]
+        [JsonProperty("language")]
         public string Language;
 
-        [SerializationPropertyName("games_count")]
+        [JsonProperty("games_count")]
         public int GamesCount;
 
-        [SerializationPropertyName("image_background")]
+        [JsonProperty("image_background")]
         public string ImageBackground;
     }
 }

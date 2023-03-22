@@ -1,20 +1,20 @@
-﻿using Playnite.SDK.Data;
+﻿using Newtonsoft.Json;
 
 // Contains the class to deserialize the steam search result.
 namespace LinkUtilities.Models.Steam
 {
     public class SteamSearchResult
     {
-        [SerializationPropertyName("appid")]
+        [JsonProperty("appid")]
         public string Appid;
 
-        [SerializationPropertyName("name")]
+        [JsonProperty("name")]
         public string Name;
 
-        [SerializationPropertyName("icon")]
+        [JsonProperty("icon")]
         public string Icon;
 
-        [SerializationPropertyName("logo")]
+        [JsonProperty("logo")]
         public string Logo;
     }
 

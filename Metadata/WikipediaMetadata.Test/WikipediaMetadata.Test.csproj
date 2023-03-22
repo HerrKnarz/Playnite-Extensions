@@ -2,7 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net462</TargetFramework>
-
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
         <IsTestProject>true</IsTestProject>
     </PropertyGroup>
 
@@ -21,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WikipediaMetadata\WikipediaMetadata.csproj" />
+        <ProjectReference Include="..\WikipediaMetadata\WikipediaMetadata.csproj" />
     </ItemGroup>
 
 </Project>

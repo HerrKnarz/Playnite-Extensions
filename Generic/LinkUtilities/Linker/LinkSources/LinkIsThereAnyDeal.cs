@@ -1,8 +1,8 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.IsThereAnyDeal;
+using Newtonsoft.Json;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -58,7 +58,7 @@ namespace LinkUtilities.Linker
 
                     string jsonResult = client.DownloadString(apiUrl);
 
-                    IsThereAnyDealSearchResult searchResult = Serialization.FromJson<IsThereAnyDealSearchResult>(jsonResult);
+                    IsThereAnyDealSearchResult searchResult = JsonConvert.DeserializeObject<IsThereAnyDealSearchResult>(jsonResult);
 
                     if (searchResult.Data.Results != null && searchResult.Data.Results.Count > 0)
                     {

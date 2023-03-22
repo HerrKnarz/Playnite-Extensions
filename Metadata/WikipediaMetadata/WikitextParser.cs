@@ -26,23 +26,25 @@ namespace WikipediaMetadata
         /// <param name="settings">Settings of the _plugin</param>
         /// <param name="gameData">Page object from wikipedia containing the wikitext and other data.</param>
         /// <param name="platformList">List of all platforms in the database</param>
-        public WikitextParser(PluginSettings settings, WikipediaPage gameData, IItemCollection<Platform> platformList)
+        public WikitextParser(PluginSettings settings)
+            => _settings = settings;
+
+
+        public void Parse(WikipediaPage gameData, IItemCollection<Platform> platformList)
         {
-            this._settings = settings;
-
-            GameMetadata = new WikipediaGameMetadata();
-
-            GameMetadata.Links = GetLinks(gameData);
+            GameMetadata = new WikipediaGameMetadata
+            {
+                Key = gameData.Key,
+                Links = GetLinks(gameData)
+            };
 
             if (gameData.Source != null)
             {
                 try
                 {
-                    MwParserFromScratch.WikitextParser parser = new MwParserFromScratch.WikitextParser();
-                    string text = gameData.Source;
-                    Wikitext ast = parser.Parse(text);
+                    Wikitext ast = new MwParserFromScratch.WikitextParser().Parse(gameData.Source);
 
-                    GameMetadata.Key = gameData.Key;
+                    GameMetadata.CriticScore = GetCriticScore(ast);
 
                     // Most of the game relevant data can be found in the "infobox video game" template. Most Wikipedia pages
                     // for games have one of those. Without it, only name, cover image, description and links can be fetched.
@@ -57,7 +59,7 @@ namespace WikipediaMetadata
                             GameMetadata.Name = gameTitle.Value.ToPlainText(NodePlainTextOptions.RemoveRefTags);
                         }
 
-                        GameMetadata.CoverImageUrl = GetImageUrl(gameData.Key);
+                        GameMetadata.CoverImageUrl = WikipediaHelper.GetImageUrl(gameData.Key);
                         GameMetadata.ReleaseDate = GetDate(infoBox);
                         GameMetadata.Genres = GetValues(infoBox, "genre");
                         GameMetadata.Developers = GetValues(infoBox, "developer", true);
@@ -66,7 +68,7 @@ namespace WikipediaMetadata
 
                         GameMetadata.Tags = new List<MetadataProperty>();
 
-                        foreach (TagSetting tagSetting in settings.TagSettings.Where(s => s.IsChecked))
+                        foreach (TagSetting tagSetting in _settings.TagSettings.Where(s => s.IsChecked))
                         {
                             GameMetadata.Tags.AddRange(GetValues(infoBox, tagSetting.Name.ToLower(), false, tagSetting.Prefix));
                         }
@@ -77,7 +79,7 @@ namespace WikipediaMetadata
 
                         platforms.AddRange(GetValues(infoBox, "platforms"));
 
-                        if (settings.ArcadeSystemAsPlatform)
+                        if (_settings.ArcadeSystemAsPlatform)
                         {
                             platforms.AddRange(GetValues(infoBox, "arcade system"));
                         }
@@ -91,8 +93,6 @@ namespace WikipediaMetadata
                     {
                         GameMetadata.Name = gameData.Title.Replace("(video game)", "").Trim();
                     }
-
-                    GameMetadata.CriticScore = GetCriticScore(ast);
                 }
                 catch (Exception ex)
                 {
@@ -111,7 +111,7 @@ namespace WikipediaMetadata
         /// <param name="prefix">Prefix to be added to the value. Is used to categorize the tags.</param>
         /// <param name="removeSup">Removes values in superscripts.</param>
         /// <returns>List of all found values</returns>
-        private List<MetadataProperty> GetValues(Template infoBox, string field, bool removeParentheses = false, string prefix = "", bool removeSup = false)
+        internal List<MetadataProperty> GetValues(Template infoBox, string field, bool removeParentheses = false, string prefix = "", bool removeSup = false)
         {
             try
             {
@@ -212,7 +212,7 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="infoBox">Infobox template</param>
         /// <returns>The found release date or null</returns>
-        private ReleaseDate? GetDate(Template infoBox)
+        internal ReleaseDate? GetDate(Template infoBox)
         {
             try
             {
@@ -301,38 +301,17 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="gameData">game data with the key to the page</param>
         /// <returns>List of found links</returns>
-        private List<Link> GetLinks(WikipediaPage gameData) => new List<Link>
+        internal List<Link> GetLinks(WikipediaPage gameData) => new List<Link>
         {
             new Link("Wikipedia", "https://en.wikipedia.org/wiki/" + gameData.Key)
         };
-
-        /// <summary>
-        /// Fetches the url of the main image from the page.
-        /// </summary>
-        /// <param name="key">Key of the page</param>
-        /// <returns>Url of the image</returns>
-        private string GetImageUrl(string key)
-        {
-            WikipediaImage imageData = ApiCaller.GetImage(key);
-
-            if (imageData != null && imageData.Query != null)
-            {
-                ImagePage page = imageData.Query.Pages.FirstOrDefault();
-
-                if (page != null && page.Original != null)
-                {
-                    return page.Original.Source;
-                }
-            }
-            return null;
-        }
 
         /// <summary>
         /// Gets the average metacritic score from all platforms mentioned in the video game reviews template.
         /// </summary>
         /// <param name="ast">Wikitext object that contains the review box.</param>
         /// <returns>The found critic score</returns>
-        private int GetCriticScore(Wikitext ast)
+        internal int GetCriticScore(Wikitext ast)
         {
             // We search for the first occurrence of a review template in the page.
             Template infoBox = ast.EnumDescendants().OfType<Template>()
@@ -418,7 +397,7 @@ namespace WikipediaMetadata
         /// <param name="removeParentheses">Removes values in parentheses.</param>
         /// <param name="removeSup">Removes values in superscripts.</param>
         /// <returns>List of values</returns>
-        private List<MetadataNameProperty> CleanUpAndSplit(TemplateArgument argument, string field, bool removeParentheses = false, bool removeSup = false)
+        internal List<MetadataNameProperty> CleanUpAndSplit(TemplateArgument argument, string field, bool removeParentheses = false, bool removeSup = false)
         {
             // First we remove unwanted elements on template level and get the text value of the argument.
             string value = StripUnwantedElements(argument).Value.ToString();
@@ -500,7 +479,7 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="argument">argument to clean up.</param>
         /// <returns>The cleaned up argument</returns>
-        private TemplateArgument StripUnwantedElements(TemplateArgument argument)
+        internal TemplateArgument StripUnwantedElements(TemplateArgument argument)
         {
             IEnumerable<Template> templates = argument.EnumDescendants().OfType<Template>();
 
@@ -530,19 +509,13 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="name">name of the template</param>
         /// <returns>The cleaned up name</returns>
-        private string CleanTemplateName(string name)
+        internal string CleanTemplateName(string name)
         {
             if (name.IndexOf("\n") > 0)
             {
                 name = name.Substring(0, name.IndexOf("\n")).Trim();
             }
 
-            if (name.Contains("<!--"))
-            {
-                int start = name.IndexOf("<!--");
-                int end = name.IndexOf("-->", start) + 3;
-                name = name.Remove(start, end - start);
-            }
             return name.RemoveTextBetween("<!--", "-->").ToLower();
         }
     }

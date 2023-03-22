@@ -1,8 +1,8 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.GiantBomb;
+using Newtonsoft.Json;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +35,7 @@ namespace LinkUtilities.Linker
 
                     string jsonResult = client.DownloadString(apiUrl);
 
-                    GiantBombSearchResult giantBombSearchResult = Serialization.FromJson<GiantBombSearchResult>(jsonResult);
+                    GiantBombSearchResult giantBombSearchResult = JsonConvert.DeserializeObject<GiantBombSearchResult>(jsonResult);
 
                     if (giantBombSearchResult.Error == "OK" && giantBombSearchResult.NumberOfTotalResults > 0)
                     {

@@ -1,8 +1,8 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.Itch;
+using Newtonsoft.Json;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -35,7 +35,7 @@ namespace LinkUtilities.Linker
 
                     string jsonResult = client.DownloadString(apiUrl);
 
-                    ItchMetaData itchMetaData = Serialization.FromJson<ItchMetaData>(jsonResult);
+                    ItchMetaData itchMetaData = JsonConvert.DeserializeObject<ItchMetaData>(jsonResult);
 
                     LinkUrl = itchMetaData.Game.Url;
 
@@ -65,7 +65,7 @@ namespace LinkUtilities.Linker
 
                     string jsonResult = client.DownloadString(apiUrl);
 
-                    ItchSearchResult itchSearchResult = Serialization.FromJson<ItchSearchResult>(jsonResult);
+                    ItchSearchResult itchSearchResult = JsonConvert.DeserializeObject<ItchSearchResult>(jsonResult);
 
                     if (itchSearchResult.Games != null && itchSearchResult.Games.Count > 0)
                     {

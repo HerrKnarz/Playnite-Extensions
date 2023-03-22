@@ -1,4 +1,4 @@
-﻿using Playnite.SDK.Data;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
 /// Contains the classes needed to fetch images from a Wikipedia page.
@@ -6,70 +6,70 @@ namespace WikipediaMetadata.Models
 {
     public class Normalized
     {
-        [SerializationPropertyName("fromencoded")]
+        [JsonProperty("fromencoded")]
         public bool Fromencoded;
 
-        [SerializationPropertyName("from")]
+        [JsonProperty("from")]
         public string From;
 
-        [SerializationPropertyName("to")]
+        [JsonProperty("to")]
         public string To;
     }
 
     public class Original
     {
-        [SerializationPropertyName("source")]
+        [JsonProperty("source")]
         public string Source;
 
-        [SerializationPropertyName("width")]
+        [JsonProperty("width")]
         public int Width;
 
-        [SerializationPropertyName("height")]
+        [JsonProperty("height")]
         public int Height;
     }
 
     public class ImagePage
     {
-        [SerializationPropertyName("pageid")]
+        [JsonProperty("pageid")]
         public int Pageid;
 
-        [SerializationPropertyName("ns")]
+        [JsonProperty("ns")]
         public int Ns;
 
-        [SerializationPropertyName("title")]
+        [JsonProperty("title")]
         public string Title;
 
-        [SerializationPropertyName("original")]
+        [JsonProperty("original")]
         public Original Original;
 
-        [SerializationPropertyName("terms")]
+        [JsonProperty("terms")]
         public Terms Terms;
     }
 
     public class Query
     {
-        [SerializationPropertyName("normalized")]
+        [JsonProperty("normalized")]
         public List<Normalized> Normalized;
 
-        [SerializationPropertyName("pages")]
+        [JsonProperty("pages")]
         public List<ImagePage> Pages;
     }
 
     public class WikipediaImage
     {
-        [SerializationPropertyName("batchcomplete")]
+        [JsonProperty("batchcomplete")]
         public bool Batchcomplete;
 
-        [SerializationPropertyName("query")]
+        [JsonProperty("query")]
         public Query Query;
     }
 
     public class Terms
     {
-        [SerializationPropertyName("label")]
+        [JsonProperty("label")]
         public List<string> Label;
 
-        [SerializationPropertyName("description")]
+        [JsonProperty("description")]
         public List<string> Description;
     }
 
