@@ -28,10 +28,10 @@ namespace CompanyCompanion
 
     public class CompanyCompanionSettingsViewModel : ObservableObject, ISettings
     {
-        private readonly CompanyCompanion plugin;
+        private readonly CompanyCompanion _plugin;
         private CompanyCompanionSettings EditingClone { get; set; }
 
-        private CompanyCompanionSettings settings;
+        private CompanyCompanionSettings _settings;
 
         public RelayCommand AddBusinessEntityDescriptorCommand
         {
@@ -79,10 +79,10 @@ namespace CompanyCompanion
 
         public CompanyCompanionSettings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
@@ -90,7 +90,7 @@ namespace CompanyCompanion
         public CompanyCompanionSettingsViewModel(CompanyCompanion plugin)
         {
             // Injecting your _plugin instance is required for Save/Load method because Playnite saves data to a location based on what _plugin requested the operation.
-            this.plugin = plugin;
+            this._plugin = plugin;
 
             // Load saved Settings.
             CompanyCompanionSettings savedSettings = plugin.LoadPluginSettings<CompanyCompanionSettings>();
@@ -99,35 +99,12 @@ namespace CompanyCompanion
 
             Settings = savedSettings ?? new CompanyCompanionSettings();
 
-            if (Settings.BusinessEntityDescriptors is null)
-            {
-                Settings.BusinessEntityDescriptors = new ObservableCollection<string>()
-                {
-                    "AB",
-                    "ACE",
-                    "Co",
-                    "Co.,Ltd.",
-                    "Corp",
-                    "GmbH",
-                    "Inc",
-                    "LLC",
-                    "Ltd",
-                    "Pte.",
-                    "Pty",
-                    "S.A.",
-                    "S.L.",
-                    "s.r.o.",
-                    "srl",
-                };
-            }
-            else
-            {
-                Settings.BusinessEntityDescriptors = new ObservableCollection<string>(Settings.BusinessEntityDescriptors.OrderBy(x => x));
-            }
+            Settings.BusinessEntityDescriptors = Settings.BusinessEntityDescriptors is null
+                ? new ObservableCollection<string>()
+                : new ObservableCollection<string>(Settings.BusinessEntityDescriptors.OrderBy(x => x).ToList());
 
-            if (Settings.IgnoreWords is null)
-            {
-                Settings.IgnoreWords = new ObservableCollection<string>()
+            Settings.IgnoreWords = Settings.IgnoreWords is null
+                ? new ObservableCollection<string>()
                 {
                     "Corporation",
                     "Digital",
@@ -141,28 +118,15 @@ namespace CompanyCompanion
                     "Software",
                     "Studios",
                     "The",
-                };
-            }
-            else
-            {
-                Settings.IgnoreWords = new ObservableCollection<string>(Settings.IgnoreWords.OrderBy(x => x));
-            }
+                }
+                : new ObservableCollection<string>(Settings.IgnoreWords.OrderBy(x => x).ToList());
         }
 
-        public void BeginEdit()
-        {
-            EditingClone = Serialization.GetClone(Settings);
-        }
+        public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
 
-        public void CancelEdit()
-        {
-            Settings = EditingClone;
-        }
+        public void CancelEdit() => Settings = EditingClone;
 
-        public void EndEdit()
-        {
-            plugin.SavePluginSettings(Settings);
-        }
+        public void EndEdit() => _plugin.SavePluginSettings(Settings);
 
         public bool VerifySettings(out List<string> errors)
         {

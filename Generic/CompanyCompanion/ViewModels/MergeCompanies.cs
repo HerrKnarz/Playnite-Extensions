@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace CompanyCompanion
 {
@@ -23,10 +24,7 @@ namespace CompanyCompanion
 
         private int _gameCount = 0;
 
-        /// <summary>
-        /// List of business entity descriptors with special characters removed.
-        /// </summary>
-        private readonly List<string> _cleanBusinessEntityDescriptors;
+        private readonly Regex _companyFormRegex;
 
         /// <summary>
         /// Contains all companies that can be merged.
@@ -48,9 +46,13 @@ namespace CompanyCompanion
         public MergeCompanies(CompanyCompanion plugin)
         {
             MergeList = new ObservableCollection<MergeGroup>();
-            this._plugin = plugin;
+            _plugin = plugin;
 
-            _cleanBusinessEntityDescriptors = plugin.Settings.Settings.BusinessEntityDescriptors.Select(w => w.RemoveSpecialChars().Replace("-", "")).ToList();
+            string additionalStrings = (plugin.Settings.Settings.BusinessEntityDescriptors.Count > 0)
+                ? "|" + string.Join("|", plugin.Settings.Settings.BusinessEntityDescriptors.Select(w => w.RemoveSpecialChars().ToLower().Replace("-", "")))
+                : string.Empty;
+
+            _companyFormRegex = new Regex(@",?\s+((co[,.\s]+)?ltd|(l\.)?inc|s\.?l|a[./]?s|limited|l\.?l\.?(c|p)|s\.?a(\.?r\.?l)?|s\.?r\.?o|gmbh|ab|corp|pte|ace|co|pty|pty\sltd|srl" + additionalStrings + @")\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         }
 
         /// <summary>
@@ -61,14 +63,9 @@ namespace CompanyCompanion
         /// <returns>Name with the words removed</returns>
         private string RemoveWords(string name, List<string> wordList)
         {
-            if (name != null)
-            {
-                return string.Join(" ", name.Split().Where(w => !wordList.Contains(w.RemoveSpecialChars().Replace("-", ""), StringComparer.InvariantCultureIgnoreCase)));
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return name != null
+                ? string.Join(" ", name.Split().Where(w => !wordList.Contains(w.RemoveSpecialChars().Replace("-", ""), StringComparer.InvariantCultureIgnoreCase)))
+                : string.Empty;
 
         }
 
@@ -79,14 +76,21 @@ namespace CompanyCompanion
         /// <returns>cleaned up name</returns>
         private string CleanUpCompanyName(string name)
         {
-            name = RemoveWords(name, _cleanBusinessEntityDescriptors).CollapseWhitespaces().Trim();
+            string newName = name;
 
-            if (name.EndsWith(","))
+            if (newName.EndsWith(")"))
             {
-                name = name.Substring(0, name.Length - 1);
+                newName = newName.Remove(newName.Length - 1);
             }
 
-            return name;
+            newName = _companyFormRegex.Replace(newName, string.Empty).CollapseWhitespaces().Trim();
+
+            if (name.EndsWith(")"))
+            {
+                newName = $"{newName})";
+            }
+
+            return newName;
         }
 
         /// <summary>
@@ -115,8 +119,8 @@ namespace CompanyCompanion
                         {
                             Id = c.Id,
                             Name = c.Name,
-                            CleanedUpName = (cleanUpName) ? CleanUpCompanyName(c.Name) : c.Name,
-                            GroupName = (findSimilar) ? RemoveWords(CleanUpCompanyName(c.Name), _plugin.Settings.Settings.IgnoreWords.ToList())
+                            CleanedUpName = cleanUpName ? CleanUpCompanyName(c.Name) : c.Name,
+                            GroupName = findSimilar ? RemoveWords(CleanUpCompanyName(c.Name), _plugin.Settings.Settings.IgnoreWords.ToList())
                                 .RemoveDiacritics()
                                 .RemoveSpecialChars()
                                 .ToLower()
@@ -126,23 +130,14 @@ namespace CompanyCompanion
 
                     companyList.RemoveAll(c => c.GroupName == "");
 
-
                     foreach (MergeItem item in companyList)
                     {
                         item.PrepareGameInfo();
                     }
 
-
-                    IEnumerable<IGrouping<string, MergeItem>> mergeGroups;
-
-                    if (cleanUpName)
-                    {
-                        mergeGroups = companyList.GroupBy(c => c.GroupName).Where(g => g.Count() > 1 || g.First().Name != g.First().CleanedUpName);
-                    }
-                    else
-                    {
-                        mergeGroups = companyList.GroupBy(c => c.GroupName).Where(g => g.Count() > 1);
-                    }
+                    IEnumerable<IGrouping<string, MergeItem>> mergeGroups = cleanUpName
+                        ? companyList.GroupBy(c => c.GroupName).Where(g => g.Count() > 1 || g.First().Name != g.First().CleanedUpName)
+                        : companyList.GroupBy(c => c.GroupName).Where(g => g.Count() > 1);
 
                     mergeList = mergeGroups.Select(g => new MergeGroup
                     {
@@ -191,12 +186,10 @@ namespace CompanyCompanion
 
                     bool mustUpdateGame = false;
 
-
                     foreach (MergeGroup group in _groups)
                     {
                         mustUpdateGame = group.UpdateGame(game) || mustUpdateGame;
                     }
-
 
                     if (mustUpdateGame)
                     {
@@ -231,13 +224,9 @@ namespace CompanyCompanion
         {
             _gameCount = 0;
 
-            if (mergeGroup is null)
-            {
-                _gameList = API.Instance.Database.Games.ToList();
-            }
-            else
-            {
-                _gameList = API.Instance.Database.Games
+            _gameList = mergeGroup is null
+                ? API.Instance.Database.Games.ToList()
+                : API.Instance.Database.Games
                 .Where(g =>
                     (
                         g.DeveloperIds != null &&
@@ -248,16 +237,8 @@ namespace CompanyCompanion
                         g.PublisherIds.Intersect(mergeGroup.Companies.Select(c => c.Id).ToList()).Any()
                     )
                 ).ToList();
-            }
 
-            if (mergeGroup is null)
-            {
-                _groups = MergeList;
-            }
-            else
-            {
-                _groups = new ObservableCollection<MergeGroup> { mergeGroup };
-            }
+            _groups = mergeGroup is null ? MergeList : new ObservableCollection<MergeGroup> { mergeGroup };
 
             if (_groups.Count > 0)
             {
