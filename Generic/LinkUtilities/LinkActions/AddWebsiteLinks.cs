@@ -21,10 +21,7 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
-        public AddWebsiteLinks(LinkUtilities plugin) : base(plugin)
-        {
-            Links = new Links(Plugin);
-        }
+        public AddWebsiteLinks(LinkUtilities plugin) : base(plugin) => Links = new Links(Plugin);
 
         private bool AddLink(Game game, Linker.Link link, ActionModifierTypes actionModifier)
         {
@@ -64,10 +61,7 @@ namespace LinkUtilities.LinkActions
             }
             else
             {
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}",
-                    true
-                )
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions($"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}", true)
                 {
                     IsIndeterminate = false
                 };
@@ -94,12 +88,10 @@ namespace LinkUtilities.LinkActions
                             activateGlobalProgress.CurrentProgressValue++;
                         }
                     }
-
                     catch (Exception ex)
                     {
                         Log.Error(ex);
                     }
-
                 }, globalProgressOptions);
             }
 

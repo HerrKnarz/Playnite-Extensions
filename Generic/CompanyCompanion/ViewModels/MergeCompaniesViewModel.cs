@@ -23,10 +23,7 @@ namespace CompanyCompanion
             }
         }
 
-        private void InitializeView(CompanyCompanion plugin)
-        {
-            MergeCompanies = new MergeCompanies(plugin);
-        }
+        private void InitializeView(CompanyCompanion plugin) => MergeCompanies = new MergeCompanies(plugin);
         public bool CleanUpNames
         {
             get => _cleanUpNames;
@@ -48,9 +45,6 @@ namespace CompanyCompanion
         public MergeCompaniesViewModel()
         {
         }
-        public RelayCommand FindCompaniesCommand
-        {
-            get => new RelayCommand(() => MergeCompanies.GetMergeList(_cleanUpNames, _findSimilar));
-        }
+        public RelayCommand FindCompaniesCommand => new RelayCommand(() => MergeCompanies.GetMergeList(_cleanUpNames, _findSimilar));
     }
 }

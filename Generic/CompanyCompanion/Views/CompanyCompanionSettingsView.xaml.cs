@@ -4,9 +4,6 @@ namespace CompanyCompanion
 {
     public partial class CompanyCompanionSettingsView : UserControl
     {
-        public CompanyCompanionSettingsView()
-        {
-            InitializeComponent();
-        }
+        public CompanyCompanionSettingsView() => InitializeComponent();
     }
 }

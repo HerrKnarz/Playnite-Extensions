@@ -6,78 +6,54 @@ namespace KNARZtools
 {
     public class KNARZtoolsSettings : ObservableObject
     {
-        private string option1 = string.Empty;
-        private bool option2 = false;
-        private bool optionThatWontBeSaved = false;
+        private string _option1 = string.Empty;
+        private bool _option2 = false;
+        private bool _optionThatWontBeSaved = false;
 
-        public string Option1 { get => option1; set => SetValue(ref option1, value); }
-        public bool Option2 { get => option2; set => SetValue(ref option2, value); }
+        public string Option1 { get => _option1; set => SetValue(ref _option1, value); }
+        public bool Option2 { get => _option2; set => SetValue(ref _option2, value); }
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         [DontSerialize]
-        public bool OptionThatWontBeSaved { get => optionThatWontBeSaved; set => SetValue(ref optionThatWontBeSaved, value); }
+        public bool OptionThatWontBeSaved { get => _optionThatWontBeSaved; set => SetValue(ref _optionThatWontBeSaved, value); }
     }
 
     public class KNARZtoolsSettingsViewModel : ObservableObject, ISettings
     {
-        private readonly KNARZtools plugin;
-        private KNARZtoolsSettings editingClone { get; set; }
+        private readonly KNARZtools _plugin;
+        private KNARZtoolsSettings EditingClone { get; set; }
 
-        private KNARZtoolsSettings settings;
+        private KNARZtoolsSettings _settings;
         public KNARZtoolsSettings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
 
         public KNARZtoolsSettingsViewModel(KNARZtools plugin)
         {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
+            _plugin = plugin;
 
-            // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<KNARZtoolsSettings>();
+            KNARZtoolsSettings savedSettings = plugin.LoadPluginSettings<KNARZtoolsSettings>();
 
-            // LoadPluginSettings returns null if no saved data is available.
-            if (savedSettings != null)
-            {
-                Settings = savedSettings;
-            }
-            else
-            {
-                Settings = new KNARZtoolsSettings();
-            }
+            Settings = savedSettings ?? new KNARZtoolsSettings();
         }
 
-        public void BeginEdit()
-        {
-            // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
-        }
+        public void BeginEdit() =>
+            EditingClone = Serialization.GetClone(Settings);
 
-        public void CancelEdit()
-        {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
-        }
+        public void CancelEdit() =>
+            Settings = EditingClone;
 
-        public void EndEdit()
-        {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
-        }
+        public void EndEdit() =>
+            _plugin.SavePluginSettings(Settings);
 
         public bool VerifySettings(out List<string> errors)
         {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
         }

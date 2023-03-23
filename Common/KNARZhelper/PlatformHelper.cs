@@ -31,6 +31,7 @@ namespace KNARZhelper
                     _platformSpecNameByNormalName.Add(nameWithoutCompany, new[] { platform.SpecificationId });
                 }
             }
+
             TryAddPlatformByName(_platformSpecNameByNormalName, "3DO", "3do");
             TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Microsoft Windows", "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows 95" }, new[] { "pc_windows" });
             TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "DOS", "MS-DOS" }, new[] { "pc_dos" });
@@ -68,6 +69,7 @@ namespace KNARZhelper
             {
                 success &= TryAddPlatformByName(dict, platformName, platformSpecNames);
             }
+
             return success;
         }
         /// <summary>
@@ -75,10 +77,7 @@ namespace KNARZhelper
         /// </summary>
         /// <param name="platformName">Name of the platform</param>
         /// <returns>List of platforms</returns>
-        public IEnumerable<MetadataProperty> GetPlatforms(string platformName)
-        {
-            return GetPlatforms(platformName, strict: false);
-        }
+        public IEnumerable<MetadataProperty> GetPlatforms(string platformName) => GetPlatforms(platformName, strict: false);
 
         /// <summary>
         /// returns all platforms created in Playnite that fit the platform name 
@@ -96,19 +95,11 @@ namespace KNARZhelper
 
             string sanitizedPlatformName = _trimInput.Replace(platformName, string.Empty);
 
-            if (_platformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds))
-            {
-                return specIds.Select(s => new MetadataSpecProperty(s)).ToList<MetadataProperty>();
-            }
-
-            if (strict)
-            {
-                return new List<MetadataProperty>();
-            }
-            else
-            {
-                return new List<MetadataProperty> { new MetadataNameProperty(sanitizedPlatformName) };
-            }
+            return _platformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds)
+                ? specIds.Select(s => new MetadataSpecProperty(s)).ToList<MetadataProperty>()
+                : strict
+                    ? new List<MetadataProperty>()
+                    : new List<MetadataProperty> { new MetadataNameProperty(sanitizedPlatformName) };
         }
     }
 }

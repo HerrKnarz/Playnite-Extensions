@@ -4,9 +4,6 @@ namespace KNARZtools
 {
     public partial class KNARZtoolsSettingsView : UserControl
     {
-        public KNARZtoolsSettingsView()
-        {
-            InitializeComponent();
-        }
+        public KNARZtoolsSettingsView() => InitializeComponent();
     }
 }
