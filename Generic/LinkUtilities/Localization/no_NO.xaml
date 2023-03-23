@@ -2,15 +2,15 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCLinkUtilitiesName">Link Utilities</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Added links to {0} games!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Name the link</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Please enter a name for the link!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Unwanted links of {0} games removed!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplicate links of {0} games removed!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Links of {0} games renamed!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">A link to {0} already exists. You can replace the existing link or add a new one by entering a new link name.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Search game</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Select option</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">La til lenker i {0} spill!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Gi navn til lenken</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Skriv inn et navn for lenken!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Uønskede lenker for {0} spill fjernet!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplikatlenker for {0} spill fjernet!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Lenker for {0} spill endret navn!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">En lenke til {0} finnes allerede. Du kan erstatte den eksisterende lenken eller legge til en ny ved å skrive inn et nytt lenkenavn.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Søk etter spill</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Velg alternativ</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Links of {0} games sorted!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Missing links of {0} games tagged!</sys:String>
 
