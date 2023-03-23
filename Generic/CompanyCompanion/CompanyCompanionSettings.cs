@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -99,9 +100,30 @@ namespace CompanyCompanion
 
             Settings = savedSettings ?? new CompanyCompanionSettings();
 
+            // Since the addon first had all built in describers in a editable list, we remove those for newer versions of the addon.
+            List<string> existintValues = new List<string>()
+                {
+                    "ab",
+                    "ace",
+                    "co",
+                    "coltd",
+                    "corp",
+                    "gmbh",
+                    "inc",
+                    "llc",
+                    "ltd",
+                    "pte",
+                    "pty",
+                    "sa",
+                    "sl",
+                    "sro",
+                    "srl",
+                };
+
             Settings.BusinessEntityDescriptors = Settings.BusinessEntityDescriptors is null
                 ? new ObservableCollection<string>()
-                : new ObservableCollection<string>(Settings.BusinessEntityDescriptors.OrderBy(x => x).ToList());
+                : new ObservableCollection<string>(Settings.BusinessEntityDescriptors
+                    .Where(d => !existintValues.Contains(d.RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", ""))).OrderBy(x => x).ToList());
 
             Settings.IgnoreWords = Settings.IgnoreWords is null
                 ? new ObservableCollection<string>()
