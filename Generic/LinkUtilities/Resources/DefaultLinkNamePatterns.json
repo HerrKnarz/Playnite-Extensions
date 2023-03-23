@@ -48,6 +48,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "Hardcore Gaming 101",
+        "urlPattern": "*hardcoregaming101.net*",
+        "namePattern": "*Hardcore Gaming 101*",
+        "partialMatch": false
+    },
+    {
         "linkName": "HowLongToBeat",
         "urlPattern": "*howlongtobeat.com*",
         "namePattern": "*HowLongToBeat",
@@ -81,6 +87,12 @@
         "linkName": "Lemon Amiga",
         "urlPattern": "*lemonamiga.com*",
         "namePattern": "*Lemon Amiga*",
+        "partialMatch": false
+    },
+    {
+        "linkName": "Map Genie",
+        "urlPattern": "*mapgenie.io*",
+        "namePattern": "*Map Genie*",
         "partialMatch": false
     },
     {

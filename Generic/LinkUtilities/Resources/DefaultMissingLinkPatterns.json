@@ -78,6 +78,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "Map Genie",
+        "urlPattern": "*mapgenie.io*",
+        "namePattern": "Map Genie",
+        "partialMatch": false
+    },
+    {
         "linkName": "Metacritic",
         "urlPattern": "*metacritic.com*",
         "namePattern": "Metacritic",

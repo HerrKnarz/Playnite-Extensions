@@ -83,6 +83,7 @@
     <Compile Include="Linker\LinkSources\LinkIGN.cs" />
     <Compile Include="Linker\LinkSources\LinkIsThereAnyDeal.cs" />
     <Compile Include="Linker\LinkSources\LinkLemonAmiga.cs" />
+    <Compile Include="Linker\LinkSources\LinkMapGenie.cs" />
     <Compile Include="Linker\LinkSources\LinkMetacritic.cs" />
     <Compile Include="Linker\LinkSources\LinkHG101.cs" />
     <Compile Include="Linker\LinkSources\LinkMobyGames.cs" />

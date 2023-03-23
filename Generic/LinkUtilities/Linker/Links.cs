@@ -22,6 +22,7 @@ namespace LinkUtilities.Linker
             Add(new LinkIsThereAnyDeal(plugin));
             Add(new LibraryLinkItch(plugin));
             Add(new LinkLemonAmiga(plugin));
+            Add(new LinkMapGenie(plugin));
             Add(new LinkMetacritic(plugin));
             Add(new LinkMobyGames(plugin));
             Add(new LinkNECRetro(plugin));
