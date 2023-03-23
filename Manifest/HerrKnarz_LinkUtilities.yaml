@@ -1,5 +1,13 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 2.5
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-23
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-03-23/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_2_5.pext
+    Changelog:
+      - Using "All configured websites" for more than one game didn't take the corresponding checkboxes into account and added/searched links to all sites.
+      - Added link to Map Genie (only add, search not possible)
+      - 100% translation to Norwegian (thx MeatBoy)
   - Version: 2.4
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-03-21

@@ -1,5 +1,16 @@
 AddonId: CompanyCompanion_b76edaec-1aa8-48ef-83a4-2a49ab031029
 Packages:
+  - Version: 0.5
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-23
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-03-23/CompanyCompanion_b76edaec-1aa8-48ef-83a4-2a49ab031029_0_5.pext
+    Changelog:
+      - optimized removing entity forms without omitting single special chars and braces from the company name.
+      - Fixed bug when merging while the games in Playnite are grouped by developer.
+      - Fixed missing translation in Add value dialog.
+      - added more default business entity describers and ignore words.
+      - exchanged direct dependency to KNARZhelper.dll with linked code.
+      - 100% translation to spanish (thx darklinkpower).
   - Version: 0.4
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-03-19
