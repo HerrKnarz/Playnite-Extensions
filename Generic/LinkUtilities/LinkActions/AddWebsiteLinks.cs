@@ -3,6 +3,7 @@ using LinkUtilities.Linker;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -43,6 +44,18 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
+            List<Linker.Link> links = null;
+
+            switch (actionModifier)
+            {
+                case ActionModifierTypes.Add:
+                    links = Links.Where(x => x.Settings.IsAddable == true).ToList();
+                    break;
+                case ActionModifierTypes.Search:
+                    links = Links.Where(x => x.Settings.IsSearchable == true).ToList();
+                    break;
+            }
+
             if (isBulkAction)
             {
                 foreach (Linker.Link link in Links)
@@ -64,21 +77,9 @@ namespace LinkUtilities.LinkActions
                 {
                     try
                     {
-                        ObservableCollection<Linker.Link> linkList = null;
+                        activateGlobalProgress.ProgressMaxValue = links.Count;
 
-                        switch (actionModifier)
-                        {
-                            case ActionModifierTypes.Add:
-                                linkList = new ObservableCollection<Linker.Link>(Links.Where(x => x.Settings.IsAddable == true).ToList());
-                                break;
-                            case ActionModifierTypes.Search:
-                                linkList = new ObservableCollection<Linker.Link>(Links.Where(x => x.Settings.IsSearchable == true).ToList());
-                                break;
-                        }
-
-                        activateGlobalProgress.ProgressMaxValue = linkList.Count;
-
-                        foreach (Linker.Link link in linkList)
+                        foreach (Linker.Link link in links)
                         {
                             activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}{Environment.NewLine}{link.LinkName}";
 
