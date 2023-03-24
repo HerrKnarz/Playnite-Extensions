@@ -1,5 +1,12 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 2.5.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-24
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-03-24/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_2_5_1.pext
+    Changelog:
+      - Using "All configured websites" for more than one game didn't take the corresponding checkboxes into account and added/searched links to all sites. Fixed for real this time!
+      - Added short delay while adding Map Genie links, so we don't get a temporary block for too many requests anymore.
   - Version: 2.5
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-03-23
