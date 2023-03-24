@@ -54,7 +54,7 @@ namespace LinkUtilities.LinkActions
 
             if (isBulkAction)
             {
-                foreach (Linker.Link link in Links)
+                foreach (Linker.Link link in links)
                 {
                     result = AddLink(game, link, actionModifier) || result;
                 }
