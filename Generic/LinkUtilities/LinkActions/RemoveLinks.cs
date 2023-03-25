@@ -37,6 +37,8 @@ namespace LinkUtilities.LinkActions
 
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogRemovedMessage";
 
+        public bool RemoveLinksAfterChange { get; set; } = false;
+
         /// <summary>
         /// List of patterns to find the links to delete based on URL or link name
         /// </summary>

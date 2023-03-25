@@ -35,6 +35,8 @@ namespace LinkUtilities.LinkActions
 
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogRenamedMessage";
 
+        public bool RenameLinksAfterChange { get; set; } = false;
+
         /// <summary>
         /// List of patterns to find the links to rename based on URL or link name
         /// </summary>

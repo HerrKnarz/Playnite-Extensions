@@ -94,12 +94,12 @@ namespace LinkUtilities
                 API.Instance.Database.Games.Update(game);
 
                 // We sort the Links automatically if the setting SortAfterChange is true.
-                if (addNewLink && plugin.Settings.Settings.SortAfterChange)
+                if (addNewLink && LinkActions.SortLinks.GetInstance(plugin).SortAfterChange)
                 {
                     LinkActions.SortLinks.GetInstance(plugin).Execute(game);
                 }
                 // We add/remove tags for missing links automatically if the setting TagMissingLinksAfterChange is true.
-                if (addNewLink && plugin.Settings.Settings.TagMissingLinksAfterChange)
+                if (addNewLink && TagMissingLinks.GetInstance(plugin).TagMissingLinksAfterChange)
                 {
                     TagMissingLinks.GetInstance(plugin).Execute(game);
                 }

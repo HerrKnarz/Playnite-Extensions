@@ -201,10 +201,18 @@ namespace LinkUtilities
         public void WriteSettingsToLinkActions()
         {
             SortLinks.GetInstance(_plugin).SortOrder = Settings.SortOrder.ToDictionary(x => x.LinkName, x => x.Position);
+            SortLinks.GetInstance(_plugin).SortAfterChange = Settings.SortAfterChange;
+            SortLinks.GetInstance(_plugin).UseCustomSortOrder = Settings.UseCustomSortOrder;
             HandleUriActions.GetInstance(_plugin).LinkNamePatterns = Settings.LinkNamePatterns;
             RemoveLinks.GetInstance(_plugin).RemovePatterns = Settings.RemovePatterns;
+            RemoveLinks.GetInstance(_plugin).RemoveLinksAfterChange = Settings.RemoveLinksAfterChange;
+            RemoveDuplicates.GetInstance(_plugin).RemoveDuplicatesAfterChange = Settings.RemoveDuplicatesAfterChange;
+            RemoveDuplicates.GetInstance(_plugin).RemoveDuplicatesType = Settings.RemoveDuplicatesType;
             RenameLinks.GetInstance(_plugin).RenamePatterns = Settings.RenamePatterns;
+            RenameLinks.GetInstance(_plugin).RenameLinksAfterChange = Settings.RenameLinksAfterChange;
             TagMissingLinks.GetInstance(_plugin).MissingLinkPatterns = Settings.MissingLinkPatterns;
+            TagMissingLinks.GetInstance(_plugin).TagMissingLinksAfterChange = Settings.TagMissingLinksAfterChange;
+            TagMissingLinks.GetInstance(_plugin).MissingLinkPrefix = Settings.MissingLinkPrefix;
         }
 
         public LinkUtilitiesSettingsViewModel(LinkUtilities plugin)

@@ -37,27 +37,27 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
-            if (Plugin.Settings.Settings.RenameLinksAfterChange && (RenameLinks.GetInstance(Plugin).RenamePatterns?.Any() ?? false))
+            if (RenameLinks.GetInstance(Plugin).RenameLinksAfterChange && (RenameLinks.GetInstance(Plugin).RenamePatterns?.Any() ?? false))
             {
                 result = RenameLinks.GetInstance(Plugin).Execute(game, actionModifier);
             }
 
-            if (Plugin.Settings.Settings.RemoveLinksAfterChange && (RemoveLinks.GetInstance(Plugin).RemovePatterns?.Any() ?? false))
+            if (RemoveLinks.GetInstance(Plugin).RemoveLinksAfterChange && (RemoveLinks.GetInstance(Plugin).RemovePatterns?.Any() ?? false))
             {
                 result |= RemoveLinks.GetInstance(Plugin).Execute(game, actionModifier);
             }
 
-            if (Plugin.Settings.Settings.RemoveDuplicatesAfterChange)
+            if (RemoveDuplicates.GetInstance(Plugin).RemoveDuplicatesAfterChange)
             {
                 result |= RemoveDuplicates.GetInstance(Plugin).Execute(game, actionModifier);
             }
 
-            if (Plugin.Settings.Settings.SortAfterChange)
+            if (SortLinks.GetInstance(Plugin).SortAfterChange)
             {
                 result |= SortLinks.GetInstance(Plugin).Execute(game, actionModifier);
             }
 
-            if (Plugin.Settings.Settings.TagMissingLinksAfterChange)
+            if (TagMissingLinks.GetInstance(Plugin).TagMissingLinksAfterChange)
             {
                 result |= TagMissingLinks.GetInstance(Plugin).Execute(game, actionModifier);
             }

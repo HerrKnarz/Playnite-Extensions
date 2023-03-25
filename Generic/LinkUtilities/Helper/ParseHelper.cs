@@ -82,7 +82,7 @@ namespace LinkUtilities.Helper
                                 HtmlNode resultText = node.SelectSingleNode("./div[@class='searchresult']");
                                 if (resultText != null)
                                 {
-                                    redirect = (resultText.InnerText.StartsWith("#REDIRECT")) ? "(REDIRECT) " : string.Empty;
+                                    redirect = resultText.InnerText.StartsWith("#REDIRECT") ? "(REDIRECT) " : string.Empty;
                                 }
 
                                 result.Add(new SearchResult

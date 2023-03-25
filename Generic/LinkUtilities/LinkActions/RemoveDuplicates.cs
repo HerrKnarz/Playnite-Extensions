@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Models;
+﻿using LinkUtilities.Settings;
+using Playnite.SDK.Models;
 
 namespace LinkUtilities.LinkActions
 {
@@ -33,7 +34,11 @@ namespace LinkUtilities.LinkActions
 
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogRemovedMessage";
 
+        public bool RemoveDuplicatesAfterChange { get; set; } = false;
+
+        public DuplicateTypes RemoveDuplicatesType { get; set; } = DuplicateTypes.NameAndUrl;
+
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => LinkHelper.RemoveDuplicateLinks(game, Plugin.Settings.Settings.RemoveDuplicatesType);
+            => LinkHelper.RemoveDuplicateLinks(game, RemoveDuplicatesType);
     }
 }

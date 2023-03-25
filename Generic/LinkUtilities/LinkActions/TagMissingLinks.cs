@@ -39,6 +39,8 @@ namespace LinkUtilities.LinkActions
 
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogTaggedMissingLinksMessage";
 
+        public bool TagMissingLinksAfterChange { get; set; } = false;
+
         /// <summary>
         /// List of patterns to check for missing links
         /// </summary>
@@ -49,6 +51,8 @@ namespace LinkUtilities.LinkActions
         /// </summary>
         public Dictionary<string, Tag> TagsCache { get; set; } = new Dictionary<string, Tag>();
 
+        public string MissingLinkPrefix { get; set; } = ResourceProvider.GetString("LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue");
+
         /// <summary>
         /// Retrieves a tag by its name and creates it, of none is found.
         /// </summary>
@@ -56,7 +60,7 @@ namespace LinkUtilities.LinkActions
         /// <returns>The found or created tag</returns>
         private Tag GetTag(string key)
         {
-            key = $"{Plugin.Settings.Settings.MissingLinkPrefix} {key}";
+            key = $"{MissingLinkPrefix} {key}";
 
             if (TagsCache.TryGetValue(key, out Tag cachedTag))
             {

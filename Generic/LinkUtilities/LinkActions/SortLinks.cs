@@ -33,11 +33,15 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressSortLinks";
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogSortedMessage";
 
+        public bool SortAfterChange { get; set; } = false;
+
+        public bool UseCustomSortOrder { get; set; } = false;
+
         public Dictionary<string, int> SortOrder { get; set; }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            return actionModifier == ActionModifierTypes.SortOrder || (actionModifier == ActionModifierTypes.None && Plugin.Settings.Settings.UseCustomSortOrder)
+            return actionModifier == ActionModifierTypes.SortOrder || (actionModifier == ActionModifierTypes.None && UseCustomSortOrder)
                 ? LinkHelper.SortLinks(game, SortOrder)
                 : LinkHelper.SortLinks(game);
         }
