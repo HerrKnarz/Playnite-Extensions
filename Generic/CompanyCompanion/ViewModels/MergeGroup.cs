@@ -15,7 +15,7 @@ namespace CompanyCompanion
         private Guid _companyId = Guid.Empty;
 
         /// <summary>
-        /// Company Companion _plugin. Used to access settings etc.
+        /// Company Companion plugin. Used to access settings etc.
         /// </summary>
         public CompanyCompanion Plugin { get; set; }
         /// <summary>
@@ -41,20 +41,7 @@ namespace CompanyCompanion
         /// <summary>
         /// Name to display
         /// </summary>
-        public string DisplayName
-        {
-            get
-            {
-                if (Plugin.Settings.Settings.ShowGroupKey)
-                {
-                    return $"{Key} ({Companies.Count})";
-                }
-                else
-                {
-                    return $"{CompanyName} ({Companies.Count})";
-                }
-            }
-        }
+        public string DisplayName => Plugin.Settings.Settings.ShowGroupKey ? $"{Key} ({Companies.Count})" : $"{CompanyName} ({Companies.Count})";
         /// <summary>
         /// Id of the masterCompany
         /// </summary>
@@ -125,7 +112,6 @@ namespace CompanyCompanion
 
             masterCompany.Name = CompanyName;
 
-
             API.Instance.MainView.UIDispatcher.Invoke(delegate
             {
                 API.Instance.Database.Companies.Update(masterCompany);
@@ -144,6 +130,5 @@ namespace CompanyCompanion
                 Owner.MergeList.Remove(this);
             });
         }
-
     }
 }

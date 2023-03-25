@@ -8,17 +8,14 @@ namespace LinkUtilities.Settings
 {
     public class LinkSourceSettings : ObservableCollection<LinkSourceSetting>
     {
-        public LinkSourceSettings(List<LinkSourceSetting> items)
-        {
-            this.AddMissing(items);
-        }
+        public LinkSourceSettings(List<LinkSourceSetting> items) => this.AddMissing(items);
 
         public LinkSourceSettings()
         {
         }
 
         /// <summary>
-        /// Refreshes a LinkSourceCollecion with the actual link sources present in the _plugin. Is needed after updates when
+        /// Refreshes a LinkSourceCollecion with the actual link sources present in the plugin. Is needed after updates when
         /// link sources get added or had to be removed.
         /// </summary>
         /// <param name="links">Link sources to be added</param>
@@ -52,15 +49,16 @@ namespace LinkUtilities.Settings
 
                     Remove(itemOld);
                 }
+
                 Add(itemNew);
             }
         }
 
         /// <summary>
-        /// Gets a collection of the settings to all link sources in the _plugin.
+        /// Gets a collection of the settings to all link sources in the plugin.
         /// </summary>
         /// <param name="links">Link sources to be added</param>
-        /// <returns>Collection of the settings to all link sources in the _plugin</returns>
+        /// <returns>Collection of the settings to all link sources in the plugin</returns>
         internal static LinkSourceSettings GetLinkSources(Links links)
         {
             LinkSourceSettings result = new LinkSourceSettings();
@@ -72,6 +70,7 @@ namespace LinkUtilities.Settings
                     result.Add(link.Settings);
                 }
             }
+
             return result;
         }
     }

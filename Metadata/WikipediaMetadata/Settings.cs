@@ -62,8 +62,8 @@ namespace WikipediaMetadata
 
         public WikipediaMetadataSettingsViewModel(WikipediaMetadata plugin)
         {
-            // Injecting your _plugin instance is required for Save/Load method because Playnite saves data to a location based on what _plugin requested the operation.
-            this._plugin = plugin;
+            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
+            _plugin = plugin;
 
             // Load saved _settings.
             PluginSettings savedSettings = plugin.LoadPluginSettings<PluginSettings>();
@@ -71,14 +71,9 @@ namespace WikipediaMetadata
             // LoadPluginSettings returns null if no saved data is available.
             Settings = savedSettings ?? new PluginSettings();
 
-            if (Settings.SectionsToRemove is null)
-            {
-                Settings.SectionsToRemove = new ObservableCollection<string>();
-            }
-            else
-            {
-                Settings.SectionsToRemove = new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
-            }
+            Settings.SectionsToRemove = Settings.SectionsToRemove is null
+                ? new ObservableCollection<string>()
+                : new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
 
             if (Settings.TagSettings is null)
             {
@@ -94,25 +89,19 @@ namespace WikipediaMetadata
             }
         }
 
-        public void BeginEdit()
-        {
+        public void BeginEdit() =>
             // Code executed when _settings view is opened and user starts editing values.
             EditingClone = Serialization.GetClone(Settings);
-        }
 
-        public void CancelEdit()
-        {
+        public void CancelEdit() =>
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and ArcadeSystemAsPlatform.
             Settings = EditingClone;
-        }
 
-        public void EndEdit()
-        {
+        public void EndEdit() =>
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save _settings made to Option1 and ArcadeSystemAsPlatform.
             _plugin.SavePluginSettings(Settings);
-        }
 
         public bool VerifySettings(out List<string> errors)
         {

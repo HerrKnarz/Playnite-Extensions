@@ -42,7 +42,7 @@ namespace CompanyCompanion
         /// <summary>
         /// Initializes the _merge class.
         /// </summary>
-        /// <param name="plugin">The _plugin itself to have access to the settings etc.</param>
+        /// <param name="plugin">The plugin itself to have access to the settings etc.</param>
         public MergeCompanies(CompanyCompanion plugin)
         {
             MergeList = new ObservableCollection<MergeGroup>();
@@ -268,7 +268,7 @@ namespace CompanyCompanion
         /// <summary>
         /// Merges all simple duplicates.
         /// </summary>
-        /// <param name="plugin">The _plugin itself to have access to the settings etc.</param>
+        /// <param name="plugin">The plugin itself to have access to the settings etc.</param>
         public static void MergeDuplicates(CompanyCompanion plugin)
         {
             MergeCompanies merger = new MergeCompanies(plugin);
@@ -288,7 +288,7 @@ namespace CompanyCompanion
         /// <summary>
         /// Removes business entity descriptor from all companies.
         /// </summary>
-        /// <param name="plugin">The _plugin itself to have access to the settings etc.</param>
+        /// <param name="plugin">The plugin itself to have access to the settings etc.</param>
         public static void RemoveBusinessEntityDescriptors(CompanyCompanion plugin)
         {
             MergeCompanies merger = new MergeCompanies(plugin);

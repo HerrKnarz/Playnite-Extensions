@@ -23,12 +23,11 @@ namespace WikipediaMetadata
         /// <summary>
         /// Creates an instance of the class and fills the parameters by parsing the wikitext.
         /// </summary>
-        /// <param name="settings">Settings of the _plugin</param>
+        /// <param name="settings">Settings of the plugin</param>
         /// <param name="gameData">Page object from wikipedia containing the wikitext and other data.</param>
         /// <param name="platformList">List of all platforms in the database</param>
         public WikitextParser(PluginSettings settings)
             => _settings = settings;
-
 
         public void Parse(WikipediaPage gameData, IItemCollection<Platform> platformList)
         {
@@ -137,6 +136,7 @@ namespace WikipediaMetadata
                                 {
                                     arguments.Add(arg);
                                 }
+
                                 counter++;
                             }
                         }
@@ -221,12 +221,10 @@ namespace WikipediaMetadata
 
                 List<PartialDate> dates = new List<PartialDate>();
 
-                DateTime dateTime;
-
                 // We check each value for a valid date and at those to a datetime list.
                 foreach (MetadataProperty property in list)
                 {
-                    if (DateTime.TryParseExact(property.ToString(), Resources.DateFormatStringsFull, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out dateTime))
+                    if (DateTime.TryParseExact(property.ToString(), Resources.DateFormatStringsFull, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out DateTime dateTime))
                     {
                         dates.Add(new PartialDate(dateTime));
                     }
@@ -273,18 +271,11 @@ namespace WikipediaMetadata
 
                     if (dateToUse != null)
                     {
-                        if (dateToUse.HasDay)
-                        {
-                            return new ReleaseDate(dateToUse.Date);
-                        }
-                        else if (dateToUse.HasMonth)
-                        {
-                            return new ReleaseDate(dateToUse.Date.Year, dateToUse.Date.Month);
-                        }
-                        else
-                        {
-                            return new ReleaseDate(dateToUse.Date.Year);
-                        }
+                        return dateToUse.HasDay
+                            ? new ReleaseDate(dateToUse.Date)
+                            : dateToUse.HasMonth
+                                ? new ReleaseDate(dateToUse.Date.Year, dateToUse.Date.Month)
+                                : new ReleaseDate(dateToUse.Date.Year);
                     }
                 }
             }
@@ -378,9 +369,12 @@ namespace WikipediaMetadata
                 {
                     switch (_settings.RatingToUse)
                     {
-                        case RatingToUse.Lowest: return ratings.Min();
-                        case RatingToUse.Highest: return ratings.Max();
-                        case RatingToUse.Average: return (int)Math.Ceiling(ratings.Average());
+                        case RatingToUse.Lowest:
+                            return ratings.Min();
+                        case RatingToUse.Highest:
+                            return ratings.Max();
+                        case RatingToUse.Average:
+                            return (int)Math.Ceiling(ratings.Average());
                     }
                 }
             }
@@ -501,6 +495,7 @@ namespace WikipediaMetadata
                     }
                 }
             }
+
             return argument;
         }
 

@@ -18,14 +18,14 @@ namespace LinkUtilities.Linker
         public virtual string SearchUrl { get; } = string.Empty;
         public virtual string LinkUrl { get; set; } = string.Empty;
         public virtual LinkAddTypes AddType { get; } = LinkAddTypes.UrlMatch;
-        public virtual bool CanBeSearched { get { return !string.IsNullOrWhiteSpace(SearchUrl); } }
+        public virtual bool CanBeSearched => !string.IsNullOrWhiteSpace(SearchUrl);
         public LinkSourceSetting Settings { get; set; }
         public virtual bool AllowRedirects { get; set; } = true;
         public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLink";
         public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
         private readonly LinkUtilities _plugin;
-        public LinkUtilities Plugin { get { return _plugin; } }
+        public LinkUtilities Plugin => _plugin;
         public List<SearchResult> SearchResults { get; set; } = new List<SearchResult>();
 
         public virtual bool AddSearchedLink(Game game)
@@ -36,12 +36,7 @@ namespace LinkUtilities.Linker
                 game.Name,
                 $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
 
-            if (result != null)
-            {
-                return LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, _plugin, false);
-            }
-
-            return false;
+            return result != null && LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, _plugin, false);
         }
 
         public virtual List<GenericItemOption> SearchLink(string searchTerm) => SearchResults.ToList<GenericItemOption>();
@@ -81,6 +76,7 @@ namespace LinkUtilities.Linker
                                 }
                             }
                         }
+
                         break;
                 }
 
@@ -113,21 +109,18 @@ namespace LinkUtilities.Linker
                         {
                             string baseName = gameName.RemoveEditionSuffix();
 
-                            if (baseName == gameName)
-                            {
-                                return TryToFindPerfectMatchingUrl(gameName) ??
-                                    string.Empty;
-                            }
-                            else
-                            {
-                                return TryToFindPerfectMatchingUrl(gameName) ??
+                            return baseName == gameName
+                                ? TryToFindPerfectMatchingUrl(gameName) ??
+                                    string.Empty
+                                : TryToFindPerfectMatchingUrl(gameName) ??
                                     TryToFindPerfectMatchingUrl(baseName) ??
                                     string.Empty;
-                            }
                         }
+
                         break;
                 }
             }
+
             return string.Empty;
         }
 
@@ -138,7 +131,7 @@ namespace LinkUtilities.Linker
         /// <returns>Url of the game. Returns null if no match was found.</returns>
         private string TryToFindPerfectMatchingUrl(string gameName)
         {
-            _ = SearchLink(gameName);
+            SearchLink(gameName);
 
             string searchName = gameName.RemoveSpecialChars().Replace(" ", "");
 
@@ -152,6 +145,7 @@ namespace LinkUtilities.Linker
             {
                 return SearchResults[0].Url;
             }
+
             return null;
         }
 
@@ -170,7 +164,7 @@ namespace LinkUtilities.Linker
 
         public Link(LinkUtilities plugin)
         {
-            this._plugin = plugin;
+            _plugin = plugin;
             Settings = new LinkSourceSetting()
             {
                 LinkName = LinkName,

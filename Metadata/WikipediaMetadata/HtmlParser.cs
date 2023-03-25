@@ -24,7 +24,7 @@ namespace WikipediaMetadata
         /// Creates an instance of the class, fetches the html code and parses it.
         /// </summary>
         /// <param name="gameKey">Key of the page we want to parse</param>
-        /// <param name="settings">Settings of the _plugin</param>
+        /// <param name="settings">Settings of the plugin</param>
         public HtmlParser(string gameKey, PluginSettings settings)
         {
             _settings = settings;
@@ -278,6 +278,7 @@ namespace WikipediaMetadata
                     }
                 }
             }
+
             return htmlNode;
         }
     }
