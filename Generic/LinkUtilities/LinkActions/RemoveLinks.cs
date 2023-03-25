@@ -9,8 +9,30 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to remove unwanted links based on patterns.
     /// </summary>
-    internal class RemoveLinks : LinkAction
+    internal class RemoveLinks : BaseClasses.LinkAction
     {
+        private static RemoveLinks _instance = null;
+        private static readonly object _mutex = new object();
+        private RemoveLinks(LinkUtilities plugin) : base(plugin)
+        {
+        }
+
+        public static RemoveLinks GetInstance(LinkUtilities plugin)
+        {
+            if (_instance == null)
+            {
+                lock (_mutex)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new RemoveLinks(plugin);
+                    }
+                }
+            }
+
+            return _instance;
+        }
+
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressRemoveLinks";
 
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogRemovedMessage";
@@ -19,10 +41,6 @@ namespace LinkUtilities.LinkActions
         /// List of patterns to find the links to delete based on URL or link name
         /// </summary>
         public LinkNamePatterns RemovePatterns { get; set; }
-
-        public RemoveLinks(LinkUtilities plugin) : base(plugin)
-        {
-        }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -50,6 +68,7 @@ namespace LinkUtilities.LinkActions
                     API.Instance.Database.Games.Update(game);
                 }
             }
+
             return mustUpdate;
         }
     }

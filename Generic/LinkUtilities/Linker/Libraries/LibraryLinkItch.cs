@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using LinkUtilities.BaseClasses;
 using LinkUtilities.Models;
 using LinkUtilities.Models.Itch;
 using Newtonsoft.Json;
@@ -48,6 +49,7 @@ namespace LinkUtilities.Linker
                     return false;
                 }
             }
+
             return false;
         }
 
@@ -90,9 +92,6 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LibraryLinkItch(LinkUtilities plugin) : base(plugin)
-        {
-            Settings.NeedsApiKey = true;
-        }
+        public LibraryLinkItch(LinkUtilities plugin) : base(plugin) => Settings.NeedsApiKey = true;
     }
 }

@@ -1,14 +1,33 @@
 ﻿using Playnite.SDK.Models;
+using System.Linq;
 
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
     /// Sorts the Links of a game.
     /// </summary>
-    internal class DoAfterChange : LinkAction
+    internal class DoAfterChange : BaseClasses.LinkAction
     {
-        internal DoAfterChange(LinkUtilities plugin) : base(plugin)
+        private static DoAfterChange _instance = null;
+        private static readonly object _mutex = new object();
+        private DoAfterChange(LinkUtilities plugin) : base(plugin)
         {
+        }
+
+        public static DoAfterChange GetInstance(LinkUtilities plugin)
+        {
+            if (_instance == null)
+            {
+                lock (_mutex)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new DoAfterChange(plugin);
+                    }
+                }
+            }
+
+            return _instance;
         }
 
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressSortLinks";
@@ -18,29 +37,29 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
-            if (Plugin.Settings.Settings.RenameLinksAfterChange && Plugin.RenameLinks.RenamePatterns != null && Plugin.RenameLinks.RenamePatterns.Count > 0)
+            if (Plugin.Settings.Settings.RenameLinksAfterChange && (RenameLinks.GetInstance(Plugin).RenamePatterns?.Any() ?? false))
             {
-                result = Plugin.RenameLinks.Execute(game, actionModifier);
+                result = RenameLinks.GetInstance(Plugin).Execute(game, actionModifier);
             }
 
-            if (Plugin.Settings.Settings.RemoveLinksAfterChange && Plugin.RemoveLinks.RemovePatterns != null && Plugin.RemoveLinks.RemovePatterns.Count > 0)
+            if (Plugin.Settings.Settings.RemoveLinksAfterChange && (RemoveLinks.GetInstance(Plugin).RemovePatterns?.Any() ?? false))
             {
-                result = Plugin.RemoveLinks.Execute(game, actionModifier);
+                result |= RemoveLinks.GetInstance(Plugin).Execute(game, actionModifier);
             }
 
             if (Plugin.Settings.Settings.RemoveDuplicatesAfterChange)
             {
-                result = Plugin.RemoveDuplicates.Execute(game, actionModifier);
+                result |= RemoveDuplicates.GetInstance(Plugin).Execute(game, actionModifier);
             }
 
             if (Plugin.Settings.Settings.SortAfterChange)
             {
-                result = Plugin.SortLinks.Execute(game, actionModifier) || result;
+                result |= SortLinks.GetInstance(Plugin).Execute(game, actionModifier);
             }
 
             if (Plugin.Settings.Settings.TagMissingLinksAfterChange)
             {
-                result = Plugin.TagMissingLinks.Execute(game, actionModifier) || result;
+                result |= TagMissingLinks.GetInstance(Plugin).Execute(game, actionModifier);
             }
 
             return result;

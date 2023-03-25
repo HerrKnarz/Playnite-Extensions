@@ -6,8 +6,29 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Adds a link to the game store page of the library (e.g. steam or gog) the game is part of.
     /// </summary>
-    internal class AddLibraryLinks : LinkAction
+    internal class AddLibraryLinks : BaseClasses.LinkAction
     {
+        private static AddLibraryLinks _instance = null;
+        private static readonly object _mutex = new object();
+
+        private AddLibraryLinks(LinkUtilities plugin) : base(plugin) => _libraries = new Libraries(Plugin);
+
+        public static AddLibraryLinks GetInstance(LinkUtilities plugin)
+        {
+            if (_instance == null)
+            {
+                lock (_mutex)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new AddLibraryLinks(plugin);
+                    }
+                }
+            }
+
+            return _instance;
+        }
+
         /// <summary>
         /// contains all game _libraries that have a link to a store page that can be added.
         /// </summary>
@@ -16,14 +37,9 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLibraryLink";
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
-        public AddLibraryLinks(LinkUtilities plugin) : base(plugin)
-        {
-            _libraries = new Libraries(Plugin);
-        }
-
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            LibraryLink library;
+            BaseClasses.LibraryLink library;
             bool result = false;
 
             // Find the library of the game and add a link, if possible.
@@ -33,6 +49,7 @@ namespace LinkUtilities.LinkActions
             {
                 result = library.AddLibraryLink(game);
             }
+
             return result;
         }
     }

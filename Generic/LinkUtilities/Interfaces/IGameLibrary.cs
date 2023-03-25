@@ -1,7 +1,7 @@
 ﻿using Playnite.SDK.Models;
 using System;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities
 {
     /// <summary>
     /// Interface with properties needed for a game library

@@ -21,15 +21,6 @@ namespace LinkUtilities
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
 
             IsUpdating = false;
-            DoAfterChange = new DoAfterChange(this);
-            SortLinks = new SortLinks(this);
-            AddLibraryLinks = new AddLibraryLinks(this);
-            AddWebsiteLinks = new AddWebsiteLinks(this);
-            RemoveDuplicates = new RemoveDuplicates(this);
-            RemoveLinks = new RemoveLinks(this);
-            RenameLinks = new RenameLinks(this);
-            TagMissingLinks = new TagMissingLinks(this);
-            HandleUriActions = new HandleUriActions(this);
 
             Settings = new LinkUtilitiesSettingsViewModel(this);
             Properties = new GenericPluginProperties
@@ -41,59 +32,14 @@ namespace LinkUtilities
 
             PlayniteApi.UriHandler.RegisterSource("LinkUtilities", (args) =>
             {
-                if (HandleUriActions.ProcessArgs(args))
+                if (HandleUriActions.GetInstance(this).ProcessArgs(args))
                 {
                     List<Game> games = PlayniteApi.MainView.SelectedGames.ToList();
 
-                    DoForAll(games, HandleUriActions, true, HandleUriActions.Action);
+                    DoForAll(games, HandleUriActions.GetInstance(this), true, HandleUriActions.GetInstance(this).Action);
                 }
             });
         }
-
-        /// <summary>
-        /// Class to execute specific actions after the meta data of a game changes
-        /// </summary>
-        internal DoAfterChange DoAfterChange { get; }
-
-        /// <summary>
-        /// Class to sort the Links of a game
-        /// </summary>
-        internal SortLinks SortLinks { get; }
-
-        /// <summary>
-        /// Class to add a link to the store page in the library of a game
-        /// </summary>
-        internal AddLibraryLinks AddLibraryLinks { get; }
-
-        /// <summary>
-        /// Class to add a link to all available websites in the Links list, if a definitive link was found.
-        /// </summary>
-        internal AddWebsiteLinks AddWebsiteLinks { get; }
-
-        /// <summary>
-        /// Class to remove duplicate links.
-        /// </summary>
-        internal RemoveDuplicates RemoveDuplicates { get; }
-
-        /// <summary>
-        /// Class to remove unwanted links.
-        /// </summary>
-        internal RemoveLinks RemoveLinks { get; }
-
-        /// <summary>
-        /// Class to rename links.
-        /// </summary>
-        internal RenameLinks RenameLinks { get; }
-
-        /// <summary>
-        /// Class to tag missing links.
-        /// </summary>
-        internal TagMissingLinks TagMissingLinks { get; }
-
-        /// <summary>
-        /// Handles UriHandler actions.
-        /// </summary>
-        internal HandleUriActions HandleUriActions { get; }
 
         /// <summary>
         /// Is set to true, while the library is updated via the sortLinks function. Is used to avoid an endless loop in the function.
@@ -185,8 +131,8 @@ namespace LinkUtilities
             if (Settings.Settings.SortAfterChange && !IsUpdating)
             {
                 List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
-                TagMissingLinks.TagsCache.Clear();
-                DoForAll(games, DoAfterChange);
+                TagMissingLinks.GetInstance(this).TagsCache.Clear();
+                DoForAll(games, DoAfterChange.GetInstance(this));
             }
         }
 
@@ -197,7 +143,7 @@ namespace LinkUtilities
                 List<Game> games = PlayniteApi.Database.Games
                     .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
 
-                DoForAll(games, AddWebsiteLinks, false, ActionModifierTypes.Add);
+                DoForAll(games, AddWebsiteLinks.GetInstance(this), false, ActionModifierTypes.Add);
             }
 
             Settings.Settings.LastAutoLibUpdate = DateTime.Now;
@@ -220,8 +166,8 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        TagMissingLinks.TagsCache.Clear();
-                        DoForAll(games, DoAfterChange, true);
+                        TagMissingLinks.GetInstance(this).TagsCache.Clear();
+                        DoForAll(games, DoAfterChange.GetInstance(this), true);
                     }
                 },
                 new MainMenuItem
@@ -231,8 +177,8 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        TagMissingLinks.TagsCache.Clear();
-                        DoForAll(games, DoAfterChange, true);
+                        TagMissingLinks.GetInstance(this).TagsCache.Clear();
+                        DoForAll(games, DoAfterChange.GetInstance(this), true);
                     }
                 },
                 // Adds a separator
@@ -254,7 +200,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, ActionModifierTypes.Name);
+                        DoForAll(games, SortLinks.GetInstance(this), true, ActionModifierTypes.Name);
                     }
                 },
                 new MainMenuItem
@@ -264,13 +210,13 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, ActionModifierTypes.Name);
+                        DoForAll(games, SortLinks.GetInstance(this), true, ActionModifierTypes.Name);
                     }
                 }
             };
 
             // Adds the "sort Links by sort order" item to the main menu.
-            if (SortLinks.SortOrder != null && SortLinks.SortOrder.Count > 0)
+            if (SortLinks.GetInstance(this).SortOrder?.Any() ?? false)
             {
                 menuItems.Add(new MainMenuItem
                 {
@@ -279,7 +225,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, ActionModifierTypes.SortOrder);
+                        DoForAll(games, SortLinks.GetInstance(this), true, ActionModifierTypes.SortOrder);
                     }
                 });
 
@@ -290,7 +236,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, ActionModifierTypes.SortOrder);
+                        DoForAll(games, SortLinks.GetInstance(this), true, ActionModifierTypes.SortOrder);
                     }
                 });
             }
@@ -303,7 +249,7 @@ namespace LinkUtilities
                 Action = a =>
                 {
                     List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                    DoForAll(games, RemoveDuplicates, true);
+                    DoForAll(games, RemoveDuplicates.GetInstance(this), true);
                 }
             });
 
@@ -314,12 +260,12 @@ namespace LinkUtilities
                 Action = a =>
                 {
                     List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                    DoForAll(games, RemoveDuplicates, true);
+                    DoForAll(games, RemoveDuplicates.GetInstance(this), true);
                 }
             });
 
             // Adds the "Remove unwanted links" item to the main menu.
-            if (RemoveLinks.RemovePatterns != null && RemoveLinks.RemovePatterns.Count > 0)
+            if (RemoveLinks.GetInstance(this).RemovePatterns?.Any() ?? false)
             {
                 menuItems.Add(new MainMenuItem
                 {
@@ -328,7 +274,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        DoForAll(games, RemoveLinks, true);
+                        DoForAll(games, RemoveLinks.GetInstance(this), true);
                     }
                 });
 
@@ -339,12 +285,12 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        DoForAll(games, RemoveLinks, true);
+                        DoForAll(games, RemoveLinks.GetInstance(this), true);
                     }
                 });
             }
             // Adds the "Rename links" item to the main menu.
-            if (RenameLinks.RenamePatterns != null && RenameLinks.RenamePatterns.Count > 0)
+            if (RenameLinks.GetInstance(this).RenamePatterns?.Any() ?? false)
             {
                 menuItems.Add(new MainMenuItem
                 {
@@ -353,7 +299,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        DoForAll(games, RenameLinks, true);
+                        DoForAll(games, RenameLinks.GetInstance(this), true);
                     }
                 });
 
@@ -364,12 +310,12 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        DoForAll(games, RenameLinks, true);
+                        DoForAll(games, RenameLinks.GetInstance(this), true);
                     }
                 });
             }
             // Adds the "Tag missing links" item to the main menu.
-            if (TagMissingLinks.MissingLinkPatterns != null && TagMissingLinks.MissingLinkPatterns.Count > 0)
+            if (TagMissingLinks.GetInstance(this).MissingLinkPatterns?.Any() ?? false)
             {
                 menuItems.Add(new MainMenuItem
                 {
@@ -378,8 +324,8 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        TagMissingLinks.TagsCache.Clear();
-                        DoForAll(games, TagMissingLinks, true);
+                        TagMissingLinks.GetInstance(this).TagsCache.Clear();
+                        DoForAll(games, TagMissingLinks.GetInstance(this), true);
                     }
                 });
 
@@ -390,8 +336,8 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        TagMissingLinks.TagsCache.Clear();
-                        DoForAll(games, TagMissingLinks, true);
+                        TagMissingLinks.GetInstance(this).TagsCache.Clear();
+                        DoForAll(games, TagMissingLinks.GetInstance(this), true);
                     }
                 });
             }
@@ -415,7 +361,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, AddLibraryLinks, true);
+                        DoForAll(games, AddLibraryLinks.GetInstance(this), true);
                     }
                 },
                 // Adds the "All configured websites" item to the "add link to" sub menu.
@@ -426,7 +372,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, AddWebsiteLinks, true, ActionModifierTypes.Add);
+                        DoForAll(games, AddWebsiteLinks.GetInstance(this), true, ActionModifierTypes.Add);
                     }
                 },
                 // Adds a separator to the "add link to" sub menu
@@ -443,7 +389,7 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, AddWebsiteLinks, true, ActionModifierTypes.Search);
+                        DoForAll(games, AddWebsiteLinks.GetInstance(this), true, ActionModifierTypes.Search);
                     }
                 },
                 // Adds a separator to the "search link to" sub menu
@@ -465,8 +411,8 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        TagMissingLinks.TagsCache.Clear();
-                        DoForAll(games, DoAfterChange, true);
+                        TagMissingLinks.GetInstance(this).TagsCache.Clear();
+                        DoForAll(games, DoAfterChange.GetInstance(this), true);
                     }
                 },
                 // Adds a separator to the game menu
@@ -483,13 +429,13 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, ActionModifierTypes.Name);
+                        DoForAll(games, SortLinks.GetInstance(this), true, ActionModifierTypes.Name);
                     }
                 }
             };
 
             // Adds the "sort Links by sort order" item to the game menu.
-            if (SortLinks.SortOrder != null && SortLinks.SortOrder.Count > 0)
+            if (SortLinks.GetInstance(this).SortOrder?.Any() ?? false)
             {
                 menuItems.Add(new GameMenuItem
                 {
@@ -498,15 +444,15 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks, true, ActionModifierTypes.SortOrder);
+                        DoForAll(games, SortLinks.GetInstance(this), true, ActionModifierTypes.SortOrder);
                     }
                 });
             }
 
             // Adds all linkable websites to the "add link to" and "search link to" sub menus.
-            foreach (Linker.Link link in AddWebsiteLinks.Links)
+            foreach (BaseClasses.Link link in AddWebsiteLinks.GetInstance(this).Links)
             {
-                if (link.Settings.ShowInMenus & link.AddType != Linker.LinkAddTypes.None)
+                if (link.Settings.ShowInMenus & link.AddType != LinkAddTypes.None)
                 {
                     menuItems.Add(new GameMenuItem
                     {
@@ -544,12 +490,12 @@ namespace LinkUtilities
                 Action = a =>
                 {
                     List<Game> games = args.Games.Distinct().ToList();
-                    DoForAll(games, RemoveDuplicates, true);
+                    DoForAll(games, RemoveDuplicates.GetInstance(this), true);
                 }
             });
 
             // Adds the "Remove unwanted links" item to the game menu.
-            if (RemoveLinks.RemovePatterns != null && RemoveLinks.RemovePatterns.Count > 0)
+            if (RemoveLinks.GetInstance(this).RemovePatterns?.Any() ?? false)
             {
                 menuItems.Add(new GameMenuItem
                 {
@@ -558,12 +504,12 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, RemoveLinks, true);
+                        DoForAll(games, RemoveLinks.GetInstance(this), true);
                     }
                 });
             }
             // Adds the "Rename links" item to the game menu.
-            if (RenameLinks.RenamePatterns != null && RenameLinks.RenamePatterns.Count > 0)
+            if (RenameLinks.GetInstance(this).RenamePatterns?.Any() ?? false)
             {
                 menuItems.Add(new GameMenuItem
                 {
@@ -572,12 +518,12 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        DoForAll(games, RenameLinks, true);
+                        DoForAll(games, RenameLinks.GetInstance(this), true);
                     }
                 });
             }
             // Adds the "Tag missing links" item to the game menu.
-            if (TagMissingLinks.MissingLinkPatterns != null && TagMissingLinks.MissingLinkPatterns.Count > 0)
+            if (TagMissingLinks.GetInstance(this).MissingLinkPatterns?.Any() ?? false)
             {
                 menuItems.Add(new GameMenuItem
                 {
@@ -586,8 +532,8 @@ namespace LinkUtilities
                     Action = a =>
                     {
                         List<Game> games = args.Games.Distinct().ToList();
-                        TagMissingLinks.TagsCache.Clear();
-                        DoForAll(games, TagMissingLinks, true);
+                        TagMissingLinks.GetInstance(this).TagsCache.Clear();
+                        DoForAll(games, TagMissingLinks.GetInstance(this), true);
                     }
                 });
             }

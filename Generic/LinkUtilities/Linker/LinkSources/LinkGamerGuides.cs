@@ -6,7 +6,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Gamer Guides.
     /// </summary>
-    internal class LinkGamerGuides : Link
+    internal class LinkGamerGuides : BaseClasses.Link
     {
         public override string LinkName { get; } = "Gamer Guides";
         public override string BaseUrl { get; } = "https://www.gamerguides.com/";

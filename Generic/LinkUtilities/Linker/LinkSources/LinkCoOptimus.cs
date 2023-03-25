@@ -11,7 +11,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Co-Optimus.
     /// </summary>
-    internal class LinkCoOptimus : Link
+    internal class LinkCoOptimus : BaseClasses.Link
     {
         public override string LinkName { get; } = "Co-Optimus";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;

@@ -11,8 +11,30 @@ namespace LinkUtilities.LinkActions
     /// Class to handle the actions received from the UriHandler. At the moment only adding links to the active URL in the
     /// web browser.
     /// </summary>
-    internal class HandleUriActions : LinkAction
+    internal class HandleUriActions : BaseClasses.LinkAction
     {
+        private static HandleUriActions _instance = null;
+        private static readonly object _mutex = new object();
+        private HandleUriActions(LinkUtilities plugin) : base(plugin)
+        {
+        }
+
+        public static HandleUriActions GetInstance(LinkUtilities plugin)
+        {
+            if (_instance == null)
+            {
+                lock (_mutex)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new HandleUriActions(plugin);
+                    }
+                }
+            }
+
+            return _instance;
+        }
+
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
 
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
@@ -83,10 +105,6 @@ namespace LinkUtilities.LinkActions
             }
 
             return false;
-        }
-
-        public HandleUriActions(LinkUtilities plugin) : base(plugin)
-        {
         }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)

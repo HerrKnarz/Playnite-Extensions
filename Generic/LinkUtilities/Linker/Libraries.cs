@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LinkUtilities.BaseClasses;
+using System.Collections.Generic;
 
 namespace LinkUtilities.Linker
 {

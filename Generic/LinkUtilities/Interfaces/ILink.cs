@@ -3,7 +3,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities
 {
     /// <summary>
     /// Defines the way a link can be added.

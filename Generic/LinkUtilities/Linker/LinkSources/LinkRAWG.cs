@@ -14,7 +14,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to RAWG.io.
     /// </summary>
-    internal class LinkRAWG : Link
+    internal class LinkRAWG : BaseClasses.Link
     {
         public override string LinkName { get; } = "RAWG";
         public override string BaseUrl { get; } = "https://rawg.io/games/";
@@ -75,9 +75,6 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkRAWG(LinkUtilities plugin) : base(plugin)
-        {
-            Settings.NeedsApiKey = true;
-        }
+        public LinkRAWG(LinkUtilities plugin) : base(plugin) => Settings.NeedsApiKey = true;
     }
 }

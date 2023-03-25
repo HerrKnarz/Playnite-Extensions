@@ -13,9 +13,9 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Arcade Database (arcadeitalia.net).
     /// </summary>
-    internal class LinkArcadeDatabase : Link
+    internal class LinkArcadeDatabase : BaseClasses.Link
     {
-        private readonly string _WebsiteUrl = "http://adb.arcadeitalia.net/";
+        private readonly string _websiteUrl = "http://adb.arcadeitalia.net/";
 
         public override string LinkName { get; } = "Arcade Database";
         public override string BaseUrl { get; } = "http://adb.arcadeitalia.net/dettaglio_mame.php?lang=en&game_name=";
@@ -36,18 +36,11 @@ namespace LinkUtilities.Linker
             }
         }
 
+        // Arcade Database needs the name of the game file, because it follows the MAME naming scheme.
         public override string GetGamePath(Game game, string gameName = null)
-        {
-            // Arcade Database needs the name of the game file, because it follows the MAME naming scheme.
-            if (game.IsInstalled && game.Roms != null && game.Roms.Count > 0)
-            {
-                return Path.GetFileNameWithoutExtension(game.Roms[0].Path);
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
+            => game.IsInstalled && game.Roms != null && game.Roms.Count > 0
+                ? Path.GetFileNameWithoutExtension(game.Roms[0].Path)
+                : string.Empty;
 
         public override List<GenericItemOption> SearchLink(string searchTerm)
         {
@@ -67,7 +60,7 @@ namespace LinkUtilities.Linker
                         SearchResults.Add(new SearchResult
                         {
                             Name = WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='titolo_galleria']").InnerText),
-                            Url = $"{_WebsiteUrl}{node.SelectSingleNode("./a").GetAttributeValue("href", "")}",
+                            Url = $"{_websiteUrl}{node.SelectSingleNode("./a").GetAttributeValue("href", "")}",
                             Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='romset_galleria']").InnerText)} - {WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='produttore_galleria']").InnerText)}"
                         }
                         );

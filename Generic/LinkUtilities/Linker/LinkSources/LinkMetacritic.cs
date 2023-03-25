@@ -9,7 +9,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Metacritic.
     /// </summary>
-    internal class LinkMetacritic : Link
+    internal class LinkMetacritic : BaseClasses.Link
     {
         public override string LinkName { get; } = "Metacritic";
         public override string BaseUrl { get; } = "https://www.metacritic.com/game/";

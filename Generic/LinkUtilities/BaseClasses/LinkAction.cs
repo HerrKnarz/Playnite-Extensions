@@ -1,6 +1,6 @@
 ﻿using Playnite.SDK.Models;
 
-namespace LinkUtilities.LinkActions
+namespace LinkUtilities.BaseClasses
 {
     internal abstract class LinkAction : ILinkAction
     {
@@ -8,14 +8,11 @@ namespace LinkUtilities.LinkActions
 
         public abstract string ResultMessage { get; }
 
-        private readonly LinkUtilities _plugin;
-        public LinkUtilities Plugin { get { return _plugin; } }
+        internal LinkUtilities _plugin;
+        public LinkUtilities Plugin => _plugin;
 
         public abstract bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true);
 
-        public LinkAction(LinkUtilities plugin)
-        {
-            _plugin = plugin;
-        }
+        public LinkAction(LinkUtilities plugin) => _plugin = plugin;
     }
 }

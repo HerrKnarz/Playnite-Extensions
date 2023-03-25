@@ -15,8 +15,8 @@ namespace WikipediaMetadata
     {
         private static readonly string _baseUrl = "https://en.wikipedia.org/w/rest.php/v1/";
         private static readonly string _imageUrl = "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&pilicense=any&titles={0}";
-        private static string SearchUrl { get => _baseUrl + "search/page?q={0}&limit=100"; }
-        private static string PageUrl { get => _baseUrl + "page/{0}"; }
+        private static string SearchUrl => _baseUrl + "search/page?q={0}&limit=100";
+        private static string PageUrl => _baseUrl + "page/{0}";
 
         private static WebClient GetWebClient()
         {

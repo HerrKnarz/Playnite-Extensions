@@ -11,8 +11,30 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to add tags to games for missing links based on patterns.
     /// </summary>
-    internal class TagMissingLinks : LinkAction
+    internal class TagMissingLinks : BaseClasses.LinkAction
     {
+        private static TagMissingLinks _instance = null;
+        private static readonly object _mutex = new object();
+        private TagMissingLinks(LinkUtilities plugin) : base(plugin)
+        {
+        }
+
+        public static TagMissingLinks GetInstance(LinkUtilities plugin)
+        {
+            if (_instance == null)
+            {
+                lock (_mutex)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new TagMissingLinks(plugin);
+                    }
+                }
+            }
+
+            return _instance;
+        }
+
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressTagMissingLinks";
 
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogTaggedMissingLinksMessage";
@@ -26,10 +48,6 @@ namespace LinkUtilities.LinkActions
         /// Cache for the tags so they don't have to be retrieved from the database every time.
         /// </summary>
         public Dictionary<string, Tag> TagsCache { get; set; } = new Dictionary<string, Tag>();
-
-        public TagMissingLinks(LinkUtilities plugin) : base(plugin)
-        {
-        }
 
         /// <summary>
         /// Retrieves a tag by its name and creates it, of none is found.
@@ -73,6 +91,7 @@ namespace LinkUtilities.LinkActions
                 tagIds.Add(tag.Id);
                 return true;
             }
+
             return false;
         }
 

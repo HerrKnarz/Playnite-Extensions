@@ -12,15 +12,13 @@ namespace KNARZtools
 {
     public class KNARZtools : GenericPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-
-        private KNARZtoolsSettingsViewModel settings { get; set; }
+        private KNARZtoolsSettingsViewModel Settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("f36aaef9-9f87-40ad-a2b5-40e50bf56b95");
 
         public KNARZtools(IPlayniteAPI api) : base(api)
         {
-            settings = new KNARZtoolsSettingsViewModel(this);
+            Settings = new KNARZtoolsSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = false
@@ -42,7 +40,6 @@ namespace KNARZtools
                 try
                 {
                     List<Tag> tags = API.Instance.Database.Tags.Where(t => t.Name.StartsWith("[")).ToList();
-
 
                     activateGlobalProgress.ProgressMaxValue = tags.Count;
 
@@ -79,6 +76,7 @@ namespace KNARZtools
                                     game.TagIds.AddMissing(existingTag.Id);
                                     API.Instance.Database.Games.Update(game);
                                 }
+
                                 API.Instance.Database.Tags.Remove(tag.Id);
                             }
                             else
@@ -107,11 +105,7 @@ namespace KNARZtools
                 {
                     Description = "Rename tags",
                     MenuSection = $"KNARZtools",
-                    Action = a =>
-                    {
-                        RenameTags();
-                    }
-                }
+                    Action = a => RenameTags()                }
             };
 
             return menuItems;
@@ -157,14 +151,8 @@ namespace KNARZtools
             // Add code to be executed when library is updated.
         }
 
-        public override ISettings GetSettings(bool firstRunSettings)
-        {
-            return settings;
-        }
+        public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
-        public override UserControl GetSettingsView(bool firstRunSettings)
-        {
-            return new KNARZtoolsSettingsView();
-        }
+        public override UserControl GetSettingsView(bool firstRunSettings) => new KNARZtoolsSettingsView();
     }
 }

@@ -13,7 +13,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Giant Bomb.
     /// </summary>
-    internal class LinkGiantBomb : Link
+    internal class LinkGiantBomb : BaseClasses.Link
     {
         public override string LinkName { get; } = "Giant Bomb";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
@@ -42,7 +42,6 @@ namespace LinkUtilities.Linker
                         foreach (Result result in giantBombSearchResult.Results)
                         {
                             string description = result.OriginalReleaseDate;
-
 
                             if (result.Platforms != null && result.Platforms.Count > 0)
                             {
@@ -74,9 +73,6 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkGiantBomb(LinkUtilities plugin) : base(plugin)
-        {
-            Settings.NeedsApiKey = true;
-        }
+        public LinkGiantBomb(LinkUtilities plugin) : base(plugin) => Settings.NeedsApiKey = true;
     }
 }

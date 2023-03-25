@@ -7,8 +7,30 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to rename links based on patterns.
     /// </summary>
-    internal class RenameLinks : LinkAction
+    internal class RenameLinks : BaseClasses.LinkAction
     {
+        private static RenameLinks _instance = null;
+        private static readonly object _mutex = new object();
+        private RenameLinks(LinkUtilities plugin) : base(plugin)
+        {
+        }
+
+        public static RenameLinks GetInstance(LinkUtilities plugin)
+        {
+            if (_instance == null)
+            {
+                lock (_mutex)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new RenameLinks(plugin);
+                    }
+                }
+            }
+
+            return _instance;
+        }
+
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressRenameLinks";
 
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogRenamedMessage";
@@ -17,10 +39,6 @@ namespace LinkUtilities.LinkActions
         /// List of patterns to find the links to rename based on URL or link name
         /// </summary>
         public LinkNamePatterns RenamePatterns { get; set; }
-
-        public RenameLinks(LinkUtilities plugin) : base(plugin)
-        {
-        }
 
         private bool Rename(Game game, bool updateDB = true)
         {

@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using LinkUtilities.BaseClasses;
 using LinkUtilities.Models;
 using LinkUtilities.Models.Steam;
 using Newtonsoft.Json;
@@ -13,7 +14,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Steam.
     /// </summary>
-    class LibraryLinkSteam : LibraryLink
+    internal class LibraryLinkSteam : LibraryLink
     {
         private readonly string _libraryUrl = "https://store.steampowered.com/app/";
 
@@ -67,7 +68,6 @@ namespace LinkUtilities.Linker
             {
                 Log.Error(ex, $"Error loading data from {LinkName}");
             }
-
 
             return base.SearchLink(searchTerm);
         }

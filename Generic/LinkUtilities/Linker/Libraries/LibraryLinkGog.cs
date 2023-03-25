@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using LinkUtilities.BaseClasses;
 using LinkUtilities.Models;
 using LinkUtilities.Models.Gog;
 using Newtonsoft.Json;
@@ -55,6 +56,7 @@ namespace LinkUtilities.Linker
                     return false;
                 }
             }
+
             return false;
         }
 

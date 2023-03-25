@@ -1,12 +1,11 @@
 ﻿using KNARZhelper;
-using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.BaseClasses
 {
     /// <summary>
     /// Base class for a website link 

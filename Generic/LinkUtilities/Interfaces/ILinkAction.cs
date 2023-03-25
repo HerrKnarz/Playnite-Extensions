@@ -1,6 +1,6 @@
 ﻿using Playnite.SDK.Models;
 
-namespace LinkUtilities.LinkActions
+namespace LinkUtilities
 {
     public enum ActionModifierTypes { None, Add, Search, Name, SortOrder }
 
@@ -21,7 +21,7 @@ namespace LinkUtilities.LinkActions
         /// <summary>
         /// instance of the extension to access settings etc.
         /// </summary>
-        LinkUtilities Plugin { get; }
+        //LinkUtilities Plugin { get; }
 
         /// <summary>
         /// Executes the action on a game.

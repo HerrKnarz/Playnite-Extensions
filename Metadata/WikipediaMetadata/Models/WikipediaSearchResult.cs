@@ -15,7 +15,7 @@ namespace WikipediaMetadata.Models
         public string Key;
 
         [DontSerialize]
-        public string KeyMatch { get => Key.RemoveSpecialChars().ToLower().Replace(" ", ""); }
+        public string KeyMatch => Key.RemoveSpecialChars().ToLower().Replace(" ", "");
 
         [JsonProperty("title")]
         public string Title;
@@ -59,6 +59,4 @@ namespace WikipediaMetadata.Models
         [JsonProperty("url")]
         public string Url;
     }
-
-
 }

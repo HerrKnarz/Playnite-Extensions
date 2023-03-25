@@ -9,7 +9,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Sega Retro.
     /// </summary>
-    internal class LinkSegaRetro : Link
+    internal class LinkSegaRetro : BaseClasses.Link
     {
         public override string LinkName { get; } = "Sega Retro";
         public override string BaseUrl { get; } = "https://segaretro.org/";

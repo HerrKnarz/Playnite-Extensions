@@ -20,9 +20,6 @@ namespace LinkUtilities
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        public LinkUtilitiesSettingsView()
-        {
-            InitializeComponent();
-        }
+        public LinkUtilitiesSettingsView() => InitializeComponent();
     }
 }

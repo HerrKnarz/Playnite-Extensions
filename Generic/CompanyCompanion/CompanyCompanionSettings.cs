@@ -91,7 +91,7 @@ namespace CompanyCompanion
         public CompanyCompanionSettingsViewModel(CompanyCompanion plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this._plugin = plugin;
+            _plugin = plugin;
 
             // Load saved Settings.
             CompanyCompanionSettings savedSettings = plugin.LoadPluginSettings<CompanyCompanionSettings>();

@@ -11,19 +11,35 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to add a link to all available websites in the Links list, if a definitive link was found.
     /// </summary>
-    internal class AddWebsiteLinks : LinkAction
+    internal class AddWebsiteLinks : BaseClasses.LinkAction
     {
-        /// <summary>
-        /// contains all website Links that can be added.
-        /// </summary>
-        public Links Links;
+        private static AddWebsiteLinks _instance = null;
+        private static readonly object _mutex = new object();
+
+        private AddWebsiteLinks(LinkUtilities plugin) : base(plugin) => Links = new Links(Plugin);
+
+        public static AddWebsiteLinks GetInstance(LinkUtilities plugin)
+        {
+            if (_instance == null)
+            {
+                lock (_mutex)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new AddWebsiteLinks(plugin);
+                    }
+                }
+            }
+
+            return _instance;
+        }
+
+        public Links Links { get; }
 
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
-        public AddWebsiteLinks(LinkUtilities plugin) : base(plugin) => Links = new Links(Plugin);
-
-        private bool AddLink(Game game, Linker.Link link, ActionModifierTypes actionModifier)
+        private bool AddLink(Game game, BaseClasses.Link link, ActionModifierTypes actionModifier)
         {
             switch (actionModifier)
             {
@@ -40,7 +56,7 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
-            List<Linker.Link> links = null;
+            List<BaseClasses.Link> links = null;
 
             switch (actionModifier)
             {
@@ -54,7 +70,7 @@ namespace LinkUtilities.LinkActions
 
             if (isBulkAction)
             {
-                foreach (Linker.Link link in links)
+                foreach (BaseClasses.Link link in links)
                 {
                     result = AddLink(game, link, actionModifier) || result;
                 }
@@ -72,7 +88,7 @@ namespace LinkUtilities.LinkActions
                     {
                         activateGlobalProgress.ProgressMaxValue = links.Count;
 
-                        foreach (Linker.Link link in links)
+                        foreach (BaseClasses.Link link in links)
                         {
                             activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}{Environment.NewLine}{link.LinkName}";
 

@@ -6,10 +6,28 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Sorts the Links of a game.
     /// </summary>
-    internal class SortLinks : LinkAction
+    internal class SortLinks : BaseClasses.LinkAction
     {
-        public SortLinks(LinkUtilities plugin) : base(plugin)
+        private static SortLinks _instance = null;
+        private static readonly object _mutex = new object();
+        private SortLinks(LinkUtilities plugin) : base(plugin)
         {
+        }
+
+        public static SortLinks GetInstance(LinkUtilities plugin)
+        {
+            if (_instance == null)
+            {
+                lock (_mutex)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new SortLinks(plugin);
+                    }
+                }
+            }
+
+            return _instance;
         }
 
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressSortLinks";
@@ -19,14 +37,9 @@ namespace LinkUtilities.LinkActions
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            if (actionModifier == ActionModifierTypes.SortOrder || (actionModifier == ActionModifierTypes.None && Plugin.Settings.Settings.UseCustomSortOrder))
-            {
-                return LinkHelper.SortLinks(game, SortOrder);
-            }
-            else
-            {
-                return LinkHelper.SortLinks(game);
-            }
+            return actionModifier == ActionModifierTypes.SortOrder || (actionModifier == ActionModifierTypes.None && Plugin.Settings.Settings.UseCustomSortOrder)
+                ? LinkHelper.SortLinks(game, SortOrder)
+                : LinkHelper.SortLinks(game);
         }
     }
 }

@@ -9,9 +9,6 @@ namespace CompanyCompanion
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged(string propname)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
-        }
+        public void OnPropertyChanged(string propname) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
     }
 }

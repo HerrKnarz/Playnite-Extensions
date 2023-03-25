@@ -59,20 +59,21 @@
     <Compile Include="..\..\Common\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
+    <Compile Include="BaseClasses\AbstractGenericSingleton.cs" />
     <Compile Include="Helper\ParseHelper.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
     <Compile Include="LinkActions\RemoveDuplicates.cs" />
     <Compile Include="LinkActions\HandleUriActions.cs" />
     <Compile Include="LinkActions\AddLibraryLinks.cs" />
     <Compile Include="LinkActions\AddWebsiteLinks.cs" />
-    <Compile Include="LinkActions\ILinkAction.cs" />
-    <Compile Include="LinkActions\LinkAction.cs" />
+    <Compile Include="Interfaces\ILinkAction.cs" />
+    <Compile Include="BaseClasses\LinkAction.cs" />
     <Compile Include="LinkActions\RemoveLinks.cs" />
     <Compile Include="LinkActions\RenameLinks.cs" />
     <Compile Include="LinkActions\TagMissingLinks.cs" />
-    <Compile Include="Linker\IGameLibrary.cs" />
-    <Compile Include="Linker\ILink.cs" />
-    <Compile Include="Linker\Link.cs" />
+    <Compile Include="Interfaces\IGameLibrary.cs" />
+    <Compile Include="Interfaces\ILink.cs" />
+    <Compile Include="BaseClasses\Link.cs" />
     <Compile Include="Linker\LinkSources\LinkAdventureGamers.cs" />
     <Compile Include="Linker\LinkSources\LinkArcadeDatabase.cs" />
     <Compile Include="Linker\LinkSources\LinkCoOptimus.cs" />
@@ -91,7 +92,7 @@
     <Compile Include="Linker\Libraries\LibraryLinkGog.cs" />
     <Compile Include="Linker\Libraries\LibraryLinkItch.cs" />
     <Compile Include="Linker\Libraries\LibraryLinkSteam.cs" />
-    <Compile Include="Linker\LibraryLink.cs" />
+    <Compile Include="BaseClasses\LibraryLink.cs" />
     <Compile Include="Linker\LinkSources\LinkNintendoWiki.cs" />
     <Compile Include="Linker\LinkSources\LinkPCGamingWiki.cs" />
     <Compile Include="Linker\Links.cs" />

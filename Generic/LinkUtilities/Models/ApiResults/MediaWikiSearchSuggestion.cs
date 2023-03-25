@@ -8,66 +8,42 @@
     public partial class SearchSuggestion
     {
 
-        private SearchSuggestionWarnings warningsField;
+        private SearchSuggestionWarnings _warningsField;
 
-        private SearchSuggestionQuery queryField;
+        private SearchSuggestionQuery _queryField;
 
-        private SearchSuggestionItem[] sectionField;
+        private SearchSuggestionItem[] _sectionField;
 
-        private decimal versionField;
+        private decimal _versionField;
 
         /// <remarks/>
         public SearchSuggestionWarnings Warnings
         {
-            get
-            {
-                return warningsField;
-            }
-            set
-            {
-                warningsField = value;
-            }
+            get => _warningsField;
+            set => _warningsField = value;
         }
 
         /// <remarks/>
         public SearchSuggestionQuery Query
         {
-            get
-            {
-                return queryField;
-            }
-            set
-            {
-                queryField = value;
-            }
+            get => _queryField;
+            set => _queryField = value;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItem("Item", IsNullable = false)]
         public SearchSuggestionItem[] Section
         {
-            get
-            {
-                return sectionField;
-            }
-            set
-            {
-                sectionField = value;
-            }
+            get => _sectionField;
+            set => _sectionField = value;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttribute()]
         public decimal Version
         {
-            get
-            {
-                return versionField;
-            }
-            set
-            {
-                versionField = value;
-            }
+            get => _versionField;
+            set => _versionField = value;
         }
     }
 
@@ -78,19 +54,13 @@
     public partial class SearchSuggestionWarnings
     {
 
-        private SearchSuggestionWarningsMain mainField;
+        private SearchSuggestionWarningsMain _mainField;
 
         /// <remarks/>
         public SearchSuggestionWarningsMain Main
         {
-            get
-            {
-                return mainField;
-            }
-            set
-            {
-                mainField = value;
-            }
+            get => _mainField;
+            set => _mainField = value;
         }
     }
 
@@ -101,36 +71,24 @@
     public partial class SearchSuggestionWarningsMain
     {
 
-        private string spaceField;
+        private string _spaceField;
 
-        private string valueField;
+        private string _valueField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/XML/1998/namespace")]
         public string Space
         {
-            get
-            {
-                return spaceField;
-            }
-            set
-            {
-                spaceField = value;
-            }
+            get => _spaceField;
+            set => _spaceField = value;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlText()]
         public string Value
         {
-            get
-            {
-                return valueField;
-            }
-            set
-            {
-                valueField = value;
-            }
+            get => _valueField;
+            set => _valueField = value;
         }
     }
 
@@ -141,36 +99,24 @@
     public partial class SearchSuggestionQuery
     {
 
-        private string spaceField;
+        private string _spaceField;
 
-        private string valueField;
+        private string _valueField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/XML/1998/namespace")]
         public string Space
         {
-            get
-            {
-                return spaceField;
-            }
-            set
-            {
-                spaceField = value;
-            }
+            get => _spaceField;
+            set => _spaceField = value;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlText()]
         public string Value
         {
-            get
-            {
-                return valueField;
-            }
-            set
-            {
-                valueField = value;
-            }
+            get => _valueField;
+            set => _valueField = value;
         }
     }
 
@@ -181,34 +127,22 @@
     public partial class SearchSuggestionItem
     {
 
-        private SearchSuggestionItemText textField;
+        private SearchSuggestionItemText _textField;
 
-        private SearchSuggestionItemUrl urlField;
+        private SearchSuggestionItemUrl _urlField;
 
         /// <remarks/>
         public SearchSuggestionItemText Text
         {
-            get
-            {
-                return textField;
-            }
-            set
-            {
-                textField = value;
-            }
+            get => _textField;
+            set => _textField = value;
         }
 
         /// <remarks/>
         public SearchSuggestionItemUrl Url
         {
-            get
-            {
-                return urlField;
-            }
-            set
-            {
-                urlField = value;
-            }
+            get => _urlField;
+            set => _urlField = value;
         }
     }
 
@@ -219,36 +153,24 @@
     public partial class SearchSuggestionItemText
     {
 
-        private string spaceField;
+        private string _spaceField;
 
-        private string valueField;
+        private string _valueField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/XML/1998/namespace")]
         public string Space
         {
-            get
-            {
-                return spaceField;
-            }
-            set
-            {
-                spaceField = value;
-            }
+            get => _spaceField;
+            set => _spaceField = value;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlText()]
         public string Value
         {
-            get
-            {
-                return valueField;
-            }
-            set
-            {
-                valueField = value;
-            }
+            get => _valueField;
+            set => _valueField = value;
         }
     }
 
@@ -259,36 +181,24 @@
     public partial class SearchSuggestionItemUrl
     {
 
-        private string spaceField;
+        private string _spaceField;
 
-        private string valueField;
+        private string _valueField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/XML/1998/namespace")]
         public string Space
         {
-            get
-            {
-                return spaceField;
-            }
-            set
-            {
-                spaceField = value;
-            }
+            get => _spaceField;
+            set => _spaceField = value;
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlText()]
         public string Value
         {
-            get
-            {
-                return valueField;
-            }
-            set
-            {
-                valueField = value;
-            }
+            get => _valueField;
+            set => _valueField = value;
         }
     }
 }

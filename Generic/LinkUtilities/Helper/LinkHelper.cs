@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using KNARZhelper;
+using LinkUtilities.LinkActions;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -95,12 +96,12 @@ namespace LinkUtilities
                 // We sort the Links automatically if the setting SortAfterChange is true.
                 if (addNewLink && plugin.Settings.Settings.SortAfterChange)
                 {
-                    plugin.SortLinks.Execute(game);
+                    LinkActions.SortLinks.GetInstance(plugin).Execute(game);
                 }
                 // We add/remove tags for missing links automatically if the setting TagMissingLinksAfterChange is true.
                 if (addNewLink && plugin.Settings.Settings.TagMissingLinksAfterChange)
                 {
-                    plugin.TagMissingLinks.Execute(game);
+                    TagMissingLinks.GetInstance(plugin).Execute(game);
                 }
             }
 
@@ -209,12 +210,7 @@ namespace LinkUtilities
 
                 string urlWithoutScheme = uri.Host + uri.PathAndQuery + uri.Fragment;
 
-                if (!url.EndsWith("/"))
-                {
-                    return urlWithoutScheme += "/";
-                }
-
-                return urlWithoutScheme;
+                return !url.EndsWith("/") ? (urlWithoutScheme += "/") : urlWithoutScheme;
             }
             catch (Exception)
             {
@@ -230,7 +226,7 @@ namespace LinkUtilities
         /// <param name="sortOrder">Dictionary that contains the sort order.</param>
         /// <returns>Position in the sort order. The max int is returned, if the link name is not in the dictionary. That way
         /// those links will always appear after the defined order.</returns>
-        private static int? GetSortPosition(string linkName, Dictionary<string, int> sortOrder) => (sortOrder.TryGetValue(linkName, out int position)) ? position : int.MaxValue;
+        private static int? GetSortPosition(string linkName, Dictionary<string, int> sortOrder) => sortOrder.TryGetValue(linkName, out int position) ? position : int.MaxValue;
 
         /// <summary>
         /// PreRequest event for the HtmlWeb class. Is used to disable redirects,

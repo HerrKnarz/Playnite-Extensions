@@ -11,7 +11,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Adventure Gamers.
     /// </summary>
-    internal class LinkAdventureGamers : Link
+    internal class LinkAdventureGamers : BaseClasses.Link
     {
         public override string LinkName { get; } = "Adventure Gamers";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;

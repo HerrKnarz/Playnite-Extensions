@@ -1,7 +1,7 @@
 ﻿using Playnite.SDK.Models;
 using System;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.BaseClasses
 {
     /// <summary>
     /// Base class for a library link

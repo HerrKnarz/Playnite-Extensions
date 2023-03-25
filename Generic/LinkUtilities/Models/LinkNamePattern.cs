@@ -43,26 +43,21 @@ namespace LinkUtilities.Models
         /// Regular expression of the UrlPattern
         /// </summary>
         [DontSerialize]
-        public string UrlRegEx { get => ParseHelper.WildCardToRegular(UrlPattern); }
+        public string UrlRegEx => ParseHelper.WildCardToRegular(UrlPattern);
 
         /// <summary>
         /// Regular expression of the NamePattern
         /// </summary>
         [DontSerialize]
-        public string NameRegEx { get => ParseHelper.WildCardToRegular(NamePattern); }
+        public string NameRegEx => ParseHelper.WildCardToRegular(NamePattern);
 
         public bool LinkMatch(string linkName, string linkUrl)
         {
-            if (PartialMatch)
-            {
-                return ((!string.IsNullOrWhiteSpace(NamePattern) && Regex.IsMatch(linkName, NameRegEx)) ||
-                    (!string.IsNullOrWhiteSpace(UrlPattern) && Regex.IsMatch(linkUrl, UrlRegEx)));
-            }
-            else
-            {
-                return (string.IsNullOrWhiteSpace(NamePattern) || Regex.IsMatch(linkName, NameRegEx)) &&
+            return PartialMatch
+                ? (!string.IsNullOrWhiteSpace(NamePattern) && Regex.IsMatch(linkName, NameRegEx)) ||
+                    (!string.IsNullOrWhiteSpace(UrlPattern) && Regex.IsMatch(linkUrl, UrlRegEx))
+                : (string.IsNullOrWhiteSpace(NamePattern) || Regex.IsMatch(linkName, NameRegEx)) &&
                     (string.IsNullOrWhiteSpace(UrlPattern) || Regex.IsMatch(linkUrl, UrlRegEx));
-            }
         }
     }
 }

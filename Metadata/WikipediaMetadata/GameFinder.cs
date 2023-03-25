@@ -13,10 +13,7 @@ namespace WikipediaMetadata
     {
         private readonly PluginSettings _settings;
 
-        public GameFinder(PluginSettings settings)
-        {
-            _settings = settings;
-        }
+        public GameFinder(PluginSettings settings) => _settings = settings;
 
         /// <summary>
         /// Prepares different strings for search functions
@@ -65,11 +62,12 @@ namespace WikipediaMetadata
                 List<Page> foundPages = searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game")).ToList();
 
                 foundPage =
-                    foundPages.Where(p => p.KeyMatch == nameVideoGame).FirstOrDefault() ??
-                    foundPages.Where(p => p.KeyMatch == searchNameVideoGame).FirstOrDefault() ??
-                    foundPages.Where(p => p.KeyMatch == compareName).FirstOrDefault() ??
-                    foundPages.Where(p => p.KeyMatch == searchName).FirstOrDefault();
+                    foundPages.FirstOrDefault(p => p.KeyMatch == nameVideoGame) ??
+                    foundPages.FirstOrDefault(p => p.KeyMatch == searchNameVideoGame) ??
+                    foundPages.FirstOrDefault(p => p.KeyMatch == compareName) ??
+                    foundPages.FirstOrDefault(p => p.KeyMatch == searchName);
             }
+
             return foundPage;
         }
 

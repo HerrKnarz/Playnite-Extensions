@@ -42,10 +42,7 @@ namespace CompanyCompanion
         /// <summary>
         /// Display name of the company. Includes info for cleaned up name.
         /// </summary>
-        public string DisplayName
-        {
-            get => (Name == CleanedUpName) ? Name : $"{Name} → {CleanedUpName}";
-        }
+        public string DisplayName => (Name == CleanedUpName) ? Name : $"{Name} → {CleanedUpName}";
         /// <summary>
         /// Specifies if the company will be merged with the others in the group.
         /// </summary>

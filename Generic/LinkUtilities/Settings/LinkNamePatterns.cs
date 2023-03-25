@@ -24,19 +24,13 @@ namespace LinkUtilities.Settings
         /// <summary>
         /// Creates an empty instance
         /// </summary>
-        public LinkNamePatterns()
-        {
-            SortByPosition = false;
-        }
+        public LinkNamePatterns() => SortByPosition = false;
 
         /// <summary>
         /// Creates an empty instance, but sets the SortByPosition property to the desired value.
         /// </summary>
         /// <param name="sortByPosition">If true the list is sorted by the position property.</param>
-        public LinkNamePatterns(bool sortByPosition = false)
-        {
-            SortByPosition = sortByPosition;
-        }
+        public LinkNamePatterns(bool sortByPosition = false) => SortByPosition = sortByPosition;
 
         public void SortPatterns()
         {
@@ -76,26 +70,27 @@ namespace LinkUtilities.Settings
             switch (type)
             {
                 case PatternTypes.LinkNamePattern:
-                    {
-                        fileName = "DefaultLinkNamePatterns.json";
-                        break;
-                    }
+                {
+                    fileName = "DefaultLinkNamePatterns.json";
+                    break;
+                }
                 case PatternTypes.RemovePattern:
-                    {
-                        fileName = "DefaultRemovePatterns.json";
-                        break;
-                    }
+                {
+                    fileName = "DefaultRemovePatterns.json";
+                    break;
+                }
                 case PatternTypes.RenamePattern:
-                    {
-                        fileName = "DefaultRenamePatterns.json";
-                        break;
-                    }
+                {
+                    fileName = "DefaultRenamePatterns.json";
+                    break;
+                }
                 case PatternTypes.MissingLinkPatterns:
-                    {
-                        fileName = "DefaultMissingLinkPatterns.json";
-                        break;
-                    }
-                default: break;
+                {
+                    fileName = "DefaultMissingLinkPatterns.json";
+                    break;
+                }
+                default:
+                    break;
             }
 
             return Serialization.FromJsonFile<List<LinkNamePattern>>(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", fileName));
