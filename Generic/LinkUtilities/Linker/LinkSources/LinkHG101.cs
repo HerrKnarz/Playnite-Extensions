@@ -63,7 +63,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkHG101(LinkUtilities plugin) : base(plugin)
+        public LinkHG101() : base()
         {
         }
     }

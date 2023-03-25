@@ -51,7 +51,7 @@ namespace LinkUtilities.Linker
 
                 if (!string.IsNullOrEmpty(LinkUrl))
                 {
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl);
                 }
             }
 
@@ -65,7 +65,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkPCGamingWiki(LinkUtilities plugin) : base(plugin)
+        public LinkPCGamingWiki() : base()
         {
         }
     }

@@ -8,11 +8,11 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class Libraries : List<LibraryLink>
     {
-        public Libraries(LinkUtilities plugin)
+        public Libraries()
         {
-            Add(new LibraryLinkSteam(plugin));
-            Add(new LibraryLinkGog(plugin));
-            Add(new LibraryLinkItch(plugin));
+            Add(new LibraryLinkSteam());
+            Add(new LibraryLinkGog());
+            Add(new LibraryLinkItch());
         }
     }
 }

@@ -69,7 +69,7 @@ namespace LinkUtilities.Linker
 
                         if (CheckLink(LinkUrl))
                         {
-                            result = LinkHelper.AddLink(game, linkName, LinkUrl, Plugin) || result;
+                            result |= LinkHelper.AddLink(game, linkName, LinkUrl);
                         }
                         else if (game.Name != game.Name.RemoveEditionSuffix())
                         {
@@ -77,7 +77,7 @@ namespace LinkUtilities.Linker
 
                             if (CheckLink(LinkUrl))
                             {
-                                result = LinkHelper.AddLink(game, linkName, LinkUrl, Plugin) || result;
+                                result |= LinkHelper.AddLink(game, linkName, LinkUrl);
                             }
                         }
                     }
@@ -94,7 +94,7 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "-")
                 .ToLower();
 
-        public LinkMetacritic(LinkUtilities plugin) : base(plugin)
+        public LinkMetacritic() : base()
         {
         }
     }

@@ -52,7 +52,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkAdventureGamers(LinkUtilities plugin) : base(plugin)
+        public LinkAdventureGamers() : base()
         {
         }
     }

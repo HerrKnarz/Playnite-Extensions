@@ -75,7 +75,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkArcadeDatabase(LinkUtilities plugin) : base(plugin)
+        public LinkArcadeDatabase() : base()
         {
         }
     }

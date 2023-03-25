@@ -42,7 +42,7 @@ namespace LinkUtilities.Linker
             {
                 string _ = client.DownloadString(url);
                 LinkUrl = $"{BaseUrl}{gameSlug}";
-                return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin);
+                return LinkHelper.AddLink(game, LinkName, LinkUrl);
             }
             catch
             {
@@ -92,7 +92,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkEpic(LinkUtilities plugin) : base(plugin)
+        public LinkEpic() : base()
         {
         }
     }

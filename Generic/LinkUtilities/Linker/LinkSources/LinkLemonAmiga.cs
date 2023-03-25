@@ -61,7 +61,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkLemonAmiga(LinkUtilities plugin) : base(plugin)
+        public LinkLemonAmiga() : base()
         {
         }
     }

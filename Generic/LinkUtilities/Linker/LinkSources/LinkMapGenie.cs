@@ -27,7 +27,7 @@ namespace LinkUtilities.Linker
                   .ToLower();
         }
 
-        public LinkMapGenie(LinkUtilities plugin) : base(plugin)
+        public LinkMapGenie() : base()
         {
         }
     }

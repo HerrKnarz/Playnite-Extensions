@@ -29,7 +29,7 @@ namespace LinkUtilities
         /// <returns>
         /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
         /// </returns>
-        internal static bool AddLink(Game game, string linkName, string linkUrl, LinkUtilities plugin, bool ignoreExisting = true)
+        internal static bool AddLink(Game game, string linkName, string linkUrl, bool ignoreExisting = true)
         {
             Link link = new Link(linkName, linkUrl);
             bool mustUpdate = false;
@@ -94,14 +94,14 @@ namespace LinkUtilities
                 API.Instance.Database.Games.Update(game);
 
                 // We sort the Links automatically if the setting SortAfterChange is true.
-                if (addNewLink && LinkActions.SortLinks.GetInstance(plugin).SortAfterChange)
+                if (addNewLink && LinkActions.SortLinks.Instance().SortAfterChange)
                 {
-                    LinkActions.SortLinks.GetInstance(plugin).Execute(game);
+                    LinkActions.SortLinks.Instance().Execute(game);
                 }
                 // We add/remove tags for missing links automatically if the setting TagMissingLinksAfterChange is true.
-                if (addNewLink && TagMissingLinks.GetInstance(plugin).TagMissingLinksAfterChange)
+                if (addNewLink && TagMissingLinks.Instance().TagMissingLinksAfterChange)
                 {
-                    TagMissingLinks.GetInstance(plugin).Execute(game);
+                    TagMissingLinks.Instance().Execute(game);
                 }
             }
 

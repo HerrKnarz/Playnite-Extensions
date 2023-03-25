@@ -23,8 +23,6 @@ namespace LinkUtilities.BaseClasses
         public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLink";
         public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
-        private readonly LinkUtilities _plugin;
-        public LinkUtilities Plugin => _plugin;
         public List<SearchResult> SearchResults { get; set; } = new List<SearchResult>();
 
         public virtual bool AddSearchedLink(Game game)
@@ -35,7 +33,7 @@ namespace LinkUtilities.BaseClasses
                 game.Name,
                 $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
 
-            return result != null && LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, _plugin, false);
+            return result != null && LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, false);
         }
 
         public virtual List<GenericItemOption> SearchLink(string searchTerm) => SearchResults.ToList<GenericItemOption>();
@@ -81,7 +79,7 @@ namespace LinkUtilities.BaseClasses
 
                 if (!string.IsNullOrEmpty(LinkUrl))
                 {
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, _plugin);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl);
                 }
             }
 
@@ -161,9 +159,8 @@ namespace LinkUtilities.BaseClasses
             }
         }
 
-        public Link(LinkUtilities plugin)
+        public Link()
         {
-            _plugin = plugin;
             Settings = new LinkSourceSetting()
             {
                 LinkName = LinkName,

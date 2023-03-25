@@ -19,7 +19,7 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "-")
                 .ToLower();
 
-        public LinkGamerGuides(LinkUtilities plugin) : base(plugin)
+        public LinkGamerGuides() : base()
         {
         }
     }

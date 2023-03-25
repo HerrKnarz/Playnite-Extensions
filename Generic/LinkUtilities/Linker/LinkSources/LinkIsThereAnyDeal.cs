@@ -83,6 +83,6 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkIsThereAnyDeal(LinkUtilities plugin) : base(plugin) => Settings.NeedsApiKey = true;
+        public LinkIsThereAnyDeal() : base() => Settings.NeedsApiKey = true;
     }
 }

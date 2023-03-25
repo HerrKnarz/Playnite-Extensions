@@ -8,34 +8,34 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class Links : List<Link>
     {
-        public Links(LinkUtilities plugin)
+        public Links()
         {
-            Add(new LinkAdventureGamers(plugin));
-            Add(new LinkArcadeDatabase(plugin));
-            Add(new LinkCoOptimus(plugin));
-            Add(new LinkEpic(plugin));
-            Add(new LinkGamerGuides(plugin));
-            Add(new LinkGiantBomb(plugin));
-            Add(new LibraryLinkGog(plugin));
-            Add(new LinkHG101(plugin));
-            Add(new LinkHowLongToBeat(plugin));
-            Add(new LinkIGN(plugin));
-            Add(new LinkIsThereAnyDeal(plugin));
-            Add(new LibraryLinkItch(plugin));
-            Add(new LinkLemonAmiga(plugin));
-            Add(new LinkMapGenie(plugin));
-            Add(new LinkMetacritic(plugin));
-            Add(new LinkMobyGames(plugin));
-            Add(new LinkNECRetro(plugin));
-            Add(new LinkNintendoWiki(plugin));
-            Add(new LinkPCGamingWiki(plugin));
-            Add(new LinkRAWG(plugin));
-            Add(new LinkSegaRetro(plugin));
-            Add(new LinkSNKWiki(plugin));
-            Add(new LibraryLinkSteam(plugin));
-            Add(new LinkStrategyWiki(plugin));
-            Add(new LinkWikipedia(plugin));
-            Add(new LinkZopharsDomain(plugin));
+            Add(new LinkAdventureGamers());
+            Add(new LinkArcadeDatabase());
+            Add(new LinkCoOptimus());
+            Add(new LinkEpic());
+            Add(new LinkGamerGuides());
+            Add(new LinkGiantBomb());
+            Add(new LibraryLinkGog());
+            Add(new LinkHG101());
+            Add(new LinkHowLongToBeat());
+            Add(new LinkIGN());
+            Add(new LinkIsThereAnyDeal());
+            Add(new LibraryLinkItch());
+            Add(new LinkLemonAmiga());
+            Add(new LinkMapGenie());
+            Add(new LinkMetacritic());
+            Add(new LinkMobyGames());
+            Add(new LinkNECRetro());
+            Add(new LinkNintendoWiki());
+            Add(new LinkPCGamingWiki());
+            Add(new LinkRAWG());
+            Add(new LinkSegaRetro());
+            Add(new LinkSNKWiki());
+            Add(new LibraryLinkSteam());
+            Add(new LinkStrategyWiki());
+            Add(new LinkWikipedia());
+            Add(new LinkZopharsDomain());
         }
     }
 }

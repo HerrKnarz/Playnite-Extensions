@@ -15,11 +15,11 @@ namespace LinkUtilities.LinkActions
     {
         private static HandleUriActions _instance = null;
         private static readonly object _mutex = new object();
-        private HandleUriActions(LinkUtilities plugin) : base(plugin)
+        private HandleUriActions() : base()
         {
         }
 
-        public static HandleUriActions GetInstance(LinkUtilities plugin)
+        public static HandleUriActions Instance()
         {
             if (_instance == null)
             {
@@ -27,7 +27,7 @@ namespace LinkUtilities.LinkActions
                 {
                     if (_instance == null)
                     {
-                        _instance = new HandleUriActions(plugin);
+                        _instance = new HandleUriActions();
                     }
                 }
             }
@@ -112,7 +112,7 @@ namespace LinkUtilities.LinkActions
             switch (actionModifier)
             {
                 case ActionModifierTypes.Add:
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin, false);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl, false);
                 default:
                     return false;
             }

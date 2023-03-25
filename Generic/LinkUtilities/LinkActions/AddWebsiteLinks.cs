@@ -16,9 +16,9 @@ namespace LinkUtilities.LinkActions
         private static AddWebsiteLinks _instance = null;
         private static readonly object _mutex = new object();
 
-        private AddWebsiteLinks(LinkUtilities plugin) : base(plugin) => Links = new Links(Plugin);
+        private AddWebsiteLinks() : base() => Links = new Links();
 
-        public static AddWebsiteLinks GetInstance(LinkUtilities plugin)
+        public static AddWebsiteLinks Instance()
         {
             if (_instance == null)
             {
@@ -26,7 +26,7 @@ namespace LinkUtilities.LinkActions
                 {
                     if (_instance == null)
                     {
-                        _instance = new AddWebsiteLinks(plugin);
+                        _instance = new AddWebsiteLinks();
                     }
                 }
             }

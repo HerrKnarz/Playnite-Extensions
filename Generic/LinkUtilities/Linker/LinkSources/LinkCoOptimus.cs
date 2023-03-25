@@ -49,7 +49,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkCoOptimus(LinkUtilities plugin) : base(plugin)
+        public LinkCoOptimus() : base()
         {
         }
     }

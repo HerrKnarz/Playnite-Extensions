@@ -30,7 +30,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkNECRetro(LinkUtilities plugin) : base(plugin)
+        public LinkNECRetro() : base()
         {
         }
     }

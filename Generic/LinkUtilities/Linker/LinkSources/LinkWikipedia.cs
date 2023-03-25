@@ -28,7 +28,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkWikipedia(LinkUtilities plugin) : base(plugin)
+        public LinkWikipedia() : base()
         {
         }
     }

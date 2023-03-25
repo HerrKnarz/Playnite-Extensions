@@ -53,10 +53,6 @@ namespace LinkUtilities
         /// only returns a GenericItemOption, that doesn't have an URL.
         /// </summary>
         List<SearchResult> SearchResults { get; set; }
-        /// <summary>
-        /// instance of the extension to access settings etc.
-        /// </summary>
-        LinkUtilities Plugin { get; }
 
         /// <summary>
         /// Adds a link via search dialog.

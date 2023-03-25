@@ -10,11 +10,11 @@ namespace LinkUtilities.LinkActions
     {
         private static DoAfterChange _instance = null;
         private static readonly object _mutex = new object();
-        private DoAfterChange(LinkUtilities plugin) : base(plugin)
+        private DoAfterChange() : base()
         {
         }
 
-        public static DoAfterChange GetInstance(LinkUtilities plugin)
+        public static DoAfterChange Instance()
         {
             if (_instance == null)
             {
@@ -22,7 +22,7 @@ namespace LinkUtilities.LinkActions
                 {
                     if (_instance == null)
                     {
-                        _instance = new DoAfterChange(plugin);
+                        _instance = new DoAfterChange();
                     }
                 }
             }
@@ -37,29 +37,29 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
-            if (RenameLinks.GetInstance(Plugin).RenameLinksAfterChange && (RenameLinks.GetInstance(Plugin).RenamePatterns?.Any() ?? false))
+            if (RenameLinks.Instance().RenameLinksAfterChange && (RenameLinks.Instance().RenamePatterns?.Any() ?? false))
             {
-                result = RenameLinks.GetInstance(Plugin).Execute(game, actionModifier);
+                result = RenameLinks.Instance().Execute(game, actionModifier);
             }
 
-            if (RemoveLinks.GetInstance(Plugin).RemoveLinksAfterChange && (RemoveLinks.GetInstance(Plugin).RemovePatterns?.Any() ?? false))
+            if (RemoveLinks.Instance().RemoveLinksAfterChange && (RemoveLinks.Instance().RemovePatterns?.Any() ?? false))
             {
-                result |= RemoveLinks.GetInstance(Plugin).Execute(game, actionModifier);
+                result |= RemoveLinks.Instance().Execute(game, actionModifier);
             }
 
-            if (RemoveDuplicates.GetInstance(Plugin).RemoveDuplicatesAfterChange)
+            if (RemoveDuplicates.Instance().RemoveDuplicatesAfterChange)
             {
-                result |= RemoveDuplicates.GetInstance(Plugin).Execute(game, actionModifier);
+                result |= RemoveDuplicates.Instance().Execute(game, actionModifier);
             }
 
-            if (SortLinks.GetInstance(Plugin).SortAfterChange)
+            if (SortLinks.Instance().SortAfterChange)
             {
-                result |= SortLinks.GetInstance(Plugin).Execute(game, actionModifier);
+                result |= SortLinks.Instance().Execute(game, actionModifier);
             }
 
-            if (TagMissingLinks.GetInstance(Plugin).TagMissingLinksAfterChange)
+            if (TagMissingLinks.Instance().TagMissingLinksAfterChange)
             {
-                result |= TagMissingLinks.GetInstance(Plugin).Execute(game, actionModifier);
+                result |= TagMissingLinks.Instance().Execute(game, actionModifier);
             }
 
             return result;

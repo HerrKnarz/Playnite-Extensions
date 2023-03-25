@@ -59,7 +59,6 @@
     <Compile Include="..\..\Common\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
-    <Compile Include="BaseClasses\AbstractGenericSingleton.cs" />
     <Compile Include="Helper\ParseHelper.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
     <Compile Include="LinkActions\RemoveDuplicates.cs" />

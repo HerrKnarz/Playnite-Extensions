@@ -40,7 +40,7 @@ namespace LinkUtilities.Linker
 
                     LinkUrl = itchMetaData.Game.Url;
 
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, Plugin);
+                    return LinkHelper.AddLink(game, LinkName, LinkUrl);
                 }
                 catch (Exception ex)
                 {
@@ -92,6 +92,6 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LibraryLinkItch(LinkUtilities plugin) : base(plugin) => Settings.NeedsApiKey = true;
+        public LibraryLinkItch() : base() => Settings.NeedsApiKey = true;
     }
 }

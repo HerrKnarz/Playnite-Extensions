@@ -10,11 +10,11 @@ namespace LinkUtilities.LinkActions
     {
         private static RemoveDuplicates _instance = null;
         private static readonly object _mutex = new object();
-        private RemoveDuplicates(LinkUtilities plugin) : base(plugin)
+        private RemoveDuplicates() : base()
         {
         }
 
-        public static RemoveDuplicates GetInstance(LinkUtilities plugin)
+        public static RemoveDuplicates Instance()
         {
             if (_instance == null)
             {
@@ -22,7 +22,7 @@ namespace LinkUtilities.LinkActions
                 {
                     if (_instance == null)
                     {
-                        _instance = new RemoveDuplicates(plugin);
+                        _instance = new RemoveDuplicates();
                     }
                 }
             }

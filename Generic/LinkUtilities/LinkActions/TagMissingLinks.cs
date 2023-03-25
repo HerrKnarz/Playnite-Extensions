@@ -15,11 +15,11 @@ namespace LinkUtilities.LinkActions
     {
         private static TagMissingLinks _instance = null;
         private static readonly object _mutex = new object();
-        private TagMissingLinks(LinkUtilities plugin) : base(plugin)
+        private TagMissingLinks() : base()
         {
         }
 
-        public static TagMissingLinks GetInstance(LinkUtilities plugin)
+        public static TagMissingLinks Instance()
         {
             if (_instance == null)
             {
@@ -27,7 +27,7 @@ namespace LinkUtilities.LinkActions
                 {
                     if (_instance == null)
                     {
-                        _instance = new TagMissingLinks(plugin);
+                        _instance = new TagMissingLinks();
                     }
                 }
             }

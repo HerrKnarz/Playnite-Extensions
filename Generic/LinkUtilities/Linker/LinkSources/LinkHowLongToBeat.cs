@@ -68,7 +68,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkHowLongToBeat(LinkUtilities plugin) : base(plugin)
+        public LinkHowLongToBeat() : base()
         {
         }
     }

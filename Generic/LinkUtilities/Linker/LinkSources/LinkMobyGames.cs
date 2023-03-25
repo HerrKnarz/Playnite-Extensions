@@ -58,7 +58,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkMobyGames(LinkUtilities plugin) : base(plugin)
+        public LinkMobyGames() : base()
         {
         }
     }

@@ -10,11 +10,11 @@ namespace LinkUtilities.LinkActions
     {
         private static SortLinks _instance = null;
         private static readonly object _mutex = new object();
-        private SortLinks(LinkUtilities plugin) : base(plugin)
+        private SortLinks() : base()
         {
         }
 
-        public static SortLinks GetInstance(LinkUtilities plugin)
+        public static SortLinks Instance()
         {
             if (_instance == null)
             {
@@ -22,7 +22,7 @@ namespace LinkUtilities.LinkActions
                 {
                     if (_instance == null)
                     {
-                        _instance = new SortLinks(plugin);
+                        _instance = new SortLinks();
                     }
                 }
             }

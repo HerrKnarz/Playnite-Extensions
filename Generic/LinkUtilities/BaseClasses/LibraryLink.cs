@@ -12,7 +12,7 @@ namespace LinkUtilities.BaseClasses
 
         public abstract bool AddLibraryLink(Game game);
 
-        public LibraryLink(LinkUtilities plugin) : base(plugin)
+        public LibraryLink() : base()
         {
         }
     }

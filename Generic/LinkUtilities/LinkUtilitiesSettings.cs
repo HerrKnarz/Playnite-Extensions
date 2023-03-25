@@ -200,19 +200,19 @@ namespace LinkUtilities
 
         public void WriteSettingsToLinkActions()
         {
-            SortLinks.GetInstance(_plugin).SortOrder = Settings.SortOrder.ToDictionary(x => x.LinkName, x => x.Position);
-            SortLinks.GetInstance(_plugin).SortAfterChange = Settings.SortAfterChange;
-            SortLinks.GetInstance(_plugin).UseCustomSortOrder = Settings.UseCustomSortOrder;
-            HandleUriActions.GetInstance(_plugin).LinkNamePatterns = Settings.LinkNamePatterns;
-            RemoveLinks.GetInstance(_plugin).RemovePatterns = Settings.RemovePatterns;
-            RemoveLinks.GetInstance(_plugin).RemoveLinksAfterChange = Settings.RemoveLinksAfterChange;
-            RemoveDuplicates.GetInstance(_plugin).RemoveDuplicatesAfterChange = Settings.RemoveDuplicatesAfterChange;
-            RemoveDuplicates.GetInstance(_plugin).RemoveDuplicatesType = Settings.RemoveDuplicatesType;
-            RenameLinks.GetInstance(_plugin).RenamePatterns = Settings.RenamePatterns;
-            RenameLinks.GetInstance(_plugin).RenameLinksAfterChange = Settings.RenameLinksAfterChange;
-            TagMissingLinks.GetInstance(_plugin).MissingLinkPatterns = Settings.MissingLinkPatterns;
-            TagMissingLinks.GetInstance(_plugin).TagMissingLinksAfterChange = Settings.TagMissingLinksAfterChange;
-            TagMissingLinks.GetInstance(_plugin).MissingLinkPrefix = Settings.MissingLinkPrefix;
+            SortLinks.Instance().SortOrder = Settings.SortOrder.ToDictionary(x => x.LinkName, x => x.Position);
+            SortLinks.Instance().SortAfterChange = Settings.SortAfterChange;
+            SortLinks.Instance().UseCustomSortOrder = Settings.UseCustomSortOrder;
+            HandleUriActions.Instance().LinkNamePatterns = Settings.LinkNamePatterns;
+            RemoveLinks.Instance().RemovePatterns = Settings.RemovePatterns;
+            RemoveLinks.Instance().RemoveLinksAfterChange = Settings.RemoveLinksAfterChange;
+            RemoveDuplicates.Instance().RemoveDuplicatesAfterChange = Settings.RemoveDuplicatesAfterChange;
+            RemoveDuplicates.Instance().RemoveDuplicatesType = Settings.RemoveDuplicatesType;
+            RenameLinks.Instance().RenamePatterns = Settings.RenamePatterns;
+            RenameLinks.Instance().RenameLinksAfterChange = Settings.RenameLinksAfterChange;
+            TagMissingLinks.Instance().MissingLinkPatterns = Settings.MissingLinkPatterns;
+            TagMissingLinks.Instance().TagMissingLinksAfterChange = Settings.TagMissingLinksAfterChange;
+            TagMissingLinks.Instance().MissingLinkPrefix = Settings.MissingLinkPrefix;
         }
 
         public LinkUtilitiesSettingsViewModel(LinkUtilities plugin)
@@ -224,14 +224,14 @@ namespace LinkUtilities
             if (savedSettings != null)
             {
                 Settings = savedSettings;
-                Settings.LinkSettings.RefreshLinkSources(AddWebsiteLinks.GetInstance(plugin).Links);
+                Settings.LinkSettings.RefreshLinkSources(AddWebsiteLinks.Instance().Links);
                 Settings.LinkSettings = new LinkSourceSettings(Settings.LinkSettings.OrderBy(x => x.LinkName).ToList());
             }
             else
             {
                 Settings = new LinkUtilitiesSettings
                 {
-                    LinkSettings = LinkSourceSettings.GetLinkSources(AddWebsiteLinks.GetInstance(plugin).Links)
+                    LinkSettings = LinkSourceSettings.GetLinkSources(AddWebsiteLinks.Instance().Links)
                 };
             }
 

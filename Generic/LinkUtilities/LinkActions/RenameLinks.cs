@@ -11,11 +11,11 @@ namespace LinkUtilities.LinkActions
     {
         private static RenameLinks _instance = null;
         private static readonly object _mutex = new object();
-        private RenameLinks(LinkUtilities plugin) : base(plugin)
+        private RenameLinks() : base()
         {
         }
 
-        public static RenameLinks GetInstance(LinkUtilities plugin)
+        public static RenameLinks Instance()
         {
             if (_instance == null)
             {
@@ -23,7 +23,7 @@ namespace LinkUtilities.LinkActions
                 {
                     if (_instance == null)
                     {
-                        _instance = new RenameLinks(plugin);
+                        _instance = new RenameLinks();
                     }
                 }
             }

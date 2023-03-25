@@ -20,7 +20,7 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "-")
                 .ToLower();
 
-        public LinkIGN(LinkUtilities plugin) : base(plugin)
+        public LinkIGN() : base()
         {
         }
     }

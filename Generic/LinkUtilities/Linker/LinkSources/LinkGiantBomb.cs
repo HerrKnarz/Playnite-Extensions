@@ -73,6 +73,6 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkGiantBomb(LinkUtilities plugin) : base(plugin) => Settings.NeedsApiKey = true;
+        public LinkGiantBomb() : base() => Settings.NeedsApiKey = true;
     }
 }

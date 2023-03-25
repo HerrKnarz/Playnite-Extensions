@@ -11,9 +11,9 @@ namespace LinkUtilities.LinkActions
         private static AddLibraryLinks _instance = null;
         private static readonly object _mutex = new object();
 
-        private AddLibraryLinks(LinkUtilities plugin) : base(plugin) => _libraries = new Libraries(Plugin);
+        private AddLibraryLinks() : base() => _libraries = new Libraries();
 
-        public static AddLibraryLinks GetInstance(LinkUtilities plugin)
+        public static AddLibraryLinks Instance()
         {
             if (_instance == null)
             {
@@ -21,7 +21,7 @@ namespace LinkUtilities.LinkActions
                 {
                     if (_instance == null)
                     {
-                        _instance = new AddLibraryLinks(plugin);
+                        _instance = new AddLibraryLinks();
                     }
                 }
             }

@@ -30,7 +30,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkStrategyWiki(LinkUtilities plugin) : base(plugin)
+        public LinkStrategyWiki() : base()
         {
         }
     }

@@ -50,7 +50,7 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkZopharsDomain(LinkUtilities plugin) : base(plugin)
+        public LinkZopharsDomain() : base()
         {
         }
     }

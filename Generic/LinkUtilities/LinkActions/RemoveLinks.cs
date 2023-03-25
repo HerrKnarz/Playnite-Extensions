@@ -13,11 +13,11 @@ namespace LinkUtilities.LinkActions
     {
         private static RemoveLinks _instance = null;
         private static readonly object _mutex = new object();
-        private RemoveLinks(LinkUtilities plugin) : base(plugin)
+        private RemoveLinks() : base()
         {
         }
 
-        public static RemoveLinks GetInstance(LinkUtilities plugin)
+        public static RemoveLinks Instance()
         {
             if (_instance == null)
             {
@@ -25,7 +25,7 @@ namespace LinkUtilities.LinkActions
                 {
                     if (_instance == null)
                     {
-                        _instance = new RemoveLinks(plugin);
+                        _instance = new RemoveLinks();
                     }
                 }
             }

@@ -75,6 +75,6 @@ namespace LinkUtilities.Linker
             return base.SearchLink(searchTerm);
         }
 
-        public LinkRAWG(LinkUtilities plugin) : base(plugin) => Settings.NeedsApiKey = true;
+        public LinkRAWG() : base() => Settings.NeedsApiKey = true;
     }
 }
