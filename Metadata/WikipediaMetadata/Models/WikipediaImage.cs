@@ -72,6 +72,4 @@ namespace WikipediaMetadata.Models
         [JsonProperty("description")]
         public List<string> Description;
     }
-
-
 }

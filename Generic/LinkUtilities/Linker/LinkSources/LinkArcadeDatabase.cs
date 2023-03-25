@@ -6,6 +6,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace LinkUtilities.Linker
@@ -38,7 +39,7 @@ namespace LinkUtilities.Linker
 
         // Arcade Database needs the name of the game file, because it follows the MAME naming scheme.
         public override string GetGamePath(Game game, string gameName = null)
-            => game.IsInstalled && game.Roms != null && game.Roms.Count > 0
+            => game.IsInstalled && (game.Roms?.Any() ?? false)
                 ? Path.GetFileNameWithoutExtension(game.Roms[0].Path)
                 : string.Empty;
 
@@ -53,7 +54,7 @@ namespace LinkUtilities.Linker
 
                 HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//li[@class='elenco_galleria']");
 
-                if (htmlNodes != null && htmlNodes.Count > 0)
+                if (htmlNodes?.Any() ?? false)
                 {
                     foreach (HtmlNode node in htmlNodes)
                     {

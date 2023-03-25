@@ -96,7 +96,7 @@ namespace LinkUtilities
             {
                 int position = 1;
 
-                if (Settings.SortOrder.Count > 0)
+                if (Settings.SortOrder.Any())
                 {
                     position = Settings.SortOrder.Max(x => x.Position) + 1;
                 }
@@ -117,7 +117,7 @@ namespace LinkUtilities
                 {
                     Settings.SortOrder.Remove(item);
                 }
-            }, (items) => items != null && items.Count > 0);
+            }, (items) => items?.Any() ?? false);
         }
 
         public RelayCommand SortSortItemsCommand => new RelayCommand(() => SortSortItems());
@@ -142,7 +142,7 @@ namespace LinkUtilities
                 {
                     Settings.LinkNamePatterns.Remove(linkPattern);
                 }
-            }, (items) => items != null && items.Count > 0);
+            }, (items) => items?.Any() ?? false);
         }
 
         public RelayCommand AddRemovePatternCommand => new RelayCommand(() => Settings.RemovePatterns.Add(new LinkNamePattern()));
@@ -157,7 +157,7 @@ namespace LinkUtilities
                 {
                     Settings.RemovePatterns.Remove(removePattern);
                 }
-            }, (items) => items != null && items.Count > 0);
+            }, (items) => items?.Any() ?? false);
         }
 
         public RelayCommand AddRenamePatternCommand => new RelayCommand(() => Settings.RenamePatterns.Add(new LinkNamePattern()));
@@ -172,7 +172,7 @@ namespace LinkUtilities
                 {
                     Settings.RenamePatterns.Remove(renamePattern);
                 }
-            }, (items) => items != null && items.Count > 0);
+            }, (items) => items?.Any() ?? false);
         }
 
         public RelayCommand AddMissingLinkPatternCommand => new RelayCommand(() => Settings.MissingLinkPatterns.Add(new LinkNamePattern()));
@@ -187,7 +187,7 @@ namespace LinkUtilities
                 {
                     Settings.MissingLinkPatterns.Remove(missingLinkPattern);
                 }
-            }, (items) => items != null && items.Count > 0);
+            }, (items) => items?.Any() ?? false);
         }
 
         private void SortSortItems()

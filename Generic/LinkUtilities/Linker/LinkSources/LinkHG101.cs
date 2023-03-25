@@ -37,13 +37,13 @@ namespace LinkUtilities.Linker
 
                 HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//header[@class='entry-header']");
 
-                if (htmlNodes != null && htmlNodes.Count > 0)
+                if (htmlNodes?.Any() ?? false)
                 {
                     foreach (HtmlNode node in htmlNodes)
                     {
                         HtmlNodeCollection reviewNodes = node.SelectNodes("./div[@class='index-entry-meta']/div[a='Review']");
 
-                        if (reviewNodes != null && reviewNodes.Count > 0)
+                        if (reviewNodes?.Any() ?? false)
                         {
                             SearchResults.Add(new SearchResult
                             {

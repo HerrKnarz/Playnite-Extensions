@@ -52,6 +52,4 @@ namespace LinkUtilities.Models.Epic
         [JsonProperty("name")]
         public string Name;
     }
-
-
 }

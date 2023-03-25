@@ -48,7 +48,7 @@ namespace LinkUtilities.LinkActions
         {
             bool mustUpdate = false;
 
-            if (game.Links != null && game.Links.Count > 0)
+            if (game.Links?.Any() ?? false)
             {
                 List<Link> links = game.Links.ToList();
 
@@ -60,7 +60,7 @@ namespace LinkUtilities.LinkActions
                     {
                         API.Instance.MainView.UIDispatcher.Invoke(delegate
                         {
-                            mustUpdate = game.Links.Remove(link) || mustUpdate;
+                            mustUpdate |= game.Links.Remove(link);
                         });
                     }
                 }

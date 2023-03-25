@@ -57,7 +57,7 @@ namespace WikipediaMetadata
                 {
                     Settings.SectionsToRemove.Remove(item);
                 }
-            }, (items) => items != null && items.Count > 0);
+            }, (items) => items?.Any() ?? false);
         }
 
         public WikipediaMetadataSettingsViewModel(WikipediaMetadata plugin)

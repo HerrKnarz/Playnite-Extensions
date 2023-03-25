@@ -152,7 +152,7 @@ namespace WikipediaMetadata
                                 IEnumerable<Template> sublistTemplates = listArgument.EnumDescendants().OfType<Template>()
                                     .Where(t => Resources.AllowedSubListTemplates.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower()));
 
-                                if (sublistTemplates != null && sublistTemplates.Count() > 0)
+                                if (sublistTemplates?.Any() ?? false)
                                 {
                                     foreach (Template sublistTemplate in sublistTemplates)
                                     {
@@ -239,7 +239,7 @@ namespace WikipediaMetadata
                 }
 
                 // If dates were found, We'll return the one depending on the _settings.
-                if (dates.Count > 0)
+                if (dates.Any())
                 {
                     foreach (PartialDate date in dates)
                     {
@@ -315,7 +315,7 @@ namespace WikipediaMetadata
 
                 List<int> ratings = new List<int>();
 
-                if (list.Count == 0)
+                if (!list.Any())
                 {
                     foreach (string code in Resources.PlatformCodes)
                     {
@@ -324,12 +324,12 @@ namespace WikipediaMetadata
                 }
 
                 // If no metacritc ratings were found, we'll try GameRankings
-                if (list.Count == 0)
+                if (!list.Any())
                 {
                     list.AddRange(GetValues(infoBox, "GR", true));
                 }
 
-                if (list.Count == 0)
+                if (!list.Any())
                 {
                     foreach (string code in Resources.PlatformCodes)
                     {
@@ -365,7 +365,7 @@ namespace WikipediaMetadata
                 }
 
                 // If we found ratings, we return the average rating.
-                if (ratings.Count > 0)
+                if (ratings.Any())
                 {
                     switch (_settings.RatingToUse)
                     {

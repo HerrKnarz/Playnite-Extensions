@@ -46,7 +46,7 @@ namespace LinkUtilities.Linker
 
                 HowLongToBeatSearchResult searchResult = JsonConvert.DeserializeObject<HowLongToBeatSearchResult>(jsonResult);
 
-                if (searchResult.Data != null && searchResult.Data.Count > 0)
+                if (searchResult.Data?.Any() ?? false)
                 {
                     foreach (Datum result in searchResult.Data)
                     {

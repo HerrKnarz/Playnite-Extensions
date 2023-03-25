@@ -1,7 +1,4 @@
-﻿using System;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using Xunit;
+﻿using Xunit;
 
 namespace WikipediaMetadata.Test
 {

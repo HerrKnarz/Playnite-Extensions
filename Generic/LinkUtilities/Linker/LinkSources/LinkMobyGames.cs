@@ -5,6 +5,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace LinkUtilities.Linker
@@ -36,7 +37,7 @@ namespace LinkUtilities.Linker
 
                 HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//table/tr/td[last()]");
 
-                if (htmlNodes != null && htmlNodes.Count > 0)
+                if (htmlNodes?.Any() ?? false)
                 {
                     foreach (HtmlNode node in htmlNodes)
                     {

@@ -4,6 +4,7 @@ using LinkUtilities.Models;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace LinkUtilities.Linker
@@ -30,7 +31,7 @@ namespace LinkUtilities.Linker
 
                 HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='item_article']//h2//a[contains(@href,'games')]");
 
-                if (htmlNodes != null && htmlNodes.Count > 0)
+                if (htmlNodes?.Any() ?? false)
                 {
                     foreach (HtmlNode node in htmlNodes)
                     {

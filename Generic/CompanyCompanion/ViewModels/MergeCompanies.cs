@@ -48,7 +48,7 @@ namespace CompanyCompanion
             MergeList = new ObservableCollection<MergeGroup>();
             _plugin = plugin;
 
-            string additionalStrings = (plugin.Settings.Settings.BusinessEntityDescriptors.Count > 0)
+            string additionalStrings = plugin.Settings.Settings.BusinessEntityDescriptors.Any()
                 ? "|" + string.Join("|", plugin.Settings.Settings.BusinessEntityDescriptors.Select(w => w.RemoveSpecialChars().ToLower().Replace("-", "")))
                 : string.Empty;
 
@@ -188,7 +188,7 @@ namespace CompanyCompanion
 
                     foreach (MergeGroup group in _groups)
                     {
-                        mustUpdateGame = group.UpdateGame(game) || mustUpdateGame;
+                        mustUpdateGame |= group.UpdateGame(game);
                     }
 
                     if (mustUpdateGame)
@@ -240,7 +240,7 @@ namespace CompanyCompanion
 
             _groups = mergeGroup is null ? MergeList : new ObservableCollection<MergeGroup> { mergeGroup };
 
-            if (_groups.Count > 0)
+            if (_groups.Any())
             {
                 GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                        $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionProgressUpdating")}",
@@ -275,7 +275,7 @@ namespace CompanyCompanion
 
             merger.GetMergeList();
 
-            if (merger.MergeList.Count > 0)
+            if (merger.MergeList.Any())
             {
                 merger.Merge();
             }
@@ -295,7 +295,7 @@ namespace CompanyCompanion
 
             merger.GetMergeList(true);
 
-            if (merger.MergeList.Count > 0)
+            if (merger.MergeList.Any())
             {
                 merger.Merge();
             }

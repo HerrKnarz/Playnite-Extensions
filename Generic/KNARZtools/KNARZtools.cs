@@ -70,7 +70,7 @@ namespace KNARZtools
 
                             if (existingTag != null)
                             {
-                                foreach (Game game in API.Instance.Database.Games.Where(g => g.TagIds != null && g.TagIds.Count > 0 && g.Tags.Exists(t => t.Name == tag.Name)))
+                                foreach (Game game in API.Instance.Database.Games.Where(g => (g.TagIds?.Any() ?? false) && g.Tags.Exists(t => t.Name == tag.Name)))
                                 {
                                     game.TagIds.Remove(tag.Id);
                                     game.TagIds.AddMissing(existingTag.Id);

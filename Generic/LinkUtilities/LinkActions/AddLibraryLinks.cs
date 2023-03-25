@@ -1,4 +1,5 @@
 ﻿using LinkUtilities.Linker;
+
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.LinkActions

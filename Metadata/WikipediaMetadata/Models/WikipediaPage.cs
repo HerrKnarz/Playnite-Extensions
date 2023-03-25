@@ -45,6 +45,4 @@ namespace WikipediaMetadata.Models
         [JsonProperty("source")]
         public string Source;
     }
-
-
 }

@@ -7,6 +7,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace LinkUtilities.Linker
@@ -48,7 +49,7 @@ namespace LinkUtilities.Linker
 
                 List<SteamSearchResult> games = JsonConvert.DeserializeObject<List<SteamSearchResult>>(jsonResult);
 
-                if (games != null && games.Count > 0)
+                if (games?.Any() ?? false)
                 {
                     Log.Debug($"Games found: {games.Count}");
 

@@ -66,5 +66,3 @@ namespace LinkUtilities.Models.GiantBomb
         public string Version;
     }
 }
-
-

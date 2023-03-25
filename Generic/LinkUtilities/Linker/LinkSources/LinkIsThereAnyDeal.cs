@@ -6,6 +6,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace LinkUtilities.Linker
@@ -60,7 +61,7 @@ namespace LinkUtilities.Linker
 
                     IsThereAnyDealSearchResult searchResult = JsonConvert.DeserializeObject<IsThereAnyDealSearchResult>(jsonResult);
 
-                    if (searchResult.Data.Results != null && searchResult.Data.Results.Count > 0)
+                    if (searchResult.Data.Results?.Any() ?? false)
                     {
                         foreach (Result result in searchResult.Data.Results)
                         {

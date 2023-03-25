@@ -75,12 +75,12 @@ namespace CompanyCompanion
                 {
                     if (game.Developers != null)
                     {
-                        updatedDeveloper = game.DeveloperIds.Remove(company.Id) || updatedDeveloper;
+                        updatedDeveloper |= game.DeveloperIds.Remove(company.Id);
                     }
 
                     if (game.Publishers != null)
                     {
-                        updatedPublisher = game.PublisherIds.Remove(company.Id) || updatedPublisher;
+                        updatedPublisher |= game.PublisherIds.Remove(company.Id);
                     }
                 }
             }

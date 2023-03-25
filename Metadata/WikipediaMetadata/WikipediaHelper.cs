@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+
 using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
@@ -14,15 +15,16 @@ namespace WikipediaMetadata
         {
             WikipediaImage imageData = ApiCaller.GetImage(key);
 
-            if (imageData != null && imageData.Query != null)
+            if (imageData?.Query != null)
             {
                 ImagePage page = imageData.Query.Pages.FirstOrDefault();
 
-                if (page != null && page.Original != null)
+                if (page?.Original != null)
                 {
                     return page.Original.Source;
                 }
             }
+
             return null;
         }
     }

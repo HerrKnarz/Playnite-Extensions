@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Game = Playnite.SDK.Models.Game;
 
@@ -69,7 +70,7 @@ namespace LinkUtilities.Linker
 
                     ItchSearchResult itchSearchResult = JsonConvert.DeserializeObject<ItchSearchResult>(jsonResult);
 
-                    if (itchSearchResult.Games != null && itchSearchResult.Games.Count > 0)
+                    if (itchSearchResult.Games?.Any() ?? false)
                     {
                         foreach (SearchedGame game in itchSearchResult.Games)
                         {

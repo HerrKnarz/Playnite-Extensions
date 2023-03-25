@@ -53,7 +53,7 @@ namespace WikipediaMetadata
             string searchNameVideoGame = (searchName + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
             searchName = searchName.RemoveSpecialChars().ToLower().Replace(" ", "");
 
-            if (searchResult.Pages != null && searchResult.Pages.Count > 0)
+            if (searchResult.Pages?.Any() ?? false)
             {
                 // Since name games have names, that aren't exclusive to video games, often "(video game)" is added to the
                 // page title, so we try that first, before searching the name itself. Only if we get a 100% match, we'll

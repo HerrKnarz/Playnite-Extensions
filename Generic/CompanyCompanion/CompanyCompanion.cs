@@ -64,29 +64,17 @@ namespace CompanyCompanion
                 {
                     Description = ResourceProvider.GetString("LOCCompanyCompanionMenuShowMerger"),
                     MenuSection = $"@{menuSection}",
-                    Action = a =>
-                    {
-                        ShowMergeView();
-                    }
-                },
+                    Action = a => ShowMergeView()                },
                 new MainMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCCompanyCompanionMenuMergeDuplicates"),
                     MenuSection = $"@{menuSection}",
-                    Action = a =>
-                    {
-                        MergeCompanies.MergeDuplicates(this);
-                    }
-                },
+                    Action = a => MergeCompanies.MergeDuplicates(this)                },
                 new MainMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCCompanyCompanionMenuRemoveDescriptors"),
                     MenuSection = $"@{menuSection}",
-                    Action = a =>
-                    {
-                        MergeCompanies.RemoveBusinessEntityDescriptors(this);
-                    }
-                }
+                    Action = a => MergeCompanies.RemoveBusinessEntityDescriptors(this)                }
             };
 
             return menuItems;

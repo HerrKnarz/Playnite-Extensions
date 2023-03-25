@@ -27,13 +27,11 @@ namespace CompanyCompanion.ViewModels
 
             if (isDeveloper)
             {
-                Games.AddRange(API.Instance.Database.Games
-                    .Where(g => g.DeveloperIds != null && g.DeveloperIds.Contains(companyId)));
+                Games.AddRange(API.Instance.Database.Games.Where(g => g.DeveloperIds != null && g.DeveloperIds.Contains(companyId)));
             }
             else
             {
-                Games.AddRange(API.Instance.Database.Games
-                        .Where(g => g.PublisherIds != null && g.PublisherIds.Contains(companyId)));
+                Games.AddRange(API.Instance.Database.Games.Where(g => g.PublisherIds != null && g.PublisherIds.Contains(companyId)));
             }
 
             string gamesShort = string.Join(", ", Games
@@ -45,18 +43,11 @@ namespace CompanyCompanion.ViewModels
                 .Take(10)
                 .ToList());
 
-            if (Games.Count == 0)
-            {
-                ShortInfo = $"0 {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGames")}";
-            }
-            else if (Games.Count == 1)
-            {
-                ShortInfo = $"1 {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGame")}: {gamesShort}";
-            }
-            else
-            {
-                ShortInfo = $"{Games.Count} {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGames")}: {gamesShort}";
-            }
+            ShortInfo = Games.Count == 0
+                ? $"0 {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGames")}"
+                : Games.Count == 1
+                    ? $"1 {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGame")}: {gamesShort}"
+                    : $"{Games.Count} {ResourceProvider.GetString("LOCCompanyCompanionMergeWindowGames")}: {gamesShort}";
 
             Tooltip = string.Join(Environment.NewLine, Games
                 .OrderBy(g => (g.SortingName != null && g.SortingName != "") ? g.SortingName : g.Name)

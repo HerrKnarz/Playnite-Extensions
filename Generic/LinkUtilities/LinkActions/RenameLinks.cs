@@ -1,6 +1,7 @@
 ﻿using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using System.Linq;
 
 namespace LinkUtilities.LinkActions
 {
@@ -46,7 +47,7 @@ namespace LinkUtilities.LinkActions
         {
             bool mustUpdate = false;
 
-            if (game.Links != null && game.Links.Count > 0)
+            if (game.Links?.Any() ?? false)
             {
                 foreach (Link link in game.Links)
                 {

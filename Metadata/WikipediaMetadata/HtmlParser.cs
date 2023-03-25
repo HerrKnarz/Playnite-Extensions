@@ -155,7 +155,7 @@ namespace WikipediaMetadata
             {
                 string text = RemoveUnwantedTags(RemoveAnnotationMarks(node), Resources.AllowedParagraphTags).InnerHtml.Trim();
 
-                if (text.Count() > 0)
+                if (text.Any())
                 {
                     Description += $"<{node.Name}>{text}</{node.Name}>" + Environment.NewLine + Environment.NewLine;
                 }
@@ -216,7 +216,7 @@ namespace WikipediaMetadata
 
             Queue<HtmlNode> nodes = new Queue<HtmlNode>(tryGetNodes);
 
-            while (nodes.Count > 0)
+            while (nodes.Any())
             {
                 HtmlNode node = nodes.Dequeue();
                 HtmlNode parentNode = node.ParentNode;

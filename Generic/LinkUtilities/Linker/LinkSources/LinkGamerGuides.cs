@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker

@@ -43,7 +43,7 @@ namespace LinkUtilities.Linker
                         {
                             string description = result.OriginalReleaseDate;
 
-                            if (result.Platforms != null && result.Platforms.Count > 0)
+                            if (result.Platforms?.Any() ?? false)
                             {
                                 if (!string.IsNullOrEmpty(description))
                                 {

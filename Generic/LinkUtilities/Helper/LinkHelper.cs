@@ -44,7 +44,7 @@ namespace LinkUtilities
             // otherwise we'll check if a link with the specified name is already present. If not, we'll add the link and return true.
             else
             {
-                if (game.Links.Count(x => x.Name == linkName) == 0)
+                if (!game.Links.Any(x => x.Name == linkName))
                 {
                     addNewLink = true;
                 }
@@ -114,7 +114,7 @@ namespace LinkUtilities
         /// <param name="game">Game for which the Links will be checked</param>
         /// <param name="linkName">Name of the link</param>
         /// <returns>True, if a link with that name exists</returns>
-        internal static bool LinkExists(Game game, string linkName) => !(game.Links is null) && game.Links.Count(x => x.Name == linkName) > 0;
+        internal static bool LinkExists(Game game, string linkName) => !(game.Links is null) && game.Links.Any(x => x.Name == linkName);
 
         /// <summary>
         /// Sorts the Links of a game alphabetically by the link name.
@@ -123,7 +123,7 @@ namespace LinkUtilities
         /// <returns>True, if the links could be sorted</returns>
         internal static bool SortLinks(Game game)
         {
-            if (game.Links != null && game.Links.Count > 0)
+            if (game.Links?.Any() ?? false)
             {
                 game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => x.Name));
 
@@ -143,7 +143,7 @@ namespace LinkUtilities
         /// <returns>True, if the links could be sorted</returns>
         internal static bool SortLinks(Game game, Dictionary<string, int> sortOrder)
         {
-            if (game.Links != null && game.Links.Count > 0)
+            if (game.Links?.Any() ?? false)
             {
                 game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => GetSortPosition(x.Name, sortOrder)).ThenBy(x => x.Name));
 
@@ -163,7 +163,7 @@ namespace LinkUtilities
         /// <returns>True, if duplicates were removed. Returns false if there weren't duplicates to begin with.</returns>
         internal static bool RemoveDuplicateLinks(Game game, DuplicateTypes duplicateType)
         {
-            if (game.Links != null && game.Links.Count > 0)
+            if (game.Links?.Any() ?? false)
             {
                 int linkCount = game.Links.Count;
 

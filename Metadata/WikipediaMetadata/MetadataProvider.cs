@@ -67,7 +67,6 @@ namespace WikipediaMetadata
                 {
                     page = ApiCaller.GetGameData(key);
                 }
-
             }
             catch (Exception ex)
             {
@@ -86,17 +85,7 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="key">Page key to fetch the html</param>
         /// <returns>Parsed result with the description and additional links</returns>
-        private HtmlParser ParseHtml(string key)
-        {
-            if (_htmlParser != null)
-            {
-                return _htmlParser;
-            }
-            else
-            {
-                return _htmlParser = new HtmlParser(key, _plugin.Settings.Settings);
-            }
-        }
+        private HtmlParser ParseHtml(string key) => _htmlParser ?? (_htmlParser = new HtmlParser(key, _plugin.Settings.Settings));
 
         public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
         {

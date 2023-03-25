@@ -53,7 +53,7 @@ namespace CompanyCompanion
                 {
                     Settings.BusinessEntityDescriptors.Remove(item);
                 }
-            }, (items) => items != null && items.Count > 0);
+            }, (items) => items?.Any() ?? false);
         }
 
         public RelayCommand AddIgnoreWordCommand
@@ -75,7 +75,7 @@ namespace CompanyCompanion
                 {
                     Settings.IgnoreWords.Remove(item);
                 }
-            }, (items) => items != null && items.Count > 0);
+            }, (items) => items?.Any() ?? false);
         }
 
         public CompanyCompanionSettings Settings

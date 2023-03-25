@@ -72,7 +72,7 @@ namespace LinkUtilities.LinkActions
             {
                 foreach (BaseClasses.Link link in links)
                 {
-                    result = AddLink(game, link, actionModifier) || result;
+                    result |= AddLink(game, link, actionModifier);
                 }
             }
             else
@@ -98,7 +98,7 @@ namespace LinkUtilities.LinkActions
                             }
                             else
                             {
-                                result = AddLink(game, link, actionModifier) || result;
+                                result |= AddLink(game, link, actionModifier);
                             }
 
                             activateGlobalProgress.CurrentProgressValue++;

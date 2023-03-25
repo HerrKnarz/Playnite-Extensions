@@ -45,16 +45,11 @@ namespace LinkUtilities.Linker
 
                     RawgSearchResult rawgSearchResult = JsonConvert.DeserializeObject<RawgSearchResult>(jsonResult);
 
-                    if (rawgSearchResult.Results != null && rawgSearchResult.Results.Count > 0)
+                    if (rawgSearchResult.Results?.Any() ?? false)
                     {
                         foreach (Result result in rawgSearchResult.Results)
                         {
-                            string genres = string.Empty;
-                            if (result.Genres != null && result.Genres.Count > 0)
-                            {
-                                genres = result.Genres.Select(genre => genre.Name).
-                                Aggregate((total, part) => total + ", " + part);
-                            }
+                            string genres = result.Genres?.Select(genre => genre.Name).Aggregate((total, part) => total + ", " + part) ?? string.Empty;
 
                             SearchResults.Add(new SearchResult
                             {

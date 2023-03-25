@@ -118,11 +118,7 @@ namespace KNARZhelper
             Regex ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", regExOptions | RegexOptions.IgnoreCase);
             Match match = ignoredEndWordsRegex.Match(str);
 
-            if (match.Success)
-            {
-                return str.Remove(match.Index).Trim();
-            }
-            return str;
+            return match.Success ? str.Remove(match.Index).Trim() : str;
         }
     }
 }

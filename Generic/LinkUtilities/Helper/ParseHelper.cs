@@ -69,7 +69,7 @@ namespace LinkUtilities.Helper
                 {
                     HtmlNodeCollection htmlNodes = resultNode.SelectSingleNode("./ul[@class='mw-search-results']").SelectNodes("./li[@class='mw-search-result']");
 
-                    if (htmlNodes != null && htmlNodes.Count > 0)
+                    if (htmlNodes?.Any() ?? false)
                     {
                         foreach (HtmlNode node in htmlNodes)
                         {

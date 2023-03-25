@@ -109,9 +109,9 @@ namespace LinkUtilities.LinkActions
 
                 bool isMissing = true;
 
-                if (game.Links != null && game.Links.Count > 0)
+                if (game.Links?.Any() ?? false)
                 {
-                    isMissing = game.Links.Where(x => pattern.LinkMatch(x.Name, x.Url)).Count() == 0;
+                    isMissing = !game.Links.Any(x => pattern.LinkMatch(x.Name, x.Url));
                 }
 
                 if (isMissing)
@@ -120,7 +120,7 @@ namespace LinkUtilities.LinkActions
                 }
                 else
                 {
-                    if (game.Tags != null && game.Tags.Count > 0)
+                    if (game.Tags?.Any() ?? false)
                     {
                         mustUpdate |= game.TagIds.Remove(tag.Id);
                     }
