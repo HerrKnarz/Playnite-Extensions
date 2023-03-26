@@ -29,7 +29,7 @@ namespace LinkUtilities.BaseClasses
         public virtual bool AddSearchedLink(Game game)
         {
             GenericItemOption result = GlobalSettings.Instance().OnlyATest
-                ? SearchLink(game.Name)?.FirstOrDefault() ?? new GenericItemOption()
+                ? SearchLink(game.Name)?.FirstOrDefault() ?? new SearchResult()
                 : API.Instance.Dialogs.ChooseItemWithSearch(
                     new List<GenericItemOption>(),
                     (a) => SearchLink(a),
