@@ -24,6 +24,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "gamepressure Guides",
+        "urlPattern": "*guides.gamepressure.com*",
+        "namePattern": "*gamepressure.com*",
+        "partialMatch": false
+    },
+    {
         "linkName": "Gamer Guides",
         "urlPattern": "*gamerguides.com*",
         "namePattern": "*Gamer Guides*",

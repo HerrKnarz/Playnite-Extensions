@@ -48,6 +48,18 @@ namespace LinkUtilities.Test
             {
                 new TestCase()
                 {
+                    CaseName = "gamepressure Guides",
+                    Link = new LinkGamePressureGuides(),
+                    GameName = "Assassin's Creed: Odyssey",
+                    GamePath = "assassins-creed-odyssey",
+                    Url = "https://guides.gamepressure.com/assassins-creed-odyssey",
+                    SearchedUrl = "not found!"
+                }
+            },
+            new object[]
+            {
+                new TestCase()
+                {
                     CaseName = "GamerGuides",
                     Link = new LinkGamerGuides(),
                     GameName = "Cyberpunk 2077",

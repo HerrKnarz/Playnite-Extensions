@@ -73,6 +73,7 @@
     <Compile Include="Interfaces\IGameLibrary.cs" />
     <Compile Include="Interfaces\ILink.cs" />
     <Compile Include="BaseClasses\Link.cs" />
+    <Compile Include="Linker\LinkSources\LinkGamePressureGuides.cs" />
     <Compile Include="Linker\LinkSources\LinkAdventureGamers.cs" />
     <Compile Include="Linker\LinkSources\LinkArcadeDatabase.cs" />
     <Compile Include="Linker\LinkSources\LinkCoOptimus.cs" />
