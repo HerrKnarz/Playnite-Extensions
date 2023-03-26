@@ -58,14 +58,21 @@ namespace LinkUtilities.LinkActions
 
                     if (RemovePatterns.LinkMatch(ref linkName, link.Url))
                     {
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        if (GlobalSettings.Instance().OnlyATest)
                         {
                             mustUpdate |= game.Links.Remove(link);
-                        });
+                        }
+                        else
+                        {
+                            API.Instance.MainView.UIDispatcher.Invoke(delegate
+                            {
+                                mustUpdate |= game.Links.Remove(link);
+                            });
+                        }
                     }
                 }
 
-                if (mustUpdate)
+                if (mustUpdate && !GlobalSettings.Instance().OnlyATest)
                 {
                     API.Instance.Database.Games.Update(game);
                 }

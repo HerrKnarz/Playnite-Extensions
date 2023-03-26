@@ -52,10 +52,12 @@ namespace LinkUtilities
                 {
                     string message = string.Format(ResourceProvider.GetString("LOCLinkUtilitiesDialogReplaceLink"), linkName);
 
-                    StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
-                            message,
-                            ResourceProvider.GetString("LOCLinkUtilitiesDialogSelectOption"),
-                            linkName);
+                    StringSelectionDialogResult selectResult = GlobalSettings.Instance().OnlyATest
+                        ? new StringSelectionDialogResult(true, $"{linkName} (Test)")
+                        : API.Instance.Dialogs.SelectString(
+                                message,
+                                ResourceProvider.GetString("LOCLinkUtilitiesDialogSelectOption"),
+                                linkName);
 
                     if (selectResult.Result)
                     {
@@ -67,10 +69,17 @@ namespace LinkUtilities
                         }
                         else
                         {
-                            API.Instance.MainView.UIDispatcher.Invoke(delegate
+                            if (GlobalSettings.Instance().OnlyATest)
                             {
                                 game.Links.Single(x => x.Name == linkName).Url = linkUrl;
-                            });
+                            }
+                            else
+                            {
+                                API.Instance.MainView.UIDispatcher.Invoke(delegate
+                                {
+                                    game.Links.Single(x => x.Name == linkName).Url = linkUrl;
+                                });
+                            }
 
                             mustUpdate = true;
                         }
@@ -79,10 +88,17 @@ namespace LinkUtilities
 
                 if (addNewLink)
                 {
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (GlobalSettings.Instance().OnlyATest)
                     {
                         game.Links.Add(link);
-                    });
+                    }
+                    else
+                    {
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            game.Links.Add(link);
+                        });
+                    }
 
                     mustUpdate = true;
                 }
@@ -91,7 +107,10 @@ namespace LinkUtilities
             // Updates the game in the database if we added a new link.
             if (mustUpdate)
             {
-                API.Instance.Database.Games.Update(game);
+                if (!GlobalSettings.Instance().OnlyATest)
+                {
+                    API.Instance.Database.Games.Update(game);
+                }
 
                 // We sort the Links automatically if the setting SortAfterChange is true.
                 if (addNewLink && LinkActions.SortLinks.Instance().SortAfterChange)
@@ -127,7 +146,10 @@ namespace LinkUtilities
             {
                 game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => x.Name));
 
-                API.Instance.Database.Games.Update(game);
+                if (!GlobalSettings.Instance().OnlyATest)
+                {
+                    API.Instance.Database.Games.Update(game);
+                }
 
                 return true;
             }
@@ -147,7 +169,10 @@ namespace LinkUtilities
             {
                 game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => GetSortPosition(x.Name, sortOrder)).ThenBy(x => x.Name));
 
-                API.Instance.Database.Games.Update(game);
+                if (!GlobalSettings.Instance().OnlyATest)
+                {
+                    API.Instance.Database.Games.Update(game);
+                }
 
                 return true;
             }
@@ -188,7 +213,10 @@ namespace LinkUtilities
                 {
                     game.Links = newLinks;
 
-                    API.Instance.Database.Games.Update(game);
+                    if (!GlobalSettings.Instance().OnlyATest)
+                    {
+                        API.Instance.Database.Games.Update(game);
+                    }
 
                     return true;
                 }

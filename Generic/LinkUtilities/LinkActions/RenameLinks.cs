@@ -57,10 +57,17 @@ namespace LinkUtilities.LinkActions
                     {
                         if (linkName != link.Name)
                         {
-                            API.Instance.MainView.UIDispatcher.Invoke(delegate
+                            if (GlobalSettings.Instance().OnlyATest)
                             {
                                 link.Name = linkName;
-                            });
+                            }
+                            else
+                            {
+                                API.Instance.MainView.UIDispatcher.Invoke(delegate
+                                {
+                                    link.Name = linkName;
+                                });
+                            }
 
                             mustUpdate = true;
                         }
@@ -73,7 +80,7 @@ namespace LinkUtilities.LinkActions
                     // renamed some links already.
                     Rename(game, false);
 
-                    if (updateDB)
+                    if (updateDB && !GlobalSettings.Instance().OnlyATest)
                     {
                         API.Instance.Database.Games.Update(game);
                     }

@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Models;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
@@ -27,11 +28,13 @@ namespace LinkUtilities.BaseClasses
 
         public virtual bool AddSearchedLink(Game game)
         {
-            GenericItemOption result = API.Instance.Dialogs.ChooseItemWithSearch(
-                new List<GenericItemOption>(),
-                (a) => SearchLink(a),
-                game.Name,
-                $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
+            GenericItemOption result = GlobalSettings.Instance().OnlyATest
+                ? SearchLink(game.Name)?.FirstOrDefault() ?? new GenericItemOption()
+                : API.Instance.Dialogs.ChooseItemWithSearch(
+                    new List<GenericItemOption>(),
+                    (a) => SearchLink(a),
+                    game.Name,
+                    $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
 
             return result != null && LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, false);
         }
