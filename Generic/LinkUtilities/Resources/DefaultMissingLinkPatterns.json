@@ -55,8 +55,14 @@
     },
     {
         "linkName": "IGN",
-        "urlPattern": "*ign.com*",
+        "urlPattern": "*ign.com/games*",
         "namePattern": "IGN",
+        "partialMatch": false
+    },
+    {
+        "linkName": "IGN Guide",
+        "urlPattern": "*ign.com/wikis*",
+        "namePattern": "IGN Guide",
         "partialMatch": false
     },
     {

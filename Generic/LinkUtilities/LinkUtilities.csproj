@@ -81,6 +81,7 @@
     <Compile Include="Linker\LinkSources\LinkGiantBomb.cs" />
     <Compile Include="Linker\LinkSources\LinkHowLongToBeat.cs" />
     <Compile Include="Linker\LinkSources\LinkIGN.cs" />
+    <Compile Include="Linker\LinkSources\LinkIGNGuides.cs" />
     <Compile Include="Linker\LinkSources\LinkIsThereAnyDeal.cs" />
     <Compile Include="Linker\LinkSources\LinkLemonAmiga.cs" />
     <Compile Include="Linker\LinkSources\LinkMapGenie.cs" />

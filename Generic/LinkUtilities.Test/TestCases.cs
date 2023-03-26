@@ -120,6 +120,18 @@ namespace LinkUtilities.Test
             {
                 new TestCase()
                 {
+                    CaseName = "IGN Guide",
+                    Link = new LinkIGNGuides(),
+                    GameName = "Resident Evil 4 (Remake)",
+                    GamePath = "resident-evil-4-remake",
+                    Url = "https://www.ign.com/wikis/resident-evil-4-remake",
+                    SearchedUrl = "not found!"
+                }
+            },
+            new object[]
+            {
+                new TestCase()
+                {
                     CaseName = "IsThereAnyDeal",
                     Link = new LinkIsThereAnyDeal(),
                     GameName = "Outer Worlds",

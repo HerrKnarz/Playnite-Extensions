@@ -20,6 +20,7 @@ namespace LinkUtilities.Linker
             Add(new LinkHG101());
             Add(new LinkHowLongToBeat());
             Add(new LinkIGN());
+            Add(new LinkIGNGuides());
             Add(new LinkIsThereAnyDeal());
             Add(new LibraryLinkItch());
             Add(new LinkLemonAmiga());
