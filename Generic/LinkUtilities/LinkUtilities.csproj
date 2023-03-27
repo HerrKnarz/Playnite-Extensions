@@ -70,7 +70,6 @@
     <Compile Include="LinkActions\RemoveLinks.cs" />
     <Compile Include="LinkActions\RenameLinks.cs" />
     <Compile Include="LinkActions\TagMissingLinks.cs" />
-    <Compile Include="Interfaces\IGameLibrary.cs" />
     <Compile Include="Interfaces\ILink.cs" />
     <Compile Include="BaseClasses\Link.cs" />
     <Compile Include="Linker\LinkSources\LinkGamePressureGuides.cs" />

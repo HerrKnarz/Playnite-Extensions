@@ -39,19 +39,6 @@ namespace LinkUtilities.LinkActions
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            BaseClasses.LibraryLink library;
-            bool result = false;
-
-            // Find the library of the game and add a link, if possible.
-            library = _libraries.Find(x => x.LibraryId == game.PluginId);
-
-            if (library is object)
-            {
-                result = library.AddLibraryLink(game);
-            }
-
-            return result;
-        }
+            => _libraries[game.PluginId]?.AddLibraryLink(game) ?? false;
     }
 }

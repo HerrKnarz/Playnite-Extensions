@@ -19,7 +19,10 @@ namespace LinkUtilities.Linker
     {
         private readonly string _libraryUrl = "https://itch.io/api/1/{0}/game/{1}";
 
-        public override Guid LibraryId { get; } = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
+        /// <summary>
+        /// ID of the game library to identify it in Playnite.
+        /// </summary>
+        public static Guid Id { get; } = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
         public override string LinkName { get; } = "Itch";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://itch.io/api/1/{0}/search/games?query={1}";
