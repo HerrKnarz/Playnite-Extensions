@@ -66,10 +66,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksAfterChange">Remover links duplicados após a atualização dos metadados do jogo</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">Muitas vezes provedores de metadados adicionam automaticamente links para alguns sites que você não quer. Aqui você pode definir padrões para os links que deseja remover. Os padrões podem conter caracteres curinga. Um * pode ser zero ou mais caracteres, um ? deve ser exatamente um caractere.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksAfterChange">Renomear links após os meta dados do jogo serem atualizados</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksDescription">If you want to change the name of specific links because they don't suit your needs, you can do that with these patterns. They can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksDescription">Se você quiser renomear dos links específicos porque eles não se adequam às suas necessidades, você pode fazer isso com esses padrões. Eles podem conter cartões curinga. Um * pode ser zero ou mais caracteres, um ? deve ter exatamente um caractere.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Pesquisar links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Exibir no menu</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Sort links after the game meta data was updated</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Renomear links após os meta dados do jogo serem atualizados</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortPosition">Posição</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarklet">Favoritos</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Configurações Gerais</sys:String>
