@@ -11,9 +11,14 @@ namespace LinkUtilities.Linker
     {
         public Libraries()
         {
-            Add(LibraryLinkSteam.Id, new LibraryLinkSteam());
-            Add(LibraryLinkGog.Id, new LibraryLinkGog());
-            Add(LibraryLinkItch.Id, new LibraryLinkItch());
+            LibraryLinkSteam steamLib = new LibraryLinkSteam();
+            Add(steamLib.Id, steamLib);
+
+            LibraryLinkGog gogLib = new LibraryLinkGog();
+            Add(gogLib.Id, gogLib);
+
+            LibraryLinkItch itchLib = new LibraryLinkItch();
+            Add(itchLib.Id, itchLib);
         }
     }
 }

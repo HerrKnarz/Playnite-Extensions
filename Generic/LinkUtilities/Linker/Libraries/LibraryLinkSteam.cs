@@ -22,7 +22,7 @@ namespace LinkUtilities.Linker
         /// <summary>
         /// ID of the game library to identify it in Playnite.
         /// </summary>
-        public static Guid Id { get; } = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
+        public override Guid Id { get; } = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         public override string LinkName { get; } = "Steam";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://steamcommunity.com/actions/SearchApps/";

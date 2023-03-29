@@ -19,7 +19,7 @@ namespace LinkUtilities.Linker
         /// <summary>
         /// ID of the game library to identify it in Playnite.
         /// </summary>
-        public static Guid Id { get; } = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
+        public override Guid Id { get; } = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
         public override string LinkName { get; } = "GOG";
         public override string BaseUrl { get; } = "https://www.gog.com/en/game/";
         public override string SearchUrl { get; } = "https://embed.gog.com/games/ajax/filtered?mediaType=game&search=";
