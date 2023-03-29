@@ -2,11 +2,13 @@
 using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.MediaWiki;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
@@ -153,5 +155,35 @@ namespace LinkUtilities.Helper
         /// <param name="value">Pattern to convert</param>
         /// <returns>The resulting regular expression</returns>
         internal static string WildCardToRegular(string value) => "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
+
+        /// <summary>
+        /// Gets a JSON result from an API and deserializes it.
+        /// </summary>
+        /// <typeparam name="T">Type the JSON gets deserialized to</typeparam>
+        /// <param name="apiUrl">Url to fetch the JSON result from</param>
+        /// <returns>Deserialized JSON result</returns>
+        internal static T GetJsonFromApi<T>(string apiUrl, string linkName, Encoding encoding = null)
+        {
+            try
+            {
+                if (encoding is null)
+                {
+                    encoding = Encoding.Default;
+                }
+
+                WebClient client = new WebClient() { Encoding = encoding };
+
+                client.Headers.Add("Accept", "application/json");
+                client.Headers.Add("user-agent", "Playnite LinkUtilities AddOn");
+
+                return JsonConvert.DeserializeObject<T>(client.DownloadString(apiUrl));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error loading data from {linkName}");
+            }
+
+            return default;
+        }
     }
 }

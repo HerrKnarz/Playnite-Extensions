@@ -21,12 +21,8 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "_")
                 .EscapeDataString();
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
-        {
-            SearchResults = ParseHelper.GetMediaWikiResultsFromApi(SearchUrl, searchTerm, LinkName);
-
-            return base.SearchLink(searchTerm);
-        }
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
+            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromApi(SearchUrl, searchTerm, LinkName));
 
         public LinkNintendoWiki() : base()
         {

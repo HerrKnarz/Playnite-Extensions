@@ -26,10 +26,8 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "-")
                 .ToLower();
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -39,13 +37,15 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes?.Any() ?? false)
                 {
+                    List<GenericItemOption> searchResults = new List<GenericItemOption>();
+
                     foreach (HtmlNode node in htmlNodes)
                     {
                         HtmlNodeCollection reviewNodes = node.SelectNodes("./div[@class='index-entry-meta']/div[a='Review']");
 
                         if (reviewNodes?.Any() ?? false)
                         {
-                            SearchResults.Add(new SearchResult
+                            searchResults.Add(new SearchResult
                             {
                                 Name = WebUtility.HtmlDecode(node.SelectSingleNode("./h2/a").InnerText),
                                 Url = node.SelectSingleNode("./h2/a").GetAttributeValue("href", ""),
@@ -53,6 +53,8 @@ namespace LinkUtilities.Linker
                             });
                         }
                     }
+
+                    return searchResults;
                 }
             }
             catch (Exception ex)
@@ -60,7 +62,7 @@ namespace LinkUtilities.Linker
                 Log.Error(ex, $"Error loading data from {LinkName}");
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LinkHG101() : base()

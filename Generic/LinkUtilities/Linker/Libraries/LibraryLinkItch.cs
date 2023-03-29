@@ -1,13 +1,12 @@
 ﻿using KNARZhelper;
 using LinkUtilities.BaseClasses;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.Itch;
-using Newtonsoft.Json;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Game = Playnite.SDK.Models.Game;
 
 namespace LinkUtilities.Linker
@@ -32,68 +31,37 @@ namespace LinkUtilities.Linker
             // To get the link to a game on the itch website, you need an API key and request the game data from their api.
             if (!string.IsNullOrWhiteSpace(Settings.ApiKey) && !LinkHelper.LinkExists(game, LinkName))
             {
-                try
+                ItchMetaData itchMetaData = ParseHelper.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName);
+
+                LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
+
+                if (LinkUrl.Any())
                 {
-                    string apiUrl = string.Format(_libraryUrl, Settings.ApiKey, game.GameId);
-
-                    WebClient client = new WebClient();
-
-                    string jsonResult = client.DownloadString(apiUrl);
-
-                    ItchMetaData itchMetaData = JsonConvert.DeserializeObject<ItchMetaData>(jsonResult);
-
-                    LinkUrl = itchMetaData.Game.Url;
-
                     return LinkHelper.AddLink(game, LinkName, LinkUrl);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, $"Error loading data from {LinkName}");
-
-                    return false;
                 }
             }
 
             return false;
         }
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             if (!string.IsNullOrWhiteSpace(Settings.ApiKey))
             {
-                try
+                ItchSearchResult itchSearchResult = ParseHelper.GetJsonFromApi<ItchSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+
+                if (itchSearchResult?.Games?.Any() ?? false)
                 {
-                    string apiUrl = string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode());
-
-                    WebClient client = new WebClient();
-
-                    string jsonResult = client.DownloadString(apiUrl);
-
-                    ItchSearchResult itchSearchResult = JsonConvert.DeserializeObject<ItchSearchResult>(jsonResult);
-
-                    if (itchSearchResult.Games?.Any() ?? false)
+                    return new List<GenericItemOption>(itchSearchResult.Games.Select(g => new SearchResult()
                     {
-                        foreach (SearchedGame game in itchSearchResult.Games)
-                        {
-                            SearchResults.Add(new SearchResult
-                            {
-                                Name = game.Title,
-                                Url = game.Url,
-                                Description = game.PublishedAt
-                            }
-                            );
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, $"Error loading data from {LinkName}");
+                        Name = g.Title,
+                        Url = g.Url,
+                        Description = g.PublishedAt
+                    }));
                 }
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LibraryLinkItch() : base() => Settings.NeedsApiKey = true;

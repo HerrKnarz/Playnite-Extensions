@@ -18,10 +18,8 @@ namespace LinkUtilities.Linker
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://api.co-optimus.com/games.php?search=true&name=";
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -31,15 +29,12 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    foreach (HtmlNode node in htmlNodes)
+                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult()
                     {
-                        SearchResults.Add(new SearchResult
-                        {
-                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./title").InnerText),
-                            Url = node.SelectSingleNode("./url").InnerText,
-                            Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./system").InnerText)} - {WebUtility.HtmlDecode(node.SelectSingleNode("./publisher").InnerText)} ({node.SelectSingleNode("./releasedate").InnerText})"
-                        });
-                    }
+                        Name = WebUtility.HtmlDecode(n.SelectSingleNode("./title").InnerText),
+                        Url = n.SelectSingleNode("./url").InnerText,
+                        Description = $"{WebUtility.HtmlDecode(n.SelectSingleNode("./system").InnerText)} - {WebUtility.HtmlDecode(n.SelectSingleNode("./publisher").InnerText)} ({n.SelectSingleNode("./releasedate").InnerText})"
+                    }));
                 }
             }
             catch (Exception ex)
@@ -47,7 +42,7 @@ namespace LinkUtilities.Linker
                 Log.Error(ex, $"Error loading data from {LinkName}");
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LinkCoOptimus() : base()

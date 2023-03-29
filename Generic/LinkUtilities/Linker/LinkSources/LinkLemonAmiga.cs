@@ -20,10 +20,8 @@ namespace LinkUtilities.Linker
 
         public override string BaseUrl { get; } = "https://www.lemonamiga.com/games/";
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -33,25 +31,25 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes?.Any() ?? false)
                 {
+                    List<GenericItemOption> searchResults = new List<GenericItemOption>();
+
                     foreach (HtmlNode node in htmlNodes)
                     {
-                        string suffix = string.Empty;
-
                         HtmlNode suffixNode = node.SelectSingleNode("./div/div[@class='game-grid-title']/a/img");
 
-                        if (suffixNode != null)
-                        {
-                            suffix = $" ({suffixNode.GetAttributeValue("alt", "")})";
-                        }
+                        string suffix = (suffixNode != null)
+                            ? $" ({suffixNode.GetAttributeValue("alt", "")})"
+                            : string.Empty;
 
-                        SearchResults.Add(new SearchResult
+                        searchResults.Add(new SearchResult
                         {
                             Name = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-title']/a").InnerText)}{suffix}",
                             Url = $"{BaseUrl}{node.SelectSingleNode("./div/div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
                             Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-info']").InnerText)}{WebUtility.HtmlDecode(node.SelectSingleNode("./div/div[@class='game-grid-category']").InnerText)}"
-                        }
-                        );
+                        });
                     }
+
+                    return searchResults;
                 }
             }
             catch (Exception ex)
@@ -59,7 +57,7 @@ namespace LinkUtilities.Linker
                 Log.Error(ex, $"Error loading data from {LinkName}");
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LinkLemonAmiga() : base()

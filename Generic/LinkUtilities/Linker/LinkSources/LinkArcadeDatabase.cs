@@ -43,10 +43,8 @@ namespace LinkUtilities.Linker
                 ? Path.GetFileNameWithoutExtension(game.Roms[0].Path)
                 : string.Empty;
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -56,16 +54,12 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    foreach (HtmlNode node in htmlNodes)
+                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult()
                     {
-                        SearchResults.Add(new SearchResult
-                        {
-                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='titolo_galleria']").InnerText),
-                            Url = $"{_websiteUrl}{node.SelectSingleNode("./a").GetAttributeValue("href", "")}",
-                            Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='romset_galleria']").InnerText)} - {WebUtility.HtmlDecode(node.SelectSingleNode("./a/div[@class='produttore_galleria']").InnerText)}"
-                        }
-                        );
-                    }
+                        Name = WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='titolo_galleria']").InnerText),
+                        Url = $"{_websiteUrl}{n.SelectSingleNode("./a").GetAttributeValue("href", "")}",
+                        Description = $"{WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='romset_galleria']").InnerText)} - {WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='produttore_galleria']").InnerText)}"
+                    }));
                 }
             }
             catch (Exception ex)
@@ -73,7 +67,7 @@ namespace LinkUtilities.Linker
                 Log.Error(ex, $"Error loading data from {LinkName}");
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LinkArcadeDatabase() : base()

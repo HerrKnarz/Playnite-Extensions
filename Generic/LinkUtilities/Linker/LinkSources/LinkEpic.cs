@@ -1,11 +1,12 @@
 ﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.Epic;
-using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -51,45 +52,24 @@ namespace LinkUtilities.Linker
             }
         }
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
+            // We use replace instead of format, because the URL already contains several braces.
+            string url = SearchUrl
+                .Replace("{SearchString}", searchTerm.UrlEncode())
+                .Replace("{DateUntil}", DateTime.Now.AddDays(5).ToString("yyyy-MM-dd"));
 
-            try
-            {
-                WebClient client = new WebClient() { Encoding = Encoding.UTF8 };
+            EpicSearchResult epicSearchResult = ParseHelper.GetJsonFromApi<EpicSearchResult>(url, LinkName, Encoding.UTF8);
 
-                client.Headers.Add("Accept", "application/json");
-
-                // We use replace instead of format, because the URL already contains several braces.
-                string url = SearchUrl
-                    .Replace("{SearchString}", searchTerm.UrlEncode())
-                    .Replace("{DateUntil}", DateTime.Now.AddDays(5).ToString("yyyy-MM-dd"));
-
-                string jsonResult = client.DownloadString(url);
-
-                EpicSearchResult epicSearchResult = JsonConvert.DeserializeObject<EpicSearchResult>(jsonResult);
-
-                foreach (Element element in epicSearchResult.Data.Catalog.SearchStore.Elements)
-                {
-                    if (!string.IsNullOrEmpty(element.UrlSlug))
+            return epicSearchResult?.Data?.Catalog?.SearchStore?.Elements?.Any() ?? false
+                ? new List<GenericItemOption>(epicSearchResult.Data.Catalog.SearchStore.Elements.Where(e => !string.IsNullOrEmpty(e.UrlSlug))
+                    .Select(e => new SearchResult()
                     {
-                        SearchResults.Add(new SearchResult
-                        {
-                            Name = element.Title,
-                            Url = $"{BaseUrl}{element.UrlSlug}",
-                            Description = element.Seller.Name
-                        }
-                        );
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, $"Error loading data from {LinkName}");
-            }
-
-            return base.SearchLink(searchTerm);
+                        Name = e.Title,
+                        Url = $"{BaseUrl}{e.UrlSlug}",
+                        Description = e.Seller.Name
+                    }))
+                : base.GetSearchResults(searchTerm);
         }
 
         public LinkEpic() : base()

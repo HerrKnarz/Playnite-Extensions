@@ -24,22 +24,20 @@ namespace LinkUtilities.BaseClasses
         public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLink";
         public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
-        public List<SearchResult> SearchResults { get; set; } = new List<SearchResult>();
-
         public virtual bool AddSearchedLink(Game game)
         {
             GenericItemOption result = GlobalSettings.Instance().OnlyATest
-                ? SearchLink(game.Name)?.FirstOrDefault() ?? new SearchResult()
+                ? GetSearchResults(game.Name)?.FirstOrDefault() ?? new SearchResult()
                 : API.Instance.Dialogs.ChooseItemWithSearch(
                     new List<GenericItemOption>(),
-                    (a) => SearchLink(a),
+                    (a) => GetSearchResults(a),
                     game.Name,
                     $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
 
             return result != null && LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, false);
         }
 
-        public virtual List<GenericItemOption> SearchLink(string searchTerm) => SearchResults.ToList<GenericItemOption>();
+        public virtual List<GenericItemOption> GetSearchResults(string searchTerm) => new List<GenericItemOption>();
 
         public virtual bool AddLink(Game game)
         {
@@ -131,19 +129,19 @@ namespace LinkUtilities.BaseClasses
         /// <returns>Url of the game. Returns null if no match was found.</returns>
         private string TryToFindPerfectMatchingUrl(string gameName)
         {
-            SearchLink(gameName);
+            List<GenericItemOption> searchResults = GetSearchResults(gameName);
 
             string searchName = gameName.RemoveSpecialChars().Replace(" ", "");
 
-            SearchResult foundGame = SearchResults.Where(r => r.Name.RemoveSpecialChars().Replace(" ", "") == searchName).FirstOrDefault();
+            SearchResult foundGame = (SearchResult)searchResults.FirstOrDefault(r => r.Name.RemoveSpecialChars().Replace(" ", "") == searchName);
 
             if (foundGame != null)
             {
                 return foundGame.Url;
             }
-            else if (SearchResults.Count() == 1)
+            else if (searchResults.Count() == 1)
             {
-                return SearchResults[0].Url;
+                return ((SearchResult)searchResults[0]).Url;
             }
 
             return null;

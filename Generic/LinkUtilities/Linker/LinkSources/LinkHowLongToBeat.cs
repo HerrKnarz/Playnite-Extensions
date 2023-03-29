@@ -20,10 +20,8 @@ namespace LinkUtilities.Linker
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://howlongtobeat.com/api/search";
         public override string BaseUrl { get; } = "https://howlongtobeat.com/game/";
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             try
             {
                 HttpClient httpClient = new HttpClient();
@@ -48,16 +46,12 @@ namespace LinkUtilities.Linker
 
                 if (searchResult.Data?.Any() ?? false)
                 {
-                    foreach (Datum result in searchResult.Data)
+                    return new List<GenericItemOption>(searchResult.Data.Select(d => new SearchResult()
                     {
-                        SearchResults.Add(new SearchResult
-                        {
-                            Name = result.GameName,
-                            Url = $"{BaseUrl}{result.GameId}",
-                            Description = $"{result.ReleaseWorld} {result.ProfileDev} - {result.ProfilePlatform}"
-                        }
-                        );
-                    }
+                        Name = d.GameName,
+                        Url = $"{BaseUrl}{d.GameId}",
+                        Description = $"{d.ReleaseWorld} {d.ProfileDev} - {d.ProfilePlatform}"
+                    }));
                 }
             }
             catch (Exception ex)
@@ -65,7 +59,7 @@ namespace LinkUtilities.Linker
                 Log.Error(ex, $"Error loading data from {LinkName}");
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LinkHowLongToBeat() : base()

@@ -20,10 +20,8 @@ namespace LinkUtilities.Linker
 
         public override string BaseUrl { get; } = "https://adventuregamers.com";
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -33,16 +31,12 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    foreach (HtmlNode node in htmlNodes)
+                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult()
                     {
-                        SearchResults.Add(new SearchResult
-                        {
-                            Name = WebUtility.HtmlDecode(node.InnerText),
-                            Url = $"{BaseUrl}{node.GetAttributeValue("href", "")}",
-                            Description = string.Empty
-                        }
-                        );
-                    }
+                        Name = WebUtility.HtmlDecode(n.InnerText),
+                        Url = $"{BaseUrl}{n.GetAttributeValue("href", "")}",
+                        Description = string.Empty
+                    }));
                 }
             }
             catch (Exception ex)
@@ -50,7 +44,7 @@ namespace LinkUtilities.Linker
                 Log.Error(ex, $"Error loading data from {LinkName}");
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LinkAdventureGamers() : base()

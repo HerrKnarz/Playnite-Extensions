@@ -1,13 +1,13 @@
 ﻿using KNARZhelper;
 using LinkUtilities.BaseClasses;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.Gog;
-using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Linq;
 
 namespace LinkUtilities.Linker
 {
@@ -37,46 +37,27 @@ namespace LinkUtilities.Linker
         {
             if (!LinkHelper.LinkExists(game, LinkName))
             {
-                try
+                GogMetaData gogMetaData = ParseHelper.GetJsonFromApi<GogMetaData>($"https://api.gog.com/products/{game.GameId}", LinkName);
+
+                if (gogMetaData?.Slug?.Any() ?? false)
                 {
-                    // To add a link to the gog page you have to get it from their API via the GameId.
-                    WebClient client = new WebClient();
-
-                    client.Headers.Add("Accept", "application/json");
-
-                    string jsonResult = client.DownloadString("https://api.gog.com/products/" + game.GameId);
-
-                    GogMetaData gogMetaData = JsonConvert.DeserializeObject<GogMetaData>(jsonResult);
-
                     LinkUrl = $"{BaseUrl}{gogMetaData.Slug}";
 
                     return LinkHelper.AddLink(game, LinkName, LinkUrl);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, $"Error loading data from {LinkName}");
-
-                    return false;
                 }
             }
 
             return false;
         }
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
+            GogSearchResult gogSearchResult = ParseHelper.GetJsonFromApi<GogSearchResult>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName);
 
-            try
+            List<GenericItemOption> searchResults = new List<GenericItemOption>();
+
+            if (gogSearchResult?.Products?.Any() ?? false)
             {
-                WebClient client = new WebClient();
-
-                client.Headers.Add("Accept", "application/json");
-
-                string jsonResult = client.DownloadString($"{SearchUrl}{searchTerm.UrlEncode()}");
-
-                GogSearchResult gogSearchResult = JsonConvert.DeserializeObject<GogSearchResult>(jsonResult);
-
                 foreach (Product product in gogSearchResult.Products)
                 {
                     string releaseDate = string.Empty;
@@ -90,21 +71,17 @@ namespace LinkUtilities.Linker
                         releaseDate = MiscHelper.UnixTimeStampToDateTime(product.ReleaseDate.Value).Date.ToString();
                     }
 
-                    SearchResults.Add(new SearchResult
-                    {
-                        Name = product.Title,
-                        Url = $"{BaseUrl}{product.Slug}",
-                        Description = releaseDate
-                    }
-                    );
+                    searchResults.Add(
+                        new SearchResult
+                        {
+                            Name = product.Title,
+                            Url = $"{BaseUrl}{product.Slug}",
+                            Description = releaseDate
+                        });
                 }
             }
-            catch (Exception ex)
-            {
-                Log.Error(ex, $"Error loading data from {LinkName}");
-            }
 
-            return base.SearchLink(searchTerm);
+            return searchResults;
         }
 
         public LibraryLinkGog() : base()

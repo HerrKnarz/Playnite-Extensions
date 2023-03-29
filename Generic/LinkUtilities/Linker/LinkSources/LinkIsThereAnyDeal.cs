@@ -1,13 +1,12 @@
 ﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.IsThereAnyDeal;
-using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
 namespace LinkUtilities.Linker
 {
@@ -45,43 +44,24 @@ namespace LinkUtilities.Linker
             }
         }
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             if (!string.IsNullOrWhiteSpace(Settings.ApiKey))
             {
-                try
+                IsThereAnyDealSearchResult searchResult = ParseHelper.GetJsonFromApi<IsThereAnyDealSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+
+                if (searchResult?.Data?.Results?.Any() ?? false)
                 {
-                    string apiUrl = string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode());
-
-                    WebClient client = new WebClient();
-
-                    string jsonResult = client.DownloadString(apiUrl);
-
-                    IsThereAnyDealSearchResult searchResult = JsonConvert.DeserializeObject<IsThereAnyDealSearchResult>(jsonResult);
-
-                    if (searchResult.Data.Results?.Any() ?? false)
+                    return new List<GenericItemOption>(searchResult.Data.Results.Select(r => new SearchResult()
                     {
-                        foreach (Result result in searchResult.Data.Results)
-                        {
-                            SearchResults.Add(new SearchResult
-                            {
-                                Name = result.Title,
-                                Url = $"{_standardUrl}{result.Plain}",
-                                Description = $"{result.Id}"
-                            }
-                            );
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, $"Error loading data from {LinkName}");
+                        Name = r.Title,
+                        Url = $"{_standardUrl}{r.Plain}",
+                        Description = $"{r.Id}"
+                    }));
                 }
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LinkIsThereAnyDeal() : base() => Settings.NeedsApiKey = true;

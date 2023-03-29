@@ -58,12 +58,8 @@ namespace LinkUtilities.Linker
             return false;
         }
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
-        {
-            SearchResults = ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName);
-
-            return base.SearchLink(searchTerm);
-        }
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
+            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName));
 
         public LinkPCGamingWiki() : base()
         {

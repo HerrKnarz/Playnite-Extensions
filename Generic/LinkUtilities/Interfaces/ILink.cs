@@ -48,11 +48,6 @@ namespace LinkUtilities
         /// In that case this should be set to false.
         /// </summary>
         bool AllowRedirects { get; set; }
-        /// <summary>
-        /// Results of the last search for the link. Is used to get the right link after closing the search dialog, because the dialog
-        /// only returns a GenericItemOption, that doesn't have an URL.
-        /// </summary>
-        List<SearchResult> SearchResults { get; set; }
 
         /// <summary>
         /// Adds a link via search dialog.
@@ -66,7 +61,7 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="searchTerm">Term to be searched for. Is usually the name of the game.</param>
         /// <returns>List with all found games. Is an empty list in the base class.</returns>
-        List<GenericItemOption> SearchLink(string searchTerm);
+        List<GenericItemOption> GetSearchResults(string searchTerm);
         /// <summary>
         /// Adds a link to the specific game page of the specified website.
         /// </summary>

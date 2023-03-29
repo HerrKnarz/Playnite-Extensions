@@ -1,13 +1,12 @@
 ﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.RAWG;
-using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
 namespace LinkUtilities.Linker
 {
@@ -29,45 +28,34 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "-")
                 .ToLower();
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             if (!string.IsNullOrWhiteSpace(Settings.ApiKey))
             {
-                try
+                RawgSearchResult rawgSearchResult = ParseHelper.GetJsonFromApi<RawgSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+
+                if (rawgSearchResult?.Results?.Any() ?? false)
                 {
-                    string apiUrl = string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode());
+                    List<GenericItemOption> searchResults = new List<GenericItemOption>();
 
-                    WebClient client = new WebClient();
-
-                    string jsonResult = client.DownloadString(apiUrl);
-
-                    RawgSearchResult rawgSearchResult = JsonConvert.DeserializeObject<RawgSearchResult>(jsonResult);
-
-                    if (rawgSearchResult.Results?.Any() ?? false)
+                    foreach (Result result in rawgSearchResult.Results)
                     {
-                        foreach (Result result in rawgSearchResult.Results)
-                        {
-                            string genres = result.Genres?.Select(genre => genre.Name).Aggregate((total, part) => total + ", " + part) ?? string.Empty;
+                        string genres = result.Genres?.Select(genre => genre.Name).Aggregate((total, part) => total + ", " + part) ?? string.Empty;
 
-                            SearchResults.Add(new SearchResult
-                            {
-                                Name = result.Name,
-                                Url = $"{BaseUrl}{result.Slug}",
-                                Description = $"{result.Released}{Environment.NewLine}{genres}"
-                            }
-                            );
+                        searchResults.Add(new SearchResult
+                        {
+                            Name = result.Name,
+                            Url = $"{BaseUrl}{result.Slug}",
+                            Description = $"{result.Released}{Environment.NewLine}{genres}"
                         }
+                        );
                     }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, $"Error loading data from {LinkName}");
+
+                    return searchResults;
                 }
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LinkRAWG() : base() => Settings.NeedsApiKey = true;

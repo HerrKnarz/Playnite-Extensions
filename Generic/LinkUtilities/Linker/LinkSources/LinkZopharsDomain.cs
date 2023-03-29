@@ -19,10 +19,8 @@ namespace LinkUtilities.Linker
         public override string SearchUrl { get; } = "https://www.zophar.net/music/search?search=";
         public override string BaseUrl { get; } = "https://www.zophar.net";
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -32,15 +30,12 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    foreach (HtmlNode node in htmlNodes)
+                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult()
                     {
-                        SearchResults.Add(new SearchResult
-                        {
-                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./td[@class='name']").InnerText),
-                            Url = $"{BaseUrl}{node.SelectSingleNode("./td[@class='name']/a").GetAttributeValue("href", "")}",
-                            Description = WebUtility.HtmlDecode(node.SelectSingleNode("./td[@class='console']").InnerText)
-                        });
-                    }
+                        Name = WebUtility.HtmlDecode(n.SelectSingleNode("./td[@class='name']").InnerText),
+                        Url = $"{BaseUrl}{n.SelectSingleNode("./td[@class='name']/a").GetAttributeValue("href", "")}",
+                        Description = WebUtility.HtmlDecode(n.SelectSingleNode("./td[@class='console']").InnerText)
+                    }));
                 }
             }
             catch (Exception ex)
@@ -48,7 +43,7 @@ namespace LinkUtilities.Linker
                 Log.Error(ex, $"Error loading data from {LinkName}");
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LinkZopharsDomain() : base()

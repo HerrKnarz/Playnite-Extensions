@@ -26,10 +26,8 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "-")
                 .ToLower();
 
-        public override List<GenericItemOption> SearchLink(string searchTerm)
+        public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            SearchResults.Clear();
-
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -39,16 +37,12 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    foreach (HtmlNode node in htmlNodes)
+                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult()
                     {
-                        SearchResults.Add(new SearchResult
-                        {
-                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./b/a").InnerText),
-                            Url = node.SelectSingleNode("./b/a").GetAttributeValue("href", ""),
-                            Description = WebUtility.HtmlDecode(node.SelectSingleNode("./small[last()]").InnerText).CollapseWhitespaces()
-                        }
-                        );
-                    }
+                        Name = WebUtility.HtmlDecode(n.SelectSingleNode("./b/a").InnerText),
+                        Url = n.SelectSingleNode("./b/a").GetAttributeValue("href", ""),
+                        Description = WebUtility.HtmlDecode(n.SelectSingleNode("./small[last()]").InnerText).CollapseWhitespaces()
+                    }));
                 }
             }
             catch (Exception ex)
@@ -56,7 +50,7 @@ namespace LinkUtilities.Linker
                 Log.Error(ex, $"Error loading data from {LinkName}");
             }
 
-            return base.SearchLink(searchTerm);
+            return base.GetSearchResults(searchTerm);
         }
 
         public LinkMobyGames() : base()
