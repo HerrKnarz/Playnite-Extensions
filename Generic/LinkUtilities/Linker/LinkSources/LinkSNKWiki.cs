@@ -9,7 +9,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to SNK Wiki.
     /// </summary>
-    internal class LinkSNKWiki : BaseClasses.Link
+    internal class LinkSNKWiki : BaseClasses.Linker
     {
         public override string LinkName { get; } = "SNK Wiki";
         public override string BaseUrl { get; } = "https://snk.fandom.com/wiki/";

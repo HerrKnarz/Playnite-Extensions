@@ -9,7 +9,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to NEC Retro.
     /// </summary>
-    internal class LinkNECRetro : BaseClasses.Link
+    internal class LinkNECRetro : BaseClasses.Linker
     {
         public override string LinkName { get; } = "NEC Retro";
         public override string BaseUrl { get; } = "https://necretro.org/";

@@ -13,7 +13,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to MobyGames.
     /// </summary>
-    internal class LinkMobyGames : BaseClasses.Link
+    internal class LinkMobyGames : BaseClasses.Linker
     {
         public override string LinkName { get; } = "MobyGames";
         public override string BaseUrl { get; } = "https://www.mobygames.com/game/";

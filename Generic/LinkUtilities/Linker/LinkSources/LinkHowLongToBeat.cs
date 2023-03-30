@@ -14,7 +14,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to HowLongToBeat.
     /// </summary>
-    internal class LinkHowLongToBeat : BaseClasses.Link
+    internal class LinkHowLongToBeat : BaseClasses.Linker
     {
         public override string LinkName { get; } = "HowLongToBeat";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;

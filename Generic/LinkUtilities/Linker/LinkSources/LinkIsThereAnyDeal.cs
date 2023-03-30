@@ -13,7 +13,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to IsThereAnyDeal.
     /// </summary>
-    internal class LinkIsThereAnyDeal : BaseClasses.Link
+    internal class LinkIsThereAnyDeal : BaseClasses.Linker
     {
         private string _baseUrl;
         private readonly string _steamUrl = "https://isthereanydeal.com/steam/app/";

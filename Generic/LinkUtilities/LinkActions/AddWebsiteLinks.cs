@@ -39,7 +39,7 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
-        private bool AddLink(Game game, BaseClasses.Link link, ActionModifierTypes actionModifier)
+        private bool AddLink(Game game, BaseClasses.Linker link, ActionModifierTypes actionModifier)
         {
             switch (actionModifier)
             {
@@ -56,7 +56,7 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
-            List<BaseClasses.Link> links = null;
+            List<BaseClasses.Linker> links = null;
 
             switch (actionModifier)
             {
@@ -70,7 +70,7 @@ namespace LinkUtilities.LinkActions
 
             if (isBulkAction)
             {
-                foreach (BaseClasses.Link link in links)
+                foreach (BaseClasses.Linker link in links)
                 {
                     result |= AddLink(game, link, actionModifier);
                 }
@@ -88,7 +88,7 @@ namespace LinkUtilities.LinkActions
                     {
                         activateGlobalProgress.ProgressMaxValue = links.Count;
 
-                        foreach (BaseClasses.Link link in links)
+                        foreach (BaseClasses.Linker link in links)
                         {
                             activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}{Environment.NewLine}{link.LinkName}";
 

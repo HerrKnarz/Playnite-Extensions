@@ -7,7 +7,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to IGN.
     /// </summary>
-    internal class LinkGamePressureGuides : BaseClasses.Link
+    internal class LinkGamePressureGuides : BaseClasses.Linker
     {
         public override string LinkName { get; } = "gamepressure Guide";
         public override string BaseUrl { get; } = "https://guides.gamepressure.com/";

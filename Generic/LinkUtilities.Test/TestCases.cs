@@ -8,7 +8,7 @@ namespace LinkUtilities.Test
     internal class TestCase
     {
         public string CaseName { get; set; }
-        public Link Link { get; set; }
+        public BaseClasses.Linker Link { get; set; }
         public string GameName { get; set; }
         public string GamePath { get; set; }
         public string Url { get; set; }

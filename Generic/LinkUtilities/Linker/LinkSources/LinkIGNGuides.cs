@@ -7,7 +7,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to IGN.
     /// </summary>
-    internal class LinkIGNGuides : BaseClasses.Link
+    internal class LinkIGNGuides : BaseClasses.Linker
     {
         public override string LinkName { get; } = "IGN Guide";
         public override string BaseUrl { get; } = "https://www.ign.com/wikis/";

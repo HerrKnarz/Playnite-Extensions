@@ -6,7 +6,7 @@ namespace LinkUtilities.BaseClasses
     /// <summary>
     /// Base class for a library link
     /// </summary>
-    internal abstract class LibraryLink : Link
+    internal abstract class LibraryLink : Linker
     {
         public abstract Guid Id { get; }
 

@@ -12,7 +12,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Lemon Amiga.
     /// </summary>
-    internal class LinkLemonAmiga : BaseClasses.Link
+    internal class LinkLemonAmiga : BaseClasses.Linker
     {
         public override string LinkName { get; } = "Lemon Amiga";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;

@@ -13,7 +13,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Hardcore Gaming 101.
     /// </summary>
-    internal class LinkHG101 : BaseClasses.Link
+    internal class LinkHG101 : BaseClasses.Linker
     {
         public override string LinkName { get; } = "Hardcore Gaming 101";
         public override string BaseUrl { get; } = "http://www.hardcoregaming101.net/";

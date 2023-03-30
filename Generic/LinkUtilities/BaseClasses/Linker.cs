@@ -11,7 +11,7 @@ namespace LinkUtilities.BaseClasses
     /// <summary>
     /// Base class for a website link 
     /// </summary>
-    internal abstract class Link : ILink, ILinkAction
+    internal abstract class Linker : ILink, ILinkAction
     {
         public abstract string LinkName { get; }
         public virtual string BaseUrl { get; } = string.Empty;
@@ -39,7 +39,11 @@ namespace LinkUtilities.BaseClasses
 
         public virtual List<GenericItemOption> GetSearchResults(string searchTerm) => new List<GenericItemOption>();
 
-        public virtual bool AddLink(Game game)
+        public virtual bool AddLink(Game game) => FindLink(game, out Link link) && LinkHelper.AddLink(game, link);
+
+        //TODO: Replace all AddLink methods with FindLink ones!
+
+        public virtual bool FindLink(Game game, out Link link)
         {
             LinkUrl = string.Empty;
 
@@ -80,9 +84,13 @@ namespace LinkUtilities.BaseClasses
 
                 if (!string.IsNullOrEmpty(LinkUrl))
                 {
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl);
+                    link = new Link(LinkName, LinkUrl);
+
+                    return true;
                 }
             }
+
+            link = null;
 
             return false;
         }
@@ -160,7 +168,7 @@ namespace LinkUtilities.BaseClasses
             }
         }
 
-        public Link()
+        public Linker()
         {
             Settings = new LinkSourceSetting()
             {

@@ -9,7 +9,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to PCGamingWiki.
     /// </summary>
-    internal class LinkPCGamingWiki : BaseClasses.Link
+    internal class LinkPCGamingWiki : BaseClasses.Linker
     {
         public override string LinkName { get; } = "PCGamingWiki";
         public override string BaseUrl { get; } = "https://www.pcgamingwiki.com/wiki/";

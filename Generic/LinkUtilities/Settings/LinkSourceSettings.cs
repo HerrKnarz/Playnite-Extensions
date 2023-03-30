@@ -66,7 +66,7 @@ namespace LinkUtilities.Settings
 
             if (links != null)
             {
-                foreach (Link link in links)
+                foreach (BaseClasses.Linker link in links)
                 {
                     result.Add(link.Settings);
                 }

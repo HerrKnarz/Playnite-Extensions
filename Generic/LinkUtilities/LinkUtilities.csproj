@@ -71,7 +71,7 @@
     <Compile Include="LinkActions\RenameLinks.cs" />
     <Compile Include="LinkActions\TagMissingLinks.cs" />
     <Compile Include="Interfaces\ILink.cs" />
-    <Compile Include="BaseClasses\Link.cs" />
+    <Compile Include="BaseClasses\Linker.cs" />
     <Compile Include="Linker\LinkSources\LinkGamePressureGuides.cs" />
     <Compile Include="Linker\LinkSources\LinkAdventureGamers.cs" />
     <Compile Include="Linker\LinkSources\LinkArcadeDatabase.cs" />

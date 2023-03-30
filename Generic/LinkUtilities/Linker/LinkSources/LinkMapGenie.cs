@@ -7,7 +7,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Map Genie.
     /// </summary>
-    internal class LinkMapGenie : BaseClasses.Link
+    internal class LinkMapGenie : BaseClasses.Linker
     {
         public override string LinkName { get; } = "Map Genie";
         public override string BaseUrl { get; } = "https://mapgenie.io/";

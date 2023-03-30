@@ -12,7 +12,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Giant Bomb.
     /// </summary>
-    internal class LinkGiantBomb : BaseClasses.Link
+    internal class LinkGiantBomb : BaseClasses.Linker
     {
         public override string LinkName { get; } = "Giant Bomb";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;

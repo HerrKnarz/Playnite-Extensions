@@ -9,7 +9,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to StrategyWiki.
     /// </summary>
-    internal class LinkStrategyWiki : BaseClasses.Link
+    internal class LinkStrategyWiki : BaseClasses.Linker
     {
         public override string LinkName { get; } = "StrategyWiki";
         public override string BaseUrl { get; } = "https://strategywiki.org/wiki/";

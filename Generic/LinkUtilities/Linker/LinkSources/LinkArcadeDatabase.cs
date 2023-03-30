@@ -14,7 +14,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Arcade Database (arcadeitalia.net).
     /// </summary>
-    internal class LinkArcadeDatabase : BaseClasses.Link
+    internal class LinkArcadeDatabase : BaseClasses.Linker
     {
         private readonly string _websiteUrl = "http://adb.arcadeitalia.net/";
 

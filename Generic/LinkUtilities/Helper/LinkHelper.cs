@@ -30,8 +30,18 @@ namespace LinkUtilities
         /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
         /// </returns>
         internal static bool AddLink(Game game, string linkName, string linkUrl, bool ignoreExisting = true)
+            => AddLink(game, new Link(linkName, linkUrl), ignoreExisting);
+
+        /// <summary>
+        /// Adds a link to a game.
+        /// </summary>
+        /// <param name="game">Game the link will be added to</param>
+        /// <param name="link">the link to add</param>
+        /// <returns>
+        /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
+        /// </returns>
+        internal static bool AddLink(Game game, Link link, bool ignoreExisting = true)
         {
-            Link link = new Link(linkName, linkUrl);
             bool mustUpdate = false;
             bool addNewLink = false;
 
@@ -44,40 +54,39 @@ namespace LinkUtilities
             // otherwise we'll check if a link with the specified name is already present. If not, we'll add the link and return true.
             else
             {
-                if (!game.Links.Any(x => x.Name == linkName))
+                if (!LinkExists(game, link.Name))
                 {
                     addNewLink = true;
                 }
                 else if (!ignoreExisting)
                 {
-                    string message = string.Format(ResourceProvider.GetString("LOCLinkUtilitiesDialogReplaceLink"), linkName);
+                    string message = string.Format(ResourceProvider.GetString("LOCLinkUtilitiesDialogReplaceLink"), link.Name);
 
                     StringSelectionDialogResult selectResult = GlobalSettings.Instance().OnlyATest
-                        ? new StringSelectionDialogResult(true, $"{linkName} (Test)")
+                        ? new StringSelectionDialogResult(true, $"{link.Name} (Test)")
                         : API.Instance.Dialogs.SelectString(
                                 message,
                                 ResourceProvider.GetString("LOCLinkUtilitiesDialogSelectOption"),
-                                linkName);
+                                link.Name);
 
                     if (selectResult.Result)
                     {
-                        if (linkName != selectResult.SelectedString)
+                        if (link.Name != selectResult.SelectedString)
                         {
                             link.Name = selectResult.SelectedString;
                             addNewLink = true;
-
                         }
                         else
                         {
                             if (GlobalSettings.Instance().OnlyATest)
                             {
-                                game.Links.Single(x => x.Name == linkName).Url = linkUrl;
+                                game.Links.Single(x => x.Name == link.Name).Url = link.Url;
                             }
                             else
                             {
                                 API.Instance.MainView.UIDispatcher.Invoke(delegate
                                 {
-                                    game.Links.Single(x => x.Name == linkName).Url = linkUrl;
+                                    game.Links.Single(x => x.Name == link.Name).Url = link.Url;
                                 });
                             }
 
@@ -107,24 +116,74 @@ namespace LinkUtilities
             // Updates the game in the database if we added a new link.
             if (mustUpdate)
             {
-                if (!GlobalSettings.Instance().OnlyATest)
-                {
-                    API.Instance.Database.Games.Update(game);
-                }
-
-                // We sort the Links automatically if the setting SortAfterChange is true.
-                if (addNewLink && LinkActions.SortLinks.Instance().SortAfterChange)
-                {
-                    LinkActions.SortLinks.Instance().Execute(game);
-                }
-                // We add/remove tags for missing links automatically if the setting TagMissingLinksAfterChange is true.
-                if (addNewLink && TagMissingLinks.Instance().TagMissingLinksAfterChange)
-                {
-                    TagMissingLinks.Instance().Execute(game);
-                }
+                DoAfterAdd(game);
             }
 
             return mustUpdate;
+        }
+
+        /// <summary>
+        /// Adds a list of links to a game.
+        /// </summary>
+        /// <param name="game">Game the links will be added to</param>
+        /// <param name="link">the links to add</param>
+        /// <returns>
+        /// True, if at least one link could be added. Returns false, if the links already existed or couldn't be added.
+        /// </returns>
+        internal static bool AddLinks(Game game, List<Link> links)
+        {
+            bool mustUpdate = false;
+
+            // If the game doesn't have any Links yet, we have to add the collection itself.
+            if (game.Links is null)
+            {
+                game.Links = new ObservableCollection<Link>(links);
+                mustUpdate = true;
+            }
+            // otherwise we'll check if a link with the specified name is already present. If not, we'll add the link and return true.
+            else
+            {
+                mustUpdate = game.Links.AddMissing(links);
+
+                if (GlobalSettings.Instance().OnlyATest)
+                {
+                    mustUpdate = game.Links.AddMissing(links);
+                }
+                else
+                {
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        mustUpdate = game.Links.AddMissing(links);
+                    });
+                }
+            }
+
+            // Updates the game in the database if we added a new link.
+            if (mustUpdate)
+            {
+                DoAfterAdd(game);
+            }
+
+            return mustUpdate;
+        }
+
+        private static void DoAfterAdd(Game game)
+        {
+            if (!GlobalSettings.Instance().OnlyATest)
+            {
+                API.Instance.Database.Games.Update(game);
+            }
+
+            // We sort the Links automatically if the setting SortAfterChange is true.
+            if (LinkActions.SortLinks.Instance().SortAfterChange)
+            {
+                LinkActions.SortLinks.Instance().Execute(game);
+            }
+            // We add/remove tags for missing links automatically if the setting TagMissingLinksAfterChange is true.
+            if (TagMissingLinks.Instance().TagMissingLinksAfterChange)
+            {
+                TagMissingLinks.Instance().Execute(game);
+            }
         }
 
         /// <summary>
@@ -133,7 +192,7 @@ namespace LinkUtilities
         /// <param name="game">Game for which the Links will be checked</param>
         /// <param name="linkName">Name of the link</param>
         /// <returns>True, if a link with that name exists</returns>
-        internal static bool LinkExists(Game game, string linkName) => !(game.Links is null) && game.Links.Any(x => x.Name == linkName);
+        internal static bool LinkExists(Game game, string linkName) => !game.Links?.Any(x => x.Name == linkName) ?? false;
 
         /// <summary>
         /// Sorts the Links of a game alphabetically by the link name.
