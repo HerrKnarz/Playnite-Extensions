@@ -16,7 +16,7 @@ namespace KNARZhelper
         private readonly Regex _trimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
         private readonly Regex _trimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
-        public PlatformHelper(List<Platform> platforms)
+        public PlatformHelper(IEnumerable<Platform> platforms)
         {
             _platformSpecNameByNormalName = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
 
@@ -33,25 +33,32 @@ namespace KNARZhelper
             }
 
             TryAddPlatformByName(_platformSpecNameByNormalName, "3DO", "3do");
-            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Microsoft Windows", "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows 95" }, new[] { "pc_windows" });
-            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "DOS", "MS-DOS" }, new[] { "pc_dos" });
+            TryAddPlatformByName(_platformSpecNameByNormalName,
+                new[] { "Microsoft Windows", "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows 95" }, "pc_windows");
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "DOS", "MS-DOS" }, "pc_dos");
             TryAddPlatformByName(_platformSpecNameByNormalName, "Linux", "pc_linux");
-            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Mac", "OSX", "OS X", "MacOS", "Mac OS", "Mac OS X" }, new[] { "macintosh" });
-            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Microsoft Xbox Series X", "Microsoft Xbox Series S", "Xbox Series X", "Xbox Series S", "Microsoft Xbox Series X/S", "Microsoft Xbox Series S/X", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", }, new[] { "xbox_series" });
-            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "PS", "PS1", "PSX" }, new[] { "sony_playstation" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Mac", "OSX", "OS X", "MacOS", "Mac OS", "Mac OS X" }, "macintosh");
+            TryAddPlatformByName(_platformSpecNameByNormalName,
+                new[]
+                {
+                    "Microsoft Xbox Series X", "Microsoft Xbox Series S", "Xbox Series X", "Xbox Series S",
+                    "Microsoft Xbox Series X/S", "Microsoft Xbox Series S/X", "Xbox Series X/S", "Xbox Series S/X",
+                    "Xbox Series X|S",
+                }, "xbox_series");
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "PS", "PS1", "PSX" }, "sony_playstation");
             TryAddPlatformByName(_platformSpecNameByNormalName, "PS2", "sony_playstation2");
             TryAddPlatformByName(_platformSpecNameByNormalName, "PS3", "sony_playstation3");
             TryAddPlatformByName(_platformSpecNameByNormalName, "PS4", "sony_playstation4");
             TryAddPlatformByName(_platformSpecNameByNormalName, "PS5", "sony_playstation5");
             TryAddPlatformByName(_platformSpecNameByNormalName, "PSP", "sony_psp");
             TryAddPlatformByName(_platformSpecNameByNormalName, "Vita", "sony_vita");
-            TryAddPlatformByName(_platformSpecNameByNormalName, "PS4/5", new[] { "sony_playstation4", "sony_playstation5" });
-            TryAddPlatformByName(_platformSpecNameByNormalName, "Playstation 4/5", new[] { "sony_playstation4", "sony_playstation5" });
-            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Sega Mega Drive", "Mega Drive", "Mega Drive/Genesis" }, new[] { "sega_genesis" });
-            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Super NES", "Super Nintendo Entertainment System" }, new[] { "nintendo_super_nes" });
-            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "SNK Neo Geo MVS", "Neo Geo MVS", "SNK Neo Geo AES", "Neo Geo AES" }, new[] { "snk_neogeo_aes" });
+            TryAddPlatformByName(_platformSpecNameByNormalName, "PS4/5", "sony_playstation4", "sony_playstation5");
+            TryAddPlatformByName(_platformSpecNameByNormalName, "Playstation 4/5", "sony_playstation4", "sony_playstation5");
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Sega Mega Drive", "Mega Drive", "Mega Drive/Genesis" }, "sega_genesis");
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Super NES", "Super Nintendo Entertainment System" }, "nintendo_super_nes");
+            TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "SNK Neo Geo MVS", "Neo Geo MVS", "SNK Neo Geo AES", "Neo Geo AES" }, "snk_neogeo_aes");
         }
-        private bool TryAddPlatformByName(Dictionary<string, string[]> dict, string platformName, params string[] platformSpecNames)
+        private static bool TryAddPlatformByName(IDictionary<string, string[]> dict, string platformName, params string[] platformSpecNames)
         {
             if (dict.ContainsKey(platformName))
             {
@@ -62,25 +69,18 @@ namespace KNARZhelper
             return true;
         }
 
-        private bool TryAddPlatformByName(Dictionary<string, string[]> dict, string[] platformNames, params string[] platformSpecNames)
-        {
-            bool success = true;
-            foreach (string platformName in platformNames)
-            {
-                success &= TryAddPlatformByName(dict, platformName, platformSpecNames);
-            }
+        private static bool TryAddPlatformByName(IDictionary<string, string[]> dict, IEnumerable<string> platformNames, params string[] platformSpecNames)
+            => platformNames.Aggregate(true, (current, platformName) => current & TryAddPlatformByName(dict, platformName, platformSpecNames));
 
-            return success;
-        }
         /// <summary>
-        /// returns all platforms created in Playnite that fit the platform name 
+        /// returns all platforms created in Playnite that fit the platform name
         /// </summary>
         /// <param name="platformName">Name of the platform</param>
         /// <returns>List of platforms</returns>
         public IEnumerable<MetadataProperty> GetPlatforms(string platformName) => GetPlatforms(platformName, strict: false);
 
         /// <summary>
-        /// returns all platforms created in Playnite that fit the platform name 
+        /// returns all platforms created in Playnite that fit the platform name
         /// </summary>
         /// <param name="platformName">Name of the platform</param>
         /// <param name="strict">If true, only matches will be returned. If false the function also returns all platforms,

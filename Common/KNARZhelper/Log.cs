@@ -20,47 +20,47 @@ namespace KNARZhelper
         /// Logs an error message.
         /// </summary>
         /// <param name="ex">The exception to log</param>
-        /// <param name="Message">Optional message. If the message is empty the calling function will be added to the error message</param>
+        /// <param name="message">Optional message. If the message is empty the calling function will be added to the error message</param>
         /// <param name="showDialog">Additionally shows the error message as a dialog if set to true.</param>
-        public static void Error(Exception ex, string Message = "", bool showDialog = false)
+        public static void Error(Exception ex, string message = "", bool showDialog = false)
         {
             TraceInfos traceInfos = new TraceInfos(ex);
 
-            if (string.IsNullOrEmpty(Message) && !string.IsNullOrEmpty(traceInfos.InitialCaller))
+            if (string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(traceInfos.InitialCaller))
             {
-                Message = $"Error on {traceInfos.InitialCaller}()";
+                message = $"Error on {traceInfos.InitialCaller}()";
             }
 
-            Message += $"|{traceInfos.FileName}|{traceInfos.LineNumber}";
+            message += $"|{traceInfos.FileName}|{traceInfos.LineNumber}";
 
-            _logger.Error(ex, $"{Message}");
+            _logger.Error(ex, $"{message}");
 
             if (showDialog)
             {
-                API.Instance.Dialogs.ShowErrorMessage(Message);
+                API.Instance.Dialogs.ShowErrorMessage(message);
             }
         }
 
         /// <summary>
         /// Logs an info message.
         /// </summary>
-        /// <param name="Message">The Message to log</param>
+        /// <param name="message">The message to log</param>
         /// <param name="showDialog">Additionally shows the error message as a dialog if set to true.</param>
-        public static void Info(string Message, bool showDialog = false)
+        public static void Info(string message, bool showDialog = false)
         {
-            _logger.Info($"{Message}");
+            _logger.Info($"{message}");
 
             if (showDialog)
             {
-                API.Instance.Dialogs.ShowMessage(Message);
+                API.Instance.Dialogs.ShowMessage(message);
             }
         }
 
         /// <summary>
         /// Logs a debug message.
         /// </summary>
-        /// <param name="Message">The Message to log</param>
-        public static void Debug(string Message) => _logger.Debug($"{Message}");
+        /// <param name="message">The message to log</param>
+        public static void Debug(string message) => _logger.Debug($"{message}");
     }
 
     /// <summary>
@@ -91,12 +91,12 @@ namespace KNARZhelper
         /// <param name="ex">Exception to process</param>
         public TraceInfos(Exception ex)
         {
-            StackTrace Trace = new StackTrace(ex, true);
-            StackFrame Frame = Trace.GetFrames()?.LastOrDefault();
-            InitialCaller = Frame?.GetMethod()?.Name;
-            CallerParams = Frame?.GetMethod()?.GetParameters();
-            FileName = string.IsNullOrEmpty(Frame.GetFileName()) ? "???" : Frame.GetFileName();
-            LineNumber = Frame.GetFileLineNumber();
+            StackTrace trace = new StackTrace(ex, true);
+            StackFrame frame = trace.GetFrames()?.LastOrDefault();
+            InitialCaller = frame?.GetMethod()?.Name;
+            CallerParams = frame?.GetMethod()?.GetParameters();
+            FileName = string.IsNullOrEmpty(frame?.GetFileName()) ? "???" : frame.GetFileName();
+            LineNumber = frame?.GetFileLineNumber() ?? 0;
         }
     }
 }

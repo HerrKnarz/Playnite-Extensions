@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Text;
@@ -17,9 +18,9 @@ namespace KNARZhelper
         public static string RemoveSpecialChars(this string str) => Regex.Replace(str, @"[^a-zA-Z0-9\-\s]+", "");
 
         /// <summary>
-        /// Dictionary with special characters that need to be replaced before regular removing of diacritics. 
+        /// Dictionary with special characters that need to be replaced before regular removing of diacritics.
         /// </summary>
-        public static IReadOnlyDictionary<string, string> SPECIAL_DIACRITICS = new Dictionary<string, string>
+        public static IReadOnlyDictionary<string, string> SpecialDiacritics = new Dictionary<string, string>
                                                                    {
                                                                         { "ß".Normalize(NormalizationForm.FormD), "ss".Normalize(NormalizationForm.FormD) },
                                                                    };
@@ -32,7 +33,7 @@ namespace KNARZhelper
             StringBuilder stringBuilder = new StringBuilder(str.Normalize(NormalizationForm.FormD));
 
             // Replace certain special chars with special combinations of ASCII chars (e.g. German double s)
-            foreach (KeyValuePair<string, string> keyValuePair in SPECIAL_DIACRITICS)
+            foreach (KeyValuePair<string, string> keyValuePair in SpecialDiacritics)
             {
                 stringBuilder.Replace(keyValuePair.Key, keyValuePair.Value);
             }
@@ -58,7 +59,7 @@ namespace KNARZhelper
         /// <summary>
         /// Escapes a string to be used in a URL.
         /// </summary>
-        public static string EscapeDataString(this string str) => System.Uri.EscapeDataString(str);
+        public static string EscapeDataString(this string str) => Uri.EscapeDataString(str);
 
         /// <summary>
         /// Encodes an URL.
@@ -75,7 +76,7 @@ namespace KNARZhelper
         /// <summary>
         /// Substitutes every digit to its counterpart in roman notation.
         /// </summary>
-        /// <param name="title"></param>
+        /// <param name="str"></param>
         /// <returns></returns>
         public static string DigitsToRomanNumbers(this string str) => str.Replace("1", "I")
             .Replace("2", "II")
@@ -98,9 +99,10 @@ namespace KNARZhelper
         {
             int lengthTo = to.Length;
 
-            while (str.IndexOf(from) > -1)
+            while (str.IndexOf(from, StringComparison.Ordinal) > -1)
             {
-                str = str.Remove(str.IndexOf(from), str.IndexOf(to) - str.IndexOf(from) + lengthTo);
+                str = str.Remove(str.IndexOf(from, StringComparison.Ordinal),
+                    str.IndexOf(to, StringComparison.Ordinal) - str.IndexOf(from, StringComparison.Ordinal) + lengthTo);
             }
 
             return str;
