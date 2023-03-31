@@ -66,7 +66,6 @@ namespace CompanyCompanion
             return name != null
                 ? string.Join(" ", name.Split().Where(w => !wordList.Contains(w.RemoveSpecialChars().Replace("-", ""), StringComparer.InvariantCultureIgnoreCase)))
                 : string.Empty;
-
         }
 
         /// <summary>
@@ -103,9 +102,9 @@ namespace CompanyCompanion
             List<MergeGroup> mergeList = new List<MergeGroup>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                       $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionProgressSearching")}",
-                       false
-                   )
+                $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionProgressSearching")}",
+                false
+            )
             {
                 IsIndeterminate = true
             };
@@ -120,11 +119,13 @@ namespace CompanyCompanion
                             Id = c.Id,
                             Name = c.Name,
                             CleanedUpName = cleanUpName ? CleanUpCompanyName(c.Name) : c.Name,
-                            GroupName = findSimilar ? RemoveWords(CleanUpCompanyName(c.Name), _plugin.Settings.Settings.IgnoreWords.ToList())
-                                .RemoveDiacritics()
-                                .RemoveSpecialChars()
-                                .ToLower()
-                                .Replace(" ", "") : c.Name,
+                            GroupName = findSimilar
+                                ? RemoveWords(CleanUpCompanyName(c.Name), _plugin.Settings.Settings.IgnoreWords.ToList())
+                                    .RemoveDiacritics()
+                                    .RemoveSpecialChars()
+                                    .ToLower()
+                                    .Replace(" ", "")
+                                : c.Name,
                             Merge = true
                         }).OrderBy(c => c.CleanedUpName).ToList();
 
@@ -144,9 +145,14 @@ namespace CompanyCompanion
                         Plugin = _plugin,
                         Owner = this,
                         Key = g.Key,
-                        CompanyName = g.OrderByDescending(c => c.GamesAsDeveloper.Games.Count() + c.GamesAsPublisher.Games.Count()).ThenBy(c => c.CleanedUpName).First().CleanedUpName,
-                        CompanyId = g.OrderByDescending(c => c.GamesAsDeveloper.Games.Count() + c.GamesAsPublisher.Games.Count()).ThenBy(c => c.CleanedUpName).First().Id,
-                        Companies = g.ToList(),
+                        CompanyName =
+                            g.OrderByDescending(
+                                    c => c.GamesAsDeveloper.Games.Count + c.GamesAsPublisher.Games.Count)
+                                .ThenBy(c => c.CleanedUpName).First().CleanedUpName,
+                        CompanyId = g
+                            .OrderByDescending(c => c.GamesAsDeveloper.Games.Count + c.GamesAsPublisher.Games.Count)
+                            .ThenBy(c => c.CleanedUpName).First().Id,
+                        Companies = g.ToList()
                     }).OrderBy(g => g.Key).ToList();
 
                     foreach (MergeGroup group in mergeList)
@@ -227,25 +233,25 @@ namespace CompanyCompanion
             _gameList = mergeGroup is null
                 ? API.Instance.Database.Games.ToList()
                 : API.Instance.Database.Games
-                .Where(g =>
-                    (
-                        g.DeveloperIds != null &&
-                        g.DeveloperIds.Intersect(mergeGroup.Companies.Select(c => c.Id).ToList()).Any()
-                    ) ||
-                    (
-                        g.PublisherIds != null &&
-                        g.PublisherIds.Intersect(mergeGroup.Companies.Select(c => c.Id).ToList()).Any()
-                    )
-                ).ToList();
+                    .Where(g =>
+                        (
+                            g.DeveloperIds != null &&
+                            g.DeveloperIds.Intersect(mergeGroup.Companies.Select(c => c.Id).ToList()).Any()
+                        ) ||
+                        (
+                            g.PublisherIds != null &&
+                            g.PublisherIds.Intersect(mergeGroup.Companies.Select(c => c.Id).ToList()).Any()
+                        )
+                    ).ToList();
 
             _groups = mergeGroup is null ? MergeList : new ObservableCollection<MergeGroup> { mergeGroup };
 
             if (_groups.Any())
             {
                 GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                       $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionProgressUpdating")}",
-                       true
-                   )
+                    $"{ResourceProvider.GetString("LOCCompanyCompanionName")} - {ResourceProvider.GetString("LOCCompanyCompanionProgressUpdating")}",
+                    true
+                )
                 {
                     IsIndeterminate = false
                 };

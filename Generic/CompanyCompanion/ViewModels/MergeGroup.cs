@@ -18,14 +18,17 @@ namespace CompanyCompanion
         /// Company Companion plugin. Used to access settings etc.
         /// </summary>
         public CompanyCompanion Plugin { get; set; }
+
         /// <summary>
         /// Owner of the group. Used to _merge one group.
         /// </summary>
         public MergeCompanies Owner { get; set; }
+
         /// <summary>
         /// String the companies are grouped by
         /// </summary>
         public string Key { get; set; }
+
         /// <summary>
         /// Name of the masterCompany
         /// </summary>
@@ -38,10 +41,12 @@ namespace CompanyCompanion
                 OnPropertyChanged("CompanyName");
             }
         }
+
         /// <summary>
         /// Name to display
         /// </summary>
         public string DisplayName => Plugin.Settings.Settings.ShowGroupKey ? $"{Key} ({Companies.Count})" : $"{CompanyName} ({Companies.Count})";
+
         /// <summary>
         /// Id of the masterCompany
         /// </summary>
@@ -54,6 +59,7 @@ namespace CompanyCompanion
                 OnPropertyChanged("CompanyId");
             }
         }
+
         /// <summary>
         /// Collection of all companies that will be merged.
         /// </summary>
@@ -122,13 +128,10 @@ namespace CompanyCompanion
         /// Merges this specific group.
         /// </summary>
         public RelayCommand MergeGroupCommand
-        {
-            get => new RelayCommand(() =>
+            => new RelayCommand(() =>
             {
                 Owner.Merge(this);
-
                 Owner.MergeList.Remove(this);
             });
-        }
     }
 }

@@ -11,7 +11,10 @@ namespace CompanyCompanion
         private bool _cleanUpNames = true;
         private bool _findSimilar = true;
 
-        public CompanyCompanion Plugin { set => InitializeView(value); }
+        public CompanyCompanion Plugin
+        {
+            set => InitializeView(value);
+        }
 
         public MergeCompanies MergeCompanies
         {
@@ -24,6 +27,7 @@ namespace CompanyCompanion
         }
 
         private void InitializeView(CompanyCompanion plugin) => MergeCompanies = new MergeCompanies(plugin);
+
         public bool CleanUpNames
         {
             get => _cleanUpNames;
@@ -33,6 +37,7 @@ namespace CompanyCompanion
                 OnPropertyChanged("CleanUpNames");
             }
         }
+
         public bool FindSimilar
         {
             get => _findSimilar;
@@ -42,9 +47,7 @@ namespace CompanyCompanion
                 OnPropertyChanged("FindSimilar");
             }
         }
-        public MergeCompaniesViewModel()
-        {
-        }
+
         public RelayCommand FindCompaniesCommand => new RelayCommand(() => MergeCompanies.GetMergeList(_cleanUpNames, _findSimilar));
     }
 }

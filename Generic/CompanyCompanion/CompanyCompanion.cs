@@ -36,7 +36,7 @@ namespace CompanyCompanion
                 MergeCompaniesView mergeView = new MergeCompaniesView(this);
                 Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                 {
-                    ShowMinimizeButton = false,
+                    ShowMinimizeButton = false
                 });
 
                 window.Height = 800;
@@ -47,9 +47,9 @@ namespace CompanyCompanion
                 window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 window.ShowDialog();
             }
-            catch (Exception E)
+            catch (Exception exception)
             {
-                Log.Error(E, "Error during initializing MergeCompaniesView", true);
+                Log.Error(exception, "Error during initializing MergeCompaniesView", true);
             }
         }
 
@@ -64,17 +64,20 @@ namespace CompanyCompanion
                 {
                     Description = ResourceProvider.GetString("LOCCompanyCompanionMenuShowMerger"),
                     MenuSection = $"@{menuSection}",
-                    Action = a => ShowMergeView()                },
+                    Action = a => ShowMergeView()
+                },
                 new MainMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCCompanyCompanionMenuMergeDuplicates"),
                     MenuSection = $"@{menuSection}",
-                    Action = a => MergeCompanies.MergeDuplicates(this)                },
+                    Action = a => MergeCompanies.MergeDuplicates(this)
+                },
                 new MainMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCCompanyCompanionMenuRemoveDescriptors"),
                     MenuSection = $"@{menuSection}",
-                    Action = a => MergeCompanies.RemoveBusinessEntityDescriptors(this)                }
+                    Action = a => MergeCompanies.RemoveBusinessEntityDescriptors(this)
+                }
             };
 
             return menuItems;
