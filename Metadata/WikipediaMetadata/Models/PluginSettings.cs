@@ -14,14 +14,53 @@ namespace WikipediaMetadata.Models
         private ObservableCollection<string> _sectionsToRemove = new ObservableCollection<string>();
         private ObservableCollection<TagSetting> _tagSettings;
 
-        public DateToUse DateToUse { get => _dateToUse; set => SetValue(ref _dateToUse, value); }
-        public RatingToUse RatingToUse { get => _ratingToUse; set => SetValue(ref _ratingToUse, value); }
-        public bool AdvancedSearchResultSorting { get => _advancedSearchResultSorting; set => SetValue(ref _advancedSearchResultSorting, value); }
-        public bool ArcadeSystemAsPlatform { get => _arcadeSystemAsPlatform; set => SetValue(ref _arcadeSystemAsPlatform, value); }
-        public bool RemoveDescriptionLinks { get => _removeDescriptionLinks; set => SetValue(ref _removeDescriptionLinks, value); }
-        public bool DescriptionOverviewOnly { get => _descriptionOverviewOnly; set => SetValue(ref _descriptionOverviewOnly, value); }
-        public ObservableCollection<string> SectionsToRemove { get => _sectionsToRemove; set => SetValue(ref _sectionsToRemove, value); }
-        public ObservableCollection<TagSetting> TagSettings { get => _tagSettings; set => SetValue(ref _tagSettings, value); }
+        public DateToUse DateToUse
+        {
+            get => _dateToUse;
+            set => SetValue(ref _dateToUse, value);
+        }
+
+        public RatingToUse RatingToUse
+        {
+            get => _ratingToUse;
+            set => SetValue(ref _ratingToUse, value);
+        }
+
+        public bool AdvancedSearchResultSorting
+        {
+            get => _advancedSearchResultSorting;
+            set => SetValue(ref _advancedSearchResultSorting, value);
+        }
+
+        public bool ArcadeSystemAsPlatform
+        {
+            get => _arcadeSystemAsPlatform;
+            set => SetValue(ref _arcadeSystemAsPlatform, value);
+        }
+
+        public bool RemoveDescriptionLinks
+        {
+            get => _removeDescriptionLinks;
+            set => SetValue(ref _removeDescriptionLinks, value);
+        }
+
+        public bool DescriptionOverviewOnly
+        {
+            get => _descriptionOverviewOnly;
+            set => SetValue(ref _descriptionOverviewOnly, value);
+        }
+
+        public ObservableCollection<string> SectionsToRemove
+        {
+            get => _sectionsToRemove;
+            set => SetValue(ref _sectionsToRemove, value);
+        }
+
+        public ObservableCollection<TagSetting> TagSettings
+        {
+            get => _tagSettings;
+            set => SetValue(ref _tagSettings, value);
+        }
 
         public void PopulateTagSettings()
         {
@@ -82,7 +121,7 @@ namespace WikipediaMetadata.Models
                         IsChecked = true,
                         Name = "Composer",
                         Prefix = "[People] composer:"
-                    },
+                    }
                 };
             }
         }

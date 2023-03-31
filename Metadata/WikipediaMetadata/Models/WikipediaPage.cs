@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-/// Contains classes needed for the JOSN result to fetch a single page.
 namespace WikipediaMetadata.Models
 {
+    /// Contains classes needed for the JSON result to fetch a single page.
     public class Latest
     {
         [JsonProperty("id")]

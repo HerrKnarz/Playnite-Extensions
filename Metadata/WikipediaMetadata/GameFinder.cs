@@ -22,16 +22,16 @@ namespace WikipediaMetadata
         /// <returns> nameVideoGame = search term with " (video game)" added
         /// compareName = search term without special characters and whitespaces to compare with results
         /// startName = the first five characters of the search term to order by those.</returns>
-        private (string nameVideoGame, string compareName, string startName) PrepareSearchTerms(string searchTerm)
+        private static (string nameVideoGame, string compareName, string startName) PrepareSearchTerms(string searchTerm)
         {
             string compareName = searchTerm.RemoveSpecialChars().ToLower().Replace(" ", "");
 
             return
-                (
-                    $"{searchTerm} (video game)".RemoveSpecialChars().ToLower().Replace(" ", ""),
-                    compareName,
-                    new string(compareName.Take(5).ToArray())
-                );
+            (
+                $"{searchTerm} (video game)".RemoveSpecialChars().ToLower().Replace(" ", ""),
+                compareName,
+                new string(compareName.Take(5).ToArray())
+            );
         }
 
         /// <summary>
@@ -90,11 +90,11 @@ namespace WikipediaMetadata
                 // titles starting with the game name, then by titles starting with the first five characters of the game
                 // name and at last by page title itself.
                 return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
-                        .OrderByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(nameVideoGame))
-                        .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(startName))
-                        .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(compareName))
-                        .ThenByDescending(o => o.Description != null && o.Description.Contains("video game"))
-                        .ToList<GenericItemOption>();
+                    .OrderByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(nameVideoGame))
+                    .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(startName))
+                    .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(compareName))
+                    .ThenByDescending(o => o.Description != null && o.Description.Contains("video game"))
+                    .ToList<GenericItemOption>();
             }
 
             return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult).ToList<GenericItemOption>();

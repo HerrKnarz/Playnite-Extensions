@@ -3,9 +3,9 @@ using Newtonsoft.Json;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
 
-/// Contains all the classes needed for the JOSN result of a search query.
 namespace WikipediaMetadata.Models
 {
+    /// Contains all the classes needed for the JSON result of a search query.
     public class Page
     {
         [JsonProperty("id")]

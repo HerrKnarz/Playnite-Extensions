@@ -9,7 +9,6 @@ using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
 {
-
     /// <summary>
     /// Parser for the html code of a wikipedia page fetched by the rest api, to get the description and additional links.
     /// </summary>
@@ -31,7 +30,7 @@ namespace WikipediaMetadata
 
             // All paragraphs we want to remove from the description by default.
             List<string> unwantedParagraphs = new List<string>()
-              { "see also", "notes", "references", "further reading", "sources", "external links" };
+                { "see also", "notes", "references", "further reading", "sources", "external links" };
 
             unwantedParagraphs.AddMissing(settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
 
@@ -118,23 +117,25 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        private HtmlNode RemoveAnnotationMarks(HtmlNode text)
+        private static HtmlNode RemoveAnnotationMarks(HtmlNode text)
         {
             HtmlNodeCollection supNodes = text.SelectNodes("./sup");
 
-            if (supNodes?.Any() ?? false)
+            if (!(supNodes?.Any() ?? false))
             {
-                foreach (HtmlNode annotation in supNodes)
-                {
-                    if (annotation.Attributes.Where(a => a.Name == "class" && a.Value.Contains("update")) != null)
-                    {
-                        annotation.Remove();
-                    }
+                return text;
+            }
 
-                    if (annotation.SelectSingleNode("./a/span[@class='mw-reflink-text']") != null)
-                    {
-                        annotation.Remove();
-                    }
+            foreach (HtmlNode annotation in supNodes)
+            {
+                if (annotation.Attributes.Any(a => a.Name == "class" && a.Value.Contains("update")))
+                {
+                    annotation.Remove();
+                }
+
+                if (annotation.SelectSingleNode("./a/span[@class='mw-reflink-text']") != null)
+                {
+                    annotation.Remove();
                 }
             }
 
@@ -187,7 +188,7 @@ namespace WikipediaMetadata
 
                             // Since the link text most of the time simply consist of the name of the game, try to
                             // match the url to popular web sites that are often linked here.
-                            LinkPair pair = Resources.LinkPairs.Where(p => link.GetAttributeValue("href", "").Contains(p.Contains)).FirstOrDefault();
+                            LinkPair pair = Resources.LinkPairs.FirstOrDefault(p => link.GetAttributeValue("href", "").Contains(p.Contains));
 
                             if (pair != null)
                             {
@@ -197,7 +198,7 @@ namespace WikipediaMetadata
                             Links.Add(new Link()
                             {
                                 Name = name,
-                                Url = link.GetAttributeValue("href", ""),
+                                Url = link.GetAttributeValue("href", "")
                             });
                         }
                     }

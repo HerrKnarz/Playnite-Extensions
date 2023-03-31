@@ -15,13 +15,11 @@ namespace WikipediaMetadata.Models
         /// <param name="page">found page</param>
         /// <returns>Search result for the search dialog.</returns>
         public static WikipediaItemOption FromWikipediaSearchResult(Page page)
-        {
-            return new WikipediaItemOption
+            => new WikipediaItemOption
             {
                 Key = page.Key,
                 Name = page.Title,
-                Description = page.Description,
+                Description = page.Description
             };
-        }
     }
 }

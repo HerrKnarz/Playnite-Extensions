@@ -37,7 +37,6 @@ namespace WikipediaMetadata
             }
 
             WikipediaPage page = new WikipediaPage();
-            string pageHtml = string.Empty;
 
             try
             {
@@ -70,7 +69,7 @@ namespace WikipediaMetadata
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Error loading data from Wikipedia");
+                Log.Error(ex, "Error loading data from Wikipedia");
             }
 
             WikitextParser wikitextParser = new WikitextParser(_plugin.Settings.Settings);
@@ -98,54 +97,64 @@ namespace WikipediaMetadata
             string name = FindGame().Name;
             return string.IsNullOrEmpty(name) ? base.GetName(args) : name;
         }
+
         public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args) => FindGame().ReleaseDate ?? base.GetReleaseDate(args);
+
         public override IEnumerable<MetadataProperty> GetGenres(GetMetadataFieldArgs args)
         {
             List<MetadataProperty> genres = FindGame().Genres;
-            return (genres?.Any() ?? false) ? genres : base.GetGenres(args);
+            return genres?.Any() ?? false ? genres : base.GetGenres(args);
         }
+
         public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
         {
             List<MetadataProperty> developers = FindGame().Developers;
-            return (developers?.Any() ?? false) ? developers : base.GetDevelopers(args);
+            return developers?.Any() ?? false ? developers : base.GetDevelopers(args);
         }
+
         public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
         {
             List<MetadataProperty> publishers = FindGame().Publishers;
-            return (publishers?.Any() ?? false) ? publishers : base.GetPublishers(args);
+            return publishers?.Any() ?? false ? publishers : base.GetPublishers(args);
         }
+
         public override IEnumerable<MetadataProperty> GetFeatures(GetMetadataFieldArgs args)
         {
             List<MetadataProperty> features = FindGame().Features;
-            return (features?.Any() ?? false) ? features : base.GetFeatures(args);
+            return features?.Any() ?? false ? features : base.GetFeatures(args);
         }
+
         public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)
         {
             List<MetadataProperty> tags = FindGame().Tags;
-            return (tags?.Any() ?? false) ? tags : base.GetTags(args);
+            return tags?.Any() ?? false ? tags : base.GetTags(args);
         }
+
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
         {
             List<Link> links = FindGame().Links;
 
             links.AddMissing(ParseHtml(FindGame().Key).Links);
 
-            return (links?.Any() ?? false) ? links : base.GetLinks(args);
+            return links?.Any() ?? false ? links : base.GetLinks(args);
         }
+
         public override IEnumerable<MetadataProperty> GetSeries(GetMetadataFieldArgs args)
         {
             List<MetadataProperty> series = FindGame().Series;
-            return (series?.Any() ?? false) ? series : base.GetSeries(args);
+            return series?.Any() ?? false ? series : base.GetSeries(args);
         }
+
         public override IEnumerable<MetadataProperty> GetPlatforms(GetMetadataFieldArgs args)
         {
             List<MetadataProperty> platforms = FindGame().Platforms;
-            return (platforms?.Any() ?? false) ? platforms : base.GetPlatforms(args);
+            return platforms?.Any() ?? false ? platforms : base.GetPlatforms(args);
         }
+
         public override int? GetCriticScore(GetMetadataFieldArgs args)
         {
             int criticScore = FindGame().CriticScore;
-            return (criticScore > -1) ? criticScore : base.GetCriticScore(args);
+            return criticScore > -1 ? criticScore : base.GetCriticScore(args);
         }
 
         public override string GetDescription(GetMetadataFieldArgs args)

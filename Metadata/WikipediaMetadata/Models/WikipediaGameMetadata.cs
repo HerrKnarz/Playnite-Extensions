@@ -12,10 +12,12 @@ namespace WikipediaMetadata.Models
         /// Name of the game
         /// </summary>
         public string Name { get; set; } = string.Empty;
+
         /// <summary>
         /// Unique key - is the variable part of the page url.
         /// </summary>
         public string Key { get; set; } = string.Empty;
+
         public string CoverImageUrl { get; set; }
         public ReleaseDate? ReleaseDate { get; set; }
         public List<MetadataProperty> Genres { get; set; }

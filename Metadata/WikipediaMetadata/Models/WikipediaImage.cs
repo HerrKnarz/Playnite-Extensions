@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-/// Contains the classes needed to fetch images from a Wikipedia page.
 namespace WikipediaMetadata.Models
 {
+    /// Contains the classes needed to fetch images from a Wikipedia page.
     public class Normalized
     {
         [JsonProperty("fromencoded")]

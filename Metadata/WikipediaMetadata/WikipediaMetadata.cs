@@ -26,7 +26,7 @@ namespace WikipediaMetadata
             MetadataField.Platform,
             MetadataField.CoverImage,
             MetadataField.CriticScore,
-            MetadataField.Description,
+            MetadataField.Description
         };
 
         public override string Name => "Wikipedia";

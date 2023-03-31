@@ -28,37 +28,32 @@ namespace WikipediaMetadata
         {
             { DateToUse.Earliest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateEarliest") },
             { DateToUse.Latest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateLatest") },
-            { DateToUse.First, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateFirst") },
+            { DateToUse.First, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateFirst") }
         };
 
         public Dictionary<RatingToUse, string> RatingToUseModes { get; } = new Dictionary<RatingToUse, string>
         {
             { RatingToUse.Lowest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingLowest") },
             { RatingToUse.Highest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingHighest") },
-            { RatingToUse.Average, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingAverage") },
+            { RatingToUse.Average, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingAverage") }
         };
 
         public RelayCommand AddSectionCommand
-        {
-            get => new RelayCommand(() =>
+            => new RelayCommand(() =>
             {
                 string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCWikipediaMetadataSettingsAddValue"), "").SelectedString;
 
                 Settings.SectionsToRemove.AddMissing(value);
                 Settings.SectionsToRemove = new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
             });
-        }
 
-        public RelayCommand<IList<object>> RemoveSectionCommand
+        public RelayCommand<IList<object>> RemoveSectionCommand => new RelayCommand<IList<object>>((items) =>
         {
-            get => new RelayCommand<IList<object>>((items) =>
+            foreach (string item in items.ToList().Cast<string>())
             {
-                foreach (string item in items.ToList().Cast<string>())
-                {
-                    Settings.SectionsToRemove.Remove(item);
-                }
-            }, (items) => items?.Any() ?? false);
-        }
+                Settings.SectionsToRemove.Remove(item);
+            }
+        }, (items) => items?.Any() ?? false);
 
         public WikipediaMetadataSettingsViewModel(WikipediaMetadata plugin)
         {
@@ -79,7 +74,7 @@ namespace WikipediaMetadata
             {
                 Settings.PopulateTagSettings();
             }
-            // Hotfix to a bug that duplicated the tag _settings in version 1.3 and 1.4
+            // Hotfix to a bug that duplicated the tag settings in version 1.3 and 1.4
             else if (Settings.TagSettings.Count > 9)
             {
                 while (Settings.TagSettings.Count > 9)

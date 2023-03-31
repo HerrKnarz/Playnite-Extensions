@@ -12,7 +12,7 @@ using WikipediaMetadata.Models;
 namespace WikipediaMetadata
 {
     /// <summary>
-    /// Parses the given wikitext to get the relevant metadata informations.
+    /// Parses the given wikitext to get the relevant metadata infos.
     /// </summary>
     internal class WikitextParser
     {
@@ -24,11 +24,14 @@ namespace WikipediaMetadata
         /// Creates an instance of the class and fills the parameters by parsing the wikitext.
         /// </summary>
         /// <param name="settings">Settings of the plugin</param>
-        /// <param name="gameData">Page object from wikipedia containing the wikitext and other data.</param>
-        /// <param name="platformList">List of all platforms in the database</param>
         public WikitextParser(PluginSettings settings)
             => _settings = settings;
 
+        /// <summary>
+        /// Parses the Wikitext
+        /// </summary>
+        /// <param name="gameData">Page object from wikipedia containing the wikitext and other data.</param>
+        /// <param name="platformList">List of all platforms in the database</param>
         public void Parse(WikipediaPage gameData, IItemCollection<Platform> platformList)
         {
             GameMetadata = new WikipediaGameMetadata
@@ -48,7 +51,7 @@ namespace WikipediaMetadata
                     // Most of the game relevant data can be found in the "infobox video game" template. Most Wikipedia pages
                     // for games have one of those. Without it, only name, cover image, description and links can be fetched.
                     Template infoBox = ast.EnumDescendants().OfType<Template>()
-                        .Where(t => Resources.InfoBoxVideoGameTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))).FirstOrDefault();
+                        .FirstOrDefault(t => Resources.InfoBoxVideoGameTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name))));
 
                     if (infoBox != null)
                     {
@@ -121,7 +124,7 @@ namespace WikipediaMetadata
 
                     // We go through all list templates used in the field to fetch the single values in the list.
                     foreach (Template template in argument.EnumDescendants().OfType<Template>()
-                            .Where(t => Resources.ListTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
+                        .Where(t => Resources.ListTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
                     {
                         List<TemplateArgument> arguments = new List<TemplateArgument>();
 
@@ -150,9 +153,9 @@ namespace WikipediaMetadata
                             if (listArgument.Name is null || listArgument.Name.ToPlainText() == "title")
                             {
                                 IEnumerable<Template> sublistTemplates = listArgument.EnumDescendants().OfType<Template>()
-                                    .Where(t => Resources.AllowedSubListTemplates.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower()));
+                                    .Where(t => Resources.AllowedSubListTemplates.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower())).ToList();
 
-                                if (sublistTemplates?.Any() ?? false)
+                                if (sublistTemplates.Any())
                                 {
                                     foreach (Template sublistTemplate in sublistTemplates)
                                     {
@@ -186,17 +189,17 @@ namespace WikipediaMetadata
                     // All additional elements like cite etc. will be removed, too.
                     values.AddMissing(CleanUpAndSplit(argument, field, removeParentheses, removeSup));
 
-                    // Now we add the prefix to all 
-                    if (prefix != string.Empty && prefix != null)
+                    // Now we add the prefix to all
+                    if (string.IsNullOrEmpty(prefix))
                     {
-                        List<MetadataProperty> prefixedValues = new List<MetadataProperty>();
-
-                        prefixedValues.AddMissing(values.Select(v => new MetadataNameProperty($"{prefix} {v}")));
-
-                        return prefixedValues;
+                        return values;
                     }
 
-                    return values;
+                    List<MetadataProperty> prefixedValues = new List<MetadataProperty>();
+
+                    prefixedValues.AddMissing(values.Select(v => new MetadataNameProperty($"{prefix} {v}")));
+
+                    return prefixedValues;
                 }
             }
             catch (Exception ex)
@@ -306,7 +309,7 @@ namespace WikipediaMetadata
         {
             // We search for the first occurrence of a review template in the page.
             Template infoBox = ast.EnumDescendants().OfType<Template>()
-                .Where(t => CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)) == "video game reviews").FirstOrDefault();
+                .FirstOrDefault(t => CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)) == "video game reviews");
 
             if (infoBox != null)
             {
@@ -353,14 +356,14 @@ namespace WikipediaMetadata
                         if (int.TryParse(value.Substring(0, value.IndexOf("/")), out int rating))
                         {
                             ratings.Add(rating);
-                        };
+                        }
                     }
                     else if (value.IndexOf("%") > 0)
                     {
                         if (int.TryParse(value.Substring(0, value.IndexOf("%")), out int rating))
                         {
                             ratings.Add(rating);
-                        };
+                        }
                     }
                 }
 
@@ -385,7 +388,7 @@ namespace WikipediaMetadata
         /// <summary>
         /// Cleans up a value and splits it by line breaks or commas instead of list templates.
         /// </summary>
-        /// <param name="value">value to be split</param>
+        /// <param name="argument">value to be split</param>
         /// <param name="field">name of the field. Is used to recognize fields, that can contain values that have commas
         /// we don't want to split.</param>
         /// <param name="removeParentheses">Removes values in parentheses.</param>
@@ -455,15 +458,10 @@ namespace WikipediaMetadata
             }
 
             // Now we split the values by the list of separators and parse the result to get the plain text values.
-            foreach (string segment in value.Split(separators.ToArray(), 100, StringSplitOptions.RemoveEmptyEntries))
-            {
-                string segmentEditable = parser.Parse(segment).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim();
-
-                if (segmentEditable.Length > 0)
-                {
-                    values.Add(new MetadataNameProperty(segmentEditable));
-                }
-            }
+            values.AddRange(value.Split(separators.ToArray(), 100, StringSplitOptions.RemoveEmptyEntries)
+                .Select(segment => parser.Parse(segment).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim())
+                .Where(segmentEditable => segmentEditable.Length > 0)
+                .Select(segmentEditable => new MetadataNameProperty(segmentEditable)));
 
             return values;
         }
@@ -475,11 +473,9 @@ namespace WikipediaMetadata
         /// <returns>The cleaned up argument</returns>
         internal TemplateArgument StripUnwantedElements(TemplateArgument argument)
         {
-            IEnumerable<Template> templates = argument.EnumDescendants().OfType<Template>();
-
             // First we remove every template we don't want.
             foreach (Template x in argument.EnumDescendants().OfType<Template>()
-                            .Where(t => Resources.UnwantedTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
+                .Where(t => Resources.UnwantedTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
             {
                 x.Remove();
             }
