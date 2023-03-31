@@ -30,7 +30,7 @@ namespace LinkUtilities.Linker
             Add(new LinkMobyGames());
             Add(new LinkNECRetro());
             Add(new LinkNintendoWiki());
-            Add(new LinkPCGamingWiki());
+            Add(new LinkPcGamingWiki());
             Add(new LinkRAWG());
             Add(new LinkSegaRetro());
             Add(new LinkSNKWiki());

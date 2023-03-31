@@ -52,6 +52,8 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="games">List of games to be processed</param>
         /// <param name="linkAction">Instance of the action to be executed</param>
+        /// <param name="showDialog">If true a dialog will be shown after completion</param>
+        /// <param name="actionModifier">specifies the type of action to execute, if more than one is possible.</param>
         private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
         {
             // While sorting Links we set IsUpdating to true, so the library update event knows it doesn't need to sort again.
@@ -82,7 +84,7 @@ namespace LinkUtilities
                         {
                             try
                             {
-                                activateGlobalProgress.ProgressMaxValue = games.Count();
+                                activateGlobalProgress.ProgressMaxValue = games.Count;
 
                                 foreach (Game game in games)
                                 {
@@ -289,6 +291,7 @@ namespace LinkUtilities
                     }
                 });
             }
+
             // Adds the "Rename links" item to the main menu.
             if (RenameLinks.Instance().RenamePatterns?.Any() ?? false)
             {
@@ -314,6 +317,7 @@ namespace LinkUtilities
                     }
                 });
             }
+
             // Adds the "Tag missing links" item to the main menu.
             if (TagMissingLinks.Instance().MissingLinkPatterns?.Any() ?? false)
             {
@@ -452,7 +456,7 @@ namespace LinkUtilities
             // Adds all linkable websites to the "add link to" and "search link to" sub menus.
             foreach (BaseClasses.Linker link in AddWebsiteLinks.Instance().Links)
             {
-                if (link.Settings.ShowInMenus & link.AddType != LinkAddTypes.None)
+                if (link.Settings.ShowInMenus & (link.AddType != LinkAddTypes.None))
                 {
                     menuItems.Add(new GameMenuItem
                     {
@@ -478,7 +482,6 @@ namespace LinkUtilities
                             DoForAll(games, link, true, ActionModifierTypes.Search);
                         }
                     });
-
                 }
             }
 
@@ -508,6 +511,7 @@ namespace LinkUtilities
                     }
                 });
             }
+
             // Adds the "Rename links" item to the game menu.
             if (RenameLinks.Instance().RenamePatterns?.Any() ?? false)
             {
@@ -522,6 +526,7 @@ namespace LinkUtilities
                     }
                 });
             }
+
             // Adds the "Tag missing links" item to the game menu.
             if (TagMissingLinks.Instance().MissingLinkPatterns?.Any() ?? false)
             {

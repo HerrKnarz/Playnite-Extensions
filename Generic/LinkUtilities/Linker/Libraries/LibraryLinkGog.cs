@@ -20,10 +20,13 @@ namespace LinkUtilities.Linker
         /// ID of the game library to identify it in Playnite.
         /// </summary>
         public override Guid Id { get; } = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
+
         public override string LinkName { get; } = "GOG";
         public override string BaseUrl { get; } = "https://www.gog.com/en/game/";
         public override string SearchUrl { get; } = "https://embed.gog.com/games/ajax/filtered?mediaType=game&search=";
+
         public override bool AllowRedirects { get; set; } = false;
+
         // GOG Links need the game name in lowercase without special characters and underscores instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveDiacritics()
@@ -35,16 +38,18 @@ namespace LinkUtilities.Linker
 
         public override bool AddLibraryLink(Game game)
         {
-            if (!LinkHelper.LinkExists(game, LinkName))
+            if (LinkHelper.LinkExists(game, LinkName))
             {
-                GogMetaData gogMetaData = ParseHelper.GetJsonFromApi<GogMetaData>($"https://api.gog.com/products/{game.GameId}", LinkName);
+                return false;
+            }
 
-                if (gogMetaData?.Slug?.Any() ?? false)
-                {
-                    LinkUrl = $"{BaseUrl}{gogMetaData.Slug}";
+            GogMetaData gogMetaData = ParseHelper.GetJsonFromApi<GogMetaData>($"https://api.gog.com/products/{game.GameId}", LinkName);
 
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl);
-                }
+            if (gogMetaData?.Slug?.Any() ?? false)
+            {
+                LinkUrl = $"{BaseUrl}{gogMetaData.Slug}";
+
+                return LinkHelper.AddLink(game, LinkName, LinkUrl);
             }
 
             return false;
@@ -82,10 +87,6 @@ namespace LinkUtilities.Linker
             }
 
             return searchResults;
-        }
-
-        public LibraryLinkGog() : base()
-        {
         }
     }
 }

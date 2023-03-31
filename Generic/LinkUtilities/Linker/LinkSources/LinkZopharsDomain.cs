@@ -45,9 +45,5 @@ namespace LinkUtilities.Linker
 
             return base.GetSearchResults(searchTerm);
         }
-
-        public LinkZopharsDomain() : base()
-        {
-        }
     }
 }

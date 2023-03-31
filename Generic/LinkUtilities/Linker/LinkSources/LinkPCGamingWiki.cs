@@ -9,7 +9,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to PCGamingWiki.
     /// </summary>
-    internal class LinkPCGamingWiki : BaseClasses.Linker
+    internal class LinkPcGamingWiki : BaseClasses.Linker
     {
         public override string LinkName { get; } = "PCGamingWiki";
         public override string BaseUrl { get; } = "https://www.pcgamingwiki.com/wiki/";
@@ -27,42 +27,35 @@ namespace LinkUtilities.Linker
         {
             LinkUrl = string.Empty;
 
-            if (!LinkHelper.LinkExists(game, LinkName))
+            if (LinkHelper.LinkExists(game, LinkName))
             {
-                string gameName = GetGamePath(game, game.Name.RemoveEditionSuffix());
+                return false;
+            }
 
-                if (!string.IsNullOrEmpty(gameName))
+            string gameName = GetGamePath(game, game.Name.RemoveEditionSuffix());
+
+            if (!string.IsNullOrEmpty(gameName))
+            {
+                if (CheckLink($"{BaseUrl}{gameName}"))
                 {
-                    if (CheckLink($"{BaseUrl}{gameName}"))
-                    {
-                        LinkUrl = $"{BaseUrl}{gameName}";
-                    }
-                    // if the first try didn't find a link, we try it with the capitalized game name. 
-                    else
-                    {
-                        string gameNameCapitalized = game.Name.CollapseWhitespaces().ToTitleCase().Replace(" ", "_").EscapeDataString();
-
-                        if (gameNameCapitalized != gameName && CheckLink($"{BaseUrl}{gameNameCapitalized}"))
-                        {
-                            LinkUrl = $"{BaseUrl}{gameNameCapitalized}";
-                        }
-                    }
+                    LinkUrl = $"{BaseUrl}{gameName}";
                 }
-
-                if (!string.IsNullOrEmpty(LinkUrl))
+                // if the first try didn't find a link, we try it with the capitalized game name.
+                else
                 {
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl);
+                    string gameNameCapitalized = game.Name.CollapseWhitespaces().ToTitleCase().Replace(" ", "_").EscapeDataString();
+
+                    if (gameNameCapitalized != gameName && CheckLink($"{BaseUrl}{gameNameCapitalized}"))
+                    {
+                        LinkUrl = $"{BaseUrl}{gameNameCapitalized}";
+                    }
                 }
             }
 
-            return false;
+            return !string.IsNullOrEmpty(LinkUrl) && LinkHelper.AddLink(game, LinkName, LinkUrl);
         }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
             => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName));
-
-        public LinkPCGamingWiki() : base()
-        {
-        }
     }
 }

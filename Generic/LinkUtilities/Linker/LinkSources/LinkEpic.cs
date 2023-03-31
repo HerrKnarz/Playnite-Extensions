@@ -31,7 +31,7 @@ namespace LinkUtilities.Linker
         public override bool AddLink(Game game)
         {
             // Unfortunately Epic returns the status code forbidden, when trying to check the url, because they want cookies and
-            // javascipt active. Fortunately we can use the game slug in the store api. If it doesn't return an error, there should also
+            // javascript active. Fortunately we can use the game slug in the store api. If it doesn't return an error, there should also
             // be a link with that slug.
             string gameSlug = GetGamePath(game);
             string url = $"{_checkUrl}{gameSlug}";
@@ -70,10 +70,6 @@ namespace LinkUtilities.Linker
                         Description = e.Seller.Name
                     }))
                 : base.GetSearchResults(searchTerm);
-        }
-
-        public LinkEpic() : base()
-        {
         }
     }
 }

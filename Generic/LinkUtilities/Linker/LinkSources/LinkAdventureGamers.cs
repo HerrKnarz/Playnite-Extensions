@@ -25,9 +25,12 @@ namespace LinkUtilities.Linker
             try
             {
                 HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "+").ToLower()}");
+                HtmlDocument doc =
+                    web.Load(
+                        $"{SearchUrl}{searchTerm.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "+").ToLower()}");
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='item_article']//h2//a[contains(@href,'games')]");
+                HtmlNodeCollection htmlNodes =
+                    doc.DocumentNode.SelectNodes("//div[@class='item_article']//h2//a[contains(@href,'games')]");
 
                 if (htmlNodes?.Any() ?? false)
                 {
@@ -45,10 +48,6 @@ namespace LinkUtilities.Linker
             }
 
             return base.GetSearchResults(searchTerm);
-        }
-
-        public LinkAdventureGamers() : base()
-        {
         }
     }
 }

@@ -26,6 +26,7 @@ namespace LinkUtilities
         /// <param name="game">Game the link will be added to</param>
         /// <param name="linkName">Name of the link</param>
         /// <param name="linkUrl">URL of the link</param>
+        /// <param name="ignoreExisting">if true existing links of the same name will be ignored</param>
         /// <returns>
         /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
         /// </returns>
@@ -37,6 +38,7 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="game">Game the link will be added to</param>
         /// <param name="link">the link to add</param>
+        /// <param name="ignoreExisting">if true existing links of the same name will be ignored</param>
         /// <returns>
         /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
         /// </returns>
@@ -60,14 +62,15 @@ namespace LinkUtilities
                 }
                 else if (!ignoreExisting)
                 {
-                    string message = string.Format(ResourceProvider.GetString("LOCLinkUtilitiesDialogReplaceLink"), link.Name);
+                    string message = string.Format(ResourceProvider.GetString("LOCLinkUtilitiesDialogReplaceLink"),
+                        link.Name);
 
                     StringSelectionDialogResult selectResult = GlobalSettings.Instance().OnlyATest
                         ? new StringSelectionDialogResult(true, $"{link.Name} (Test)")
                         : API.Instance.Dialogs.SelectString(
-                                message,
-                                ResourceProvider.GetString("LOCLinkUtilitiesDialogSelectOption"),
-                                link.Name);
+                            message,
+                            ResourceProvider.GetString("LOCLinkUtilitiesDialogSelectOption"),
+                            link.Name);
 
                     if (selectResult.Result)
                     {
@@ -126,13 +129,13 @@ namespace LinkUtilities
         /// Adds a list of links to a game.
         /// </summary>
         /// <param name="game">Game the links will be added to</param>
-        /// <param name="link">the links to add</param>
+        /// <param name="links">the links to add</param>
         /// <returns>
         /// True, if at least one link could be added. Returns false, if the links already existed or couldn't be added.
         /// </returns>
         internal static bool AddLinks(Game game, List<Link> links)
         {
-            bool mustUpdate = false;
+            bool mustUpdate;
 
             // If the game doesn't have any Links yet, we have to add the collection itself.
             if (game.Links is null)
@@ -179,6 +182,7 @@ namespace LinkUtilities
             {
                 LinkActions.SortLinks.Instance().Execute(game);
             }
+
             // We add/remove tags for missing links automatically if the setting TagMissingLinksAfterChange is true.
             if (TagMissingLinks.Instance().TagMissingLinksAfterChange)
             {
@@ -192,7 +196,8 @@ namespace LinkUtilities
         /// <param name="game">Game for which the Links will be checked</param>
         /// <param name="linkName">Name of the link</param>
         /// <returns>True, if a link with that name exists</returns>
-        internal static bool LinkExists(Game game, string linkName) => !game.Links?.Any(x => x.Name == linkName) ?? false;
+        internal static bool LinkExists(Game game, string linkName) =>
+            !game.Links?.Any(x => x.Name == linkName) ?? false;
 
         /// <summary>
         /// Sorts the Links of a game alphabetically by the link name.
@@ -226,7 +231,8 @@ namespace LinkUtilities
         {
             if (game.Links?.Any() ?? false)
             {
-                game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => GetSortPosition(x.Name, sortOrder)).ThenBy(x => x.Name));
+                game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => GetSortPosition(x.Name, sortOrder))
+                    .ThenBy(x => x.Name));
 
                 if (!GlobalSettings.Instance().OnlyATest)
                 {
@@ -256,13 +262,16 @@ namespace LinkUtilities
                 switch (duplicateType)
                 {
                     case DuplicateTypes.NameAndUrl:
-                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => new { x.Name, url = CleanUpUrl(x.Url) }).Select(x => x.First()));
+                        newLinks = new ObservableCollection<Link>(game.Links
+                            .GroupBy(x => new { x.Name, url = CleanUpUrl(x.Url) }).Select(x => x.First()));
                         break;
                     case DuplicateTypes.Name:
-                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => x.Name).Select(x => x.First()));
+                        newLinks = new ObservableCollection<Link>(
+                            game.Links.GroupBy(x => x.Name).Select(x => x.First()));
                         break;
                     case DuplicateTypes.Url:
-                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => CleanUpUrl(x.Url)).Select(x => x.First()));
+                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => CleanUpUrl(x.Url))
+                            .Select(x => x.First()));
                         break;
                     default:
                         return false;
@@ -297,7 +306,7 @@ namespace LinkUtilities
 
                 string urlWithoutScheme = uri.Host + uri.PathAndQuery + uri.Fragment;
 
-                return !url.EndsWith("/") ? (urlWithoutScheme += "/") : urlWithoutScheme;
+                return !url.EndsWith("/") ? urlWithoutScheme + "/" : urlWithoutScheme;
             }
             catch (Exception)
             {
@@ -313,7 +322,8 @@ namespace LinkUtilities
         /// <param name="sortOrder">Dictionary that contains the sort order.</param>
         /// <returns>Position in the sort order. The max int is returned, if the link name is not in the dictionary. That way
         /// those links will always appear after the defined order.</returns>
-        private static int? GetSortPosition(string linkName, Dictionary<string, int> sortOrder) => sortOrder.TryGetValue(linkName, out int position) ? position : int.MaxValue;
+        private static int? GetSortPosition(string linkName, Dictionary<string, int> sortOrder) =>
+            sortOrder.TryGetValue(linkName, out int position) ? position : int.MaxValue;
 
         /// <summary>
         /// PreRequest event for the HtmlWeb class. Is used to disable redirects,
@@ -330,7 +340,8 @@ namespace LinkUtilities
         /// Checks if an URL is reachable and returns OK
         /// </summary>
         /// <param name="url">URL to check</param>
-        /// <returns>True, if the URL is reachable</returns>        
+        /// <param name="allowRedirects">If true, a redirect will count as ok.</param>
+        /// <returns>True, if the URL is reachable</returns>
         internal static bool CheckUrl(string url, bool allowRedirects = true)
         {
             _allowRedirects = allowRedirects;
@@ -343,21 +354,29 @@ namespace LinkUtilities
                     PreRequest = OnPreRequest
                 };
 
-                HtmlDocument doc = web.Load(url);
+                web.Load(url);
 
                 return web.StatusCode == HttpStatusCode.OK;
             }
             catch (WebException ex)
             {
-                if (ex.Response != null)
+                if (ex.Response == null)
                 {
-                    WebResponse response = ex.Response;
-                    Stream dataStream = response.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    string details = reader.ReadToEnd();
-
-                    Log.Error(ex, details);
+                    return false;
                 }
+
+                WebResponse response = ex.Response;
+                Stream dataStream = response.GetResponseStream();
+
+                if (dataStream == null)
+                {
+                    return false;
+                }
+
+                StreamReader reader = new StreamReader(dataStream);
+                string details = reader.ReadToEnd();
+
+                Log.Error(ex, details);
 
                 return false;
             }

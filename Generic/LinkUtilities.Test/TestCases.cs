@@ -230,7 +230,7 @@ namespace LinkUtilities.Test
                 new TestCase()
                 {
                     CaseName = "PCGamingWiki",
-                    Link = new LinkPCGamingWiki(),
+                    Link = new LinkPcGamingWiki(),
                     GameName = "Trüberbrook",
                     GamePath = "Tr%C3%BCberbrook",
                     Url = "https://www.pcgamingwiki.com/wiki/Tr%C3%BCberbrook",
@@ -320,7 +320,7 @@ namespace LinkUtilities.Test
                     Url = "https://www.zophar.net/music/sega-mega-drive-genesis/alien-soldier",
                     SearchedUrl = "https://www.zophar.net/music/sega-mega-drive-genesis/alien-soldier"
                 }
-            },
+            }
         };
 
         public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();

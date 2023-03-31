@@ -22,6 +22,7 @@ namespace LinkUtilities.Linker
         /// ID of the game library to identify it in Playnite.
         /// </summary>
         public override Guid Id { get; } = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
+
         public override string LinkName { get; } = "Itch";
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://itch.io/api/1/{0}/search/games?query={1}";
@@ -29,16 +30,18 @@ namespace LinkUtilities.Linker
         public override bool AddLibraryLink(Game game)
         {
             // To get the link to a game on the itch website, you need an API key and request the game data from their api.
-            if (!string.IsNullOrWhiteSpace(Settings.ApiKey) && !LinkHelper.LinkExists(game, LinkName))
+            if (string.IsNullOrWhiteSpace(Settings.ApiKey) || LinkHelper.LinkExists(game, LinkName))
             {
-                ItchMetaData itchMetaData = ParseHelper.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName);
+                return false;
+            }
 
-                LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
+            ItchMetaData itchMetaData = ParseHelper.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName);
 
-                if (LinkUrl.Any())
-                {
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl);
-                }
+            LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
+
+            if (LinkUrl.Any())
+            {
+                return LinkHelper.AddLink(game, LinkName, LinkUrl);
             }
 
             return false;
@@ -50,20 +53,19 @@ namespace LinkUtilities.Linker
             {
                 ItchSearchResult itchSearchResult = ParseHelper.GetJsonFromApi<ItchSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
 
-                if (itchSearchResult?.Games?.Any() ?? false)
-                {
-                    return new List<GenericItemOption>(itchSearchResult.Games.Select(g => new SearchResult()
+                return itchSearchResult?.Games?.Any() ?? false
+                    ? new List<GenericItemOption>(itchSearchResult.Games.Select(g => new SearchResult()
                     {
                         Name = g.Title,
                         Url = g.Url,
                         Description = g.PublishedAt
-                    }));
-                }
+                    }))
+                    : base.GetSearchResults(searchTerm);
             }
 
             return base.GetSearchResults(searchTerm);
         }
 
-        public LibraryLinkItch() : base() => Settings.NeedsApiKey = true;
+        public LibraryLinkItch() => Settings.NeedsApiKey = true;
     }
 }

@@ -2,7 +2,6 @@
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
-using System.Linq;
 using System.Net;
 
 namespace LinkUtilities.LinkActions
@@ -13,11 +12,9 @@ namespace LinkUtilities.LinkActions
     /// </summary>
     internal class HandleUriActions : BaseClasses.LinkAction
     {
-        private static HandleUriActions _instance = null;
+        private static HandleUriActions _instance;
         private static readonly object _mutex = new object();
-        private HandleUriActions() : base()
-        {
-        }
+        private HandleUriActions() { }
 
         public static HandleUriActions Instance()
         {
@@ -50,7 +47,7 @@ namespace LinkUtilities.LinkActions
         public string LinkName { get; set; }
 
         /// <summary>
-        /// Action that will be executed 
+        /// Action that will be executed
         /// </summary>
         public ActionModifierTypes Action { get; set; }
 
@@ -60,7 +57,7 @@ namespace LinkUtilities.LinkActions
         public LinkNamePatterns LinkNamePatterns { get; set; }
 
         /// <summary>
-        /// Processes the arguments received from the UriHandler. 
+        /// Processes the arguments received from the UriHandler.
         /// </summary>
         /// <param name="args">Arguments to process</param>
         /// <returns>True if the arguments could be processed and fit a LinkUtilities action</returns>
@@ -76,32 +73,29 @@ namespace LinkUtilities.LinkActions
                     break;
             }
 
-            if (Action == ActionModifierTypes.Add)
+            if (Action != ActionModifierTypes.Add || args.Arguments.Length != 3)
             {
-                if (args.Arguments.Count() == 3)
-                {
-                    string tempLinkName = args.Arguments[1];
-                    LinkUrl = WebUtility.UrlDecode(args.Arguments[2]);
+                return false;
+            }
 
-                    if (LinkNamePatterns.LinkMatch(ref tempLinkName, LinkUrl))
-                    {
-                        LinkName = tempLinkName;
-                        return true;
-                    }
-                    else
-                    {
-                        StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
-                            ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkText"),
-                            ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkCaption"),
-                            tempLinkName);
+            string tempLinkName = args.Arguments[1];
+            LinkUrl = WebUtility.UrlDecode(args.Arguments[2]);
 
-                        if (selectResult.Result)
-                        {
-                            LinkName = selectResult.SelectedString;
-                            return true;
-                        }
-                    }
-                }
+            if (LinkNamePatterns.LinkMatch(ref tempLinkName, LinkUrl))
+            {
+                LinkName = tempLinkName;
+                return true;
+            }
+
+            StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
+                ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkText"),
+                ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkCaption"),
+                tempLinkName);
+
+            if (selectResult.Result)
+            {
+                LinkName = selectResult.SelectedString;
+                return true;
             }
 
             return false;

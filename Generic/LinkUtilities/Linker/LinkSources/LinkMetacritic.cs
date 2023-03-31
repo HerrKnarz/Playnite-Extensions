@@ -42,7 +42,7 @@ namespace LinkUtilities.Linker
             { "xbox", "xbox" },
             { "xbox360", "xbox-360" },
             { "xbox_one", "xbox-one" },
-            { "xbox_series", "xbox-series-x" },
+            { "xbox_series", "xbox-series-x" }
         };
 
         public override bool AddLink(Game game)
@@ -93,9 +93,5 @@ namespace LinkUtilities.Linker
                 .CollapseWhitespaces()
                 .Replace(" ", "-")
                 .ToLower();
-
-        public LinkMetacritic() : base()
-        {
-        }
     }
 }

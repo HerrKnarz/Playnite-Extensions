@@ -20,9 +20,5 @@ namespace LinkUtilities.BaseClasses
         public abstract bool AddLibraryLink(Game game);
 
         public override bool AddLink(Game game) => game.PluginId == Id ? AddLibraryLink(game) : base.AddLink(game);
-
-        public LibraryLink() : base()
-        {
-        }
     }
 }

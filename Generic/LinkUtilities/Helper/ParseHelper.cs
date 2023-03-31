@@ -41,7 +41,7 @@ namespace LinkUtilities.Helper
         /// <typeparam name="T">Object the XML will be deserialized to.</typeparam>
         /// <param name="this">XML string</param>
         /// <returns>The deserialized XML</returns>
-        internal static T ParseXML<T>(this string @this) where T : class
+        internal static T ParseXml<T>(this string @this) where T : class
         {
             XmlReader reader = XmlReader.Create(@this.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document });
             return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
@@ -92,8 +92,7 @@ namespace LinkUtilities.Helper
                                     Name = WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='mw-search-result-heading']").InnerText),
                                     Url = websiteUrl + url,
                                     Description = redirect + websiteUrl + url
-                                }
-                                );
+                                });
                             }
                         }
                     }
@@ -126,18 +125,14 @@ namespace LinkUtilities.Helper
 
                 string xml = client.DownloadString(string.Format(searchUrl, searchTerm.UrlEncode()));
 
-                SearchSuggestion searchResults = xml.ParseXML<SearchSuggestion>();
+                SearchSuggestion searchResults = xml.ParseXml<SearchSuggestion>();
 
-                foreach (SearchSuggestionItem item in searchResults.Section)
+                result.AddRange(searchResults.Section.Select(item => new SearchResult
                 {
-                    result.Add(new SearchResult
-                    {
-                        Name = item.Text.Value,
-                        Url = item.Url.Value,
-                        Description = item.Url.Value
-                    }
-                    );
-                }
+                    Name = item.Text.Value,
+                    Url = item.Url.Value,
+                    Description = item.Url.Value
+                }));
             }
             catch (Exception ex)
             {
@@ -161,6 +156,8 @@ namespace LinkUtilities.Helper
         /// </summary>
         /// <typeparam name="T">Type the JSON gets deserialized to</typeparam>
         /// <param name="apiUrl">Url to fetch the JSON result from</param>
+        /// <param name="linkName">Link name for the error message</param>
+        /// <param name="encoding">the encoding to use</param>
         /// <returns>Deserialized JSON result</returns>
         internal static T GetJsonFromApi<T>(string apiUrl, string linkName, Encoding encoding = null)
         {
