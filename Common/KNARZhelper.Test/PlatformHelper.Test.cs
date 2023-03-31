@@ -53,7 +53,7 @@ namespace KNARZhelper.Test
                 {
                     Name = "Kaneko Super Nova System",
                     Id = new Guid("1ced4513-9326-4701-a814-7d3c93bcc5a5")
-                },
+                }
             };
 
             PlatformHelper platformHelper = new PlatformHelper(platforms);

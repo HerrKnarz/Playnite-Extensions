@@ -19,7 +19,7 @@ namespace WikipediaMetadata.Test
                 new PluginSettings()
                 {
                     RemoveDescriptionLinks = true,
-                    DescriptionOverviewOnly = true,
+                    DescriptionOverviewOnly = true
                 },
                 "The_Battle_of_Polytopia",
                 "<p><i><b>The Battle of Polytopia</b></i> is a turn-based 4X strategy game developed by Swedish gaming company Midjiwan AB. Players play as one of sixteen tribes to develop an empire and defeat opponents in a low poly square-shaped world. Players can play against bots or human opponents, local or online. The game was initially released in February 2016.</p>\r\n\r\n"
@@ -28,7 +28,7 @@ namespace WikipediaMetadata.Test
                 new PluginSettings()
                 {
                     RemoveDescriptionLinks = true,
-                    SectionsToRemove = new ObservableCollection<string> { "Gameplay" },
+                    SectionsToRemove = new ObservableCollection<string> { "Gameplay" }
                 },
                 "The_Battle_of_Polytopia",
                 "<p><i><b>The Battle of Polytopia</b></i> is a turn-based 4X strategy game developed by Swedish gaming company Midjiwan AB. Players play as one of sixteen tribes to develop an empire and defeat opponents in a low poly square-shaped world. Players can play against bots or human opponents, local or online. The game was initially released in February 2016.</p>\r\n\r\n<h2>History</h2>\r\n\r\n<p><i>The Battle of Polytopia</i> was initially released on iOS in February 2016 as <i><b>Super Tribes</b></i>.\nIn June 2016, the game's name was changed to <i>The Battle of Polytopia</i> due to trademark issues. The game was released on Android on December 1, 2016.\nOnline multiplayer was added on February 15, 2018. A desktop version using Steam was released on August 4, 2020.\nThe game was added as a feature to Tesla cars on December 25, 2020.</p>\r\n\r\n<p>The game was released for Nintendo Switch in October of 2022.</p>\r\n\r\n<p>In 2020, a new version of the game called <i>Moonrise</i> was released. Moonrise uses the Unity game engine, while previous versions used Adobe AIR. Moonrise was released first on Steam with the desktop version's release on August 4, 2020 and then on mobile on November 23 the same year.</p>\r\n\r\n<h2>Reception</h2>\r\n\r\n<p>Reviews for the mobile version of <i>The Battle of Polytopia</i> were positive. Chris Carter of <i>TouchArcade</i> gave the game 4.5 stars out of 5, calling it \"a great city building game that’s free of the shackles of 'freemium.'\" The PC port of the game received \"mixed reviews\" according to review aggregator Metacritic. In a review for Cubed3, Eric Ace gave the game a 6 out of 10 saying, \"For some casual players it is a fun romp, but anyone looking for depth or longevity won't find it here.\"</p>\r\n\r\n<h2>Environmental initiatives</h2>\r\n\r\n<p>All revenues from sales of the game's \"Zebasi\" tribe on mobile are invested in loans for solar power projects in rural Africa with the Swedish company Trine. Over €150,000 has been invested since October 2021.</p>\r\n\r\n<p>Midjiwan AB has donated to EARTHDAY.ORG's The Canopy Project in support of its reforestation efforts.</p>\r\n\r\n"
@@ -56,7 +56,7 @@ namespace WikipediaMetadata.Test
                     new Link()
                     {
                         Name = "Official website",
-                        Url = "https://polytopia.io/",
+                        Url = "https://polytopia.io/"
                     }
                 }
             },
@@ -68,30 +68,30 @@ namespace WikipediaMetadata.Test
                     new Link()
                     {
                         Name = "Official website",
-                        Url = "https://game.snk-corp.co.jp/official/online/mow/index.php",
+                        Url = "https://game.snk-corp.co.jp/official/online/mow/index.php"
                     },
                     new Link()
                     {
                         Name = "GameFAQs",
-                        Url = "https://gamefaqs.gamespot.com/arcade/562919-garou-mark-of-the-wolves",
+                        Url = "https://gamefaqs.gamespot.com/arcade/562919-garou-mark-of-the-wolves"
                     },
                     new Link()
                     {
                         Name = "Giant Bomb",
-                        Url = "https://www.giantbomb.com/garou-mark-of-the-wolves/3030-10674/",
+                        Url = "https://www.giantbomb.com/garou-mark-of-the-wolves/3030-10674/"
                     },
                     new Link()
                     {
                         Name = "Killer List of Videogames",
-                        Url = "https://www.arcade-museum.com/game_detail.php?game_id=7918",
+                        Url = "https://www.arcade-museum.com/game_detail.php?game_id=7918"
                     },
                     new Link()
                     {
                         Name = "MobyGames",
-                        Url = "https://www.mobygames.com/game/garou-mark-of-the-wolves",
-                    },
+                        Url = "https://www.mobygames.com/game/garou-mark-of-the-wolves"
+                    }
                 }
-            },
+            }
         };
 
         [Theory]

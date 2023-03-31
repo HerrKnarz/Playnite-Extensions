@@ -11,12 +11,12 @@ namespace KNARZhelper.Test
 
         [Theory]
         [InlineData("This is a test with д÷ья and other chars.", "This is a test with aOuss and other chars.")]
-        public void TestRemoveDiactritics(string stringToCheck, string stringResult)
+        public void TestRemoveDiacritics(string stringToCheck, string stringResult)
             => Assert.Equal(stringResult, stringToCheck.RemoveDiacritics());
 
         [Theory]
         [InlineData("   This is   a test      .", "This is a test .")]
-        public void TestCollapesWhitespaces(string stringToCheck, string stringResult)
+        public void TestCollapseWhitespaces(string stringToCheck, string stringResult)
             => Assert.Equal(stringResult, stringToCheck.CollapseWhitespaces());
 
         [Theory]
