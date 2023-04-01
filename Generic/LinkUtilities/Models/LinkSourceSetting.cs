@@ -51,14 +51,14 @@ namespace LinkUtilities.Models
         /// add functionality.
         /// </summary>
         [DontSerialize]
-        public Visibility IsAddableVisible => (IsAddable != null) ? Visibility.Visible : Visibility.Hidden;
+        public Visibility IsAddableVisible => IsAddable != null ? Visibility.Visible : Visibility.Hidden;
 
         /// <summary>
         /// Visibility property for the "Search link" check box in the settings window. Will be hidden, if the site doesn't have
         /// a search functionality.
         /// </summary>
         [DontSerialize]
-        public Visibility IsSearchableVisible => (IsSearchable != null) ? Visibility.Visible : Visibility.Hidden;
+        public Visibility IsSearchableVisible => IsSearchable != null ? Visibility.Visible : Visibility.Hidden;
 
         /// <summary>
         /// Visibility property for the "API key" text box in the settings window. Will be hidden, if the site doesn't need an

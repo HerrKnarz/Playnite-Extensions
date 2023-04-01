@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker
@@ -9,8 +8,8 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkGamerGuides : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "Gamer Guides";
-        public override string BaseUrl { get; } = "https://www.gamerguides.com/";
+        public override string LinkName => "Gamer Guides";
+        public override string BaseUrl => "https://www.gamerguides.com/";
 
         // Gamer Guides Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
@@ -19,9 +18,5 @@ namespace LinkUtilities.Linker
                 .CollapseWhitespaces()
                 .Replace(" ", "-")
                 .ToLower();
-
-        public LinkGamerGuides() : base()
-        {
-        }
     }
 }

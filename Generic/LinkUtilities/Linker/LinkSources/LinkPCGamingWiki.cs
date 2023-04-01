@@ -11,9 +11,9 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkPcGamingWiki : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "PCGamingWiki";
-        public override string BaseUrl { get; } = "https://www.pcgamingwiki.com/wiki/";
-        public override string SearchUrl { get; } = "https://www.pcgamingwiki.com/w/index.php?search={0}&fulltext=1";
+        public override string LinkName => "PCGamingWiki";
+        public override string BaseUrl => "https://www.pcgamingwiki.com/wiki/";
+        public override string SearchUrl => "https://www.pcgamingwiki.com/w/index.php?search={0}&fulltext=1";
 
         private readonly string _websiteUrl = "https://www.pcgamingwiki.com";
 

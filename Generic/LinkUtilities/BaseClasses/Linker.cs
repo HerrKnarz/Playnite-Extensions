@@ -9,20 +9,20 @@ using System.Linq;
 namespace LinkUtilities.BaseClasses
 {
     /// <summary>
-    /// Base class for a website link 
+    /// Base class for a website link
     /// </summary>
-    internal abstract class Linker : ILink, ILinkAction
+    internal abstract class Linker : ILinker, ILinkAction
     {
         public abstract string LinkName { get; }
-        public virtual string BaseUrl { get; } = string.Empty;
-        public virtual string SearchUrl { get; } = string.Empty;
+        public virtual string BaseUrl => string.Empty;
+        public virtual string SearchUrl => string.Empty;
         public virtual string LinkUrl { get; set; } = string.Empty;
-        public virtual LinkAddTypes AddType { get; } = LinkAddTypes.UrlMatch;
+        public virtual LinkAddTypes AddType => LinkAddTypes.UrlMatch;
         public virtual bool CanBeSearched => !string.IsNullOrWhiteSpace(SearchUrl);
         public LinkSourceSetting Settings { get; set; }
         public virtual bool AllowRedirects { get; set; } = true;
-        public string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLink";
-        public string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
+        public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
+        public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
         public virtual bool AddSearchedLink(Game game)
         {
@@ -30,7 +30,7 @@ namespace LinkUtilities.BaseClasses
                 ? GetSearchResults(game.Name)?.FirstOrDefault() ?? new SearchResult()
                 : API.Instance.Dialogs.ChooseItemWithSearch(
                     new List<GenericItemOption>(),
-                    (a) => GetSearchResults(a),
+                    GetSearchResults,
                     game.Name,
                     $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
 
@@ -117,10 +117,10 @@ namespace LinkUtilities.BaseClasses
 
                             return baseName == gameName
                                 ? TryToFindPerfectMatchingUrl(gameName) ??
-                                    string.Empty
+                                  string.Empty
                                 : TryToFindPerfectMatchingUrl(gameName) ??
-                                    TryToFindPerfectMatchingUrl(baseName) ??
-                                    string.Empty;
+                                  TryToFindPerfectMatchingUrl(baseName) ??
+                                  string.Empty;
                         }
 
                         break;
@@ -143,16 +143,7 @@ namespace LinkUtilities.BaseClasses
 
             SearchResult foundGame = (SearchResult)searchResults.FirstOrDefault(r => r.Name.RemoveSpecialChars().Replace(" ", "") == searchName);
 
-            if (foundGame != null)
-            {
-                return foundGame.Url;
-            }
-            else if (searchResults.Count() == 1)
-            {
-                return ((SearchResult)searchResults[0]).Url;
-            }
-
-            return null;
+            return foundGame != null ? foundGame.Url : searchResults.Count == 1 ? ((SearchResult)searchResults[0]).Url : null;
         }
 
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
@@ -168,17 +159,14 @@ namespace LinkUtilities.BaseClasses
             }
         }
 
-        public Linker()
+        protected Linker() => Settings = new LinkSourceSetting()
         {
-            Settings = new LinkSourceSetting()
-            {
-                LinkName = LinkName,
-                IsAddable = AddType != LinkAddTypes.None ? true : (bool?)null,
-                IsSearchable = CanBeSearched ? true : (bool?)null,
-                ShowInMenus = true,
-                ApiKey = null,
-                NeedsApiKey = false
-            };
-        }
+            LinkName = LinkName,
+            IsAddable = AddType != LinkAddTypes.None ? true : (bool?)null,
+            IsSearchable = CanBeSearched ? true : (bool?)null,
+            ShowInMenus = true,
+            ApiKey = null,
+            NeedsApiKey = false
+        };
     }
 }

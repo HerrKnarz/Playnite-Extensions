@@ -10,9 +10,10 @@ using System.Windows.Controls;
 
 namespace KNARZtools
 {
+    // ReSharper disable once InconsistentNaming
     public class KNARZtools : GenericPlugin
     {
-        private KNARZtoolsSettingsViewModel Settings { get; set; }
+        private KNARZtoolsSettingsViewModel Settings { get; }
 
         public override Guid Id { get; } = Guid.Parse("f36aaef9-9f87-40ad-a2b5-40e50bf56b95");
 
@@ -28,9 +29,9 @@ namespace KNARZtools
         public void RenameTags()
         {
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                   $"KNARZtools - updating tags",
-                   true
-               )
+                "KNARZtools - updating tags",
+                true
+            )
             {
                 IsIndeterminate = false
             };
@@ -104,8 +105,9 @@ namespace KNARZtools
                 new MainMenuItem
                 {
                     Description = "Rename tags",
-                    MenuSection = $"KNARZtools",
-                    Action = a => RenameTags()                }
+                    MenuSection = "KNARZtools",
+                    Action = a => RenameTags()
+                }
             };
 
             return menuItems;

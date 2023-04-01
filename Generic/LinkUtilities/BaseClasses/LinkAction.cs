@@ -9,7 +9,5 @@ namespace LinkUtilities.BaseClasses
         public abstract string ResultMessage { get; }
 
         public abstract bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true);
-
-        public LinkAction() { }
     }
 }

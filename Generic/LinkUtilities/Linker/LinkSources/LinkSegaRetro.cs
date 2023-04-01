@@ -11,11 +11,11 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkSegaRetro : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "Sega Retro";
-        public override string BaseUrl { get; } = "https://segaretro.org/";
-        public override string SearchUrl { get; } = "https://segaretro.org/index.php?search={0}&fulltext=1";
+        public override string LinkName => "Sega Retro";
+        public override string BaseUrl => "https://segaretro.org/";
+        public override string SearchUrl => "https://segaretro.org/index.php?search={0}&fulltext=1";
 
-        private readonly string _websiteUrl = "https://segaretro.org";
+        private const string _websiteUrl = "https://segaretro.org";
 
         // Sega Retro Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
@@ -25,9 +25,5 @@ namespace LinkUtilities.Linker
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
             => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName, 2));
-
-        public LinkSegaRetro() : base()
-        {
-        }
     }
 }

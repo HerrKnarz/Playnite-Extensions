@@ -91,7 +91,7 @@ namespace LinkUtilities.Models.Gog
         public int? GlobalReleaseDate;
 
         [JsonProperty("isTBA")]
-        public bool IsTBA;
+        public bool IsTba;
 
         [JsonProperty("price")]
         public Price Price;

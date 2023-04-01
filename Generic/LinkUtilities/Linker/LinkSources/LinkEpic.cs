@@ -14,9 +14,9 @@ namespace LinkUtilities.Linker
 {
     internal class LinkEpic : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "Epic";
-        public override string BaseUrl { get; } = "https://store.epicgames.com/en-US/p/";
-        public override string SearchUrl { get; } = "https://www.epicgames.com/graphql?query={Catalog{searchStore(keywords:%22{SearchString}%22,category:%22games/edition%22,effectiveDate:%22[1900-01-01,{DateUntil}]%22,count:100){elements{title%20urlSlug%20seller{name}}}}}";
+        public override string LinkName => "Epic";
+        public override string BaseUrl => "https://store.epicgames.com/en-US/p/";
+        public override string SearchUrl => "https://www.epicgames.com/graphql?query={Catalog{searchStore(keywords:%22{SearchString}%22,category:%22games/edition%22,effectiveDate:%22[1900-01-01,{DateUntil}]%22,count:100){elements{title%20urlSlug%20seller{name}}}}}";
 
         private readonly string _checkUrl = "https://store-content-ipv4.ak.epicgames.com/api/en-US/content/products/";
 

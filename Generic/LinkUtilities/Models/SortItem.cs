@@ -9,6 +9,7 @@
         /// Name of the link
         /// </summary>
         public string LinkName { get; set; }
+
         /// <summary>
         /// Position the name will be sorted to
         /// </summary>

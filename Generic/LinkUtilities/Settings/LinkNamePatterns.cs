@@ -12,7 +12,13 @@ namespace LinkUtilities.Settings
     /// <summary>
     /// Types of patterns that can be matched.
     /// </summary>
-    public enum PatternTypes { LinkNamePattern, RemovePattern, RenamePattern, MissingLinkPatterns }
+    public enum PatternTypes
+    {
+        LinkNamePattern,
+        RemovePattern,
+        RenamePattern,
+        MissingLinkPatterns
+    }
 
     /// <summary>
     /// Handles the Patterns to find link names for URL/link title combinations
@@ -53,7 +59,6 @@ namespace LinkUtilities.Settings
                     .ThenBy(x => x.NamePattern, StringComparer.CurrentCultureIgnoreCase)
                     .ThenBy(x => x.UrlPattern, StringComparer.CurrentCultureIgnoreCase)
                     .ToList());
-
             }
         }
 
@@ -65,7 +70,7 @@ namespace LinkUtilities.Settings
         /// </param>
         private static List<LinkNamePattern> GetDefaultLinkNamePatterns(PatternTypes type)
         {
-            string fileName = string.Empty;
+            string fileName;
 
             switch (type)
             {
@@ -90,10 +95,12 @@ namespace LinkUtilities.Settings
                     break;
                 }
                 default:
-                    break;
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
 
-            return Serialization.FromJsonFile<List<LinkNamePattern>>(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", fileName));
+            return Serialization.FromJsonFile<List<LinkNamePattern>>(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Resources",
+                fileName));
         }
 
         /// <summary>
@@ -104,12 +111,9 @@ namespace LinkUtilities.Settings
         /// </param>
         public void AddDefaultPatterns(PatternTypes type)
         {
-            foreach (LinkNamePattern item in GetDefaultLinkNamePatterns(type))
+            foreach (LinkNamePattern item in GetDefaultLinkNamePatterns(type).Where(item => this.All(x => x.LinkName != item.LinkName)))
             {
-                if (!this.Any(x => x.LinkName == item.LinkName))
-                {
-                    Add(item);
-                }
+                Add(item);
             }
 
             SortPatterns();
@@ -120,15 +124,14 @@ namespace LinkUtilities.Settings
             string tempLinkName = linkName;
 
             LinkNamePattern pattern = this.FirstOrDefault(x => x.LinkMatch(tempLinkName, linkUrl));
+
             if (pattern != null)
             {
                 linkName = pattern.LinkName;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
     }
 }

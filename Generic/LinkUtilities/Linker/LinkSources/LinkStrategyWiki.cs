@@ -11,9 +11,9 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkStrategyWiki : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "StrategyWiki";
-        public override string BaseUrl { get; } = "https://strategywiki.org/wiki/";
-        public override string SearchUrl { get; } = "https://strategywiki.org/w/index.php?search={0}&fulltext=1";
+        public override string LinkName => "StrategyWiki";
+        public override string BaseUrl => "https://strategywiki.org/wiki/";
+        public override string SearchUrl => "https://strategywiki.org/w/index.php?search={0}&fulltext=1";
 
         private readonly string _websiteUrl = "https://strategywiki.org";
 
@@ -25,9 +25,5 @@ namespace LinkUtilities.Linker
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
             => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName));
-
-        public LinkStrategyWiki() : base()
-        {
-        }
     }
 }

@@ -26,7 +26,7 @@ namespace LinkUtilities.Models.Gog
         public string Logo;
 
         [JsonProperty("logo2x")]
-        public string Logo2x;
+        public string Logo2X;
 
         [JsonProperty("icon")]
         public string Icon;
@@ -35,7 +35,7 @@ namespace LinkUtilities.Models.Gog
         public string SidebarIcon;
 
         [JsonProperty("sidebarIcon2x")]
-        public string SidebarIcon2x;
+        public string SidebarIcon2X;
 
         [JsonProperty("menuNotificationAv")]
         public string MenuNotificationAv;

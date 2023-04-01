@@ -52,12 +52,10 @@ namespace LinkUtilities.Models
         public string NameRegEx => ParseHelper.WildCardToRegular(NamePattern);
 
         public bool LinkMatch(string linkName, string linkUrl)
-        {
-            return PartialMatch
+            => PartialMatch
                 ? (!string.IsNullOrWhiteSpace(NamePattern) && Regex.IsMatch(linkName, NameRegEx)) ||
-                    (!string.IsNullOrWhiteSpace(UrlPattern) && Regex.IsMatch(linkUrl, UrlRegEx))
+                  (!string.IsNullOrWhiteSpace(UrlPattern) && Regex.IsMatch(linkUrl, UrlRegEx))
                 : (string.IsNullOrWhiteSpace(NamePattern) || Regex.IsMatch(linkName, NameRegEx)) &&
-                    (string.IsNullOrWhiteSpace(UrlPattern) || Regex.IsMatch(linkUrl, UrlRegEx));
-        }
+                  (string.IsNullOrWhiteSpace(UrlPattern) || Regex.IsMatch(linkUrl, UrlRegEx));
     }
 }

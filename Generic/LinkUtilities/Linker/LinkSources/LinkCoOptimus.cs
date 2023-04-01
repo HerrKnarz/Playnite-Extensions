@@ -14,9 +14,9 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkCoOptimus : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "Co-Optimus";
-        public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl { get; } = "https://api.co-optimus.com/games.php?search=true&name=";
+        public override string LinkName => "Co-Optimus";
+        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
+        public override string SearchUrl => "https://api.co-optimus.com/games.php?search=true&name=";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
@@ -43,10 +43,6 @@ namespace LinkUtilities.Linker
             }
 
             return base.GetSearchResults(searchTerm);
-        }
-
-        public LinkCoOptimus() : base()
-        {
         }
     }
 }

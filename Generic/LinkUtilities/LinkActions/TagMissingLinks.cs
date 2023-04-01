@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Models;
+﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Models;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -11,33 +12,33 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to add tags to games for missing links based on patterns.
     /// </summary>
-    internal class TagMissingLinks : BaseClasses.LinkAction
+    internal class TagMissingLinks : LinkAction
     {
-        private static TagMissingLinks _instance = null;
+        private static TagMissingLinks _instance;
         private static readonly object _mutex = new object();
-        private TagMissingLinks() : base()
-        {
-        }
+        private TagMissingLinks() { }
 
         public static TagMissingLinks Instance()
         {
-            if (_instance == null)
+            if (_instance != null)
             {
-                lock (_mutex)
+                return _instance;
+            }
+
+            lock (_mutex)
+            {
+                if (_instance == null)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new TagMissingLinks();
-                    }
+                    _instance = new TagMissingLinks();
                 }
             }
 
             return _instance;
         }
 
-        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressTagMissingLinks";
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressTagMissingLinks";
 
-        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogTaggedMissingLinksMessage";
+        public override string ResultMessage => "LOCLinkUtilitiesDialogTaggedMissingLinksMessage";
 
         public bool TagMissingLinksAfterChange { get; set; } = false;
 
@@ -86,7 +87,7 @@ namespace LinkUtilities.LinkActions
         /// <param name="game">Game the tag will be added to</param>
         /// <param name="tag">The tag to add.</param>
         /// <returns>True if the tag was added</returns>
-        private bool AddTagToGame(Game game, Tag tag)
+        private static bool AddTagToGame(Game game, Tag tag)
         {
             List<Guid> tagIds = game.TagIds ?? (game.TagIds = new List<Guid>());
 

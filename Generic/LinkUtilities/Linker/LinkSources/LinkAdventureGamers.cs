@@ -14,11 +14,11 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkAdventureGamers : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "Adventure Gamers";
-        public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl { get; } = "https://adventuregamers.com/games/search?keywords=";
+        public override string LinkName => "Adventure Gamers";
+        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
+        public override string SearchUrl => "https://adventuregamers.com/games/search?keywords=";
 
-        public override string BaseUrl { get; } = "https://adventuregamers.com";
+        public override string BaseUrl => "https://adventuregamers.com";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {

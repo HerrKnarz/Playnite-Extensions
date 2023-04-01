@@ -63,9 +63,7 @@ namespace LinkUtilities.Models.Itch
         public Game Game { get; set; }
     }
 
-    public class Traits
-    {
-    }
+    public class Traits { }
 
     public class User
     {

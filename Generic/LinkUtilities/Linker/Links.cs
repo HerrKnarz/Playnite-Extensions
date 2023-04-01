@@ -1,12 +1,11 @@
-﻿using LinkUtilities.BaseClasses;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace LinkUtilities.Linker
 {
     /// <summary>
     /// List of all website Links that can be added.
     /// </summary>
-    internal class Links : List<BaseClasses.Linker>
+    internal class Links : List<ILinker>
     {
         public Links()
         {
@@ -18,22 +17,22 @@ namespace LinkUtilities.Linker
             Add(new LinkGamerGuides());
             Add(new LinkGiantBomb());
             Add(new LibraryLinkGog());
-            Add(new LinkHG101());
+            Add(new LinkHg101());
             Add(new LinkHowLongToBeat());
-            Add(new LinkIGN());
-            Add(new LinkIGNGuides());
+            Add(new LinkIgn());
+            Add(new LinkIgnGuides());
             Add(new LinkIsThereAnyDeal());
             Add(new LibraryLinkItch());
             Add(new LinkLemonAmiga());
             Add(new LinkMapGenie());
             Add(new LinkMetacritic());
             Add(new LinkMobyGames());
-            Add(new LinkNECRetro());
+            Add(new LinkNecRetro());
             Add(new LinkNintendoWiki());
             Add(new LinkPcGamingWiki());
-            Add(new LinkRAWG());
+            Add(new LinkRawg());
             Add(new LinkSegaRetro());
-            Add(new LinkSNKWiki());
+            Add(new LinkSnkWiki());
             Add(new LibraryLinkSteam());
             Add(new LinkStrategyWiki());
             Add(new LinkWikipedia());

@@ -97,7 +97,7 @@ namespace LinkUtilities.Test
                 new TestCase()
                 {
                     CaseName = "HG101",
-                    Link = new LinkHG101(),
+                    Link = new LinkHg101(),
                     GameName = "Eternal Champions",
                     GamePath = "eternal-champions",
                     Url = "http://www.hardcoregaming101.net/eternal-champions",
@@ -121,7 +121,7 @@ namespace LinkUtilities.Test
                 new TestCase()
                 {
                     CaseName = "IGN",
-                    Link = new LinkIGN(),
+                    Link = new LinkIgn(),
                     GameName = "Monkey Island 2: LeChuck's Revenge",
                     GamePath = "monkey-island-2-lechucks-revenge",
                     Url = "https://www.ign.com/games/monkey-island-2-lechucks-revenge",
@@ -133,7 +133,7 @@ namespace LinkUtilities.Test
                 new TestCase()
                 {
                     CaseName = "IGN Guide",
-                    Link = new LinkIGNGuides(),
+                    Link = new LinkIgnGuides(),
                     GameName = "Resident Evil 4 (Remake)",
                     GamePath = "resident-evil-4-remake",
                     Url = "https://www.ign.com/wikis/resident-evil-4-remake",
@@ -206,7 +206,7 @@ namespace LinkUtilities.Test
                 new TestCase()
                 {
                     CaseName = "NECRetro",
-                    Link = new LinkNECRetro(),
+                    Link = new LinkNecRetro(),
                     GameName = "Asuka 120% Maxima Burning Fest. Maxima",
                     GamePath = "Asuka_120%25_Maxima_Burning_Fest._Maxima",
                     Url = "https://necretro.org/Asuka_120%25_Maxima_Burning_Fest._Maxima",
@@ -242,7 +242,7 @@ namespace LinkUtilities.Test
                 new TestCase()
                 {
                     CaseName = "RAWG",
-                    Link = new LinkRAWG(),
+                    Link = new LinkRawg(),
                     GameName = "The Walking Dead: The Telltale Definitive Series",
                     GamePath = "the-walking-dead-the-telltale-definitive-series",
                     Url = "https://rawg.io/games/the-walking-dead-the-telltale-definitive-series",
@@ -266,7 +266,7 @@ namespace LinkUtilities.Test
                 new TestCase()
                 {
                     CaseName = "SNKWiki",
-                    Link = new LinkSNKWiki(),
+                    Link = new LinkSnkWiki(),
                     GameName = "Real Bout Fatal Fury 2: The Newcomers",
                     GamePath = "Real_Bout_Fatal_Fury_2%3A_The_Newcomers",
                     Url = "https://snk.fandom.com/wiki/Real_Bout_Fatal_Fury_2%3A_The_Newcomers",

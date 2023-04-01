@@ -17,6 +17,4 @@ namespace LinkUtilities.Models.Steam
         [JsonProperty("logo")]
         public string Logo;
     }
-
-
 }

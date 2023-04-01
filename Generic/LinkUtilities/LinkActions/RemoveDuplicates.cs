@@ -1,5 +1,5 @@
-﻿using LinkUtilities.Settings;
-
+﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Settings;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.LinkActions
@@ -7,24 +7,24 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to remove duplicate links.
     /// </summary>
-    internal class RemoveDuplicates : BaseClasses.LinkAction
+    internal class RemoveDuplicates : LinkAction
     {
         private static RemoveDuplicates _instance = null;
         private static readonly object _mutex = new object();
-        private RemoveDuplicates() : base()
-        {
-        }
+        private RemoveDuplicates() { }
 
         public static RemoveDuplicates Instance()
         {
-            if (_instance == null)
+            if (_instance != null)
             {
-                lock (_mutex)
+                return _instance;
+            }
+
+            lock (_mutex)
+            {
+                if (_instance == null)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new RemoveDuplicates();
-                    }
+                    _instance = new RemoveDuplicates();
                 }
             }
 

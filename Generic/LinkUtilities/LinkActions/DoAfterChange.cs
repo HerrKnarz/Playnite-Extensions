@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Models;
+﻿using LinkUtilities.BaseClasses;
+using Playnite.SDK.Models;
 using System.Linq;
 
 namespace LinkUtilities.LinkActions
@@ -6,24 +7,24 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Sorts the Links of a game.
     /// </summary>
-    internal class DoAfterChange : BaseClasses.LinkAction
+    internal class DoAfterChange : LinkAction
     {
         private static DoAfterChange _instance = null;
         private static readonly object _mutex = new object();
-        private DoAfterChange() : base()
-        {
-        }
+        private DoAfterChange() { }
 
         public static DoAfterChange Instance()
         {
-            if (_instance == null)
+            if (_instance != null)
             {
-                lock (_mutex)
+                return _instance;
+            }
+
+            lock (_mutex)
+            {
+                if (_instance == null)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new DoAfterChange();
-                    }
+                    _instance = new DoAfterChange();
                 }
             }
 

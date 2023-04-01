@@ -6,7 +6,12 @@ namespace LinkUtilities.Settings
     /// <summary>
     /// Types of values to check for duplicates.
     /// </summary>
-    public enum DuplicateTypes { NameAndUrl, Name, Url }
+    public enum DuplicateTypes
+    {
+        NameAndUrl,
+        Name,
+        Url
+    }
 
     /// <summary>
     /// Dictionary of types with captions to show in a combo box.

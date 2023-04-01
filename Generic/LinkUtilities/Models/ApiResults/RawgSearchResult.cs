@@ -17,7 +17,7 @@ namespace LinkUtilities.Models.RAWG
         public int Beaten;
 
         [JsonProperty("toplay")]
-        public int Toplay;
+        public int ToPlay;
 
         [JsonProperty("dropped")]
         public int Dropped;

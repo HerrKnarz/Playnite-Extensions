@@ -15,9 +15,9 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkMobyGames : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "MobyGames";
-        public override string BaseUrl { get; } = "https://www.mobygames.com/game/";
-        public override string SearchUrl { get; } = "https://www.mobygames.com/search/?type=game&q=";
+        public override string LinkName => "MobyGames";
+        public override string BaseUrl => "https://www.mobygames.com/game/";
+        public override string SearchUrl => "https://www.mobygames.com/search/?type=game&q=";
 
         // MobyGames Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
@@ -51,10 +51,6 @@ namespace LinkUtilities.Linker
             }
 
             return base.GetSearchResults(searchTerm);
-        }
-
-        public LinkMobyGames() : base()
-        {
         }
     }
 }

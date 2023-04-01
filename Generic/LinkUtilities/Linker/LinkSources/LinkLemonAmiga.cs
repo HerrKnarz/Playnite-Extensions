@@ -14,11 +14,11 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkLemonAmiga : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "Lemon Amiga";
-        public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl { get; } = "https://www.lemonamiga.com/games/list.php?list_title=";
+        public override string LinkName => "Lemon Amiga";
+        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
+        public override string SearchUrl => "https://www.lemonamiga.com/games/list.php?list_title=";
 
-        public override string BaseUrl { get; } = "https://www.lemonamiga.com/games/";
+        public override string BaseUrl => "https://www.lemonamiga.com/games/";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
@@ -37,7 +37,7 @@ namespace LinkUtilities.Linker
                     {
                         HtmlNode suffixNode = node.SelectSingleNode("./div/div[@class='game-grid-title']/a/img");
 
-                        string suffix = (suffixNode != null)
+                        string suffix = suffixNode != null
                             ? $" ({suffixNode.GetAttributeValue("alt", "")})"
                             : string.Empty;
 
@@ -58,10 +58,6 @@ namespace LinkUtilities.Linker
             }
 
             return base.GetSearchResults(searchTerm);
-        }
-
-        public LinkLemonAmiga() : base()
-        {
         }
     }
 }

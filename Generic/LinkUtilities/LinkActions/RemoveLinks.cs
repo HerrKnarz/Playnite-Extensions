@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Settings;
+﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
@@ -9,24 +10,24 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to remove unwanted links based on patterns.
     /// </summary>
-    internal class RemoveLinks : BaseClasses.LinkAction
+    internal class RemoveLinks : LinkAction
     {
-        private static RemoveLinks _instance = null;
+        private static RemoveLinks _instance;
         private static readonly object _mutex = new object();
-        private RemoveLinks() : base()
-        {
-        }
+        private RemoveLinks() { }
 
         public static RemoveLinks Instance()
         {
-            if (_instance == null)
+            if (_instance != null)
             {
-                lock (_mutex)
+                return _instance;
+            }
+
+            lock (_mutex)
+            {
+                if (_instance == null)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new RemoveLinks();
-                    }
+                    _instance = new RemoveLinks();
                 }
             }
 
@@ -48,34 +49,36 @@ namespace LinkUtilities.LinkActions
         {
             bool mustUpdate = false;
 
-            if (game.Links?.Any() ?? false)
+            if (!(game.Links?.Any() ?? false))
             {
-                List<Link> links = game.Links.ToList();
+                return false;
+            }
 
-                foreach (Link link in links)
+            List<Link> links = game.Links.ToList();
+
+            foreach (Link link in links)
+            {
+                string linkName = link.Name;
+
+                if (RemovePatterns.LinkMatch(ref linkName, link.Url))
                 {
-                    string linkName = link.Name;
-
-                    if (RemovePatterns.LinkMatch(ref linkName, link.Url))
+                    if (GlobalSettings.Instance().OnlyATest)
                     {
-                        if (GlobalSettings.Instance().OnlyATest)
+                        mustUpdate |= game.Links.Remove(link);
+                    }
+                    else
+                    {
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
                         {
                             mustUpdate |= game.Links.Remove(link);
-                        }
-                        else
-                        {
-                            API.Instance.MainView.UIDispatcher.Invoke(delegate
-                            {
-                                mustUpdate |= game.Links.Remove(link);
-                            });
-                        }
+                        });
                     }
                 }
+            }
 
-                if (mustUpdate && !GlobalSettings.Instance().OnlyATest)
-                {
-                    API.Instance.Database.Games.Update(game);
-                }
+            if (mustUpdate && !GlobalSettings.Instance().OnlyATest)
+            {
+                API.Instance.Database.Games.Update(game);
             }
 
             return mustUpdate;

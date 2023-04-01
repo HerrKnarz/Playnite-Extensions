@@ -18,7 +18,7 @@ namespace LinkUtilities
     /// <summary>
     /// Interface for all the websites a link can be added to
     /// </summary>
-    internal interface ILink
+    internal interface ILinker
     {
         /// <summary>
         /// Name the link will have in the games link collection

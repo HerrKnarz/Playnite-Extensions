@@ -19,9 +19,9 @@ namespace LinkUtilities.Linker
         private readonly string _steamUrl = "https://isthereanydeal.com/steam/app/";
         private readonly string _standardUrl = "https://isthereanydeal.com/game/";
 
-        public override string LinkName { get; } = "IsThereAnyDeal";
+        public override string LinkName => "IsThereAnyDeal";
         public override string BaseUrl => _baseUrl;
-        public override string SearchUrl { get; } = "https://api.isthereanydeal.com/v02/search/search/?key={0}&q={1}&limit=20&strict=0";
+        public override string SearchUrl => "https://api.isthereanydeal.com/v02/search/search/?key={0}&q={1}&limit=20&strict=0";
 
         public override string GetGamePath(Game game, string gameName = null)
         {
@@ -31,39 +31,37 @@ namespace LinkUtilities.Linker
                 _baseUrl = _steamUrl;
                 return game.GameId;
             }
-            // For all other _libraries links need the result name in lowercase without special characters and white spaces with numbers translated to roman numbers.
-            else
-            {
-                _baseUrl = _standardUrl;
-                return (gameName ?? game.Name).RemoveDiacritics()
+
+            // For all other libraries links need the result name in lowercase without special characters and white spaces with numbers translated to roman numbers.
+            _baseUrl = _standardUrl;
+
+            return (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()
                 .Replace("-", "")
                 .Replace(" ", "")
                 .DigitsToRomanNumbers()
                 .ToLower();
-            }
         }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            if (!string.IsNullOrWhiteSpace(Settings.ApiKey))
+            if (string.IsNullOrWhiteSpace(Settings.ApiKey))
             {
-                IsThereAnyDealSearchResult searchResult = ParseHelper.GetJsonFromApi<IsThereAnyDealSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
-
-                if (searchResult?.Data?.Results?.Any() ?? false)
-                {
-                    return new List<GenericItemOption>(searchResult.Data.Results.Select(r => new SearchResult()
-                    {
-                        Name = r.Title,
-                        Url = $"{_standardUrl}{r.Plain}",
-                        Description = $"{r.Id}"
-                    }));
-                }
+                return base.GetSearchResults(searchTerm);
             }
 
-            return base.GetSearchResults(searchTerm);
+            IsThereAnyDealSearchResult searchResult = ParseHelper.GetJsonFromApi<IsThereAnyDealSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+
+            return searchResult?.Data?.Results?.Any() ?? false
+                ? new List<GenericItemOption>(searchResult.Data.Results.Select(r => new SearchResult()
+                {
+                    Name = r.Title,
+                    Url = $"{_standardUrl}{r.Plain}",
+                    Description = $"{r.Id}"
+                }))
+                : base.GetSearchResults(searchTerm);
         }
 
-        public LinkIsThereAnyDeal() : base() => Settings.NeedsApiKey = true;
+        public LinkIsThereAnyDeal() => Settings.NeedsApiKey = true;
     }
 }

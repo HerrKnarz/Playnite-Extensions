@@ -1,5 +1,4 @@
-﻿using LinkUtilities.BaseClasses;
-using LinkUtilities.Linker;
+﻿using LinkUtilities.Linker;
 using LinkUtilities.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,12 +10,10 @@ namespace LinkUtilities.Settings
     {
         public LinkSourceSettings(List<LinkSourceSetting> items) => this.AddMissing(items);
 
-        public LinkSourceSettings()
-        {
-        }
+        public LinkSourceSettings() { }
 
         /// <summary>
-        /// Refreshes a LinkSourceCollecion with the actual link sources present in the plugin. Is needed after updates when
+        /// Refreshes a LinkSourceCollection with the actual link sources present in the plugin. Is needed after updates when
         /// link sources get added or had to be removed.
         /// </summary>
         /// <param name="links">Link sources to be added</param>

@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using LinkUtilities.BaseClasses;
 using LinkUtilities.Linker;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -9,25 +10,27 @@ using System.Linq;
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    /// Class to add a link to all available websites in the Links list, if a definitive link was found.
+    /// Class to add a linker to all available websites in the Links list, if a definitive linker was found.
     /// </summary>
-    internal class AddWebsiteLinks : BaseClasses.LinkAction
+    internal class AddWebsiteLinks : LinkAction
     {
         private static AddWebsiteLinks _instance = null;
         private static readonly object _mutex = new object();
 
-        private AddWebsiteLinks() : base() => Links = new Links();
+        private AddWebsiteLinks() => Links = new Links();
 
         public static AddWebsiteLinks Instance()
         {
-            if (_instance == null)
+            if (_instance != null)
             {
-                lock (_mutex)
+                return _instance;
+            }
+
+            lock (_mutex)
+            {
+                if (_instance == null)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new AddWebsiteLinks();
-                    }
+                    _instance = new AddWebsiteLinks();
                 }
             }
 
@@ -36,17 +39,17 @@ namespace LinkUtilities.LinkActions
 
         public Links Links { get; }
 
-        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
-        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressWebsiteLink";
+        public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
-        private bool AddLink(Game game, BaseClasses.Linker link, ActionModifierTypes actionModifier)
+        private static bool AddLink(Game game, ILinker linker, ActionModifierTypes actionModifier)
         {
             switch (actionModifier)
             {
                 case ActionModifierTypes.Add:
-                    return link.AddLink(game);
+                    return linker.AddLink(game);
                 case ActionModifierTypes.Search:
-                    return link.AddSearchedLink(game);
+                    return linker.AddSearchedLink(game);
                 default:
                     return false;
             }
@@ -56,7 +59,7 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
-            List<BaseClasses.Linker> links = null;
+            List<ILinker> links = null;
 
             switch (actionModifier)
             {
@@ -70,10 +73,7 @@ namespace LinkUtilities.LinkActions
 
             if (isBulkAction)
             {
-                foreach (BaseClasses.Linker link in links)
-                {
-                    result |= AddLink(game, link, actionModifier);
-                }
+                result = links?.Aggregate(false, (current, link) => current | AddLink(game, link, actionModifier)) ?? false;
             }
             else
             {
@@ -86,9 +86,14 @@ namespace LinkUtilities.LinkActions
                 {
                     try
                     {
+                        if (links == null)
+                        {
+                            return;
+                        }
+
                         activateGlobalProgress.ProgressMaxValue = links.Count;
 
-                        foreach (BaseClasses.Linker link in links)
+                        foreach (ILinker link in links)
                         {
                             activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}{Environment.NewLine}{link.LinkName}";
 
@@ -96,10 +101,8 @@ namespace LinkUtilities.LinkActions
                             {
                                 break;
                             }
-                            else
-                            {
-                                result |= AddLink(game, link, actionModifier);
-                            }
+
+                            result |= AddLink(game, link, actionModifier);
 
                             activateGlobalProgress.CurrentProgressValue++;
                         }

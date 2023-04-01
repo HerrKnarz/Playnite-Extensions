@@ -1,5 +1,5 @@
-﻿using LinkUtilities.Linker;
-
+﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Linker;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.LinkActions
@@ -7,23 +7,25 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Adds a link to the game store page of the library (e.g. steam or gog) the game is part of.
     /// </summary>
-    internal class AddLibraryLinks : BaseClasses.LinkAction
+    internal class AddLibraryLinks : LinkAction
     {
         private static AddLibraryLinks _instance = null;
         private static readonly object _mutex = new object();
 
-        private AddLibraryLinks() : base() => _libraries = new Libraries();
+        private AddLibraryLinks() => _libraries = new Libraries();
 
         public static AddLibraryLinks Instance()
         {
-            if (_instance == null)
+            if (_instance != null)
             {
-                lock (_mutex)
+                return _instance;
+            }
+
+            lock (_mutex)
+            {
+                if (_instance == null)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new AddLibraryLinks();
-                    }
+                    _instance = new AddLibraryLinks();
                 }
             }
 

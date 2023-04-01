@@ -16,10 +16,11 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkHowLongToBeat : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "HowLongToBeat";
-        public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl { get; } = "https://howlongtobeat.com/api/search";
-        public override string BaseUrl { get; } = "https://howlongtobeat.com/game/";
+        public override string LinkName => "HowLongToBeat";
+        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
+        public override string SearchUrl => "https://howlongtobeat.com/api/search";
+        public override string BaseUrl => "https://howlongtobeat.com/game/";
+
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
@@ -34,7 +35,9 @@ namespace LinkUtilities.Linker
 
                 string[] searchTerms = searchTerm.RemoveDiacritics().RemoveSpecialChars().Split(' ');
 
-                string request = "{\"searchType\":\"games\",\"searchTerms\":[" + string.Join(",", searchTerms.Select(x => "\"" + x + "\"")) + "],\"searchPage\":1,\"size\":20,\"searchOptions\":{\"games\":{\"userId\":0,\"platform\":\"\",\"sortCategory\":\"popular\",\"rangeCategory\":\"main\",\"rangeTime\":{\"min\":0,\"max\":0},\"gameplay\":{\"perspective\":\"\",\"flow\":\"\",\"genre\":\"\"},\"modifier\":\"\"},\"users\":{\"sortCategory\":\"postcount\"},\"filter\":\"\",\"sort\":0,\"randomizer\":0}}";
+                string request = @"{""searchType"":""games"",""searchTerms"":[" +
+                                 string.Join(",", searchTerms.Select(x => "\"" + x + "\"")) +
+                                 @"],""searchPage"":1,""size"":20,""searchOptions"":{""games"":{""userId"":0,""platform"":"""",""sortCategory"":""popular"",""rangeCategory"":""main"",""rangeTime"":{""min"":0,""max"":0},""gameplay"":{""perspective"":"""",""flow"":"""",""genre"":""""},""modifier"":""""},""users"":{""sortCategory"":""postcount""},""filter"":"""",""sort"":0,""randomizer"":0}}";
 
                 requestMessage.Content = new StringContent(request, Encoding.UTF8, "application/json");
 
@@ -60,10 +63,6 @@ namespace LinkUtilities.Linker
             }
 
             return base.GetSearchResults(searchTerm);
-        }
-
-        public LinkHowLongToBeat() : base()
-        {
         }
     }
 }

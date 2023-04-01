@@ -28,9 +28,7 @@ namespace LinkUtilities.Models.Epic
         public Seller Seller;
     }
 
-    public class Extensions
-    {
-    }
+    public class Extensions { }
 
     public class EpicSearchResult
     {

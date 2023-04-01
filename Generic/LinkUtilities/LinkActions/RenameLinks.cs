@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Settings;
+﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Linq;
@@ -8,33 +9,33 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Class to rename links based on patterns.
     /// </summary>
-    internal class RenameLinks : BaseClasses.LinkAction
+    internal class RenameLinks : LinkAction
     {
-        private static RenameLinks _instance = null;
+        private static RenameLinks _instance;
         private static readonly object _mutex = new object();
-        private RenameLinks() : base()
-        {
-        }
+        private RenameLinks() { }
 
         public static RenameLinks Instance()
         {
-            if (_instance == null)
+            if (_instance != null)
             {
-                lock (_mutex)
+                return _instance;
+            }
+
+            lock (_mutex)
+            {
+                if (_instance == null)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new RenameLinks();
-                    }
+                    _instance = new RenameLinks();
                 }
             }
 
             return _instance;
         }
 
-        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressRenameLinks";
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressRenameLinks";
 
-        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogRenamedMessage";
+        public override string ResultMessage => "LOCLinkUtilitiesDialogRenamedMessage";
 
         public bool RenameLinksAfterChange { get; set; } = false;
 
@@ -43,7 +44,7 @@ namespace LinkUtilities.LinkActions
         /// </summary>
         public LinkNamePatterns RenamePatterns { get; set; }
 
-        private bool Rename(Game game, bool updateDB = true)
+        private bool Rename(Game game, bool updateDb = true)
         {
             bool mustUpdate = false;
 
@@ -80,7 +81,7 @@ namespace LinkUtilities.LinkActions
                     // renamed some links already.
                     Rename(game, false);
 
-                    if (updateDB && !GlobalSettings.Instance().OnlyATest)
+                    if (updateDb && !GlobalSettings.Instance().OnlyATest)
                     {
                         API.Instance.Database.Games.Update(game);
                     }

@@ -18,9 +18,9 @@ namespace LinkUtilities.Linker
     {
         private readonly string _websiteUrl = "http://adb.arcadeitalia.net/";
 
-        public override string LinkName { get; } = "Arcade Database";
-        public override string BaseUrl { get; } = "http://adb.arcadeitalia.net/dettaglio_mame.php?lang=en&game_name=";
-        public override string SearchUrl { get; } = "http://adb.arcadeitalia.net/lista_mame.php?lang=en&ricerca=";
+        public override string LinkName => "Arcade Database";
+        public override string BaseUrl => "http://adb.arcadeitalia.net/dettaglio_mame.php?lang=en&game_name=";
+        public override string SearchUrl => "http://adb.arcadeitalia.net/lista_mame.php?lang=en&ricerca=";
 
         public override bool CheckLink(string link)
         {
@@ -58,7 +58,8 @@ namespace LinkUtilities.Linker
                     {
                         Name = WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='titolo_galleria']").InnerText),
                         Url = $"{_websiteUrl}{n.SelectSingleNode("./a").GetAttributeValue("href", "")}",
-                        Description = $"{WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='romset_galleria']").InnerText)} - {WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='produttore_galleria']").InnerText)}"
+                        Description =
+                            $"{WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='romset_galleria']").InnerText)} - {WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='produttore_galleria']").InnerText)}"
                     }));
                 }
             }
@@ -68,10 +69,6 @@ namespace LinkUtilities.Linker
             }
 
             return base.GetSearchResults(searchTerm);
-        }
-
-        public LinkArcadeDatabase() : base()
-        {
         }
     }
 }

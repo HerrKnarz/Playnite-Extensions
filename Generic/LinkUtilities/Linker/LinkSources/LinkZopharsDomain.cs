@@ -14,10 +14,10 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkZopharsDomain : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "Zophar (Music)";
-        public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl { get; } = "https://www.zophar.net/music/search?search=";
-        public override string BaseUrl { get; } = "https://www.zophar.net";
+        public override string LinkName => "Zophar (Music)";
+        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
+        public override string SearchUrl => "https://www.zophar.net/music/search?search=";
+        public override string BaseUrl => "https://www.zophar.net";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {

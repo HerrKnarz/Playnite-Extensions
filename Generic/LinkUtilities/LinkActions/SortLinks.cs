@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Models;
+﻿using LinkUtilities.BaseClasses;
+using Playnite.SDK.Models;
 using System.Collections.Generic;
 
 namespace LinkUtilities.LinkActions
@@ -6,32 +7,32 @@ namespace LinkUtilities.LinkActions
     /// <summary>
     /// Sorts the Links of a game.
     /// </summary>
-    internal class SortLinks : BaseClasses.LinkAction
+    internal class SortLinks : LinkAction
     {
-        private static SortLinks _instance = null;
+        private static SortLinks _instance;
         private static readonly object _mutex = new object();
-        private SortLinks() : base()
-        {
-        }
+        private SortLinks() { }
 
         public static SortLinks Instance()
         {
-            if (_instance == null)
+            if (_instance != null)
             {
-                lock (_mutex)
+                return _instance;
+            }
+
+            lock (_mutex)
+            {
+                if (_instance == null)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new SortLinks();
-                    }
+                    _instance = new SortLinks();
                 }
             }
 
             return _instance;
         }
 
-        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressSortLinks";
-        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogSortedMessage";
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressSortLinks";
+        public override string ResultMessage => "LOCLinkUtilitiesDialogSortedMessage";
 
         public bool SortAfterChange { get; set; } = false;
 
@@ -40,10 +41,8 @@ namespace LinkUtilities.LinkActions
         public Dictionary<string, int> SortOrder { get; set; }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            return actionModifier == ActionModifierTypes.SortOrder || (actionModifier == ActionModifierTypes.None && UseCustomSortOrder)
+            => actionModifier == ActionModifierTypes.SortOrder || (actionModifier == ActionModifierTypes.None && UseCustomSortOrder)
                 ? LinkHelper.SortLinks(game, SortOrder)
                 : LinkHelper.SortLinks(game);
-        }
     }
 }

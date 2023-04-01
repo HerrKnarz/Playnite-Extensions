@@ -11,9 +11,9 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkMetacritic : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "Metacritic";
-        public override string BaseUrl { get; } = "https://www.metacritic.com/game/";
-        public override string SearchUrl { get; } = string.Empty;
+        public override string LinkName => "Metacritic";
+        public override string BaseUrl => "https://www.metacritic.com/game/";
+        public override string SearchUrl => string.Empty;
 
         /// <summary>
         /// Dictionary with playnite platform ids and their equivalents in metacritic links
@@ -61,24 +61,21 @@ namespace LinkUtilities.Linker
                     linkName = $"{LinkName} ({platform.Name})";
                 }
 
-                if (!LinkHelper.LinkExists(game, linkName))
+                if (!LinkHelper.LinkExists(game, linkName) && _platforms.ContainsKey(platform.SpecificationId))
                 {
-                    if (_platforms.ContainsKey(platform.SpecificationId))
+                    LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game)}";
+
+                    if (CheckLink(LinkUrl))
                     {
-                        LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game)}";
+                        result |= LinkHelper.AddLink(game, linkName, LinkUrl);
+                    }
+                    else if (game.Name != game.Name.RemoveEditionSuffix())
+                    {
+                        LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game, game.Name.RemoveEditionSuffix())}";
 
                         if (CheckLink(LinkUrl))
                         {
                             result |= LinkHelper.AddLink(game, linkName, LinkUrl);
-                        }
-                        else if (game.Name != game.Name.RemoveEditionSuffix())
-                        {
-                            LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game, game.Name.RemoveEditionSuffix())}";
-
-                            if (CheckLink(LinkUrl))
-                            {
-                                result |= LinkHelper.AddLink(game, linkName, LinkUrl);
-                            }
                         }
                     }
                 }

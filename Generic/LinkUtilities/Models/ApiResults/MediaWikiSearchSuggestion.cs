@@ -5,9 +5,8 @@
     [System.ComponentModel.DesignerCategory("code")]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://opensearch.org/searchsuggest2")]
     [System.Xml.Serialization.XmlRoot(Namespace = "http://opensearch.org/searchsuggest2", IsNullable = false)]
-    public partial class SearchSuggestion
+    public class SearchSuggestion
     {
-
         private SearchSuggestionWarnings _warningsField;
 
         private SearchSuggestionQuery _queryField;
@@ -51,9 +50,8 @@
     [System.Serializable()]
     [System.ComponentModel.DesignerCategory("code")]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://opensearch.org/searchsuggest2")]
-    public partial class SearchSuggestionWarnings
+    public class SearchSuggestionWarnings
     {
-
         private SearchSuggestionWarningsMain _mainField;
 
         /// <remarks/>
@@ -68,9 +66,8 @@
     [System.Serializable()]
     [System.ComponentModel.DesignerCategory("code")]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://opensearch.org/searchsuggest2")]
-    public partial class SearchSuggestionWarningsMain
+    public class SearchSuggestionWarningsMain
     {
-
         private string _spaceField;
 
         private string _valueField;
@@ -96,9 +93,8 @@
     [System.Serializable()]
     [System.ComponentModel.DesignerCategory("code")]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://opensearch.org/searchsuggest2")]
-    public partial class SearchSuggestionQuery
+    public class SearchSuggestionQuery
     {
-
         private string _spaceField;
 
         private string _valueField;
@@ -124,9 +120,8 @@
     [System.Serializable()]
     [System.ComponentModel.DesignerCategory("code")]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://opensearch.org/searchsuggest2")]
-    public partial class SearchSuggestionItem
+    public class SearchSuggestionItem
     {
-
         private SearchSuggestionItemText _textField;
 
         private SearchSuggestionItemUrl _urlField;
@@ -150,9 +145,8 @@
     [System.Serializable()]
     [System.ComponentModel.DesignerCategory("code")]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://opensearch.org/searchsuggest2")]
-    public partial class SearchSuggestionItemText
+    public class SearchSuggestionItemText
     {
-
         private string _spaceField;
 
         private string _valueField;
@@ -178,9 +172,8 @@
     [System.Serializable()]
     [System.ComponentModel.DesignerCategory("code")]
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://opensearch.org/searchsuggest2")]
-    public partial class SearchSuggestionItemUrl
+    public class SearchSuggestionItemUrl
     {
-
         private string _spaceField;
 
         private string _valueField;

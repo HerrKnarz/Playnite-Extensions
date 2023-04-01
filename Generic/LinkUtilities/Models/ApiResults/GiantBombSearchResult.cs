@@ -8,6 +8,7 @@ namespace LinkUtilities.Models.GiantBomb
     {
         [JsonProperty("api_detail_url")]
         public string ApiDetailUrl;
+
         [JsonProperty("id")]
         public int Id;
 

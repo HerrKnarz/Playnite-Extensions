@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Settings;
+﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
@@ -10,7 +11,7 @@ namespace LinkUtilities.LinkActions
     /// Class to handle the actions received from the UriHandler. At the moment only adding links to the active URL in the
     /// web browser.
     /// </summary>
-    internal class HandleUriActions : BaseClasses.LinkAction
+    internal class HandleUriActions : LinkAction
     {
         private static HandleUriActions _instance;
         private static readonly object _mutex = new object();
@@ -18,14 +19,16 @@ namespace LinkUtilities.LinkActions
 
         public static HandleUriActions Instance()
         {
-            if (_instance == null)
+            if (_instance != null)
             {
-                lock (_mutex)
+                return _instance;
+            }
+
+            lock (_mutex)
+            {
+                if (_instance == null)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new HandleUriActions();
-                    }
+                    _instance = new HandleUriActions();
                 }
             }
 

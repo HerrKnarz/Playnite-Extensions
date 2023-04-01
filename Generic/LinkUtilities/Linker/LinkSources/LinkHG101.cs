@@ -13,11 +13,11 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// Adds a link to Hardcore Gaming 101.
     /// </summary>
-    internal class LinkHG101 : BaseClasses.Linker
+    internal class LinkHg101 : BaseClasses.Linker
     {
-        public override string LinkName { get; } = "Hardcore Gaming 101";
-        public override string BaseUrl { get; } = "http://www.hardcoregaming101.net/";
-        public override string SearchUrl { get; } = "http://www.hardcoregaming101.net/?s=";
+        public override string LinkName => "Hardcore Gaming 101";
+        public override string BaseUrl => "http://www.hardcoregaming101.net/";
+        public override string SearchUrl => "http://www.hardcoregaming101.net/?s=";
 
         // HG101 Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
@@ -63,10 +63,6 @@ namespace LinkUtilities.Linker
             }
 
             return base.GetSearchResults(searchTerm);
-        }
-
-        public LinkHG101() : base()
-        {
         }
     }
 }
