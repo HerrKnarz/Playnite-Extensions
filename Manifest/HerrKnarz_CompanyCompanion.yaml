@@ -1,5 +1,12 @@
 AddonId: CompanyCompanion_b76edaec-1aa8-48ef-83a4-2a49ab031029
 Packages:
+  - Version: 0.6
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-04-04
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-04-04/CompanyCompanion_b76edaec-1aa8-48ef-83a4-2a49ab031029_0_6.pext
+    Changelog:
+      - fixed bug, that occured, when company names are NULL
+      - massive code clean up
   - Version: 0.5
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-03-23

@@ -1,5 +1,16 @@
 AddonId: WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c
 Packages:
+  - Version: 1.6
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-04-04
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-04-04/WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c_1_6.pext
+    Changelog:
+      - fixed bug not fetching games in automatic mode
+      - fixed bug adding a link, when cancelling (or nothing was found in automatic mode)
+      - fixed sorting bug in automatic mode
+      - complete translation to Spanish (thx darklinkpower)
+      - complete translation to Norwegian (thx MeatBoy)
+      - massive code clean up
   - Version: 1.5
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-03-19
