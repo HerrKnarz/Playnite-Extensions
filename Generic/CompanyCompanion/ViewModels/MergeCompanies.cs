@@ -61,7 +61,7 @@ namespace CompanyCompanion
         /// <param name="name">Name to clean.</param>
         /// <param name="wordList">List of words to remove.</param>
         /// <returns>Name with the words removed</returns>
-        private string RemoveWords(string name, List<string> wordList)
+        private static string RemoveWords(string name, IReadOnlyCollection<string> wordList)
         {
             return name != null
                 ? string.Join(" ", name.Split().Where(w => !wordList.Contains(w.RemoveSpecialChars().Replace("-", ""), StringComparer.InvariantCultureIgnoreCase)))
@@ -75,6 +75,11 @@ namespace CompanyCompanion
         /// <returns>cleaned up name</returns>
         private string CleanUpCompanyName(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return name;
+            }
+
             string newName = name;
 
             if (newName.EndsWith(")"))
@@ -114,6 +119,7 @@ namespace CompanyCompanion
                 try
                 {
                     List<MergeItem> companyList = API.Instance.Database.Companies
+                        .Where(c => !string.IsNullOrEmpty(c.Name))
                         .Select(c => new MergeItem
                         {
                             Id = c.Id,
