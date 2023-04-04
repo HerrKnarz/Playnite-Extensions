@@ -134,7 +134,7 @@ namespace WikipediaMetadata
         {
             List<Link> links = FindGame().Links;
 
-            links.AddMissing(ParseHtml(FindGame().Key).Links);
+            links?.AddMissing(ParseHtml(FindGame().Key).Links);
 
             return links?.Any() ?? false ? links : base.GetLinks(args);
         }

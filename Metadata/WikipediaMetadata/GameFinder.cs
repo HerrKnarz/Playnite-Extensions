@@ -63,8 +63,8 @@ namespace WikipediaMetadata
 
                 foundPage =
                     foundPages.FirstOrDefault(p => p.KeyMatch == nameVideoGame) ??
-                    foundPages.FirstOrDefault(p => p.KeyMatch == searchNameVideoGame) ??
                     foundPages.FirstOrDefault(p => p.KeyMatch == compareName) ??
+                    foundPages.FirstOrDefault(p => p.KeyMatch == searchNameVideoGame) ??
                     foundPages.FirstOrDefault(p => p.KeyMatch == searchName);
             }
 

@@ -295,10 +295,12 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="gameData">game data with the key to the page</param>
         /// <returns>List of found links</returns>
-        internal List<Link> GetLinks(WikipediaPage gameData) => new List<Link>
-        {
-            new Link("Wikipedia", "https://en.wikipedia.org/wiki/" + gameData.Key)
-        };
+        internal List<Link> GetLinks(WikipediaPage gameData) => gameData?.Key?.Any() ?? false
+            ? new List<Link>
+            {
+                new Link("Wikipedia", "https://en.wikipedia.org/wiki/" + gameData.Key)
+            }
+            : null;
 
         /// <summary>
         /// Gets the average metacritic score from all platforms mentioned in the video game reviews template.
