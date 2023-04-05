@@ -47,8 +47,12 @@ namespace LinkUtilities.Linker
 
         public override bool AddLink(Game game)
         {
-            bool result = false;
+            if (!game.Platforms?.Any() ?? true)
+            {
+                return false;
+            }
 
+            bool result = false;
             bool addPlatformName = game.Platforms.Count > 1;
 
             string linkName = LinkName;

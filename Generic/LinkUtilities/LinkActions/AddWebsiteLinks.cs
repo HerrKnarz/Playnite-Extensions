@@ -14,7 +14,7 @@ namespace LinkUtilities.LinkActions
     /// </summary>
     internal class AddWebsiteLinks : LinkAction
     {
-        private static AddWebsiteLinks _instance = null;
+        private static AddWebsiteLinks _instance;
         private static readonly object _mutex = new object();
 
         private AddWebsiteLinks() => Links = new Links();

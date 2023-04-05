@@ -197,7 +197,7 @@ namespace LinkUtilities
         /// <param name="linkName">Name of the link</param>
         /// <returns>True, if a link with that name exists</returns>
         internal static bool LinkExists(Game game, string linkName) =>
-            !game.Links?.Any(x => x.Name == linkName) ?? false;
+            game.Links?.Any(x => x.Name == linkName) ?? false;
 
         /// <summary>
         /// Sorts the Links of a game alphabetically by the link name.
