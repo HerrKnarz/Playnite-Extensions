@@ -1,15 +1,5 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
-  - Version: 2.6
-    RequiredApiVersion: 6.8.0
-    ReleaseDate: 2023-04-04
-    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-04-04/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_2_6.pext
-    Changelog:
-      - Added link to IGN Guides (only add function)
-      - Added link to Gamepressure Guides (only add function)
-      - new translations to Portuguese, Brazilian (thx kelvis)
-      - new translations to Russian (thx virtpunk)
-      - massive code clean up
   - Version: 2.5.1
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-03-24
