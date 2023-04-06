@@ -19,6 +19,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Adicionar link da biblioteca</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Adicionar link para...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Todos os sites configurados</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">All missing websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Todos os jogos</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Limpar links (renomear, remover, classificar)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Jogos filtrados</sys:String>
