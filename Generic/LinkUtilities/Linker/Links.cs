@@ -5,7 +5,7 @@ namespace LinkUtilities.Linker
     /// <summary>
     /// List of all website Links that can be added.
     /// </summary>
-    internal class Links : List<ILinker>
+    internal class Links : List<BaseClasses.Linker>
     {
         public Links()
         {

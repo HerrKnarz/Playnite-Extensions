@@ -50,6 +50,8 @@ namespace LinkUtilities.LinkActions
                     return linker.AddLink(game);
                 case ActionModifierTypes.Search:
                     return linker.AddSearchedLink(game);
+                case ActionModifierTypes.SearchMissing:
+                    return linker.AddSearchedLink(game, true);
                 default:
                     return false;
             }
@@ -59,7 +61,7 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
-            List<ILinker> links = null;
+            List<BaseClasses.Linker> links = null;
 
             switch (actionModifier)
             {
@@ -67,8 +69,15 @@ namespace LinkUtilities.LinkActions
                     links = Links.Where(x => x.Settings.IsAddable == true).ToList();
                     break;
                 case ActionModifierTypes.Search:
+                case ActionModifierTypes.SearchMissing:
                     links = Links.Where(x => x.Settings.IsSearchable == true).ToList();
                     break;
+                case ActionModifierTypes.None:
+                    break;
+                case ActionModifierTypes.Name:
+                case ActionModifierTypes.SortOrder:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
             }
 
             if (isBulkAction)

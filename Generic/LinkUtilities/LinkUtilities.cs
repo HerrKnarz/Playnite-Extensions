@@ -396,6 +396,17 @@ namespace LinkUtilities
                         DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.Search);
                     }
                 },
+                // Adds the "All missing websites" item to the "search link to" sub menu.
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllMissingWebsites"),
+                    MenuSection = $"{menuSection}|{menuSearchLinks}",
+                    Action = a =>
+                    {
+                        List<Game> games = args.Games.Distinct().ToList();
+                        DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.SearchMissing);
+                    }
+                },
                 // Adds a separator to the "search link to" sub menu
                 new GameMenuItem
                 {

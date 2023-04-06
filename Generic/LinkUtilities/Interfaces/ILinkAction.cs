@@ -7,6 +7,7 @@ namespace LinkUtilities
         None,
         Add,
         Search,
+        SearchMissing,
         Name,
         SortOrder
     }

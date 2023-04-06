@@ -65,8 +65,9 @@ namespace LinkUtilities
         /// Adds a link via search dialog.
         /// </summary>
         /// <param name="game">Game the link will be searched for and added to</param>
+        /// <param name="skipExistingLinks">When true already existing links will be skipped.</param>
         /// <returns>True, if a link was added</returns>
-        bool AddSearchedLink(Game game);
+        bool AddSearchedLink(Game game, bool skipExistingLinks = false);
 
         /// <summary>
         /// Searches the website and returns a list of found games via GenericItemOption. An extended list with URL is also written to

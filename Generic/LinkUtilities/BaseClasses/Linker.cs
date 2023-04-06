@@ -3,6 +3,7 @@ using LinkUtilities.Models;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,8 +25,13 @@ namespace LinkUtilities.BaseClasses
         public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
         public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
-        public virtual bool AddSearchedLink(Game game)
+        public virtual bool AddSearchedLink(Game game, bool skipExistingLinks = false)
         {
+            if (skipExistingLinks && LinkHelper.LinkExists(game, LinkName))
+            {
+                return false;
+            }
+
             GenericItemOption result = GlobalSettings.Instance().OnlyATest
                 ? GetSearchResults(game.Name)?.FirstOrDefault() ?? new SearchResult()
                 : API.Instance.Dialogs.ChooseItemWithSearch(
@@ -46,53 +52,58 @@ namespace LinkUtilities.BaseClasses
         public virtual bool FindLink(Game game, out Link link)
         {
             LinkUrl = string.Empty;
+            link = null;
 
-            if (!LinkHelper.LinkExists(game, LinkName))
+            if (LinkHelper.LinkExists(game, LinkName))
             {
-                switch (AddType)
-                {
-                    case LinkAddTypes.SingleSearchResult:
-                        LinkUrl = GetGamePath(game);
-                        break;
-                    case LinkAddTypes.UrlMatch:
-                        string gameName = GetGamePath(game);
+                return false;
+            }
 
-                        if (!string.IsNullOrEmpty(gameName))
+            switch (AddType)
+            {
+                case LinkAddTypes.SingleSearchResult:
+                    LinkUrl = GetGamePath(game);
+                    break;
+                case LinkAddTypes.UrlMatch:
+                    string gameName = GetGamePath(game);
+
+                    if (!string.IsNullOrEmpty(gameName))
+                    {
+                        if (CheckLink($"{BaseUrl}{gameName}"))
                         {
-                            if (CheckLink($"{BaseUrl}{gameName}"))
-                            {
-                                LinkUrl = $"{BaseUrl}{gameName}";
-                            }
-                            else
-                            {
-                                string baseName = game.Name.RemoveEditionSuffix();
+                            LinkUrl = $"{BaseUrl}{gameName}";
+                        }
+                        else
+                        {
+                            string baseName = game.Name.RemoveEditionSuffix();
 
-                                if (baseName != game.Name)
+                            if (baseName != game.Name)
+                            {
+                                gameName = GetGamePath(game, baseName);
+
+                                if (CheckLink($"{BaseUrl}{gameName}"))
                                 {
-                                    gameName = GetGamePath(game, baseName);
-
-                                    if (CheckLink($"{BaseUrl}{gameName}"))
-                                    {
-                                        LinkUrl = $"{BaseUrl}{gameName}";
-                                    }
+                                    LinkUrl = $"{BaseUrl}{gameName}";
                                 }
                             }
                         }
+                    }
 
-                        break;
-                }
-
-                if (!string.IsNullOrEmpty(LinkUrl))
-                {
-                    link = new Link(LinkName, LinkUrl);
-
-                    return true;
-                }
+                    break;
+                case LinkAddTypes.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
-            link = null;
+            if (string.IsNullOrEmpty(LinkUrl))
+            {
+                return false;
+            }
 
-            return false;
+            link = new Link(LinkName, LinkUrl);
+
+            return true;
         }
 
         public virtual bool CheckLink(string link) => LinkHelper.CheckUrl(link, AllowRedirects);
@@ -154,6 +165,11 @@ namespace LinkUtilities.BaseClasses
                     return AddLink(game);
                 case ActionModifierTypes.Search:
                     return AddSearchedLink(game);
+                case ActionModifierTypes.SearchMissing:
+                    return AddSearchedLink(game, true);
+                case ActionModifierTypes.None:
+                case ActionModifierTypes.Name:
+                case ActionModifierTypes.SortOrder:
                 default:
                     return false;
             }
