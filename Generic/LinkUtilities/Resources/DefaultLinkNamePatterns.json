@@ -96,6 +96,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "Lemon64",
+        "urlPattern": "*lemon64.com*",
+        "namePattern": "*Lemon64*",
+        "partialMatch": false
+    },
+    {
         "linkName": "Lemon Amiga",
         "urlPattern": "*lemonamiga.com*",
         "namePattern": "*Lemon Amiga*",

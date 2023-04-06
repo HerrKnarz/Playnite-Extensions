@@ -23,6 +23,7 @@ namespace LinkUtilities.Linker
             Add(new LinkIgnGuides());
             Add(new LinkIsThereAnyDeal());
             Add(new LibraryLinkItch());
+            Add(new LinkLemon64());
             Add(new LinkLemonAmiga());
             Add(new LinkMapGenie());
             Add(new LinkMetacritic());
