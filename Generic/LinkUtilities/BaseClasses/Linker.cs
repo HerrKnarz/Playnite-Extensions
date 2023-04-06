@@ -22,6 +22,7 @@ namespace LinkUtilities.BaseClasses
         public virtual bool CanBeSearched => !string.IsNullOrWhiteSpace(SearchUrl);
         public LinkSourceSetting Settings { get; set; }
         public virtual bool AllowRedirects { get; set; } = true;
+        public virtual bool ReturnsSameUrl { get; set; } = false;
         public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
         public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
@@ -106,7 +107,7 @@ namespace LinkUtilities.BaseClasses
             return true;
         }
 
-        public virtual bool CheckLink(string link) => LinkHelper.CheckUrl(link, AllowRedirects);
+        public virtual bool CheckLink(string link) => LinkHelper.CheckUrl(link, AllowRedirects, ReturnsSameUrl);
 
         public virtual string GetGamePath(Game game, string gameName = null)
         {

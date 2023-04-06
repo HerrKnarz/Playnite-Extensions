@@ -206,19 +206,19 @@ namespace LinkUtilities
         /// <returns>True, if the links could be sorted</returns>
         internal static bool SortLinks(Game game)
         {
-            if (game.Links?.Any() ?? false)
+            if (!(game.Links?.Any() ?? false))
             {
-                game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => x.Name));
-
-                if (!GlobalSettings.Instance().OnlyATest)
-                {
-                    API.Instance.Database.Games.Update(game);
-                }
-
-                return true;
+                return false;
             }
 
-            return false;
+            game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => x.Name));
+
+            if (!GlobalSettings.Instance().OnlyATest)
+            {
+                API.Instance.Database.Games.Update(game);
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -229,20 +229,20 @@ namespace LinkUtilities
         /// <returns>True, if the links could be sorted</returns>
         internal static bool SortLinks(Game game, Dictionary<string, int> sortOrder)
         {
-            if (game.Links?.Any() ?? false)
+            if (!(game.Links?.Any() ?? false))
             {
-                game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => GetSortPosition(x.Name, sortOrder))
-                    .ThenBy(x => x.Name));
-
-                if (!GlobalSettings.Instance().OnlyATest)
-                {
-                    API.Instance.Database.Games.Update(game);
-                }
-
-                return true;
+                return false;
             }
 
-            return false;
+            game.Links = new ObservableCollection<Link>(game.Links.OrderBy(x => GetSortPosition(x.Name, sortOrder))
+                .ThenBy(x => x.Name));
+
+            if (!GlobalSettings.Instance().OnlyATest)
+            {
+                API.Instance.Database.Games.Update(game);
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -253,44 +253,46 @@ namespace LinkUtilities
         /// <returns>True, if duplicates were removed. Returns false if there weren't duplicates to begin with.</returns>
         internal static bool RemoveDuplicateLinks(Game game, DuplicateTypes duplicateType)
         {
-            if (game.Links?.Any() ?? false)
+            if (!(game.Links?.Any() ?? false))
             {
-                int linkCount = game.Links.Count;
-
-                ObservableCollection<Link> newLinks;
-
-                switch (duplicateType)
-                {
-                    case DuplicateTypes.NameAndUrl:
-                        newLinks = new ObservableCollection<Link>(game.Links
-                            .GroupBy(x => new { x.Name, url = CleanUpUrl(x.Url) }).Select(x => x.First()));
-                        break;
-                    case DuplicateTypes.Name:
-                        newLinks = new ObservableCollection<Link>(
-                            game.Links.GroupBy(x => x.Name).Select(x => x.First()));
-                        break;
-                    case DuplicateTypes.Url:
-                        newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => CleanUpUrl(x.Url))
-                            .Select(x => x.First()));
-                        break;
-                    default:
-                        return false;
-                }
-
-                if (newLinks.Count < linkCount)
-                {
-                    game.Links = newLinks;
-
-                    if (!GlobalSettings.Instance().OnlyATest)
-                    {
-                        API.Instance.Database.Games.Update(game);
-                    }
-
-                    return true;
-                }
+                return false;
             }
 
-            return false;
+            int linkCount = game.Links.Count;
+
+            ObservableCollection<Link> newLinks;
+
+            switch (duplicateType)
+            {
+                case DuplicateTypes.NameAndUrl:
+                    newLinks = new ObservableCollection<Link>(game.Links
+                        .GroupBy(x => new { x.Name, url = CleanUpUrl(x.Url) }).Select(x => x.First()));
+                    break;
+                case DuplicateTypes.Name:
+                    newLinks = new ObservableCollection<Link>(
+                        game.Links.GroupBy(x => x.Name).Select(x => x.First()));
+                    break;
+                case DuplicateTypes.Url:
+                    newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => CleanUpUrl(x.Url))
+                        .Select(x => x.First()));
+                    break;
+                default:
+                    return false;
+            }
+
+            if (newLinks.Count >= linkCount)
+            {
+                return false;
+            }
+
+            game.Links = newLinks;
+
+            if (!GlobalSettings.Instance().OnlyATest)
+            {
+                API.Instance.Database.Games.Update(game);
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -341,8 +343,9 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="url">URL to check</param>
         /// <param name="allowRedirects">If true, a redirect will count as ok.</param>
+        /// <param name="sameUrl">When true the method only returns true, if the response url didn't change.</param>
         /// <returns>True, if the URL is reachable</returns>
-        internal static bool CheckUrl(string url, bool allowRedirects = true)
+        internal static bool CheckUrl(string url, bool allowRedirects = true, bool sameUrl = false)
         {
             _allowRedirects = allowRedirects;
 
@@ -356,7 +359,9 @@ namespace LinkUtilities
 
                 web.Load(url);
 
-                return web.StatusCode == HttpStatusCode.OK;
+                return sameUrl
+                    ? web.StatusCode == HttpStatusCode.OK && web.ResponseUri.AbsoluteUri == url
+                    : web.StatusCode == HttpStatusCode.OK;
             }
             catch (WebException ex)
             {

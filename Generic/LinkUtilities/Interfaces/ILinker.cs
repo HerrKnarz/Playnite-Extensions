@@ -62,6 +62,12 @@ namespace LinkUtilities
         bool AllowRedirects { get; set; }
 
         /// <summary>
+        /// Specifies, if the returned url must be the same as the searched one while checking the URL. Some sites always redirect and
+        /// then return OK, even if the link isn't valid. In that case this should be set to true, if the url needs to be the same.
+        /// </summary>
+        bool ReturnsSameUrl { get; set; }
+
+        /// <summary>
         /// Adds a link via search dialog.
         /// </summary>
         /// <param name="game">Game the link will be searched for and added to</param>
