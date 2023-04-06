@@ -45,8 +45,10 @@ namespace LinkUtilities.Linker
             { "xbox_series", "xbox-series-x" }
         };
 
-        public override bool AddLink(Game game)
+        public override bool FindLinks(Game game, out List<Link> links)
         {
+            links = new List<Link>();
+
             if (!game.Platforms?.Any() ?? true)
             {
                 return false;
@@ -65,22 +67,27 @@ namespace LinkUtilities.Linker
                     linkName = $"{LinkName} ({platform.Name})";
                 }
 
-                if (!LinkHelper.LinkExists(game, linkName) && _platforms.ContainsKey(platform.SpecificationId))
+                if (LinkHelper.LinkExists(game, linkName) || !_platforms.ContainsKey(platform.SpecificationId))
                 {
-                    LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game)}";
+                    continue;
+                }
+
+                LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game)}";
+
+                if (CheckLink(LinkUrl))
+                {
+                    links.Add(new Link(linkName, LinkUrl));
+
+                    result = true;
+                }
+                else if (game.Name != game.Name.RemoveEditionSuffix())
+                {
+                    LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game, game.Name.RemoveEditionSuffix())}";
 
                     if (CheckLink(LinkUrl))
                     {
-                        result |= LinkHelper.AddLink(game, linkName, LinkUrl);
-                    }
-                    else if (game.Name != game.Name.RemoveEditionSuffix())
-                    {
-                        LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game, game.Name.RemoveEditionSuffix())}";
-
-                        if (CheckLink(LinkUrl))
-                        {
-                            result |= LinkHelper.AddLink(game, linkName, LinkUrl);
-                        }
+                        links.Add(new Link(linkName, LinkUrl));
+                        result = true;
                     }
                 }
             }

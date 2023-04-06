@@ -29,8 +29,6 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "-")
                 .ToLower();
 
-        //TODO: Make link addable by removing "the" and "a" and replacing spaces with - 
-
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try

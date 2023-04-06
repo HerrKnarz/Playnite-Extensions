@@ -135,7 +135,12 @@ namespace LinkUtilities
         /// </returns>
         internal static bool AddLinks(Game game, List<Link> links)
         {
-            bool mustUpdate;
+            if (!(links?.Any() ?? false))
+            {
+                return false;
+            }
+
+            bool mustUpdate = false;
 
             // If the game doesn't have any Links yet, we have to add the collection itself.
             if (game.Links is null)
@@ -146,8 +151,6 @@ namespace LinkUtilities
             // otherwise we'll check if a link with the specified name is already present. If not, we'll add the link and return true.
             else
             {
-                mustUpdate = game.Links.AddMissing(links);
-
                 if (GlobalSettings.Instance().OnlyATest)
                 {
                     mustUpdate = game.Links.AddMissing(links);

@@ -93,12 +93,12 @@ namespace LinkUtilities
         bool AddLink(Game game);
 
         /// <summary>
-        /// Finds a link without user interaction
+        /// Finds one or more links without user interaction
         /// </summary>
         /// <param name="game">Game the link will be found for</param>
-        /// <param name="link">The found link will be returned here</param>
+        /// <param name="links">The list of found links will be returned here</param>
         /// <returns>True, if a link was found</returns>
-        bool FindLink(Game game, out Link link);
+        bool FindLinks(Game game, out List<Link> links);
 
         /// <summary>
         /// Checks if the link is valid.

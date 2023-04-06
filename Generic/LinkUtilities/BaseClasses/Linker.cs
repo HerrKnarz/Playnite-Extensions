@@ -46,14 +46,14 @@ namespace LinkUtilities.BaseClasses
 
         public virtual List<GenericItemOption> GetSearchResults(string searchTerm) => new List<GenericItemOption>();
 
-        public virtual bool AddLink(Game game) => FindLink(game, out Link link) && LinkHelper.AddLink(game, link);
+        public virtual bool AddLink(Game game) => FindLinks(game, out List<Link> links) && LinkHelper.AddLinks(game, links);
 
         //TODO: Replace all AddLink methods with FindLink ones!
 
-        public virtual bool FindLink(Game game, out Link link)
+        public virtual bool FindLinks(Game game, out List<Link> links)
         {
             LinkUrl = string.Empty;
-            link = null;
+            links = new List<Link>();
 
             if (LinkHelper.LinkExists(game, LinkName))
             {
@@ -102,7 +102,7 @@ namespace LinkUtilities.BaseClasses
                 return false;
             }
 
-            link = new Link(LinkName, LinkUrl);
+            links.Add(new Link(LinkName, LinkUrl));
 
             return true;
         }
