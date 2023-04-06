@@ -34,7 +34,7 @@ namespace LinkUtilities.Linker
                     return htmlNodes.Select(node
                         => new SearchResult
                         {
-                            Name = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='game-grid-title']/a").InnerText)}",
+                            Name = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='game-grid-title']").InnerText.Replace("\n", " ").Remove(0, 1))}",
                             Url = $"{BaseUrl}{node.SelectSingleNode("./div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
                             Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='grid-info']").InnerText)}{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='grid-category']").InnerText)}"
                         }).Cast<GenericItemOption>().ToList();
