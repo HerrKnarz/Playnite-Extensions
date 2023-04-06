@@ -2,6 +2,7 @@
 using KNARZhelper;
 using LinkUtilities.Models;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,21 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkLemon64 : BaseClasses.Linker
     {
+        private const string _websiteUrl = "https://www.lemon64.com";
         public override string LinkName => "Lemon64";
-        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string SearchUrl => "https://www.lemon64.com/games/list.php?list_title=";
+        public override string BaseUrl => _websiteUrl + "/game/";
 
-        public override string BaseUrl => "https://www.lemon64.com";
+        // Lemon64 Links need the game name in lowercase without leading articles, special characters and hyphens instead of white spaces.
+        public override string GetGamePath(Game game, string gameName = null)
+            => (gameName ?? game.Name).RemoveSpecialChars()
+                .RemoveFirst("the ")
+                .RemoveFirst("a ")
+                .CollapseWhitespaces()
+                .Replace(" ", "-")
+                .ToLower();
+
+        //TODO: Make link addable by removing "the" and "a" and replacing spaces with - 
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
@@ -35,7 +46,7 @@ namespace LinkUtilities.Linker
                         => new SearchResult
                         {
                             Name = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='game-grid-title']").InnerText.Replace("\n", " ").Remove(0, 1))}",
-                            Url = $"{BaseUrl}{node.SelectSingleNode("./div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
+                            Url = $"{_websiteUrl}{node.SelectSingleNode("./div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
                             Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='grid-info']").InnerText)}{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='grid-category']").InnerText)}"
                         }).Cast<GenericItemOption>().ToList();
                 }

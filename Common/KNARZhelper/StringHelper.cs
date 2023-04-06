@@ -122,5 +122,19 @@ namespace KNARZhelper
 
             return match.Success ? str.Remove(match.Index).Trim() : str;
         }
+
+        /// <summary>
+        /// Removes the first occurrence of a string from the source string
+        /// </summary>
+        /// <param name="source">string to process</param>
+        /// <param name="remove">string to removed</param>
+        /// <returns>processed string</returns>
+        public static string RemoveFirst(this string source, string remove)
+        {
+            int index = source.IndexOf(remove, StringComparison.OrdinalIgnoreCase);
+            return (index < 0)
+                ? source
+                : source.Remove(index, remove.Length);
+        }
     }
 }
