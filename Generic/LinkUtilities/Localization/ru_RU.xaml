@@ -19,7 +19,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Добавить ссылку на библиотеку</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Добавить ссылку на...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Все настроенные сайты</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">All missing websites</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Все недостающие сайты</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Все игры</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Очистить ссылки (переименование, удаление, сортировка)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Отфильтрованные игры</sys:String>
@@ -56,7 +56,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">названием ссылки и URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">названием ссылки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Link name</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Названием ссылки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link source</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Missing link]</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">Name pattern</sys:String>
