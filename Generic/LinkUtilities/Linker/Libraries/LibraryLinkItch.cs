@@ -4,6 +4,7 @@ using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.Itch;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,10 @@ namespace LinkUtilities.Linker
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://itch.io/api/1/{0}/search/games?query={1}";
 
-        public override bool AddLibraryLink(Game game)
+        public override bool FindLibraryLink(Game game, out List<Link> links)
         {
+            links = new List<Link>();
+
             // To get the link to a game on the itch website, you need an API key and request the game data from their api.
             if (string.IsNullOrWhiteSpace(Settings.ApiKey) || LinkHelper.LinkExists(game, LinkName))
             {
@@ -39,12 +42,13 @@ namespace LinkUtilities.Linker
 
             LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
 
-            if (LinkUrl.Any())
+            if (!LinkUrl.Any())
             {
-                return LinkHelper.AddLink(game, LinkName, LinkUrl);
+                return false;
             }
 
-            return false;
+            links.Add(new Link(LinkName, LinkUrl));
+            return true;
         }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)

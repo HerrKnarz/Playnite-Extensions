@@ -36,8 +36,10 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "_")
                 .ToLower();
 
-        public override bool AddLibraryLink(Game game)
+        public override bool FindLibraryLink(Game game, out List<Link> links)
         {
+            links = new List<Link>();
+
             if (LinkHelper.LinkExists(game, LinkName))
             {
                 return false;
@@ -45,14 +47,16 @@ namespace LinkUtilities.Linker
 
             GogMetaData gogMetaData = ParseHelper.GetJsonFromApi<GogMetaData>($"https://api.gog.com/products/{game.GameId}", LinkName);
 
-            if (gogMetaData?.Slug?.Any() ?? false)
+            if (!(gogMetaData?.Slug?.Any() ?? false))
             {
-                LinkUrl = $"{BaseUrl}{gogMetaData.Slug}";
-
-                return LinkHelper.AddLink(game, LinkName, LinkUrl);
+                return false;
             }
 
-            return false;
+            LinkUrl = $"{BaseUrl}{gogMetaData.Slug}";
+
+            links.Add(new Link(LinkName, LinkUrl));
+
+            return true;
         }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
@@ -61,29 +65,31 @@ namespace LinkUtilities.Linker
 
             List<GenericItemOption> searchResults = new List<GenericItemOption>();
 
-            if (gogSearchResult?.Products?.Any() ?? false)
+            if (!(gogSearchResult?.Products?.Any() ?? false))
             {
-                foreach (Product product in gogSearchResult.Products)
+                return searchResults;
+            }
+
+            foreach (Product product in gogSearchResult.Products)
+            {
+                string releaseDate = string.Empty;
+
+                if (product.GlobalReleaseDate.HasValue)
                 {
-                    string releaseDate = string.Empty;
-
-                    if (product.GlobalReleaseDate.HasValue)
-                    {
-                        releaseDate = MiscHelper.UnixTimeStampToDateTime(product.GlobalReleaseDate.Value).Date.ToString();
-                    }
-                    else if (product.ReleaseDate.HasValue)
-                    {
-                        releaseDate = MiscHelper.UnixTimeStampToDateTime(product.ReleaseDate.Value).Date.ToString();
-                    }
-
-                    searchResults.Add(
-                        new SearchResult
-                        {
-                            Name = product.Title,
-                            Url = $"{BaseUrl}{product.Slug}",
-                            Description = releaseDate
-                        });
+                    releaseDate = MiscHelper.UnixTimeStampToDateTime(product.GlobalReleaseDate.Value).Date.ToString();
                 }
+                else if (product.ReleaseDate.HasValue)
+                {
+                    releaseDate = MiscHelper.UnixTimeStampToDateTime(product.ReleaseDate.Value).Date.ToString();
+                }
+
+                searchResults.Add(
+                    new SearchResult
+                    {
+                        Name = product.Title,
+                        Url = $"{BaseUrl}{product.Slug}",
+                        Description = releaseDate
+                    });
             }
 
             return searchResults;

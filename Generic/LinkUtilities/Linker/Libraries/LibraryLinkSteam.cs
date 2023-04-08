@@ -27,11 +27,20 @@ namespace LinkUtilities.Linker
         public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
         public override string SearchUrl { get; } = "https://steamcommunity.com/actions/SearchApps/";
 
-        public override bool AddLibraryLink(Game game)
+        public override bool FindLibraryLink(Game game, out List<Link> links)
         {
+            links = new List<Link>();
+
+            if (LinkHelper.LinkExists(game, LinkName))
+            {
+                return false;
+            }
+
             // Adding a link to steam is extremely simple. You only have to add the GameId to the base URL.
             LinkUrl = $"{_libraryUrl}{game.GameId}";
-            return LinkHelper.AddLink(game, LinkName, LinkUrl);
+            links.Add(new Link(LinkName, LinkUrl));
+
+            return true;
         }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)

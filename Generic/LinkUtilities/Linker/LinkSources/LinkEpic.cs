@@ -28,8 +28,10 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "-")
                 .ToLower();
 
-        public override bool AddLink(Game game)
+        public override bool FindLinks(Game game, out List<Link> links)
         {
+            links = new List<Link>();
+
             // Unfortunately Epic returns the status code forbidden, when trying to check the url, because they want cookies and
             // javascript active. Fortunately we can use the game slug in the store api. If it doesn't return an error, there should also
             // be a link with that slug.
@@ -43,7 +45,10 @@ namespace LinkUtilities.Linker
             {
                 string _ = client.DownloadString(url);
                 LinkUrl = $"{BaseUrl}{gameSlug}";
-                return LinkHelper.AddLink(game, LinkName, LinkUrl);
+
+                links.Add(new Link(LinkName, LinkUrl));
+
+                return true;
             }
             catch
             {

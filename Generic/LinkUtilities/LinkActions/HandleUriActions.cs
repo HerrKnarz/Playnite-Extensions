@@ -95,24 +95,16 @@ namespace LinkUtilities.LinkActions
                 ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkCaption"),
                 tempLinkName);
 
-            if (selectResult.Result)
+            if (!selectResult.Result)
             {
-                LinkName = selectResult.SelectedString;
-                return true;
+                return false;
             }
 
-            return false;
+            LinkName = selectResult.SelectedString;
+            return true;
         }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            switch (actionModifier)
-            {
-                case ActionModifierTypes.Add:
-                    return LinkHelper.AddLink(game, LinkName, LinkUrl, false);
-                default:
-                    return false;
-            }
-        }
+            => actionModifier == ActionModifierTypes.Add && LinkHelper.AddLink(game, LinkName, LinkUrl, false);
     }
 }
