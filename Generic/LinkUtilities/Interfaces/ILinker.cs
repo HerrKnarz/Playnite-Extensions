@@ -2,6 +2,7 @@
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LinkUtilities
 {
@@ -99,6 +100,13 @@ namespace LinkUtilities
         /// <param name="links">The list of found links will be returned here</param>
         /// <returns>True, if a link was found</returns>
         bool FindLinks(Game game, out List<Link> links);
+
+        /// <summary>
+        /// Asynchronous implementation of the FindLinks method
+        /// </summary>
+        /// <param name="game">Game the link will be found for</param>
+        /// <returns>found links in a list and a boolean representation of the result</returns>
+        Task<FindLinkResult> FindLinks(Game game);
 
         /// <summary>
         /// Checks if the link is valid.

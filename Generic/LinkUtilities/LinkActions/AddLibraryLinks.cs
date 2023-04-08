@@ -1,6 +1,7 @@
 ﻿using LinkUtilities.BaseClasses;
 using LinkUtilities.Linker;
 using Playnite.SDK.Models;
+using System.Collections.Generic;
 
 namespace LinkUtilities.LinkActions
 {
@@ -41,6 +42,10 @@ namespace LinkUtilities.LinkActions
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => _libraries[game.PluginId]?.FindLibraryLink(game) ?? false;
+        {
+            List<Link> links = new List<Link>();
+
+            return (_libraries[game.PluginId]?.FindLibraryLink(game, out links) ?? false) && LinkHelper.AddLinks(game, links);
+        }
     }
 }

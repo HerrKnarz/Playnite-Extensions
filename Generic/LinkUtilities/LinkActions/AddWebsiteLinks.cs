@@ -1,11 +1,13 @@
 ﻿using KNARZhelper;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Linker;
+using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LinkUtilities.LinkActions
 {
@@ -42,47 +44,77 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage => "LOCLinkUtilitiesProgressWebsiteLink";
         public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
-        private static bool AddLink(Game game, ILinker linker, ActionModifierTypes actionModifier)
+        private async Task<FindLinkResult> FindLinks(Game game)
         {
-            switch (actionModifier)
+            List<BaseClasses.Linker> linkers = Links.Where(x => x.Settings.IsAddable == true).ToList();
+
+            List<Link> links = new List<Link>();
+
+            bool success = false;
+
+            List<Task<FindLinkResult>> tasks = linkers.Select(link => link.FindLinks(game)).ToList();
+
+            await Task.WhenAll(tasks);
+
+            foreach (Task<FindLinkResult> task in tasks.Where(task => task.Result.Success))
             {
-                case ActionModifierTypes.Add:
-                    return linker.AddLink(game);
-                case ActionModifierTypes.Search:
-                    return linker.AddSearchedLink(game);
-                case ActionModifierTypes.SearchMissing:
-                    return linker.AddSearchedLink(game, true);
-                default:
-                    return false;
+                success |= links.AddMissing(task.Result.Links);
             }
+
+            return new FindLinkResult() { Success = success, Links = links };
         }
 
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        private bool AddLinks(Game game, bool isBulkAction = true)
         {
-            bool result = false;
-
-            List<BaseClasses.Linker> links = null;
-
-            switch (actionModifier)
+            bool Add(Game g)
             {
-                case ActionModifierTypes.Add:
-                    links = Links.Where(x => x.Settings.IsAddable == true).ToList();
-                    break;
-                case ActionModifierTypes.Search:
-                case ActionModifierTypes.SearchMissing:
-                    links = Links.Where(x => x.Settings.IsSearchable == true).ToList();
-                    break;
-                case ActionModifierTypes.None:
-                    break;
-                case ActionModifierTypes.Name:
-                case ActionModifierTypes.SortOrder:
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
+                FindLinkResult linkResult = FindLinks(g).GetAwaiter().GetResult();
+
+                return linkResult.Success && (linkResult.Links?.Any() ?? false) && LinkHelper.AddLinks(g, linkResult.Links);
             }
 
             if (isBulkAction)
             {
-                result = links?.Aggregate(false, (current, link) => current | AddLink(game, link, actionModifier)) ?? false;
+                return Add(game);
+            }
+
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}",
+                true
+            )
+            {
+                IsIndeterminate = true
+            };
+
+            bool result = false;
+
+            API.Instance.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+            {
+                try
+                {
+                    result = Add(game);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            }, globalProgressOptions);
+
+            return result;
+        }
+
+        private bool SearchLinks(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            bool result = false;
+
+            List<BaseClasses.Linker> links = Links.Where(x => x.Settings.IsSearchable == true).ToList();
+
+            if (isBulkAction)
+            {
+                foreach (BaseClasses.Linker link in links)
+                {
+                    result |= link.AddSearchedLink(game, actionModifier == ActionModifierTypes.SearchMissing);
+                }
             }
             else
             {
@@ -95,11 +127,6 @@ namespace LinkUtilities.LinkActions
                 {
                     try
                     {
-                        if (links == null)
-                        {
-                            return;
-                        }
-
                         activateGlobalProgress.ProgressMaxValue = links.Count;
 
                         foreach (ILinker link in links)
@@ -111,7 +138,7 @@ namespace LinkUtilities.LinkActions
                                 break;
                             }
 
-                            result |= AddLink(game, link, actionModifier);
+                            result |= link.AddSearchedLink(game, actionModifier == ActionModifierTypes.SearchMissing);
 
                             activateGlobalProgress.CurrentProgressValue++;
                         }
@@ -124,6 +151,20 @@ namespace LinkUtilities.LinkActions
             }
 
             return result;
+        }
+
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            switch (actionModifier)
+            {
+                case ActionModifierTypes.Add:
+                    return AddLinks(game, isBulkAction);
+                case ActionModifierTypes.Search:
+                case ActionModifierTypes.SearchMissing:
+                    return SearchLinks(game, actionModifier, isBulkAction);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
+            }
         }
     }
 }

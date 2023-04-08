@@ -6,6 +6,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LinkUtilities.BaseClasses
 {
@@ -48,7 +49,15 @@ namespace LinkUtilities.BaseClasses
 
         public virtual bool AddLink(Game game) => FindLinks(game, out List<Link> links) && LinkHelper.AddLinks(game, links);
 
-        //TODO: Replace all AddLink methods with FindLink ones!
+        public async Task<FindLinkResult> FindLinks(Game game)
+        {
+            List<Link> links = new List<Link>();
+            bool success = false;
+
+            await Task.Run(() => success = FindLinks(game, out links));
+
+            return new FindLinkResult() { Success = success, Links = links };
+        }
 
         public virtual bool FindLinks(Game game, out List<Link> links)
         {

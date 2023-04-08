@@ -51,8 +51,8 @@ namespace LinkUtilities.Test
                     CaseName = "gamepressure Guides",
                     Link = new LinkGamePressureGuides(),
                     GameName = "Assassin's Creed: Odyssey",
-                    GamePath = "assassins-creed-odyssey",
-                    Url = "https://guides.gamepressure.com/assassins-creed-odyssey",
+                    GamePath = "assassins-creed-odyssey/",
+                    Url = "https://guides.gamepressure.com/assassins-creed-odyssey/",
                     SearchedUrl = "not found!"
                 }
             },
