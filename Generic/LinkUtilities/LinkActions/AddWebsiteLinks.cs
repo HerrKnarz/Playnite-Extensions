@@ -56,7 +56,7 @@ namespace LinkUtilities.LinkActions
 
             links = new List<Link>();
 
-            ConcurrentBag<Link> linksBag = new ConcurrentBag<Link>();
+            ConcurrentQueue<Link> linksQueue = new ConcurrentQueue<Link>();
 
             Parallel.ForEach(linkers, linker =>
             {
@@ -64,11 +64,11 @@ namespace LinkUtilities.LinkActions
 
                 foreach (Link innerLink in innerLinks)
                 {
-                    linksBag.Add(innerLink);
+                    linksQueue.Enqueue(innerLink);
                 }
             });
 
-            return links.AddMissing(linksBag.Distinct());
+            return links.AddMissing(linksQueue.Distinct());
         }
 
         /// <summary>
