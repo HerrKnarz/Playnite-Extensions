@@ -1,10 +1,10 @@
 ﻿using KNARZhelper;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Linker;
-using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,34 +44,42 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage => "LOCLinkUtilitiesProgressWebsiteLink";
         public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
-        private async Task<FindLinkResult> FindLinks(Game game)
+        /// <summary>
+        /// Finds links to all configured websites. The links are added asynchronously to a ConcurrentBag and then returned as a distinct list.
+        /// </summary>
+        /// <param name="game">game the links will be found for.</param>
+        /// <param name="links">Returns a list of found links</param>
+        /// <returns>True, if links were found.</returns>
+        private bool FindLinks(Game game, out List<Link> links)
         {
             List<BaseClasses.Linker> linkers = Links.Where(x => x.Settings.IsAddable == true).ToList();
 
-            List<Link> links = new List<Link>();
+            links = new List<Link>();
 
-            bool success = false;
+            ConcurrentBag<Link> linksBag = new ConcurrentBag<Link>();
 
-            List<Task<FindLinkResult>> tasks = linkers.Select(link => link.FindLinks(game)).ToList();
-
-            await Task.WhenAll(tasks);
-
-            foreach (Task<FindLinkResult> task in tasks.Where(task => task.Result.Success))
+            Parallel.ForEach(linkers, linker =>
             {
-                success |= links.AddMissing(task.Result.Links);
-            }
+                linker.FindLinks(game, out List<Link> innerLinks);
 
-            return new FindLinkResult() { Success = success, Links = links };
+                foreach (Link innerLink in innerLinks)
+                {
+                    linksBag.Add(innerLink);
+                }
+            });
+
+            return links.AddMissing(linksBag.Distinct());
         }
 
+        /// <summary>
+        /// Adds links to all configured websites
+        /// </summary>
+        /// <param name="game">game the links will be added to.</param>
+        /// <param name="isBulkAction">If true, the method already is used in a progress bar and no new one has to be started.</param>
+        /// <returns>True, if new links were added.</returns>
         private bool AddLinks(Game game, bool isBulkAction = true)
         {
-            bool Add(Game g)
-            {
-                FindLinkResult linkResult = FindLinks(g).GetAwaiter().GetResult();
-
-                return linkResult.Success && (linkResult.Links?.Any() ?? false) && LinkHelper.AddLinks(g, linkResult.Links);
-            }
+            bool Add(Game g) => FindLinks(game, out List<Link> links) && (links?.Any() ?? false) && LinkHelper.AddLinks(g, links);
 
             if (isBulkAction)
             {
@@ -103,6 +111,13 @@ namespace LinkUtilities.LinkActions
             return result;
         }
 
+        /// <summary>
+        /// Searches links for all configured websites
+        /// </summary>
+        /// <param name="game">game the links will be searched for.</param>
+        /// <param name="actionModifier">Kind of search (e.g. Search or SearchMissing)</param>
+        /// <param name="isBulkAction">If true, the method already is used in a progress bar and no new one has to be started.</param>
+        /// <returns>True, if new links were added.</returns>
         private bool SearchLinks(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
             bool result = false;
@@ -155,16 +170,22 @@ namespace LinkUtilities.LinkActions
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
+            bool result;
+
             switch (actionModifier)
             {
                 case ActionModifierTypes.Add:
-                    return AddLinks(game, isBulkAction);
+                    result = AddLinks(game, isBulkAction);
+                    break;
                 case ActionModifierTypes.Search:
                 case ActionModifierTypes.SearchMissing:
-                    return SearchLinks(game, actionModifier, isBulkAction);
+                    result = SearchLinks(game, actionModifier, isBulkAction);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
             }
+
+            return result && DoAfterChange.Instance().Execute(game, actionModifier, isBulkAction);
         }
     }
 }

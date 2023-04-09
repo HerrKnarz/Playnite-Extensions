@@ -102,13 +102,6 @@ namespace LinkUtilities
         bool FindLinks(Game game, out List<Link> links);
 
         /// <summary>
-        /// Asynchronous implementation of the FindLinks method
-        /// </summary>
-        /// <param name="game">Game the link will be found for</param>
-        /// <returns>found links in a list and a boolean representation of the result</returns>
-        Task<FindLinkResult> FindLinks(Game game);
-
-        /// <summary>
         /// Checks if the link is valid.
         /// </summary>
         /// <param name="link">The link to check</param>

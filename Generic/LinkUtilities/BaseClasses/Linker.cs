@@ -49,16 +49,6 @@ namespace LinkUtilities.BaseClasses
 
         public virtual bool AddLink(Game game) => FindLinks(game, out List<Link> links) && LinkHelper.AddLinks(game, links);
 
-        public async Task<FindLinkResult> FindLinks(Game game)
-        {
-            List<Link> links = new List<Link>();
-            bool success = false;
-
-            await Task.Run(() => success = FindLinks(game, out links));
-
-            return new FindLinkResult() { Success = success, Links = links };
-        }
-
         public virtual bool FindLinks(Game game, out List<Link> links)
         {
             LinkUrl = string.Empty;
