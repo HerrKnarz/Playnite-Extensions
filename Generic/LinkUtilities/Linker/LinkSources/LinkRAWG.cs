@@ -46,7 +46,12 @@ namespace LinkUtilities.Linker
 
             foreach (Result result in rawgSearchResult.Results)
             {
-                string genres = result.Genres?.Select(genre => genre.Name).Aggregate((total, part) => total + ", " + part) ?? string.Empty;
+                string genres = string.Empty;
+
+                if (result.Genres?.Any() ?? false)
+                {
+                    genres = result.Genres.Select(genre => genre.Name).Aggregate((total, part) => total + ", " + part);
+                }
 
                 searchResults.Add(new SearchResult
                 {
