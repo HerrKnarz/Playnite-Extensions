@@ -27,7 +27,7 @@ namespace LinkUtilities.BaseClasses
         public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
         public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
-        public virtual bool AddSearchedLink(Game game, bool skipExistingLinks = false)
+        public virtual bool AddSearchedLink(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true)
         {
             if (skipExistingLinks && LinkHelper.LinkExists(game, LinkName))
             {
@@ -42,7 +42,7 @@ namespace LinkUtilities.BaseClasses
                     game.Name,
                     $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
 
-            return result != null && LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, false);
+            return result != null && LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, false, cleanUpAfterAdding);
         }
 
         public virtual List<GenericItemOption> GetSearchResults(string searchTerm) => new List<GenericItemOption>();

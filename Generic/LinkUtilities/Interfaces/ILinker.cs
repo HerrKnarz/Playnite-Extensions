@@ -73,8 +73,9 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="game">Game the link will be searched for and added to</param>
         /// <param name="skipExistingLinks">When true already existing links will be skipped.</param>
+        /// <param name="cleanUpAfterAdding">if true, the links will be cleaned up afterwards</param>
         /// <returns>True, if a link was added</returns>
-        bool AddSearchedLink(Game game, bool skipExistingLinks = false);
+        bool AddSearchedLink(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true);
 
         /// <summary>
         /// Searches the website and returns a list of found games via GenericItemOption. An extended list with URL is also written to

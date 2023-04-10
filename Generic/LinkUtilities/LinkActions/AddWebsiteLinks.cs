@@ -128,7 +128,7 @@ namespace LinkUtilities.LinkActions
             {
                 foreach (BaseClasses.Linker link in links)
                 {
-                    result |= link.AddSearchedLink(game, actionModifier == ActionModifierTypes.SearchMissing);
+                    result |= link.AddSearchedLink(game, actionModifier == ActionModifierTypes.SearchMissing, false);
                 }
             }
             else
@@ -153,7 +153,7 @@ namespace LinkUtilities.LinkActions
                                 break;
                             }
 
-                            result |= link.AddSearchedLink(game, actionModifier == ActionModifierTypes.SearchMissing);
+                            result |= link.AddSearchedLink(game, actionModifier == ActionModifierTypes.SearchMissing, false);
 
                             activateGlobalProgress.CurrentProgressValue++;
                         }
@@ -165,27 +165,26 @@ namespace LinkUtilities.LinkActions
                 }, globalProgressOptions);
             }
 
+            if (result)
+            {
+                DoAfterChange.Instance().Execute(game, actionModifier, isBulkAction);
+            }
+
             return result;
         }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            bool result;
-
             switch (actionModifier)
             {
                 case ActionModifierTypes.Add:
-                    result = AddLinks(game, isBulkAction);
-                    break;
+                    return AddLinks(game, isBulkAction);
                 case ActionModifierTypes.Search:
                 case ActionModifierTypes.SearchMissing:
-                    result = SearchLinks(game, actionModifier, isBulkAction);
-                    break;
+                    return SearchLinks(game, actionModifier, isBulkAction);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
             }
-
-            return result && DoAfterChange.Instance().Execute(game, actionModifier, isBulkAction);
         }
     }
 }

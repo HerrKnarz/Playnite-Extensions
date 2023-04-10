@@ -27,11 +27,12 @@ namespace LinkUtilities
         /// <param name="linkName">Name of the link</param>
         /// <param name="linkUrl">URL of the link</param>
         /// <param name="ignoreExisting">if true existing links of the same name will be ignored</param>
+        /// <param name="cleanUpAfterAdding">if true, the links will be cleaned up afterwards</param>
         /// <returns>
         /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
         /// </returns>
-        internal static bool AddLink(Game game, string linkName, string linkUrl, bool ignoreExisting = true)
-            => AddLink(game, new Link(linkName, linkUrl), ignoreExisting);
+        internal static bool AddLink(Game game, string linkName, string linkUrl, bool ignoreExisting = true, bool cleanUpAfterAdding = true)
+            => AddLink(game, new Link(linkName, linkUrl), ignoreExisting, cleanUpAfterAdding);
 
         /// <summary>
         /// Adds a link to a game.
@@ -39,10 +40,11 @@ namespace LinkUtilities
         /// <param name="game">Game the link will be added to</param>
         /// <param name="link">the link to add</param>
         /// <param name="ignoreExisting">if true existing links of the same name will be ignored</param>
+        /// <param name="cleanUpAfterAdding">if true, the links will be cleaned up afterwards</param>
         /// <returns>
         /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
         /// </returns>
-        internal static bool AddLink(Game game, Link link, bool ignoreExisting = true)
+        internal static bool AddLink(Game game, Link link, bool ignoreExisting = true, bool cleanUpAfterAdding = true)
         {
             bool mustUpdate = false;
             bool addNewLink = false;
@@ -119,7 +121,7 @@ namespace LinkUtilities
             // Updates the game in the database if we added a new link.
             if (mustUpdate)
             {
-                DoAfterAdd(game);
+                DoAfterAdd(game, cleanUpAfterAdding);
             }
 
             return mustUpdate;
@@ -130,10 +132,11 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="game">Game the links will be added to</param>
         /// <param name="links">the links to add</param>
+        /// <param name="cleanUpAfterAdding">if true, the links will be cleaned up afterwards</param>
         /// <returns>
         /// True, if at least one link could be added. Returns false, if the links already existed or couldn't be added.
         /// </returns>
-        internal static bool AddLinks(Game game, List<Link> links)
+        internal static bool AddLinks(Game game, List<Link> links, bool cleanUpAfterAdding = true)
         {
             if (!(links?.Any() ?? false))
             {
@@ -167,29 +170,27 @@ namespace LinkUtilities
             // Updates the game in the database if we added a new link.
             if (mustUpdate)
             {
-                DoAfterAdd(game);
+                DoAfterAdd(game, cleanUpAfterAdding);
             }
 
             return mustUpdate;
         }
 
-        private static void DoAfterAdd(Game game)
+        /// <summary>
+        /// Things to do after adding one or more links
+        /// </summary>
+        /// <param name="game">game to process</param>
+        /// <param name="cleanUp">if true, the links will be cleaned up afterwards</param>
+        private static void DoAfterAdd(Game game, bool cleanUp = true)
         {
             if (!GlobalSettings.Instance().OnlyATest)
             {
                 API.Instance.Database.Games.Update(game);
             }
 
-            // We sort the Links automatically if the setting SortAfterChange is true.
-            if (LinkActions.SortLinks.Instance().SortAfterChange)
+            if (cleanUp)
             {
-                LinkActions.SortLinks.Instance().Execute(game);
-            }
-
-            // We add/remove tags for missing links automatically if the setting TagMissingLinksAfterChange is true.
-            if (TagMissingLinks.Instance().TagMissingLinksAfterChange)
-            {
-                TagMissingLinks.Instance().Execute(game);
+                DoAfterChange.Instance().Execute(game);
             }
         }
 
