@@ -105,6 +105,8 @@ namespace LinkUtilities.LinkActions
         }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => actionModifier == ActionModifierTypes.Add && LinkHelper.AddLink(game, LinkName, LinkUrl, false);
+            => actionModifier == ActionModifierTypes.Add &&
+               base.Execute(game, actionModifier, isBulkAction) &&
+               LinkHelper.AddLink(game, LinkName, LinkUrl, false);
     }
 }

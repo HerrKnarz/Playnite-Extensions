@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    /// Class to add a linker to all available websites in the Links list, if a definitive linker was found.
+    /// Class to add a link to all available websites in the Links list, if a definitive link was found.
     /// </summary>
     internal class AddWebsiteLinks : LinkAction
     {
@@ -20,6 +20,8 @@ namespace LinkUtilities.LinkActions
         private static readonly object _mutex = new object();
 
         private AddWebsiteLinks() => Links = new Links();
+
+        private List<BaseClasses.Linker> _linkers;
 
         public static AddWebsiteLinks Instance()
         {
@@ -52,13 +54,11 @@ namespace LinkUtilities.LinkActions
         /// <returns>True, if links were found.</returns>
         private bool FindLinks(Game game, out List<Link> links)
         {
-            List<BaseClasses.Linker> linkers = Links.Where(x => x.Settings.IsAddable == true).ToList();
-
             links = new List<Link>();
 
             ConcurrentQueue<Link> linksQueue = new ConcurrentQueue<Link>();
 
-            Parallel.ForEach(linkers, linker =>
+            Parallel.ForEach(_linkers, linker =>
             {
                 linker.FindLinks(game, out List<Link> innerLinks);
 
@@ -122,11 +122,9 @@ namespace LinkUtilities.LinkActions
         {
             bool result = false;
 
-            List<BaseClasses.Linker> links = Links.Where(x => x.Settings.IsSearchable == true).ToList();
-
             if (isBulkAction)
             {
-                foreach (BaseClasses.Linker link in links)
+                foreach (BaseClasses.Linker link in _linkers)
                 {
                     result |= link.AddSearchedLink(game, actionModifier == ActionModifierTypes.SearchMissing, false);
                 }
@@ -142,9 +140,9 @@ namespace LinkUtilities.LinkActions
                 {
                     try
                     {
-                        activateGlobalProgress.ProgressMaxValue = links.Count;
+                        activateGlobalProgress.ProgressMaxValue = _linkers.Count;
 
-                        foreach (ILinker link in links)
+                        foreach (ILinker link in _linkers)
                         {
                             activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}{Environment.NewLine}{link.LinkName}";
 
@@ -173,8 +171,29 @@ namespace LinkUtilities.LinkActions
             return result;
         }
 
+        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            switch (actionModifier)
+            {
+                case ActionModifierTypes.Add:
+                    _linkers = Links.Where(x => x.Settings.IsAddable == true).ToList();
+                    return true;
+                case ActionModifierTypes.Search:
+                case ActionModifierTypes.SearchMissing:
+                    _linkers = Links.Where(x => x.Settings.IsSearchable == true).ToList();
+                    return true;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
+            }
+        }
+
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
+            if (!base.Execute(game, actionModifier, isBulkAction))
+            {
+                return false;
+            }
+
             switch (actionModifier)
             {
                 case ActionModifierTypes.Add:

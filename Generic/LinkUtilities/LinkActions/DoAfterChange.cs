@@ -36,6 +36,11 @@ namespace LinkUtilities.LinkActions
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
+            if (!base.Execute(game, actionModifier, isBulkAction))
+            {
+                return false;
+            }
+
             bool result = false;
 
             if (RenameLinks.Instance().RenameLinksAfterChange && (RenameLinks.Instance().RenamePatterns?.Any() ?? false))

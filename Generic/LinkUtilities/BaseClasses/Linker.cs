@@ -6,7 +6,6 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LinkUtilities.BaseClasses
 {
@@ -157,8 +156,19 @@ namespace LinkUtilities.BaseClasses
             return foundGame != null ? foundGame.Url : searchResults.Count == 1 ? ((SearchResult)searchResults[0]).Url : null;
         }
 
+        public virtual bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+            => true;
+
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
+            if (!isBulkAction)
+            {
+                if (!Prepare(actionModifier, false))
+                {
+                    return false;
+                }
+            }
+
             switch (actionModifier)
             {
                 case ActionModifierTypes.Add:

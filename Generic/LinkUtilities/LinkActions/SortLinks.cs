@@ -41,8 +41,10 @@ namespace LinkUtilities.LinkActions
         public Dictionary<string, int> SortOrder { get; set; }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => actionModifier == ActionModifierTypes.SortOrder || (actionModifier == ActionModifierTypes.None && UseCustomSortOrder)
-                ? LinkHelper.SortLinks(game, SortOrder)
-                : LinkHelper.SortLinks(game);
+            => base.Execute(game, actionModifier, isBulkAction) &&
+               (actionModifier == ActionModifierTypes.SortOrder ||
+                (actionModifier == ActionModifierTypes.None && UseCustomSortOrder)
+                   ? LinkHelper.SortLinks(game, SortOrder)
+                   : LinkHelper.SortLinks(game));
     }
 }

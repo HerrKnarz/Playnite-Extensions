@@ -40,6 +40,7 @@ namespace LinkUtilities.LinkActions
         public DuplicateTypes RemoveDuplicatesType { get; set; } = DuplicateTypes.NameAndUrl;
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => LinkHelper.RemoveDuplicateLinks(game, RemoveDuplicatesType);
+            => base.Execute(game, actionModifier, isBulkAction) &&
+               LinkHelper.RemoveDuplicateLinks(game, RemoveDuplicatesType);
     }
 }

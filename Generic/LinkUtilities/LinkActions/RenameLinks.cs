@@ -92,6 +92,7 @@ namespace LinkUtilities.LinkActions
         }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => Rename(game);
+            => base.Execute(game, actionModifier, isBulkAction) &&
+               Rename(game);
     }
 }

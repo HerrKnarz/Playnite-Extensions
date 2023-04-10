@@ -43,6 +43,11 @@ namespace LinkUtilities.LinkActions
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
+            if (!base.Execute(game, actionModifier, isBulkAction))
+            {
+                return false;
+            }
+
             List<Link> links = new List<Link>();
 
             return (_libraries[game.PluginId]?.FindLibraryLink(game, out links) ?? false) && LinkHelper.AddLinks(game, links);

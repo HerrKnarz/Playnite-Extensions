@@ -137,6 +137,7 @@ namespace LinkUtilities.LinkActions
         }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => Tag(game);
+            => base.Execute(game, actionModifier, isBulkAction) &&
+               Tag(game);
     }
 }

@@ -47,6 +47,11 @@ namespace LinkUtilities.LinkActions
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
+            if (!base.Execute(game, actionModifier, isBulkAction))
+            {
+                return false;
+            }
+
             bool mustUpdate = false;
 
             if (!(game.Links?.Any() ?? false))
