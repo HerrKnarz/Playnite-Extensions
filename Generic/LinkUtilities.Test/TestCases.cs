@@ -180,6 +180,18 @@ namespace LinkUtilities.Test
             {
                 new TestCase()
                 {
+                    CaseName = "Lemon64",
+                    Link = new LinkLemon64(),
+                    GameName = "The Blues Brothers",
+                    GamePath = "blues-brothers",
+                    Url = "https://www.lemon64.com/game/blues-brothers",
+                    SearchedUrl = "https://www.lemon64.com/game/blues-brothers"
+                }
+            },
+            new object[]
+            {
+                new TestCase()
+                {
                     CaseName = "MapGenie",
                     Link = new LinkMapGenie(),
                     GameName = "Fallout 4",
@@ -234,7 +246,7 @@ namespace LinkUtilities.Test
                     GameName = "Trüberbrook",
                     GamePath = "Tr%C3%BCberbrook",
                     Url = "https://www.pcgamingwiki.com/wiki/Tr%C3%BCberbrook",
-                    SearchedUrl = "https://www.pcgamingwiki.com/wiki/Tr%C3%BCberbrook_-_A_Nerd_Saves_the_World"
+                    SearchedUrl = "https://www.pcgamingwiki.com/wiki/Tr%C3%BCberbrook"
                 }
             },
             new object[]
