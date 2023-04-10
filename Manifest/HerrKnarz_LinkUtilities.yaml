@@ -1,5 +1,19 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 3.0
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-04-10
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-04-10/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_3_0.pext
+    Changelog:
+      - Adding links is now much faster thanks to simultaneous link processing. 
+      - Added option to search only for missing links instead of all
+      - Added support for Lemon64
+      - Optimized Wikipedia search results with descriptions and better sorting.
+      - Optimized link processing by sorting, renaming etc. only after all links to a game have been added.
+      - Fixed link to gamepressure Guides. The site redirected to the homepage, when the link wasn't valid.
+      - Fixed broken search for PCGamingWiki.
+      - Fixed issue with searching on RAWG, when the results contained a game without any genres.
+      - 100% translations to German, Norwegian, Russian, Spanish and Ukrainian. 
   - Version: 2.6.1
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-04-05
