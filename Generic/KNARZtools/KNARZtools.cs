@@ -40,7 +40,7 @@ namespace KNARZtools
             {
                 try
                 {
-                    List<Tag> tags = API.Instance.Database.Tags.Where(t => t.Name.StartsWith("[")).ToList();
+                    List<Tag> tags = API.Instance.Database.Tags.Where(t => t.Name.StartsWith("🧑")).ToList();
 
                     activateGlobalProgress.ProgressMaxValue = tags.Count;
 
@@ -54,16 +54,13 @@ namespace KNARZtools
                         string tagName = tag.Name;
 
                         tagName = tagName
-                            .Replace("[Art Style]", "🎨")
-                            .Replace("[Controls]", "🕹")
-                            .Replace("[Game Engine]", "⚙️")
-                            .Replace("[Locations]", "🗺")
-                            .Replace("[Pacing]", "🐌")
-                            .Replace("[Perspectives]", "👁")
-                            .Replace("[Screen]", "💻")
-                            .Replace("[Themes]", "📚")
-                            .Replace("[Type]", "🗃")
-                            .Replace("[Vehicles]", "🚗");
+                            .Replace(" director:", "🎬")
+                            .Replace(" producer:", "🗓")
+                            .Replace(" designer:", "🖼")
+                            .Replace(" programmer:", "⌨️")
+                            .Replace(" artist:", "🎨")
+                            .Replace(" writer:", "📝")
+                            .Replace(" composer:", "🎵");
 
                         if (tagName != tag.Name)
                         {
