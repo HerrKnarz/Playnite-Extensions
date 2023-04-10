@@ -13,7 +13,7 @@ namespace WikipediaMetadata
     /// </summary>
     internal class WikipediaApiCaller
     {
-        private const string _searchUrl = "https://en.wikipedia.org/w/rest.php/v1/search/page?q={0}&limit=100";
+        private const string SearchUrl = "https://en.wikipedia.org/w/rest.php/v1/search/page?q={0}&limit=100";
 
         private static WebClient GetWebClient()
         {
@@ -34,7 +34,7 @@ namespace WikipediaMetadata
         {
             WebClient client = GetWebClient();
 
-            string apiUrl = string.Format(_searchUrl, name.UrlEncode());
+            string apiUrl = string.Format(SearchUrl, name.UrlEncode());
 
             string jsonResult = client.DownloadString(apiUrl);
 
