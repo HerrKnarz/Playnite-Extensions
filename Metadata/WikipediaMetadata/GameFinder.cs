@@ -11,9 +11,9 @@ namespace WikipediaMetadata
     /// </summary>
     internal class GameFinder
     {
-        private readonly PluginSettings _settings;
+        private readonly bool _useAdvancedSearchResultSorting;
 
-        public GameFinder(PluginSettings settings) => _settings = settings;
+        public GameFinder(bool useAdvancedSearchResultSorting) => _useAdvancedSearchResultSorting = useAdvancedSearchResultSorting;
 
         /// <summary>
         /// Prepares different strings for search functions
@@ -48,7 +48,7 @@ namespace WikipediaMetadata
             string searchName = gameName.RemoveEditionSuffix();
 
             // We search for the game name on Wikipedia
-            WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(searchName);
+            WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(searchName);
 
             string searchNameVideoGame = (searchName + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
             searchName = searchName.RemoveSpecialChars().ToLower().Replace(" ", "");
@@ -81,9 +81,9 @@ namespace WikipediaMetadata
             (string nameVideoGame, string compareName, string startName) = PrepareSearchTerms(searchTerm);
 
             // We search for the game name on Wikipedia
-            WikipediaSearchResult searchResult = ApiCaller.GetSearchResults(searchTerm);
+            WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(searchTerm);
 
-            if (_settings.AdvancedSearchResultSorting)
+            if (_useAdvancedSearchResultSorting)
             {
                 // When displaying the search results, we order them differently to hopefully get the actual game as one
                 // of the first results. First we order by containing "video game" in the short description, then by

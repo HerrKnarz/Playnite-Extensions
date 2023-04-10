@@ -7,7 +7,10 @@ namespace WikipediaMetadata.Models
     /// </summary>
     internal class WikipediaItemOption : GenericItemOption
     {
-        public string Key { get; set; }
+        /// <summary>
+        /// unique key of the page
+        /// </summary>
+        public string Key;
 
         /// <summary>
         /// Gets a search item for the search dialog from a JSON page result

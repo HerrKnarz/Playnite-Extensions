@@ -12,7 +12,7 @@ namespace WikipediaMetadata
         /// <returns>Url of the image</returns>
         internal static string GetImageUrl(string key)
         {
-            WikipediaImage imageData = ApiCaller.GetImage(key);
+            WikipediaImage imageData = WikipediaApiCaller.GetImage(key);
 
             ImagePage page = imageData?.Query?.Pages.FirstOrDefault();
 

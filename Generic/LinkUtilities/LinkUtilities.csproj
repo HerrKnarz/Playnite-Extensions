@@ -59,7 +59,17 @@
     <Compile Include="..\..\Common\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\Metadata\WikipediaMetadata\GameFinder.cs">
+      <Link>Shared\Wikipedia\GameFinder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Metadata\WikipediaMetadata\Models\WikipediaItemOption.cs">
+      <Link>Shared\Wikipedia\WikipediaItemOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Metadata\WikipediaMetadata\Models\WikipediaSearchResult.cs">
+      <Link>Shared\Wikipedia\WikipediaSearchResult.cs</Link>
+    </Compile>
     <Compile Include="Helper\ParseHelper.cs" />
+    <Compile Include="Helper\WikipediaApiCaller.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
     <Compile Include="LinkActions\RemoveDuplicates.cs" />
     <Compile Include="LinkActions\HandleUriActions.cs" />

@@ -67,7 +67,7 @@
     <Compile Include="Models\WikipediaItemOption.cs" />
     <Compile Include="Models\WikipediaGameMetadata.cs" />
     <Compile Include="Models\WikipediaSearchResult.cs" />
-    <Compile Include="ApiCaller.cs" />
+    <Compile Include="WikipediaApiCaller.cs" />
     <Compile Include="WikipediaMetadata.cs" />
     <Compile Include="MetadataProvider.cs" />
     <Compile Include="Settings.cs" />

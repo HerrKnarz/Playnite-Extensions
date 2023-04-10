@@ -40,7 +40,7 @@ namespace WikipediaMetadata
 
             try
             {
-                GameFinder gameFinder = new GameFinder(_plugin.Settings.Settings);
+                GameFinder gameFinder = new GameFinder(_plugin.Settings.Settings.AdvancedSearchResultSorting);
                 string key = string.Empty;
 
                 if (_options.IsBackgroundDownload)
@@ -64,7 +64,7 @@ namespace WikipediaMetadata
 
                 if (key != string.Empty)
                 {
-                    page = ApiCaller.GetGameData(key);
+                    page = WikipediaApiCaller.GetGameData(key);
                 }
             }
             catch (Exception ex)

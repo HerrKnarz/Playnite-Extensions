@@ -14,7 +14,7 @@ namespace WikipediaMetadata.Test
         {
             PluginSettings settings = new PluginSettings();
 
-            GameFinder gameFinder = new GameFinder(settings);
+            GameFinder gameFinder = new GameFinder(settings.AdvancedSearchResultSorting);
 
             Assert.Equal(stringResult, gameFinder.FindGame(stringToCheck)?.Key ?? string.Empty);
         }

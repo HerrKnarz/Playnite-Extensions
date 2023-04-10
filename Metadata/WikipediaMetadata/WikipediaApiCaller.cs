@@ -11,7 +11,7 @@ namespace WikipediaMetadata
     /// <summary>
     /// Handles all API calls to Wikipedia
     /// </summary>
-    internal class ApiCaller
+    internal class WikipediaApiCaller
     {
         private const string _baseUrl = "https://en.wikipedia.org/w/rest.php/v1/";
         private const string _imageUrl = "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&pilicense=any&titles={0}";
