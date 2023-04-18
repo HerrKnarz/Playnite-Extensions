@@ -62,7 +62,7 @@ Extension to get metadata from wikipedia. The following fields are supported:
 - Series
 - Platform
 - Cover image
-- Critic Score (Metacritic)
+- Critic Score (Metacritic and GameRankings as fallback)
 - Description (with option to leave out certain sections)
 
 ## KNARZtools
