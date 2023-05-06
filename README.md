@@ -37,7 +37,7 @@ To see which websites are already supported or planned to be added see the [wiki
 Extension to manage game companies (see Developer and Publisher fields in Playnite). It can do the following:
 
 - Merge duplicate companies
-- Remove Business entitiy descriptions like Ltd. or Co.
+- Remove Business entity descriptions like Ltd. or Co.
 - Find and merge similar named companies by removing special characters and generic strings like "Interactive", "Games", "Studios"
 
 ### Planned features
@@ -62,7 +62,7 @@ Extension to get metadata from wikipedia. The following fields are supported:
 - Series
 - Platform
 - Cover image
-- Critic Score (Metacritic)
+- Critic Score (Metacritic and GameRankings as fallback)
 - Description (with option to leave out certain sections)
 
 ## KNARZtools
