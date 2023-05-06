@@ -2,6 +2,7 @@
 using LinkUtilities.Linker;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace LinkUtilities.LinkActions
 {
@@ -13,7 +14,7 @@ namespace LinkUtilities.LinkActions
         private static AddLibraryLinks _instance = null;
         private static readonly object _mutex = new object();
 
-        private AddLibraryLinks() => _libraries = new Libraries();
+        private AddLibraryLinks() => Libraries = new Libraries();
 
         public static AddLibraryLinks Instance()
         {
@@ -34,23 +35,17 @@ namespace LinkUtilities.LinkActions
         }
 
         /// <summary>
-        /// contains all game _libraries that have a link to a store page that can be added.
+        /// contains all game Libraries that have a link to a store page that can be added.
         /// </summary>
-        private readonly Libraries _libraries;
+        public readonly Libraries Libraries;
 
         public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressLibraryLink";
         public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            if (!base.Execute(game, actionModifier, isBulkAction))
-            {
-                return false;
-            }
-
-            List<Link> links = new List<Link>();
-
-            return (_libraries[game.PluginId]?.FindLibraryLink(game, out links) ?? false) && LinkHelper.AddLinks(game, links);
-        }
+            => base.Execute(game, actionModifier, isBulkAction) &&
+               Libraries.TryGetValue(game.PluginId, out LibraryLink lib) &&
+               lib.FindLibraryLink(game, out List<Link> links) &&
+               LinkHelper.AddLinks(game, links);
     }
 }
