@@ -27,6 +27,8 @@ namespace LinkUtilities.Linker
 
         public override bool AllowRedirects { get; set; } = false;
 
+        public override bool ReturnsSameUrl { get; set; } = true;
+
         // GOG Links need the game name in lowercase without special characters and underscores instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveDiacritics()
