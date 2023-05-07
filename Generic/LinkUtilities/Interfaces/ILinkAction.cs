@@ -9,7 +9,8 @@ namespace LinkUtilities
         Search,
         SearchMissing,
         Name,
-        SortOrder
+        SortOrder,
+        DontRename
     }
 
     /// <summary>

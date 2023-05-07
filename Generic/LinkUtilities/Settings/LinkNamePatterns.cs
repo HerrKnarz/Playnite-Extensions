@@ -119,19 +119,19 @@ namespace LinkUtilities.Settings
             SortPatterns();
         }
 
-        public bool LinkMatch(ref string linkName, string linkUrl)
+        public bool LinkMatch(ref string linkName, string linkUrl, bool overridePartialMatch = false)
         {
             string tempLinkName = linkName;
 
-            LinkNamePattern pattern = this.FirstOrDefault(x => x.LinkMatch(tempLinkName, linkUrl));
+            LinkNamePattern pattern = this.FirstOrDefault(x => x.LinkMatch(tempLinkName, linkUrl, overridePartialMatch));
 
-            if (pattern != null)
+            if (pattern == null)
             {
-                linkName = pattern.LinkName;
-                return true;
+                return false;
             }
 
-            return false;
+            linkName = pattern.LinkName;
+            return true;
         }
     }
 }

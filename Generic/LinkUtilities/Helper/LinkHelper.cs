@@ -48,6 +48,7 @@ namespace LinkUtilities
         {
             bool mustUpdate = false;
             bool addNewLink = false;
+            bool renameLink = true;
 
             // If the game doesn't have any Links yet, we have to add the collection itself.
             if (game.Links is null)
@@ -80,6 +81,7 @@ namespace LinkUtilities
                         {
                             link.Name = selectResult.SelectedString;
                             addNewLink = true;
+                            renameLink = false;
                         }
                         else
                         {
@@ -121,7 +123,7 @@ namespace LinkUtilities
             // Updates the game in the database if we added a new link.
             if (mustUpdate)
             {
-                DoAfterAdd(game, cleanUpAfterAdding);
+                DoAfterAdd(game, cleanUpAfterAdding, renameLink);
             }
 
             return mustUpdate;
@@ -181,7 +183,8 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="game">game to process</param>
         /// <param name="cleanUp">if true, the links will be cleaned up afterwards</param>
-        private static void DoAfterAdd(Game game, bool cleanUp = true)
+        /// <param name="renameLinks">If True, newly added links will be renamed.</param>
+        private static void DoAfterAdd(Game game, bool cleanUp = true, bool renameLinks = true)
         {
             if (!GlobalSettings.Instance().OnlyATest)
             {
@@ -190,7 +193,7 @@ namespace LinkUtilities
 
             if (cleanUp)
             {
-                DoAfterChange.Instance().Execute(game);
+                DoAfterChange.Instance().Execute(game, renameLinks ? ActionModifierTypes.None : ActionModifierTypes.DontRename);
             }
         }
 

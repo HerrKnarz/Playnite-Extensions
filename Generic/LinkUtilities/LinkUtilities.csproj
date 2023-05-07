@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="Helper\ParseHelper.cs" />
     <Compile Include="Helper\WikipediaApiCaller.cs" />
+    <Compile Include="LinkActions\AddLinkFromClipboard.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
     <Compile Include="LinkActions\RemoveDuplicates.cs" />
     <Compile Include="LinkActions\HandleUriActions.cs" />

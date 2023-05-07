@@ -9,7 +9,7 @@ namespace LinkUtilities.LinkActions
     /// </summary>
     internal class DoAfterChange : LinkAction
     {
-        private static DoAfterChange _instance = null;
+        private static DoAfterChange _instance;
         private static readonly object _mutex = new object();
         private DoAfterChange() { }
 
@@ -31,8 +31,8 @@ namespace LinkUtilities.LinkActions
             return _instance;
         }
 
-        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressSortLinks";
-        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogSortedMessage";
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressSortLinks";
+        public override string ResultMessage => "LOCLinkUtilitiesDialogSortedMessage";
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -43,7 +43,7 @@ namespace LinkUtilities.LinkActions
 
             bool result = false;
 
-            if (RenameLinks.Instance().RenameLinksAfterChange && (RenameLinks.Instance().RenamePatterns?.Any() ?? false))
+            if (actionModifier != ActionModifierTypes.DontRename && RenameLinks.Instance().RenameLinksAfterChange && (RenameLinks.Instance().RenamePatterns?.Any() ?? false))
             {
                 result = RenameLinks.Instance().Execute(game, actionModifier);
             }

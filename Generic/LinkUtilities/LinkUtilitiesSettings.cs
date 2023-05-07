@@ -252,6 +252,7 @@ namespace LinkUtilities
             SortLinks.Instance().SortAfterChange = Settings.SortAfterChange;
             SortLinks.Instance().UseCustomSortOrder = Settings.UseCustomSortOrder;
             HandleUriActions.Instance().LinkNamePatterns = Settings.LinkNamePatterns;
+            AddLinkFromClipboard.Instance().LinkNamePatterns = Settings.LinkNamePatterns;
             RemoveLinks.Instance().RemovePatterns = Settings.RemovePatterns;
             RemoveLinks.Instance().RemoveLinksAfterChange = Settings.RemoveLinksAfterChange;
             RemoveDuplicates.Instance().RemoveDuplicatesAfterChange = Settings.RemoveDuplicatesAfterChange;
