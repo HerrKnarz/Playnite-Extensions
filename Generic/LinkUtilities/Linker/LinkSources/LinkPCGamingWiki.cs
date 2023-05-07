@@ -11,10 +11,10 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkPcGamingWiki : BaseClasses.Linker
     {
-        private const string WebsiteUrl = "https://www.pcgamingwiki.com";
+        private const string _websiteUrl = "https://www.pcgamingwiki.com";
         public override string LinkName => "PCGamingWiki";
-        public override string BaseUrl => $"{WebsiteUrl}/wiki/";
-        public override string SearchUrl => WebsiteUrl + "/w/index.php?search={0}&fulltext=1";
+        public override string BaseUrl => $"{_websiteUrl}/wiki/";
+        public override string SearchUrl => _websiteUrl + "/w/index.php?search={0}&fulltext=1";
 
         // PCGamingWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
@@ -65,6 +65,6 @@ namespace LinkUtilities.Linker
         }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
-            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, WebsiteUrl, LinkName));
+            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName));
     }
 }

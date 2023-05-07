@@ -86,6 +86,8 @@ namespace LinkUtilities
                             {
                                 activateGlobalProgress.ProgressMaxValue = games.Count;
 
+                                linkAction.Prepare(actionModifier);
+
                                 foreach (Game game in games)
                                 {
                                     activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(linkAction.ProgressMessage)}{Environment.NewLine}{game.Name}";

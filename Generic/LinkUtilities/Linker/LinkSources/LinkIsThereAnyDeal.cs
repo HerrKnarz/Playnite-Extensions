@@ -16,8 +16,8 @@ namespace LinkUtilities.Linker
     internal class LinkIsThereAnyDeal : BaseClasses.Linker
     {
         private string _baseUrl;
-        private readonly string _steamUrl = "https://isthereanydeal.com/steam/app/";
-        private readonly string _standardUrl = "https://isthereanydeal.com/game/";
+        private const string _steamUrl = "https://isthereanydeal.com/steam/app/";
+        private const string _standardUrl = "https://isthereanydeal.com/game/";
 
         public override string LinkName => "IsThereAnyDeal";
         public override string BaseUrl => _baseUrl;

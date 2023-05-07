@@ -16,7 +16,7 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LinkArcadeDatabase : BaseClasses.Linker
     {
-        private readonly string _websiteUrl = "http://adb.arcadeitalia.net/";
+        private const string _websiteUrl = "http://adb.arcadeitalia.net/";
 
         public override string LinkName => "Arcade Database";
         public override string BaseUrl => "http://adb.arcadeitalia.net/dettaglio_mame.php?lang=en&game_name=";

@@ -56,6 +56,8 @@ namespace LinkUtilities.LinkActions
         {
             links = new List<Link>();
 
+            //Prepare(ActionModifierTypes.Add);
+
             ConcurrentQueue<Link> linksQueue = new ConcurrentQueue<Link>();
 
             Parallel.ForEach(_linkers, linker =>
