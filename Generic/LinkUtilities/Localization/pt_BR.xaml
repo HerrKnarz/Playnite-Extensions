@@ -17,6 +17,7 @@
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Você tem duplicatas em sua ordem de ordenação. Por favor, certifique-se de que o nome de cada link é único.</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Adicionar link da biblioteca</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkFromClipboard">Add link from clipboard</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Adicionar link para...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Todos os sites configurados</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">All missing websites</sys:String>
@@ -49,6 +50,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Adicionar padrões</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remover</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Classificar</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configurar sites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Definir ordem de classificação personalizada</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Remover links duplicados após a atualização dos metadados do jogo</sys:String>
@@ -72,7 +74,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Exibir no menu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Renomear links após os meta dados do jogo serem atualizados</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortPosition">Posição</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarklet">Favoritos</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">Bookmarklet/Clipboard</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Configurações Gerais</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Remover links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Renomear links</sys:String>
