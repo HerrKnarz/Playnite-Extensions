@@ -50,7 +50,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Додати типові</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Вилучити</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Сортувати</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Налаштуйте шаблони назв посилань (Для посилань з буфера обміну перевірятиметься лише шаблон URL-адреси, оскільки ми все одно не маємо назви)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Налаштувати сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Визначити довільний порядок сортування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Прибрати повторювані посилання після оновлення метаданих</sys:String>
