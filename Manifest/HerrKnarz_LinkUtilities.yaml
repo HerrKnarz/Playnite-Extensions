@@ -1,5 +1,15 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 3.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-05-07
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-05-07/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_3_1.pext
+    Changelog:
+      - Added option to add a link from the clipboard.
+      - Fixed bug not finding anything when adding/searching links to several games at once.
+      - Hopefully fixed bug that sometimes added a link to a game that doesn't exist on GOG.
+      - Fixed error when trying to add library link when the game is from a library that can't be added.
+      - The option to add a library link now only shows up in the menu, when at least one of the selected games is from a supported library.
   - Version: 3.0
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-04-10
