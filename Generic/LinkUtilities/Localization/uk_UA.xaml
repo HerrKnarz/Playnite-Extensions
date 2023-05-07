@@ -17,7 +17,7 @@
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">У вас є дублікати в списку сортування. Переконайтеся, що кожна назва посилання унікальна.</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Додати посилання бібліотеки</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkFromClipboard">Add link from clipboard</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkFromClipboard">Додати посилання з буфера обміну</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Додати посилання до...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Всі налаштовані сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Всі відсутні сайти</sys:String>
@@ -74,7 +74,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Показати в меню</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Сортувати посилання після оновлення метаданих</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortPosition">Розташування</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">Bookmarklet/Clipboard</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">Букмарклет/Буфер Обміну</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Загальні налаштування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Вилучити посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Перейменувати посилання</sys:String>
