@@ -74,6 +74,11 @@ namespace LinkUtilities
 
                     using (PlayniteApi.Database.BufferedUpdate())
                     {
+                        if (!linkAction.Prepare(actionModifier))
+                        {
+                            return;
+                        }
+
                         GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                             $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
                             true
@@ -87,8 +92,6 @@ namespace LinkUtilities
                             try
                             {
                                 activateGlobalProgress.ProgressMaxValue = games.Count;
-
-                                linkAction.Prepare(actionModifier);
 
                                 foreach (Game game in games)
                                 {
