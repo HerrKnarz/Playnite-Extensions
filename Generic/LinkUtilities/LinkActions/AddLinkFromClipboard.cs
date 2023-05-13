@@ -85,7 +85,7 @@ namespace LinkUtilities.LinkActions
             }
 
             StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
-                ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkText"),
+                ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkText") + Environment.NewLine + url,
                 ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkCaption"),
                 tempLinkName);
 
