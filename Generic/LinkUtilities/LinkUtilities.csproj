@@ -68,10 +68,13 @@
     <Compile Include="..\..\Metadata\WikipediaMetadata\Models\WikipediaSearchResult.cs">
       <Link>Shared\Wikipedia\WikipediaSearchResult.cs</Link>
     </Compile>
+    <Compile Include="BaseClasses\ObservableCollectionFast.cs" />
     <Compile Include="Helper\ParseHelper.cs" />
     <Compile Include="Helper\WikipediaApiCaller.cs" />
     <Compile Include="LinkActions\AddLinkFromClipboard.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
+    <Compile Include="ViewModels\ReviewDuplicatesViewModel.cs" />
+    <Compile Include="ViewModels\ReviewDuplicates.cs" />
     <Compile Include="LinkActions\RemoveDuplicates.cs" />
     <Compile Include="LinkActions\HandleUriActions.cs" />
     <Compile Include="LinkActions\AddLibraryLinks.cs" />
@@ -125,11 +128,10 @@
     <Compile Include="Helper\LinkHelper.cs" />
     <Compile Include="LinkUtilities.cs" />
     <Compile Include="LinkUtilitiesSettings.cs" />
-    <Compile Include="LinkUtilitiesSettingsView.xaml.cs">
+    <Compile Include="Views\LinkUtilitiesSettingsView.xaml.cs">
       <DependentUpon>LinkUtilitiesSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\ApiResults\ItchSearchResult.cs" />
-    <Compile Include="Models\FindLinkResult.cs" />
     <Compile Include="Models\LinkNamePattern.cs" />
     <Compile Include="Models\LinkSourceSetting.cs" />
     <Compile Include="Models\ApiResults\MediaWikiSearchSuggestion.cs" />
@@ -137,12 +139,17 @@
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\SortItem.cs" />
     <Compile Include="Models\ApiResults\SteamSearchResult.cs" />
+    <Compile Include="ViewModels\Duplicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LinkActions\SortLinks.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="Settings\DuplicateTypes.cs" />
     <Compile Include="Settings\LinkNamePatterns.cs" />
     <Compile Include="Settings\LinkSourceSettings.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\ReviewDuplicatesView.xaml.cs">
+      <DependentUpon>ReviewDuplicatesView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="extension.yaml">
@@ -150,7 +157,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="LinkUtilitiesSettingsView.xaml">
+    <Page Include="Views\LinkUtilitiesSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,6 +166,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="Views\ReviewDuplicatesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\.editorconfig">

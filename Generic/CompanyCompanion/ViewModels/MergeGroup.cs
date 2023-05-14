@@ -45,7 +45,8 @@ namespace CompanyCompanion
         /// <summary>
         /// Name to display
         /// </summary>
-        public string DisplayName => Plugin.Settings.Settings.ShowGroupKey ? $"{Key} ({Companies.Count})" : $"{CompanyName} ({Companies.Count})";
+        public string DisplayName
+            => Plugin.Settings.Settings.ShowGroupKey ? $"{Key} ({Companies.Count})" : $"{CompanyName} ({Companies.Count})";
 
         /// <summary>
         /// Id of the masterCompany

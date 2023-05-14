@@ -27,6 +27,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Remove duplicate links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Remove unwanted links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Rename links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Search link to...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Sort links by name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Sort links by sort order</sys:String>
@@ -40,6 +41,12 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">Sorting links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">Tagging missing links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Adding links to configured websites...</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesGameName">Game</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkName">Link</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkUrl">URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesRefresh">Refresh</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesWindowName">Review duplicate links</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Add link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Automatically add links to newly added games</sys:String>

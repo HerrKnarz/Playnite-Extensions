@@ -7,6 +7,7 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace LinkUtilities
@@ -129,6 +130,34 @@ namespace LinkUtilities
                 IsUpdating = false;
             }
         }
+
+        /// <summary>
+        /// Shows the Review Duplicates window.
+        /// </summary>
+        private void ShowReviewDuplicatesView(IEnumerable<Game> games)
+        {
+            try
+            {
+                ReviewDuplicatesView reviewDuplicatesView = new ReviewDuplicatesView(this, games);
+                Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                {
+                    ShowMinimizeButton = false
+                });
+
+                window.Height = 800;
+                window.Width = 1200;
+                window.Title = ResourceProvider.GetString("LOCLinkUtilitiesReviewDuplicatesWindowName");
+                window.Content = reviewDuplicatesView;
+                window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                window.ShowDialog();
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing ReviewDuplicatesView", true);
+            }
+        }
+
 
         /// <summary>
         /// Event that get's triggered after updating the game database. Is used to sort Links after updating.
@@ -493,6 +522,15 @@ namespace LinkUtilities
                 MenuSection = menuSection,
                 Action = a => DoForAll(games, RemoveDuplicates.Instance(), true)
             });
+
+            // Adds the "Review duplicate links" item to the game menu.
+            menuItems.Add(new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
+                MenuSection = menuSection,
+                Action = a => ShowReviewDuplicatesView(games)
+            });
+
 
             // Adds the "Remove unwanted links" item to the game menu.
             if (RemoveLinks.Instance().RemovePatterns?.Any() ?? false)

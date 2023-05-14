@@ -307,7 +307,7 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="url">URL to clean up</param>
         /// <returns>cleaned up URL</returns>
-        private static string CleanUpUrl(string url)
+        internal static string CleanUpUrl(string url)
         {
             try
             {

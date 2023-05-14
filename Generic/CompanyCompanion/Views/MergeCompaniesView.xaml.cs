@@ -16,9 +16,9 @@ namespace CompanyCompanion
                 InitializeComponent();
                 ((MergeCompaniesViewModel)DataContext).Plugin = plugin;
             }
-            catch (Exception E)
+            catch (Exception e)
             {
-                Log.Error(E, "Error during initializing MergeCompaniesView", true);
+                Log.Error(e, "Error during initializing MergeCompaniesView", true);
             }
         }
     }
