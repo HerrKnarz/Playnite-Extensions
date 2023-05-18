@@ -38,7 +38,7 @@ namespace LinkUtilities
                     return;
                 }
 
-                List<Game> games = PlayniteApi.MainView.SelectedGames.ToList();
+                List<Game> games = PlayniteApi.MainView.SelectedGames.Distinct().ToList();
 
                 DoForAll(games, HandleUriActions.Instance(), true, HandleUriActions.Instance().Action);
             });
@@ -165,12 +165,14 @@ namespace LinkUtilities
         /// <param name="args">Event arguments. Contains a list of all updated games.</param>
         public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
         {
-            if (Settings.Settings.SortAfterChange && !IsUpdating)
+            if (!Settings.Settings.SortAfterChange || IsUpdating)
             {
-                List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
-                TagMissingLinks.Instance().TagsCache.Clear();
-                DoForAll(games, DoAfterChange.Instance());
+                return;
             }
+
+            List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
+            TagMissingLinks.Instance().TagsCache.Clear();
+            DoForAll(games, DoAfterChange.Instance());
         }
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
