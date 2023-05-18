@@ -138,7 +138,7 @@ namespace LinkUtilities
         {
             try
             {
-                ReviewDuplicatesView reviewDuplicatesView = new ReviewDuplicatesView(this, games);
+                ReviewDuplicatesView reviewDuplicatesView = new ReviewDuplicatesView(games);
                 Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                 {
                     ShowMinimizeButton = false
@@ -157,7 +157,6 @@ namespace LinkUtilities
                 Log.Error(exception, "Error during initializing ReviewDuplicatesView", true);
             }
         }
-
 
         /// <summary>
         /// Event that get's triggered after updating the game database. Is used to sort Links after updating.
@@ -530,7 +529,6 @@ namespace LinkUtilities
                 MenuSection = menuSection,
                 Action = a => ShowReviewDuplicatesView(games)
             });
-
 
             // Adds the "Remove unwanted links" item to the game menu.
             if (RemoveLinks.Instance().RemovePatterns?.Any() ?? false)

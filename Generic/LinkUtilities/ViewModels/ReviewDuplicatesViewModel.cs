@@ -37,7 +37,7 @@ namespace LinkUtilities
         public void InitializeView(IEnumerable<Game> games)
         {
             _games = games;
-            _reviewDuplicates = new ReviewDuplicates(_games);
+            ReviewDuplicates = new ReviewDuplicates(_games);
         }
 
         public RelayCommand RefreshCommand

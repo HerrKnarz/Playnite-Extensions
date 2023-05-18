@@ -11,7 +11,7 @@ namespace LinkUtilities
     /// </summary>
     public partial class ReviewDuplicatesView : UserControl
     {
-        public ReviewDuplicatesView(LinkUtilities plugin, IEnumerable<Game> games)
+        public ReviewDuplicatesView(IEnumerable<Game> games)
         {
             try
             {

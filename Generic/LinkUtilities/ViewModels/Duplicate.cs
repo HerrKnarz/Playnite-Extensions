@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Settings;
+﻿using LinkUtilities.LinkActions;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 
@@ -9,8 +10,6 @@ namespace LinkUtilities
         private Game _game;
 
         private Link _link;
-
-        private bool _mustUpdate;
 
         public Game Game
         {
@@ -32,27 +31,32 @@ namespace LinkUtilities
             }
         }
 
-        public bool MustUpdate
-        {
-            get => _mustUpdate;
-            set
-            {
-                _mustUpdate = value;
-                OnPropertyChanged("MustUpdate");
-            }
-        }
-
         public void Remove()
         {
             if (GlobalSettings.Instance().OnlyATest)
             {
-                _mustUpdate |= _game.Links.Remove(_link);
+                _game.Links.Remove(_link);
+
+                if (TagMissingLinks.Instance().TagMissingLinksAfterChange)
+                {
+                    TagMissingLinks.Instance().Execute(_game);
+                }
             }
             else
             {
                 API.Instance.MainView.UIDispatcher.Invoke(delegate
                 {
-                    _mustUpdate |= _game.Links.Remove(_link);
+                    if (!_game.Links.Remove(_link))
+                    {
+                        return;
+                    }
+
+                    if (TagMissingLinks.Instance().TagMissingLinksAfterChange)
+                    {
+                        TagMissingLinks.Instance().Execute(_game);
+                    }
+
+                    API.Instance.Database.Games.Update(_game);
                 });
             }
         }
