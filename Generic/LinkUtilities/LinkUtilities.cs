@@ -292,6 +292,18 @@ namespace LinkUtilities
                 }
             });
 
+            // Adds the "Review duplicate links" item to the main menu.
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
+                MenuSection = $"@{menuSection}|{menuAllGames}",
+                Action = a =>
+                {
+                    List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                    ShowReviewDuplicatesView(games);
+                }
+            });
+
             menuItems.Add(new MainMenuItem
             {
                 Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
@@ -300,6 +312,18 @@ namespace LinkUtilities
                 {
                     List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
                     DoForAll(games, RemoveDuplicates.Instance(), true);
+                }
+            });
+
+            // Adds the "Review duplicate links" item to the main menu.
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
+                MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                Action = a =>
+                {
+                    List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                    ShowReviewDuplicatesView(games);
                 }
             });
 
