@@ -29,6 +29,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Endre navn på lenker</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Søk etter lenke til …</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">selected websites...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Sorter lenker etter navn</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Sorter lenker etter sorteringsrekkefølge</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Merk manglende lenker</sys:String>
@@ -48,6 +49,8 @@
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesRefresh">Refresh</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesWindowName">Review duplicate links</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesSelectLinksWindowName">Select websites</sys:String>
+
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Legg til lenke</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Legg til lenker automatisk til nye spill</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-nøkkel</sys:String>
@@ -55,6 +58,8 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Mer informasjon om bokmerkeverktøyet er tilgjengelig her.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Legg til</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Legg til standardinnstillinger</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Fjern</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sorter</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Konfigurer koblingsmønstre (Når det gjelder utklippstavlekoblingene vil kun URL-mønstre bli sjekket for navn, siden vi ikke har noe navn å begynne med.)</sys:String>
