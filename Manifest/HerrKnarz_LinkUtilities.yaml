@@ -1,5 +1,15 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 3.2
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-05-19
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-05-19/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_3_2.pext
+    Changelog:
+      - New option "Review duplicate links" opens a list with all found duplicates to be removed manually.
+      - Added option to choose which websites you want to add/search a link for in a dialog window.
+      - The link to be added from the clipboard is now shown in the message box text.
+      - Added option to not rename a link, when the link name contains a special character or string. Can be configured in the settings.
+      - Fixed bug preventing clipboard and bookmarklet links from being added when more than one game is selected.
   - Version: 3.1
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-05-07
