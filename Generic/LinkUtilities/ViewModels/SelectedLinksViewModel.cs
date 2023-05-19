@@ -26,5 +26,29 @@ namespace LinkUtilities
                 OnPropertyChanged("Links");
             }
         }
+
+        public RelayCommand<object> CheckAllCommand => new RelayCommand<object>((a) =>
+        {
+            foreach (SelectedLink link in Links)
+            {
+                link.Selected = true;
+            }
+        });
+
+        public RelayCommand<object> UncheckAllCommand => new RelayCommand<object>((a) =>
+        {
+            foreach (SelectedLink link in Links)
+            {
+                link.Selected = false;
+            }
+        });
+
+        public RelayCommand<object> ReverseCheckCommand => new RelayCommand<object>((a) =>
+        {
+            foreach (SelectedLink link in Links)
+            {
+                link.Selected = !link.Selected;
+            }
+        });
     }
 }

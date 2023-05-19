@@ -59,9 +59,12 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Add</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Add defaults</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Check all</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remove</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Reverse check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sort</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Uncheck all</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Define custom sort order</sys:String>
