@@ -27,7 +27,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Odstranit duplicitní odkazy</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Odstranit nežádoucí odkazy</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Přejmenovat odkazy</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Vyhledat odkaz...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">selected websites...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Řadit odkazy dle jména</sys:String>
@@ -59,9 +59,12 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Přidat</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Přidat výchozí</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Check all</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Odstranit</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Reverse check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Řazení</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Uncheck all</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Define custom sort order</sys:String>
