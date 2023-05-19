@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Odkazy přidány do {0} her!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Pojmenovat odkaz</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Prosím vložte název odkazu!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">No duplicates found!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Nežádoucí odkazy odstraněny z {0} hry/her!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplikáty odkazů odstraněny z {0} hry/her!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Odkazy {0} her přejmenováný!</sys:String>
@@ -27,7 +28,9 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Odstranit duplicitní odkazy</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Odstranit nežádoucí odkazy</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Přejmenovat odkazy</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Vyhledat odkaz...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">selected websites...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Řadit odkazy dle jména</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Řadit odkazy dle pořadí</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Tag missing links</sys:String>
@@ -41,6 +44,14 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">Tagging missing links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Přidat odkazy nastavených web-stránek...</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesGameName">Game</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkName">Link</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkUrl">URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesRefresh">Refresh</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesWindowName">Review duplicate links</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesSelectLinksWindowName">Select websites</sys:String>
+
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Přidat odkaz</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Automatically add links to newly added games</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Klíč</sys:String>
@@ -48,8 +59,13 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">For more information on the bookmarklet click here.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Přidat</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Přidat výchozí</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Check all</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Odstranit</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Reverse check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Řazení</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Uncheck all</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Define custom sort order</sys:String>

@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">La til lenker i {0} spill!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Gi navn til lenken</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Skriv inn et navn for lenken!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">No duplicates found!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Uønskede lenker for {0} spill fjernet!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplikatlenker for {0} spill fjernet!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Lenker for {0} spill endret navn!</sys:String>
@@ -17,7 +18,7 @@
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Du har duplikater i sorteringsrekkefølgen. Kontroller at alle lenkenavn er unike.</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">Legg til lenke for bibliotek</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkFromClipboard">Add link from clipboard</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkFromClipboard">Legg til lenke fra utklippstavlen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Legg til lenke til...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Alle konfigurerte nettsider</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Alle manglende nettsteder</sys:String>
@@ -27,7 +28,9 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Fjern duplikater</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Fjern uønskede lenker</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Endre navn på lenker</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Søk etter lenke til …</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">selected websites...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Sorter lenker etter navn</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Sorter lenker etter sorteringsrekkefølge</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Merk manglende lenker</sys:String>
@@ -41,6 +44,14 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">Tagger manglende lenker …</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Legger til lenker til konfigurerte nettsteder …</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesGameName">Game</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkName">Link</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkUrl">URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesRefresh">Refresh</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesWindowName">Review duplicate links</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesSelectLinksWindowName">Select websites</sys:String>
+
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Legg til lenke</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Legg til lenker automatisk til nye spill</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-nøkkel</sys:String>
@@ -48,9 +59,14 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Mer informasjon om bokmerkeverktøyet er tilgjengelig her.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Legg til</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Legg til standardinnstillinger</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Check all</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Fjern</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Reverse check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sorter</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Uncheck all</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Konfigurer koblingsmønstre (Når det gjelder utklippstavlekoblingene vil kun URL-mønstre bli sjekket for navn, siden vi ikke har noe navn å begynne med.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Konfigurer nettsider</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Definer tilpasset sorteringsrekkefølge</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Fjern dupliserte lenker etter at spillets metadata er oppdatert</sys:String>
@@ -74,7 +90,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">Vis i meny</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Sorter lenker etter at spillmetadataene er oppdatert</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortPosition">Posisjon</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">Bookmarklet/Clipboard</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">Bookmarklet/utklippstavle</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Generelle innstillinger</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Fjern lenker</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Endre navn på lenker</sys:String>

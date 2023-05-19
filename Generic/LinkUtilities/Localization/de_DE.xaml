@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Links zu {0} Spielen hinzugefügt!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Link benennen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Bitte einen Namen für den Link eingeben!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">Keine Duplikate gefunden!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Unerwünschte Links von {0} Spielen entfernt!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Doppelte Links von {0} Spielen entfernt!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Links von {0} Spielen umbenannt!</sys:String>
@@ -27,7 +28,9 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Doppelte Links entfernen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Unerwünschte Links entfernen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Links umbenennen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Doppelte Links überprüfen...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Link suchen zu...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">Webseiten auswählen...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Links nach Namen sortieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Links nach Sortierreihenfolge sortieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Fehlende Links taggen</sys:String>
@@ -41,6 +44,14 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">Fehlende Links werden getaggt...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Füge Links zu konfigurierten Webseiten hinzu...</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesGameName">Spiel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkName">Link</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkUrl">URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesRefresh">Aktualisieren</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesWindowName">Doppelte Links überprüfen</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesSelectLinksWindowName">Webseiten auswählen</sys:String>
+
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Link hinzufügen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Automatisch Links zu neu hinzugefügten Spielen hinzufügen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Schlüssel</sys:String>
@@ -48,8 +59,13 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Klicke hie für weitere Informationen zum Bookmarklet.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Neu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Standardwerte hinzufügen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Abbrechen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Alle auswählen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Löschen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Auswahl umkehren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sortieren</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Alle abwählen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Link-Namensmuster konfigurieren (Für die Zwischenablage werden nur die URL-Muster geprüft, um einen Namen zu finden da wir keinen Namen haben, den wir prüfen könnten.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Webseiten konfigurieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Sortierreihenfolge festlegen</sys:String>
