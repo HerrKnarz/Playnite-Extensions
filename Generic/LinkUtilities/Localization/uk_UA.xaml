@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Додано посилання до {0} гри!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Назвіть посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Будь ласка, введіть назву для посилання!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">No duplicates found!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Небажані посилання в {0} іграх видалені!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Повторювані посилання видалені з {0} ігор!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Посилання {0} ігор перейменовано!</sys:String>
