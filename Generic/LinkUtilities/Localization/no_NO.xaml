@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">La til lenker i {0} spill!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Gi navn til lenken</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Skriv inn et navn for lenken!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">No duplicates found!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Uønskede lenker for {0} spill fjernet!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplikatlenker for {0} spill fjernet!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Lenker for {0} spill endret navn!</sys:String>
