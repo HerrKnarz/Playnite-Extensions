@@ -17,7 +17,7 @@
             <Button Content="{DynamicResource LOCLinkUtilitiesReviewDuplicatesRefresh}" Margin="10,0,0,0"
                     Command="{Binding RefreshCommand}"/>
         </StackPanel>
-        <ListView Name="DuplicateLinks" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0" HorizontalAlignment="Stretch"
+        <ListView Name="DuplicateLinks" SelectionMode="Extended" DockPanel.Dock="Top" HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch" ItemsSource="{Binding ReviewDuplicates.Duplicates}">
             <ListView.View>
                 <GridView>

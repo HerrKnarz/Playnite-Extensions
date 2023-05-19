@@ -178,14 +178,7 @@ namespace LinkUtilities.LinkActions
         private bool SelectLinks(bool add = true)
         {
             SelectedLinksViewModel viewModel = new SelectedLinksViewModel(Links, add);
-
-            Window window = API.Instance.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
-            window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
-            window.SizeToContent = SizeToContent.WidthAndHeight;
-            window.MaxHeight = SystemParameters.PrimaryScreenHeight - 20;
-            window.Title = ResourceProvider.GetString("LOCLinkUtilitiesSelectLinksWindowName");
-            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-
+            Window window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesSelectLinksWindowName"));
             SelectedLinksView view = new SelectedLinksView(window) { DataContext = viewModel };
 
             window.Content = view;

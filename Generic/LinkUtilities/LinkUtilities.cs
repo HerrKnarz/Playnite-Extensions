@@ -134,22 +134,13 @@ namespace LinkUtilities
         /// <summary>
         /// Shows the Review Duplicates window.
         /// </summary>
-        private void ShowReviewDuplicatesView(IEnumerable<Game> games)
+        private static void ShowReviewDuplicatesView(IEnumerable<Game> games)
         {
             try
             {
                 ReviewDuplicatesView reviewDuplicatesView = new ReviewDuplicatesView(games);
-                Window window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-                {
-                    ShowMinimizeButton = false
-                });
-
-                window.Height = 800;
-                window.Width = 1200;
-                window.Title = ResourceProvider.GetString("LOCLinkUtilitiesReviewDuplicatesWindowName");
+                Window window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesReviewDuplicatesWindowName"));
                 window.Content = reviewDuplicatesView;
-                window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 window.ShowDialog();
             }
             catch (Exception exception)
