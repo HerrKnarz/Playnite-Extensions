@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Liens ajoutés à {0} jeux !</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Nommez le lien</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Veuillez saisir un nom pour le lien !</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">No duplicates found!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Liens non désirés de {0} parties supprimés !</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Lien en double de {0} jeux supprimés !</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Liens de {0} jeux renommés !</sys:String>
