@@ -23,6 +23,7 @@ namespace LinkUtilities
         private bool _removeLinksAfterChange = false;
         private bool _renameLinksAfterChange = false;
         private bool _tagMissingLinksAfterChange = false;
+        private string _renameBlocker = string.Empty;
         private string _missingLinkPrefix = ResourceProvider.GetString("LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue");
         private DateTime _lastAutoLibUpdate = DateTime.Now;
         private ObservableCollection<SortItem> _sortOrder;
@@ -81,6 +82,12 @@ namespace LinkUtilities
         {
             get => _tagMissingLinksAfterChange;
             set => SetValue(ref _tagMissingLinksAfterChange, value);
+        }
+
+        public string RenameBlocker
+        {
+            get => _renameBlocker;
+            set => SetValue(ref _renameBlocker, value);
         }
 
         public string MissingLinkPrefix
@@ -259,6 +266,7 @@ namespace LinkUtilities
             RemoveDuplicates.Instance().RemoveDuplicatesType = Settings.RemoveDuplicatesType;
             RenameLinks.Instance().RenamePatterns = Settings.RenamePatterns;
             RenameLinks.Instance().RenameLinksAfterChange = Settings.RenameLinksAfterChange;
+            RenameLinks.Instance().RenameBlocker = Settings.RenameBlocker;
             TagMissingLinks.Instance().MissingLinkPatterns = Settings.MissingLinkPatterns;
             TagMissingLinks.Instance().TagMissingLinksAfterChange = Settings.TagMissingLinksAfterChange;
             TagMissingLinks.Instance().MissingLinkPrefix = Settings.MissingLinkPrefix;
@@ -342,6 +350,7 @@ namespace LinkUtilities
             Settings.RemoveLinksAfterChange = EditingClone.RemoveLinksAfterChange;
             Settings.RenameLinksAfterChange = EditingClone.RenameLinksAfterChange;
             Settings.TagMissingLinksAfterChange = EditingClone.TagMissingLinksAfterChange;
+            Settings.RenameBlocker = EditingClone.RenameBlocker;
             Settings.MissingLinkPrefix = EditingClone.MissingLinkPrefix;
             Settings.SortOrder = EditingClone.SortOrder;
             Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;

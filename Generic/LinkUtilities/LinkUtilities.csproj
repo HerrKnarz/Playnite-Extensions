@@ -131,7 +131,7 @@
     <Compile Include="Models\ApiResults\GogMetaData.cs" />
     <Compile Include="Helper\LinkHelper.cs" />
     <Compile Include="LinkUtilities.cs" />
-    <Compile Include="LinkUtilitiesSettings.cs" />
+    <Compile Include="Settings\LinkUtilitiesSettings.cs" />
     <Compile Include="ViewModels\SelectedLink.cs" />
     <Compile Include="ViewModels\SelectedLinksViewModel.cs" />
     <Compile Include="Views\LinkUtilitiesSettingsView.xaml.cs">

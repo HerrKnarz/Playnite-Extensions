@@ -39,6 +39,8 @@ namespace LinkUtilities.LinkActions
 
         public bool RenameLinksAfterChange { get; set; } = false;
 
+        public string RenameBlocker { get; set; } = string.Empty;
+
         /// <summary>
         /// List of patterns to find the links to rename based on URL or link name
         /// </summary>
@@ -52,27 +54,36 @@ namespace LinkUtilities.LinkActions
             {
                 foreach (Link link in game.Links)
                 {
+                    if (RenameBlocker.Any() && link.Name.Contains(RenameBlocker))
+                    {
+                        continue;
+                    }
+
                     string linkName = link.Name;
 
-                    if (RenamePatterns.LinkMatch(ref linkName, link.Url))
+                    if (!RenamePatterns.LinkMatch(ref linkName, link.Url))
                     {
-                        if (linkName != link.Name)
-                        {
-                            if (GlobalSettings.Instance().OnlyATest)
-                            {
-                                link.Name = linkName;
-                            }
-                            else
-                            {
-                                API.Instance.MainView.UIDispatcher.Invoke(delegate
-                                {
-                                    link.Name = linkName;
-                                });
-                            }
-
-                            mustUpdate = true;
-                        }
+                        continue;
                     }
+
+                    if (linkName == link.Name)
+                    {
+                        continue;
+                    }
+
+                    if (GlobalSettings.Instance().OnlyATest)
+                    {
+                        link.Name = linkName;
+                    }
+                    else
+                    {
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            link.Name = linkName;
+                        });
+                    }
+
+                    mustUpdate = true;
                 }
 
                 if (mustUpdate)
