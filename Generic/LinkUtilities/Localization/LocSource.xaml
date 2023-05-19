@@ -29,6 +29,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Rename links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Search link to...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">selected websites...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Sort links by name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Sort links by sort order</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Tag missing links</sys:String>
@@ -48,6 +49,8 @@
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesRefresh">Refresh</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesWindowName">Review duplicate links</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesSelectLinksWindowName">Select websites</sys:String>
+
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Add link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Automatically add links to newly added games</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Key</sys:String>
@@ -55,6 +58,8 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">For more information on the bookmarklet click here.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Add</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Add defaults</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remove</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sort</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>

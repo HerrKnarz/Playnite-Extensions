@@ -440,6 +440,13 @@ namespace LinkUtilities
                         MenuSection = $"{menuSection}|{menuAddLinks}",
                         Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.Add)
                     },
+                    // Adds the "selected websites..." item to the "add link to" sub menu.
+                    new GameMenuItem
+                    {
+                        Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSelectedWebsites"),
+                        MenuSection = $"{menuSection}|{menuAddLinks}",
+                        Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.AddSelected)
+                    },
                     // Adds a separator to the "add link to" sub menu
                     new GameMenuItem
                     {
@@ -459,6 +466,13 @@ namespace LinkUtilities
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllMissingWebsites"),
                         MenuSection = $"{menuSection}|{menuSearchLinks}",
                         Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.SearchMissing)
+                    },
+                    // Adds the "selected websites..." item to the "search link to" sub menu.
+                    new GameMenuItem
+                    {
+                        Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSelectedWebsites"),
+                        MenuSection = $"{menuSection}|{menuSearchLinks}",
+                        Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.SearchSelected)
                     },
                     // Adds a separator to the "search link to" sub menu
                     new GameMenuItem

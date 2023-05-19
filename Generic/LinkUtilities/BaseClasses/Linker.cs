@@ -12,7 +12,7 @@ namespace LinkUtilities.BaseClasses
     /// <summary>
     /// Base class for a website link
     /// </summary>
-    internal abstract class Linker : ILinker, ILinkAction
+    public abstract class Linker : ILinker, ILinkAction
     {
         public abstract string LinkName { get; }
         public virtual string BaseUrl => string.Empty;
@@ -172,8 +172,10 @@ namespace LinkUtilities.BaseClasses
             switch (actionModifier)
             {
                 case ActionModifierTypes.Add:
+                case ActionModifierTypes.AddSelected:
                     return AddLink(game);
                 case ActionModifierTypes.Search:
+                case ActionModifierTypes.SearchSelected:
                     return AddSearchedLink(game);
                 case ActionModifierTypes.SearchMissing:
                     return AddSearchedLink(game, true);

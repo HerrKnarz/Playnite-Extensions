@@ -6,8 +6,10 @@ namespace LinkUtilities
     {
         None,
         Add,
+        AddSelected,
         Search,
         SearchMissing,
+        SearchSelected,
         Name,
         SortOrder,
         DontRename

@@ -1,6 +1,4 @@
 ﻿using LinkUtilities.BaseClasses;
-using LinkUtilities.LinkActions;
-using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

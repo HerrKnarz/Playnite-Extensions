@@ -8,6 +8,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Interop;
+using System.Drawing;
 
 namespace LinkUtilities.LinkActions
 {
@@ -55,8 +59,6 @@ namespace LinkUtilities.LinkActions
         private bool FindLinks(Game game, out List<Link> links)
         {
             links = new List<Link>();
-
-            //Prepare(ActionModifierTypes.Add);
 
             ConcurrentQueue<Link> linksQueue = new ConcurrentQueue<Link>();
 
@@ -173,6 +175,30 @@ namespace LinkUtilities.LinkActions
             return result;
         }
 
+        private bool SelectLinks(bool add = true)
+        {
+            SelectedLinksViewModel viewModel = new SelectedLinksViewModel(Links, add);
+
+            Window window = API.Instance.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
+            window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
+            window.SizeToContent = SizeToContent.WidthAndHeight;
+            window.MaxHeight = SystemParameters.PrimaryScreenHeight - 20;
+            window.Title = ResourceProvider.GetString("LOCLinkUtilitiesSelectLinksWindowName");
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+            SelectedLinksView view = new SelectedLinksView(window) { DataContext = viewModel };
+
+            window.Content = view;
+            if (window.ShowDialog() != true)
+            {
+                return false;
+            }
+
+            _linkers = viewModel.Links.Where(x => x.Selected).Select(x => x.Linker).ToList();
+
+            return true;
+        }
+
         public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
             switch (actionModifier)
@@ -180,10 +206,14 @@ namespace LinkUtilities.LinkActions
                 case ActionModifierTypes.Add:
                     _linkers = Links.Where(x => x.Settings.IsAddable == true).ToList();
                     return true;
+                case ActionModifierTypes.AddSelected:
+                    return SelectLinks();
                 case ActionModifierTypes.Search:
                 case ActionModifierTypes.SearchMissing:
                     _linkers = Links.Where(x => x.Settings.IsSearchable == true).ToList();
                     return true;
+                case ActionModifierTypes.SearchSelected:
+                    return SelectLinks(false);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
             }
@@ -199,9 +229,11 @@ namespace LinkUtilities.LinkActions
             switch (actionModifier)
             {
                 case ActionModifierTypes.Add:
+                case ActionModifierTypes.AddSelected:
                     return AddLinks(game, isBulkAction);
                 case ActionModifierTypes.Search:
                 case ActionModifierTypes.SearchMissing:
+                case ActionModifierTypes.SearchSelected:
                     return SearchLinks(game, actionModifier, isBulkAction);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
