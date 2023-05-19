@@ -29,6 +29,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Renomear links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Pesquisar link para...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">selected websites...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Classificar links por nome</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Ordenar links por ordem de classificação</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Links sem etiqueta</sys:String>
@@ -48,6 +49,8 @@
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesRefresh">Refresh</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesWindowName">Review duplicate links</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesSelectLinksWindowName">Select websites</sys:String>
+
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">Adicionar link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Adicionar links automaticamente aos jogos recentemente adicionados</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">Chave API</sys:String>
@@ -55,6 +58,8 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Para obter mais informações sobre o bookmarklet clique aqui.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Adicionar</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Adicionar padrões</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remover</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Classificar</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
