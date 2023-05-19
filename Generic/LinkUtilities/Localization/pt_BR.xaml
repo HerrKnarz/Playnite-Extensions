@@ -27,7 +27,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Remover links duplicados</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Remover links indesejados</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Renomear links</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Pesquisar link para...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">selected websites...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Classificar links por nome</sys:String>
@@ -59,9 +59,12 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Adicionar</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Adicionar padrões</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Check all</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remover</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Reverse check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Classificar</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Uncheck all</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configurar sites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Definir ordem de classificação personalizada</sys:String>
