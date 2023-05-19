@@ -27,7 +27,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Удалить дублирующиеся ссылки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Удалить ненужные ссылки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Переименовать ссылки</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Поиск ссылки в...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">selected websites...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">Сортировать ссылки по названию</sys:String>
@@ -59,9 +59,12 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Добавить</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Добавить значения по умолчанию</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Check all</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Удалить</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Reverse check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Сортировка</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Uncheck all</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Настроить сайты</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Определить свой порядок сортировки</sys:String>
