@@ -6,13 +6,18 @@ using System.Linq;
 namespace LinkUtilities
 {
     /// <summary>
-    /// View model for the Review Duplicates window
+    ///     View model for the Review Duplicates window
     /// </summary>
     public class ReviewDuplicatesViewModel : ViewModelBase
     {
+        private IEnumerable<Game> _games;
         private ReviewDuplicates _reviewDuplicates;
 
-        private IEnumerable<Game> _games;
+        public ReviewDuplicatesViewModel(IEnumerable<Game> games)
+        {
+            _games = games;
+            ReviewDuplicates = new ReviewDuplicates(_games);
+        }
 
         public IEnumerable<Game> Games
         {
@@ -34,21 +39,15 @@ namespace LinkUtilities
             }
         }
 
-        public void InitializeView(IEnumerable<Game> games)
-        {
-            _games = games;
-            ReviewDuplicates = new ReviewDuplicates(_games);
-        }
-
         public RelayCommand RefreshCommand
             => new RelayCommand(() => _reviewDuplicates.GetDuplicates());
 
-        public RelayCommand<IList<object>> RemoveCommand => new RelayCommand<IList<object>>((items) =>
+        public RelayCommand<IList<object>> RemoveCommand => new RelayCommand<IList<object>>(items =>
         {
             foreach (Duplicate item in items.ToList().Cast<Duplicate>())
             {
                 _reviewDuplicates.Remove(item);
             }
-        }, (items) => items?.Any() ?? false);
+        }, items => items?.Any() ?? false);
     }
 }

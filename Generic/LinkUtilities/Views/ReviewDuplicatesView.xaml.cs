@@ -1,22 +1,19 @@
 ﻿using KNARZhelper;
-using Playnite.SDK.Models;
 using System;
-using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace LinkUtilities
 {
     /// <summary>
-    /// Interaction logic for ReviewDuplicatesView.xaml
+    ///     Interaction logic for ReviewDuplicatesView.xaml
     /// </summary>
     public partial class ReviewDuplicatesView : UserControl
     {
-        public ReviewDuplicatesView(IEnumerable<Game> games)
+        public ReviewDuplicatesView()
         {
             try
             {
                 InitializeComponent();
-                ((ReviewDuplicatesViewModel)DataContext).InitializeView(games);
             }
             catch (Exception e)
             {

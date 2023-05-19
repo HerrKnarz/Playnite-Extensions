@@ -9,23 +9,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Interop;
-using System.Drawing;
 
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    /// Class to add a link to all available websites in the Links list, if a definitive link was found.
+    ///     Class to add a link to all available websites in the Links list, if a definitive link was found.
     /// </summary>
     internal class AddWebsiteLinks : LinkAction
     {
         private static AddWebsiteLinks _instance;
         private static readonly object _mutex = new object();
 
+        private List<BaseClasses.Linker> _linkers;
+
         private AddWebsiteLinks() => Links = new Links();
 
-        private List<BaseClasses.Linker> _linkers;
+        public Links Links { get; }
+
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressWebsiteLink";
+        public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
         public static AddWebsiteLinks Instance()
         {
@@ -45,13 +47,9 @@ namespace LinkUtilities.LinkActions
             return _instance;
         }
 
-        public Links Links { get; }
-
-        public override string ProgressMessage => "LOCLinkUtilitiesProgressWebsiteLink";
-        public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
-
         /// <summary>
-        /// Finds links to all configured websites. The links are added asynchronously to a ConcurrentBag and then returned as a distinct list.
+        ///     Finds links to all configured websites. The links are added asynchronously to a ConcurrentBag and then returned as
+        ///     a distinct list.
         /// </summary>
         /// <param name="game">game the links will be found for.</param>
         /// <param name="links">Returns a list of found links</param>
@@ -76,7 +74,7 @@ namespace LinkUtilities.LinkActions
         }
 
         /// <summary>
-        /// Adds links to all configured websites
+        ///     Adds links to all configured websites
         /// </summary>
         /// <param name="game">game the links will be added to.</param>
         /// <param name="isBulkAction">If true, the method already is used in a progress bar and no new one has to be started.</param>
@@ -100,7 +98,7 @@ namespace LinkUtilities.LinkActions
 
             bool result = false;
 
-            API.Instance.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
             {
                 try
                 {
@@ -116,7 +114,7 @@ namespace LinkUtilities.LinkActions
         }
 
         /// <summary>
-        /// Searches links for all configured websites
+        ///     Searches links for all configured websites
         /// </summary>
         /// <param name="game">game the links will be searched for.</param>
         /// <param name="actionModifier">Kind of search (e.g. Search or SearchMissing)</param>
@@ -140,7 +138,7 @@ namespace LinkUtilities.LinkActions
                     IsIndeterminate = false
                 };
 
-                API.Instance.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
                 {
                     try
                     {
@@ -177,19 +175,28 @@ namespace LinkUtilities.LinkActions
 
         private bool SelectLinks(bool add = true)
         {
-            SelectedLinksViewModel viewModel = new SelectedLinksViewModel(Links, add);
-            Window window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesSelectLinksWindowName"));
-            SelectedLinksView view = new SelectedLinksView(window) { DataContext = viewModel };
-
-            window.Content = view;
-            if (window.ShowDialog() != true)
+            try
             {
+                SelectedLinksViewModel viewModel = new SelectedLinksViewModel(Links, add);
+                Window window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesSelectLinksWindowName"));
+                SelectedLinksView view = new SelectedLinksView(window) { DataContext = viewModel };
+
+                window.Content = view;
+                if (window.ShowDialog() != true)
+                {
+                    return false;
+                }
+
+                _linkers = viewModel.Links.Where(x => x.Selected).Select(x => x.Linker).ToList();
+
+                return true;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing ReviewDuplicatesView", true);
+
                 return false;
             }
-
-            _linkers = viewModel.Links.Where(x => x.Selected).Select(x => x.Linker).ToList();
-
-            return true;
         }
 
         public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)

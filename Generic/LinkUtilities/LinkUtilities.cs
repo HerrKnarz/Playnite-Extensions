@@ -7,13 +7,12 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace LinkUtilities
 {
     /// <summary>
-    /// Class of the actual playnite extension
+    ///     Class of the actual playnite extension
     /// </summary>
     public class LinkUtilities : GenericPlugin
     {
@@ -31,7 +30,7 @@ namespace LinkUtilities
 
             Settings.WriteSettingsToLinkActions();
 
-            PlayniteApi.UriHandler.RegisterSource("LinkUtilities", (args) =>
+            PlayniteApi.UriHandler.RegisterSource("LinkUtilities", args =>
             {
                 if (!HandleUriActions.Instance().ProcessArgs(args))
                 {
@@ -45,13 +44,25 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        /// Is set to true, while the library is updated via the sortLinks function. Is used to avoid an endless loop in the function.
+        ///     Is set to true, while the library is updated via the sortLinks function. Is used to avoid an endless loop in the
+        ///     function.
         /// </summary>
         internal bool IsUpdating { get; set; }
 
         /// <summary>
-        /// Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update mode if the
-        /// list contains more than one game.
+        ///     The settings view model of the extension
+        /// </summary>
+        public LinkUtilitiesSettingsViewModel Settings { get; set; }
+
+        /// <summary>
+        ///     The global GUID to identify the extension in playnite
+        /// </summary>
+        public override Guid Id { get; } = Guid.Parse("f692b4bb-238d-4080-ae76-4aaefde6f7a1");
+
+        /// <summary>
+        ///     Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update
+        ///     mode if the
+        ///     list contains more than one game.
         /// </summary>
         /// <param name="games">List of games to be processed</param>
         /// <param name="linkAction">Instance of the action to be executed</param>
@@ -88,7 +99,7 @@ namespace LinkUtilities
                             IsIndeterminate = false
                         };
 
-                        PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+                        PlayniteApi.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
                         {
                             try
                             {
@@ -132,25 +143,7 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        /// Shows the Review Duplicates window.
-        /// </summary>
-        private static void ShowReviewDuplicatesView(IEnumerable<Game> games)
-        {
-            try
-            {
-                ReviewDuplicatesView reviewDuplicatesView = new ReviewDuplicatesView(games);
-                Window window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesReviewDuplicatesWindowName"));
-                window.Content = reviewDuplicatesView;
-                window.ShowDialog();
-            }
-            catch (Exception exception)
-            {
-                Log.Error(exception, "Error during initializing ReviewDuplicatesView", true);
-            }
-        }
-
-        /// <summary>
-        /// Event that get's triggered after updating the game database. Is used to sort Links after updating.
+        ///     Event that get's triggered after updating the game database. Is used to sort Links after updating.
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="args">Event arguments. Contains a list of all updated games.</param>
@@ -291,7 +284,7 @@ namespace LinkUtilities
                 Action = a =>
                 {
                     List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                    ShowReviewDuplicatesView(games);
+                    RemoveDuplicates.ShowReviewDuplicatesView(games);
                 }
             });
 
@@ -314,7 +307,7 @@ namespace LinkUtilities
                 Action = a =>
                 {
                     List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                    ShowReviewDuplicatesView(games);
+                    RemoveDuplicates.ShowReviewDuplicatesView(games);
                 }
             });
 
@@ -558,7 +551,7 @@ namespace LinkUtilities
             {
                 Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
                 MenuSection = menuSection,
-                Action = a => ShowReviewDuplicatesView(games)
+                Action = a => RemoveDuplicates.ShowReviewDuplicatesView(games)
             });
 
             // Adds the "Remove unwanted links" item to the game menu.
@@ -602,24 +595,14 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        /// The settings view model of the extension
-        /// </summary>
-        public LinkUtilitiesSettingsViewModel Settings { get; set; }
-
-        /// <summary>
-        /// The global GUID to identify the extension in playnite
-        /// </summary>
-        public override Guid Id { get; } = Guid.Parse("f692b4bb-238d-4080-ae76-4aaefde6f7a1");
-
-        /// <summary>
-        /// Gets the settings of the extension
+        ///     Gets the settings of the extension
         /// </summary>
         /// <param name="firstRunSettings">True, if it's the first time the settings are fetched</param>
         /// <returns>Settings interface</returns>
         public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
         /// <summary>
-        /// Gets the settings view to be shown in playnite
+        ///     Gets the settings view to be shown in playnite
         /// </summary>
         /// <param name="firstRunSettings">True, if it's the first time the settings view is fetched</param>
         /// <returns>Settings view</returns>
