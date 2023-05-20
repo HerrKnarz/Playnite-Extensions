@@ -22,7 +22,10 @@
                     CommandParameter="{Binding SelectedItems, ElementName=LvCheckedLinks}"/>
         </StackPanel>
         <ListView Name="LvCheckedLinks" SelectionMode="Extended" DockPanel.Dock="Top" HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource GroupedItems}}">
+                  VerticalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.CanContentScroll="False" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                  VirtualizingPanel.VirtualizationMode="Recycling">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsLinkName}"
@@ -80,7 +83,7 @@
                                                 <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" FontSize="{DynamicResource FontSizeLarge}"
                                                            VerticalAlignment="Bottom" />
                                             </Expander.Header>
-                                            <ItemsPresenter />
+                                            <ItemsPresenter/>
                                         </Expander>
                                     </ControlTemplate>
                                 </Setter.Value>

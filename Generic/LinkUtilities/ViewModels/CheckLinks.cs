@@ -36,50 +36,42 @@ namespace LinkUtilities
         {
             Links.Clear();
 
-            if (_games.Count == 1)
+            using (API.Instance.Database.BufferedUpdate())
             {
-                Check(_games.First());
-            }
-            // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
-            else if (_games.Count > 1)
-            {
-                using (API.Instance.Database.BufferedUpdate())
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                    $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString("LOCLinkUtilitiesProgressCheckingLinks")}",
+                    true
+                )
                 {
-                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                        $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString("LOCLinkUtilitiesProgressCheckingLinks")}",
-                        true
-                    )
-                    {
-                        IsIndeterminate = false
-                    };
+                    IsIndeterminate = false
+                };
 
-                    API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                {
+                    try
                     {
-                        try
+                        activateGlobalProgress.ProgressMaxValue = _games.Count;
+
+                        foreach (Game game in _games)
                         {
-                            activateGlobalProgress.ProgressMaxValue = _games.Count;
+                            activateGlobalProgress.Text =
+                                $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString("LOCLinkUtilitiesProgressCheckingLinks")}{Environment.NewLine}{game.Name}";
 
-                            foreach (Game game in _games)
+                            if (activateGlobalProgress.CancelToken.IsCancellationRequested)
                             {
-                                activateGlobalProgress.Text =
-                                    $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString("LOCLinkUtilitiesProgressCheckingLinks")}{Environment.NewLine}{game.Name}";
-
-                                if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                                {
-                                    break;
-                                }
-
-                                Check(game);
-
-                                activateGlobalProgress.CurrentProgressValue++;
+                                break;
                             }
+
+                            Check(game);
+
+                            activateGlobalProgress.CurrentProgressValue++;
                         }
-                        catch (Exception ex)
-                        {
-                            Log.Error(ex);
-                        }
-                    }, globalProgressOptions);
-                }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                }, globalProgressOptions);
             }
         }
 

@@ -9,7 +9,7 @@ namespace KNARZhelper
 {
     public static class WindowHelper
     {
-        private static Window CreateWindow(string title, bool showMaximizeButton = true, bool showMinimizeButton = false)
+        private static Window CreateWindow(string title, bool showMaximizeButton = false, bool showMinimizeButton = false)
         {
             Window window = API.Instance.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = showMaximizeButton, ShowMinimizeButton = showMinimizeButton });
             window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
