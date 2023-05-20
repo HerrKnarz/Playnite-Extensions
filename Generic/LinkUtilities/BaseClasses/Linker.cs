@@ -10,10 +10,54 @@ using System.Linq;
 namespace LinkUtilities.BaseClasses
 {
     /// <summary>
-    /// Base class for a website link
+    ///     Base class for a website link
     /// </summary>
     public abstract class Linker : ILinker, ILinkAction
     {
+        protected Linker() => Settings = new LinkSourceSetting
+        {
+            LinkName = LinkName,
+            IsAddable = AddType != LinkAddTypes.None ? true : (bool?)null,
+            IsSearchable = CanBeSearched ? true : (bool?)null,
+            ShowInMenus = true,
+            ApiKey = null,
+            NeedsApiKey = false
+        };
+
+        public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
+        public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
+
+        public virtual bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+            => true;
+
+        public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            if (!isBulkAction)
+            {
+                if (!Prepare(actionModifier, false))
+                {
+                    return false;
+                }
+            }
+
+            switch (actionModifier)
+            {
+                case ActionModifierTypes.Add:
+                case ActionModifierTypes.AddSelected:
+                    return AddLink(game);
+                case ActionModifierTypes.Search:
+                case ActionModifierTypes.SearchSelected:
+                    return AddSearchedLink(game);
+                case ActionModifierTypes.SearchMissing:
+                    return AddSearchedLink(game, true);
+                case ActionModifierTypes.None:
+                case ActionModifierTypes.Name:
+                case ActionModifierTypes.SortOrder:
+                default:
+                    return false;
+            }
+        }
+
         public abstract string LinkName { get; }
         public virtual string BaseUrl => string.Empty;
         public virtual string SearchUrl => string.Empty;
@@ -23,8 +67,6 @@ namespace LinkUtilities.BaseClasses
         public LinkSourceSetting Settings { get; set; }
         public virtual bool AllowRedirects { get; set; } = true;
         public virtual bool ReturnsSameUrl { get; set; } = false;
-        public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
-        public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
         public virtual bool AddSearchedLink(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true)
         {
@@ -105,7 +147,7 @@ namespace LinkUtilities.BaseClasses
             return true;
         }
 
-        public virtual bool CheckLink(string link) => LinkHelper.CheckUrl(link, AllowRedirects, ReturnsSameUrl);
+        public virtual bool CheckLink(string link) => LinkHelper.IsUrlOk(link, AllowRedirects, ReturnsSameUrl);
 
         public virtual string GetGamePath(Game game, string gameName = null)
         {
@@ -141,7 +183,7 @@ namespace LinkUtilities.BaseClasses
         }
 
         /// <summary>
-        /// Searches for a game by name and looks for a matching search result.
+        ///     Searches for a game by name and looks for a matching search result.
         /// </summary>
         /// <param name="gameName">Name of the game</param>
         /// <returns>Url of the game. Returns null if no match was found.</returns>
@@ -155,46 +197,5 @@ namespace LinkUtilities.BaseClasses
 
             return foundGame != null ? foundGame.Url : searchResults.Count == 1 ? ((SearchResult)searchResults[0]).Url : null;
         }
-
-        public virtual bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => true;
-
-        public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            if (!isBulkAction)
-            {
-                if (!Prepare(actionModifier, false))
-                {
-                    return false;
-                }
-            }
-
-            switch (actionModifier)
-            {
-                case ActionModifierTypes.Add:
-                case ActionModifierTypes.AddSelected:
-                    return AddLink(game);
-                case ActionModifierTypes.Search:
-                case ActionModifierTypes.SearchSelected:
-                    return AddSearchedLink(game);
-                case ActionModifierTypes.SearchMissing:
-                    return AddSearchedLink(game, true);
-                case ActionModifierTypes.None:
-                case ActionModifierTypes.Name:
-                case ActionModifierTypes.SortOrder:
-                default:
-                    return false;
-            }
-        }
-
-        protected Linker() => Settings = new LinkSourceSetting()
-        {
-            LinkName = LinkName,
-            IsAddable = AddType != LinkAddTypes.None ? true : (bool?)null,
-            IsSearchable = CanBeSearched ? true : (bool?)null,
-            ShowInMenus = true,
-            ApiKey = null,
-            NeedsApiKey = false
-        };
     }
 }

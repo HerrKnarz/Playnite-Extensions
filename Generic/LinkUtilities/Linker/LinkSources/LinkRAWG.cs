@@ -11,10 +11,11 @@ using System.Linq;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to RAWG.io.
+    ///     Adds a link to RAWG.io.
     /// </summary>
     internal class LinkRawg : BaseClasses.Linker
     {
+        public LinkRawg() => Settings.NeedsApiKey = true;
         public override string LinkName => "RAWG";
         public override string BaseUrl => "https://rawg.io/games/";
         public override string SearchUrl => "https://api.rawg.io/api/games?key={0}&search={1}&search_precise=true&page_size=50";
@@ -37,7 +38,7 @@ namespace LinkUtilities.Linker
 
             RawgSearchResult rawgSearchResult = ParseHelper.GetJsonFromApi<RawgSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
 
-            if (!(rawgSearchResult?.Results?.Any() ?? false))
+            if (!rawgSearchResult?.Results?.Any() ?? true)
             {
                 return base.GetSearchResults(searchTerm);
             }
@@ -63,7 +64,5 @@ namespace LinkUtilities.Linker
 
             return searchResults;
         }
-
-        public LinkRawg() => Settings.NeedsApiKey = true;
     }
 }

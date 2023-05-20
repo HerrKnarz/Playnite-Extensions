@@ -5,7 +5,7 @@ using Playnite.SDK.Models;
 
 namespace LinkUtilities
 {
-    public class Duplicate : ViewModelBase
+    public class LinkViewModel : ViewModelBase
     {
         private Game _game;
 

@@ -7,13 +7,26 @@ using System.Linq;
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    /// Class to rename links based on patterns.
+    ///     Class to rename links based on patterns.
     /// </summary>
     internal class RenameLinks : LinkAction
     {
         private static RenameLinks _instance;
         private static readonly object _mutex = new object();
         private RenameLinks() { }
+
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressRenameLinks";
+
+        public override string ResultMessage => "LOCLinkUtilitiesDialogRenamedMessage";
+
+        public bool RenameLinksAfterChange { get; set; } = false;
+
+        public string RenameBlocker { get; set; } = string.Empty;
+
+        /// <summary>
+        ///     List of patterns to find the links to rename based on URL or link name
+        /// </summary>
+        public LinkNamePatterns RenamePatterns { get; set; }
 
         public static RenameLinks Instance()
         {
@@ -33,73 +46,64 @@ namespace LinkUtilities.LinkActions
             return _instance;
         }
 
-        public override string ProgressMessage => "LOCLinkUtilitiesProgressRenameLinks";
-
-        public override string ResultMessage => "LOCLinkUtilitiesDialogRenamedMessage";
-
-        public bool RenameLinksAfterChange { get; set; } = false;
-
-        public string RenameBlocker { get; set; } = string.Empty;
-
-        /// <summary>
-        /// List of patterns to find the links to rename based on URL or link name
-        /// </summary>
-        public LinkNamePatterns RenamePatterns { get; set; }
-
         private bool Rename(Game game, bool updateDb = true)
         {
-            bool mustUpdate = false;
-
-            if (game.Links?.Any() ?? false)
+            if (!game.Links?.Any() ?? true)
             {
-                foreach (Link link in game.Links)
-                {
-                    if (RenameBlocker.Any() && link.Name.Contains(RenameBlocker))
-                    {
-                        continue;
-                    }
-
-                    string linkName = link.Name;
-
-                    if (!RenamePatterns.LinkMatch(ref linkName, link.Url))
-                    {
-                        continue;
-                    }
-
-                    if (linkName == link.Name)
-                    {
-                        continue;
-                    }
-
-                    if (GlobalSettings.Instance().OnlyATest)
-                    {
-                        link.Name = linkName;
-                    }
-                    else
-                    {
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            link.Name = linkName;
-                        });
-                    }
-
-                    mustUpdate = true;
-                }
-
-                if (mustUpdate)
-                {
-                    // We start another renaming run, because there could be more links to rename after the last run
-                    // renamed some links already.
-                    Rename(game, false);
-
-                    if (updateDb && !GlobalSettings.Instance().OnlyATest)
-                    {
-                        API.Instance.Database.Games.Update(game);
-                    }
-                }
+                return false;
             }
 
-            return mustUpdate;
+            bool mustUpdate = false;
+
+            foreach (Link link in game.Links)
+            {
+                if (RenameBlocker.Any() && link.Name.Contains(RenameBlocker))
+                {
+                    continue;
+                }
+
+                string linkName = link.Name;
+
+                if (!RenamePatterns.LinkMatch(ref linkName, link.Url))
+                {
+                    continue;
+                }
+
+                if (linkName == link.Name)
+                {
+                    continue;
+                }
+
+                if (GlobalSettings.Instance().OnlyATest)
+                {
+                    link.Name = linkName;
+                }
+                else
+                {
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        link.Name = linkName;
+                    });
+                }
+
+                mustUpdate = true;
+            }
+
+            if (!mustUpdate)
+            {
+                return false;
+            }
+
+            // We start another renaming run, because there could be more links to rename after the last run
+            // renamed some links already.
+            Rename(game, false);
+
+            if (updateDb && !GlobalSettings.Instance().OnlyATest)
+            {
+                API.Instance.Database.Games.Update(game);
+            }
+
+            return true;
         }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)

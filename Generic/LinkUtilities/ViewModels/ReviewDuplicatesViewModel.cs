@@ -44,7 +44,7 @@ namespace LinkUtilities
 
         public RelayCommand<IList<object>> RemoveCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (Duplicate item in items.ToList().Cast<Duplicate>())
+            foreach (LinkViewModel item in items.ToList().Cast<LinkViewModel>())
             {
                 _reviewDuplicates.Remove(item);
             }

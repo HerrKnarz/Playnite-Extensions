@@ -56,7 +56,7 @@ namespace LinkUtilities.LinkActions
                 IEnumerable<Game> enumerable = games.ToList();
                 ReviewDuplicatesViewModel viewModel = new ReviewDuplicatesViewModel(enumerable);
 
-                if (!viewModel.ReviewDuplicates.Duplicates?.Any() ?? false)
+                if (!viewModel.ReviewDuplicates.Duplicates?.Any() ?? true)
                 {
                     API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCLinkUtilitiesDialogNoDuplicatesFound"));
                     return;

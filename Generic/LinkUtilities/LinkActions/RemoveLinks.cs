@@ -8,13 +8,24 @@ using System.Linq;
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    /// Class to remove unwanted links based on patterns.
+    ///     Class to remove unwanted links based on patterns.
     /// </summary>
     internal class RemoveLinks : LinkAction
     {
         private static RemoveLinks _instance;
         private static readonly object _mutex = new object();
         private RemoveLinks() { }
+
+        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressRemoveLinks";
+
+        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogRemovedMessage";
+
+        public bool RemoveLinksAfterChange { get; set; } = false;
+
+        /// <summary>
+        ///     List of patterns to find the links to delete based on URL or link name
+        /// </summary>
+        public LinkNamePatterns RemovePatterns { get; set; }
 
         public static RemoveLinks Instance()
         {
@@ -34,17 +45,6 @@ namespace LinkUtilities.LinkActions
             return _instance;
         }
 
-        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressRemoveLinks";
-
-        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogRemovedMessage";
-
-        public bool RemoveLinksAfterChange { get; set; } = false;
-
-        /// <summary>
-        /// List of patterns to find the links to delete based on URL or link name
-        /// </summary>
-        public LinkNamePatterns RemovePatterns { get; set; }
-
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, isBulkAction))
@@ -54,7 +54,7 @@ namespace LinkUtilities.LinkActions
 
             bool mustUpdate = false;
 
-            if (!(game.Links?.Any() ?? false))
+            if (!game.Links?.Any() ?? true)
             {
                 return false;
             }

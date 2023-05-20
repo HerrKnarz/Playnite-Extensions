@@ -12,12 +12,12 @@ using System.Linq;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to GOG.
+    ///     Adds a link to GOG.
     /// </summary>
     internal class LibraryLinkGog : LibraryLink
     {
         /// <summary>
-        /// ID of the game library to identify it in Playnite.
+        ///     ID of the game library to identify it in Playnite.
         /// </summary>
         public override Guid Id { get; } = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
 
@@ -49,7 +49,7 @@ namespace LinkUtilities.Linker
 
             GogMetaData gogMetaData = ParseHelper.GetJsonFromApi<GogMetaData>($"https://api.gog.com/products/{game.GameId}", LinkName);
 
-            if (!(gogMetaData?.Slug?.Any() ?? false))
+            if (!gogMetaData?.Slug?.Any() ?? true)
             {
                 return false;
             }
@@ -67,7 +67,7 @@ namespace LinkUtilities.Linker
 
             List<GenericItemOption> searchResults = new List<GenericItemOption>();
 
-            if (!(gogSearchResult?.Products?.Any() ?? false))
+            if (!gogSearchResult?.Products?.Any() ?? true)
             {
                 return searchResults;
             }

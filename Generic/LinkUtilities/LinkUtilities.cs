@@ -7,6 +7,7 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace LinkUtilities
@@ -171,6 +172,31 @@ namespace LinkUtilities
 
             Settings.Settings.LastAutoLibUpdate = DateTime.Now;
             SavePluginSettings(Settings.Settings);
+        }
+
+        public void CheckLinks(List<Game> games)
+        {
+            try
+            {
+                CheckLinksViewModel viewModel = new CheckLinksViewModel(games);
+
+                if (!viewModel.CheckLinks.Links?.Any() ?? true)
+                {
+                    API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCLinkUtilitiesDialogNoLinksFound"));
+                    return;
+                }
+
+                Window window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesCheckLinksWindowName"));
+                CheckLinksView view = new CheckLinksView { DataContext = viewModel };
+
+                window.Content = view;
+
+                window.ShowDialog();
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing CheckLinksView", true);
+            }
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
@@ -476,6 +502,13 @@ namespace LinkUtilities
                     {
                         Description = "-",
                         MenuSection = menuSection
+                    },
+                    // Adds the "Check links" item to the game menu
+                    new GameMenuItem
+                    {
+                        Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCheckLinks"),
+                        MenuSection = menuSection,
+                        Action = a => CheckLinks(games)
                     },
                     new GameMenuItem
                     {

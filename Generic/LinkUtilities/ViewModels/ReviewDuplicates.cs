@@ -8,9 +8,8 @@ namespace LinkUtilities
 {
     public class ReviewDuplicates : ViewModelBase
     {
-        private ObservableCollectionFast<Duplicate> _duplicates = new ObservableCollectionFast<Duplicate>();
-
         private readonly IEnumerable<Game> _games;
+        private ObservableCollectionFast<LinkViewModel> _duplicates = new ObservableCollectionFast<LinkViewModel>();
 
         public ReviewDuplicates(IEnumerable<Game> games)
         {
@@ -18,7 +17,7 @@ namespace LinkUtilities
             GetDuplicates();
         }
 
-        public ObservableCollectionFast<Duplicate> Duplicates
+        public ObservableCollectionFast<LinkViewModel> Duplicates
         {
             get => _duplicates;
             set
@@ -36,13 +35,13 @@ namespace LinkUtilities
 
         private bool GetDuplicates(Game game)
         {
-            if (!game.Links?.Any() ?? false)
+            if (!game.Links?.Any() ?? true)
             {
                 return false;
             }
 
             ObservableCollection<Link> newLinks =
-                game.Links?.GroupBy(x => x.Name).Where(x => x.Count() > 1).SelectMany(x => x).ToObservable() ?? new ObservableCollection<Link>();
+                game.Links.GroupBy(x => x.Name).Where(x => x.Count() > 1).SelectMany(x => x).ToObservable();
 
             newLinks.AddMissing(game.Links?.GroupBy(x => LinkHelper.CleanUpUrl(x.Url)).Where(x => x.Count() > 1).SelectMany(x => x));
 
@@ -51,16 +50,16 @@ namespace LinkUtilities
                 return false;
             }
 
-            Duplicates.AddRange(newLinks.Select(x => new Duplicate() { Game = game, Link = x }));
+            Duplicates.AddRange(newLinks.Select(x => new LinkViewModel { Game = game, Link = x }));
 
             return true;
         }
 
-        public void Remove(Duplicate duplicate)
+        public void Remove(LinkViewModel linkViewModel)
         {
-            duplicate.Remove();
+            linkViewModel.Remove();
 
-            Duplicates.Remove(duplicate);
+            Duplicates.Remove(linkViewModel);
         }
     }
 }

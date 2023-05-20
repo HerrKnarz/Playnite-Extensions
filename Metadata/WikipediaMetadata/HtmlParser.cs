@@ -10,17 +10,14 @@ using WikipediaMetadata.Models;
 namespace WikipediaMetadata
 {
     /// <summary>
-    /// Parser for the html code of a wikipedia page fetched by the rest api, to get the description and additional links.
+    ///     Parser for the html code of a wikipedia page fetched by the rest api, to get the description and additional links.
     /// </summary>
     internal class HtmlParser
     {
         private readonly PluginSettings _settings;
 
-        public string Description { get; set; } = string.Empty;
-        public List<Link> Links { get; } = new List<Link>();
-
         /// <summary>
-        /// Creates an instance of the class, fetches the html code and parses it.
+        ///     Creates an instance of the class, fetches the html code and parses it.
         /// </summary>
         /// <param name="gameKey">Key of the page we want to parse</param>
         /// <param name="settings">Settings of the plugin</param>
@@ -29,8 +26,7 @@ namespace WikipediaMetadata
             _settings = settings;
 
             // All paragraphs we want to remove from the description by default.
-            List<string> unwantedParagraphs = new List<string>()
-                { "see also", "notes", "references", "further reading", "sources", "external links" };
+            List<string> unwantedParagraphs = new List<string> { "see also", "notes", "references", "further reading", "sources", "external links" };
 
             unwantedParagraphs.AddMissing(settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
 
@@ -59,7 +55,8 @@ namespace WikipediaMetadata
                     {
                         break;
                     }
-                    else if (secondLevelNode.Name == "section")
+
+                    if (secondLevelNode.Name == "section")
                     {
                         // We now look for third level nodes and add those to the description.
                         foreach (HtmlNode thirdLevelNode in secondLevelNode.ChildNodes.Where(c => Resources.AllowedThirdLevelNodes.Contains(c.Name)))
@@ -93,8 +90,11 @@ namespace WikipediaMetadata
             }
         }
 
+        public string Description { get; set; } = string.Empty;
+        public List<Link> Links { get; } = new List<Link>();
+
         /// <summary>
-        /// Gets the content of a ul or ol list as cleaned up html code.
+        ///     Gets the content of a ul or ol list as cleaned up html code.
         /// </summary>
         /// <param name="htmlList">list to process</param>
         /// <returns>the cleaned up html string for the list and its items</returns>
@@ -113,7 +113,7 @@ namespace WikipediaMetadata
         }
 
         /// <summary>
-        /// Removes annotation marks from the text, because we don't need those in the game description.
+        ///     Removes annotation marks from the text, because we don't need those in the game description.
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
@@ -121,7 +121,7 @@ namespace WikipediaMetadata
         {
             HtmlNodeCollection supNodes = text.SelectNodes("./sup");
 
-            if (!(supNodes?.Any() ?? false))
+            if (!supNodes?.Any() ?? true)
             {
                 return text;
             }
@@ -143,7 +143,7 @@ namespace WikipediaMetadata
         }
 
         /// <summary>
-        /// Adds the provided section to the description
+        ///     Adds the provided section to the description
         /// </summary>
         /// <param name="node">The section to add</param>
         private void AddSectionToDescription(HtmlNode node)
@@ -164,7 +164,7 @@ namespace WikipediaMetadata
         }
 
         /// <summary>
-        /// Gets the external links from the provided node.
+        ///     Gets the external links from the provided node.
         /// </summary>
         /// <param name="node">Node with the links to add.</param>
         private void GetExternalLinks(HtmlNode node)
@@ -195,7 +195,7 @@ namespace WikipediaMetadata
                                 name = pair.Name;
                             }
 
-                            Links.Add(new Link()
+                            Links.Add(new Link
                             {
                                 Name = name,
                                 Url = link.GetAttributeValue("href", "")
