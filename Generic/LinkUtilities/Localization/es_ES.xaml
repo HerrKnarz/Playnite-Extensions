@@ -68,10 +68,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Añadir predeterminados</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancelar</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Seleccionar Todos</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">Help</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">Ayuda</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">Ok</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Eliminar</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">Replace</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">Reemplazar</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Invertir selección</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Ordenar</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Desmarcar todo</sys:String>
@@ -83,7 +83,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">nombre de enlace y URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">nombre del enlace</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsHideOkOnLinkCheck">Hide links, that return OK, in link check</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsHideOkOnLinkCheck">Ocultar enlaces, que devuelven OK, en la verificación de enlaces</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Nombre del enlace</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Fuente del enlace</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Enlace faltante]</sys:String>
