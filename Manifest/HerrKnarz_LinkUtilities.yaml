@@ -1,5 +1,12 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 3.3
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-05-21
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-05-21/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_3_3.pext
+    Changelog:
+      - New option "Check links" checks, if the links of the selected games are reachable and shows the results in a dialog with the option to remove or replace them.
+      - Added grouping by game name to the Review duplicates dialog.
   - Version: 3.2
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-05-19
