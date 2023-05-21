@@ -25,12 +25,12 @@ Extension to manage links for the games in the playnite library. It can do the f
 - Add library links: add links to the game page of its library
 - Add link to active website in your browser via bookmarklet (see [wiki](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet) for more information). Works with any website.
 - Add tags to games to keep track of missing links to specific websites.
+- Check if links are still working, with option to remove links or replace URLs in the result dialog.
 
 To see which websites are already supported or planned to be added see the [wiki](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Supported-websites-for-add-&-search-function)!
 
 ### Planned features
 - add links to more websites.
-- check if links are still working, optional removal of dead links (postponed for now, because several sites return 403 when checked without real browser)
 
 ## Company Companion
 
