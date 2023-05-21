@@ -68,8 +68,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Add defaults</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Check all</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">Help</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remove</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">Replace</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Reverse check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sort</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Uncheck all</sys:String>
@@ -81,6 +83,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">link name and URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">link name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsHideOkOnLinkCheck">Hide links, that return OK, in link check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Link name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link source</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Missing link]</sys:String>
