@@ -2,6 +2,14 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCLinkUtilitiesName">Утилита для ссылок</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseUrl">Response URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksStatusCode">Status code</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">equal?</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Check links</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Game</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">URL</sys:String>
+
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Добавлены ссылки на {0} игр(ы)!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Название ссылки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Пожалуйста, введите имя для ссылки!</sys:String>
@@ -23,6 +31,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Все настроенные сайты</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Все недостающие сайты</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Все игры</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Check links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Очистить ссылки (переименование, удаление, сортировка)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Отфильтрованные игры</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Удалить дублирующиеся ссылки</sys:String>
@@ -35,6 +44,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Сортировать ссылки по порядку сортировки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Отметить недостающие ссылки</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesProgressCheckingLinks">Checking links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Добавление ссылок на библиотеку...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Добавление ссылок...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRemoveLinks">Удаление ненужных ссылок...</sys:String>
@@ -44,9 +54,6 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">Пометка отсутствующих ссылок...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Добавление ссылок на настроенные сайты...</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesGameName">Game</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkName">Link</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkUrl">URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesRefresh">Refresh</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesWindowName">Review duplicate links</sys:String>
 
@@ -61,8 +68,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Добавить значения по умолчанию</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Check all</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">Help</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Удалить</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">Replace</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Reverse check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Сортировка</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Uncheck all</sys:String>
@@ -74,6 +83,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">названием ссылки и URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">названием ссылки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsHideOkOnLinkCheck">Hide links, that return OK, in link check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Названием ссылки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Источник ссылки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Отсутствует ссылка]</sys:String>

@@ -2,6 +2,14 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCLinkUtilitiesName">Linkwerkzeuge</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseUrl">Antwort-URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksStatusCode">Statuscode</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">gleich?</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Links überprüfen</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Spiel</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">URL</sys:String>
+
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Links zu {0} Spielen hinzugefügt!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Link benennen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Bitte einen Namen für den Link eingeben!</sys:String>
@@ -23,6 +31,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Alle konfigurierten Webseiten</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Alle fehlenden Webseiten</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Alle Spiele</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Links überprüfen...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Links bereinigen (umbenennen, entfernen, sortieren)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Gefilterte Spiele</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Doppelte Links entfernen</sys:String>
@@ -35,6 +44,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Links nach Sortierreihenfolge sortieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Fehlende Links taggen</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesProgressCheckingLinks">Überprüfe Links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Füge Bibliothekslinks hinzu...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Füge Links hinzu...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRemoveLinks">Entferne unerwünschte Links...</sys:String>
@@ -44,9 +54,6 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">Fehlende Links werden getaggt...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Füge Links zu konfigurierten Webseiten hinzu...</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesGameName">Spiel</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkName">Link</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesLinkUrl">URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesRefresh">Aktualisieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesWindowName">Doppelte Links überprüfen</sys:String>
 
@@ -61,8 +68,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Standardwerte hinzufügen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Abbrechen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Alle auswählen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">Hilfe</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Löschen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">Ersetzen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Auswahl umkehren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sortieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Alle abwählen</sys:String>
@@ -74,6 +83,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">Link-Name und URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">Link-Name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsHideOkOnLinkCheck">Links, die OK zurückgeben, in der Linküberprüfung ausblenden</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Link-Name</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Link-Quelle</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Fehlender Link]</sys:String>
