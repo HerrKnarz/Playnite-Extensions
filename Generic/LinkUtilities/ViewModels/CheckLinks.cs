@@ -7,6 +7,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace LinkUtilities
@@ -16,10 +17,10 @@ namespace LinkUtilities
         private readonly List<Game> _games;
         private ObservableCollectionFast<CheckedLink> _links = new ObservableCollectionFast<CheckedLink>();
 
-        public CheckLinks(List<Game> games)
+        public CheckLinks(List<Game> games, bool hideOkOnLinkCheck)
         {
             _games = games;
-            Check();
+            Check(hideOkOnLinkCheck);
         }
 
         public ObservableCollectionFast<CheckedLink> Links
@@ -32,7 +33,7 @@ namespace LinkUtilities
             }
         }
 
-        public void Check()
+        public void Check(bool hideOkOnLinkCheck)
         {
             Links.Clear();
 
@@ -62,7 +63,7 @@ namespace LinkUtilities
                                 break;
                             }
 
-                            Check(game);
+                            Check(game, hideOkOnLinkCheck);
 
                             activateGlobalProgress.CurrentProgressValue++;
                         }
@@ -75,7 +76,7 @@ namespace LinkUtilities
             }
         }
 
-        private void Check(Game game)
+        private void Check(Game game, bool hideOkOnLinkCheck)
         {
             if (!game.Links?.Any() ?? true)
             {
@@ -88,13 +89,16 @@ namespace LinkUtilities
             {
                 LinkCheckResult linkCheckResult = LinkHelper.CheckUrl(link.Url);
 
-                linksQueue.Enqueue(new CheckedLink
+                if (!hideOkOnLinkCheck || linkCheckResult.StatusCode != HttpStatusCode.OK)
                 {
-                    Game = game,
-                    Link = link,
-                    LinkCheckResult = linkCheckResult,
-                    UrlIsEqual = LinkHelper.CleanUpUrl(linkCheckResult.ResponseUrl) == LinkHelper.CleanUpUrl(link.Url)
-                });
+                    linksQueue.Enqueue(new CheckedLink
+                    {
+                        Game = game,
+                        Link = link,
+                        LinkCheckResult = linkCheckResult,
+                        UrlIsEqual = LinkHelper.CleanUpUrl(linkCheckResult.ResponseUrl) == LinkHelper.CleanUpUrl(link.Url)
+                    });
+                }
             });
 
             Links.AddRange(linksQueue);
@@ -105,6 +109,11 @@ namespace LinkUtilities
             checkedLink.Remove();
 
             Links.Remove(checkedLink);
+        }
+
+        public void Replace(CheckedLink checkedLink)
+        {
+            checkedLink.Replace();
         }
     }
 }

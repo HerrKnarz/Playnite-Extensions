@@ -20,6 +20,11 @@
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}"
                     Command="{Binding RemoveCommand}"
                     CommandParameter="{Binding SelectedItems, ElementName=LvCheckedLinks}"/>
+            <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonReplace}"
+                    Command="{Binding ReplaceCommand}"
+                    CommandParameter="{Binding SelectedItems, ElementName=LvCheckedLinks}"/>
+            <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonHelp}"
+                    Click="HelpClick"/>
         </StackPanel>
         <ListView Name="LvCheckedLinks" SelectionMode="Extended" DockPanel.Dock="Top" HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource GroupedItems}}"

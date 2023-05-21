@@ -10,10 +10,10 @@ namespace LinkUtilities
         private CheckLinks _checkLinks;
         private List<Game> _games;
 
-        public CheckLinksViewModel(List<Game> games)
+        public CheckLinksViewModel(List<Game> games, bool hideOkOnLinkCheck)
         {
             _games = games;
-            CheckLinks = new CheckLinks(_games);
+            CheckLinks = new CheckLinks(_games, hideOkOnLinkCheck);
         }
 
         public List<Game> Games
@@ -41,6 +41,14 @@ namespace LinkUtilities
             foreach (CheckedLink item in items.ToList().Cast<CheckedLink>())
             {
                 _checkLinks.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> ReplaceCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (CheckedLink item in items.ToList().Cast<CheckedLink>())
+            {
+                _checkLinks.Replace(item);
             }
         }, items => items?.Any() ?? false);
     }

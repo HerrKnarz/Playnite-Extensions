@@ -1,4 +1,7 @@
 ﻿using LinkUtilities.Models;
+using LinkUtilities.Settings;
+using Playnite.SDK;
+using System.Linq;
 
 namespace LinkUtilities
 {
@@ -25,6 +28,25 @@ namespace LinkUtilities
                 _urlIsEqual = value;
                 OnPropertyChanged("UrlIsEqual");
             }
+        }
+
+        public void Replace()
+        {
+            if (GlobalSettings.Instance().OnlyATest)
+            {
+                Game.Links.Single(x => x.Name == Link.Name).Url = LinkCheckResult.ResponseUrl;
+            }
+            else
+            {
+                API.Instance.MainView.UIDispatcher.Invoke(delegate
+                {
+                    Game.Links.Single(x => x.Name == Link.Name).Url = LinkCheckResult.ResponseUrl;
+
+                    API.Instance.Database.Games.Update(Game);
+                });
+            }
+
+            UrlIsEqual = true;
         }
     }
 }

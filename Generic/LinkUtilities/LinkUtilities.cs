@@ -178,7 +178,7 @@ namespace LinkUtilities
         {
             try
             {
-                CheckLinksViewModel viewModel = new CheckLinksViewModel(games);
+                CheckLinksViewModel viewModel = new CheckLinksViewModel(games, Settings.Settings.HideOkOnLinkCheck);
 
                 if (!viewModel.CheckLinks.Links?.Any() ?? true)
                 {
