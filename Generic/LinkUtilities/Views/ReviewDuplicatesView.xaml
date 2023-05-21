@@ -7,6 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:ReviewDuplicatesViewModel}">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key='GroupedItems' 
+                              Source="{Binding ReviewDuplicates.Duplicates}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Game.Name" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
     <DockPanel Margin="10">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}"
@@ -16,7 +24,10 @@
                     Command="{Binding RefreshCommand}"/>
         </StackPanel>
         <ListView Name="DuplicateLinks" SelectionMode="Extended" DockPanel.Dock="Top" HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch" ItemsSource="{Binding ReviewDuplicates.Duplicates}">
+                  VerticalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.CanContentScroll="False" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                  VirtualizingPanel.VirtualizationMode="Recycling">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesCommonGameName}"
@@ -27,6 +38,27 @@
                                     DisplayMemberBinding="{Binding Link.Url}" />
                 </GridView>
             </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" FontSize="{DynamicResource FontSizeLarge}"
+                                                           VerticalAlignment="Bottom" />
+                                            </Expander.Header>
+                                            <ItemsPresenter/>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
     </DockPanel>
 </UserControl>
