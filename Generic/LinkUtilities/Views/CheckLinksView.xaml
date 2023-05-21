@@ -17,13 +17,13 @@
     </UserControl.Resources>
     <DockPanel Margin="10">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
-            <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}"
+            <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}" 
                     Command="{Binding RemoveCommand}"
                     CommandParameter="{Binding SelectedItems, ElementName=LvCheckedLinks}"/>
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonReplace}"
-                    Command="{Binding ReplaceCommand}"
+                    Command="{Binding ReplaceCommand}" Margin="10,0,0,0"
                     CommandParameter="{Binding SelectedItems, ElementName=LvCheckedLinks}"/>
-            <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonHelp}"
+            <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonHelp}" Margin="10,0,0,0"
                     Click="HelpClick"/>
         </StackPanel>
         <ListView Name="LvCheckedLinks" SelectionMode="Extended" DockPanel.Dock="Top" HorizontalAlignment="Stretch"
@@ -38,12 +38,11 @@
                     <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesCommonLinkUrl}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock>
-                                    <Hyperlink NavigateUri="{Binding Link.Url}"
-                                               RequestNavigate="Hyperlink_RequestNavigate" >
-                                        <Run Text="{Binding Link.Url}" />
-                                    </Hyperlink>
-                                </TextBlock>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <Button Content="🔗"
+                                            Click="UrlClick" Tag="{Binding Link.Url}"/>
+                                    <TextBlock Text="{Binding Link.Url}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -57,12 +56,11 @@
                     <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesCheckLinksResponseUrl}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock>
-                                    <Hyperlink NavigateUri="{Binding LinkCheckResult.ResponseUrl}"
-                                               RequestNavigate="Hyperlink_RequestNavigate" >
-                                        <Run Text="{Binding LinkCheckResult.ResponseUrl}" />
-                                    </Hyperlink>
-                                </TextBlock>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <Button Content="🔗"
+                                            Click="UrlClick" Tag="{Binding LinkCheckResult.ResponseUrl}"/>
+                                    <TextBlock Text="{Binding LinkCheckResult.ResponseUrl}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

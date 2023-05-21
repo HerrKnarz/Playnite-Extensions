@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace LinkUtilities
 {
-    internal class CheckedLink : LinkViewModel
+    internal class CheckLink : LinkViewModel
     {
         private LinkCheckResult _linkCheckResult;
         private bool _urlIsEqual;

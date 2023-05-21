@@ -15,7 +15,7 @@ namespace LinkUtilities
     internal class CheckLinks : ViewModelBase
     {
         private readonly List<Game> _games;
-        private ObservableCollectionFast<CheckedLink> _links = new ObservableCollectionFast<CheckedLink>();
+        private ObservableCollectionFast<CheckLink> _links = new ObservableCollectionFast<CheckLink>();
 
         public CheckLinks(List<Game> games, bool hideOkOnLinkCheck)
         {
@@ -23,7 +23,7 @@ namespace LinkUtilities
             Check(hideOkOnLinkCheck);
         }
 
-        public ObservableCollectionFast<CheckedLink> Links
+        public ObservableCollectionFast<CheckLink> Links
         {
             get => _links;
             set
@@ -83,7 +83,7 @@ namespace LinkUtilities
                 return;
             }
 
-            ConcurrentQueue<CheckedLink> linksQueue = new ConcurrentQueue<CheckedLink>();
+            ConcurrentQueue<CheckLink> linksQueue = new ConcurrentQueue<CheckLink>();
 
             Parallel.ForEach(game.Links, link =>
             {
@@ -91,7 +91,7 @@ namespace LinkUtilities
 
                 if (!hideOkOnLinkCheck || linkCheckResult.StatusCode != HttpStatusCode.OK)
                 {
-                    linksQueue.Enqueue(new CheckedLink
+                    linksQueue.Enqueue(new CheckLink
                     {
                         Game = game,
                         Link = link,
@@ -104,16 +104,13 @@ namespace LinkUtilities
             Links.AddRange(linksQueue);
         }
 
-        public void Remove(CheckedLink checkedLink)
+        public void Remove(CheckLink checkLink)
         {
-            checkedLink.Remove();
+            checkLink.Remove();
 
-            Links.Remove(checkedLink);
+            Links.Remove(checkLink);
         }
 
-        public void Replace(CheckedLink checkedLink)
-        {
-            checkedLink.Replace();
-        }
+        public void Replace(CheckLink checkLink) => checkLink.Replace();
     }
 }

@@ -35,5 +35,11 @@ namespace LinkUtilities
             Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet#bookmarklet"));
             e.Handled = true;
         }
+
+        private void UrlClick(object sender, RoutedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo((string)((Button)sender).Tag));
+            e.Handled = true;
+        }
     }
 }

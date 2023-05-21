@@ -77,7 +77,7 @@
     <Compile Include="Helper\WikipediaApiCaller.cs" />
     <Compile Include="LinkActions\AddLinkFromClipboard.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
-    <Compile Include="ViewModels\CheckedLink.cs" />
+    <Compile Include="ViewModels\CheckLink.cs" />
     <Compile Include="ViewModels\CheckLinks.cs" />
     <Compile Include="ViewModels\CheckLinksViewModel.cs" />
     <Compile Include="ViewModels\ReviewDuplicatesViewModel.cs" />

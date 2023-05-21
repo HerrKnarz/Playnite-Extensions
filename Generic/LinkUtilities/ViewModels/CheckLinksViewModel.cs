@@ -38,7 +38,7 @@ namespace LinkUtilities
 
         public RelayCommand<IList<object>> RemoveCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (CheckedLink item in items.ToList().Cast<CheckedLink>())
+            foreach (CheckLink item in items.ToList().Cast<CheckLink>())
             {
                 _checkLinks.Remove(item);
             }
@@ -46,7 +46,7 @@ namespace LinkUtilities
 
         public RelayCommand<IList<object>> ReplaceCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (CheckedLink item in items.ToList().Cast<CheckedLink>())
+            foreach (CheckLink item in items.ToList().Cast<CheckLink>())
             {
                 _checkLinks.Replace(item);
             }
