@@ -1,5 +1,15 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 3.3.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-05-24
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-05-24/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_3_3_1.pext
+    Changelog:
+      - Review duplicate links now ignores hidden games, when clicking on "All games" in the main menu.
+      - Fixed link for the help button in check links dialog.
+      - Fixed dialogs not being centered over the main window.
+      - Fixed same url with and without trailing slash not being equal.
+      - Fixed missing dialog text when no links to check were found.
   - Version: 3.3
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-05-21
