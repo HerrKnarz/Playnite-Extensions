@@ -49,12 +49,11 @@ namespace LinkUtilities.LinkActions
             => base.Execute(game, actionModifier, isBulkAction) &&
                LinkHelper.RemoveDuplicateLinks(game, RemoveDuplicatesType);
 
-        public static void ShowReviewDuplicatesView(IEnumerable<Game> games)
+        public static void ShowReviewDuplicatesView(List<Game> games)
         {
             try
             {
-                IEnumerable<Game> enumerable = games.Where(x => !x.Hidden).ToList();
-                ReviewDuplicatesViewModel viewModel = new ReviewDuplicatesViewModel(enumerable);
+                ReviewDuplicatesViewModel viewModel = new ReviewDuplicatesViewModel(games);
 
                 if (!viewModel.ReviewDuplicates.Duplicates?.Any() ?? true)
                 {

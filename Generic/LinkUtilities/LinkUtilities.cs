@@ -309,7 +309,7 @@ namespace LinkUtilities
                 MenuSection = $"@{menuSection}|{menuAllGames}",
                 Action = a =>
                 {
-                    List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                    List<Game> games = PlayniteApi.Database.Games.Distinct().Where(x => !x.Hidden).ToList();
                     RemoveDuplicates.ShowReviewDuplicatesView(games);
                 }
             });

@@ -13,11 +13,12 @@ namespace KNARZhelper
         {
             Window window = API.Instance.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = showMaximizeButton, ShowMinimizeButton = showMinimizeButton });
             window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
-            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.Title = title;
 
             return window;
         }
+
+        private static void PositionWindow(Window window) => window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
         public static Window CreateSizeToContentWindow(string title)
         {
@@ -32,6 +33,8 @@ namespace KNARZhelper
             window.MaxHeight = screen.WorkingArea.Height * 0.96D / dpi.DpiScaleY;
             window.MaxWidth = screen.WorkingArea.Width * 0.96D / dpi.DpiScaleY;
 
+            PositionWindow(window);
+
             return window;
         }
 
@@ -41,6 +44,8 @@ namespace KNARZhelper
 
             window.Width = width;
             window.Height = height;
+
+            PositionWindow(window);
 
             return window;
         }

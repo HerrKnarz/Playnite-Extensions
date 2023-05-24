@@ -316,7 +316,7 @@ namespace LinkUtilities
 
                 string urlWithoutScheme = uri.Host + uri.PathAndQuery + uri.Fragment;
 
-                return !url.EndsWith("/") ? urlWithoutScheme + "/" : urlWithoutScheme;
+                return !urlWithoutScheme.EndsWith("/") ? urlWithoutScheme + "/" : urlWithoutScheme;
             }
             catch (Exception)
             {

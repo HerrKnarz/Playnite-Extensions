@@ -10,16 +10,16 @@ namespace LinkUtilities
     /// </summary>
     public class ReviewDuplicatesViewModel : ViewModelBase
     {
-        private IEnumerable<Game> _games;
+        private List<Game> _games;
         private ReviewDuplicates _reviewDuplicates;
 
-        public ReviewDuplicatesViewModel(IEnumerable<Game> games)
+        public ReviewDuplicatesViewModel(List<Game> games)
         {
             _games = games;
             ReviewDuplicates = new ReviewDuplicates(_games);
         }
 
-        public IEnumerable<Game> Games
+        public List<Game> Games
         {
             get => _games;
             set
