@@ -14,6 +14,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Nomeie o link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Por favor, insira um nome para o link!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">No duplicates found!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoLinksFound">No links found!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Links indesejados de {0} jogos removidos!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Links duplicados de {0} jogos removidos!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Links de {0} jogos renomeados!</sys:String>
