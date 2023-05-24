@@ -14,6 +14,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Назвіть посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Будь ласка, введіть назву для посилання!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">Дублікатів не знайдено!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoLinksFound">No links found!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Небажані посилання в {0} іграх видалені!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Повторювані посилання видалені з {0} ігор!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Посилання {0} ігор перейменовано!</sys:String>
@@ -68,10 +69,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Додати типові</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Скасувати</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Вибрати все</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">Help</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">Довідка</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Вилучити</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">Replace</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">Замінити</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Зворотній вибір</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Сортувати</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Зняти вибір з усього</sys:String>
@@ -83,7 +84,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">назвою посилання та URL-адресою</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">назвою посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsHideOkOnLinkCheck">Hide links, that return OK, in link check</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsHideOkOnLinkCheck">Приховати посилання, які відгукуються, в перевірці посилань</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Назва посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Джерело посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[Відсутнє посилання]</sys:String>
