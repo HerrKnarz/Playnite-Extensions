@@ -53,7 +53,7 @@ namespace LinkUtilities.LinkActions
         {
             try
             {
-                IEnumerable<Game> enumerable = games.ToList();
+                IEnumerable<Game> enumerable = games.Where(x => !x.Hidden).ToList();
                 ReviewDuplicatesViewModel viewModel = new ReviewDuplicatesViewModel(enumerable);
 
                 if (!viewModel.ReviewDuplicates.Duplicates?.Any() ?? true)
