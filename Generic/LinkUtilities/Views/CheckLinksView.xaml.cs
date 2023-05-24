@@ -32,7 +32,7 @@ namespace LinkUtilities
 
         private void HelpClick(object sender, RoutedEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet#bookmarklet"));
+            Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Check-links"));
             e.Handled = true;
         }
 
