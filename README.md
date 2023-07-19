@@ -16,15 +16,18 @@ If you have more ideas for these extensions, feel free to suggest them by openin
 
 Extension to manage links for the games in the playnite library. It can do the following:
 
-- Sort links by name or custom sort order via game menu or optionally automatically after metadata change.
-- Remove unwanted links (e.g. social media links added by IGDB) via game menu or optionally automatically after metadata change.
-- Remove duplicate links via game menu or optionally automatically after metadata change.
-- Rename links (e.g. shorten wikipedia to wiki) via game menu or optionally automatically after metadata change.
+- Sort links by name or custom sort order.
+- Remove unwanted links (e.g. social media links added by IGDB).
+- Remove duplicate links.
+- Rename links (e.g. shorten wikipedia to wiki).
 - Add links to several websites directly by trying to find a valid link using the game name
-- Search for games on several websites to add links via search dialog
 - Add library links: add links to the game page of its library
-- Add link to active website in your browser via bookmarklet (see [wiki](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet) for more information). Works with any website.
 - Add tags to games to keep track of missing links to specific websites.
+
+All of these functions can be triggered manually for the selected games via game or playnite menu or configured to be triggered automatically after the metadata of a game changes.
+
+- Search for a game on several websites to add links via search dialog
+- Add link to active website in your browser via bookmarklet (see [wiki](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet) for more information). Works with any website.
 - Check if links are still working, with option to remove links or replace URLs in the result dialog.
 
 To see which websites are already supported or planned to be added see the [wiki](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Supported-websites-for-add-&-search-function)!
