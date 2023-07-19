@@ -354,14 +354,16 @@ namespace LinkUtilities
         /// <param name="url">URL to check</param>
         /// <param name="allowRedirects">If true, a redirect will count as ok.</param>
         /// <param name="sameUrl">When true the method only returns true, if the response url didn't change.</param>
+        /// <param name="wrongTitle">Returns false, if the website has this title. Is used to detect certain redirects.</param>
         /// <returns>True, if the URL is reachable</returns>
-        internal static bool IsUrlOk(string url, bool allowRedirects = true, bool sameUrl = false)
+        internal static bool IsUrlOk(string url, bool allowRedirects = true, bool sameUrl = false, string wrongTitle = "")
         {
             LinkCheckResult linkCheckResult = CheckUrl(url, allowRedirects);
 
             return !linkCheckResult.ErrorDetails.Any() && (sameUrl
-                ? linkCheckResult.StatusCode == HttpStatusCode.OK && linkCheckResult.ResponseUrl == url
-                : linkCheckResult.StatusCode == HttpStatusCode.OK);
+                       ? linkCheckResult.StatusCode == HttpStatusCode.OK && linkCheckResult.ResponseUrl == url
+                       : linkCheckResult.StatusCode == HttpStatusCode.OK) &&
+                   (wrongTitle == string.Empty || linkCheckResult.PageTitle != wrongTitle);
         }
 
         /// <summary>
@@ -384,10 +386,11 @@ namespace LinkUtilities
                     PreRequest = OnPreRequest
                 };
 
-                web.Load(url);
+                HtmlDocument document = web.Load(url);
 
                 result.StatusCode = web.StatusCode;
                 result.ResponseUrl = web.ResponseUri.AbsoluteUri;
+                result.PageTitle = document.DocumentNode.SelectSingleNode("html/head/title").InnerText;
             }
             catch (WebException ex)
             {

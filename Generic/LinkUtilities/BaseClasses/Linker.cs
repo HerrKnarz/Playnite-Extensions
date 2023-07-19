@@ -24,6 +24,8 @@ namespace LinkUtilities.BaseClasses
             NeedsApiKey = false
         };
 
+        public virtual string WrongTitle { get; set; } = string.Empty;
+
         public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
         public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
@@ -147,7 +149,7 @@ namespace LinkUtilities.BaseClasses
             return true;
         }
 
-        public virtual bool CheckLink(string link) => LinkHelper.IsUrlOk(link, AllowRedirects, ReturnsSameUrl);
+        public virtual bool CheckLink(string link) => LinkHelper.IsUrlOk(link, AllowRedirects, ReturnsSameUrl, WrongTitle);
 
         public virtual string GetGamePath(Game game, string gameName = null)
         {
