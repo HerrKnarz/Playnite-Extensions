@@ -12,6 +12,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "Backloggd",
+        "urlPattern": "*backloggd.com*",
+        "namePattern": "",
+        "partialMatch": false
+    },
+    {
         "linkName": "Co-Optimus",
         "urlPattern": "*co-optimus.com*",
         "namePattern": "Co-Optimus",
@@ -111,6 +117,12 @@
         "linkName": "MobyGames",
         "urlPattern": "*mobygames.com*",
         "namePattern": "MobyGames",
+        "partialMatch": false
+    },
+    {
+        "linkName": "Mod DB",
+        "urlPattern": "*moddb.com*",
+        "namePattern": "*Mod DB",
         "partialMatch": false
     },
     {
