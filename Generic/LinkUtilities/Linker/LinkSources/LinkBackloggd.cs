@@ -21,6 +21,10 @@ namespace LinkUtilities.Linker
         public override string BaseUrl => _websiteUrl + "/games/";
         public override string SearchUrl => _websiteUrl + "/search/games/";
 
+        // Since Backloggd always returns the status code OK and the same url, even if that leads to a non existing game, we also check if the title isn't the one
+        // of that generic page. Funny enough it says 404 but doesn't return that status code...
+        public override string WrongTitle => "404 Not Found";
+
         // Backloggd Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()

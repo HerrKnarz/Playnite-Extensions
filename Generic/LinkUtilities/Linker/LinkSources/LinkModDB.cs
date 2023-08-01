@@ -34,8 +34,6 @@ namespace LinkUtilities.Linker
             {
                 HtmlWeb web = new HtmlWeb();
 
-                string test = $"{SearchUrl}{searchTerm.UrlEncode()}";
-
                 HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
                 HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'rowcontent')]/div[@class='content']");
