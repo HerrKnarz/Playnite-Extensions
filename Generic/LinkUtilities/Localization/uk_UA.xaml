@@ -4,6 +4,7 @@
 
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseUrl">URL-адреса відповіді</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksStatusCode">Код стану</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Заголовок сторінки відповіді</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">рівно?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Перевірити посилання</sys:String>
 
@@ -14,7 +15,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Назвіть посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Будь ласка, введіть назву для посилання!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">Дублікатів не знайдено!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNoLinksFound">No links found!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoLinksFound">Посилань не знайдено!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Небажані посилання в {0} іграх видалені!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Повторювані посилання видалені з {0} ігор!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Посилання {0} ігор перейменовано!</sys:String>
