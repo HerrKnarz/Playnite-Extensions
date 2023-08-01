@@ -5,3 +5,10 @@ Version: 3.3.1
 Module: LinkUtilities.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+  - Name: GitHub
+    Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
+  - Name: AddOn database
+    Url: https://playnite.link/addons.html#LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
+  - Name: Translate
+    Url: https://crowdin.com/project/playnite-extension-linkutiliti
