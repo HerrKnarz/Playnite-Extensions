@@ -3,7 +3,7 @@
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// List of all website Links that can be added.
+    ///     List of all website Links that can be added.
     /// </summary>
     public class Links : List<BaseClasses.Linker>
     {
@@ -11,6 +11,7 @@ namespace LinkUtilities.Linker
         {
             Add(new LinkAdventureGamers());
             Add(new LinkArcadeDatabase());
+            Add(new LinkBackloggd());
             Add(new LinkCoOptimus());
             Add(new LinkEpic());
             Add(new LinkGamePressureGuides());
