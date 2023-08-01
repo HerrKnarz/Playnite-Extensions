@@ -78,6 +78,7 @@
     <Compile Include="LinkActions\AddLinkFromClipboard.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
     <Compile Include="Linker\LinkSources\LinkBackloggd.cs" />
+    <Compile Include="Linker\LinkSources\LinkModDB.cs" />
     <Compile Include="ViewModels\CheckLink.cs" />
     <Compile Include="ViewModels\CheckLinks.cs" />
     <Compile Include="ViewModels\CheckLinksViewModel.cs" />

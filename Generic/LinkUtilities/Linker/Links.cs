@@ -29,6 +29,7 @@ namespace LinkUtilities.Linker
             Add(new LinkMapGenie());
             Add(new LinkMetacritic());
             Add(new LinkMobyGames());
+            Add(new LinkModDB());
             Add(new LinkNecRetro());
             Add(new LinkNintendoWiki());
             Add(new LinkPcGamingWiki());
