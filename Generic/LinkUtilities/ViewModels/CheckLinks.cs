@@ -101,7 +101,7 @@ namespace LinkUtilities
                 }
             });
 
-            Links.AddRange(linksQueue);
+            Links.AddRange(linksQueue.OrderBy(x => x.Link.Name).ToList());
         }
 
         public void Remove(CheckLink checkLink)

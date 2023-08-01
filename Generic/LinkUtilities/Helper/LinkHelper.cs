@@ -390,7 +390,7 @@ namespace LinkUtilities
 
                 result.StatusCode = web.StatusCode;
                 result.ResponseUrl = web.ResponseUri.AbsoluteUri;
-                result.PageTitle = document.DocumentNode.SelectSingleNode("html/head/title").InnerText;
+                result.PageTitle = document?.DocumentNode?.SelectSingleNode("html/head/title")?.InnerText.Trim();
             }
             catch (WebException ex)
             {

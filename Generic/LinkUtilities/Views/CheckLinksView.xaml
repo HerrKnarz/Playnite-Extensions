@@ -72,6 +72,8 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesCheckLinksResponseTitle}"
+                                    DisplayMemberBinding="{Binding LinkCheckResult.PageTitle}" />
                 </GridView>
             </ListView.View>
             <ListView.GroupStyle>
