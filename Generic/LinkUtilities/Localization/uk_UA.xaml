@@ -4,6 +4,7 @@
 
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseUrl">URL-адреса відповіді</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksStatusCode">Код стану</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Response page title</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">рівно?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Перевірити посилання</sys:String>
 
