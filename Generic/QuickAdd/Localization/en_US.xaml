@@ -4,6 +4,8 @@
 
     <sys:String x:Key="LOCQuickAddName">Quick Add</sys:String>
 
-    <sys:String x:Key="LOCQuickAddProgressFeatures">Adding features</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressFeatures">Adding feature</sys:String>
     <sys:String x:Key="LOCQuickAddFeaturesAdded">Feature added to {0} games</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressTags">Adding tag</sys:String>
+    <sys:String x:Key="LOCQuickAddTagsAdded">Tag added to {0} games</sys:String>
 </ResourceDictionary>
