@@ -34,6 +34,10 @@ To see which websites are already supported or planned to be added see the [wiki
 
 ### Planned features
 - add links to more websites.
+- blacklist games from adding "missing link" tags for specific websites.
+- add support for quick search to add links or search for games with specific links
+- option to filter check links window by website to make it easier to manager links to certain sites
+- option to remove linksto manually added url mask from selected games 
 
 ## Company Companion
 
@@ -45,6 +49,7 @@ Extension to manage game companies (see Developer and Publisher fields in Playni
 
 ### Planned features
 - optional fuzzy search to find similar companies
+- option to filter only publishers or developers, to manage then separately.
 - ignore list to keep specific companies from being merged with similar ones.
 - option to save merge groups to automatically merge them again, when games were added or updated.
 - option to find and manually split comma separated companies.
@@ -67,6 +72,9 @@ Extension to get metadata from wikipedia. The following fields are supported:
 - Cover image
 - Critic Score (Metacritic and GameRankings as fallback)
 - Description (with option to leave out certain sections)
+
+### Planned features
+- Maybe add wikipedia categories as optional tags (metadata addons can't directly fill the categories field).
 
 ## KNARZtools
 
