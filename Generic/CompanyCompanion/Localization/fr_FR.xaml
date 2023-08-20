@@ -20,16 +20,16 @@
 
     <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Ajouter</sys:String>
     <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Descripteurs d'entité commerciale :</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Words to ignore to find similar companies:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Remove</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Show group key in merge window.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Mots à ignorer pour trouver des entreprises similaires :</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Retirer</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Afficher la clé de groupe dans la fenêtre de fusion.</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">fusion des entreprises</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">recherche d'entreprises à fusionner</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">mise à jour des jeux</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Add value</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">No companies with business entity descriptors found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">No duplicate companies were found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Updated companies in {0} games and merged {1} companies</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Ajouter une valeur</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">Aucune entreprise avec un descripteur d'entité commerciale n'a été trouvé.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">Aucune entreprise en double n'a été trouvée.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Entreprises mises à jour dans les jeux {0} et entreprises fusionnées {1}</sys:String>
 </ResourceDictionary>
