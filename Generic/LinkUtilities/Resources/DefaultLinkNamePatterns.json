@@ -42,6 +42,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "GG.deals",
+        "urlPattern": "*gg.deals*",
+        "namePattern": "",
+        "partialMatch": false
+    },
+    {
         "linkName": "Giant Bomb",
         "urlPattern": "*giantbomb.com*",
         "namePattern": "*Giant Bomb*",
