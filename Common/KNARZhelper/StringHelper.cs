@@ -15,7 +15,7 @@ namespace KNARZhelper
         /// <summary>
         /// Removes all characters that aren't part of the alphabet, a number, a whitespace or a hyphen.
         /// </summary>
-        public static string RemoveSpecialChars(this string str) => Regex.Replace(str, @"[^a-zA-Z0-9\-\s]+", "");
+        public static string RemoveSpecialChars(this string str, string replaceStr = "") => Regex.Replace(str, @"[^a-zA-Z0-9\-\s]+", replaceStr);
 
         /// <summary>
         /// Dictionary with special characters that need to be replaced before regular removing of diacritics.

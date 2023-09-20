@@ -16,6 +16,7 @@ namespace LinkUtilities.Linker
             Add(new LinkEpic());
             Add(new LinkGamePressureGuides());
             Add(new LinkGamerGuides());
+            Add(new LinkGGDeals());
             Add(new LinkGiantBomb());
             Add(new LibraryLinkGog());
             Add(new LinkHg101());
