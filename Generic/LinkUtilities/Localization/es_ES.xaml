@@ -4,7 +4,7 @@
 
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseUrl">URL de respuesta</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksStatusCode">Codigo de estado</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Response page title</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Título de la página de respuesta</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">es igual a</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Comprobar enlaces</sys:String>
 
