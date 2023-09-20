@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Playnite.SDK;
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace KNARZhelper
 {
@@ -15,5 +19,15 @@ namespace KNARZhelper
             => new DateTime(date.Year, date.Month, 1);
         public static DateTime EndOfMonth(this DateTime date)
             => date.StartOfMonth().AddMonths(1).AddDays(-1);
+
+        public static void AddTextIcoFontResource(string key, string text)
+        {
+            Application.Current.Resources.Add(key, new TextBlock
+            {
+                Text = text,
+                FontSize = 16,
+                FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
+            });
+        }
     }
 }

@@ -42,6 +42,28 @@ namespace LinkUtilities
 
                 DoForAll(games, HandleUriActions.Instance(), true, HandleUriActions.Instance().Action);
             });
+
+            Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
+            {
+                { "luLinkIcon", "\xef71" },
+                { "luAddIcon", "\xec3e" },
+                { "luSearchIcon", "\xed1b" },
+                { "luLibraryIcon", "\xef65" },
+                { "luClipboardIcon", "\xec4c" },
+                { "luCheckIcon", "\xf021" },
+                { "luCleanIcon", "\xe99c" },
+                { "luSortIcon", "\xefee" },
+                { "luRemoveIcon", "\xec7e" },
+                { "luReviewIcon", "\xeaeb" },
+                { "luDuplicateIcon", "\xedea" },
+                { "luRenameIcon", "\xeded" },
+                { "luTagIcon", "\xf004" }
+            };
+
+            foreach (KeyValuePair<string, string> iconResource in iconResourcesToAdd)
+            {
+                MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+            }
         }
 
         /// <summary>
@@ -212,6 +234,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
                     MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luCleanIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
@@ -223,6 +246,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
                     MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luCleanIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
@@ -246,6 +270,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
                     MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luSortIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
@@ -256,6 +281,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
                     MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luSortIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
@@ -271,6 +297,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksBySortOrder"),
                     MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luSortIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
@@ -282,6 +309,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksBySortOrder"),
                     MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luSortIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
@@ -295,6 +323,7 @@ namespace LinkUtilities
             {
                 Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
                 MenuSection = $"@{menuSection}|{menuAllGames}",
+                Icon = "luDuplicateIcon",
                 Action = a =>
                 {
                     List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
@@ -307,6 +336,7 @@ namespace LinkUtilities
             {
                 Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
                 MenuSection = $"@{menuSection}|{menuAllGames}",
+                Icon = "luReviewIcon",
                 Action = a =>
                 {
                     List<Game> games = PlayniteApi.Database.Games.Distinct().Where(x => !x.Hidden).ToList();
@@ -318,6 +348,7 @@ namespace LinkUtilities
             {
                 Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
                 MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                Icon = "luDuplicateIcon",
                 Action = a =>
                 {
                     List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
@@ -330,6 +361,7 @@ namespace LinkUtilities
             {
                 Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
                 MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                Icon = "luReviewIcon",
                 Action = a =>
                 {
                     List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
@@ -344,6 +376,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveUnwantedLinks"),
                     MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luRemoveIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
@@ -355,6 +388,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveUnwantedLinks"),
                     MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luRemoveIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
@@ -370,6 +404,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRenameLinks"),
                     MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luRenameIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
@@ -381,6 +416,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRenameLinks"),
                     MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luRenameIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
@@ -396,6 +432,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
                     MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luTagIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
@@ -408,6 +445,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
                     MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luTagIcon",
                     Action = a =>
                     {
                         List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
@@ -437,6 +475,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAddLibraryLink"),
                     MenuSection = menuSection,
+                    Icon = "luLibraryIcon",
                     Action = a => DoForAll(games, AddLibraryLinks.Instance(), true)
                 });
             }
@@ -448,6 +487,7 @@ namespace LinkUtilities
                     {
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllConfiguredWebsites"),
                         MenuSection = $"{menuSection}|{menuAddLinks}",
+                        Icon = "luAddIcon",
                         Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.Add)
                     },
                     // Adds the "selected websites..." item to the "add link to" sub menu.
@@ -455,6 +495,7 @@ namespace LinkUtilities
                     {
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSelectedWebsites"),
                         MenuSection = $"{menuSection}|{menuAddLinks}",
+                        Icon = "luAddIcon",
                         Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.AddSelected)
                     },
                     // Adds a separator to the "add link to" sub menu
@@ -468,6 +509,7 @@ namespace LinkUtilities
                     {
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllConfiguredWebsites"),
                         MenuSection = $"{menuSection}|{menuSearchLinks}",
+                        Icon = "luSearchIcon",
                         Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.Search)
                     },
                     // Adds the "All missing websites" item to the "search link to" sub menu.
@@ -475,6 +517,7 @@ namespace LinkUtilities
                     {
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllMissingWebsites"),
                         MenuSection = $"{menuSection}|{menuSearchLinks}",
+                        Icon = "luSearchIcon",
                         Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.SearchMissing)
                     },
                     // Adds the "selected websites..." item to the "search link to" sub menu.
@@ -482,6 +525,7 @@ namespace LinkUtilities
                     {
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSelectedWebsites"),
                         MenuSection = $"{menuSection}|{menuSearchLinks}",
+                        Icon = "luSearchIcon",
                         Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.SearchSelected)
                     },
                     // Adds a separator to the "search link to" sub menu
@@ -495,6 +539,7 @@ namespace LinkUtilities
                     {
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAddLinkFromClipboard"),
                         MenuSection = menuSection,
+                        Icon = "luClipboardIcon",
                         Action = a => DoForAll(games, AddLinkFromClipboard.Instance(), true)
                     },
                     // Adds a separator to the game menu
@@ -508,12 +553,14 @@ namespace LinkUtilities
                     {
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCheckLinks"),
                         MenuSection = menuSection,
+                        Icon = "luCheckIcon",
                         Action = a => CheckLinks(games)
                     },
                     new GameMenuItem
                     {
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
                         MenuSection = menuSection,
+                        Icon = "luCleanIcon",
                         Action = a =>
                         {
                             TagMissingLinks.Instance().TagsCache.Clear();
@@ -531,6 +578,7 @@ namespace LinkUtilities
                     {
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
                         MenuSection = menuSection,
+                        Icon = "luSortIcon",
                         Action = a => DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.Name)
                     }
                 }
@@ -543,6 +591,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksBySortOrder"),
                     MenuSection = menuSection,
+                    Icon = "luSortIcon",
                     Action = a => DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.SortOrder)
                 });
             }
@@ -576,6 +625,7 @@ namespace LinkUtilities
             {
                 Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
                 MenuSection = menuSection,
+                Icon = "luDuplicateIcon",
                 Action = a => DoForAll(games, RemoveDuplicates.Instance(), true)
             });
 
@@ -584,6 +634,7 @@ namespace LinkUtilities
             {
                 Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
                 MenuSection = menuSection,
+                Icon = "luReviewIcon",
                 Action = a => RemoveDuplicates.ShowReviewDuplicatesView(games)
             });
 
@@ -594,6 +645,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveUnwantedLinks"),
                     MenuSection = menuSection,
+                    Icon = "luRemoveIcon",
                     Action = a => DoForAll(games, RemoveLinks.Instance(), true)
                 });
             }
@@ -605,6 +657,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRenameLinks"),
                     MenuSection = menuSection,
+                    Icon = "luRenameIcon",
                     Action = a => DoForAll(games, RenameLinks.Instance(), true)
                 });
             }
@@ -616,6 +669,7 @@ namespace LinkUtilities
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
                     MenuSection = menuSection,
+                    Icon = "luTagIcon",
                     Action = a =>
                     {
                         TagMissingLinks.Instance().TagsCache.Clear();
