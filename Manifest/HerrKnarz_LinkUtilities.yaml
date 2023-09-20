@@ -1,5 +1,13 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 3.5
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-09-20
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-09-20/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_3_5.pext
+    Changelog:
+      - Added support for GG.deals.
+      - Added icons to menu items.
+      - Additional translations to Spanish (thx darklinkpower) and French (thx Lacro59).
   - Version: 3.4
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-08-01
