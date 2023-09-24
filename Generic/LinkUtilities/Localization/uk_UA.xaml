@@ -80,6 +80,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Налаштуйте шаблони назв посилань (Для посилань з буфера обміну перевірятиметься лише шаблон URL-адреси, оскільки ми все одно не маємо назви)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Налаштувати сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Визначити довільний порядок сортування</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Don't rename, when the link name contains:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Прибрати повторювані посилання після оновлення метаданих</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionType">Прибрати повторювані посилання з однаковою</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">назвою посилання та URL-адресою</sys:String>
