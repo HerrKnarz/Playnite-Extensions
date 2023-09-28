@@ -158,9 +158,9 @@ namespace QuickAdd
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            string featureLabel = ResourceProvider.GetString("LOCFeaturesLabel");
-            string tagLabel = ResourceProvider.GetString("LOCTagsLabel");
-            string categoryLabel = ResourceProvider.GetString("LOCCategoriesLabel");
+            string featureLabel = ResourceProvider.GetString("LOCQuickAddAddFeature");
+            string tagLabel = ResourceProvider.GetString("LOCQuickAddAddTag");
+            string categoryLabel = ResourceProvider.GetString("LOCQuickAddAddCategory");
 
             List<Game> games = args.Games.Distinct().ToList();
 
@@ -207,7 +207,7 @@ namespace QuickAdd
                 {
                     Description = category.Name,
                     MenuSection = $"{categoryLabel}",
-                    Action = a => DoForAll(games, category.Id, FieldType.Feature)
+                    Action = a => DoForAll(games, category.Id, FieldType.Category)
                 }).OrderBy(x => x.Description));
             }
 
