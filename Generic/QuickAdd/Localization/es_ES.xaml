@@ -3,8 +3,15 @@
 
     <sys:String x:Key="LOCQuickAddName">Adición rápida</sys:String>
 
+    <sys:String x:Key="LOCQuickAddAddFeature">Add feature</sys:String>
     <sys:String x:Key="LOCQuickAddProgressFeatures">Agregando característica</sys:String>
     <sys:String x:Key="LOCQuickAddFeaturesAdded">Característica añadida a {0} juegos</sys:String>
+
+    <sys:String x:Key="LOCQuickAddAddTag">Add tag</sys:String>
     <sys:String x:Key="LOCQuickAddProgressTags">Añadiendo etiqueta</sys:String>
     <sys:String x:Key="LOCQuickAddTagsAdded">Etiqueta añadida a {0} juegos</sys:String>
+
+    <sys:String x:Key="LOCQuickAddAddCategory">Add category</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressCategories">Adding category</sys:String>
+    <sys:String x:Key="LOCQuickAddCategoriesAdded">Category added to {0} games</sys:String>
 </ResourceDictionary>
