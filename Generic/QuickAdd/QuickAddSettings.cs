@@ -1,99 +1,125 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using QuickAdd.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QuickAdd
 {
     public class QuickAddSettings : ObservableObject
     {
-        private string option1 = string.Empty;
-        private bool option2;
-        private bool optionThatWontBeSaved;
+        private List<Guid> _checkedCategories;
+        private List<Guid> _checkedFeatures;
+        private List<Guid> _checkedTags;
+        private QuickCategories _quickCategories;
+        private QuickFeatures _quickFeatures;
 
-        public string Option1
+        private QuickTags _quickTags;
+
+        public List<Guid> CheckedTags
         {
-            get => option1;
-            set => SetValue(ref option1, value);
+            get => _checkedTags;
+            set => SetValue(ref _checkedTags, value);
         }
 
-        public bool Option2
+        public List<Guid> CheckedFeatures
         {
-            get => option2;
-            set => SetValue(ref option2, value);
+            get => _checkedFeatures;
+            set => SetValue(ref _checkedFeatures, value);
         }
 
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
+        public List<Guid> CheckedCategories
+        {
+            get => _checkedCategories;
+            set => SetValue(ref _checkedCategories, value);
+        }
+
         [DontSerialize]
-        public bool OptionThatWontBeSaved
+        public QuickTags QuickTags
         {
-            get => optionThatWontBeSaved;
-            set => SetValue(ref optionThatWontBeSaved, value);
+            get => _quickTags;
+            set => SetValue(ref _quickTags, value);
+        }
+
+        [DontSerialize]
+        public QuickFeatures QuickFeatures
+        {
+            get => _quickFeatures;
+            set => SetValue(ref _quickFeatures, value);
+        }
+
+        [DontSerialize]
+        public QuickCategories QuickCategories
+        {
+            get => _quickCategories;
+            set => SetValue(ref _quickCategories, value);
         }
     }
 
     public class QuickAddSettingsViewModel : ObservableObject, ISettings
     {
-        private readonly QuickAdd plugin;
+        private readonly QuickAdd _plugin;
 
-        private QuickAddSettings settings;
+        private QuickAddSettings _settings;
 
         public QuickAddSettingsViewModel(QuickAdd plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
+            _plugin = plugin;
 
             // Load saved settings.
             QuickAddSettings savedSettings = plugin.LoadPluginSettings<QuickAddSettings>();
 
             // LoadPluginSettings returns null if no saved data is available.
-            if (savedSettings != null)
-            {
-                Settings = savedSettings;
-            }
-            else
-            {
-                Settings = new QuickAddSettings();
-            }
+            Settings = savedSettings ?? new QuickAddSettings();
+
+            Settings.QuickTags = QuickTags.GetTags(Settings.CheckedTags);
+            Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.CheckedFeatures);
+            Settings.QuickCategories = QuickCategories.GetCategories(Settings.CheckedCategories);
         }
 
-        private QuickAddSettings editingClone { get; set; }
+        private QuickAddSettings EditingClone { get; set; }
 
         public QuickAddSettings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
 
         public void BeginEdit()
         {
-            // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
+            EditingClone = Serialization.GetClone(Settings);
+
+            Settings.QuickTags = QuickTags.GetTags(Settings.CheckedTags);
+            Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.CheckedFeatures);
+            Settings.QuickCategories = QuickCategories.GetCategories(Settings.CheckedCategories);
         }
 
         public void CancelEdit()
         {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
+            Settings = EditingClone;
+
+            Settings.QuickTags = QuickTags.GetTags(Settings.CheckedTags);
+            Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.CheckedFeatures);
+            Settings.QuickCategories = QuickCategories.GetCategories(Settings.CheckedCategories);
         }
 
         public void EndEdit()
         {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
+            Settings.CheckedTags = Settings.QuickTags.Where(x => x.Checked)?.Select(x => x.Id).ToList();
+            Settings.CheckedFeatures = Settings.QuickFeatures.Where(x => x.Checked)?.Select(x => x.Id).ToList();
+            Settings.CheckedCategories = Settings.QuickCategories.Where(x => x.Checked)?.Select(x => x.Id).ToList();
+
+            _plugin.SavePluginSettings(Settings);
         }
 
         public bool VerifySettings(out List<string> errors)
         {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
         }

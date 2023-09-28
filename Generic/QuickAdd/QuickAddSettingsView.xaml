@@ -3,12 +3,77 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:quickadd="clr-namespace:QuickAdd"
+             d:DataContext="{d:DesignInstance Type=quickadd:QuickAddSettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="Description for Option1:"/>
-        <TextBox Text="{Binding Settings.Option1}"/>
-        <TextBlock Text="Description for Option2:"/>
-        <CheckBox IsChecked="{Binding Settings.Option2}"/>
-    </StackPanel>
+    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch">
+        <TabItem Header="{DynamicResource LOCFeaturesLabel}">
+            <DockPanel Margin="10">
+                <ListView Name="Features" SelectionMode="Single" DockPanel.Dock="Top" Margin="0,10,0,0"
+                              ItemsSource="{Binding Settings.QuickFeatures}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="50">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCFeatureLabel}"
+                                            DisplayMemberBinding="{Binding Name}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </DockPanel>
+        </TabItem>
+
+        <TabItem Header="{DynamicResource LOCTagsLabel}">
+            <DockPanel Margin="10">
+                <ListView Name="Tags" SelectionMode="Single" DockPanel.Dock="Top" Margin="0,10,0,0"
+                          ItemsSource="{Binding Settings.QuickTags}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="50">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCTagLabel}"
+                                            DisplayMemberBinding="{Binding Name}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </DockPanel>
+        </TabItem>
+
+        <TabItem Header="{DynamicResource LOCCategoriesLabel}">
+            <DockPanel Margin="10">
+                <ListView Name="Categories" SelectionMode="Single" DockPanel.Dock="Top" Margin="0,10,0,0"
+                          ItemsSource="{Binding Settings.QuickCategories}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="50">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCCategoryLabel}"
+                                            DisplayMemberBinding="{Binding Name}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </DockPanel>
+        </TabItem>
+
+    </TabControl>
 </UserControl>

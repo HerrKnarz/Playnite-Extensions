@@ -48,6 +48,12 @@
     <Compile Include="..\..\Common\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>
+    <Compile Include="Models\QuickCategories.cs" />
+    <Compile Include="Models\QuickCategory.cs" />
+    <Compile Include="Models\QuickFeature.cs" />
+    <Compile Include="Models\QuickFeatures.cs" />
+    <Compile Include="Models\QuickTag.cs" />
+    <Compile Include="Models\QuickTags.cs" />
     <Compile Include="QuickAdd.cs" />
     <Compile Include="QuickAddSettings.cs" />
     <Compile Include="QuickAddSettingsView.xaml.cs">

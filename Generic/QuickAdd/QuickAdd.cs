@@ -2,6 +2,7 @@
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using QuickAdd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace QuickAdd
     public enum FieldType
     {
         Feature,
-        Tag
+        Tag,
+        Category
     }
 
     public class QuickAdd : GenericPlugin
@@ -22,8 +24,23 @@ namespace QuickAdd
             Settings = new QuickAddSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = false
+                HasSettings = true
             };
+
+            API.Instance.Database.Tags.ItemCollectionChanged += (sender, args) =>
+                Settings.Settings.QuickTags = QuickTags.GetTags(Settings.Settings.CheckedTags);
+            API.Instance.Database.Tags.ItemUpdated += (sender, args) =>
+                Settings.Settings.QuickTags = QuickTags.GetTags(Settings.Settings.CheckedTags);
+
+            API.Instance.Database.Features.ItemCollectionChanged += (sender, args) =>
+                Settings.Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.Settings.CheckedFeatures);
+            API.Instance.Database.Features.ItemUpdated += (sender, args) =>
+                Settings.Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.Settings.CheckedFeatures);
+
+            API.Instance.Database.Categories.ItemCollectionChanged += (sender, args) =>
+                Settings.Settings.QuickCategories = QuickCategories.GetCategories(Settings.Settings.CheckedCategories);
+            API.Instance.Database.Categories.ItemUpdated += (sender, args) =>
+                Settings.Settings.QuickCategories = QuickCategories.GetCategories(Settings.Settings.CheckedCategories);
         }
 
         private QuickAddSettingsViewModel Settings { get; }
@@ -42,6 +59,10 @@ namespace QuickAdd
                     break;
                 case FieldType.Tag:
                     ids = game.TagIds ?? (game.TagIds = new List<Guid>());
+
+                    break;
+                case FieldType.Category:
+                    ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
 
                     break;
                 default:
@@ -81,6 +102,10 @@ namespace QuickAdd
                     case FieldType.Tag:
                         progressLabel = ResourceProvider.GetString("LOCQuickAddProgressTags");
                         progressResult = ResourceProvider.GetString("LOCQuickAddTagsAdded");
+                        break;
+                    case FieldType.Category:
+                        progressLabel = ResourceProvider.GetString("LOCQuickAddProgressCategories");
+                        progressResult = ResourceProvider.GetString("LOCQuickAddCategoriesAdded");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -133,25 +158,58 @@ namespace QuickAdd
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            string menuSection = ResourceProvider.GetString("LOCQuickAddName");
-            string featuresLabel = ResourceProvider.GetString("LOCFeaturesLabel");
+            string featureLabel = ResourceProvider.GetString("LOCFeaturesLabel");
             string tagLabel = ResourceProvider.GetString("LOCTagsLabel");
+            string categoryLabel = ResourceProvider.GetString("LOCCategoriesLabel");
 
             List<Game> games = args.Games.Distinct().ToList();
 
-            List<GameMenuItem> menuItems = API.Instance.Database.Features.Select(feature => new GameMenuItem
+            if (!Settings.Settings.QuickFeatures.Any())
             {
-                Description = feature.Name,
-                MenuSection = $"{menuSection}|{featuresLabel}",
-                Action = a => DoForAll(games, feature.Id, FieldType.Feature)
-            }).OrderBy(x => x.Description).ToList();
+                Settings.Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.Settings.CheckedFeatures);
+            }
 
-            menuItems.AddRange(API.Instance.Database.Tags.Select(tag => new GameMenuItem
+            List<GameMenuItem> menuItems = new List<GameMenuItem>();
+
+            if (Settings.Settings.QuickFeatures.Any(x => x.Checked))
             {
-                Description = tag.Name,
-                MenuSection = $"{menuSection}|{tagLabel}",
-                Action = a => DoForAll(games, tag.Id, FieldType.Tag)
-            }).OrderBy(x => x.Description));
+                menuItems.AddRange(Settings.Settings.QuickFeatures.Where(x => x.Checked).Select(feature => new GameMenuItem
+                {
+                    Description = feature.Name,
+                    MenuSection = $"{featureLabel}",
+                    Action = a => DoForAll(games, feature.Id, FieldType.Feature)
+                }).OrderBy(x => x.Description));
+            }
+
+            if (!Settings.Settings.QuickTags.Any())
+            {
+                Settings.Settings.QuickTags = QuickTags.GetTags(Settings.Settings.CheckedTags);
+            }
+
+            if (Settings.Settings.QuickTags.Any(x => x.Checked))
+            {
+                menuItems.AddRange(Settings.Settings.QuickTags.Where(x => x.Checked).Select(tag => new GameMenuItem
+                {
+                    Description = tag.Name,
+                    MenuSection = $"{tagLabel}",
+                    Action = a => DoForAll(games, tag.Id, FieldType.Tag)
+                }).OrderBy(x => x.Description));
+            }
+
+            if (!Settings.Settings.QuickCategories.Any())
+            {
+                Settings.Settings.QuickCategories = QuickCategories.GetCategories(Settings.Settings.CheckedCategories);
+            }
+
+            if (Settings.Settings.QuickCategories.Any(x => x.Checked))
+            {
+                menuItems.AddRange(Settings.Settings.QuickCategories.Where(x => x.Checked).Select(category => new GameMenuItem
+                {
+                    Description = category.Name,
+                    MenuSection = $"{categoryLabel}",
+                    Action = a => DoForAll(games, category.Id, FieldType.Feature)
+                }).OrderBy(x => x.Description));
+            }
 
             return menuItems;
         }
