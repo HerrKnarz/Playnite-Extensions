@@ -27,20 +27,20 @@ namespace QuickAdd
                 HasSettings = true
             };
 
-            API.Instance.Database.Tags.ItemCollectionChanged += (sender, args) =>
-                Settings.Settings.QuickTags = QuickTags.GetTags(Settings.Settings.CheckedTags);
-            API.Instance.Database.Tags.ItemUpdated += (sender, args) =>
-                Settings.Settings.QuickTags = QuickTags.GetTags(Settings.Settings.CheckedTags);
+            API.Instance.Database.Categories.ItemCollectionChanged += (sender, args) =>
+                Settings.Settings.QuickCategories = QuickDBObjects.GetObjects(Settings.Settings.CheckedCategories, FieldType.Category);
+            API.Instance.Database.Categories.ItemUpdated += (sender, args) =>
+                Settings.Settings.QuickCategories = QuickDBObjects.GetObjects(Settings.Settings.CheckedCategories, FieldType.Category);
 
             API.Instance.Database.Features.ItemCollectionChanged += (sender, args) =>
-                Settings.Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.Settings.CheckedFeatures);
+                Settings.Settings.QuickFeatures = QuickDBObjects.GetObjects(Settings.Settings.CheckedFeatures, FieldType.Feature);
             API.Instance.Database.Features.ItemUpdated += (sender, args) =>
-                Settings.Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.Settings.CheckedFeatures);
+                Settings.Settings.QuickFeatures = QuickDBObjects.GetObjects(Settings.Settings.CheckedFeatures, FieldType.Feature);
 
-            API.Instance.Database.Categories.ItemCollectionChanged += (sender, args) =>
-                Settings.Settings.QuickCategories = QuickCategories.GetCategories(Settings.Settings.CheckedCategories);
-            API.Instance.Database.Categories.ItemUpdated += (sender, args) =>
-                Settings.Settings.QuickCategories = QuickCategories.GetCategories(Settings.Settings.CheckedCategories);
+            API.Instance.Database.Tags.ItemCollectionChanged += (sender, args) =>
+                Settings.Settings.QuickTags = QuickDBObjects.GetObjects(Settings.Settings.CheckedTags, FieldType.Tag);
+            API.Instance.Database.Tags.ItemUpdated += (sender, args) =>
+                Settings.Settings.QuickTags = QuickDBObjects.GetObjects(Settings.Settings.CheckedTags, FieldType.Tag);
         }
 
         private QuickAddSettingsViewModel Settings { get; }
@@ -53,16 +53,16 @@ namespace QuickAdd
 
             switch (type)
             {
+                case FieldType.Category:
+                    ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
+
+                    break;
                 case FieldType.Feature:
                     ids = game.FeatureIds ?? (game.FeatureIds = new List<Guid>());
 
                     break;
                 case FieldType.Tag:
                     ids = game.TagIds ?? (game.TagIds = new List<Guid>());
-
-                    break;
-                case FieldType.Category:
-                    ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
 
                     break;
                 default:
@@ -95,6 +95,10 @@ namespace QuickAdd
 
                 switch (type)
                 {
+                    case FieldType.Category:
+                        progressLabel = ResourceProvider.GetString("LOCQuickAddProgressCategories");
+                        progressResult = ResourceProvider.GetString("LOCQuickAddCategoriesAdded");
+                        break;
                     case FieldType.Feature:
                         progressLabel = ResourceProvider.GetString("LOCQuickAddProgressFeatures");
                         progressResult = ResourceProvider.GetString("LOCQuickAddFeaturesAdded");
@@ -102,10 +106,6 @@ namespace QuickAdd
                     case FieldType.Tag:
                         progressLabel = ResourceProvider.GetString("LOCQuickAddProgressTags");
                         progressResult = ResourceProvider.GetString("LOCQuickAddTagsAdded");
-                        break;
-                    case FieldType.Category:
-                        progressLabel = ResourceProvider.GetString("LOCQuickAddProgressCategories");
-                        progressResult = ResourceProvider.GetString("LOCQuickAddCategoriesAdded");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -166,10 +166,25 @@ namespace QuickAdd
 
             if (!Settings.Settings.QuickFeatures.Any())
             {
-                Settings.Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.Settings.CheckedFeatures);
+                Settings.Settings.QuickFeatures = QuickDBObjects.GetObjects(Settings.Settings.CheckedFeatures, FieldType.Feature);
             }
 
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
+
+            if (!Settings.Settings.QuickCategories.Any())
+            {
+                Settings.Settings.QuickCategories = QuickDBObjects.GetObjects(Settings.Settings.CheckedCategories, FieldType.Category);
+            }
+
+            if (Settings.Settings.QuickCategories.Any(x => x.Add))
+            {
+                menuItems.AddRange(Settings.Settings.QuickCategories.Where(x => x.Add).Select(category => new GameMenuItem
+                {
+                    Description = category.Name,
+                    MenuSection = $"{categoryLabel}",
+                    Action = a => DoForAll(games, category.Id, FieldType.Category)
+                }).OrderBy(x => x.Description));
+            }
 
             if (Settings.Settings.QuickFeatures.Any(x => x.Add))
             {
@@ -183,7 +198,7 @@ namespace QuickAdd
 
             if (!Settings.Settings.QuickTags.Any())
             {
-                Settings.Settings.QuickTags = QuickTags.GetTags(Settings.Settings.CheckedTags);
+                Settings.Settings.QuickTags = QuickDBObjects.GetObjects(Settings.Settings.CheckedTags, FieldType.Tag);
             }
 
             if (Settings.Settings.QuickTags.Any(x => x.Add))
@@ -193,21 +208,6 @@ namespace QuickAdd
                     Description = tag.Name,
                     MenuSection = $"{tagLabel}",
                     Action = a => DoForAll(games, tag.Id, FieldType.Tag)
-                }).OrderBy(x => x.Description));
-            }
-
-            if (!Settings.Settings.QuickCategories.Any())
-            {
-                Settings.Settings.QuickCategories = QuickCategories.GetCategories(Settings.Settings.CheckedCategories);
-            }
-
-            if (Settings.Settings.QuickCategories.Any(x => x.Add))
-            {
-                menuItems.AddRange(Settings.Settings.QuickCategories.Where(x => x.Add).Select(category => new GameMenuItem
-                {
-                    Description = category.Name,
-                    MenuSection = $"{categoryLabel}",
-                    Action = a => DoForAll(games, category.Id, FieldType.Category)
                 }).OrderBy(x => x.Description));
             }
 

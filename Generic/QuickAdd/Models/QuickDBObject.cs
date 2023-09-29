@@ -2,7 +2,7 @@
 
 namespace QuickAdd.Models
 {
-    public class QuickTag : Tag
+    public class QuickDBObject : DatabaseObject
     {
         public bool Add { get; set; } = false;
         public bool Remove { get; set; } = false;

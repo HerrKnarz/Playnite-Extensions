@@ -9,36 +9,43 @@ namespace QuickAdd
 {
     public class QuickAddSettings : ObservableObject
     {
-        private QuickCategories _quickCategories;
-        private QuickFeatures _quickFeatures;
-        private QuickTags _quickTags;
+        private QuickDBObjects _quickCategories;
+        private QuickDBObjects _quickFeatures;
+        private QuickDBObjects _quickTags;
+
+        public QuickAddSettings()
+        {
+            _quickCategories = QuickDBObjects.GetObjects(null, FieldType.Category);
+            _quickFeatures = QuickDBObjects.GetObjects(null, FieldType.Feature);
+            _quickTags = QuickDBObjects.GetObjects(null, FieldType.Tag);
+        }
+
+        public QuickDBObjects QuickCategories
+        {
+            get => _quickCategories;
+            set => SetValue(ref _quickCategories, value);
+        }
+
+        public QuickDBObjects QuickFeatures
+        {
+            get => _quickFeatures;
+            set => SetValue(ref _quickFeatures, value);
+        }
+
+        public QuickDBObjects QuickTags
+        {
+            get => _quickTags;
+            set => SetValue(ref _quickTags, value);
+        }
+
+        [DontSerialize]
+        public List<Guid> CheckedCategories => QuickCategories?.Where(x => x.Add)?.Select(x => x.Id).ToList();
 
         [DontSerialize]
         public List<Guid> CheckedFeatures => QuickFeatures?.Where(x => x.Add)?.Select(x => x.Id).ToList();
 
         [DontSerialize]
         public List<Guid> CheckedTags => QuickTags?.Where(x => x.Add)?.Select(x => x.Id).ToList();
-
-        [DontSerialize]
-        public List<Guid> CheckedCategories => QuickCategories?.Where(x => x.Add)?.Select(x => x.Id).ToList();
-
-        public QuickFeatures QuickFeatures
-        {
-            get => _quickFeatures;
-            set => SetValue(ref _quickFeatures, value);
-        }
-
-        public QuickTags QuickTags
-        {
-            get => _quickTags;
-            set => SetValue(ref _quickTags, value);
-        }
-
-        public QuickCategories QuickCategories
-        {
-            get => _quickCategories;
-            set => SetValue(ref _quickCategories, value);
-        }
     }
 
     public class QuickAddSettingsViewModel : ObservableObject, ISettings
@@ -57,10 +64,6 @@ namespace QuickAdd
 
             // LoadPluginSettings returns null if no saved data is available.
             Settings = savedSettings ?? new QuickAddSettings();
-
-            Settings.QuickTags = QuickTags.GetTags(Settings.CheckedTags);
-            Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.CheckedFeatures);
-            Settings.QuickCategories = QuickCategories.GetCategories(Settings.CheckedCategories);
         }
 
         private QuickAddSettings EditingClone { get; set; }
@@ -79,18 +82,18 @@ namespace QuickAdd
         {
             EditingClone = Serialization.GetClone(Settings);
 
-            Settings.QuickTags = QuickTags.GetTags(Settings.CheckedTags);
-            Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.CheckedFeatures);
-            Settings.QuickCategories = QuickCategories.GetCategories(Settings.CheckedCategories);
+            Settings.QuickCategories = QuickDBObjects.GetObjects(Settings.CheckedCategories, FieldType.Category);
+            Settings.QuickFeatures = QuickDBObjects.GetObjects(Settings.CheckedFeatures, FieldType.Feature);
+            Settings.QuickTags = QuickDBObjects.GetObjects(Settings.CheckedTags, FieldType.Tag);
         }
 
         public void CancelEdit()
         {
             Settings = EditingClone;
 
-            Settings.QuickTags = QuickTags.GetTags(Settings.CheckedTags);
-            Settings.QuickFeatures = QuickFeatures.GetFeatures(Settings.CheckedFeatures);
-            Settings.QuickCategories = QuickCategories.GetCategories(Settings.CheckedCategories);
+            Settings.QuickCategories = QuickDBObjects.GetObjects(Settings.CheckedCategories, FieldType.Category);
+            Settings.QuickFeatures = QuickDBObjects.GetObjects(Settings.CheckedFeatures, FieldType.Feature);
+            Settings.QuickTags = QuickDBObjects.GetObjects(Settings.CheckedTags, FieldType.Tag);
         }
 
         public void EndEdit()
