@@ -12,9 +12,9 @@ namespace QuickAdd
 {
     public enum FieldType
     {
+        Category,
         Feature,
-        Tag,
-        Category
+        Tag
     }
 
     public enum ActionType
@@ -219,14 +219,14 @@ namespace QuickAdd
 
                 switch (type)
                 {
+                    case FieldType.Category:
+                        checkedCount = games.Count(x => x.CategoryIds?.Contains(dbObject.Id) ?? false);
+                        break;
                     case FieldType.Feature:
                         checkedCount = games.Count(x => x.FeatureIds?.Contains(dbObject.Id) ?? false);
                         break;
                     case FieldType.Tag:
                         checkedCount = games.Count(x => x.TagIds?.Contains(dbObject.Id) ?? false);
-                        break;
-                    case FieldType.Category:
-                        checkedCount = games.Count(x => x.CategoryIds?.Contains(dbObject.Id) ?? false);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);

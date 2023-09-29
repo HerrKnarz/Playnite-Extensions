@@ -15,9 +15,9 @@ namespace QuickAdd
 
         public QuickAddSettings()
         {
-            _quickCategories = QuickDbObjects.GetObjects(null, FieldType.Category);
-            _quickFeatures = QuickDbObjects.GetObjects(null, FieldType.Feature);
-            _quickTags = QuickDbObjects.GetObjects(null, FieldType.Tag);
+            _quickCategories = new QuickDbObjects();
+            _quickFeatures = new QuickDbObjects();
+            _quickTags = new QuickDbObjects();
         }
 
         public QuickDbObjects QuickCategories
@@ -72,14 +72,14 @@ namespace QuickAdd
         public void BeginEdit()
         {
             EditingClone = Serialization.GetClone(Settings);
-
-            RefreshList(FieldType.Category);
-            RefreshList(FieldType.Feature);
-            RefreshList(FieldType.Tag);
         }
 
         public void CancelEdit()
         {
+            Settings.QuickCategories.Clear();
+            Settings.QuickFeatures.Clear();
+            Settings.QuickTags.Clear();
+
             Settings = EditingClone;
 
             RefreshList(FieldType.Category);

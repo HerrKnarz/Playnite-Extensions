@@ -55,7 +55,7 @@
                         <GridView>
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCFeatureLabel}"
                                             DisplayMemberBinding="{Binding Name}" />
-                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddAdd}">
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddAdd}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
@@ -63,7 +63,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddRemove}">
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddRemove}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}"
@@ -71,7 +71,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddToggle}">
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddToggle}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
@@ -93,7 +93,7 @@
                         <GridView>
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCTagLabel}"
                                             DisplayMemberBinding="{Binding Name}" />
-                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddAdd}">
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddAdd}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
@@ -101,7 +101,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddRemove}">
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddRemove}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}"
@@ -109,7 +109,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddToggle}">
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddToggle}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
