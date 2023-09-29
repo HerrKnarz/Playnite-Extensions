@@ -17,6 +17,13 @@ namespace QuickAdd
         Category
     }
 
+    public enum ActionType
+    {
+        Add,
+        Remove,
+        Toggle
+    }
+
     public class QuickAdd : GenericPlugin
     {
         public QuickAdd(IPlayniteAPI api) : base(api)
@@ -28,26 +35,26 @@ namespace QuickAdd
             };
 
             API.Instance.Database.Categories.ItemCollectionChanged += (sender, args) =>
-                Settings.Settings.QuickCategories = QuickDBObjects.GetObjects(Settings.Settings.CheckedCategories, FieldType.Category);
+                Settings.RefreshList(FieldType.Category);
             API.Instance.Database.Categories.ItemUpdated += (sender, args) =>
-                Settings.Settings.QuickCategories = QuickDBObjects.GetObjects(Settings.Settings.CheckedCategories, FieldType.Category);
+                Settings.RefreshList(FieldType.Category);
 
             API.Instance.Database.Features.ItemCollectionChanged += (sender, args) =>
-                Settings.Settings.QuickFeatures = QuickDBObjects.GetObjects(Settings.Settings.CheckedFeatures, FieldType.Feature);
+                Settings.RefreshList(FieldType.Feature);
             API.Instance.Database.Features.ItemUpdated += (sender, args) =>
-                Settings.Settings.QuickFeatures = QuickDBObjects.GetObjects(Settings.Settings.CheckedFeatures, FieldType.Feature);
+                Settings.RefreshList(FieldType.Feature);
 
             API.Instance.Database.Tags.ItemCollectionChanged += (sender, args) =>
-                Settings.Settings.QuickTags = QuickDBObjects.GetObjects(Settings.Settings.CheckedTags, FieldType.Tag);
+                Settings.RefreshList(FieldType.Tag);
             API.Instance.Database.Tags.ItemUpdated += (sender, args) =>
-                Settings.Settings.QuickTags = QuickDBObjects.GetObjects(Settings.Settings.CheckedTags, FieldType.Tag);
+                Settings.RefreshList(FieldType.Tag);
         }
 
         private QuickAddSettingsViewModel Settings { get; }
 
         public override Guid Id { get; } = Guid.Parse("44def840-a5dc-4fdf-8fd7-37ffe57187d6");
 
-        private static bool AddValue(Game game, Guid id, FieldType type)
+        private static bool SetFieldValue(Game game, Guid id, FieldType type, ActionType action = ActionType.Add)
         {
             List<Guid> ids;
 
@@ -69,47 +76,43 @@ namespace QuickAdd
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
 
-            bool added = ids.AddMissing(id);
+            bool valueSet;
 
-            if (added)
+            switch (action)
+            {
+                case ActionType.Add:
+                    valueSet = ids.AddMissing(id);
+                    break;
+                case ActionType.Remove:
+                    valueSet = ids.Remove(id);
+                    break;
+                case ActionType.Toggle:
+                    valueSet = ids.Contains(id) ? ids.Remove(id) : ids.AddMissing(id);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(action), action, null);
+            }
+
+            if (valueSet)
             {
                 API.Instance.Database.Games.Update(game);
             }
 
-            return added;
+            return valueSet;
         }
 
-        private void DoForAll(List<Game> games, Guid id, FieldType type)
+        private void DoForAll(List<Game> games, Guid id, FieldType type, ActionType action = ActionType.Add)
         {
             if (games.Count == 1)
             {
-                AddValue(games.First(), id, type);
+                SetFieldValue(games.First(), id, type, action);
             }
             // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
             else if (games.Count > 1)
             {
                 int gamesAffected = 0;
 
-                string progressLabel;
-                string progressResult;
-
-                switch (type)
-                {
-                    case FieldType.Category:
-                        progressLabel = ResourceProvider.GetString("LOCQuickAddProgressCategories");
-                        progressResult = ResourceProvider.GetString("LOCQuickAddCategoriesAdded");
-                        break;
-                    case FieldType.Feature:
-                        progressLabel = ResourceProvider.GetString("LOCQuickAddProgressFeatures");
-                        progressResult = ResourceProvider.GetString("LOCQuickAddFeaturesAdded");
-                        break;
-                    case FieldType.Tag:
-                        progressLabel = ResourceProvider.GetString("LOCQuickAddProgressTags");
-                        progressResult = ResourceProvider.GetString("LOCQuickAddTagsAdded");
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
-                }
+                string progressLabel = string.Format(ResourceProvider.GetString($"LOCQuickAddProgress{action}"), ResourceProvider.GetString($"LOC{type}Label"));
 
                 using (PlayniteApi.Database.BufferedUpdate())
                 {
@@ -136,7 +139,7 @@ namespace QuickAdd
                                     break;
                                 }
 
-                                if (AddValue(game, id, type))
+                                if (SetFieldValue(game, id, type, action))
                                 {
                                     gamesAffected++;
                                 }
@@ -152,66 +155,64 @@ namespace QuickAdd
                 }
 
                 // Shows a dialog with the number of games actually affected.
-                PlayniteApi.Dialogs.ShowMessage(string.Format(progressResult, gamesAffected));
+                PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString($"LOCQuickAddSuccess{action}"), ResourceProvider.GetString($"LOC{type}Label"), gamesAffected));
             }
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            string featureLabel = ResourceProvider.GetString("LOCQuickAddAddFeature");
-            string tagLabel = ResourceProvider.GetString("LOCQuickAddAddTag");
-            string categoryLabel = ResourceProvider.GetString("LOCQuickAddAddCategory");
-
             List<Game> games = args.Games.Distinct().ToList();
-
-            if (!Settings.Settings.QuickFeatures.Any())
-            {
-                Settings.Settings.QuickFeatures = QuickDBObjects.GetObjects(Settings.Settings.CheckedFeatures, FieldType.Feature);
-            }
 
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
 
-            if (!Settings.Settings.QuickCategories.Any())
-            {
-                Settings.Settings.QuickCategories = QuickDBObjects.GetObjects(Settings.Settings.CheckedCategories, FieldType.Category);
-            }
+            menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickCategories, FieldType.Category));
+            menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickFeatures, FieldType.Feature));
+            menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickTags, FieldType.Tag));
 
-            if (Settings.Settings.QuickCategories.Any(x => x.Add))
-            {
-                menuItems.AddRange(Settings.Settings.QuickCategories.Where(x => x.Add).Select(category => new GameMenuItem
-                {
-                    Description = category.Name,
-                    MenuSection = $"{categoryLabel}",
-                    Action = a => DoForAll(games, category.Id, FieldType.Category)
-                }).OrderBy(x => x.Description));
-            }
+            menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickCategories, FieldType.Category, ActionType.Remove));
+            menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickFeatures, FieldType.Feature, ActionType.Remove));
+            menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickTags, FieldType.Tag, ActionType.Remove));
 
-            if (Settings.Settings.QuickFeatures.Any(x => x.Add))
-            {
-                menuItems.AddRange(Settings.Settings.QuickFeatures.Where(x => x.Add).Select(feature => new GameMenuItem
-                {
-                    Description = feature.Name,
-                    MenuSection = $"{featureLabel}",
-                    Action = a => DoForAll(games, feature.Id, FieldType.Feature)
-                }).OrderBy(x => x.Description));
-            }
-
-            if (!Settings.Settings.QuickTags.Any())
-            {
-                Settings.Settings.QuickTags = QuickDBObjects.GetObjects(Settings.Settings.CheckedTags, FieldType.Tag);
-            }
-
-            if (Settings.Settings.QuickTags.Any(x => x.Add))
-            {
-                menuItems.AddRange(Settings.Settings.QuickTags.Where(x => x.Add).Select(tag => new GameMenuItem
-                {
-                    Description = tag.Name,
-                    MenuSection = $"{tagLabel}",
-                    Action = a => DoForAll(games, tag.Id, FieldType.Tag)
-                }).OrderBy(x => x.Description));
-            }
+            menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickCategories, FieldType.Category, ActionType.Toggle));
+            menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickFeatures, FieldType.Feature, ActionType.Toggle));
+            menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickTags, FieldType.Tag, ActionType.Toggle));
 
             return menuItems;
+        }
+
+        private IEnumerable<GameMenuItem> CreateMenuItems(List<Game> games, QuickDbObjects dbObjects, FieldType type, ActionType action = ActionType.Add)
+        {
+            List<GameMenuItem> menuItems = new List<GameMenuItem>();
+
+            if (!dbObjects.Any())
+            {
+                Settings.RefreshList(type);
+            }
+
+            string label = string.Format(ResourceProvider.GetString($"LOCQuickAddMenu{action}"), ResourceProvider.GetString($"LOC{type}Label"));
+
+            if (!dbObjects.Any(x => (action == ActionType.Add && x.Add) ||
+                                    (action == ActionType.Remove && x.Remove) ||
+                                    (action == ActionType.Toggle && x.Toggle)))
+            {
+                return menuItems;
+            }
+
+
+            foreach (QuickDBObject dbObject in dbObjects
+                .Where(x => (action == ActionType.Add && x.Add) ||
+                            (action == ActionType.Remove && x.Remove) ||
+                            (action == ActionType.Toggle && x.Toggle)))
+            {
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = dbObject.Name,
+                    MenuSection = label,
+                    Action = a => DoForAll(games, dbObject.Id, type, action)
+                });
+            }
+
+            return menuItems.OrderBy(x => x.Description);
         }
 
         public override ISettings GetSettings(bool firstRunSettings) => Settings;

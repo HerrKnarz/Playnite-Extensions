@@ -9,43 +9,34 @@ namespace QuickAdd
 {
     public class QuickAddSettings : ObservableObject
     {
-        private QuickDBObjects _quickCategories;
-        private QuickDBObjects _quickFeatures;
-        private QuickDBObjects _quickTags;
+        private QuickDbObjects _quickCategories;
+        private QuickDbObjects _quickFeatures;
+        private QuickDbObjects _quickTags;
 
         public QuickAddSettings()
         {
-            _quickCategories = QuickDBObjects.GetObjects(null, FieldType.Category);
-            _quickFeatures = QuickDBObjects.GetObjects(null, FieldType.Feature);
-            _quickTags = QuickDBObjects.GetObjects(null, FieldType.Tag);
+            _quickCategories = QuickDbObjects.GetObjects(null, FieldType.Category);
+            _quickFeatures = QuickDbObjects.GetObjects(null, FieldType.Feature);
+            _quickTags = QuickDbObjects.GetObjects(null, FieldType.Tag);
         }
 
-        public QuickDBObjects QuickCategories
+        public QuickDbObjects QuickCategories
         {
             get => _quickCategories;
             set => SetValue(ref _quickCategories, value);
         }
 
-        public QuickDBObjects QuickFeatures
+        public QuickDbObjects QuickFeatures
         {
             get => _quickFeatures;
             set => SetValue(ref _quickFeatures, value);
         }
 
-        public QuickDBObjects QuickTags
+        public QuickDbObjects QuickTags
         {
             get => _quickTags;
             set => SetValue(ref _quickTags, value);
         }
-
-        [DontSerialize]
-        public List<Guid> CheckedCategories => QuickCategories?.Where(x => x.Add)?.Select(x => x.Id).ToList();
-
-        [DontSerialize]
-        public List<Guid> CheckedFeatures => QuickFeatures?.Where(x => x.Add)?.Select(x => x.Id).ToList();
-
-        [DontSerialize]
-        public List<Guid> CheckedTags => QuickTags?.Where(x => x.Add)?.Select(x => x.Id).ToList();
     }
 
     public class QuickAddSettingsViewModel : ObservableObject, ISettings
@@ -82,29 +73,47 @@ namespace QuickAdd
         {
             EditingClone = Serialization.GetClone(Settings);
 
-            Settings.QuickCategories = QuickDBObjects.GetObjects(Settings.CheckedCategories, FieldType.Category);
-            Settings.QuickFeatures = QuickDBObjects.GetObjects(Settings.CheckedFeatures, FieldType.Feature);
-            Settings.QuickTags = QuickDBObjects.GetObjects(Settings.CheckedTags, FieldType.Tag);
+            RefreshList(FieldType.Category);
+            RefreshList(FieldType.Feature);
+            RefreshList(FieldType.Tag);
         }
 
         public void CancelEdit()
         {
             Settings = EditingClone;
 
-            Settings.QuickCategories = QuickDBObjects.GetObjects(Settings.CheckedCategories, FieldType.Category);
-            Settings.QuickFeatures = QuickDBObjects.GetObjects(Settings.CheckedFeatures, FieldType.Feature);
-            Settings.QuickTags = QuickDBObjects.GetObjects(Settings.CheckedTags, FieldType.Tag);
+            RefreshList(FieldType.Category);
+            RefreshList(FieldType.Feature);
+            RefreshList(FieldType.Tag);
         }
 
-        public void EndEdit()
-        {
-            _plugin.SavePluginSettings(Settings);
-        }
+        public void EndEdit() => _plugin.SavePluginSettings(Settings);
 
         public bool VerifySettings(out List<string> errors)
         {
             errors = new List<string>();
             return true;
+        }
+
+        public void RefreshList(FieldType type)
+        {
+            switch (type)
+            {
+                case FieldType.Category:
+                    Settings.QuickCategories = QuickDbObjects.GetObjects(Settings.QuickCategories.ToList(), type);
+
+                    break;
+                case FieldType.Feature:
+                    Settings.QuickFeatures = QuickDbObjects.GetObjects(Settings.QuickFeatures.ToList(), type);
+
+                    break;
+                case FieldType.Tag:
+                    Settings.QuickTags = QuickDbObjects.GetObjects(Settings.QuickTags.ToList(), type);
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
     }
 }

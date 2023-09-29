@@ -9,13 +9,15 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
-        <TabItem Header="{DynamicResource LOCFeaturesLabel}">
+        <TabItem Header="{DynamicResource LOCCategoriesLabel}">
             <DockPanel Margin="10">
-                <ListView Name="Features" SelectionMode="Single" DockPanel.Dock="Top" Margin="0,10,0,0"
-                              ItemsSource="{Binding Settings.QuickFeatures}">
+                <ListView Name="Categories" SelectionMode="Single" DockPanel.Dock="Top" Margin="0,10,0,0"
+                          ItemsSource="{Binding Settings.QuickCategories}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="50">
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCCategoryLabel}"
+                                            DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddAdd}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
@@ -23,8 +25,60 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddRemove}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddToggle}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </DockPanel>
+        </TabItem>
+
+        <TabItem Header="{DynamicResource LOCFeaturesLabel}">
+            <DockPanel Margin="10">
+                <ListView Name="Features" SelectionMode="Single" DockPanel.Dock="Top" Margin="0,10,0,0"
+                              ItemsSource="{Binding Settings.QuickFeatures}">
+                    <ListView.View>
+                        <GridView>
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCFeatureLabel}"
                                             DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddAdd}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddRemove}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddToggle}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -37,29 +91,9 @@
                           ItemsSource="{Binding Settings.QuickTags}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="50">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
-                                                  HorizontalAlignment="Center" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCTagLabel}"
                                             DisplayMemberBinding="{Binding Name}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </DockPanel>
-        </TabItem>
-
-        <TabItem Header="{DynamicResource LOCCategoriesLabel}">
-            <DockPanel Margin="10">
-                <ListView Name="Categories" SelectionMode="Single" DockPanel.Dock="Top" Margin="0,10,0,0"
-                          ItemsSource="{Binding Settings.QuickCategories}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="50">
+                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddAdd}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
@@ -67,8 +101,22 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCCategoryLabel}"
-                                            DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddRemove}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="60" Header="{DynamicResource LOCQuickAddToggle}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>

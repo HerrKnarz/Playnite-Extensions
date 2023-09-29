@@ -49,7 +49,7 @@
       <Link>Shared\Log.cs</Link>
     </Compile>
     <Compile Include="Models\QuickDBObject.cs" />
-    <Compile Include="Models\QuickDBObjects.cs" />
+    <Compile Include="Models\QuickDbObjects.cs" />
     <Compile Include="QuickAdd.cs" />
     <Compile Include="QuickAddSettings.cs" />
     <Compile Include="QuickAddSettingsView.xaml.cs">
