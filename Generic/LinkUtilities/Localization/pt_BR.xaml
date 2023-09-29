@@ -80,6 +80,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configurar sites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Definir ordem de classificação personalizada</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Don't rename, when the link name contains:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Remover links duplicados após a atualização dos metadados do jogo</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionType">Remover links duplicados com o mesmo</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">nome do link e URL</sys:String>

@@ -80,6 +80,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Link-Namensmuster konfigurieren (Für die Zwischenablage werden nur die URL-Muster geprüft, um einen Namen zu finden da wir keinen Namen haben, den wir prüfen könnten.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Webseiten konfigurieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Sortierreihenfolge festlegen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Nicht umbenennen, wenn der Link-Name Folgendes enthält:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Entferne doppelte Links, nachdem die Spiel-Metadaten aktualisiert wurden</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionType">Entferne doppelte Links nach</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">Link-Name und URL</sys:String>

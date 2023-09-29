@@ -80,6 +80,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Konfigurer koblingsmønstre (Når det gjelder utklippstavlekoblingene vil kun URL-mønstre bli sjekket for navn, siden vi ikke har noe navn å begynne med.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Konfigurer nettsider</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Definer tilpasset sorteringsrekkefølge</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Don't rename, when the link name contains:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Fjern dupliserte lenker etter at spillets metadata er oppdatert</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionType">Fjern dupliserte lenker med samme</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">lenkenavn og URL</sys:String>
