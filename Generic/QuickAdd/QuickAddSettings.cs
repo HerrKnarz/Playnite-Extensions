@@ -9,47 +9,31 @@ namespace QuickAdd
 {
     public class QuickAddSettings : ObservableObject
     {
-        private List<Guid> _checkedCategories;
-        private List<Guid> _checkedFeatures;
-        private List<Guid> _checkedTags;
         private QuickCategories _quickCategories;
         private QuickFeatures _quickFeatures;
-
         private QuickTags _quickTags;
 
-        public List<Guid> CheckedTags
-        {
-            get => _checkedTags;
-            set => SetValue(ref _checkedTags, value);
-        }
-
-        public List<Guid> CheckedFeatures
-        {
-            get => _checkedFeatures;
-            set => SetValue(ref _checkedFeatures, value);
-        }
-
-        public List<Guid> CheckedCategories
-        {
-            get => _checkedCategories;
-            set => SetValue(ref _checkedCategories, value);
-        }
+        [DontSerialize]
+        public List<Guid> CheckedFeatures => QuickFeatures?.Where(x => x.Add)?.Select(x => x.Id).ToList();
 
         [DontSerialize]
-        public QuickTags QuickTags
-        {
-            get => _quickTags;
-            set => SetValue(ref _quickTags, value);
-        }
+        public List<Guid> CheckedTags => QuickTags?.Where(x => x.Add)?.Select(x => x.Id).ToList();
 
         [DontSerialize]
+        public List<Guid> CheckedCategories => QuickCategories?.Where(x => x.Add)?.Select(x => x.Id).ToList();
+
         public QuickFeatures QuickFeatures
         {
             get => _quickFeatures;
             set => SetValue(ref _quickFeatures, value);
         }
 
-        [DontSerialize]
+        public QuickTags QuickTags
+        {
+            get => _quickTags;
+            set => SetValue(ref _quickTags, value);
+        }
+
         public QuickCategories QuickCategories
         {
             get => _quickCategories;
@@ -111,10 +95,6 @@ namespace QuickAdd
 
         public void EndEdit()
         {
-            Settings.CheckedTags = Settings.QuickTags.Where(x => x.Checked)?.Select(x => x.Id).ToList();
-            Settings.CheckedFeatures = Settings.QuickFeatures.Where(x => x.Checked)?.Select(x => x.Id).ToList();
-            Settings.CheckedCategories = Settings.QuickCategories.Where(x => x.Checked)?.Select(x => x.Id).ToList();
-
             _plugin.SavePluginSettings(Settings);
         }
 

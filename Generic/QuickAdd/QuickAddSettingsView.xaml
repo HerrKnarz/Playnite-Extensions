@@ -18,7 +18,7 @@
                             <GridViewColumn Width="50">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -40,7 +40,7 @@
                             <GridViewColumn Width="50">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -62,7 +62,7 @@
                             <GridViewColumn Width="50">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>

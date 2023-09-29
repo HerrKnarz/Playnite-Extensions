@@ -171,9 +171,9 @@ namespace QuickAdd
 
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
 
-            if (Settings.Settings.QuickFeatures.Any(x => x.Checked))
+            if (Settings.Settings.QuickFeatures.Any(x => x.Add))
             {
-                menuItems.AddRange(Settings.Settings.QuickFeatures.Where(x => x.Checked).Select(feature => new GameMenuItem
+                menuItems.AddRange(Settings.Settings.QuickFeatures.Where(x => x.Add).Select(feature => new GameMenuItem
                 {
                     Description = feature.Name,
                     MenuSection = $"{featureLabel}",
@@ -186,9 +186,9 @@ namespace QuickAdd
                 Settings.Settings.QuickTags = QuickTags.GetTags(Settings.Settings.CheckedTags);
             }
 
-            if (Settings.Settings.QuickTags.Any(x => x.Checked))
+            if (Settings.Settings.QuickTags.Any(x => x.Add))
             {
-                menuItems.AddRange(Settings.Settings.QuickTags.Where(x => x.Checked).Select(tag => new GameMenuItem
+                menuItems.AddRange(Settings.Settings.QuickTags.Where(x => x.Add).Select(tag => new GameMenuItem
                 {
                     Description = tag.Name,
                     MenuSection = $"{tagLabel}",
@@ -201,9 +201,9 @@ namespace QuickAdd
                 Settings.Settings.QuickCategories = QuickCategories.GetCategories(Settings.Settings.CheckedCategories);
             }
 
-            if (Settings.Settings.QuickCategories.Any(x => x.Checked))
+            if (Settings.Settings.QuickCategories.Any(x => x.Add))
             {
-                menuItems.AddRange(Settings.Settings.QuickCategories.Where(x => x.Checked).Select(category => new GameMenuItem
+                menuItems.AddRange(Settings.Settings.QuickCategories.Where(x => x.Add).Select(category => new GameMenuItem
                 {
                     Description = category.Name,
                     MenuSection = $"{categoryLabel}",

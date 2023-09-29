@@ -28,7 +28,7 @@ namespace QuickAdd.Models
                 {
                     Id = feature.Id,
                     Name = feature.Name,
-                    Checked = checkedFeatures?.Any(x => x == feature.Id) ?? false
+                    Add = checkedFeatures?.Any(x => x == feature.Id) ?? false
                 };
 
                 result.Add(newFeature);

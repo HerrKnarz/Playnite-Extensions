@@ -4,6 +4,8 @@ namespace QuickAdd.Models
 {
     public class QuickTag : Tag
     {
-        public bool Checked { get; set; } = false;
+        public bool Add { get; set; } = false;
+        public bool Remove { get; set; } = false;
+        public bool Toggle { get; set; } = false;
     }
 }

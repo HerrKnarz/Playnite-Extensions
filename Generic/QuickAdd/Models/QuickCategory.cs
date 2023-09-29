@@ -4,6 +4,8 @@ namespace QuickAdd.Models
 {
     public class QuickCategory : Category
     {
-        public bool Checked { get; set; } = false;
+        public bool Add { get; set; } = false;
+        public bool Remove { get; set; } = false;
+        public bool Toggle { get; set; } = false;
     }
 }

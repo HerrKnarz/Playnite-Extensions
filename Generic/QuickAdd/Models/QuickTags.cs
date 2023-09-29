@@ -28,7 +28,7 @@ namespace QuickAdd.Models
                 {
                     Id = tag.Id,
                     Name = tag.Name,
-                    Checked = checkedTags?.Any(x => x == tag.Id) ?? false
+                    Add = checkedTags?.Any(x => x == tag.Id) ?? false
                 };
 
                 result.Add(newTag);

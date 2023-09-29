@@ -28,7 +28,7 @@ namespace QuickAdd.Models
                 {
                     Id = category.Id,
                     Name = category.Name,
-                    Checked = checkedCategories?.Any(x => x == category.Id) ?? false
+                    Add = checkedCategories?.Any(x => x == category.Id) ?? false
                 };
 
                 result.Add(newCategory);
