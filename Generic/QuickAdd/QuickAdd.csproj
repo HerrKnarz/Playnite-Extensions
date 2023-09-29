@@ -48,6 +48,9 @@
     <Compile Include="..\..\Common\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\MiscHelper.cs">
+      <Link>Shared\MiscHelper.cs</Link>
+    </Compile>
     <Compile Include="Models\QuickDBObject.cs" />
     <Compile Include="Models\QuickDbObjects.cs" />
     <Compile Include="QuickAdd.cs" />

@@ -48,6 +48,18 @@ namespace QuickAdd
                 Settings.RefreshList(FieldType.Tag);
             API.Instance.Database.Tags.ItemUpdated += (sender, args) =>
                 Settings.RefreshList(FieldType.Tag);
+
+            Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
+            {
+                { "qaAllCheckedIcon", "\xeed7" },
+                { "qaSomeCheckedIcon", "\xeed8" },
+                { "qaNoneCheckedIcon", "\xeedd" }
+            };
+
+            foreach (KeyValuePair<string, string> iconResource in iconResourcesToAdd)
+            {
+                MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+            }
         }
 
         private QuickAddSettingsViewModel Settings { get; }
@@ -198,14 +210,32 @@ namespace QuickAdd
                 return menuItems;
             }
 
-
             foreach (QuickDBObject dbObject in dbObjects
                 .Where(x => (action == ActionType.Add && x.Add) ||
                             (action == ActionType.Remove && x.Remove) ||
                             (action == ActionType.Toggle && x.Toggle)))
             {
+                int checkedCount;
+
+                switch (type)
+                {
+                    case FieldType.Feature:
+                        checkedCount = games.Count(x => x.FeatureIds?.Contains(dbObject.Id) ?? false);
+                        break;
+                    case FieldType.Tag:
+                        checkedCount = games.Count(x => x.TagIds?.Contains(dbObject.Id) ?? false);
+                        break;
+                    case FieldType.Category:
+                        checkedCount = games.Count(x => x.CategoryIds?.Contains(dbObject.Id) ?? false);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                }
+
                 menuItems.Add(new GameMenuItem
                 {
+                    Icon = checkedCount == 0 ? "qaNoneCheckedIcon" :
+                        checkedCount < games.Count ? "qaSomeCheckedIcon" : "qaAllCheckedIcon",
                     Description = dbObject.Name,
                     MenuSection = label,
                     Action = a => DoForAll(games, dbObject.Id, type, action)
