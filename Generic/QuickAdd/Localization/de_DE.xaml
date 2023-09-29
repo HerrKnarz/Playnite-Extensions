@@ -2,19 +2,19 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:String x:Key="LOCQuickAddName">Schnelles Hinzufügen</sys:String>
-    <sys:String x:Key="LOCQuickAddAdd">Add</sys:String>
-    <sys:String x:Key="LOCQuickAddRemove">Remove</sys:String>
-    <sys:String x:Key="LOCQuickAddToggle">Toggle</sys:String>
+    <sys:String x:Key="LOCQuickAddAdd">Hinzufügen</sys:String>
+    <sys:String x:Key="LOCQuickAddRemove">Entfernen</sys:String>
+    <sys:String x:Key="LOCQuickAddToggle">Umschalten</sys:String>
 
-    <sys:String x:Key="LOCQuickAddMenuAdd">Add {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddProgressAdd">Adding {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddSuccessAdd">{0} added to {1} games</sys:String>
+    <sys:String x:Key="LOCQuickAddMenuAdd">{0} hinzufügen</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressAdd">Füge {0} hinzu</sys:String>
+    <sys:String x:Key="LOCQuickAddSuccessAdd">{0} zu {1} Spielen hinzugefügt</sys:String>
 
-    <sys:String x:Key="LOCQuickAddMenuRemove">Remove {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddProgressRemove">Removing {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddSuccessRemove">{0} removed from {1} games</sys:String>
+    <sys:String x:Key="LOCQuickAddMenuRemove">{0} entfernen</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressRemove">Entferne {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddSuccessRemove">{0} aus {1} Spielen entfernt</sys:String>
 
-    <sys:String x:Key="LOCQuickAddMenuToggle">Toggle {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddProgressToggle">Toggling {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddSuccessToggle">{0} toggled in {1} games</sys:String>
+    <sys:String x:Key="LOCQuickAddMenuToggle">{0} umschalten</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressToggle">Schalte {0} um</sys:String>
+    <sys:String x:Key="LOCQuickAddSuccessToggle">{0} in {1} Spielen umgeschaltet</sys:String>
 </ResourceDictionary>
