@@ -12,6 +12,27 @@ If you want to use my extensions, I strongly recommend to install them via the a
 
 If you have more ideas for these extensions, feel free to suggest them by opening an issue!
 
+## Wikipedia Metadata
+
+Extension to get metadata from wikipedia. The following fields are supported:
+
+- Name
+- Release Date
+- Genres
+- Developers
+- Publishers
+- Features
+- Tags (arcade system, engine, director, producer, designer, programmer, artist, writer, composer) Each can be toggled!
+- Links
+- Series
+- Platform
+- Cover image
+- Critic Score (Metacritic and GameRankings as fallback)
+- Description (with option to leave out certain sections)
+
+### Planned features
+- Maybe add wikipedia categories as optional tags (metadata addons can't directly fill the categories field).
+
 ## Link Utilities
 
 Extension to manage links for the games in the playnite library. It can do the following:
@@ -36,8 +57,8 @@ To see which websites are already supported or planned to be added see the [wiki
 - add links to more websites.
 - blacklist games from adding "missing link" tags for specific websites.
 - add support for quick search to add links or search for games with specific links
-- option to filter check links window by website to make it easier to manager links to certain sites
-- option to remove linksto manually added url mask from selected games 
+- option to filter check links window by website to make it easier to manage links to certain sites
+- option to remove links to manually added url mask from selected games 
 
 ## Company Companion
 
@@ -55,26 +76,16 @@ Extension to manage game companies (see Developer and Publisher fields in Playni
 - option to find and manually split comma separated companies.
 - maybe add additional information to companies like descriptions and links (via own dialog window).
 
-## Wikipedia Metadata
+## Quick Add
 
-Extension to get metadata from wikipedia. The following fields are supported:
+Extension to quickly add, remove or toggle categories, features and tags in games through the game context menu instead of going through the edit dialog.
 
-- Name
-- Release Date
-- Genres
-- Developers
-- Publishers
-- Features
-- Tags (arcade system, engine, director, producer, designer, programmer, artist, writer, composer) Each can be toggled!
-- Links
-- Series
-- Platform
-- Cover image
-- Critic Score (Metacritic and GameRankings as fallback)
-- Description (with option to leave out certain sections)
+- You can configure which will show up in the menu via the addon settings. Per default non are shown.
+- An icon left of the values in the menu indicates, if it is already set in all selected games (check mark in a circle), some of the selectec games (check marl withot circle) or in none (cross in circle).
 
 ### Planned features
-- Maybe add wikipedia categories as optional tags (metadata addons can't directly fill the categories field).
+- custom menu entry path for each value to make it possible to group them.
+- option to show all sub menus under one "Quick Add" menu entry or one for each type and action on the top level (which is the default at the moment).
 
 ## KNARZtools
 
