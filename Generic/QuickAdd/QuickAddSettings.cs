@@ -71,6 +71,10 @@ namespace QuickAdd
 
         public void BeginEdit()
         {
+            RefreshList(FieldType.Category);
+            RefreshList(FieldType.Feature);
+            RefreshList(FieldType.Tag);
+
             EditingClone = Serialization.GetClone(Settings);
         }
 
