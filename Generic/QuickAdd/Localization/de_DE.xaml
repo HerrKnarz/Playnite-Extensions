@@ -17,4 +17,10 @@
     <sys:String x:Key="LOCQuickAddMenuToggle">{0} umschalten</sys:String>
     <sys:String x:Key="LOCQuickAddProgressToggle">Schalte {0} um</sys:String>
     <sys:String x:Key="LOCQuickAddSuccessToggle">{0} in {1} Spielen umgeschaltet</sys:String>
+
+    <sys:String x:Key="LOCQuickAddSettingsCustomPath">Eigener Menüpfad</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsCustomPathDescription">Mit benutzerdefinierten Menüpfaden kannst du ändern, wie die Buttons im Kontextmenü angezeigt werden, so dass du sie gruppieren oder einfach das Layout ändern kannst. Du kannst Untermenüs hinzufügen, indem du ein &quot;|&quot; verwendest, so fügt &quot;test|menu&quot; z.B. Menü &quot;test&quot; mit dem Untermenü &quot;Menü&quot; hinzu. Du kannst auch die Aktion (hinzufügen, umschalten, entfernen) und den Typ (Kategorie, Feature, Tag) in deinen Menüpfad einfügen, indem du den Platzhalter &quot;{action}&quot; bzw. &quot;{type}&quot; verwendest. Dies funktioniert für die Standard- und einzelnen Pfade für jeden Wert.</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsDefaultCustomPath">Standard-Menüpfad</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsShowDialog">Ergebnisdialog anzeigen, nachdem ein Wert für mehr als ein Spiel gesetzt wurde</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsSingleMenuEntry">Untermenüs unter einen übergreifenden Menüeintrag &quot;Schnelles Hinzufügen&quot; legen</sys:String>
 </ResourceDictionary>

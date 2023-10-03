@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCCompanyCompanionName">Company Companion</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionName">公司合伙人</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Clean up company names.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Find companies to match</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Find similar companies to match.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">game</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">games</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Merge group</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Untick, if this company shouldn't be merged with the others.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Company Merger</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">New name:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">清除公司名称。</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">查找匹配的公司</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">查找相似的公司进行匹配。</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">比赛</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">比赛</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">合并组</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">如果该公司不应与其他公司合并，请取消勾选。</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowName">公司合并</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">新名称：</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Use as name</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Merge duplicates</sys:String>
