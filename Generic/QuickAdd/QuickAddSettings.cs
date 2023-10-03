@@ -12,6 +12,9 @@ namespace QuickAdd
         private QuickDbObjects _quickCategories;
         private QuickDbObjects _quickFeatures;
         private QuickDbObjects _quickTags;
+        private bool _showDialog = true;
+
+        private bool _singleMenuEntry;
 
         public QuickAddSettings()
         {
@@ -36,6 +39,18 @@ namespace QuickAdd
         {
             get => _quickTags;
             set => SetValue(ref _quickTags, value);
+        }
+
+        public bool SingleMenuEntry
+        {
+            get => _singleMenuEntry;
+            set => SetValue(ref _singleMenuEntry, value);
+        }
+
+        public bool ShowDialog
+        {
+            get => _showDialog;
+            set => SetValue(ref _showDialog, value);
         }
     }
 

@@ -9,6 +9,15 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
+        <TabItem Header="{DynamicResource LOCGeneralLabel}">
+            <DockPanel Margin="10" LastChildFill="False">
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.SingleMenuEntry}"
+                          Content="{DynamicResource LOCQuickAddSettingsSingleMenuEntry}" Margin="0,10,0,0"/>
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.ShowDialog}"
+                          Content="{DynamicResource LOCQuickAddSettingsShowDialog}" Margin="0,10,0,0"/>
+            </DockPanel>
+        </TabItem>
+
         <TabItem Header="{DynamicResource LOCCategoriesLabel}">
             <DockPanel Margin="10">
                 <ListView Name="Categories" SelectionMode="Single" DockPanel.Dock="Top" Margin="0,10,0,0"

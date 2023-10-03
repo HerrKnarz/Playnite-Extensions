@@ -166,7 +166,10 @@ namespace QuickAdd
                 }
 
                 // Shows a dialog with the number of games actually affected.
-                PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString($"LOCQuickAddSuccess{action}"), ResourceProvider.GetString($"LOC{type}Label"), gamesAffected));
+                if (Settings.Settings.ShowDialog)
+                {
+                    PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString($"LOCQuickAddSuccess{action}"), ResourceProvider.GetString($"LOC{type}Label"), gamesAffected));
+                }
             }
         }
 
@@ -200,7 +203,10 @@ namespace QuickAdd
                 Settings.RefreshList(type);
             }
 
-            string label = string.Format(ResourceProvider.GetString($"LOCQuickAddMenu{action}"), ResourceProvider.GetString($"LOC{type}Label"));
+            string label = (Settings.Settings.SingleMenuEntry
+                               ? ResourceProvider.GetString("LOCQuickAddName") + "|"
+                               : "") +
+                           string.Format(ResourceProvider.GetString($"LOCQuickAddMenu{action}"), ResourceProvider.GetString($"LOC{type}Label"));
 
             if (!dbObjects.Any(x => (action == ActionType.Add && x.Add) ||
                                     (action == ActionType.Remove && x.Remove) ||
