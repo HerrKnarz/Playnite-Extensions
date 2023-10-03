@@ -15,6 +15,12 @@
                           Content="{DynamicResource LOCQuickAddSettingsSingleMenuEntry}" Margin="0,10,0,0"/>
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.ShowDialog}"
                           Content="{DynamicResource LOCQuickAddSettingsShowDialog}" Margin="0,10,0,0"/>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,10,0,0" HorizontalAlignment="Left">
+                    <Label Content="{DynamicResource LOCQuickAddSettingsDefaultCustomPath}"/>
+                    <TextBox Text="{Binding Settings.CustomPath}" Width="200" Margin="10,0,0,0"/>
+                </StackPanel>
+                <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap" Margin="0,10,0,0"
+                           Text="{DynamicResource LOCQuickAddSettingsCustomPathDescription}" />
             </DockPanel>
         </TabItem>
 
@@ -47,6 +53,14 @@
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
                                                   HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="200" Header="{DynamicResource LOCQuickAddSettingsCustomPath}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding CustomPath, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -88,6 +102,14 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                            <GridViewColumn Width="200" Header="{DynamicResource LOCQuickAddSettingsCustomPath}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding CustomPath, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -123,6 +145,14 @@
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
                                                   HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="200" Header="{DynamicResource LOCQuickAddSettingsCustomPath}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding CustomPath, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

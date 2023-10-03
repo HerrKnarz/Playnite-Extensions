@@ -9,11 +9,11 @@ namespace QuickAdd
 {
     public class QuickAddSettings : ObservableObject
     {
+        private string _customPath = string.Empty;
         private QuickDbObjects _quickCategories;
         private QuickDbObjects _quickFeatures;
         private QuickDbObjects _quickTags;
         private bool _showDialog = true;
-
         private bool _singleMenuEntry;
 
         public QuickAddSettings()
@@ -51,6 +51,12 @@ namespace QuickAdd
         {
             get => _showDialog;
             set => SetValue(ref _showDialog, value);
+        }
+
+        public string CustomPath
+        {
+            get => _customPath;
+            set => SetValue(ref _customPath, value);
         }
     }
 

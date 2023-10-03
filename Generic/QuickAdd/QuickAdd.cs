@@ -26,6 +26,8 @@ namespace QuickAdd
 
     public class QuickAdd : GenericPlugin
     {
+        private string _baseMenu = string.Empty;
+
         public QuickAdd(IPlayniteAPI api) : base(api)
         {
             Settings = new QuickAddSettingsViewModel(this);
@@ -179,6 +181,10 @@ namespace QuickAdd
 
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
 
+            _baseMenu = Settings.Settings.SingleMenuEntry
+                ? ResourceProvider.GetString("LOCQuickAddName") + "|"
+                : "";
+
             menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickCategories, FieldType.Category));
             menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickFeatures, FieldType.Feature));
             menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickTags, FieldType.Tag));
@@ -191,7 +197,7 @@ namespace QuickAdd
             menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickFeatures, FieldType.Feature, ActionType.Toggle));
             menuItems.AddRange(CreateMenuItems(games, Settings.Settings.QuickTags, FieldType.Tag, ActionType.Toggle));
 
-            return menuItems;
+            return menuItems.OrderBy(x => x.MenuSection).ThenBy(x => x.Description);
         }
 
         private IEnumerable<GameMenuItem> CreateMenuItems(List<Game> games, QuickDbObjects dbObjects, FieldType type, ActionType action = ActionType.Add)
@@ -203,11 +209,6 @@ namespace QuickAdd
                 Settings.RefreshList(type);
             }
 
-            string label = (Settings.Settings.SingleMenuEntry
-                               ? ResourceProvider.GetString("LOCQuickAddName") + "|"
-                               : "") +
-                           string.Format(ResourceProvider.GetString($"LOCQuickAddMenu{action}"), ResourceProvider.GetString($"LOC{type}Label"));
-
             if (!dbObjects.Any(x => (action == ActionType.Add && x.Add) ||
                                     (action == ActionType.Remove && x.Remove) ||
                                     (action == ActionType.Toggle && x.Toggle)))
@@ -215,12 +216,18 @@ namespace QuickAdd
                 return menuItems;
             }
 
-            foreach (QuickDBObject dbObject in dbObjects
+            foreach (QuickDbObject dbObject in dbObjects
                 .Where(x => (action == ActionType.Add && x.Add) ||
                             (action == ActionType.Remove && x.Remove) ||
                             (action == ActionType.Toggle && x.Toggle)))
             {
                 int checkedCount;
+
+                string customMenu = dbObject.CustomPath?.Trim().Any() ?? false
+                    ? dbObject.CustomPath.Replace("{type}", type.ToString()).Replace("{action}", action.ToString())
+                    : Settings.Settings.CustomPath?.Trim().Any() ?? false
+                        ? Settings.Settings.CustomPath.Replace("{type}", type.ToString()).Replace("{action}", action.ToString())
+                        : string.Format(ResourceProvider.GetString($"LOCQuickAddMenu{action}"), ResourceProvider.GetString($"LOC{type}Label"));
 
                 switch (type)
                 {
@@ -242,12 +249,12 @@ namespace QuickAdd
                     Icon = checkedCount == games.Count ? "qaAllCheckedIcon" :
                         checkedCount > 0 ? "qaSomeCheckedIcon" : "",
                     Description = dbObject.Name,
-                    MenuSection = label,
+                    MenuSection = _baseMenu + customMenu,
                     Action = a => DoForAll(games, dbObject.Id, type, action)
                 });
             }
 
-            return menuItems.OrderBy(x => x.Description);
+            return menuItems;
         }
 
         public override ISettings GetSettings(bool firstRunSettings) => Settings;
