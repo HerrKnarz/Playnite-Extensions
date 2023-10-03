@@ -17,4 +17,7 @@
     <sys:String x:Key="LOCQuickAddMenuToggle">{0} umschalten</sys:String>
     <sys:String x:Key="LOCQuickAddProgressToggle">Schalte {0} um</sys:String>
     <sys:String x:Key="LOCQuickAddSuccessToggle">{0} in {1} Spielen umgeschaltet</sys:String>
+
+    <sys:String x:Key="LOCQuickAddSettingsShowDialog">Show result dialog after setting a value for more than one game</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsSingleMenuEntry">Put the sub menus under a single &quot;Quick Add&quot; menu entry</sys:String>
 </ResourceDictionary>
