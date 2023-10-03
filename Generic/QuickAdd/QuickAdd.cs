@@ -51,9 +51,8 @@ namespace QuickAdd
 
             Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
             {
-                { "qaAllCheckedIcon", "\xeed7" },
-                { "qaSomeCheckedIcon", "\xeed8" },
-                { "qaNoneCheckedIcon", "\xeedd" }
+                { "qaAllCheckedIcon", "\xeed8" },
+                { "qaSomeCheckedIcon", "\xeed7" }
             };
 
             foreach (KeyValuePair<string, string> iconResource in iconResourcesToAdd)
@@ -234,8 +233,8 @@ namespace QuickAdd
 
                 menuItems.Add(new GameMenuItem
                 {
-                    Icon = checkedCount == 0 ? "qaNoneCheckedIcon" :
-                        checkedCount < games.Count ? "qaSomeCheckedIcon" : "qaAllCheckedIcon",
+                    Icon = checkedCount == games.Count ? "qaAllCheckedIcon" :
+                        checkedCount > 0 ? "qaSomeCheckedIcon" : "",
                     Description = dbObject.Name,
                     MenuSection = label,
                     Action = a => DoForAll(games, dbObject.Id, type, action)
