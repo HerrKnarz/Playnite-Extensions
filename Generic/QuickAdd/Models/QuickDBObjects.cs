@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace QuickAdd.Models
 {
-    public class QuickDbObjects : ObservableCollection<QuickDBObject>
+    public class QuickDbObjects : ObservableCollection<QuickDbObject>
     {
         /// <summary>
         ///     Gets a collection of all database objects of a certain type
@@ -15,7 +15,7 @@ namespace QuickAdd.Models
         /// <param name="oldObjects"></param>
         /// <param name="type">Type of the database object</param>
         /// <returns>Collection of all of all database objects of a certain type</returns>
-        internal static QuickDbObjects GetObjects(List<QuickDBObject> oldObjects, FieldType type)
+        internal static QuickDbObjects GetObjects(List<QuickDbObject> oldObjects, FieldType type)
         {
             QuickDbObjects result = new QuickDbObjects();
 
@@ -64,17 +64,18 @@ namespace QuickAdd.Models
             return result;
         }
 
-        internal static QuickDBObject CreateObject(DatabaseObject dbObject, List<QuickDBObject> oldObjects)
+        internal static QuickDbObject CreateObject(DatabaseObject dbObject, List<QuickDbObject> oldObjects)
         {
-            QuickDBObject oldObject = oldObjects?.FirstOrDefault(x => x.Id == dbObject.Id);
+            QuickDbObject oldObject = oldObjects?.FirstOrDefault(x => x.Id == dbObject.Id);
 
-            return new QuickDBObject
+            return new QuickDbObject
             {
                 Id = dbObject.Id,
                 Name = dbObject.Name,
                 Add = oldObject?.Add ?? false,
                 Remove = oldObject?.Remove ?? false,
-                Toggle = oldObject?.Toggle ?? false
+                Toggle = oldObject?.Toggle ?? false,
+                CustomPath = oldObject?.CustomPath ?? string.Empty
             };
         }
     }

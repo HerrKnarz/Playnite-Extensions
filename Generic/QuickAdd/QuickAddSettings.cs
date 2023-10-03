@@ -9,9 +9,12 @@ namespace QuickAdd
 {
     public class QuickAddSettings : ObservableObject
     {
+        private string _customPath = string.Empty;
         private QuickDbObjects _quickCategories;
         private QuickDbObjects _quickFeatures;
         private QuickDbObjects _quickTags;
+        private bool _showDialog = true;
+        private bool _singleMenuEntry;
 
         public QuickAddSettings()
         {
@@ -36,6 +39,24 @@ namespace QuickAdd
         {
             get => _quickTags;
             set => SetValue(ref _quickTags, value);
+        }
+
+        public bool SingleMenuEntry
+        {
+            get => _singleMenuEntry;
+            set => SetValue(ref _singleMenuEntry, value);
+        }
+
+        public bool ShowDialog
+        {
+            get => _showDialog;
+            set => SetValue(ref _showDialog, value);
+        }
+
+        public string CustomPath
+        {
+            get => _customPath;
+            set => SetValue(ref _customPath, value);
         }
     }
 
@@ -71,6 +92,10 @@ namespace QuickAdd
 
         public void BeginEdit()
         {
+            RefreshList(FieldType.Category);
+            RefreshList(FieldType.Feature);
+            RefreshList(FieldType.Tag);
+
             EditingClone = Serialization.GetClone(Settings);
         }
 

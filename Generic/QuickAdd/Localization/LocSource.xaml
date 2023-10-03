@@ -18,4 +18,10 @@
     <sys:String x:Key="LOCQuickAddMenuToggle">Toggle {0}</sys:String>
     <sys:String x:Key="LOCQuickAddProgressToggle">Toggling {0}</sys:String>
     <sys:String x:Key="LOCQuickAddSuccessToggle">{0} toggled in {1} games</sys:String>
+
+    <sys:String x:Key="LOCQuickAddSettingsCustomPath">Custom menu path</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsCustomPathDescription">Using custom menu paths you can change how your buttons in the context menu will show up, so you can group them or simply change the layout. You can add sub menus by adding a "|", so "test|menu" will add the menu "test" with the sub menu "menu". You can also add the action (add, toggle, remove) and type (category, feature, tag) to your menu entry by adding the placeholder "{action}" or "{type}" respectively. This works for the default and separate custom paths for each value.</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsDefaultCustomPath">Default custom menu path</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsShowDialog">Show result dialog after setting a value for more than one game</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsSingleMenuEntry">Put the sub menus under a single "Quick Add" menu entry</sys:String>
 </ResourceDictionary>
