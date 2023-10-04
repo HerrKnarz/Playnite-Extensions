@@ -6,30 +6,30 @@
     <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">清除公司名称。</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">查找匹配的公司</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">查找相似的公司进行匹配。</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">比赛</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">比赛</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">游戏</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">游戏</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">合并组</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">如果该公司不应与其他公司合并，请取消勾选。</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowName">公司合并</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">新名称：</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Use as name</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">用作名称</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Merge duplicates</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Remove business entity descriptors</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Show Company Merger</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">合并重复项</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">删除业务实体描述符</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">显示公司合并</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Add</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Business entity descriptors:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Words to ignore to find similar companies:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Remove</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Show group key in merge window.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">添加</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">业务实体描述符：</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">寻找类似公司时需要忽略的词汇：</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">删除</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">在合并窗口中显示组密钥。</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">合并公司</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">搜索要合并的公司</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">更新游戏</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Add value</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">No companies with business entity descriptors found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">No duplicate companies were found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Updated companies in {0} games and merged {1} companies</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">添加值</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">未找到具有业务实体描述符的公司。</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">未发现重复的公司。</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">更新了 {0} 个游戏中的公司并合并了 {1} 个公司</sys:String>
 </ResourceDictionary>
