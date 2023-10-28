@@ -6,6 +6,18 @@
         "partialMatch": false
     },       
     {
+        "linkName": "PCGamingWiki appdata",
+        "urlPattern": "https://pcgamingwiki.com/api/appid.php?appid=*",
+        "namePattern": "",
+        "partialMatch": true
+    },
+    {
+        "linkName": "Facebook",
+        "urlPattern": "*facebook.com*",
+        "namePattern": "*Facebook*",
+        "partialMatch": true
+    },     
+    {
         "linkName": "Facebook",
         "urlPattern": "*facebook.com*",
         "namePattern": "*Facebook*",
