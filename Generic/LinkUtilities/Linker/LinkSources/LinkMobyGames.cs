@@ -2,7 +2,6 @@
 using KNARZhelper;
 using LinkUtilities.Models;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,20 +10,13 @@ using System.Net;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to MobyGames.
+    ///     Adds a link to MobyGames.
     /// </summary>
     internal class LinkMobyGames : BaseClasses.Linker
     {
         public override string LinkName => "MobyGames";
-        public override string BaseUrl => "https://www.mobygames.com/game/";
+        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string SearchUrl => "https://www.mobygames.com/search/?type=game&q=";
-
-        // MobyGames Links need the game name in lowercase without special characters and hyphens instead of white spaces.
-        public override string GetGamePath(Game game, string gameName = null)
-            => (gameName ?? game.Name).RemoveSpecialChars()
-                .CollapseWhitespaces()
-                .Replace(" ", "-")
-                .ToLower();
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
@@ -37,7 +29,7 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult()
+                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult
                     {
                         Name = WebUtility.HtmlDecode(n.SelectSingleNode("./b/a").InnerText),
                         Url = n.SelectSingleNode("./b/a").GetAttributeValue("href", ""),
