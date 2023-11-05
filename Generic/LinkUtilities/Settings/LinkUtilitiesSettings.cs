@@ -368,6 +368,8 @@ namespace LinkUtilities
         {
             Settings.RenamePatterns.SortPatterns();
 
+            Settings.RemovePatterns.RemoveEmpty();
+
             _plugin.SavePluginSettings(Settings);
 
             WriteSettingsToLinkActions();
