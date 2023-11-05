@@ -12,20 +12,20 @@ using System.Linq;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to Steam.
+    ///     Adds a link to Steam.
     /// </summary>
     internal class LibraryLinkSteam : LibraryLink
     {
         private readonly string _libraryUrl = "https://store.steampowered.com/app/";
 
         /// <summary>
-        /// ID of the game library to identify it in Playnite.
+        ///     ID of the game library to identify it in Playnite.
         /// </summary>
         public override Guid Id { get; } = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
 
-        public override string LinkName { get; } = "Steam";
-        public override LinkAddTypes AddType { get; } = LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl { get; } = "https://steamcommunity.com/actions/SearchApps/";
+        public override string LinkName => "Steam";
+        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
+        public override string SearchUrl => "https://steamcommunity.com/actions/SearchApps/";
 
         public override bool FindLibraryLink(Game game, out List<Link> links)
         {
@@ -48,7 +48,7 @@ namespace LinkUtilities.Linker
             List<SteamSearchResult> games = ParseHelper.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName);
 
             return games?.Any() ?? false
-                ? new List<GenericItemOption>(games.Select(g => new SearchResult()
+                ? new List<GenericItemOption>(games.Select(g => new SearchResult
                 {
                     Name = g.Name,
                     Url = $"{_libraryUrl}{g.Appid}",
