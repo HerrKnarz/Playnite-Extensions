@@ -23,6 +23,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Buscar juego</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Elegir opción</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">¡Ordenados los enlaces de {0} juegos!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Steam links of {0} games converted!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Enlaces faltantes de {0} juegos etiquetados!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Tiene duplicados en su orden de clasificación. Por favor, asegúrate de que cada nombre de enlace es único.</sys:String>
@@ -33,6 +34,8 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Todas las webs configuradas</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Todos los sitios web faltantes</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Todos los juegos</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Comprobar enlaces...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Limpiar enlaces (renombrar, eliminar, ordenar)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Juegos filtrados</sys:String>
@@ -46,6 +49,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Ordenar enlaces por orden</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Etiquetar enlaces faltantes</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Converting steam links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressCheckingLinks">Comprobando enlaces…</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Añadir enlaces a bibliotecas...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Añadiendo enlaces...</sys:String>
