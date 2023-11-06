@@ -23,6 +23,7 @@ namespace LinkUtilities
         private bool _addSteamGuidesLink;
         private bool _addSteamNewsLink;
         private bool _addSteamStorePageLink;
+        private bool _changeSteamLinksAfterChange;
         private bool _hideOkOnLinkCheck;
         private DateTime _lastAutoLibUpdate = DateTime.Now;
         private LinkNamePatterns _linkPatterns;
@@ -110,6 +111,12 @@ namespace LinkUtilities
         {
             get => _addSteamStorePageLink;
             set => SetValue(ref _addSteamStorePageLink, value);
+        }
+
+        public bool ChangeSteamLinksAfterChange
+        {
+            get => _changeSteamLinksAfterChange;
+            set => SetValue(ref _changeSteamLinksAfterChange, value);
         }
 
         public string NameSteamAchievementLink
@@ -445,6 +452,8 @@ namespace LinkUtilities
             Settings.TagMissingLinksAfterChange = EditingClone.TagMissingLinksAfterChange;
             Settings.UseCustomSortOrder = EditingClone.UseCustomSortOrder;
             Settings.UseSteamAppLinks = EditingClone.UseSteamAppLinks;
+            Settings.ChangeSteamLinksAfterChange = EditingClone.ChangeSteamLinksAfterChange;
+
 
             foreach (LinkSourceSetting originalItem in Settings.LinkSettings)
             {
@@ -521,6 +530,7 @@ namespace LinkUtilities
             TagMissingLinks.Instance().MissingLinkPatterns = Settings.MissingLinkPatterns;
             TagMissingLinks.Instance().TagMissingLinksAfterChange = Settings.TagMissingLinksAfterChange;
             TagMissingLinks.Instance().MissingLinkPrefix = Settings.MissingLinkPrefix;
+            ChangeSteamLinks.Instance().ChangeSteamLinksAfterChange = Settings.ChangeSteamLinksAfterChange;
 
             LibraryLinkSteam steamLink = (LibraryLinkSteam)AddWebsiteLinks.Instance().Links?.FirstOrDefault(x => x.LinkName == "Steam");
 
