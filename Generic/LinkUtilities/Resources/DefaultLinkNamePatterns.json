@@ -198,6 +198,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "TV Tropes",
+        "urlPattern": "*tvtropes.org*",
+        "namePattern": "*TV Tropes*",
+        "partialMatch": false
+    },
+    {
         "linkName": "Wikipedia",
         "urlPattern": "*wikipedia.org*",
         "namePattern": "*Wikipedia*",
