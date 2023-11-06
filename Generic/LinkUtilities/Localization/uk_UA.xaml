@@ -23,6 +23,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Пошук гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Виберіть варіант</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Посилання {0} ігор сортовано!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Steam links of {0} games converted!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Відсутні посилання {0} ігор позначені тегом!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">У вас є дублікати в списку сортування. Переконайтеся, що кожна назва посилання унікальна.</sys:String>
@@ -33,6 +34,8 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Всі налаштовані сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Всі відсутні сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Всі ігри</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Перевірити посилання...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Очистити посилання (перейменувати, видалити, сортувати)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Відфільтровані ігри</sys:String>
@@ -46,6 +49,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Сортувати посилання за порядком сортування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Позначити тегом відсутні посилання</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Converting steam links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressCheckingLinks">Перевірка посилань...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Додавання посилання бібліотеки...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Додавання посилань...</sys:String>
