@@ -60,6 +60,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "Grouvee",
+        "urlPattern": "*grouvee.com*",
+        "namePattern": "Grouvee",
+        "partialMatch": false
+    },
+    {
         "linkName": "Hardcore Gaming 101",
         "urlPattern": "*hardcoregaming101.net*",
         "namePattern": "Hardcore Gaming 101",
@@ -177,6 +183,12 @@
         "linkName": "StrategyWiki",
         "urlPattern": "*strategywiki.org*",
         "namePattern": "StrategyWiki",
+        "partialMatch": false
+    },
+    {
+        "linkName": "TV Tropes",
+        "urlPattern": "*tvtropes.org*",
+        "namePattern": "TV Tropes",
         "partialMatch": false
     },
     {

@@ -57,7 +57,8 @@ namespace LinkUtilities
                 { "luReviewIcon", "\xeaeb" },
                 { "luDuplicateIcon", "\xedea" },
                 { "luRenameIcon", "\xeded" },
-                { "luTagIcon", "\xf004" }
+                { "luTagIcon", "\xf004" },
+                { "luSteamIcon", "\xe93e" }
             };
 
             foreach (KeyValuePair<string, string> iconResource in iconResourcesToAdd)
@@ -425,6 +426,55 @@ namespace LinkUtilities
                 });
             }
 
+            // Adds the "Change steam links" item to the main menu.
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToApp"),
+                MenuSection = $"@{menuSection}|{menuAllGames}",
+                Icon = "luSteamIcon",
+                Action = a =>
+                {
+                    List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.AppLink);
+                }
+            });
+
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToApp"),
+                MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                Icon = "luSteamIcon",
+                Action = a =>
+                {
+                    List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.AppLink);
+                }
+            });
+
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToWeb"),
+                MenuSection = $"@{menuSection}|{menuAllGames}",
+                Icon = "luSteamIcon",
+                Action = a =>
+                {
+                    List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
+                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.WebLink);
+                }
+            });
+
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToWeb"),
+                MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                Icon = "luSteamIcon",
+                Action = a =>
+                {
+                    List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.WebLink);
+                }
+            });
+
             // Adds the "Tag missing links" item to the main menu.
             if (TagMissingLinks.Instance().MissingLinkPatterns?.Any() ?? false)
             {
@@ -661,6 +711,24 @@ namespace LinkUtilities
                     Action = a => DoForAll(games, RenameLinks.Instance(), true)
                 });
             }
+
+            menuItems.Add(new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToApp"),
+                MenuSection = menuSection,
+                Icon = "luSteamIcon",
+                Action = a => DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.AppLink)
+            });
+
+            menuItems.Add(new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToWeb"),
+                MenuSection = menuSection,
+                Icon = "luSteamIcon",
+                Action = a => DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.WebLink)
+            });
+
+            //TODO nach einem besseren Icon suchen!
 
             // Adds the "Tag missing links" item to the game menu.
             if (TagMissingLinks.Instance().MissingLinkPatterns?.Any() ?? false)

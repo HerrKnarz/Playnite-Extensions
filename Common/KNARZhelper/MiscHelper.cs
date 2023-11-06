@@ -1,5 +1,7 @@
 ﻿using Playnite.SDK;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -28,6 +30,19 @@ namespace KNARZhelper
                 FontSize = 16,
                 FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
             });
+        }
+
+        public static int RemoveAll<T>(
+            this ObservableCollection<T> coll, Func<T, bool> condition)
+        {
+            System.Collections.Generic.List<T> itemsToRemove = coll.Where(condition).ToList();
+
+            foreach (T itemToRemove in itemsToRemove)
+            {
+                coll.Remove(itemToRemove);
+            }
+
+            return itemsToRemove.Count;
         }
     }
 }

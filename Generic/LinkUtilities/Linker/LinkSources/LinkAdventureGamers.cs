@@ -10,7 +10,7 @@ using System.Net;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to Adventure Gamers.
+    ///     Adds a link to Adventure Gamers.
     /// </summary>
     internal class LinkAdventureGamers : BaseClasses.Linker
     {
@@ -34,7 +34,7 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult()
+                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult
                     {
                         Name = WebUtility.HtmlDecode(n.InnerText),
                         Url = $"{BaseUrl}{n.GetAttributeValue("href", "")}",

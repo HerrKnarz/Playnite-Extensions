@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Models;
+﻿using KNARZhelper;
+using LinkUtilities.Models;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Reflection;
 namespace LinkUtilities.Settings
 {
     /// <summary>
-    /// Types of patterns that can be matched.
+    ///     Types of patterns that can be matched.
     /// </summary>
     public enum PatternTypes
     {
@@ -21,22 +22,24 @@ namespace LinkUtilities.Settings
     }
 
     /// <summary>
-    /// Handles the Patterns to find link names for URL/link title combinations
+    ///     Handles the Patterns to find link names for URL/link title combinations
     /// </summary>
     public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
     {
-        public bool SortByPosition { get; set; }
-
         /// <summary>
-        /// Creates an empty instance
+        ///     Creates an empty instance
         /// </summary>
         public LinkNamePatterns() => SortByPosition = false;
 
         /// <summary>
-        /// Creates an empty instance, but sets the SortByPosition property to the desired value.
+        ///     Creates an empty instance, but sets the SortByPosition property to the desired value.
         /// </summary>
         /// <param name="sortByPosition">If true the list is sorted by the position property.</param>
         public LinkNamePatterns(bool sortByPosition = false) => SortByPosition = sortByPosition;
+
+        public bool SortByPosition { get; set; }
+
+        public void RemoveEmpty() => this.RemoveAll(x => !(x.NamePattern?.Any() ?? false) && !(x.UrlPattern?.Any() ?? false));
 
         public void SortPatterns()
         {
@@ -63,10 +66,10 @@ namespace LinkUtilities.Settings
         }
 
         /// <summary>
-        /// Gets a list of default patterns.
+        ///     Gets a list of default patterns.
         /// </summary>
         /// <param name="type">
-        /// Type of the pattern to be added
+        ///     Type of the pattern to be added
         /// </param>
         private static List<LinkNamePattern> GetDefaultLinkNamePatterns(PatternTypes type)
         {
@@ -104,10 +107,10 @@ namespace LinkUtilities.Settings
         }
 
         /// <summary>
-        /// Adds the default patterns to the list and sorts it afterwards.
+        ///     Adds the default patterns to the list and sorts it afterwards.
         /// </summary>
         /// <param name="type">
-        /// Type of the pattern to be added
+        ///     Type of the pattern to be added
         /// </param>
         public void AddDefaultPatterns(PatternTypes type)
         {
