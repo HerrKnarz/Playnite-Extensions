@@ -18,12 +18,6 @@
         "partialMatch": true
     },     
     {
-        "linkName": "Facebook",
-        "urlPattern": "*facebook.com*",
-        "namePattern": "*Facebook*",
-        "partialMatch": true
-    },
-    {
         "linkName": "Instagram",
         "urlPattern": "*instagram.com*",
         "namePattern": "*Instagram*",
