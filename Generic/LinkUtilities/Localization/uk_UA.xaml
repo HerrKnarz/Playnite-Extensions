@@ -23,7 +23,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Пошук гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Виберіть варіант</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Посилання {0} ігор сортовано!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Steam links of {0} games converted!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Посилання Steam {0} ігор перетворено!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Відсутні посилання {0} ігор позначені тегом!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">У вас є дублікати в списку сортування. Переконайтеся, що кожна назва посилання унікальна.</sys:String>
@@ -34,8 +34,8 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Всі налаштовані сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Всі відсутні сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Всі ігри</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Перетворити вебпосилання Steam на клієнт-посилання</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Перетворити клієнт-посилання Steam на вебпосилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Перевірити посилання...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Очистити посилання (перейменувати, видалити, сортувати)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Відфільтровані ігри</sys:String>
@@ -49,7 +49,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Сортувати посилання за порядком сортування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Позначити тегом відсутні посилання</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Converting steam links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Перетворення посилань Steam...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressCheckingLinks">Перевірка посилань...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Додавання посилання бібліотеки...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Додавання посилань...</sys:String>
@@ -118,13 +118,13 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">Шаблон URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Використовувати власний порядок сортування при автоматичному сортуванні</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamUseAppLinks">Add links for the steam client instead of the website.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Automatically change steam web links to steam client links on library update.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">If none of the check boxes below are ticked, adding or searching for a steam link will add the usual store page link with &quot;Steam&quot; as link name.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Achievements</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Community Hub</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamDiscussion">Discussion</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Guides</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">News</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Store Page</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamUseAppLinks">Додати посилання для клієнта Steam замість вебсайту.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Автоматично змінювати вебпосилання Steam посилань на клієнт-посилання Steam при оновленні бібліотеки.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">Якщо не вибрано жодної з опцій нижче, додавання чи пошук посилання Steam додасть звичайне посилання на сторінку в крамниці яке називатиметься &quot;Steam&quot;.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Досягнення</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Центр спільноти</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamDiscussion">Обговорення</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Посібники</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">Новини</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Сторінка в крамниці</sys:String>
 </ResourceDictionary>
