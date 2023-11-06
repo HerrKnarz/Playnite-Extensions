@@ -1,4 +1,5 @@
 ﻿using LinkUtilities.LinkActions;
+using LinkUtilities.Linker;
 using LinkUtilities.Models;
 using LinkUtilities.Settings;
 using Playnite.SDK;
@@ -16,12 +17,24 @@ namespace LinkUtilities
     public class LinkUtilitiesSettings : ObservableObject
     {
         private bool _addLinksToNewGames;
+        private bool _addSteamAchievementLink;
+        private bool _addSteamCommunityLink;
+        private bool _addSteamDiscussionLink;
+        private bool _addSteamGuidesLink;
+        private bool _addSteamNewsLink;
+        private bool _addSteamStorePageLink;
         private bool _hideOkOnLinkCheck;
         private DateTime _lastAutoLibUpdate = DateTime.Now;
         private LinkNamePatterns _linkPatterns;
         private LinkSourceSettings _linkSettings;
         private LinkNamePatterns _missingLinkPatterns;
         private string _missingLinkPrefix = ResourceProvider.GetString("LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue");
+        private string _nameSteamAchievementLink = "Achievements";
+        private string _nameSteamCommunityLink = "Community Hub";
+        private string _nameSteamDiscussionLink = "Discussion";
+        private string _nameSteamGuidesLink = "Guides";
+        private string _nameSteamNewsLink = "News";
+        private string _nameSteamStorePageLink = "Store Page";
         private bool _removeDuplicatesAfterChange;
         private DuplicateTypes _removeDuplicatesType = DuplicateTypes.NameAndUrl;
         private bool _removeLinksAfterChange;
@@ -33,6 +46,8 @@ namespace LinkUtilities
         private ObservableCollection<SortItem> _sortOrder;
         private bool _tagMissingLinksAfterChange;
         private bool _useCustomSortOrder;
+        private bool _useSteamAppLinks;
+
 
         public LinkUtilitiesSettings()
         {
@@ -53,6 +68,84 @@ namespace LinkUtilities
         {
             get => _addLinksToNewGames;
             set => SetValue(ref _addLinksToNewGames, value);
+        }
+
+        public bool UseSteamAppLinks
+        {
+            get => _useSteamAppLinks;
+            set => SetValue(ref _useSteamAppLinks, value);
+        }
+
+        public bool AddSteamAchievementLink
+        {
+            get => _addSteamAchievementLink;
+            set => SetValue(ref _addSteamAchievementLink, value);
+        }
+
+        public bool AddSteamCommunityLink
+        {
+            get => _addSteamCommunityLink;
+            set => SetValue(ref _addSteamCommunityLink, value);
+        }
+
+        public bool AddSteamDiscussionLink
+        {
+            get => _addSteamDiscussionLink;
+            set => SetValue(ref _addSteamDiscussionLink, value);
+        }
+
+        public bool AddSteamGuidesLink
+        {
+            get => _addSteamGuidesLink;
+            set => SetValue(ref _addSteamGuidesLink, value);
+        }
+
+        public bool AddSteamNewsLink
+        {
+            get => _addSteamNewsLink;
+            set => SetValue(ref _addSteamNewsLink, value);
+        }
+
+        public bool AddSteamStorePageLink
+        {
+            get => _addSteamStorePageLink;
+            set => SetValue(ref _addSteamStorePageLink, value);
+        }
+
+        public string NameSteamAchievementLink
+        {
+            get => _nameSteamAchievementLink;
+            set => SetValue(ref _nameSteamAchievementLink, value);
+        }
+
+        public string NameSteamCommunityLink
+        {
+            get => _nameSteamCommunityLink;
+            set => SetValue(ref _nameSteamCommunityLink, value);
+        }
+
+        public string NameSteamDiscussionLink
+        {
+            get => _nameSteamDiscussionLink;
+            set => SetValue(ref _nameSteamDiscussionLink, value);
+        }
+
+        public string NameSteamGuidesLink
+        {
+            get => _nameSteamGuidesLink;
+            set => SetValue(ref _nameSteamGuidesLink, value);
+        }
+
+        public string NameSteamNewsLink
+        {
+            get => _nameSteamNewsLink;
+            set => SetValue(ref _nameSteamNewsLink, value);
+        }
+
+        public string NameSteamStorePageLink
+        {
+            get => _nameSteamStorePageLink;
+            set => SetValue(ref _nameSteamStorePageLink, value);
         }
 
         public bool UseCustomSortOrder
@@ -323,22 +416,35 @@ namespace LinkUtilities
 
         public void CancelEdit()
         {
-            Settings.SortAfterChange = EditingClone.SortAfterChange;
             Settings.AddLinksToNewGames = EditingClone.AddLinksToNewGames;
-            Settings.UseCustomSortOrder = EditingClone.UseCustomSortOrder;
+            Settings.AddSteamAchievementLink = EditingClone.AddSteamAchievementLink;
+            Settings.AddSteamCommunityLink = EditingClone.AddSteamCommunityLink;
+            Settings.AddSteamDiscussionLink = EditingClone.AddSteamDiscussionLink;
+            Settings.AddSteamGuidesLink = EditingClone.AddSteamGuidesLink;
+            Settings.AddSteamNewsLink = EditingClone.AddSteamNewsLink;
+            Settings.AddSteamStorePageLink = EditingClone.AddSteamStorePageLink;
+            Settings.HideOkOnLinkCheck = EditingClone.HideOkOnLinkCheck;
+            Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;
+            Settings.MissingLinkPatterns = EditingClone.MissingLinkPatterns;
+            Settings.MissingLinkPrefix = EditingClone.MissingLinkPrefix;
+            Settings.NameSteamAchievementLink = EditingClone.NameSteamAchievementLink;
+            Settings.NameSteamCommunityLink = EditingClone.NameSteamCommunityLink;
+            Settings.NameSteamDiscussionLink = EditingClone.NameSteamDiscussionLink;
+            Settings.NameSteamGuidesLink = EditingClone.NameSteamGuidesLink;
+            Settings.NameSteamNewsLink = EditingClone.NameSteamNewsLink;
+            Settings.NameSteamStorePageLink = EditingClone.NameSteamStorePageLink;
             Settings.RemoveDuplicatesAfterChange = EditingClone.RemoveDuplicatesAfterChange;
             Settings.RemoveDuplicatesType = EditingClone.RemoveDuplicatesType;
             Settings.RemoveLinksAfterChange = EditingClone.RemoveLinksAfterChange;
-            Settings.RenameLinksAfterChange = EditingClone.RenameLinksAfterChange;
-            Settings.TagMissingLinksAfterChange = EditingClone.TagMissingLinksAfterChange;
-            Settings.HideOkOnLinkCheck = EditingClone.HideOkOnLinkCheck;
-            Settings.RenameBlocker = EditingClone.RenameBlocker;
-            Settings.MissingLinkPrefix = EditingClone.MissingLinkPrefix;
-            Settings.SortOrder = EditingClone.SortOrder;
-            Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;
             Settings.RemovePatterns = EditingClone.RemovePatterns;
+            Settings.RenameBlocker = EditingClone.RenameBlocker;
+            Settings.RenameLinksAfterChange = EditingClone.RenameLinksAfterChange;
             Settings.RenamePatterns = EditingClone.RenamePatterns;
-            Settings.MissingLinkPatterns = EditingClone.MissingLinkPatterns;
+            Settings.SortAfterChange = EditingClone.SortAfterChange;
+            Settings.SortOrder = EditingClone.SortOrder;
+            Settings.TagMissingLinksAfterChange = EditingClone.TagMissingLinksAfterChange;
+            Settings.UseCustomSortOrder = EditingClone.UseCustomSortOrder;
+            Settings.UseSteamAppLinks = EditingClone.UseSteamAppLinks;
 
             foreach (LinkSourceSetting originalItem in Settings.LinkSettings)
             {
@@ -415,6 +521,44 @@ namespace LinkUtilities
             TagMissingLinks.Instance().MissingLinkPatterns = Settings.MissingLinkPatterns;
             TagMissingLinks.Instance().TagMissingLinksAfterChange = Settings.TagMissingLinksAfterChange;
             TagMissingLinks.Instance().MissingLinkPrefix = Settings.MissingLinkPrefix;
+
+            LibraryLinkSteam steamLink = (LibraryLinkSteam)AddWebsiteLinks.Instance().Links?.FirstOrDefault(x => x.LinkName == "Steam");
+
+            if (steamLink != null)
+            {
+                steamLink.UseAppLinks = Settings.UseSteamAppLinks;
+                steamLink.AddAchievementLink = Settings.AddSteamAchievementLink;
+                steamLink.AddCommunityLink = Settings.AddSteamCommunityLink;
+                steamLink.AddDiscussionLink = Settings.AddSteamDiscussionLink;
+                steamLink.AddGuidesLink = Settings.AddSteamGuidesLink;
+                steamLink.AddNewsLink = Settings.AddSteamNewsLink;
+                steamLink.AddStorePageLink = Settings.AddSteamStorePageLink;
+                steamLink.NameAchievementLink = Settings.NameSteamAchievementLink;
+                steamLink.NameCommunityLink = Settings.NameSteamCommunityLink;
+                steamLink.NameDiscussionLink = Settings.NameSteamDiscussionLink;
+                steamLink.NameGuidesLink = Settings.NameSteamGuidesLink;
+                steamLink.NameNewsLink = Settings.NameSteamNewsLink;
+                steamLink.NameStorePageLink = Settings.NameSteamStorePageLink;
+            }
+
+            LibraryLinkSteam steamLibLink = (LibraryLinkSteam)AddLibraryLinks.Instance().Libraries?[Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab")];
+
+            if (steamLibLink != null)
+            {
+                steamLibLink.UseAppLinks = Settings.UseSteamAppLinks;
+                steamLibLink.AddAchievementLink = Settings.AddSteamAchievementLink;
+                steamLibLink.AddCommunityLink = Settings.AddSteamCommunityLink;
+                steamLibLink.AddDiscussionLink = Settings.AddSteamDiscussionLink;
+                steamLibLink.AddGuidesLink = Settings.AddSteamGuidesLink;
+                steamLibLink.AddNewsLink = Settings.AddSteamNewsLink;
+                steamLibLink.AddStorePageLink = Settings.AddSteamStorePageLink;
+                steamLibLink.NameAchievementLink = Settings.NameSteamAchievementLink;
+                steamLibLink.NameCommunityLink = Settings.NameSteamCommunityLink;
+                steamLibLink.NameDiscussionLink = Settings.NameSteamDiscussionLink;
+                steamLibLink.NameGuidesLink = Settings.NameSteamGuidesLink;
+                steamLibLink.NameNewsLink = Settings.NameSteamNewsLink;
+                steamLibLink.NameStorePageLink = Settings.NameSteamStorePageLink;
+            }
         }
     }
 }
