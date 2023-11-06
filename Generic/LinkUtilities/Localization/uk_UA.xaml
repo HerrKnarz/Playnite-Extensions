@@ -113,4 +113,14 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Позначити тегом відсутні посилання після оновлення метаданих гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">Шаблон URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Використовувати власний порядок сортування при автоматичному сортуванні</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamUseAppLinks">Add links for the steam client instead of the website.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Automatically change steam web links to steam client links on library update.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">If none of the check boxes below are ticked, adding or searching for a steam link will add the usual store page link with &quot;Steam&quot; as link name.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Achievements</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Community Hub</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamDiscussion">Discussion</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Guides</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">News</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Store Page</sys:String>
 </ResourceDictionary>
