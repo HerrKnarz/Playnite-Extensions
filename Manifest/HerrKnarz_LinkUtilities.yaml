@@ -1,5 +1,18 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 3.6
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-11-08
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-11-08/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_3_6.pext
+    Changelog:
+      - Added support for Grouvee.
+      - Added support for TV Tropes (only add)
+      - Added more options for steam links. It is now possible to add links to several steam pages like guides, news etc. and you can change the steam link to a steam client one instead of the web page.
+      - Added menu options to convert steam links to client or web links.
+      - Fixed bug that cause empty remove patterns to remove all links. Empty patterns will now be removed when saving the settings.
+      - Added default remove pattern for appid PCGamingWiki links, because those often link to non existent pages.
+      - Removed direct "add" function for MobyGames, since it didn't work anymore most of the time, because MobyGames changed their link structure. "Add" now only works, when a single search result is returned for a game.
+      - Added missing string in the addon settings.
   - Version: 3.5
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-09-20
