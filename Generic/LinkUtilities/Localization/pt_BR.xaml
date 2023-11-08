@@ -23,6 +23,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Procurar um jogo</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Selecione uma opção</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Links de {0} jogos classificados!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Steam links of {0} games converted!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Links ausentes de {0} jogos marcados!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Você tem duplicatas em sua ordem de ordenação. Por favor, certifique-se de que o nome de cada link é único.</sys:String>
@@ -33,6 +34,8 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Todos os sites configurados</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">All missing websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Todos os jogos</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Check links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Limpar links (renomear, remover, classificar)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Jogos filtrados</sys:String>
@@ -46,6 +49,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Ordenar links por ordem de classificação</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Links sem etiqueta</sys:String>
 
+    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Converting steam links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressCheckingLinks">Checking links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Adicionando links da biblioteca...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Adicionando links...</sys:String>
@@ -113,4 +117,14 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Tag missing links after the game meta data was updated</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">URL padrão</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Use custom sort order on automatic sort</sys:String>
+
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamUseAppLinks">Add links for the steam client instead of the website.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Automatically change steam web links to steam client links on library update.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">If none of the check boxes below are ticked, adding or searching for a steam link will add the usual store page link with &quot;Steam&quot; as link name.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Achievements</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Community Hub</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamDiscussion">Discussion</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Guides</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">News</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Store Page</sys:String>
 </ResourceDictionary>
