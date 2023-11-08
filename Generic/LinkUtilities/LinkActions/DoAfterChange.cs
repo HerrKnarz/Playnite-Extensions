@@ -5,13 +5,16 @@ using System.Linq;
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    /// Sorts the Links of a game.
+    ///     Sorts the Links of a game.
     /// </summary>
     internal class DoAfterChange : LinkAction
     {
         private static DoAfterChange _instance;
         private static readonly object _mutex = new object();
         private DoAfterChange() { }
+
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressSortLinks";
+        public override string ResultMessage => "LOCLinkUtilitiesDialogSortedMessage";
 
         public static DoAfterChange Instance()
         {
@@ -31,9 +34,6 @@ namespace LinkUtilities.LinkActions
             return _instance;
         }
 
-        public override string ProgressMessage => "LOCLinkUtilitiesProgressSortLinks";
-        public override string ResultMessage => "LOCLinkUtilitiesDialogSortedMessage";
-
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, isBulkAction))
@@ -51,6 +51,11 @@ namespace LinkUtilities.LinkActions
             if (RemoveLinks.Instance().RemoveLinksAfterChange && (RemoveLinks.Instance().RemovePatterns?.Any() ?? false))
             {
                 result |= RemoveLinks.Instance().Execute(game, actionModifier);
+            }
+
+            if (ChangeSteamLinks.Instance().ChangeSteamLinksAfterChange)
+            {
+                result |= ChangeSteamLinks.Instance().Execute(game, ActionModifierTypes.AppLink);
             }
 
             if (RemoveDuplicates.Instance().RemoveDuplicatesAfterChange)

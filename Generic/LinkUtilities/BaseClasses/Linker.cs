@@ -85,7 +85,7 @@ namespace LinkUtilities.BaseClasses
                     game.Name,
                     $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
 
-            return result != null && LinkHelper.AddLink(game, LinkName, ((SearchResult)result).Url, false, cleanUpAfterAdding);
+            return result != null && AddLinkFromSearch(game, (SearchResult)result, cleanUpAfterAdding);
         }
 
         public virtual List<GenericItemOption> GetSearchResults(string searchTerm) => new List<GenericItemOption>();
@@ -183,6 +183,8 @@ namespace LinkUtilities.BaseClasses
 
             return string.Empty;
         }
+
+        public virtual bool AddLinkFromSearch(Game game, SearchResult result, bool cleanUpAfterAdding = true) => LinkHelper.AddLink(game, LinkName, result.Url, false, cleanUpAfterAdding);
 
         /// <summary>
         ///     Searches for a game by name and looks for a matching search result.
