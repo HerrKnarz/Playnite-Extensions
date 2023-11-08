@@ -23,7 +23,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Suche Spiel</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Option wählen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Links von {0} Spielen sortiert!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Steam links of {0} games converted!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Steam-Links von {0} Spielen umgewandelt!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Fehlende Links von {0} Spielen getaggt!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Du hast Duplikate in deiner Sortierreihenfolge. Bitte stelle sicher, dass jeder Link-Name eindeutig ist.</sys:String>
@@ -34,8 +34,8 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Alle konfigurierten Webseiten</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Alle fehlenden Webseiten</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Alle Spiele</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Steam Web-Links in Client umwandeln</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Steam Client-Links in Web umwandeln</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Links überprüfen...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Links bereinigen (umbenennen, entfernen, sortieren)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Gefilterte Spiele</sys:String>
@@ -49,7 +49,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Links nach Sortierreihenfolge sortieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Fehlende Links taggen</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Converting steam links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Wandle Steam-Links um...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressCheckingLinks">Überprüfe Links...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Füge Bibliothekslinks hinzu...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Füge Links hinzu...</sys:String>
@@ -118,13 +118,13 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">URL-Muster</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Verwende benutzerdefinierte Sortierreihenfolge bei automatischer Sortierung</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamUseAppLinks">Add links for the steam client instead of the website.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Automatically change steam web links to steam client links on library update.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">If none of the check boxes below are ticked, adding or searching for a steam link will add the usual store page link with &quot;Steam&quot; as link name.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Achievements</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Community Hub</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamDiscussion">Discussion</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Guides</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">News</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Store Page</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamUseAppLinks">Links für den Steam-Client statt der Website hinzufügen.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Automatisches Umwandeln von Steam Web-Links in Steam Client-Links beim Bibliotheks-Update.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">Wenn keines der Kontrollkästchen unten angeklickt ist, wird das Hinzufügen oder die Suche nach einem Steam-Link den üblichen Link der Shop-Seite mit &quot;Steam&quot; als Linknamen hinzufügen.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Errungenschaften</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Community-Hub</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamDiscussion">Diskussion</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Anleitungen</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">Neuigkeiten</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Shopseite</sys:String>
 </ResourceDictionary>
