@@ -34,6 +34,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Всі налаштовані сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Всі відсутні сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Всі ігри</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Open browser search on...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Перетворити вебпосилання Steam на клієнт-посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Перетворити клієнт-посилання Steam на вебпосилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Перевірити посилання...</sys:String>
