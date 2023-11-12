@@ -4,7 +4,7 @@ using Playnite.SDK.Models;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to Gamer Guides.
+    ///     Adds a link to Gamer Guides.
     /// </summary>
     internal class LinkGamerGuides : BaseClasses.Linker
     {

@@ -10,6 +10,7 @@ namespace LinkUtilities
         Search,
         SearchMissing,
         SearchSelected,
+        SearchInBrowser,
         Name,
         SortOrder,
         DontRename,

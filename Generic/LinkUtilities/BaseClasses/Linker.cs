@@ -5,6 +5,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace LinkUtilities.BaseClasses
@@ -52,6 +53,9 @@ namespace LinkUtilities.BaseClasses
                     return AddSearchedLink(game);
                 case ActionModifierTypes.SearchMissing:
                     return AddSearchedLink(game, true);
+                case ActionModifierTypes.SearchInBrowser:
+                    StartBrowserSearch(game);
+                    return true;
                 case ActionModifierTypes.None:
                 case ActionModifierTypes.Name:
                 case ActionModifierTypes.SortOrder:
@@ -63,9 +67,11 @@ namespace LinkUtilities.BaseClasses
         public abstract string LinkName { get; }
         public virtual string BaseUrl => string.Empty;
         public virtual string SearchUrl => string.Empty;
+        public virtual string BrowserSearchUrl => SearchUrl;
         public virtual string LinkUrl { get; set; } = string.Empty;
         public virtual LinkAddTypes AddType => LinkAddTypes.UrlMatch;
         public virtual bool CanBeSearched => !string.IsNullOrWhiteSpace(SearchUrl);
+        public virtual bool CanBeBrowserSearched => !string.IsNullOrWhiteSpace(BrowserSearchUrl);
         public LinkSourceSetting Settings { get; set; }
         public virtual bool AllowRedirects { get; set; } = true;
         public virtual bool ReturnsSameUrl { get; set; } = false;
@@ -183,6 +189,9 @@ namespace LinkUtilities.BaseClasses
 
             return string.Empty;
         }
+
+        public string GetBrowserSearchLink(string searchTerm) => BrowserSearchUrl + searchTerm.UrlEncode();
+        public void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game.Name));
 
         public virtual bool AddLinkFromSearch(Game game, SearchResult result, bool cleanUpAfterAdding = true) => LinkHelper.AddLink(game, LinkName, result.Url, false, cleanUpAfterAdding);
 
