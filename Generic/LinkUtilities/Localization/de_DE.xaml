@@ -34,6 +34,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Alle konfigurierten Webseiten</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Alle fehlenden Webseiten</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Alle Spiele</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Open browser search on...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Steam Web-Links in Client umwandeln</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Steam Client-Links in Web umwandeln</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Links überprüfen...</sys:String>
