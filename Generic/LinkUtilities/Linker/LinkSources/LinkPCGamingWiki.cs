@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to PCGamingWiki.
+    ///     Adds a link to PCGamingWiki.
     /// </summary>
     internal class LinkPcGamingWiki : BaseClasses.Linker
     {
@@ -15,6 +15,7 @@ namespace LinkUtilities.Linker
         public override string LinkName => "PCGamingWiki";
         public override string BaseUrl => $"{_websiteUrl}/wiki/";
         public override string SearchUrl => _websiteUrl + "/w/index.php?search={0}&fulltext=1";
+        public override string BrowserSearchUrl => $"{_websiteUrl}/w/index.php?search=";
 
         // PCGamingWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)

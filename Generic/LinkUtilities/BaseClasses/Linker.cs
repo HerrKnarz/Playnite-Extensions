@@ -190,8 +190,8 @@ namespace LinkUtilities.BaseClasses
             return string.Empty;
         }
 
-        public string GetBrowserSearchLink(string searchTerm) => BrowserSearchUrl + searchTerm.UrlEncode();
-        public void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game.Name));
+        public virtual string GetBrowserSearchLink(string searchTerm) => BrowserSearchUrl + searchTerm.UrlEncode();
+        public virtual void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game.Name));
 
         public virtual bool AddLinkFromSearch(Game game, SearchResult result, bool cleanUpAfterAdding = true) => LinkHelper.AddLink(game, LinkName, result.Url, false, cleanUpAfterAdding);
 

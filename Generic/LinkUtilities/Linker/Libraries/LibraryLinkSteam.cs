@@ -16,13 +16,13 @@ namespace LinkUtilities.Linker
     /// </summary>
     internal class LibraryLinkSteam : LibraryLink
     {
-        private readonly string _steamAppPrefix = "steam://openurl/";
-        private readonly string _urlAchievements = "https://steamcommunity.com/stats/{0}/achievements";
-        private readonly string _urlCommunity = "https://steamcommunity.com/app/{0}";
-        private readonly string _urlDiscussion = "https://steamcommunity.com/app/{0}/discussions/";
-        private readonly string _urlGuides = "https://steamcommunity.com/app/{0}/guides/";
-        private readonly string _urlNews = "https://store.steampowered.com/news/?appids={0}";
-        private readonly string _urlStorePage = "https://store.steampowered.com/app/{0}";
+        private const string _steamAppPrefix = "steam://openurl/";
+        private const string _urlAchievements = "https://steamcommunity.com/stats/{0}/achievements";
+        private const string _urlCommunity = "https://steamcommunity.com/app/{0}";
+        private const string _urlDiscussion = "https://steamcommunity.com/app/{0}/discussions/";
+        private const string _urlGuides = "https://steamcommunity.com/app/{0}/guides/";
+        private const string _urlNews = "https://store.steampowered.com/news/?appids={0}";
+        private const string _urlStorePage = "https://store.steampowered.com/app/{0}";
 
         /// <summary>
         ///     ID of the game library to identify it in Playnite.
@@ -32,6 +32,7 @@ namespace LinkUtilities.Linker
         public override string LinkName => "Steam";
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string SearchUrl => "https://steamcommunity.com/actions/SearchApps/";
+        public override string BrowserSearchUrl => "https://store.steampowered.com/search/?term=";
 
         public bool UseAppLinks { get; set; } = false;
         public bool AddAchievementLink { get; set; } = false;

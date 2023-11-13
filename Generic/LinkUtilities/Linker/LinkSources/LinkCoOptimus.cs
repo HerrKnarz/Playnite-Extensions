@@ -10,13 +10,14 @@ using System.Net;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to Co-Optimus.
+    ///     Adds a link to Co-Optimus.
     /// </summary>
     internal class LinkCoOptimus : BaseClasses.Linker
     {
         public override string LinkName => "Co-Optimus";
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string SearchUrl => "https://api.co-optimus.com/games.php?search=true&name=";
+        public override string BrowserSearchUrl => string.Empty;
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
@@ -29,7 +30,7 @@ namespace LinkUtilities.Linker
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult()
+                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult
                     {
                         Name = WebUtility.HtmlDecode(n.SelectSingleNode("./title").InnerText),
                         Url = n.SelectSingleNode("./url").InnerText,

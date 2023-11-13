@@ -25,9 +25,7 @@ namespace LinkUtilities.Linker
             try
             {
                 HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc =
-                    web.Load(
-                        $"{SearchUrl}{searchTerm.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "+").ToLower()}");
+                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
                 HtmlNodeCollection htmlNodes =
                     doc.DocumentNode.SelectNodes("//div[@class='item_article']//h2//a[contains(@href,'games')]");

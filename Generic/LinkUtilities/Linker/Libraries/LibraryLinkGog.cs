@@ -21,9 +21,10 @@ namespace LinkUtilities.Linker
         /// </summary>
         public override Guid Id { get; } = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
 
-        public override string LinkName { get; } = "GOG";
-        public override string BaseUrl { get; } = "https://www.gog.com/en/game/";
-        public override string SearchUrl { get; } = "https://embed.gog.com/games/ajax/filtered?mediaType=game&search=";
+        public override string LinkName => "GOG";
+        public override string BaseUrl => "https://www.gog.com/en/game/";
+        public override string SearchUrl => "https://embed.gog.com/games/ajax/filtered?mediaType=game&search=";
+        public override string BrowserSearchUrl => "https://www.gog.com/en/games?query=";
 
         public override bool AllowRedirects { get; set; } = false;
 

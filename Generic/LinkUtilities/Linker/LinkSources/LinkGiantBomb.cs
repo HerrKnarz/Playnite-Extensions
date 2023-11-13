@@ -10,13 +10,15 @@ using System.Linq;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to Giant Bomb.
+    ///     Adds a link to Giant Bomb.
     /// </summary>
     internal class LinkGiantBomb : BaseClasses.Linker
     {
+        public LinkGiantBomb() => Settings.NeedsApiKey = true;
         public override string LinkName => "Giant Bomb";
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string SearchUrl => "https://www.giantbomb.com/api/search/?api_key={0}&format=json&query={1}&resources=game&field_list=name,platforms,site_detail_url,original_release_date&limit=50";
+        public override string BrowserSearchUrl => "https://www.giantbomb.com/search/?i=&q=";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
@@ -58,7 +60,5 @@ namespace LinkUtilities.Linker
 
             return searchResults;
         }
-
-        public LinkGiantBomb() => Settings.NeedsApiKey = true;
     }
 }

@@ -7,16 +7,12 @@ using System.Linq;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to Metacritic.
+    ///     Adds a link to Metacritic.
     /// </summary>
     internal class LinkMetacritic : BaseClasses.Linker
     {
-        public override string LinkName => "Metacritic";
-        public override string BaseUrl => "https://www.metacritic.com/game/";
-        public override string SearchUrl => string.Empty;
-
         /// <summary>
-        /// Dictionary with playnite platform ids and their equivalents in metacritic links
+        ///     Dictionary with playnite platform ids and their equivalents in metacritic links
         /// </summary>
         private readonly IReadOnlyDictionary<string, string> _platforms = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -44,6 +40,11 @@ namespace LinkUtilities.Linker
             { "xbox_one", "xbox-one" },
             { "xbox_series", "xbox-series-x" }
         };
+
+        public override string LinkName => "Metacritic";
+        public override string BaseUrl => "https://www.metacritic.com/game/";
+        public override string SearchUrl => string.Empty;
+        public override string BrowserSearchUrl => "https://www.metacritic.com/search/{0}/?page=1&category=13";
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
@@ -101,5 +102,7 @@ namespace LinkUtilities.Linker
                 .CollapseWhitespaces()
                 .Replace(" ", "-")
                 .ToLower();
+
+        public override string GetBrowserSearchLink(string searchTerm) => string.Format(BrowserSearchUrl, searchTerm.UrlEncode());
     }
 }
