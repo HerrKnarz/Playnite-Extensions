@@ -8,6 +8,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Game = Playnite.SDK.Models.Game;
 
 namespace LinkUtilities.Linker
@@ -58,7 +59,7 @@ namespace LinkUtilities.Linker
         {
             if (!string.IsNullOrWhiteSpace(Settings.ApiKey))
             {
-                ItchSearchResult itchSearchResult = ParseHelper.GetJsonFromApi<ItchSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+                ItchSearchResult itchSearchResult = ParseHelper.GetJsonFromApi<ItchSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName, Encoding.UTF8);
 
                 return itchSearchResult?.Games?.Any() ?? false
                     ? new List<GenericItemOption>(itchSearchResult.Games.Select(g => new SearchResult

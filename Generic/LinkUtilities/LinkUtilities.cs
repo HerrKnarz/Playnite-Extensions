@@ -58,7 +58,8 @@ namespace LinkUtilities
                 { "luDuplicateIcon", "\xedea" },
                 { "luRenameIcon", "\xeded" },
                 { "luTagIcon", "\xf004" },
-                { "luSteamIcon", "\xe93e" }
+                { "luSteamIcon", "\xe93e" },
+                { "luWebIcon", "\xf028" }
             };
 
             foreach (KeyValuePair<string, string> iconResource in iconResourcesToAdd)
@@ -584,6 +585,20 @@ namespace LinkUtilities
                 {
                     Description = "-",
                     MenuSection = $"{menuSection}|{menuSearchLinks}"
+                },
+                // Adds the "All missing websites" item to the browser search sub menu.
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllMissingWebsites"),
+                    MenuSection = $"{menuSection}|{menuBrowserSearchLinks}",
+                    Icon = "luWebIcon",
+                    Action = a => DoForAll(games, AddWebsiteLinks.Instance(), false, ActionModifierTypes.SearchInBrowser)
+                },
+                // Adds a separator to the browser search sub menu
+                new GameMenuItem
+                {
+                    Description = "-",
+                    MenuSection = $"{menuSection}|{menuBrowserSearchLinks}"
                 }
             });
 
@@ -618,7 +633,6 @@ namespace LinkUtilities
                         MenuSection = $"{menuSection}|{menuBrowserSearchLinks}",
                         Action = a => DoForAll(games, link, true, ActionModifierTypes.SearchInBrowser)
                     });
-                    // TODO: Check search urls of all linkers, if they are already correct.
                 }
             }
 

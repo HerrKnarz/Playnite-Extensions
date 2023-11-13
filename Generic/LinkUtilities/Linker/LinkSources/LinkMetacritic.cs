@@ -85,11 +85,13 @@ namespace LinkUtilities.Linker
                 {
                     LinkUrl = $"{BaseUrl}{_platforms[platform.SpecificationId]}/{GetGamePath(game, game.Name.RemoveEditionSuffix())}";
 
-                    if (CheckLink(LinkUrl))
+                    if (!CheckLink(LinkUrl))
                     {
-                        links.Add(new Link(linkName, LinkUrl));
-                        result = true;
+                        continue;
                     }
+
+                    links.Add(new Link(linkName, LinkUrl));
+                    result = true;
                 }
             }
 
@@ -103,6 +105,6 @@ namespace LinkUtilities.Linker
                 .Replace(" ", "-")
                 .ToLower();
 
-        public override string GetBrowserSearchLink(string searchTerm) => string.Format(BrowserSearchUrl, searchTerm.UrlEncode());
+        public override string GetBrowserSearchLink(string searchTerm) => string.Format(BrowserSearchUrl, searchTerm.RemoveDiacritics().EscapeDataString());
     }
 }

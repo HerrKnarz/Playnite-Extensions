@@ -10,7 +10,7 @@ using System.Net;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to Zophar's Domain for game soundtracks.
+    ///     Adds a link to Zophar's Domain for game soundtracks.
     /// </summary>
     internal class LinkZopharsDomain : BaseClasses.Linker
     {
@@ -24,13 +24,13 @@ namespace LinkUtilities.Linker
             try
             {
                 HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                HtmlDocument doc = web.Load(GetBrowserSearchLink(searchTerm));
 
                 HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//tr[contains(@class, 'regularrow')]");
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult()
+                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult
                     {
                         Name = WebUtility.HtmlDecode(n.SelectSingleNode("./td[@class='name']").InnerText),
                         Url = $"{BaseUrl}{n.SelectSingleNode("./td[@class='name']/a").GetAttributeValue("href", "")}",
@@ -45,5 +45,7 @@ namespace LinkUtilities.Linker
 
             return base.GetSearchResults(searchTerm);
         }
+
+        public override string GetBrowserSearchLink(string searchTerm) => $"{BrowserSearchUrl}{searchTerm.RemoveDiacritics().EscapeDataString()}";
     }
 }

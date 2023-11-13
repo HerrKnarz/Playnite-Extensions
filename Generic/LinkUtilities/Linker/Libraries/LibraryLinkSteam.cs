@@ -8,6 +8,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace LinkUtilities.Linker
 {
@@ -87,7 +88,7 @@ namespace LinkUtilities.Linker
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            List<SteamSearchResult> games = ParseHelper.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName);
+            List<SteamSearchResult> games = ParseHelper.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, Encoding.UTF8);
 
             return games?.Any() ?? false
                 ? new List<GenericItemOption>(games.Select(g => new SearchResult

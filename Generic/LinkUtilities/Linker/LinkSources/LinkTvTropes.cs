@@ -18,5 +18,7 @@ namespace LinkUtilities.Linker
         // TVTropes Links need the game name in title case without diacritics exchanged and special characters and white spaces removed.
         public override string GetGamePath(Game game, string gameName = null) => (gameName ?? game.Name)
             .RemoveDiacritics().ToTitleCase().RemoveSpecialChars().Replace("_", "").Replace(" ", "");
+
+        public override string GetBrowserSearchLink(string searchTerm) => $"{BrowserSearchUrl}{searchTerm.RemoveDiacritics().EscapeDataString()}";
     }
 }

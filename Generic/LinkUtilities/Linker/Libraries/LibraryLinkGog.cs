@@ -64,7 +64,7 @@ namespace LinkUtilities.Linker
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            GogSearchResult gogSearchResult = ParseHelper.GetJsonFromApi<GogSearchResult>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName);
+            GogSearchResult gogSearchResult = ParseHelper.GetJsonFromApi<GogSearchResult>($"{SearchUrl}{searchTerm.RemoveDiacritics().UrlEncode()}", LinkName);
 
             List<GenericItemOption> searchResults = new List<GenericItemOption>();
 
