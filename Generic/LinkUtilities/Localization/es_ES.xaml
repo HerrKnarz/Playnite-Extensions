@@ -115,6 +115,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Ordenación</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Etiquetar enlaces faltantes</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">Para hacer un seguimiento de qué juegos faltan enlaces a sitios web específicos, puede añadir patrones de nombres de enlaces y de url aquí. Si ningún enlace de un juego coincide con el patrón, se añadirá una etiqueta con el nombre del patrón al juego. Los patrones pueden contener comodines. Un * puede ser cero o más caracteres, un ? tiene que ser exactamente un carácter.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Tag missing links to game library</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Etiquetar enlaces faltantes después de que los metadatos del juego se hayan actualizado</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">Patrón de URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Usar orden personalizado en ordenamiento automático</sys:String>
