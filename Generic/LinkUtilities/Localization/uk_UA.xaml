@@ -115,6 +115,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Сортування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Позначити тегом відсутні посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">Щоб відстежувати які з ігор мають відсутні посилання на конкретні сайти, ви можете додати назви посилання і шаблони Url-адрес. Якщо жодне з посилані гри не відповідає шаблонові, тег з назвою шаблону буде додано до гри. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Tag missing links to game library</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Позначити тегом відсутні посилання після оновлення метаданих гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">Шаблон URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Використовувати власний порядок сортування при автоматичному сортуванні</sys:String>
