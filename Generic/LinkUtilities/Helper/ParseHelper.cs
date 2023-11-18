@@ -16,12 +16,12 @@ using System.Xml.Serialization;
 namespace LinkUtilities.Helper
 {
     /// <summary>
-    /// Helper functions for parsing strings
+    ///     Helper functions for parsing strings
     /// </summary>
     internal static class ParseHelper
     {
         /// <summary>
-        /// Converts a string to a stream.
+        ///     Converts a string to a stream.
         /// </summary>
         /// <param name="this">String to convert</param>
         /// <returns>Stream from the string</returns>
@@ -36,19 +36,20 @@ namespace LinkUtilities.Helper
         }
 
         /// <summary>
-        /// Deserializes an XML string into an object
+        ///     Deserializes an XML string into an object
         /// </summary>
         /// <typeparam name="T">Object the XML will be deserialized to.</typeparam>
         /// <param name="this">XML string</param>
         /// <returns>The deserialized XML</returns>
         internal static T ParseXml<T>(this string @this) where T : class
         {
-            XmlReader reader = XmlReader.Create(@this.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document });
+            XmlReader reader = XmlReader.Create(@this.Trim().ToStream(), new XmlReaderSettings { ConformanceLevel = ConformanceLevel.Document });
             return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
         }
 
         /// <summary>
-        /// Scrapes the search results from a mediawiki search results page. Is used on sites, where opensearch doesn't return sufficient results.
+        ///     Scrapes the search results from a mediawiki search results page. Is used on sites, where opensearch doesn't return
+        ///     sufficient results.
         /// </summary>
         /// <param name="searchUrl">URL of the search page with {0} for the search term</param>
         /// <param name="searchTerm">Term to search for. Will be encoded in the function!</param>
@@ -107,7 +108,7 @@ namespace LinkUtilities.Helper
         }
 
         /// <summary>
-        /// Gets the search results from a mediawiki website via opensearch.
+        ///     Gets the search results from a mediawiki website via opensearch.
         /// </summary>
         /// <param name="searchUrl">URL of the search page with {0} for the search term</param>
         /// <param name="searchTerm">Term to search for. Will be encoded in the function!</param>
@@ -143,16 +144,16 @@ namespace LinkUtilities.Helper
         }
 
         /// <summary>
-        /// Converts a wildcard pattern to a regular expression.
-        /// * is interpreted as zero or more characters,
-        /// ? is interpreted as exactly one character.
+        ///     Converts a wildcard pattern to a regular expression.
+        ///     * is interpreted as zero or more characters,
+        ///     ? is interpreted as exactly one character.
         /// </summary>
         /// <param name="value">Pattern to convert</param>
         /// <returns>The resulting regular expression</returns>
         internal static string WildCardToRegular(string value) => "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
 
         /// <summary>
-        /// Gets a JSON result from an API and deserializes it.
+        ///     Gets a JSON result from an API and deserializes it.
         /// </summary>
         /// <typeparam name="T">Type the JSON gets deserialized to</typeparam>
         /// <param name="apiUrl">Url to fetch the JSON result from</param>
@@ -168,7 +169,7 @@ namespace LinkUtilities.Helper
                     encoding = Encoding.Default;
                 }
 
-                WebClient client = new WebClient() { Encoding = encoding };
+                WebClient client = new WebClient { Encoding = encoding };
 
                 client.Headers.Add("Accept", "application/json");
                 client.Headers.Add("user-agent", "Playnite LinkUtilities AddOn");

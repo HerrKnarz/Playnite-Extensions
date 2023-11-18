@@ -11,17 +11,20 @@ using System.Linq;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to IsThereAnyDeal.
+    ///     Adds a link to IsThereAnyDeal.
     /// </summary>
     internal class LinkIsThereAnyDeal : BaseClasses.Linker
     {
-        private string _baseUrl;
         private const string _steamUrl = "https://isthereanydeal.com/steam/app/";
         private const string _standardUrl = "https://isthereanydeal.com/game/";
+        private string _baseUrl;
+
+        public LinkIsThereAnyDeal() => Settings.NeedsApiKey = true;
 
         public override string LinkName => "IsThereAnyDeal";
         public override string BaseUrl => _baseUrl;
         public override string SearchUrl => "https://api.isthereanydeal.com/v02/search/search/?key={0}&q={1}&limit=20&strict=0";
+        public override string BrowserSearchUrl => "https://isthereanydeal.com/search/?q=";
 
         public override string GetGamePath(Game game, string gameName = null)
         {
@@ -53,7 +56,7 @@ namespace LinkUtilities.Linker
             IsThereAnyDealSearchResult searchResult = ParseHelper.GetJsonFromApi<IsThereAnyDealSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
 
             return searchResult?.Data?.Results?.Any() ?? false
-                ? new List<GenericItemOption>(searchResult.Data.Results.Select(r => new SearchResult()
+                ? new List<GenericItemOption>(searchResult.Data.Results.Select(r => new SearchResult
                 {
                     Name = r.Title,
                     Url = $"{_standardUrl}{r.Plain}",
@@ -61,7 +64,5 @@ namespace LinkUtilities.Linker
                 }))
                 : base.GetSearchResults(searchTerm);
         }
-
-        public LinkIsThereAnyDeal() => Settings.NeedsApiKey = true;
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace KNARZhelper
 {
@@ -64,7 +64,7 @@ namespace KNARZhelper
         /// <summary>
         /// Encodes an URL.
         /// </summary>
-        public static string UrlEncode(this string str) => WebUtility.UrlEncode(str);
+        public static string UrlEncode(this string str) => HttpUtility.UrlEncode(str);
 
         /// <summary>
         /// Escapes quotes in a string to \".

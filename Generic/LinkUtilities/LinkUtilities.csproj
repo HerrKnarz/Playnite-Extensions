@@ -39,6 +39,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
@@ -78,10 +79,13 @@
     <Compile Include="LinkActions\AddLinkFromClipboard.cs" />
     <Compile Include="LinkActions\ChangeSteamLinks.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
+    <Compile Include="Linker\LinkSources\LinkGogDb.cs" />
     <Compile Include="Linker\LinkSources\LinkGrouvee.cs" />
     <Compile Include="Linker\LinkSources\LinkBackloggd.cs" />
     <Compile Include="Linker\LinkSources\LinkGGDeals.cs" />
     <Compile Include="Linker\LinkSources\LinkModDB.cs" />
+    <Compile Include="Linker\LinkSources\LinkProtonDb.cs" />
+    <Compile Include="Linker\LinkSources\LinkSteamDb.cs" />
     <Compile Include="Linker\LinkSources\LinkTvTropes.cs" />
     <Compile Include="ViewModels\CheckLink.cs" />
     <Compile Include="ViewModels\CheckLinks.cs" />

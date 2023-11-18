@@ -11,7 +11,7 @@ using System.Net;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to Lemon Amiga.
+    ///     Adds a link to Lemon Amiga.
     /// </summary>
     internal class LinkLemon64 : BaseClasses.Linker
     {
@@ -34,7 +34,7 @@ namespace LinkUtilities.Linker
             try
             {
                 HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.RemoveSpecialChars().CollapseWhitespaces().Replace(" ", "+").ToLower()}");
+                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
                 HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]/div/div[2]");
 

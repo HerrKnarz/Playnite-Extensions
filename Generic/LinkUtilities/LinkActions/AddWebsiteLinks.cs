@@ -173,6 +173,63 @@ namespace LinkUtilities.LinkActions
             return result;
         }
 
+        /// <summary>
+        ///     Opens the search page for all configured websites in the standard web browser
+        /// </summary>
+        /// <param name="game">game the links will be searched for.</param>
+        /// <param name="actionModifier">Kind of search (e.g. Search or SearchMissing)</param>
+        /// <param name="isBulkAction">If true, the method already is used in a progress bar and no new one has to be started.</param>
+        /// <returns>True, if pages were opened.</returns>
+        private bool SearchLinksInBrowser(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            bool result = false;
+
+            if (isBulkAction)
+            {
+                foreach (BaseClasses.Linker link in _linkers.Where(link => !LinkHelper.LinkExists(game, link.LinkName)))
+                {
+                    link.StartBrowserSearch(game);
+                    result = true;
+                }
+            }
+            else
+            {
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions($"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}", true)
+                {
+                    IsIndeterminate = false
+                };
+
+                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                {
+                    try
+                    {
+                        activateGlobalProgress.ProgressMaxValue = _linkers.Count(link => !LinkHelper.LinkExists(game, link.LinkName));
+
+                        foreach (BaseClasses.Linker link in _linkers.Where(link => !LinkHelper.LinkExists(game, link.LinkName)))
+                        {
+                            activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}{Environment.NewLine}{link.LinkName}";
+
+                            if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                            {
+                                break;
+                            }
+
+                            link.StartBrowserSearch(game);
+                            result = true;
+
+                            activateGlobalProgress.CurrentProgressValue++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                }, globalProgressOptions);
+            }
+
+            return result;
+        }
+
         private bool SelectLinks(bool add = true)
         {
             try
@@ -212,6 +269,9 @@ namespace LinkUtilities.LinkActions
                 case ActionModifierTypes.SearchMissing:
                     _linkers = Links.Where(x => x.Settings.IsSearchable == true).ToList();
                     return true;
+                case ActionModifierTypes.SearchInBrowser:
+                    _linkers = Links.Where(x => x.CanBeBrowserSearched).ToList();
+                    return true;
                 case ActionModifierTypes.SearchSelected:
                     return SelectLinks(false);
                 default:
@@ -235,6 +295,8 @@ namespace LinkUtilities.LinkActions
                 case ActionModifierTypes.SearchMissing:
                 case ActionModifierTypes.SearchSelected:
                     return SearchLinks(game, actionModifier, isBulkAction);
+                case ActionModifierTypes.SearchInBrowser:
+                    return SearchLinksInBrowser(game, actionModifier, isBulkAction);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
             }

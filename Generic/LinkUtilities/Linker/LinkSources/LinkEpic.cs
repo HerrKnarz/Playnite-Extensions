@@ -14,11 +14,11 @@ namespace LinkUtilities.Linker
 {
     internal class LinkEpic : BaseClasses.Linker
     {
+        private const string _checkUrl = "https://store-content-ipv4.ak.epicgames.com/api/en-US/content/products/";
         public override string LinkName => "Epic";
         public override string BaseUrl => "https://store.epicgames.com/en-US/p/";
         public override string SearchUrl => "https://www.epicgames.com/graphql?query={Catalog{searchStore(keywords:%22{SearchString}%22,category:%22games/edition%22,effectiveDate:%22[1900-01-01,{DateUntil}]%22,count:100){elements{title%20urlSlug%20seller{name}}}}}";
-
-        private readonly string _checkUrl = "https://store-content-ipv4.ak.epicgames.com/api/en-US/content/products/";
+        public override string BrowserSearchUrl => "https://store.epicgames.com/en-US/browse?q=";
 
         // Epic Links need the game name in lowercase without special characters and underscores instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
@@ -38,7 +38,7 @@ namespace LinkUtilities.Linker
             string gameSlug = GetGamePath(game);
             string url = $"{_checkUrl}{gameSlug}";
 
-            WebClient client = new WebClient() { Encoding = Encoding.UTF8 };
+            WebClient client = new WebClient { Encoding = Encoding.UTF8 };
             client.Headers.Add("Accept", "application/json");
 
             try
@@ -68,7 +68,7 @@ namespace LinkUtilities.Linker
 
             return epicSearchResult?.Data?.Catalog?.SearchStore?.Elements?.Any() ?? false
                 ? new List<GenericItemOption>(epicSearchResult.Data.Catalog.SearchStore.Elements.Where(e => !string.IsNullOrEmpty(e.UrlSlug))
-                    .Select(e => new SearchResult()
+                    .Select(e => new SearchResult
                     {
                         Name = e.Title,
                         Url = $"{BaseUrl}{e.UrlSlug}",

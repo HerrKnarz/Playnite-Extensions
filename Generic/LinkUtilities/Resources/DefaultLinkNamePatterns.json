@@ -60,6 +60,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "GOG Database",
+        "urlPattern": "*gogdb.org*",
+        "namePattern": "*GOG Database*",
+        "partialMatch": false
+    },
+    {
         "linkName": "Grouvee",
         "urlPattern": "*grouvee.com*",
         "namePattern": "*grouvee.com*",
@@ -168,6 +174,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "ProtonDB",
+        "urlPattern": "*protondb.com*",
+        "namePattern": "*ProtonDB*",
+        "partialMatch": false
+    },
+    {
         "linkName": "RAWG",
         "urlPattern": "*rawg.io*",
         "namePattern": "*RAWG*",
@@ -189,6 +201,12 @@
         "linkName": "Steam",
         "urlPattern": "*steampowered.com*",
         "namePattern": "*Steam*",
+        "partialMatch": false
+    },
+    {
+        "linkName": "SteamDB",
+        "urlPattern": "*steamdb.info*",
+        "namePattern": "*SteamDB*",
         "partialMatch": false
     },
     {

@@ -82,6 +82,11 @@ namespace LinkUtilities
         bool ReturnsSameUrl { get; set; }
 
         /// <summary>
+        ///     Specifies, if the link needs to be checked.
+        /// </summary>
+        bool NeedsToBeChecked { get; set; }
+
+        /// <summary>
         ///     Adds a link via search dialog.
         /// </summary>
         /// <param name="game">Game the link will be searched for and added to</param>

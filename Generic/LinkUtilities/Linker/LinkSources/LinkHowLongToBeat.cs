@@ -12,7 +12,7 @@ using System.Text;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to HowLongToBeat.
+    ///     Adds a link to HowLongToBeat.
     /// </summary>
     internal class LinkHowLongToBeat : BaseClasses.Linker
     {
@@ -20,6 +20,7 @@ namespace LinkUtilities.Linker
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string SearchUrl => "https://howlongtobeat.com/api/search";
         public override string BaseUrl => "https://howlongtobeat.com/game/";
+        public override string BrowserSearchUrl => "https://howlongtobeat.com/?q=";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
@@ -49,7 +50,7 @@ namespace LinkUtilities.Linker
 
                 if (searchResult.Data?.Any() ?? false)
                 {
-                    return new List<GenericItemOption>(searchResult.Data.Select(d => new SearchResult()
+                    return new List<GenericItemOption>(searchResult.Data.Select(d => new SearchResult
                     {
                         Name = d.GameName,
                         Url = $"{BaseUrl}{d.GameId}",

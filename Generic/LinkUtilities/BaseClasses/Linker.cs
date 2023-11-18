@@ -75,6 +75,7 @@ namespace LinkUtilities.BaseClasses
         public LinkSourceSetting Settings { get; set; }
         public virtual bool AllowRedirects { get; set; } = true;
         public virtual bool ReturnsSameUrl { get; set; } = false;
+        public virtual bool NeedsToBeChecked { get; set; } = true;
 
         public virtual bool AddSearchedLink(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true)
         {
@@ -118,7 +119,7 @@ namespace LinkUtilities.BaseClasses
 
                     if (!string.IsNullOrEmpty(gameName))
                     {
-                        if (CheckLink($"{BaseUrl}{gameName}"))
+                        if (!NeedsToBeChecked || CheckLink($"{BaseUrl}{gameName}"))
                         {
                             LinkUrl = $"{BaseUrl}{gameName}";
                         }
@@ -130,7 +131,7 @@ namespace LinkUtilities.BaseClasses
                             {
                                 gameName = GetGamePath(game, baseName);
 
-                                if (CheckLink($"{BaseUrl}{gameName}"))
+                                if (!NeedsToBeChecked || CheckLink($"{BaseUrl}{gameName}"))
                                 {
                                     LinkUrl = $"{BaseUrl}{gameName}";
                                 }
@@ -190,8 +191,8 @@ namespace LinkUtilities.BaseClasses
             return string.Empty;
         }
 
-        public string GetBrowserSearchLink(string searchTerm) => BrowserSearchUrl + searchTerm.UrlEncode();
-        public void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game.Name));
+        public virtual string GetBrowserSearchLink(string searchTerm) => BrowserSearchUrl + searchTerm.UrlEncode();
+        public virtual void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game.Name));
 
         public virtual bool AddLinkFromSearch(Game game, SearchResult result, bool cleanUpAfterAdding = true) => LinkHelper.AddLink(game, LinkName, result.Url, false, cleanUpAfterAdding);
 

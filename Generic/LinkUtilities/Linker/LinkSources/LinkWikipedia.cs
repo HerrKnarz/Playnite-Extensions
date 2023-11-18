@@ -1,6 +1,4 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
-using LinkUtilities.Models;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -12,13 +10,14 @@ using WikipediaMetadata.Models;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// Adds a link to Wikipedia.
+    ///     Adds a link to Wikipedia.
     /// </summary>
     internal class LinkWikipedia : BaseClasses.Linker
     {
         public override string LinkName => "Wikipedia";
         public override string BaseUrl => "https://en.wikipedia.org/wiki/";
         public override string SearchUrl => "https://en.wikipedia.org/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
+        public override string BrowserSearchUrl => "https://en.wikipedia.org/w/index.php?search=";
 
         // Wikipedia Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
