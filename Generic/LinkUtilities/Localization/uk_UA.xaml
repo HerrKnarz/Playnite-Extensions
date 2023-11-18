@@ -34,6 +34,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Всі налаштовані сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Всі відсутні сайти</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Всі ігри</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Відкрити веббраузер з пошуком...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Перетворити вебпосилання Steam на клієнт-посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Перетворити клієнт-посилання Steam на вебпосилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Перевірити посилання...</sys:String>
@@ -114,6 +115,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Сортування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Позначити тегом відсутні посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">Щоб відстежувати які з ігор мають відсутні посилання на конкретні сайти, ви можете додати назви посилання і шаблони Url-адрес. Якщо жодне з посилані гри не відповідає шаблонові, тег з назвою шаблону буде додано до гри. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Позначати відсутні посилання на ігрову бібліотеку</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Позначити тегом відсутні посилання після оновлення метаданих гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">Шаблон URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Використовувати власний порядок сортування при автоматичному сортуванні</sys:String>
@@ -127,4 +129,5 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Посібники</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">Новини</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Сторінка в крамниці</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamWorkshop">Майстерня</sys:String>
 </ResourceDictionary>

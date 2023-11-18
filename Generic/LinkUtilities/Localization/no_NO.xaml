@@ -34,6 +34,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Alle konfigurerte nettsider</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Alle manglende nettsteder</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Alle spill</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Open browser search on...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Check links...</sys:String>
@@ -114,6 +115,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Sortering</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Merk manglende lenker</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">For å holde oversikt over hvilke spill som mangler koblinger til bestemte nettsteder, kan du legge til lenkenavn og URL-mønstre her. Hvis ingen lenke til et spill samsvarer med mønsteret, vil en tag med navnet på mønsteret legges til spillet. Mønstrene kan inneholde jokertegn. * kan være null eller flere tegn, mens ? er nøyaktig ett tegn.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Tag missing links to game library</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Merk manglende lenker etter at spillmetadataene har blitt oppdatert</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">URL-mønster</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Bruk tilpasset sorteringsrekkefølge på automatisk sortering</sys:String>
@@ -127,4 +129,5 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Guides</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">News</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Store Page</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamWorkshop">Workshop</sys:String>
 </ResourceDictionary>

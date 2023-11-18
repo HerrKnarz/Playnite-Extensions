@@ -34,6 +34,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Todos os sites configurados</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">All missing websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Todos os jogos</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Open browser search on...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Check links...</sys:String>
@@ -114,6 +115,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Ordenar por</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Links sem tag</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">To keep track which games are missing links to specific websites, you can add link names and url patterns here. If no link of a game matches the pattern, a tag with the name of the pattern will be added to the game. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Tag missing links to game library</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Tag missing links after the game meta data was updated</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">URL padrão</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Use custom sort order on automatic sort</sys:String>
@@ -127,4 +129,5 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Guides</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">News</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Store Page</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamWorkshop">Workshop</sys:String>
 </ResourceDictionary>
