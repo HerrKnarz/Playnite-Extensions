@@ -115,6 +115,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Sortering</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Merk manglende lenker</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">For å holde oversikt over hvilke spill som mangler koblinger til bestemte nettsteder, kan du legge til lenkenavn og URL-mønstre her. Hvis ingen lenke til et spill samsvarer med mønsteret, vil en tag med navnet på mønsteret legges til spillet. Mønstrene kan inneholde jokertegn. * kan være null eller flere tegn, mens ? er nøyaktig ett tegn.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Tag missing links to game library</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Merk manglende lenker etter at spillmetadataene har blitt oppdatert</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">URL-mønster</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Bruk tilpasset sorteringsrekkefølge på automatisk sortering</sys:String>
