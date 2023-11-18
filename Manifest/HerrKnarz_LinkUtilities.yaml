@@ -1,5 +1,18 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 3.7
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-11-18
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2023-11-18/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_3_7.pext
+    Changelog:
+      - Added browser search function for all supported websites with directly reachable search urls. This opens a search for the game in your default web browser.
+      - Added option to also tag missing links to game libraries
+      - Added support for ProtonDB
+      - Added support for SteamDB
+      - Added support for GOG Database
+      - Added support for Steam Workshop links
+      - fixed encodings in search urls for games with umlauts on some websites
+      - updated localizations
   - Version: 3.6
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-11-08
