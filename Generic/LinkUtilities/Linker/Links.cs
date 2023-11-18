@@ -19,6 +19,7 @@ namespace LinkUtilities.Linker
             Add(new LinkGGDeals());
             Add(new LinkGiantBomb());
             Add(new LibraryLinkGog());
+            Add(new LinkGogDb());
             Add(new LinkGrouvee());
             Add(new LinkHg101());
             Add(new LinkHowLongToBeat());
@@ -40,6 +41,7 @@ namespace LinkUtilities.Linker
             Add(new LinkSegaRetro());
             Add(new LinkSnkWiki());
             Add(new LibraryLinkSteam());
+            Add(new LinkSteamDb());
             Add(new LinkStrategyWiki());
             Add(new LinkTvTropes());
             Add(new LinkWikipedia());

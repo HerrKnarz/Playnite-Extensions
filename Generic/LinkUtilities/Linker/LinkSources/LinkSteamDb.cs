@@ -4,15 +4,16 @@ using System;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    ///     Adds a link to ProtonDB.
+    ///     Adds a link to SteamDB.
     /// </summary>
-    internal class LinkProtonDb : BaseClasses.Linker
+    internal class LinkSteamDb : BaseClasses.Linker
     {
-        private const string _baseUrl = "https://www.protondb.com";
-        public override string LinkName => "ProtonDB";
+        private const string _baseUrl = "https://steamdb.info";
+        public override string LinkName => "SteamDB";
         public override string BaseUrl => _baseUrl + "/app/";
+        public override bool NeedsToBeChecked => false;
 
-        // ProtonDb Links need the steam game id. Because of that the add function only works with the steam library.
+        // SteamDb Links need the steam game id. Because of that the add function only works with the steam library.
         public override string GetGamePath(Game game, string gameName = null) =>
             game.PluginId != Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab") ? string.Empty : game.GameId;
 

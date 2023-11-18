@@ -75,6 +75,7 @@ namespace LinkUtilities.BaseClasses
         public LinkSourceSetting Settings { get; set; }
         public virtual bool AllowRedirects { get; set; } = true;
         public virtual bool ReturnsSameUrl { get; set; } = false;
+        public virtual bool NeedsToBeChecked { get; set; } = true;
 
         public virtual bool AddSearchedLink(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true)
         {
@@ -118,7 +119,7 @@ namespace LinkUtilities.BaseClasses
 
                     if (!string.IsNullOrEmpty(gameName))
                     {
-                        if (CheckLink($"{BaseUrl}{gameName}"))
+                        if (!NeedsToBeChecked || CheckLink($"{BaseUrl}{gameName}"))
                         {
                             LinkUrl = $"{BaseUrl}{gameName}";
                         }
@@ -130,7 +131,7 @@ namespace LinkUtilities.BaseClasses
                             {
                                 gameName = GetGamePath(game, baseName);
 
-                                if (CheckLink($"{BaseUrl}{gameName}"))
+                                if (!NeedsToBeChecked || CheckLink($"{BaseUrl}{gameName}"))
                                 {
                                     LinkUrl = $"{BaseUrl}{gameName}";
                                 }
