@@ -128,4 +128,5 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Guides</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">News</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Store Page</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamWorkshop">Workshop</sys:String>
 </ResourceDictionary>
