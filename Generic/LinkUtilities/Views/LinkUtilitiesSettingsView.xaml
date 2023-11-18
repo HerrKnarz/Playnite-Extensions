@@ -383,6 +383,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <CheckBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.UseSteamAppLinks}" Content="{DynamicResource LOCLinkUtilitiesSettingsSteamUseAppLinks}"/>
                 <CheckBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" Margin="0,10,10,0" IsChecked="{Binding Settings.ChangeSteamLinksAfterChange}" Content="{DynamicResource LOCLinkUtilitiesSettingsSteamAutoAppLinks}"/>
@@ -401,6 +402,8 @@
                 <TextBox Grid.Column="1" Grid.Row="8" Margin="0,10,0,0" Text="{Binding Settings.NameSteamNewsLink}"/>
                 <CheckBox Grid.Column="0" Grid.Row="9" Margin="0,10,10,0" IsChecked="{Binding Settings.AddSteamStorePageLink}" Content="{DynamicResource LOCLinkUtilitiesSettingsSteamStorePage}"/>
                 <TextBox Grid.Column="1" Grid.Row="9" Margin="0,10,0,0" Text="{Binding Settings.NameSteamStorePageLink}"/>
+                <CheckBox Grid.Column="0" Grid.Row="10" Margin="0,10,10,0" IsChecked="{Binding Settings.AddSteamWorkshopLink}" Content="{DynamicResource LOCLinkUtilitiesSettingsSteamWorkshop}"/>
+                <TextBox Grid.Column="1" Grid.Row="10" Margin="0,10,0,0" Text="{Binding Settings.NameSteamWorkshopLink}"/>
             </Grid>
         </TabItem>
     </TabControl>

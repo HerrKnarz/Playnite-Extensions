@@ -23,6 +23,7 @@ namespace LinkUtilities
         private bool _addSteamGuidesLink;
         private bool _addSteamNewsLink;
         private bool _addSteamStorePageLink;
+        private bool _addSteamWorkshopLink;
         private bool _changeSteamLinksAfterChange;
         private bool _hideOkOnLinkCheck;
         private DateTime _lastAutoLibUpdate = DateTime.Now;
@@ -36,6 +37,7 @@ namespace LinkUtilities
         private string _nameSteamGuidesLink = "Guides";
         private string _nameSteamNewsLink = "News";
         private string _nameSteamStorePageLink = "Store Page";
+        private string _nameSteamWorkshopLink = "Workshop";
         private bool _removeDuplicatesAfterChange;
         private DuplicateTypes _removeDuplicatesType = DuplicateTypes.NameAndUrl;
         private bool _removeLinksAfterChange;
@@ -113,6 +115,12 @@ namespace LinkUtilities
             set => SetValue(ref _addSteamStorePageLink, value);
         }
 
+        public bool AddSteamWorkshopLink
+        {
+            get => _addSteamWorkshopLink;
+            set => SetValue(ref _addSteamWorkshopLink, value);
+        }
+
         public bool ChangeSteamLinksAfterChange
         {
             get => _changeSteamLinksAfterChange;
@@ -153,6 +161,12 @@ namespace LinkUtilities
         {
             get => _nameSteamStorePageLink;
             set => SetValue(ref _nameSteamStorePageLink, value);
+        }
+
+        public string NameSteamWorkshopLink
+        {
+            get => _nameSteamWorkshopLink;
+            set => SetValue(ref _nameSteamWorkshopLink, value);
         }
 
         public bool UseCustomSortOrder
@@ -430,6 +444,7 @@ namespace LinkUtilities
             Settings.AddSteamGuidesLink = EditingClone.AddSteamGuidesLink;
             Settings.AddSteamNewsLink = EditingClone.AddSteamNewsLink;
             Settings.AddSteamStorePageLink = EditingClone.AddSteamStorePageLink;
+            Settings.AddSteamWorkshopLink = EditingClone.AddSteamWorkshopLink;
             Settings.HideOkOnLinkCheck = EditingClone.HideOkOnLinkCheck;
             Settings.LinkNamePatterns = EditingClone.LinkNamePatterns;
             Settings.MissingLinkPatterns = EditingClone.MissingLinkPatterns;
@@ -440,6 +455,7 @@ namespace LinkUtilities
             Settings.NameSteamGuidesLink = EditingClone.NameSteamGuidesLink;
             Settings.NameSteamNewsLink = EditingClone.NameSteamNewsLink;
             Settings.NameSteamStorePageLink = EditingClone.NameSteamStorePageLink;
+            Settings.NameSteamWorkshopLink = EditingClone.NameSteamWorkshopLink;
             Settings.RemoveDuplicatesAfterChange = EditingClone.RemoveDuplicatesAfterChange;
             Settings.RemoveDuplicatesType = EditingClone.RemoveDuplicatesType;
             Settings.RemoveLinksAfterChange = EditingClone.RemoveLinksAfterChange;
@@ -543,12 +559,14 @@ namespace LinkUtilities
                 steamLink.AddGuidesLink = Settings.AddSteamGuidesLink;
                 steamLink.AddNewsLink = Settings.AddSteamNewsLink;
                 steamLink.AddStorePageLink = Settings.AddSteamStorePageLink;
+                steamLink.AddWorkshopLink = Settings.AddSteamWorkshopLink;
                 steamLink.NameAchievementLink = Settings.NameSteamAchievementLink;
                 steamLink.NameCommunityLink = Settings.NameSteamCommunityLink;
                 steamLink.NameDiscussionLink = Settings.NameSteamDiscussionLink;
                 steamLink.NameGuidesLink = Settings.NameSteamGuidesLink;
                 steamLink.NameNewsLink = Settings.NameSteamNewsLink;
                 steamLink.NameStorePageLink = Settings.NameSteamStorePageLink;
+                steamLink.NameWorkshopLink = Settings.NameSteamWorkshopLink;
             }
 
             LibraryLinkSteam steamLibLink = (LibraryLinkSteam)AddLibraryLinks.Instance().Libraries?[Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab")];
@@ -562,12 +580,14 @@ namespace LinkUtilities
                 steamLibLink.AddGuidesLink = Settings.AddSteamGuidesLink;
                 steamLibLink.AddNewsLink = Settings.AddSteamNewsLink;
                 steamLibLink.AddStorePageLink = Settings.AddSteamStorePageLink;
+                steamLibLink.AddWorkshopLink = Settings.AddSteamWorkshopLink;
                 steamLibLink.NameAchievementLink = Settings.NameSteamAchievementLink;
                 steamLibLink.NameCommunityLink = Settings.NameSteamCommunityLink;
                 steamLibLink.NameDiscussionLink = Settings.NameSteamDiscussionLink;
                 steamLibLink.NameGuidesLink = Settings.NameSteamGuidesLink;
                 steamLibLink.NameNewsLink = Settings.NameSteamNewsLink;
                 steamLibLink.NameStorePageLink = Settings.NameSteamStorePageLink;
+                steamLibLink.NameWorkshopLink = Settings.NameSteamWorkshopLink;
             }
         }
     }
