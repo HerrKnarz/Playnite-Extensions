@@ -10,13 +10,29 @@ using System.Linq;
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    /// Class to add tags to games for missing links based on patterns.
+    ///     Class to add tags to games for missing links based on patterns.
     /// </summary>
     internal class TagMissingLinks : LinkAction
     {
         private static TagMissingLinks _instance;
         private static readonly object _mutex = new object();
         private TagMissingLinks() { }
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressTagMissingLinks";
+        public override string ResultMessage => "LOCLinkUtilitiesDialogTaggedMissingLinksMessage";
+        public bool TagMissingLinksAfterChange { get; set; } = false;
+        public bool TagMissingLibraryLinks { get; set; } = false;
+
+        /// <summary>
+        ///     List of patterns to check for missing links
+        /// </summary>
+        public LinkNamePatterns MissingLinkPatterns { get; set; }
+
+        /// <summary>
+        ///     Cache for the tags so they don't have to be retrieved from the database every time.
+        /// </summary>
+        public Dictionary<string, Tag> TagsCache { get; set; } = new Dictionary<string, Tag>();
+
+        public string MissingLinkPrefix { get; set; } = ResourceProvider.GetString("LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue");
 
         public static TagMissingLinks Instance()
         {
@@ -36,26 +52,8 @@ namespace LinkUtilities.LinkActions
             return _instance;
         }
 
-        public override string ProgressMessage => "LOCLinkUtilitiesProgressTagMissingLinks";
-
-        public override string ResultMessage => "LOCLinkUtilitiesDialogTaggedMissingLinksMessage";
-
-        public bool TagMissingLinksAfterChange { get; set; } = false;
-
         /// <summary>
-        /// List of patterns to check for missing links
-        /// </summary>
-        public LinkNamePatterns MissingLinkPatterns { get; set; }
-
-        /// <summary>
-        /// Cache for the tags so they don't have to be retrieved from the database every time.
-        /// </summary>
-        public Dictionary<string, Tag> TagsCache { get; set; } = new Dictionary<string, Tag>();
-
-        public string MissingLinkPrefix { get; set; } = ResourceProvider.GetString("LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue");
-
-        /// <summary>
-        /// Retrieves a tag by its name and creates it, of none is found.
+        ///     Retrieves a tag by its name and creates it, of none is found.
         /// </summary>
         /// <param name="key">Name of the tag</param>
         /// <returns>The found or created tag</returns>
@@ -82,22 +80,33 @@ namespace LinkUtilities.LinkActions
         }
 
         /// <summary>
-        /// Adds a tag to a game.
+        ///     Adds a tag to a game.
         /// </summary>
         /// <param name="game">Game the tag will be added to</param>
         /// <param name="tag">The tag to add.</param>
         /// <returns>True if the tag was added</returns>
-        private static bool AddTagToGame(Game game, Tag tag)
+        private static bool AddTagToGame(Game game, IIdentifiable tag)
         {
             List<Guid> tagIds = game.TagIds ?? (game.TagIds = new List<Guid>());
 
-            if (!tagIds.Contains(tag.Id))
+            if (tagIds.Contains(tag.Id))
             {
-                tagIds.Add(tag.Id);
-                return true;
+                return false;
             }
 
-            return false;
+            tagIds.Add(tag.Id);
+            return true;
+        }
+
+        private bool CheckLibraryLink(Game game, string guid, string urlPattern)
+        {
+            LinkNamePattern pattern = new LinkNamePattern
+            {
+                PartialMatch = true,
+                UrlPattern = urlPattern
+            };
+
+            return game.PluginId == Guid.Parse(guid) && !game.Links.Any(x => pattern.LinkMatch(x.Name, x.Url));
         }
 
         private bool Tag(Game game)
@@ -124,6 +133,30 @@ namespace LinkUtilities.LinkActions
                     if (game.Tags?.Any() ?? false)
                     {
                         mustUpdate |= game.TagIds.Remove(tag.Id);
+                    }
+                }
+            }
+
+            if (TagMissingLibraryLinks)
+            {
+                bool libraryTagMissing = CheckLibraryLink(game, "aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e", "*gog.com*") ||
+                                         CheckLibraryLink(game, "00000001-ebb2-4eec-abcb-7c89937a42bb", "*itch.io*") ||
+                                         CheckLibraryLink(game, "cb91dfc9-b977-43bf-8e70-55f46e410fab", "*steampowered.com*");
+
+                //TODO: Someday make library instances available globally to just add this function to and get the guid from them directly.
+
+                Tag libraryTag = GetTag("Library");
+
+
+                if (libraryTagMissing)
+                {
+                    mustUpdate |= AddTagToGame(game, libraryTag);
+                }
+                else
+                {
+                    if (game.Tags?.Any() ?? false)
+                    {
+                        mustUpdate |= game.TagIds.Remove(libraryTag.Id);
                     }
                 }
             }

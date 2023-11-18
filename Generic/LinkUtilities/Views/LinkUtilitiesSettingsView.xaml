@@ -309,6 +309,8 @@
                            Text="{DynamicResource LOCLinkUtilitiesSettingsTagMissingLinksDescription}" />
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.TagMissingLinksAfterChange}"
                           Content="{DynamicResource LOCLinkUtilitiesSettingsTagMissingLinksAfterChange}" Margin="0,10,0,0"/>
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.TagMissingLibraryLinks}"
+                          Content="{DynamicResource LOCLinkUtilitiesSettingsTagMissingLibraryLinks}" Margin="0,10,0,0"/>
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
                     <Label Content="{DynamicResource LOCLinkUtilitiesSettingsPrefixMissingLinkTag}"/>
                     <TextBox Text="{Binding Settings.MissingLinkPrefix}" Width="100" Margin="10,0,0,0"/>
