@@ -48,6 +48,7 @@ Extension to manage links for the games in the playnite library. It can do the f
 All of these functions can be triggered manually for the selected games via game or playnite menu or configured to be triggered automatically after the metadata of a game changes.
 
 - Search for a game on several websites to add links via search dialog
+- Open a search for a game in your web browser on supported websites.
 - Add link to active website in your browser via bookmarklet (see [wiki](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet) for more information). Works with any website.
 - Check if links are still working, with option to remove links or replace URLs in the result dialog.
 
