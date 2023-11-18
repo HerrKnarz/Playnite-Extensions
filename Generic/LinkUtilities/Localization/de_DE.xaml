@@ -34,7 +34,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Alle konfigurierten Webseiten</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Alle fehlenden Webseiten</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Alle Spiele</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Open browser search on...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Browser-Suche öffnen auf...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Steam Web-Links in Client umwandeln</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Steam Client-Links in Web umwandeln</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Links überprüfen...</sys:String>
@@ -115,7 +115,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Sortieren</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Fehlende Links taggen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">Um den Überblick zu behalten, welche Spiele keine Links zu bestimmten Websites enthalten, können Sie hier Link-Namen und Url-Muster hinzufügen. Wenn kein Link eines Spiels mit dem Muster übereinstimmt, wird dem Spiel ein Tag mit dem Namen des Spiels hinzugefügt. Die Muster können Platzhalter enthalten. Ein * kann null oder mehr Zeichen sein, ein ? muss genau ein Zeichen sein.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Tag missing links to game library</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Fehlende Links zur Spielebibliothek taggen</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Tagge fehlende Links nachdem die Spiel-Meta-Daten aktualisiert wurden</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">URL-Muster</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Verwende benutzerdefinierte Sortierreihenfolge bei automatischer Sortierung</sys:String>
