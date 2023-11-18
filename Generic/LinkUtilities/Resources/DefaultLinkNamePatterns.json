@@ -78,12 +78,6 @@
         "partialMatch": false
     },
     {
-        "linkName": "Hardcore Gaming 101",
-        "urlPattern": "*hardcoregaming101.net*",
-        "namePattern": "*Hardcore Gaming 101*",
-        "partialMatch": false
-    },
-    {
         "linkName": "HowLongToBeat",
         "urlPattern": "*howlongtobeat.com*",
         "namePattern": "*HowLongToBeat",
