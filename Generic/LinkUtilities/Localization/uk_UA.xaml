@@ -128,4 +128,5 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Посібники</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">Новини</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Сторінка в крамниці</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamWorkshop">Workshop</sys:String>
 </ResourceDictionary>
