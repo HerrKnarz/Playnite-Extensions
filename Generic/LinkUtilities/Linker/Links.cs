@@ -35,6 +35,7 @@ namespace LinkUtilities.Linker
             Add(new LinkNecRetro());
             Add(new LinkNintendoWiki());
             Add(new LinkPcGamingWiki());
+            Add(new LinkProtonDb());
             Add(new LinkRawg());
             Add(new LinkSegaRetro());
             Add(new LinkSnkWiki());

@@ -156,6 +156,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "ProtonDB",
+        "urlPattern": "*protondb.com*",
+        "namePattern": "ProtonDB",
+        "partialMatch": false
+    },
+    {
         "linkName": "RAWG",
         "urlPattern": "*rawg.io*",
         "namePattern": "RAWG",

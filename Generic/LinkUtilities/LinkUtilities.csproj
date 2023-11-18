@@ -83,6 +83,7 @@
     <Compile Include="Linker\LinkSources\LinkBackloggd.cs" />
     <Compile Include="Linker\LinkSources\LinkGGDeals.cs" />
     <Compile Include="Linker\LinkSources\LinkModDB.cs" />
+    <Compile Include="Linker\LinkSources\LinkProtonDb.cs" />
     <Compile Include="Linker\LinkSources\LinkTvTropes.cs" />
     <Compile Include="ViewModels\CheckLink.cs" />
     <Compile Include="ViewModels\CheckLinks.cs" />
