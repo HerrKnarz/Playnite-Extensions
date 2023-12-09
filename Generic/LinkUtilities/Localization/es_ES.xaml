@@ -23,7 +23,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Buscar juego</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Elegir opción</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">¡Ordenados los enlaces de {0} juegos!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Steam links of {0} games converted!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">¡Vínculos de Steam de juegos {0} convertidos!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Enlaces faltantes de {0} juegos etiquetados!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Tiene duplicados en su orden de clasificación. Por favor, asegúrate de que cada nombre de enlace es único.</sys:String>
@@ -34,9 +34,9 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Todas las webs configuradas</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Todos los sitios web faltantes</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Todos los juegos</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Open browser search on...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Abrir búsqueda del navegador en...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convierte los enlaces web de Steam al cliente</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convierte los enlaces del cliente de Steam a web</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Comprobar enlaces...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Limpiar enlaces (renombrar, eliminar, ordenar)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Juegos filtrados</sys:String>
@@ -50,7 +50,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Ordenar enlaces por orden</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Etiquetar enlaces faltantes</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Converting steam links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Convirtiendo enlaces de Steam...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressCheckingLinks">Comprobando enlaces…</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Añadir enlaces a bibliotecas...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Añadiendo enlaces...</sys:String>
@@ -115,19 +115,19 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Ordenación</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Etiquetar enlaces faltantes</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">Para hacer un seguimiento de qué juegos faltan enlaces a sitios web específicos, puede añadir patrones de nombres de enlaces y de url aquí. Si ningún enlace de un juego coincide con el patrón, se añadirá una etiqueta con el nombre del patrón al juego. Los patrones pueden contener comodines. Un * puede ser cero o más caracteres, un ? tiene que ser exactamente un carácter.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Tag missing links to game library</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Etiquetar enlaces faltantes a la biblioteca de juegos</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Etiquetar enlaces faltantes después de que los metadatos del juego se hayan actualizado</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">Patrón de URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Usar orden personalizado en ordenamiento automático</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamUseAppLinks">Add links for the steam client instead of the website.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Automatically change steam web links to steam client links on library update.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">If none of the check boxes below are ticked, adding or searching for a steam link will add the usual store page link with &quot;Steam&quot; as link name.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Achievements</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Community Hub</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamDiscussion">Discussion</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Guides</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">News</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Store Page</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamUseAppLinks">Añadir enlaces para el cliente de Steam en lugar del sitio web.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Cambia automáticamente los enlaces web de Steam a los enlaces del cliente de Steam en la actualización de la biblioteca.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">Si ninguna de las casillas de verificación a continuación están marcadas, añadir o buscar un enlace de Steam añadirá el enlace de página de la tienda habitual con &quot;Steam&quot; como nombre de enlace.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Logros</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Punto de encuentro</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamDiscussion">Discusión</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Guías</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">Noticias</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Página de la tienda</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamWorkshop">Workshop</sys:String>
 </ResourceDictionary>
