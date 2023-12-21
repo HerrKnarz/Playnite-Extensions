@@ -4,8 +4,8 @@
     <sys:String x:Key="LOCCompanyCompanionName">Company Companion</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Очистка названий компаний.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Find companies to match</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Find similar companies to match.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Найти совпадающие компании</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Поиск похожих компаний для совпадения.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">игра</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">игр</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Слияние группы</sys:String>
@@ -16,20 +16,20 @@
 
     <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Объединить дубликаты</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Remove business entity descriptors</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Show Company Merger</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Объединение компаний</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Add</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Business entity descriptors:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Words to ignore to find similar companies:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Remove</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Show group key in merge window.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Добавить</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Описание бизнес-сущности:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Слова для игнорирования поиска похожих компаний:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Удалить</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Показывать ключ группы в окне слияния.</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">объединение компаний</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">поиск компаний для объединения</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">обновление игр</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Добавить значение</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">No companies with business entity descriptors found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">No duplicate companies were found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Updated companies in {0} games and merged {1} companies</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">Компании с дескрипторами бизнес-структур не найдены.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">Повторяющиеся компании не найдены.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Обновлены компании в {0} играх и объединены {1}</sys:String>
 </ResourceDictionary>
