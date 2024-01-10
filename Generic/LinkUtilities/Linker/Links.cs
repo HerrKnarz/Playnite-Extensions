@@ -1,5 +1,6 @@
 ﻿using LinkUtilities.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LinkUtilities.Linker
 {
@@ -8,7 +9,7 @@ namespace LinkUtilities.Linker
     /// </summary>
     public class Links : List<BaseClasses.Linker>
     {
-        public Links(List<CustomLinkProfile> customLinkProfiles)
+        public Links()
         {
             Add(new LinkAdventureGamers());
             Add(new LinkArcadeDatabase());
@@ -47,6 +48,16 @@ namespace LinkUtilities.Linker
             Add(new LinkTvTropes());
             Add(new LinkWikipedia());
             Add(new LinkZopharsDomain());
+        }
+
+        public void RefreshCustomLinkProfiles(List<CustomLinkProfile> customLinkProfiles)
+        {
+            List<BaseClasses.Linker> linksToRemove = this.Where(x => x.Settings.IsCustomSource).ToList();
+
+            foreach (BaseClasses.Linker linker in linksToRemove)
+            {
+                Remove(linker);
+            }
 
             foreach (CustomLinkProfile customLinkProfile in customLinkProfiles)
             {

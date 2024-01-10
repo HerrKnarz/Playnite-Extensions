@@ -149,6 +149,7 @@
     <Compile Include="Settings\LinkUtilitiesSettings.cs" />
     <Compile Include="ViewModels\SelectedLink.cs" />
     <Compile Include="ViewModels\SelectedLinksViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\CheckLinksView.xaml.cs">
       <DependentUpon>CheckLinksView.xaml</DependentUpon>
     </Compile>

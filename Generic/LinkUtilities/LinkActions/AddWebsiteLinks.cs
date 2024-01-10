@@ -21,48 +21,22 @@ namespace LinkUtilities.LinkActions
         private static AddWebsiteLinks _instance;
         private static readonly object _mutex = new object();
 
+        private readonly List<CustomLinkProfile> _customLinkProfiles = new List<CustomLinkProfile>();
+
         private List<BaseClasses.Linker> _linkers;
 
-        public List<CustomLinkProfile> CustomLinkProfiles;
+        private AddWebsiteLinks() => Links = new Links();
 
-        private AddWebsiteLinks()
+        public List<CustomLinkProfile> CustomLinkProfiles
         {
-            CustomLinkProfiles = new List<CustomLinkProfile>();
-
-            CustomLinkProfiles.Add(new CustomLinkProfile
+            get => _customLinkProfiles;
+            set
             {
-                Active = true,
-                Name = "IGNTest",
-                GameUrl = "https://www.ign.com/games/{GameName}",
-                RemoveDiacritics = true,
-                RemoveSpecialChars = true,
-                UnderscoresToWhitespaces = true,
-                WhitespacesToHyphens = true,
-                ToLower = true
-            });
+                _customLinkProfiles.Clear();
+                _customLinkProfiles.AddRange(value);
 
-            CustomLinkProfiles.Add(new CustomLinkProfile
-            {
-                Active = true,
-                Name = "GogDBTest",
-                GameUrl = "https://gogdb.org/product/{GogId}",
-                NeedsToBeChecked = false
-            });
-
-            CustomLinkProfiles.Add(new CustomLinkProfile
-            {
-                Active = true,
-                Name = "TVTropesTest",
-                GameUrl = "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/{GameName}",
-                BrowserSearchUrl = "https://tvtropes.org/pmwiki/search_result.php?q={GameName}",
-                RemoveDiacritics = true,
-                RemoveSpecialChars = true,
-                UnderscoresToWhitespaces = true,
-                RemoveWhitespaces = true,
-                ToTitleCase = true
-            });
-
-            Links = new Links(CustomLinkProfiles);
+                Links.RefreshCustomLinkProfiles(_customLinkProfiles);
+            }
         }
 
         public Links Links { get; }

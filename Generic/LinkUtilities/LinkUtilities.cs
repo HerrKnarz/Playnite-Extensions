@@ -23,7 +23,7 @@ namespace LinkUtilities
 
             IsUpdating = false;
 
-            Settings = new LinkUtilitiesSettingsViewModel(this);
+            Settings = new SettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -77,7 +77,7 @@ namespace LinkUtilities
         /// <summary>
         ///     The settings view model of the extension
         /// </summary>
-        public LinkUtilitiesSettingsViewModel Settings { get; set; }
+        public SettingsViewModel Settings { get; set; }
 
         /// <summary>
         ///     The global GUID to identify the extension in playnite
