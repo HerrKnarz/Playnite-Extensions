@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Linker;
+using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -22,7 +23,47 @@ namespace LinkUtilities.LinkActions
 
         private List<BaseClasses.Linker> _linkers;
 
-        private AddWebsiteLinks() => Links = new Links();
+        public List<CustomLinkProfile> CustomLinkProfiles;
+
+        private AddWebsiteLinks()
+        {
+            CustomLinkProfiles = new List<CustomLinkProfile>();
+
+            CustomLinkProfiles.Add(new CustomLinkProfile
+            {
+                Active = true,
+                Name = "IGNTest",
+                GameUrl = "https://www.ign.com/games/{GameName}",
+                RemoveDiacritics = true,
+                RemoveSpecialChars = true,
+                UnderscoresToWhitespaces = true,
+                WhitespacesToHyphens = true,
+                ToLower = true
+            });
+
+            CustomLinkProfiles.Add(new CustomLinkProfile
+            {
+                Active = true,
+                Name = "GogDBTest",
+                GameUrl = "https://gogdb.org/product/{GogId}",
+                NeedsToBeChecked = false
+            });
+
+            CustomLinkProfiles.Add(new CustomLinkProfile
+            {
+                Active = true,
+                Name = "TVTropesTest",
+                GameUrl = "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/{GameName}",
+                BrowserSearchUrl = "https://tvtropes.org/pmwiki/search_result.php?q={GameName}",
+                RemoveDiacritics = true,
+                RemoveSpecialChars = true,
+                UnderscoresToWhitespaces = true,
+                RemoveWhitespaces = true,
+                ToTitleCase = true
+            });
+
+            Links = new Links(CustomLinkProfiles);
+        }
 
         public Links Links { get; }
 

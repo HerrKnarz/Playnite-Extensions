@@ -603,7 +603,7 @@ namespace LinkUtilities
             });
 
             // Adds all linkable websites to the "add link to" and "search link to" sub menus.
-            foreach (BaseClasses.Linker link in AddWebsiteLinks.Instance().Links)
+            foreach (BaseClasses.Linker link in AddWebsiteLinks.Instance().Links.OrderBy(x => x.LinkName))
             {
                 if (link.Settings.ShowInMenus & (link.AddType != LinkAddTypes.None))
                 {

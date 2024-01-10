@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LinkUtilities.Models;
+using System.Collections.Generic;
 
 namespace LinkUtilities.Linker
 {
@@ -7,7 +8,7 @@ namespace LinkUtilities.Linker
     /// </summary>
     public class Links : List<BaseClasses.Linker>
     {
-        public Links()
+        public Links(List<CustomLinkProfile> customLinkProfiles)
         {
             Add(new LinkAdventureGamers());
             Add(new LinkArcadeDatabase());
@@ -46,6 +47,11 @@ namespace LinkUtilities.Linker
             Add(new LinkTvTropes());
             Add(new LinkWikipedia());
             Add(new LinkZopharsDomain());
+
+            foreach (CustomLinkProfile customLinkProfile in customLinkProfiles)
+            {
+                Add(new CustomLinker(customLinkProfile));
+            }
         }
     }
 }
