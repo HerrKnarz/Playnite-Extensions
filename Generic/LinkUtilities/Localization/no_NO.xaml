@@ -70,7 +70,6 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Legg til lenker automatisk til nye spill</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-nøkkel</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Ved å bruke et bokmerkeverktøy, kan du legge til det aktive nettstedet i nettleseren din direkte til de valgte spillene i Playnite. For å finne navnet på lenken, kan du definere mønstre for URL-adressen og lenkens tittel her. Mønstrene kan inneholde jokertegn. En * kan representere null eller flere tegn, mens ? må være nøyaktig ett tegn.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Mer informasjon om bokmerkeverktøyet er tilgjengelig her.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">Browser search URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Legg til</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Legg til standardinnstillinger</sys:String>
@@ -109,6 +108,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionAllowRedirects">The link is valid, even if the website redirects to another page (or at leas sends a redirect signal)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl">The link is only valid, if the website returns exactly the same url and doesn't change it.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked">The link won't be checked and always counts as valid. This is only useful for sites, where you can be sure, that the URL exists. SteamDB is a good example, because it has links for all steam games via the steam ID.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">Try out game name formatting</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Definer tilpasset sorteringsrekkefølge</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Don't rename, when the link name contains:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Fjern dupliserte lenker etter at spillets metadata er oppdatert</sys:String>
