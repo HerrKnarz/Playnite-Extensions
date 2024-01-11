@@ -27,6 +27,8 @@ namespace LinkUtilities.Linker
         public override bool ReturnsSameUrl => CustomSettings?.ReturnsSameUrl ?? false;
         public override bool NeedsToBeChecked => CustomSettings?.NeedsToBeChecked ?? true;
 
+        public override LinkAddTypes AddType => CustomSettings?.GameUrl?.Any() ?? false ? LinkAddTypes.UrlMatch : LinkAddTypes.None;
+
         public override string GetGamePath(Game game, string gameName = null) => CustomSettings.FormatGameName(game.Name);
 
         public override bool FindLinks(Game game, out List<Link> links)
