@@ -789,6 +789,6 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="firstRunSettings">True, if it's the first time the settings view is fetched</param>
         /// <returns>Settings view</returns>
-        public override UserControl GetSettingsView(bool firstRunSettings) => new LinkUtilitiesSettingsView();
+        public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
     }
 }

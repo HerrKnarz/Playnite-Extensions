@@ -47,11 +47,6 @@ namespace LinkUtilities.Linker
                 gameName = gameName.Replace("_", " ");
             }
 
-            if (CustomSettings.WhitespacesToUnderscores)
-            {
-                gameName = gameName.Replace(" ", "_");
-            }
-
             if (CustomSettings.RemoveSpecialChars)
             {
                 gameName = gameName.RemoveSpecialChars();
@@ -77,6 +72,11 @@ namespace LinkUtilities.Linker
             if (CustomSettings.WhitespacesToHyphens)
             {
                 gameName = gameName.Replace(" ", "-");
+            }
+
+            if (CustomSettings.WhitespacesToUnderscores)
+            {
+                gameName = gameName.Replace(" ", "_");
             }
 
             if (CustomSettings.EscapeDataString)

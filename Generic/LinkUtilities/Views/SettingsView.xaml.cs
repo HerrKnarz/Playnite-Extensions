@@ -6,8 +6,10 @@ using System.Windows.Navigation;
 
 namespace LinkUtilities
 {
-    public partial class LinkUtilitiesSettingsView : UserControl
+    public partial class SettingsView : UserControl
     {
+        public SettingsView() => InitializeComponent();
+
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
@@ -19,7 +21,5 @@ namespace LinkUtilities
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-
-        public LinkUtilitiesSettingsView() => InitializeComponent();
     }
 }
