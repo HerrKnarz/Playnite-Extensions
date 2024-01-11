@@ -85,7 +85,7 @@ namespace LinkUtilities
 
             ConcurrentQueue<CheckLink> linksQueue = new ConcurrentQueue<CheckLink>();
 
-            Parallel.ForEach(game.Links, link =>
+            Parallel.ForEach(game.Links.Where(x => !x.Url.StartsWith("steam")), link =>
             {
                 LinkCheckResult linkCheckResult = LinkHelper.CheckUrl(link.Url);
 

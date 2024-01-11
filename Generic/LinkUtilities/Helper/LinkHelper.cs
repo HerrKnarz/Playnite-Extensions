@@ -392,20 +392,30 @@ namespace LinkUtilities
                 result.ResponseUrl = web.ResponseUri.AbsoluteUri;
                 result.PageTitle = document?.DocumentNode?.SelectSingleNode("html/head/title")?.InnerText.Trim();
             }
-            catch (WebException ex)
+            catch (Exception ex)
             {
-                if (ex.Response != null)
+                if (ex is WebException)
                 {
-                    WebResponse response = ex.Response;
-                    Stream dataStream = response.GetResponseStream();
+                    WebException webEx = ex as WebException;
 
-                    if (dataStream != null)
+                    if (webEx.Response != null)
                     {
-                        StreamReader reader = new StreamReader(dataStream);
-                        result.ErrorDetails = reader.ReadToEnd();
+                        WebResponse response = webEx.Response;
+                        Stream dataStream = response.GetResponseStream();
 
-                        Log.Error(ex, result.ErrorDetails);
+                        if (dataStream != null)
+                        {
+                            StreamReader reader = new StreamReader(dataStream);
+                            result.ErrorDetails = reader.ReadToEnd();
+
+                            Log.Error(ex, result.ErrorDetails);
+                        }
                     }
+                }
+                else
+                {
+                    result.ErrorDetails = ex.Message;
+                    Log.Error(ex, result.ErrorDetails);
                 }
             }
 
