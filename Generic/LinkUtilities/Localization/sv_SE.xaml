@@ -7,6 +7,7 @@
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Response page title</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">equal?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Check links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filter by link name:</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Game</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">URL</sys:String>
