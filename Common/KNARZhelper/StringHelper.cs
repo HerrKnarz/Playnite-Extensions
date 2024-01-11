@@ -18,6 +18,15 @@ namespace KNARZhelper
         public static string RemoveSpecialChars(this string str, string replaceStr = "") => Regex.Replace(str, @"[^a-zA-Z0-9\-\s]+", replaceStr);
 
         /// <summary>
+        /// Checks, if a string contains a substring
+        /// </summary>
+        /// <param name="source">String that will be checked</param>
+        /// <param name="toCheck">The substring, that will be searched</param>
+        /// <param name="comp">StringComparer to allow ignore case etc.</param>
+        /// <returns>true, if the string contains the substring</returns>
+        public static bool Contains(this string source, string toCheck, StringComparison comp) => source?.IndexOf(toCheck, comp) >= 0;
+
+        /// <summary>
         /// Dictionary with special characters that need to be replaced before regular removing of diacritics.
         /// </summary>
         public static IReadOnlyDictionary<string, string> SpecialDiacritics = new Dictionary<string, string>

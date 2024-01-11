@@ -51,5 +51,11 @@ namespace LinkUtilities
                 _checkLinks.Replace(item);
             }
         }, items => items?.Any() ?? false);
+
+        public RelayCommand FilterCommand
+            => new RelayCommand(() =>
+            {
+                CheckLinks.FilterLinks();
+            });
     }
 }

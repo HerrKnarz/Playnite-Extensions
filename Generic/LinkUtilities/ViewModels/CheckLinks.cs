@@ -15,7 +15,9 @@ namespace LinkUtilities
     internal class CheckLinks : ViewModelBase
     {
         private readonly List<Game> _games;
+        private ObservableCollectionFast<CheckLink> _filteredLinks = new ObservableCollectionFast<CheckLink>();
         private ObservableCollectionFast<CheckLink> _links = new ObservableCollectionFast<CheckLink>();
+        private string _searchString = string.Empty;
 
         public CheckLinks(List<Game> games, bool hideOkOnLinkCheck)
         {
@@ -31,6 +33,34 @@ namespace LinkUtilities
                 _links = value;
                 OnPropertyChanged("Links");
             }
+        }
+
+        public ObservableCollectionFast<CheckLink> FilteredLinks
+        {
+            get => _filteredLinks;
+            set
+            {
+                _filteredLinks = value;
+                OnPropertyChanged("FilteredLinks");
+            }
+        }
+
+        public string SearchString
+        {
+            get => _searchString;
+            set
+            {
+                _searchString = value;
+                FilterLinks();
+                OnPropertyChanged("SearchString");
+            }
+        }
+
+        public void FilterLinks()
+        {
+            FilteredLinks.Clear();
+
+            FilteredLinks.AddRange(SearchString.Any() ? Links.Where(x => x.Link.Name.Contains(SearchString, StringComparison.OrdinalIgnoreCase)) : Links);
         }
 
         public void Check(bool hideOkOnLinkCheck)
@@ -74,6 +104,8 @@ namespace LinkUtilities
                     }
                 }, globalProgressOptions);
             }
+
+            FilterLinks();
         }
 
         private void Check(Game game, bool hideOkOnLinkCheck)
@@ -109,6 +141,7 @@ namespace LinkUtilities
             checkLink.Remove();
 
             Links.Remove(checkLink);
+            FilteredLinks.Remove(checkLink);
         }
 
         public void Replace(CheckLink checkLink) => checkLink.Replace();
