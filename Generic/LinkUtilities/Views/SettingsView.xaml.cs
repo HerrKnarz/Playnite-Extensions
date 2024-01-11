@@ -1,20 +1,12 @@
-﻿using System.Diagnostics;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace LinkUtilities
 {
     public partial class SettingsView : UserControl
     {
         public SettingsView() => InitializeComponent();
-
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
-        }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {

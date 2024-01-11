@@ -7,6 +7,7 @@ using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace LinkUtilities
@@ -14,6 +15,11 @@ namespace LinkUtilities
     public class SettingsViewModel : ObservableObject, ISettings
     {
         private readonly LinkUtilities _plugin;
+
+        private string _exampleName = "Baldur's Gate 3";
+        private string _exampleResult = "";
+
+        private CustomLinkProfile _selectedItem;
 
         private LinkUtilitiesSettings _settings;
 
@@ -93,6 +99,38 @@ namespace LinkUtilities
             }
         }
 
+        public CustomLinkProfile SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ExampleName
+        {
+            get => _exampleName;
+            set
+            {
+                _exampleName = value;
+                ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ExampleResult
+        {
+            get => _exampleResult;
+            set
+            {
+                _exampleResult = value;
+                OnPropertyChanged();
+            }
+        }
+
         private LinkUtilitiesSettings EditingClone { get; set; }
 
         public LinkUtilitiesSettings Settings
@@ -120,6 +158,26 @@ namespace LinkUtilities
         }, items => items?.Any() ?? false);
 
         public RelayCommand SortCustomLinkProfileCommand => new RelayCommand(SortCustomLinkProfiles);
+
+        public RelayCommand HelpCustomLinkProfileCommand
+            => new RelayCommand(() =>
+            {
+                Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki"));
+            });
+
+        public RelayCommand HelpBookmarkletCommand
+            => new RelayCommand(() =>
+            {
+                Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet"));
+            });
+
+
+        public RelayCommand TestCustomLinkProfileCommand
+            => new RelayCommand(() =>
+            {
+                ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty;
+            });
+
 
         public RelayCommand AddSortItemCommand
             => new RelayCommand(() =>

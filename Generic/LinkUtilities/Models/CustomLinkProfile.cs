@@ -1,4 +1,6 @@
-﻿namespace LinkUtilities.Models
+﻿using KNARZhelper;
+
+namespace LinkUtilities.Models
 {
     public class CustomLinkProfile
     {
@@ -21,5 +23,67 @@
         public bool AllowRedirects { get; set; } = true;
         public bool ReturnsSameUrl { get; set; } = false;
         public bool NeedsToBeChecked { get; set; } = true;
+
+        public string FormatGameName(string gameName)
+        {
+            if (RemoveEditionSuffix)
+            {
+                gameName = gameName.RemoveEditionSuffix();
+            }
+
+            if (RemoveHyphens)
+            {
+                gameName = gameName.Replace("-", "");
+            }
+
+            if (UnderscoresToWhitespaces)
+            {
+                gameName = gameName.Replace("_", " ");
+            }
+
+            if (RemoveSpecialChars)
+            {
+                gameName = gameName.RemoveSpecialChars();
+            }
+
+            if (RemoveDiacritics)
+            {
+                gameName = gameName.RemoveDiacritics();
+            }
+
+            if (ToTitleCase)
+            {
+                gameName = gameName.ToTitleCase();
+            }
+
+            if (ToLower)
+            {
+                gameName = gameName.ToLower();
+            }
+
+            gameName = RemoveWhitespaces ? gameName.Replace(" ", "") : gameName.CollapseWhitespaces();
+
+            if (WhitespacesToHyphens)
+            {
+                gameName = gameName.Replace(" ", "-");
+            }
+
+            if (WhitespacesToUnderscores)
+            {
+                gameName = gameName.Replace(" ", "_");
+            }
+
+            if (EscapeDataString)
+            {
+                gameName = gameName.EscapeDataString();
+            }
+
+            if (UrlEncode)
+            {
+                gameName = gameName.UrlEncode();
+            }
+
+            return gameName;
+        }
     }
 }

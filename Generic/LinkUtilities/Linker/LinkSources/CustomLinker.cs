@@ -27,70 +27,7 @@ namespace LinkUtilities.Linker
         public override bool ReturnsSameUrl => CustomSettings?.ReturnsSameUrl ?? false;
         public override bool NeedsToBeChecked => CustomSettings?.NeedsToBeChecked ?? true;
 
-        public override string GetGamePath(Game game, string gameName = null)
-        {
-            gameName = game.Name;
-
-
-            if (CustomSettings.RemoveEditionSuffix)
-            {
-                gameName = gameName.RemoveEditionSuffix();
-            }
-
-            if (CustomSettings.RemoveHyphens)
-            {
-                gameName = gameName.Replace("-", "");
-            }
-
-            if (CustomSettings.UnderscoresToWhitespaces)
-            {
-                gameName = gameName.Replace("_", " ");
-            }
-
-            if (CustomSettings.RemoveSpecialChars)
-            {
-                gameName = gameName.RemoveSpecialChars();
-            }
-
-            if (CustomSettings.RemoveDiacritics)
-            {
-                gameName = gameName.RemoveDiacritics();
-            }
-
-            if (CustomSettings.ToTitleCase)
-            {
-                gameName = gameName.ToTitleCase();
-            }
-
-            if (CustomSettings.ToLower)
-            {
-                gameName = gameName.ToLower();
-            }
-
-            gameName = CustomSettings.RemoveWhitespaces ? gameName.Replace(" ", "") : gameName.CollapseWhitespaces();
-
-            if (CustomSettings.WhitespacesToHyphens)
-            {
-                gameName = gameName.Replace(" ", "-");
-            }
-
-            if (CustomSettings.WhitespacesToUnderscores)
-            {
-                gameName = gameName.Replace(" ", "_");
-            }
-
-            if (CustomSettings.EscapeDataString)
-            {
-                gameName = gameName.EscapeDataString();
-            }
-
-            if (CustomSettings.UrlEncode)
-            {
-                gameName = gameName.UrlEncode();
-            }
-
-            return gameName;
-        }
+        public override string GetGamePath(Game game, string gameName = null) => CustomSettings.FormatGameName(game.Name);
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
