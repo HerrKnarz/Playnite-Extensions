@@ -70,7 +70,6 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Автоматично додавати посилання до нещодавно доданих ігор</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">Ключ API</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Використовуючи букмарклет, ви можете додати активний сайт у своєму браузері безпосередньо до вибраних ігор у Playnite. Щоб знайти відповідну назву посилання, тут можна визначити шаблони для URL-адреси та назви посилання. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Для отримання додаткової інформації про букмарклет натисніть тут.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">Browser search URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Додати</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Додати типові</sys:String>
@@ -109,6 +108,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionAllowRedirects">The link is valid, even if the website redirects to another page (or at leas sends a redirect signal)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl">The link is only valid, if the website returns exactly the same url and doesn't change it.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked">The link won't be checked and always counts as valid. This is only useful for sites, where you can be sure, that the URL exists. SteamDB is a good example, because it has links for all steam games via the steam ID.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">Try out game name formatting</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Визначити довільний порядок сортування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Не перейменовувати, коли назва посилання містить:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Прибрати повторювані посилання після оновлення метаданих</sys:String>
