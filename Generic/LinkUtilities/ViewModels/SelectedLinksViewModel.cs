@@ -11,7 +11,7 @@ namespace LinkUtilities
 
         public SelectedLinksViewModel(Links links, bool add = true)
         {
-            foreach (BaseClasses.Linker linker in links.Where(linker => add ? linker.Settings.IsAddable != null : linker.Settings.IsSearchable != null))
+            foreach (BaseClasses.Linker linker in links.Where(linker => add ? linker.Settings.IsAddable != null : linker.Settings.IsSearchable != null).OrderBy(x => x.LinkName))
             {
                 Links.Add(new SelectedLink(linker, add));
             }
@@ -27,7 +27,7 @@ namespace LinkUtilities
             }
         }
 
-        public RelayCommand<object> CheckAllCommand => new RelayCommand<object>((a) =>
+        public RelayCommand<object> CheckAllCommand => new RelayCommand<object>(a =>
         {
             foreach (SelectedLink link in Links)
             {
@@ -35,7 +35,7 @@ namespace LinkUtilities
             }
         });
 
-        public RelayCommand<object> UncheckAllCommand => new RelayCommand<object>((a) =>
+        public RelayCommand<object> UncheckAllCommand => new RelayCommand<object>(a =>
         {
             foreach (SelectedLink link in Links)
             {
@@ -43,7 +43,7 @@ namespace LinkUtilities
             }
         });
 
-        public RelayCommand<object> ReverseCheckCommand => new RelayCommand<object>((a) =>
+        public RelayCommand<object> ReverseCheckCommand => new RelayCommand<object>(a =>
         {
             foreach (SelectedLink link in Links)
             {

@@ -79,6 +79,7 @@
     <Compile Include="LinkActions\AddLinkFromClipboard.cs" />
     <Compile Include="LinkActions\ChangeSteamLinks.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
+    <Compile Include="Linker\LinkSources\CustomLinker.cs" />
     <Compile Include="Linker\LinkSources\LinkGogDb.cs" />
     <Compile Include="Linker\LinkSources\LinkGrouvee.cs" />
     <Compile Include="Linker\LinkSources\LinkBackloggd.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Linker\LinkSources\LinkProtonDb.cs" />
     <Compile Include="Linker\LinkSources\LinkSteamDb.cs" />
     <Compile Include="Linker\LinkSources\LinkTvTropes.cs" />
+    <Compile Include="Models\CustomLinkProfile.cs" />
     <Compile Include="ViewModels\CheckLink.cs" />
     <Compile Include="ViewModels\CheckLinks.cs" />
     <Compile Include="ViewModels\CheckLinksViewModel.cs" />
@@ -147,11 +149,12 @@
     <Compile Include="Settings\LinkUtilitiesSettings.cs" />
     <Compile Include="ViewModels\SelectedLink.cs" />
     <Compile Include="ViewModels\SelectedLinksViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\CheckLinksView.xaml.cs">
       <DependentUpon>CheckLinksView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LinkUtilitiesSettingsView.xaml.cs">
-      <DependentUpon>LinkUtilitiesSettingsView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\ApiResults\ItchSearchResult.cs" />
     <Compile Include="Models\LinkNamePattern.cs" />
@@ -187,7 +190,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\LinkUtilitiesSettingsView.xaml">
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

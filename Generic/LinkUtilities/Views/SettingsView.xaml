@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="LinkUtilities.LinkUtilitiesSettingsView"
+﻿<UserControl x:Class="LinkUtilities.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -67,6 +67,204 @@
                 </ListView>
             </DockPanel>
         </TabItem>
+        <TabItem Header="{DynamicResource LOCLinkUtilitiesSettingsTabCustomLinks}">
+            <DockPanel Margin="10">
+                <Grid DockPanel.Dock="Top" Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap"
+                               Text="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescription}" />
+                    <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
+                            Command="{Binding HelpCustomLinkProfileCommand}" Margin="10,0,0,0"/>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
+                    <Label Content="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksTryOut}"/>
+                    <TextBox Text="{Binding ExampleName}" Width="150" Margin="10,0,0,0"/>
+                    <Button Content="&#xEA5D;" FontFamily="{DynamicResource FontIcoFont}"
+                            Command="{Binding TestCustomLinkProfileCommand}" Margin="10,0,0,0"/>
+                    <TextBox Text="{Binding ExampleResult}" Width="150" Margin="10,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
+                    <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonAdd}"
+                            Command="{Binding AddCustomLinkProfileCommand}"/>
+                    <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}" Margin="10,0,0,0"
+                            Command="{Binding RemoveCustomLinkProfileCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=GridCustomLinkProfiles}"/>
+                    <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonSort}" Margin="10,0,0,0"
+                            Command="{Binding SortCustomLinkProfileCommand}"/>
+                </StackPanel>
+                <ListView Name="GridCustomLinkProfiles" SelectionMode="Single" Margin="0,10,0,0" DockPanel.Dock="Top" 
+                          ItemsSource="{Binding Settings.CustomLinkProfiles}" SelectedItem="{Binding SelectedItem}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="150" Header="{DynamicResource LOCLinkUtilitiesSettingsLinkName}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="180" Header="{DynamicResource LOCLinkUtilitiesSettingsGameUrl}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding GameUrl, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="180"  Header="{DynamicResource LOCLinkUtilitiesSettingsBrowserSearchUrl}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding BrowserSearchUrl, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCEnabledTitle}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Active, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding RemoveSpecialChars, UpdateSourceTrigger=PropertyChanged}"
+                                                  ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveSpecialChars}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding RemoveHyphens, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding RemoveWhitespaces, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksRemoveDiacritics}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding RemoveDiacritics, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksRemoveEditionSuffix}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding RemoveEditionSuffix, UpdateSourceTrigger=PropertyChanged}"
+                                                  ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveEditionSuffix}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksWhitespacesToHyphens}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding WhitespacesToHyphens, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksUnderscoresToWhitespaces}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding UnderscoresToWhitespaces, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksWhitespacesToUnderscores}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding WhitespacesToUnderscores, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksEscapeDataString}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding EscapeDataString, UpdateSourceTrigger=PropertyChanged}"
+                                                  ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionEscapeDataString}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksUrlEncode}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding UrlEncode, UpdateSourceTrigger=PropertyChanged}"
+                                                  ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionUrlEncode}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksToLower}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding ToLower, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksToTitleCase}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding ToTitleCase, UpdateSourceTrigger=PropertyChanged}"
+                                                  ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionToTitleCase}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksAllowRedirects}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding AllowRedirects, UpdateSourceTrigger=PropertyChanged}"
+                                                  ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionAllowRedirects}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksReturnsSameUrl}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding ReturnsSameUrl, UpdateSourceTrigger=PropertyChanged}"
+                                                  ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksNeedsToBeChecked}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding NeedsToBeChecked, UpdateSourceTrigger=PropertyChanged}"
+                                                  ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked}"
+                                                  HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </DockPanel>
+        </TabItem>
         <TabItem Header="{DynamicResource LOCLinkUtilitiesSettingsTabSorting}">
             <DockPanel Margin="10">
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.SortAfterChange}"
@@ -110,14 +308,16 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCLinkUtilitiesSettingsTabBookmarkletClipboard}">
             <DockPanel Margin="10">
-                <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap"
-                           Text="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletDescription}" />
-                <TextBlock VerticalAlignment="Center" Margin="0,10,0,0" DockPanel.Dock="Top">
-                    <Hyperlink NavigateUri="https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet#bookmarklet"
-                               RequestNavigate="Hyperlink_RequestNavigate" >
-                        <Run Text="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletInformationLink}" />
-                    </Hyperlink>
-                </TextBlock>
+                <Grid DockPanel.Dock="Top" Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap"
+                               Text="{DynamicResource LOCLinkUtilitiesSettingsBookmarkletDescription}" />
+                    <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
+                            Command="{Binding HelpBookmarkletCommand}" Margin="10,0,0,0"/>
+                </Grid>
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
                     <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonAdd}"
                             Command="{Binding AddLinkNamePatternCommand}"/>

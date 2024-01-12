@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Linker;
+using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -20,9 +21,23 @@ namespace LinkUtilities.LinkActions
         private static AddWebsiteLinks _instance;
         private static readonly object _mutex = new object();
 
+        private readonly List<CustomLinkProfile> _customLinkProfiles = new List<CustomLinkProfile>();
+
         private List<BaseClasses.Linker> _linkers;
 
         private AddWebsiteLinks() => Links = new Links();
+
+        public List<CustomLinkProfile> CustomLinkProfiles
+        {
+            get => _customLinkProfiles;
+            set
+            {
+                _customLinkProfiles.Clear();
+                _customLinkProfiles.AddRange(value);
+
+                Links.RefreshCustomLinkProfiles(_customLinkProfiles);
+            }
+        }
 
         public Links Links { get; }
 

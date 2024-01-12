@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LinkUtilities.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LinkUtilities.Linker
 {
@@ -46,6 +48,21 @@ namespace LinkUtilities.Linker
             Add(new LinkTvTropes());
             Add(new LinkWikipedia());
             Add(new LinkZopharsDomain());
+        }
+
+        public void RefreshCustomLinkProfiles(List<CustomLinkProfile> customLinkProfiles)
+        {
+            List<BaseClasses.Linker> linksToRemove = this.Where(x => x.Settings.IsCustomSource).ToList();
+
+            foreach (BaseClasses.Linker linker in linksToRemove)
+            {
+                Remove(linker);
+            }
+
+            foreach (CustomLinkProfile customLinkProfile in customLinkProfiles)
+            {
+                Add(new CustomLinker(customLinkProfile));
+            }
         }
     }
 }

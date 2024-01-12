@@ -9,13 +9,19 @@
              d:DataContext="{d:DesignInstance Type=vm:CheckLinksViewModel}">
     <UserControl.Resources>
         <CollectionViewSource x:Key='GroupedItems' 
-                              Source="{Binding CheckLinks.Links}">
+                              Source="{Binding CheckLinks.FilteredLinks}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Game.Name" />
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
     <DockPanel Margin="10">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
+            <Label Content="{DynamicResource LOCLinkUtilitiesCheckLinksFilter}"/>
+            <TextBox Text="{Binding CheckLinks.SearchString}" Width="150" Margin="10,0,0,0"/>
+            <Button Content="&#xEF29;" FontFamily="{DynamicResource FontIcoFont}"
+                    Command="{Binding FilterCommand}" Margin="10,0,0,0"/>
+        </StackPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}" 
                     Command="{Binding RemoveCommand}"
@@ -26,7 +32,7 @@
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonHelp}" Margin="10,0,0,0"
                     Click="HelpClick"/>
         </StackPanel>
-        <ListView Name="LvCheckedLinks" SelectionMode="Extended" DockPanel.Dock="Top" HorizontalAlignment="Stretch"
+        <ListView Name="LvCheckedLinks" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0" HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                   ScrollViewer.CanContentScroll="False" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True"

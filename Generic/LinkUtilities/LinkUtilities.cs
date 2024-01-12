@@ -23,7 +23,7 @@ namespace LinkUtilities
 
             IsUpdating = false;
 
-            Settings = new LinkUtilitiesSettingsViewModel(this);
+            Settings = new SettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -77,7 +77,7 @@ namespace LinkUtilities
         /// <summary>
         ///     The settings view model of the extension
         /// </summary>
-        public LinkUtilitiesSettingsViewModel Settings { get; set; }
+        public SettingsViewModel Settings { get; set; }
 
         /// <summary>
         ///     The global GUID to identify the extension in playnite
@@ -603,7 +603,7 @@ namespace LinkUtilities
             });
 
             // Adds all linkable websites to the "add link to" and "search link to" sub menus.
-            foreach (BaseClasses.Linker link in AddWebsiteLinks.Instance().Links)
+            foreach (BaseClasses.Linker link in AddWebsiteLinks.Instance().Links.OrderBy(x => x.LinkName))
             {
                 if (link.Settings.ShowInMenus & (link.AddType != LinkAddTypes.None))
                 {
@@ -789,6 +789,6 @@ namespace LinkUtilities
         /// </summary>
         /// <param name="firstRunSettings">True, if it's the first time the settings view is fetched</param>
         /// <returns>Settings view</returns>
-        public override UserControl GetSettingsView(bool firstRunSettings) => new LinkUtilitiesSettingsView();
+        public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
     }
 }
