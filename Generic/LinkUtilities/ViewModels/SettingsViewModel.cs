@@ -162,7 +162,7 @@ namespace LinkUtilities
         public RelayCommand HelpCustomLinkProfileCommand
             => new RelayCommand(() =>
             {
-                Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki"));
+                Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Custom-link-profiles"));
             });
 
         public RelayCommand HelpBookmarkletCommand
