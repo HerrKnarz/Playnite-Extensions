@@ -1,5 +1,14 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 4.0
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2024-01-12
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-01-12/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_0.pext
+    Changelog:
+      - Added option to add your own custom link profiles to add links to websites, Link Utilities doesn't support yet. You can also add links to a browser search on websites that way.
+      - Added filter to check links window. Now you can filter the results by link name.
+      - Removed duplicate link name pattern for Hardcoregaming 101.
+      - updated localizations
   - Version: 3.7
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-11-18
