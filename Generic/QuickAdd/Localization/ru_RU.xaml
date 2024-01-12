@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCQuickAddName">Quick Add</sys:String>
-    <sys:String x:Key="LOCQuickAddAdd">Add</sys:String>
-    <sys:String x:Key="LOCQuickAddRemove">Remove</sys:String>
-    <sys:String x:Key="LOCQuickAddToggle">Toggle</sys:String>
+    <sys:String x:Key="LOCQuickAddName">Быстро добавить</sys:String>
+    <sys:String x:Key="LOCQuickAddAdd">Добавить</sys:String>
+    <sys:String x:Key="LOCQuickAddRemove">Удалить</sys:String>
+    <sys:String x:Key="LOCQuickAddToggle">Вкл/Выкл</sys:String>
 
-    <sys:String x:Key="LOCQuickAddMenuAdd">Add {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddProgressAdd">Adding {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddSuccessAdd">{0} added to {1} games</sys:String>
+    <sys:String x:Key="LOCQuickAddMenuAdd">Добавить {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressAdd">Добавление {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddSuccessAdd">{0} добавлено в {1} игры</sys:String>
 
-    <sys:String x:Key="LOCQuickAddMenuRemove">Remove {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddProgressRemove">Removing {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddSuccessRemove">{0} removed from {1} games</sys:String>
+    <sys:String x:Key="LOCQuickAddMenuRemove">Удалить {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressRemove">Удаление: {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddSuccessRemove">{0} удалено из игр {1}</sys:String>
 
-    <sys:String x:Key="LOCQuickAddMenuToggle">Toggle {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddProgressToggle">Toggling {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddSuccessToggle">{0} toggled in {1} games</sys:String>
+    <sys:String x:Key="LOCQuickAddMenuToggle">Вкл/выкл {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressToggle">Вкл/выкл {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddSuccessToggle">{0} переключено в {1} играх</sys:String>
 
-    <sys:String x:Key="LOCQuickAddSettingsCustomPath">Custom menu path</sys:String>
-    <sys:String x:Key="LOCQuickAddSettingsCustomPathDescription">Using custom menu paths you can change how your buttons in the context menu will show up, so you can group them or simply change the layout. You can add sub menus by adding a &quot;|&quot;, so &quot;test|menu&quot; will add the menu &quot;test&quot; with the sub menu &quot;menu&quot;. You can also add the action (add, toggle, remove) and type (category, feature, tag) to your menu entry by adding the placeholder &quot;{action}&quot; or &quot;{type}&quot; respectively. This works for the default and separate custom paths for each value.</sys:String>
-    <sys:String x:Key="LOCQuickAddSettingsDefaultCustomPath">Default custom menu path</sys:String>
-    <sys:String x:Key="LOCQuickAddSettingsShowDialog">Show result dialog after setting a value for more than one game</sys:String>
-    <sys:String x:Key="LOCQuickAddSettingsSingleMenuEntry">Put the sub menus under a single &quot;Quick Add&quot; menu entry</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsCustomPath">Путь пользовательского меню</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsCustomPathDescription">Используя пользовательские пути меню, вы можете изменить как будут отображаться кнопки в контекстном меню, так что вы можете сгруппировать их или просто изменить макет. Вы можете добавить подменю, добавив &quot;|&quot;, так что &quot;test|menu&quot; добавит меню &quot;test&quot; с подменю &quot;menu&quot;. Вы также можете добавить действие (добавление, переключатель, удаление) и тип (категория, характеристика, тэг) к записи меню, добавив метку&quot;{action}&quot; или &quot;{type}&quot;. Это работает для стандартных и отдельных пользовательских путей для каждого значения.</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsDefaultCustomPath">Путь пользовательского меню по умолчанию</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsShowDialog">Показать окно результата после установки значения для более чем одной игры</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsSingleMenuEntry">Поместить подменю в одно меню &quot;Quick Add&quot;</sys:String>
 </ResourceDictionary>

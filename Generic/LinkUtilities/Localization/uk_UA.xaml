@@ -7,6 +7,7 @@
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Заголовок сторінки відповіді</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">рівно?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Перевірити посилання</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Фільтрувати за назвою посилання:</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Гра</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">URL-адреса</sys:String>
@@ -70,7 +71,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Автоматично додавати посилання до нещодавно доданих ігор</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">Ключ API</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Використовуючи букмарклет, ви можете додати активний сайт у своєму браузері безпосередньо до вибраних ігор у Playnite. Щоб знайти відповідну назву посилання, тут можна визначити шаблони для URL-адреси та назви посилання. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletInformationLink">Для отримання додаткової інформації про букмарклет натисніть тут.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">URL Пошуку в Браузері</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Додати</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Додати типові</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Скасувати</sys:String>
@@ -84,6 +85,31 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Зняти вибір з усього</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Налаштуйте шаблони назв посилань (Для посилань з буфера обміну перевірятиметься лише шаблон URL-адреси, оскільки ми все одно не маємо назви)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Налаштувати сайти</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Тут можна додавати власні посилання на веб-сайти з URL, які містять назву гри, назву РОМу, Steam ID або GOG ID і не мають змінних частин. Для цього в полі URL-адреси гри можна використовувати заповнювачі {GameName}, {RomName}, {SteamId} і {GogId}. Наступні прапорці визначають, як назву гри буде змінено відповідно до схеми URL-адреси та як перевірити дійсність посилання. Ви також можете додати URL Пошуку в Браузері, яка буде відкриватися в браузері для пошуку гри. Це поле підтримує лише заповнювач {GameName}. Щоб отримати додаткову інформацію про спеціальні профілі посилань, натисніть кнопку зі знаком запитання.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">Прибрати спеціальні символи</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens">Прибрати дефіси</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces">Прибрати пробіли</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveDiacritics">Видалити діакритичні знаки</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveEditionSuffix">Прибрати суфікс типу видання</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksWhitespacesToHyphens">Пробіли на суфікси</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksUnderscoresToWhitespaces">Підкреслення у пробіли</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksWhitespacesToUnderscores">Пробіли у підкреслення</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksEscapeDataString">Екранувати рядок даних</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksUrlEncode">Закодувати URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksToLower">У нижній регістр</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksToTitleCase">У верхній регістр</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksAllowRedirects">Дозволити перенаправлення</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksReturnsSameUrl">Повертає той самий URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksNeedsToBeChecked">Потребує перевірки</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveSpecialChars">Видаляє всі символи, які не є частиною алфавіту, номером, пробілом чи дефісом.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveEditionSuffix">Видаляє з кінця назви гри речі типу &quot;Special Edition&quot; або HD.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionEscapeDataString">Екранує рядок для використання в URL.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionUrlEncode">Кодує назву гри, що її можна було використати в URL-адресі</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionToTitleCase">Змінює назву гри, щоб кожне слово починалося з великої літери.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionAllowRedirects">The link is valid, even if the website redirects to another page (or at least sends a redirect signal)</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl">Посилання дійсне лише за умови, що вебсайт поверне точно таку ж адресу без змін.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked">When unticked, the link won't be checked and always counts as valid. This is only useful for sites, where you can be sure, that the URL exists. SteamDB is a good example, because it has links for all steam games via the steam ID.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">Спробувати як сформується назва гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Визначити довільний порядок сортування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Не перейменовувати, коли назва посилання містить:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Прибрати повторювані посилання після оновлення метаданих</sys:String>
@@ -91,6 +117,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveNameUrl">назвою посилання та URL-адресою</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveName">назвою посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesRemoveUrl">URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsGameUrl">URL гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsHideOkOnLinkCheck">Приховати посилання, які відгукуються, в перевірці посилань</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkName">Назва посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">Джерело посилання</sys:String>
@@ -109,6 +136,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Сортувати посилання після оновлення метаданих</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortPosition">Розташування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">Букмарклет/Буфер Обміну</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabCustomLinks">Custom link profiles</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Загальні налаштування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Вилучити посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Перейменувати посилання</sys:String>
