@@ -106,9 +106,9 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionEscapeDataString">Екранує рядок для використання в URL.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionUrlEncode">Кодує назву гри, що її можна було використати в URL-адресі</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionToTitleCase">Змінює назву гри, щоб кожне слово починалося з великої літери.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionAllowRedirects">The link is valid, even if the website redirects to another page (or at least sends a redirect signal)</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionAllowRedirects">Посилання дійсне, навіть якщо вебсайт перенаправляє на іншу сторінку (або принаймні надсилає сигнал перенаправлення)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl">Посилання дійсне лише за умови, що вебсайт поверне точно таку ж адресу без змін.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked">When unticked, the link won't be checked and always counts as valid. This is only useful for sites, where you can be sure, that the URL exists. SteamDB is a good example, because it has links for all steam games via the steam ID.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked">Якщо прапорець знятий, посилання не перевірятиметься та завжди вважатиметься дійсним. Це корисно лише для сайтів, де ви можете бути впевнені, що URL існує. Як приклад SteamDB, адже він містить посилання на всі ігри Steam через Steam ID.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">Спробувати як сформується назва гри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Визначити довільний порядок сортування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Не перейменовувати, коли назва посилання містить:</sys:String>
@@ -136,7 +136,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">Сортувати посилання після оновлення метаданих</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortPosition">Розташування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">Букмарклет/Буфер Обміну</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabCustomLinks">Custom link profiles</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabCustomLinks">Користувацькі профілі посилань</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Загальні налаштування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Вилучити посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Перейменувати посилання</sys:String>
