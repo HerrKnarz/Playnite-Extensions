@@ -7,7 +7,7 @@
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Заголовок сторінки відповіді</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">рівно?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Перевірити посилання</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filter by link name:</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Фільтрувати за назвою посилання:</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Гра</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">URL-адреса</sys:String>
@@ -71,7 +71,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Автоматично додавати посилання до нещодавно доданих ігор</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">Ключ API</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Використовуючи букмарклет, ви можете додати активний сайт у своєму браузері безпосередньо до вибраних ігор у Playnite. Щоб знайти відповідну назву посилання, тут можна визначити шаблони для URL-адреси та назви посилання. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">Browser search URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">URL-адреса Пошуку в Браузері</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Додати</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Додати типові</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Скасувати</sys:String>
@@ -85,7 +85,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Зняти вибір з усього</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Налаштуйте шаблони назв посилань (Для посилань з буфера обміну перевірятиметься лише шаблон URL-адреси, оскільки ми все одно не маємо назви)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Налаштувати сайти</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Here you can add your own links for websites with urls, that contain either the game name, rom name, steam ID or GOG ID and have no variable parts. In the Game URL field you can use the placeholders {GameName}, {RomName}, {SteamId} and {GogId} for that. The following checkboxes define, how the game name will be modified to fit the url scheme and how to check for link validity. You can also add a Browser search url that then can be opened in a browser to search for the game. This field only supports the {GameName} placeholder. For further information on custom link profiles click the questionmark button.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Тут можна додавати власні посилання на веб-сайти з URL-адресами, які містять назву гри, назву РОМу, Steam ID або GOG ID і не мають змінних частин. Для цього в полі URL-адреси гри можна використовувати заповнювачі {GameName}, {RomName}, {SteamId} і {GogId}. Наступні прапорці визначають, як назву гри буде змінено відповідно до схеми URL-адреси та як перевірити дійсність посилання. Ви також можете додати URL-адресу Пошуку в Браузері, яка буде відкриватися в браузері для пошуку гри. Це поле підтримує лише заповнювач {GameName}. Щоб отримати додаткову інформацію про спеціальні профілі посилань, натисніть кнопку зі знаком запитання.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">Remove special chars</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens">Remove hyphens</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces">Remove whitespaces</sys:String>
