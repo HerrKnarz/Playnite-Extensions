@@ -30,6 +30,6 @@
 
     <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Adicionar valor</sys:String>
     <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">Nenhuma empresa com descritores de entidade empresarial encontrada.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">No duplicate companies were found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Updated companies in {0} games and merged {1} companies</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">Nenhuma empresa duplicada foi encontrada.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Empresas atualizadas em {0} jogos e mescladas {1} empresas</sys:String>
 </ResourceDictionary>
