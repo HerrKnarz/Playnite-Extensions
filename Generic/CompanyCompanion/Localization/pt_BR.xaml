@@ -3,12 +3,12 @@
 
     <sys:String x:Key="LOCCompanyCompanionName">Company Companion</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Clean up company names.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Find companies to match</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Find similar companies to match.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">game</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">games</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Merge group</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Limpar os nomes das empresas.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Encontre empresas para combinar</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Encontre empresas similares para combinar.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">jogo</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">jogos</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Mesclar grupo</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Untick, if this company shouldn't be merged with the others.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Company Merger</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">New name:</sys:String>
