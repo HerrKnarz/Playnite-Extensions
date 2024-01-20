@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkUtilities.Test", "Gener
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickAdd", "Generic\QuickAdd\QuickAdd.csproj", "{389CA94C-A5AD-4E93-A4AE-A5B8F2496EB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedMetadataTools", "Generic\AdvancedMetadataTools\AdvancedMetadataTools.csproj", "{F154E2A4-5514-4061-97AC-21C1A85FB727}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,12 @@ Global
 		{389CA94C-A5AD-4E93-A4AE-A5B8F2496EB7}.Deploy|Any CPU.Build.0 = Debug|Any CPU
 		{389CA94C-A5AD-4E93-A4AE-A5B8F2496EB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{389CA94C-A5AD-4E93-A4AE-A5B8F2496EB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F154E2A4-5514-4061-97AC-21C1A85FB727}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F154E2A4-5514-4061-97AC-21C1A85FB727}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F154E2A4-5514-4061-97AC-21C1A85FB727}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{F154E2A4-5514-4061-97AC-21C1A85FB727}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{F154E2A4-5514-4061-97AC-21C1A85FB727}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F154E2A4-5514-4061-97AC-21C1A85FB727}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,6 +131,7 @@ Global
 		{371B85A9-F0FA-4FF6-BFCC-AD43B43BC732} = {BB964DAC-A6CF-4400-B004-BD3ABA10BB7E}
 		{A4284B4C-B63A-43A8-B2E0-16928CDF6DB7} = {D10FA19A-19DB-4752-BE43-538700781EBB}
 		{389CA94C-A5AD-4E93-A4AE-A5B8F2496EB7} = {D10FA19A-19DB-4752-BE43-538700781EBB}
+		{F154E2A4-5514-4061-97AC-21C1A85FB727} = {D10FA19A-19DB-4752-BE43-538700781EBB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {65030A28-242D-4782-B0E1-E1481FFF0F40}
