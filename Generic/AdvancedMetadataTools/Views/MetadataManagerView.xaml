@@ -9,6 +9,12 @@
     <UserControl.DataContext>
         <VM:MetadataManagerViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+    </UserControl.Resources>
     <DockPanel Margin="10">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
             <TextBox Text="{Binding SearchTerm}" Width="150"/>
@@ -20,31 +26,13 @@
             <Button Content="&#xEF29;" FontFamily="{DynamicResource FontIcoFont}"
                     Command="{Binding FilterCommand}" Margin="10,0,0,0"/>
         </StackPanel>
-
-
-        <ListView Name="Categories" SelectionMode="Single" DockPanel.Dock="Top" Margin="0,10,0,0"
-                          ItemsSource="{Binding MetadataListObjects}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCTypeLabel}"
-                                            DisplayMemberBinding="{Binding TypeLabel}" />
-                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCNameLabel}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Width="Auto" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCAdvancedMetadataToolsManagerGameCount}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" VerticalAlignment="Center"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
+        <DataGrid Name="DG1" ItemsSource="{Binding MetadataListObjects}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0" CanUserAddRows="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="{DynamicResource LOCAdvancedMetadataToolsManagerGameCount}"  ElementStyle="{StaticResource RightCell}"
+                                    Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </UserControl>
