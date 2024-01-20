@@ -48,6 +48,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectHelper.cs">
+      <Link>Shared\DatabaseObjectHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>

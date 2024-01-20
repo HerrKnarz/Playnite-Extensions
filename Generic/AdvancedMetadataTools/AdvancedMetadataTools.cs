@@ -9,14 +9,6 @@ using System.Windows.Controls;
 
 namespace AdvancedMetadataTools
 {
-    public enum FieldType
-    {
-        Category,
-        Feature,
-        Genre,
-        Tag
-    }
-
     public class AdvancedMetadataTools : GenericPlugin
     {
         public AdvancedMetadataTools(IPlayniteAPI api) : base(api)

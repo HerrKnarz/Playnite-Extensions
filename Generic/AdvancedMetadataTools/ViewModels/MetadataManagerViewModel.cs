@@ -82,12 +82,30 @@ namespace AdvancedMetadataTools
 
             if (FilterCategories)
             {
+                //foreach (Category category in API.Instance.Database.Categories
+                //    .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
+                //{
+                //    MetadataListObject listObject = new MetadataListObject
+                //    {
+                //        Id = category.Id,
+                //        Name = category.Name,
+                //        GameCount = API.Instance.Database.Games.Count(g => g.CategoryIds?.Any(t => t == category.Id) ?? false),
+                //        Type = FieldType.Category
+                //    };
+                //    ((INotifyPropertyChanged)listObject).PropertyChanged +=
+                //        metadataList_Changed;
+                //
+                //    filteredObjects.Add(listObject);
+                //}
+
+
                 filteredObjects.AddRange(API.Instance.Database.Categories
                     .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(category
                         => new MetadataListObject
                         {
                             Id = category.Id,
                             Name = category.Name,
+                            EditName = category.Name,
                             GameCount = API.Instance.Database.Games.Count(g => g.CategoryIds?.Any(t => t == category.Id) ?? false),
                             Type = FieldType.Category
                         }));
@@ -101,6 +119,7 @@ namespace AdvancedMetadataTools
                         {
                             Id = feature.Id,
                             Name = feature.Name,
+                            EditName = feature.Name,
                             GameCount = API.Instance.Database.Games.Count(g => g.FeatureIds?.Any(t => t == feature.Id) ?? false),
                             Type = FieldType.Feature
                         }));
@@ -114,6 +133,7 @@ namespace AdvancedMetadataTools
                         {
                             Id = genre.Id,
                             Name = genre.Name,
+                            EditName = genre.Name,
                             GameCount = API.Instance.Database.Games.Count(g => g.GenreIds?.Any(t => t == genre.Id) ?? false),
                             Type = FieldType.Genre
                         }));
@@ -127,6 +147,7 @@ namespace AdvancedMetadataTools
                         {
                             Id = tag.Id,
                             Name = tag.Name,
+                            EditName = tag.Name,
                             GameCount = API.Instance.Database.Games.Count(g => g.TagIds?.Any(t => t == tag.Id) ?? false),
                             Type = FieldType.Tag
                         }));
@@ -148,5 +169,10 @@ namespace AdvancedMetadataTools
         }
 
         private void InitializeView(AdvancedMetadataTools plugin) => MetadataListObjects = new MetadataListObjects();
+
+        //private void metadataList_Changed(object sender, PropertyChangedEventArgs e)
+        //{
+        //    Log.Debug(e.PropertyName + "###" + sender);
+        //}
     }
 }

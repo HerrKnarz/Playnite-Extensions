@@ -29,7 +29,7 @@
         <DataGrid Name="DG1" ItemsSource="{Binding MetadataListObjects}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0" CanUserAddRows="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding EditName, UpdateSourceTrigger=LostFocus}"  />
                 <DataGridTextColumn Header="{DynamicResource LOCAdvancedMetadataToolsManagerGameCount}"  ElementStyle="{StaticResource RightCell}"
                                     Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
             </DataGrid.Columns>
