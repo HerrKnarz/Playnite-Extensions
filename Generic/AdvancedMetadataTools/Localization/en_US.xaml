@@ -6,9 +6,12 @@
 
     <sys:String x:Key="LOCAdvancedMetadataToolsManager">Advanced Metadata Manager</sys:String>
     <sys:String x:Key="LOCAdvancedMetadataToolsManagerGameCount">Game Count</sys:String>
+    <sys:String x:Key="LOCAdvancedMetadataToolsManagerMerge">Merge</sys:String>
 
     <sys:String x:Key="LOCAdvancedMetadataToolsDialogAlreadyExists">A {0} with that name already exists.</sys:String>
     <sys:String x:Key="LOCAdvancedMetadataToolsDialogRemovingItems">Removing items...</sys:String>
+    <sys:String x:Key="LOCAdvancedMetadataToolsDialogMergeAs">Merge as</sys:String>
+    <sys:String x:Key="LOCAdvancedMetadataToolsDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
 
     <sys:String x:Key="LOCAdvancedMetadataToolsEnum_FieldType_Category">Category</sys:String>
     <sys:String x:Key="LOCAdvancedMetadataToolsEnum_FieldType_Feature">Feature</sys:String>

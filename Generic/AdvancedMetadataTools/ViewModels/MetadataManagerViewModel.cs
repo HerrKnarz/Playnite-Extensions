@@ -1,9 +1,11 @@
 ﻿using AdvancedMetadataTools.Models;
+using AdvancedMetadataTools.Views;
 using KNARZhelper;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace AdvancedMetadataTools
 {
@@ -19,10 +21,13 @@ namespace AdvancedMetadataTools
 
         private MetadataListObjects _metadataListObjects;
 
+        private AdvancedMetadataTools _plugin;
+
         private string _searchTerm = string.Empty;
 
         public AdvancedMetadataTools Plugin
         {
+            get => _plugin;
             set => InitializeView(value);
         }
 
@@ -158,6 +163,35 @@ namespace AdvancedMetadataTools
             MetadataListObjects.AddMissing(filteredObjects.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
         });
 
+        public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
+        {
+            if ((items?.Count() ?? 0) > 1)
+            {
+                try
+                {
+                    MetadataListObjects mergeItems = new MetadataListObjects();
+
+                    mergeItems.AddMissing(items.ToList().Cast<MetadataListObject>());
+
+                    MergeDialogView mergeView = new MergeDialogView(Plugin, mergeItems);
+
+                    Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCAdvancedMetadataToolsManagerMerge"));
+
+                    window.Content = mergeView;
+
+                    window.ShowDialog();
+                }
+                catch (Exception exception)
+                {
+                    Log.Error(exception, "Error during initializing merge dialog", true);
+                }
+
+                return;
+            }
+
+            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogMultipleSelected"));
+        }, items => items?.Any() ?? false);
+
         public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
         {
             using (API.Instance.Database.BufferedUpdate())
@@ -207,11 +241,10 @@ namespace AdvancedMetadataTools
         }
 
 
-        private void InitializeView(AdvancedMetadataTools plugin) => MetadataListObjects = new MetadataListObjects();
-
-        //private void metadataList_Changed(object sender, PropertyChangedEventArgs e)
-        //{
-        //    Log.Debug(e.PropertyName + "###" + sender);
-        //}
+        private void InitializeView(AdvancedMetadataTools plugin)
+        {
+            _plugin = plugin;
+            MetadataListObjects = new MetadataListObjects();
+        }
     }
 }

@@ -20,6 +20,14 @@ namespace KNARZhelper
 
         private static void PositionWindow(Window window) => window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
+        public static Window CreateFixedDialog(string title)
+        {
+            Window window = CreateSizeToContentWindow(title, 300, 50);
+            window.ResizeMode = ResizeMode.NoResize;
+
+            return window;
+        }
+
         public static Window CreateSizeToContentWindow(string title, int minWidth = 500, int minHeight = 500)
         {
             Window window = CreateWindow(title);

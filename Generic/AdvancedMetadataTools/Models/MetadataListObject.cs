@@ -42,6 +42,7 @@ namespace AdvancedMetadataTools.Models
             }
         }
 
-        public string TypeLabel => Type.ToString();
+        public string TypeAndName => $"{Type.GetEnumDisplayName("AdvancedMetadataTools")}: {EditName}";
+        public string TypeLabel => Type.GetEnumDisplayName("AdvancedMetadataTools");
     }
 }
