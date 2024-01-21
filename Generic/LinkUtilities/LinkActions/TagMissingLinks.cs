@@ -98,7 +98,7 @@ namespace LinkUtilities.LinkActions
             return true;
         }
 
-        private bool CheckLibraryLink(Game game, string guid, string urlPattern)
+        private static bool CheckLibraryLink(Game game, string guid, string urlPattern)
         {
             LinkNamePattern pattern = new LinkNamePattern
             {
@@ -106,7 +106,7 @@ namespace LinkUtilities.LinkActions
                 UrlPattern = urlPattern
             };
 
-            return game.PluginId == Guid.Parse(guid) && !game.Links.Any(x => pattern.LinkMatch(x.Name, x.Url));
+            return game.PluginId == Guid.Parse(guid) && !(game.Links?.Any(x => pattern.LinkMatch(x.Name, x.Url)) ?? false);
         }
 
         private bool Tag(Game game)
