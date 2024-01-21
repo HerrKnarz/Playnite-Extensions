@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
 
@@ -97,6 +98,55 @@ namespace KNARZhelper
                     }
 
                     return;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        public static void RemoveDbObject(FieldType type, Guid id)
+        {
+            switch (type)
+            {
+                case FieldType.Category:
+                    foreach (Game game in API.Instance.Database.Games.Where(g => g.CategoryIds?.Any(t => t == id) ?? false))
+                    {
+                        game.CategoryIds.Remove(id);
+                        API.Instance.Database.Games.Update(game);
+                    }
+
+                    API.Instance.Database.Categories.Remove(id);
+
+                    break;
+                case FieldType.Feature:
+                    foreach (Game game in API.Instance.Database.Games.Where(g => g.FeatureIds?.Any(t => t == id) ?? false))
+                    {
+                        game.FeatureIds.Remove(id);
+                        API.Instance.Database.Games.Update(game);
+                    }
+
+                    API.Instance.Database.Features.Remove(id);
+
+                    break;
+                case FieldType.Genre:
+                    foreach (Game game in API.Instance.Database.Games.Where(g => g.GenreIds?.Any(t => t == id) ?? false))
+                    {
+                        game.GenreIds.Remove(id);
+                        API.Instance.Database.Games.Update(game);
+                    }
+
+                    API.Instance.Database.Genres.Remove(id);
+
+                    break;
+                case FieldType.Tag:
+                    foreach (Game game in API.Instance.Database.Games.Where(g => g.TagIds?.Any(t => t == id) ?? false))
+                    {
+                        game.TagIds.Remove(id);
+                        API.Instance.Database.Games.Update(game);
+                    }
+
+                    API.Instance.Database.Tags.Remove(id);
+
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }

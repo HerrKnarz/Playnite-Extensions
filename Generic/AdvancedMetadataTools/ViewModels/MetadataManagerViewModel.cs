@@ -80,83 +80,121 @@ namespace AdvancedMetadataTools
         {
             List<MetadataListObject> filteredObjects = new List<MetadataListObject>();
 
-            if (FilterCategories)
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                ResourceProvider.GetString("LOCLoadingLabel"),
+                false
+            )
             {
-                //foreach (Category category in API.Instance.Database.Categories
-                //    .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
-                //{
-                //    MetadataListObject listObject = new MetadataListObject
-                //    {
-                //        Id = category.Id,
-                //        Name = category.Name,
-                //        GameCount = API.Instance.Database.Games.Count(g => g.CategoryIds?.Any(t => t == category.Id) ?? false),
-                //        Type = FieldType.Category
-                //    };
-                //    ((INotifyPropertyChanged)listObject).PropertyChanged +=
-                //        metadataList_Changed;
-                //
-                //    filteredObjects.Add(listObject);
-                //}
+                IsIndeterminate = true
+            };
 
-
-                filteredObjects.AddRange(API.Instance.Database.Categories
-                    .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(category
-                        => new MetadataListObject
-                        {
-                            Id = category.Id,
-                            Name = category.Name,
-                            EditName = category.Name,
-                            GameCount = API.Instance.Database.Games.Count(g => g.CategoryIds?.Any(t => t == category.Id) ?? false),
-                            Type = FieldType.Category
-                        }));
-            }
-
-            if (FilterFeatures)
+            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
             {
-                filteredObjects.AddRange(API.Instance.Database.Features
-                    .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(feature
-                        => new MetadataListObject
-                        {
-                            Id = feature.Id,
-                            Name = feature.Name,
-                            EditName = feature.Name,
-                            GameCount = API.Instance.Database.Games.Count(g => g.FeatureIds?.Any(t => t == feature.Id) ?? false),
-                            Type = FieldType.Feature
-                        }));
-            }
+                try
+                {
+                    if (FilterCategories)
+                    {
+                        filteredObjects.AddRange(API.Instance.Database.Categories
+                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(category
+                                => new MetadataListObject
+                                {
+                                    Id = category.Id,
+                                    Name = category.Name,
+                                    EditName = category.Name,
+                                    GameCount = API.Instance.Database.Games.Count(g => g.CategoryIds?.Any(t => t == category.Id) ?? false),
+                                    Type = FieldType.Category
+                                }));
+                    }
 
-            if (FilterGenres)
-            {
-                filteredObjects.AddRange(API.Instance.Database.Genres
-                    .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(genre
-                        => new MetadataListObject
-                        {
-                            Id = genre.Id,
-                            Name = genre.Name,
-                            EditName = genre.Name,
-                            GameCount = API.Instance.Database.Games.Count(g => g.GenreIds?.Any(t => t == genre.Id) ?? false),
-                            Type = FieldType.Genre
-                        }));
-            }
+                    if (FilterFeatures)
+                    {
+                        filteredObjects.AddRange(API.Instance.Database.Features
+                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(feature
+                                => new MetadataListObject
+                                {
+                                    Id = feature.Id,
+                                    Name = feature.Name,
+                                    EditName = feature.Name,
+                                    GameCount = API.Instance.Database.Games.Count(g => g.FeatureIds?.Any(t => t == feature.Id) ?? false),
+                                    Type = FieldType.Feature
+                                }));
+                    }
 
-            if (FilterTags)
-            {
-                filteredObjects.AddRange(API.Instance.Database.Tags
-                    .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(tag
-                        => new MetadataListObject
-                        {
-                            Id = tag.Id,
-                            Name = tag.Name,
-                            EditName = tag.Name,
-                            GameCount = API.Instance.Database.Games.Count(g => g.TagIds?.Any(t => t == tag.Id) ?? false),
-                            Type = FieldType.Tag
-                        }));
-            }
+                    if (FilterGenres)
+                    {
+                        filteredObjects.AddRange(API.Instance.Database.Genres
+                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(genre
+                                => new MetadataListObject
+                                {
+                                    Id = genre.Id,
+                                    Name = genre.Name,
+                                    EditName = genre.Name,
+                                    GameCount = API.Instance.Database.Games.Count(g => g.GenreIds?.Any(t => t == genre.Id) ?? false),
+                                    Type = FieldType.Genre
+                                }));
+                    }
+
+                    if (FilterTags)
+                    {
+                        filteredObjects.AddRange(API.Instance.Database.Tags
+                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(tag
+                                => new MetadataListObject
+                                {
+                                    Id = tag.Id,
+                                    Name = tag.Name,
+                                    EditName = tag.Name,
+                                    GameCount = API.Instance.Database.Games.Count(g => g.TagIds?.Any(t => t == tag.Id) ?? false),
+                                    Type = FieldType.Tag
+                                }));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            }, globalProgressOptions);
 
             MetadataListObjects.Clear();
             MetadataListObjects.AddMissing(filteredObjects.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
         });
 
+        public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
+        {
+            using (API.Instance.Database.BufferedUpdate())
+            {
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                    ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogRemovingItems"),
+                    false
+                )
+                {
+                    IsIndeterminate = false
+                };
+
+                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                {
+                    try
+                    {
+                        activateGlobalProgress.ProgressMaxValue = items.Count;
+
+                        foreach (MetadataListObject item in items)
+                        {
+                            DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id);
+
+                            activateGlobalProgress.CurrentProgressValue++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                }, globalProgressOptions);
+            }
+
+            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            {
+                MetadataListObjects.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
 
         public MetadataListObjects MetadataListObjects
         {
@@ -167,6 +205,7 @@ namespace AdvancedMetadataTools
                 OnPropertyChanged("MetadataListObjects");
             }
         }
+
 
         private void InitializeView(AdvancedMetadataTools plugin) => MetadataListObjects = new MetadataListObjects();
 

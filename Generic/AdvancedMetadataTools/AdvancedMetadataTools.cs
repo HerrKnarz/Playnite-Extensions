@@ -35,7 +35,7 @@ namespace AdvancedMetadataTools
             {
                 MetadataManagerView managerView = new MetadataManagerView(this);
 
-                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCAdvancedMetadataToolsManager"), 1200, 800);
+                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCAdvancedMetadataToolsManager"), 600, 600, false, true);
 
                 window.Content = managerView;
 
