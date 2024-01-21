@@ -163,15 +163,17 @@ namespace KNARZhelper
                 case FieldType.Tag:
                     foreach (Game game in API.Instance.Database.Games.Where(g => g.TagIds?.Any(t => t == id) ?? false))
                     {
-                        if (game.TagIds.Remove(id))
+                        if (!game.TagIds.Remove(id))
                         {
-                            if (newType != null && newId != null)
-                            {
-                                AddDbObject(game, (FieldType)newType, (Guid)newId);
-                            }
-
-                            API.Instance.Database.Games.Update(game);
+                            continue;
                         }
+
+                        if (newType != null && newId != null)
+                        {
+                            AddDbObject(game, (FieldType)newType, (Guid)newId);
+                        }
+
+                        API.Instance.Database.Games.Update(game);
                     }
 
                     API.Instance.Database.Tags.Remove(id);
