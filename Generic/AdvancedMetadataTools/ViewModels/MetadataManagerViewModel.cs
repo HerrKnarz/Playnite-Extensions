@@ -83,6 +83,91 @@ namespace AdvancedMetadataTools
 
         public RelayCommand FilterCommand => new RelayCommand(() =>
         {
+            ExecuteFilter();
+        });
+
+        public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
+        {
+            if ((items?.Count() ?? 0) > 1)
+            {
+                try
+                {
+                    MetadataListObjects mergeItems = new MetadataListObjects();
+
+                    mergeItems.AddMissing(items.ToList().Cast<MetadataListObject>());
+
+                    MergeDialogView mergeView = new MergeDialogView(Plugin, mergeItems);
+
+                    Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCAdvancedMetadataToolsManagerMerge"));
+
+                    window.Content = mergeView;
+
+                    if (window.ShowDialog() ?? false)
+                    {
+                        ExecuteFilter();
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.Error(exception, "Error during initializing merge dialog", true);
+                }
+
+                return;
+            }
+
+            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogMultipleSelected"));
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
+        {
+            using (API.Instance.Database.BufferedUpdate())
+            {
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                    ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogRemovingItems"),
+                    false
+                )
+                {
+                    IsIndeterminate = false
+                };
+
+                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                {
+                    try
+                    {
+                        activateGlobalProgress.ProgressMaxValue = items.Count;
+
+                        foreach (MetadataListObject item in items)
+                        {
+                            DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id);
+
+                            activateGlobalProgress.CurrentProgressValue++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                }, globalProgressOptions);
+            }
+
+            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            {
+                MetadataListObjects.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public MetadataListObjects MetadataListObjects
+        {
+            get => _metadataListObjects;
+            set
+            {
+                _metadataListObjects = value;
+                OnPropertyChanged("MetadataListObjects");
+            }
+        }
+
+        public void ExecuteFilter()
+        {
             List<MetadataListObject> filteredObjects = new List<MetadataListObject>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
@@ -161,83 +246,6 @@ namespace AdvancedMetadataTools
 
             MetadataListObjects.Clear();
             MetadataListObjects.AddMissing(filteredObjects.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
-        });
-
-        public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
-        {
-            if ((items?.Count() ?? 0) > 1)
-            {
-                try
-                {
-                    MetadataListObjects mergeItems = new MetadataListObjects();
-
-                    mergeItems.AddMissing(items.ToList().Cast<MetadataListObject>());
-
-                    MergeDialogView mergeView = new MergeDialogView(Plugin, mergeItems);
-
-                    Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCAdvancedMetadataToolsManagerMerge"));
-
-                    window.Content = mergeView;
-
-                    window.ShowDialog();
-                }
-                catch (Exception exception)
-                {
-                    Log.Error(exception, "Error during initializing merge dialog", true);
-                }
-
-                return;
-            }
-
-            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogMultipleSelected"));
-        }, items => items?.Any() ?? false);
-
-        public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
-        {
-            using (API.Instance.Database.BufferedUpdate())
-            {
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogRemovingItems"),
-                    false
-                )
-                {
-                    IsIndeterminate = false
-                };
-
-                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                {
-                    try
-                    {
-                        activateGlobalProgress.ProgressMaxValue = items.Count;
-
-                        foreach (MetadataListObject item in items)
-                        {
-                            DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id);
-
-                            activateGlobalProgress.CurrentProgressValue++;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                    }
-                }, globalProgressOptions);
-            }
-
-            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
-            {
-                MetadataListObjects.Remove(item);
-            }
-        }, items => items?.Any() ?? false);
-
-        public MetadataListObjects MetadataListObjects
-        {
-            get => _metadataListObjects;
-            set
-            {
-                _metadataListObjects = value;
-                OnPropertyChanged("MetadataListObjects");
-            }
         }
 
 

@@ -10,6 +10,7 @@
 
     <sys:String x:Key="LOCAdvancedMetadataToolsDialogAlreadyExists">A {0} with that name already exists.</sys:String>
     <sys:String x:Key="LOCAdvancedMetadataToolsDialogRemovingItems">Removing items...</sys:String>
+    <sys:String x:Key="LOCAdvancedMetadataToolsDialogMergingItems">Merging items...</sys:String>
     <sys:String x:Key="LOCAdvancedMetadataToolsDialogMergeAs">Merge as</sys:String>
     <sys:String x:Key="LOCAdvancedMetadataToolsDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
 

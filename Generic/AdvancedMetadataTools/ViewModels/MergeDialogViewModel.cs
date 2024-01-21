@@ -46,7 +46,7 @@ namespace AdvancedMetadataTools
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
-            API.Instance.Dialogs.ShowMessage(MergeDestination.EditName);
+            MetadataListObjects.MergeItems(MergeDestination.Type, MergeDestination.Id);
             win.DialogResult = true;
             win.Close();
         }, win => win != null);

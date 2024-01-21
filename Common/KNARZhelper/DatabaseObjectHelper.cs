@@ -103,15 +103,24 @@ namespace KNARZhelper
             }
         }
 
-        public static void RemoveDbObject(FieldType type, Guid id)
+        public static void RemoveDbObject(FieldType type, Guid id) => ReplaceDbObject(type, id);
+
+        public static void ReplaceDbObject(FieldType type, Guid id, FieldType? newType = null, Guid? newId = null)
         {
             switch (type)
             {
                 case FieldType.Category:
                     foreach (Game game in API.Instance.Database.Games.Where(g => g.CategoryIds?.Any(t => t == id) ?? false))
                     {
-                        game.CategoryIds.Remove(id);
-                        API.Instance.Database.Games.Update(game);
+                        if (game.CategoryIds.Remove(id))
+                        {
+                            if (newType != null && newId != null)
+                            {
+                                AddDbObject(game, (FieldType)newType, (Guid)newId);
+                            }
+
+                            API.Instance.Database.Games.Update(game);
+                        }
                     }
 
                     API.Instance.Database.Categories.Remove(id);
@@ -120,8 +129,15 @@ namespace KNARZhelper
                 case FieldType.Feature:
                     foreach (Game game in API.Instance.Database.Games.Where(g => g.FeatureIds?.Any(t => t == id) ?? false))
                     {
-                        game.FeatureIds.Remove(id);
-                        API.Instance.Database.Games.Update(game);
+                        if (game.FeatureIds.Remove(id))
+                        {
+                            if (newType != null && newId != null)
+                            {
+                                AddDbObject(game, (FieldType)newType, (Guid)newId);
+                            }
+
+                            API.Instance.Database.Games.Update(game);
+                        }
                     }
 
                     API.Instance.Database.Features.Remove(id);
@@ -130,8 +146,15 @@ namespace KNARZhelper
                 case FieldType.Genre:
                     foreach (Game game in API.Instance.Database.Games.Where(g => g.GenreIds?.Any(t => t == id) ?? false))
                     {
-                        game.GenreIds.Remove(id);
-                        API.Instance.Database.Games.Update(game);
+                        if (game.GenreIds.Remove(id))
+                        {
+                            if (newType != null && newId != null)
+                            {
+                                AddDbObject(game, (FieldType)newType, (Guid)newId);
+                            }
+
+                            API.Instance.Database.Games.Update(game);
+                        }
                     }
 
                     API.Instance.Database.Genres.Remove(id);
@@ -140,8 +163,15 @@ namespace KNARZhelper
                 case FieldType.Tag:
                     foreach (Game game in API.Instance.Database.Games.Where(g => g.TagIds?.Any(t => t == id) ?? false))
                     {
-                        game.TagIds.Remove(id);
-                        API.Instance.Database.Games.Update(game);
+                        if (game.TagIds.Remove(id))
+                        {
+                            if (newType != null && newId != null)
+                            {
+                                AddDbObject(game, (FieldType)newType, (Guid)newId);
+                            }
+
+                            API.Instance.Database.Games.Update(game);
+                        }
                     }
 
                     API.Instance.Database.Tags.Remove(id);
@@ -150,6 +180,31 @@ namespace KNARZhelper
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
+        }
+
+        public static bool AddDbObject(Game game, FieldType type, Guid id)
+        {
+            List<Guid> ids;
+
+            switch (type)
+            {
+                case FieldType.Category:
+                    ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
+                    break;
+                case FieldType.Feature:
+                    ids = game.FeatureIds ?? (game.FeatureIds = new List<Guid>());
+                    break;
+                case FieldType.Genre:
+                    ids = game.GenreIds ?? (game.GenreIds = new List<Guid>());
+                    break;
+                case FieldType.Tag:
+                    ids = game.TagIds ?? (game.TagIds = new List<Guid>());
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            return ids?.AddMissing(id) ?? false;
         }
     }
 }
