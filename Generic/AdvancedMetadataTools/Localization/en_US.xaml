@@ -6,4 +6,12 @@
 
     <sys:String x:Key="LOCAdvancedMetadataToolsManager">Advanced Metadata Manager</sys:String>
     <sys:String x:Key="LOCAdvancedMetadataToolsManagerGameCount">Game Count</sys:String>
+
+    <sys:String x:Key="LOCAdvancedMetadataToolsDialogAlreadyExists">A {0} with that name already exists.</sys:String>
+
+    <sys:String x:Key="LOCAdvancedMetadataToolsEnum_FieldType_Category">Category</sys:String>
+    <sys:String x:Key="LOCAdvancedMetadataToolsEnum_FieldType_Feature">Feature</sys:String>
+    <sys:String x:Key="LOCAdvancedMetadataToolsEnum_FieldType_Genre">Genre</sys:String>
+    <sys:String x:Key="LOCAdvancedMetadataToolsEnum_FieldType_Tag">Tag</sys:String>
+
 </ResourceDictionary>

@@ -2,6 +2,7 @@
 using Playnite.SDK.Models;
 using System;
 using System.Linq;
+using System.Resources;
 
 namespace KNARZhelper
 {
@@ -13,21 +14,26 @@ namespace KNARZhelper
         Tag
     }
 
+    public enum DbInteractionResult
+    {
+        Updated,
+        Created,
+        IsDuplicate,
+        Error
+    }
+
     public static class DatabaseObjectHelper
     {
-        public static bool UpdateName(FieldType type, Guid id, string oldName, string newName)
+        public static DbInteractionResult UpdateName(FieldType type, Guid id, string oldName, string newName)
         {
             if (oldName != null && oldName != newName && newName.DbObjectExists(type, id))
             {
-                API.Instance.Dialogs.ShowMessage("A value with that name already exists.");
-                return false;
-
-                //TODO: Stattdessen Status zurückmelden und Dialog außerhalb aufrufen. AUßerdem Meldung übersetzbar machen und "Value" durch wirklichen Typen ersetzen. 
+                return DbInteractionResult.IsDuplicate;
             }
 
             UpdateDbObject(type, id, newName);
 
-            return true;
+            return DbInteractionResult.Updated;
         }
 
         public static bool DbObjectExists(this string str, FieldType type, Guid id)

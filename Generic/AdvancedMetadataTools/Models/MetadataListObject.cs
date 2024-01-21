@@ -1,5 +1,7 @@
 ﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Models;
+using System;
 
 namespace AdvancedMetadataTools.Models
 {
@@ -14,7 +16,24 @@ namespace AdvancedMetadataTools.Models
             get => _editName;
             set
             {
-                if (_editName == null || _editName == value || DatabaseObjectHelper.UpdateName(Type, Id, _editName, value))
+                if (_editName != null && _editName != value)
+                {
+                    DbInteractionResult res = DatabaseObjectHelper.UpdateName(Type, Id, _editName, value);
+
+                    switch (res)
+                    {
+                        case DbInteractionResult.Updated:
+                            _editName = value;
+                            break;
+                        case DbInteractionResult.IsDuplicate:
+                            API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogAlreadyExists"),
+                                Type.GetEnumDisplayName("AdvancedMetadataTools")));
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+                else
                 {
                     _editName = value;
                 }
