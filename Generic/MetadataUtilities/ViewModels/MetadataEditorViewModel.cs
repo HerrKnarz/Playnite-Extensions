@@ -1,15 +1,15 @@
-﻿using AdvancedMetadataTools.Models;
-using AdvancedMetadataTools.Views;
-using KNARZhelper;
+﻿using KNARZhelper;
+using MetadataUtilities.Models;
+using MetadataUtilities.Views;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
-namespace AdvancedMetadataTools
+namespace MetadataUtilities
 {
-    public class MetadataManagerViewModel : ViewModelBase
+    public class MetadataEditorViewModel : ViewModelBase
     {
         private bool _filterCategories = true;
 
@@ -21,11 +21,11 @@ namespace AdvancedMetadataTools
 
         private MetadataListObjects _metadataListObjects;
 
-        private AdvancedMetadataTools _plugin;
+        private MetadataUtilities _plugin;
 
         private string _searchTerm = string.Empty;
 
-        public AdvancedMetadataTools Plugin
+        public MetadataUtilities Plugin
         {
             get => _plugin;
             set => InitializeView(value);
@@ -98,7 +98,7 @@ namespace AdvancedMetadataTools
 
                     MergeDialogView mergeView = new MergeDialogView(Plugin, mergeItems);
 
-                    Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCAdvancedMetadataToolsManagerMerge"));
+                    Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesEditorMerge"));
 
                     window.Content = mergeView;
 
@@ -115,7 +115,7 @@ namespace AdvancedMetadataTools
                 return;
             }
 
-            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogMultipleSelected"));
+            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMultipleSelected"));
         }, items => items?.Any() ?? false);
 
         public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
@@ -123,7 +123,7 @@ namespace AdvancedMetadataTools
             using (API.Instance.Database.BufferedUpdate())
             {
                 GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogRemovingItems"),
+                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogRemovingItems"),
                     false
                 )
                 {
@@ -249,7 +249,7 @@ namespace AdvancedMetadataTools
         }
 
 
-        private void InitializeView(AdvancedMetadataTools plugin)
+        private void InitializeView(MetadataUtilities plugin)
         {
             _plugin = plugin;
             MetadataListObjects = new MetadataListObjects();

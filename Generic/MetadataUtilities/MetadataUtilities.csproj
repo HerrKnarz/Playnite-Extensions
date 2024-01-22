@@ -7,8 +7,8 @@
     <ProjectGuid>{F154E2A4-5514-4061-97AC-21C1A85FB727}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AdvancedMetadataTools</RootNamespace>
-    <AssemblyName>AdvancedMetadataTools</AssemblyName>
+    <RootNamespace>MetadataUtilities</RootNamespace>
+    <AssemblyName>MetadataUtilities</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -63,19 +63,19 @@
     <Compile Include="..\..\Common\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
-    <Compile Include="AdvancedMetadataTools.cs" />
+    <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\MetadataListObject.cs" />
     <Compile Include="Models\MetadataListObjects.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\MetadataManagerViewModel.cs" />
+    <Compile Include="ViewModels\Settings.cs" />
+    <Compile Include="ViewModels\MetadataEditorViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\MetadataManagerView.xaml.cs">
-      <DependentUpon>MetadataManagerView.xaml</DependentUpon>
+    <Compile Include="Views\MetadataEditorView.xaml.cs">
+      <DependentUpon>MetadataEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MergeDialogView.xaml.cs">
       <DependentUpon>MergeDialogView.xaml</DependentUpon>
@@ -96,7 +96,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MetadataManagerView.xaml">
+    <Page Include="Views\MetadataEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

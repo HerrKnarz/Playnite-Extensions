@@ -2,9 +2,9 @@
 using Playnite.SDK.Data;
 using System.Collections.Generic;
 
-namespace AdvancedMetadataTools
+namespace MetadataUtilities
 {
-    public class SettingsViewModel : ObservableObject
+    public class Settings : ObservableObject
     {
         private string option1 = string.Empty;
         private bool option2;
@@ -32,19 +32,19 @@ namespace AdvancedMetadataTools
         }
     }
 
-    public class AdvancedMetadataToolsSettingsViewModel : ObservableObject, ISettings
+    public class SettingsViewModel : ObservableObject, ISettings
     {
-        private readonly AdvancedMetadataTools plugin;
+        private readonly MetadataUtilities plugin;
 
-        private SettingsViewModel settings;
+        private Settings settings;
 
-        public AdvancedMetadataToolsSettingsViewModel(AdvancedMetadataTools plugin)
+        public SettingsViewModel(MetadataUtilities plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
 
             // Load saved settings.
-            SettingsViewModel savedSettings = plugin.LoadPluginSettings<SettingsViewModel>();
+            Settings savedSettings = plugin.LoadPluginSettings<Settings>();
 
             // LoadPluginSettings returns null if no saved data is available.
             if (savedSettings != null)
@@ -53,13 +53,13 @@ namespace AdvancedMetadataTools
             }
             else
             {
-                Settings = new SettingsViewModel();
+                Settings = new Settings();
             }
         }
 
-        private SettingsViewModel editingClone { get; set; }
+        private Settings editingClone { get; set; }
 
-        public SettingsViewModel Settings
+        public Settings Settings
         {
             get => settings;
             set

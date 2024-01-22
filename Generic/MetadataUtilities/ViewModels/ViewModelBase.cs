@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace AdvancedMetadataTools
+namespace MetadataUtilities
 {
     /// <summary>
     ///     Base class for the view models

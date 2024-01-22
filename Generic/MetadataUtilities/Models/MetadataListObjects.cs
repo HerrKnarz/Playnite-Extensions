@@ -3,7 +3,7 @@ using Playnite.SDK;
 using System;
 using System.Collections.ObjectModel;
 
-namespace AdvancedMetadataTools.Models
+namespace MetadataUtilities.Models
 {
     public class MetadataListObjects : ObservableCollection<MetadataListObject>
     {
@@ -14,7 +14,7 @@ namespace AdvancedMetadataTools.Models
             using (API.Instance.Database.BufferedUpdate())
             {
                 GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogMergingItems"),
+                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergingItems"),
                     false
                 )
                 {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace AdvancedMetadataTools
+namespace MetadataUtilities
 {
     public partial class SettingsView : UserControl
     {

@@ -1,16 +1,16 @@
-﻿using AdvancedMetadataTools.Models;
-using KNARZhelper;
+﻿using KNARZhelper;
+using MetadataUtilities.Models;
 using System;
 using System.Windows.Controls;
 
-namespace AdvancedMetadataTools.Views
+namespace MetadataUtilities.Views
 {
     /// <summary>
     ///     Interaction logic for UserControl1.xaml
     /// </summary>
     public partial class MergeDialogView : UserControl
     {
-        public MergeDialogView(AdvancedMetadataTools plugin, MetadataListObjects items)
+        public MergeDialogView(MetadataUtilities plugin, MetadataListObjects items)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace AdvancedMetadataTools.Views
             }
             catch (Exception e)
             {
-                Log.Error(e, "Error during initializing MetadataManager", true);
+                Log.Error(e, "Error during initializing Metadata Editor", true);
             }
         }
     }

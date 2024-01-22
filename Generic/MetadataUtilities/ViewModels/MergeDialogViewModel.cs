@@ -1,17 +1,17 @@
-﻿using AdvancedMetadataTools.Models;
+﻿using MetadataUtilities.Models;
 using Playnite.SDK;
 using System.Linq;
 using System.Windows;
 
-namespace AdvancedMetadataTools
+namespace MetadataUtilities
 {
     public class MergeDialogViewModel : ViewModelBase
     {
         private MetadataListObject _mergeDestination;
         private MetadataListObjects _metadataListObjects;
-        private AdvancedMetadataTools _plugin;
+        private MetadataUtilities _plugin;
 
-        public AdvancedMetadataTools Plugin
+        public MetadataUtilities Plugin
         {
             get => _plugin;
             set

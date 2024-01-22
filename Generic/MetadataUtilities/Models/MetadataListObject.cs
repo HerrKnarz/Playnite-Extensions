@@ -3,7 +3,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 
-namespace AdvancedMetadataTools.Models
+namespace MetadataUtilities.Models
 {
     public class MetadataListObject : DatabaseObject
     {
@@ -26,8 +26,8 @@ namespace AdvancedMetadataTools.Models
                             _editName = value;
                             break;
                         case DbInteractionResult.IsDuplicate:
-                            API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCAdvancedMetadataToolsDialogAlreadyExists"),
-                                Type.GetEnumDisplayName("AdvancedMetadataTools")));
+                            API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
+                                Type.GetEnumDisplayName("MetadataUtilities")));
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -42,7 +42,7 @@ namespace AdvancedMetadataTools.Models
             }
         }
 
-        public string TypeAndName => $"{Type.GetEnumDisplayName("AdvancedMetadataTools")}: {EditName}";
-        public string TypeLabel => Type.GetEnumDisplayName("AdvancedMetadataTools");
+        public string TypeAndName => $"{Type.GetEnumDisplayName("MetadataUtilities")}: {EditName}";
+        public string TypeLabel => Type.GetEnumDisplayName("MetadataUtilities");
     }
 }

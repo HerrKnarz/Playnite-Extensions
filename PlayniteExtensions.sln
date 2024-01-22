@@ -44,7 +44,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkUtilities.Test", "Gener
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickAdd", "Generic\QuickAdd\QuickAdd.csproj", "{389CA94C-A5AD-4E93-A4AE-A5B8F2496EB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedMetadataTools", "Generic\AdvancedMetadataTools\AdvancedMetadataTools.csproj", "{F154E2A4-5514-4061-97AC-21C1A85FB727}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataUtilities", "Generic\MetadataUtilities\MetadataUtilities.csproj", "{F154E2A4-5514-4061-97AC-21C1A85FB727}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
