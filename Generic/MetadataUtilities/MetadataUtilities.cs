@@ -16,7 +16,7 @@ namespace MetadataUtilities
             Settings = new SettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = true
+                HasSettings = false
             };
 
             Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
@@ -45,7 +45,7 @@ namespace MetadataUtilities
             {
                 MetadataEditorView editorView = new MetadataEditorView(this);
 
-                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesEditor"), 600, 600, false, true);
+                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesEditor"), 700, 600, false, true);
 
                 window.Content = editorView;
 

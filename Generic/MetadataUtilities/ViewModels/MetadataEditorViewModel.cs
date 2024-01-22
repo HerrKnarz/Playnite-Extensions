@@ -17,6 +17,8 @@ namespace MetadataUtilities
 
         private bool _filterGenres = true;
 
+        private bool _filterSeries = true;
+
         private bool _filterTags = true;
 
         private MetadataListObjects _metadataListObjects;
@@ -58,6 +60,16 @@ namespace MetadataUtilities
             {
                 _filterGenres = value;
                 OnPropertyChanged("FilterGenres");
+            }
+        }
+
+        public bool FilterSeries
+        {
+            get => _filterSeries;
+            set
+            {
+                _filterSeries = value;
+                OnPropertyChanged("FilterSeries");
             }
         }
 
@@ -221,6 +233,20 @@ namespace MetadataUtilities
                                     EditName = genre.Name,
                                     GameCount = API.Instance.Database.Games.Count(g => g.GenreIds?.Any(t => t == genre.Id) ?? false),
                                     Type = FieldType.Genre
+                                }));
+                    }
+
+                    if (FilterSeries)
+                    {
+                        filteredObjects.AddRange(API.Instance.Database.Series
+                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(series
+                                => new MetadataListObject
+                                {
+                                    Id = series.Id,
+                                    Name = series.Name,
+                                    EditName = series.Name,
+                                    GameCount = API.Instance.Database.Games.Count(g => g.SeriesIds?.Any(t => t == series.Id) ?? false),
+                                    Type = FieldType.Series
                                 }));
                     }
 

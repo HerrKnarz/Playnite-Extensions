@@ -21,6 +21,7 @@
             <CheckBox IsChecked="{Binding FilterCategories}" Content="{DynamicResource LOCCategoriesLabel}" Margin="10,0,0,0"/>
             <CheckBox IsChecked="{Binding FilterFeatures}" Content="{DynamicResource LOCFeaturesLabel}" Margin="10,0,0,0"/>
             <CheckBox IsChecked="{Binding FilterGenres}" Content="{DynamicResource LOCGenresLabel}" Margin="10,0,0,0"/>
+            <CheckBox IsChecked="{Binding FilterSeries}" Content="{DynamicResource LOCSeriesLabel}" Margin="10,0,0,0"/>
             <CheckBox IsChecked="{Binding FilterTags}" Content="{DynamicResource LOCTagsLabel}" Margin="10,0,0,0"/>
 
             <Button Content="&#xEF29;" FontFamily="{DynamicResource FontIcoFont}"

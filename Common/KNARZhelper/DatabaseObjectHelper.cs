@@ -12,6 +12,7 @@ namespace KNARZhelper
         Category,
         Feature,
         Genre,
+        Series,
         Tag
     }
 
@@ -47,6 +48,8 @@ namespace KNARZhelper
                     return API.Instance.Database.Features?.Any(x => x.Name == str && x.Id != id) ?? false;
                 case FieldType.Genre:
                     return API.Instance.Database.Genres?.Any(x => x.Name == str && x.Id != id) ?? false;
+                case FieldType.Series:
+                    return API.Instance.Database.Series?.Any(x => x.Name == str && x.Id != id) ?? false;
                 case FieldType.Tag:
                     return API.Instance.Database.Tags?.Any(x => x.Name == str && x.Id != id) ?? false;
                 default:
@@ -85,6 +88,16 @@ namespace KNARZhelper
                     {
                         genre.Name = name;
                         API.Instance.Database.Genres.Update(genre);
+                    }
+
+                    return;
+                case FieldType.Series:
+                    Series series = API.Instance.Database.Series?.FirstOrDefault(x => x.Id == id);
+
+                    if (series != null)
+                    {
+                        series.Name = name;
+                        API.Instance.Database.Series.Update(series);
                     }
 
                     return;
@@ -160,6 +173,23 @@ namespace KNARZhelper
                     API.Instance.Database.Genres.Remove(id);
 
                     break;
+                case FieldType.Series:
+                    foreach (Game game in API.Instance.Database.Games.Where(g => g.SeriesIds?.Any(t => t == id) ?? false))
+                    {
+                        if (game.SeriesIds.Remove(id))
+                        {
+                            if (newType != null && newId != null)
+                            {
+                                AddDbObject(game, (FieldType)newType, (Guid)newId);
+                            }
+
+                            API.Instance.Database.Games.Update(game);
+                        }
+                    }
+
+                    API.Instance.Database.Series.Remove(id);
+
+                    break;
                 case FieldType.Tag:
                     foreach (Game game in API.Instance.Database.Games.Where(g => g.TagIds?.Any(t => t == id) ?? false))
                     {
@@ -198,6 +228,9 @@ namespace KNARZhelper
                     break;
                 case FieldType.Genre:
                     ids = game.GenreIds ?? (game.GenreIds = new List<Guid>());
+                    break;
+                case FieldType.Series:
+                    ids = game.SeriesIds ?? (game.SeriesIds = new List<Guid>());
                     break;
                 case FieldType.Tag:
                     ids = game.TagIds ?? (game.TagIds = new List<Guid>());
