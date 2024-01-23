@@ -32,6 +32,9 @@ namespace KNARZhelper
             });
         }
 
+        public static string GetEnumDisplayName(this Enum e, string locPrefix)
+            => ResourceProvider.GetString($"LOC{locPrefix}Enum_{e.GetType().Name}_{e}");
+
         public static int RemoveAll<T>(
             this ObservableCollection<T> coll, Func<T, bool> condition)
         {

@@ -1,4 +1,5 @@
-﻿using LinkUtilities.BaseClasses;
+﻿using KNARZhelper;
+using LinkUtilities.BaseClasses;
 using LinkUtilities.Models;
 using LinkUtilities.Settings;
 using Playnite.SDK;
@@ -79,26 +80,7 @@ namespace LinkUtilities.LinkActions
             return tag;
         }
 
-        /// <summary>
-        ///     Adds a tag to a game.
-        /// </summary>
-        /// <param name="game">Game the tag will be added to</param>
-        /// <param name="tag">The tag to add.</param>
-        /// <returns>True if the tag was added</returns>
-        private static bool AddTagToGame(Game game, IIdentifiable tag)
-        {
-            List<Guid> tagIds = game.TagIds ?? (game.TagIds = new List<Guid>());
-
-            if (tagIds.Contains(tag.Id))
-            {
-                return false;
-            }
-
-            tagIds.Add(tag.Id);
-            return true;
-        }
-
-        private bool CheckLibraryLink(Game game, string guid, string urlPattern)
+        private static bool CheckLibraryLink(Game game, string guid, string urlPattern)
         {
             LinkNamePattern pattern = new LinkNamePattern
             {
@@ -106,7 +88,7 @@ namespace LinkUtilities.LinkActions
                 UrlPattern = urlPattern
             };
 
-            return game.PluginId == Guid.Parse(guid) && !game.Links.Any(x => pattern.LinkMatch(x.Name, x.Url));
+            return game.PluginId == Guid.Parse(guid) && !(game.Links?.Any(x => pattern.LinkMatch(x.Name, x.Url)) ?? false);
         }
 
         private bool Tag(Game game)
@@ -126,7 +108,7 @@ namespace LinkUtilities.LinkActions
 
                 if (isMissing)
                 {
-                    mustUpdate |= AddTagToGame(game, tag);
+                    mustUpdate |= DatabaseObjectHelper.AddDbObject(game, FieldType.Tag, tag.Id);
                 }
                 else
                 {
@@ -150,7 +132,7 @@ namespace LinkUtilities.LinkActions
 
                 if (libraryTagMissing)
                 {
-                    mustUpdate |= AddTagToGame(game, libraryTag);
+                    mustUpdate |= DatabaseObjectHelper.AddDbObject(game, FieldType.Tag, libraryTag.Id);
                 }
                 else
                 {

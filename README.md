@@ -42,6 +42,7 @@ Extension to manage links for the games in the playnite library. It can do the f
 - Remove duplicate links.
 - Rename links (e.g. shorten wikipedia to wiki).
 - Add links to several websites directly by trying to find a valid link using the game name
+- limited option to add your own websites to be added. See [wiki](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Supported-websites-for-add-&-search-function) for details.
 - Add library links: add links to the game page of its library
 - Add tags to games to keep track of missing links to specific websites.
 
@@ -50,7 +51,7 @@ All of these functions can be triggered manually for the selected games via game
 - Search for a game on several websites to add links via search dialog
 - Open a search for a game in your web browser on supported websites.
 - Add link to active website in your browser via bookmarklet (see [wiki](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet) for more information). Works with any website.
-- Check if links are still working, with option to remove links or replace URLs in the result dialog.
+- Check if links are still working, with option to filter results, remove links or replace URLs in the result dialog.
 
 To see which websites are already supported or planned to be added see the [wiki](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Supported-websites-for-add-&-search-function)!
 
@@ -58,7 +59,6 @@ To see which websites are already supported or planned to be added see the [wiki
 - add links to more websites.
 - blacklist games from adding "missing link" tags for specific websites.
 - add support for quick search to add links or search for games with specific links
-- option to filter check links window by website to make it easier to manage links to certain sites
 - option to remove links to manually added url mask from selected games 
 
 ## Company Companion

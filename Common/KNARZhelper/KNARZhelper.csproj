@@ -47,6 +47,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseObjectHelper.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MiscHelper.cs" />
     <Compile Include="PlatformHelper.cs" />
@@ -56,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="PlayniteSDK">
-      <Version>6.8.0</Version>
+      <Version>6.11.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
