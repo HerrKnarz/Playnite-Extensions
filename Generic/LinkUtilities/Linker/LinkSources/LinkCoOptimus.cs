@@ -17,7 +17,7 @@ namespace LinkUtilities.Linker
         public override string LinkName => "Co-Optimus";
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string SearchUrl => "https://api.co-optimus.com/games.php?search=true&name=";
-        public override string BrowserSearchUrl => string.Empty;
+        public override string BrowserSearchUrl => "https://www.co-optimus.com/search.php?q=";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
