@@ -1,35 +1,35 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCCompanyCompanionName">Company Companion</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionName">الشركة المصاحبة</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Clean up company names.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Find companies to match</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Find similar companies to match.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">game</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">games</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Merge group</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">تنظيف أسماء الشركة.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">ابحث عن الشركات لتطابق</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">ابحث عن شركات مشابهة لتطابق.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">لعبة</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">ألعاب</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">دمج المجموعة</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Untick, if this company shouldn't be merged with the others.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Company Merger</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">New name:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Use as name</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">اسم جديد:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">استخدم كاسم</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Merge duplicates</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">دمج التكرارات</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Remove business entity descriptors</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Show Company Merger</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Add</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">إضافة</sys:String>
     <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Business entity descriptors:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Words to ignore to find similar companies:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Remove</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">الكلمات التي يجب تجاهلها للعثور على شركات مماثلة:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">إزالة</sys:String>
     <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Show group key in merge window.</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
     <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">تحديث الألعاب</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Add value</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">إضافة قيمة</sys:String>
     <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">No companies with business entity descriptors found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">No duplicate companies were found.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">لم يتم العثور على شركات مكررة.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Updated companies in {0} games and merged {1} companies</sys:String>
 </ResourceDictionary>
