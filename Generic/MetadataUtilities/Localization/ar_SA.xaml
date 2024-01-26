@@ -14,9 +14,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Merge as</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Category</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">التصنيف</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Feature</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Genre</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Series">Series</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Tag">Tag</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">النوع</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Series">السلسلة</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Tag">علامة</sys:String>
 </ResourceDictionary>
