@@ -20,10 +20,10 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Series">Серія</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Tag">Тег</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Add value</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Default categories for new game</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Default tags for new game</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Set only when no tags were added on metadata import</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Додати значення</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Категорії за замовчуванням для нової гри</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Теги за замовчуванням для нової гри</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Встановлювати тільки коли теги не були додані при імпорті метаданих</sys:String>
 
 
 </ResourceDictionary>
