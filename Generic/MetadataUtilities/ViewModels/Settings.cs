@@ -1,34 +1,42 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using MetadataUtilities.Models;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MetadataUtilities
 {
     public class Settings : ObservableObject
     {
-        private string option1 = string.Empty;
-        private bool option2;
-        private bool optionThatWontBeSaved;
+        private ObservableCollection<MetadataListObject> _defaultCategories = new ObservableCollection<MetadataListObject>();
+        private ObservableCollection<MetadataListObject> _defaultTags = new ObservableCollection<MetadataListObject>();
+        private ObservableCollection<MergeRule> _mergeRules = new ObservableCollection<MergeRule>();
+        private bool _setDefaultTagsOnlyIfEmpty;
 
-        public string Option1
+        public ObservableCollection<MetadataListObject> DefaultCategories
         {
-            get => option1;
-            set => SetValue(ref option1, value);
+            get => _defaultCategories;
+            set => SetValue(ref _defaultCategories, value);
         }
 
-        public bool Option2
+        public ObservableCollection<MetadataListObject> DefaultTags
         {
-            get => option2;
-            set => SetValue(ref option2, value);
+            get => _defaultTags;
+            set => SetValue(ref _defaultTags, value);
         }
 
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
-        [DontSerialize]
-        public bool OptionThatWontBeSaved
+        public ObservableCollection<MergeRule> MergeRules
         {
-            get => optionThatWontBeSaved;
-            set => SetValue(ref optionThatWontBeSaved, value);
+            get => _mergeRules;
+            set => SetValue(ref _mergeRules, value);
+        }
+
+        public bool SetDefaultTagsOnlyIfEmpty
+        {
+            get => _setDefaultTagsOnlyIfEmpty;
+            set => SetValue(ref _setDefaultTagsOnlyIfEmpty, value);
         }
     }
 
@@ -36,64 +44,91 @@ namespace MetadataUtilities
     {
         private readonly MetadataUtilities plugin;
 
-        private Settings settings;
+        private Settings _settings;
 
         public SettingsViewModel(MetadataUtilities plugin)
         {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
 
-            // Load saved settings.
             Settings savedSettings = plugin.LoadPluginSettings<Settings>();
 
-            // LoadPluginSettings returns null if no saved data is available.
-            if (savedSettings != null)
-            {
-                Settings = savedSettings;
-            }
-            else
-            {
-                Settings = new Settings();
-            }
+            Settings = savedSettings ?? new Settings();
         }
 
-        private Settings editingClone { get; set; }
+        private Settings EditingClone { get; set; }
 
         public Settings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
 
-        public void BeginEdit()
-        {
-            // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
-        }
+        public RelayCommand AddNewDefaultCategoryCommand
+            => new RelayCommand(() =>
+            {
+                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), "").SelectedString;
 
-        public void CancelEdit()
-        {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
-        }
+                if (Settings.DefaultCategories.Any(x => x.Name == value))
+                {
+                    return;
+                }
 
-        public void EndEdit()
+                Settings.DefaultCategories.Add(new MetadataListObject
+                {
+                    Name = value,
+                    Type = FieldType.Category
+                });
+
+                Settings.DefaultCategories = new ObservableCollection<MetadataListObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
+            });
+
+        public RelayCommand AddNewDefaultTagCommand
+            => new RelayCommand(() =>
+            {
+                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), "").SelectedString;
+
+                if (Settings.DefaultTags.Any(x => x.Name == value))
+                {
+                    return;
+                }
+
+                Settings.DefaultTags.Add(new MetadataListObject
+                {
+                    Name = value,
+                    Type = FieldType.Tag
+                });
+
+                Settings.DefaultTags = new ObservableCollection<MetadataListObject>(Settings.DefaultTags.OrderBy(x => x.Name));
+            });
+
+        public RelayCommand<IList<object>> RemoveDefaultCategoryCommand => new RelayCommand<IList<object>>(items =>
         {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
-        }
+            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            {
+                Settings.DefaultCategories.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveDefaultTagCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            {
+                Settings.DefaultTags.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
+
+        public void CancelEdit() => Settings = EditingClone;
+
+        public void EndEdit() => plugin.SavePluginSettings(Settings);
 
         public bool VerifySettings(out List<string> errors)
         {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
         }

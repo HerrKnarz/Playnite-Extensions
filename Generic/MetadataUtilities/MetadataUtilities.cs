@@ -16,7 +16,7 @@ namespace MetadataUtilities
             Settings = new SettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = false
+                HasSettings = true
             };
 
             Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>

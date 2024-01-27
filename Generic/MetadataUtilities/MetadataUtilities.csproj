@@ -64,6 +64,7 @@
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
     <Compile Include="MetadataUtilities.cs" />
+    <Compile Include="Models\MergeRule.cs" />
     <Compile Include="Models\MetadataListObject.cs" />
     <Compile Include="Models\MetadataListObjects.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
