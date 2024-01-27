@@ -63,6 +63,7 @@
     <Compile Include="..\..\Common\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
+    <Compile Include="Actions\BaseAction.cs" />
     <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\MergeRule.cs" />
     <Compile Include="Models\MetadataListObject.cs" />
