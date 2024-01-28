@@ -8,7 +8,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Об’єднання елементів...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Об'єднати як</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Треба мати принаймні два вибраних елементів для об'єднання.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Save as merge rule</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Зберегти як правило об’єднання</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Додавання елементів...</sys:String>
 
@@ -24,13 +24,13 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Series">Серія</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Tag">Тег</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Add default categories/tags</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Додати категорії/теги за замовчуванням</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Додати значення</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Always save manual merges as merge rules.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Завжди зберігати ручні об'єднання як правила об'єднання.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Категорії за замовчуванням для нової гри</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Теги за замовчуванням для нової гри</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Встановлювати тільки коли теги не були додані при імпорті метаданих</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">General</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabMerging">Merging</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Загальне</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabMerging">Об'єднання</sys:String>
 </ResourceDictionary>
