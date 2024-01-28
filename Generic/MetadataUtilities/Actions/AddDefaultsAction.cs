@@ -19,7 +19,7 @@ namespace MetadataUtilities.Actions
 
         public override string ProgressMessage { get; } = "LOCMetadataUtilitiesDialogAddedDefaultsMessage";
 
-        public override string ResultMessage { get; } = "LOCMetadataUtilitiesDialogAddedMessage";
+        public override string ResultMessage { get; } = "LOCMetadataUtilitiesDialogAddedDefaultsMessage";
 
         public Settings Settings { get; set; }
 

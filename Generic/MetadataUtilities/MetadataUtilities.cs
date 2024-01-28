@@ -24,7 +24,8 @@ namespace MetadataUtilities
 
             Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
             {
-                { "muEditorIcon", "\xef10" }
+                { "muEditorIcon", "\xef10" },
+                { "muTagIcon", "\xf004" }
             };
 
             foreach (KeyValuePair<string, string> iconResource in iconResourcesToAdd)
@@ -156,6 +157,24 @@ namespace MetadataUtilities
                     Action = a => ShowEditor()
                 }
             };
+
+            return menuItems;
+        }
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            string menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
+            List<GameMenuItem> menuItems = new List<GameMenuItem>();
+            List<Game> games = args.Games.Distinct().ToList();
+
+            menuItems.Add(new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuAddDefaults"),
+                MenuSection = menuSection,
+                Icon = "muTagIcon",
+                Action = a => DoForAll(games, AddDefaultsAction.Instance(this), true)
+            });
+
 
             return menuItems;
         }
