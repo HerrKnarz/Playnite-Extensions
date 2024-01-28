@@ -8,6 +8,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Mesclando itens...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Mesclar como</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Você precisa ter pelo menos dois itens selecionados para mesclar.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Save as merge rule</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adicionando padrões...</sys:String>
 
@@ -26,8 +27,10 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Add default categories/tags</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Adicionar valor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Always save manual merges as merge rules.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Categorias padrão para um novo jogo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Marcador padrão para um novo jogo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Definir apenas quando nenhum marcador foi adicionado na importação de metadados</sys:String>
-
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">General</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabMerging">Merging</sys:String>
 </ResourceDictionary>
