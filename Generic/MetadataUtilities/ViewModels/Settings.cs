@@ -2,6 +2,7 @@
 using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace MetadataUtilities
     {
         private ObservableCollection<MetadataListObject> _defaultCategories = new ObservableCollection<MetadataListObject>();
         private ObservableCollection<MetadataListObject> _defaultTags = new ObservableCollection<MetadataListObject>();
+        private DateTime _lastAutoLibUpdate = DateTime.Now;
         private ObservableCollection<MergeRule> _mergeRules = new ObservableCollection<MergeRule>();
         private bool _setDefaultTagsOnlyIfEmpty;
 
@@ -31,6 +33,12 @@ namespace MetadataUtilities
         {
             get => _mergeRules;
             set => SetValue(ref _mergeRules, value);
+        }
+
+        public DateTime LastAutoLibUpdate
+        {
+            get => _lastAutoLibUpdate;
+            set => SetValue(ref _lastAutoLibUpdate, value);
         }
 
         public bool SetDefaultTagsOnlyIfEmpty

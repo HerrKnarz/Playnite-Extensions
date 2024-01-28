@@ -33,13 +33,21 @@ namespace MetadataUtilities
             }
         }
 
-        private SettingsViewModel Settings { get; }
+        public SettingsViewModel Settings { get; }
 
         public override Guid Id { get; } = Guid.Parse("485ab5f0-bfb1-4c17-93cc-20d8338673be");
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
-            // Add code to be executed when library is updated.
+            List<Game> games = PlayniteApi.Database.Games
+                .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
+
+            DoForAll(games, AddDefaultsAction.Instance(this));
+            // TODO: Add function to game menu, too!
+
+            Settings.Settings.LastAutoLibUpdate = DateTime.Now;
+
+            SavePluginSettings(Settings.Settings);
         }
 
         /// <summary>

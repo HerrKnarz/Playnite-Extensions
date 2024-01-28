@@ -108,7 +108,7 @@ namespace LinkUtilities.LinkActions
 
                 if (isMissing)
                 {
-                    mustUpdate |= DatabaseObjectHelper.AddDbObject(game, FieldType.Tag, tag.Id);
+                    mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, FieldType.Tag, tag.Id);
                 }
                 else
                 {
@@ -132,7 +132,7 @@ namespace LinkUtilities.LinkActions
 
                 if (libraryTagMissing)
                 {
-                    mustUpdate |= DatabaseObjectHelper.AddDbObject(game, FieldType.Tag, libraryTag.Id);
+                    mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, FieldType.Tag, libraryTag.Id);
                 }
                 else
                 {

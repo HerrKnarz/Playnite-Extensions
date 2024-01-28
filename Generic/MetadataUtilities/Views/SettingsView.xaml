@@ -15,7 +15,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <ListBox Name="lbDefaultCategories" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultCategories}" Height="200"
                                  VerticalAlignment="Top" SelectionMode="Extended">
@@ -25,7 +25,7 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                        <StackPanel Grid.Column="1" Margin="10,0,0,0" Width="200">
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
                             <Button Content="{DynamicResource LOCAddNewItem}"
                                     Command="{Binding AddNewDefaultCategoryCommand}" />
                             <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
@@ -39,7 +39,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <ListBox Name="lbDefaultTags" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultTags}" Height="200"
                                  VerticalAlignment="Top" SelectionMode="Extended">
@@ -49,7 +49,7 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                        <StackPanel Grid.Column="1" Margin="10,0,0,0" Width="200">
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
                             <Button Content="{DynamicResource LOCAddNewItem}"
                                     Command="{Binding AddNewDefaultTagCommand}" />
                             <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"

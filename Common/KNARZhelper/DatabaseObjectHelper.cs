@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
+using System.Windows.Forms;
 
 namespace KNARZhelper
 {
@@ -129,7 +130,7 @@ namespace KNARZhelper
                         {
                             if (newType != null && newId != null)
                             {
-                                AddDbObject(game, (FieldType)newType, (Guid)newId);
+                                AddDbObjectToGame(game, (FieldType)newType, (Guid)newId);
                             }
 
                             API.Instance.Database.Games.Update(game);
@@ -146,7 +147,7 @@ namespace KNARZhelper
                         {
                             if (newType != null && newId != null)
                             {
-                                AddDbObject(game, (FieldType)newType, (Guid)newId);
+                                AddDbObjectToGame(game, (FieldType)newType, (Guid)newId);
                             }
 
                             API.Instance.Database.Games.Update(game);
@@ -163,7 +164,7 @@ namespace KNARZhelper
                         {
                             if (newType != null && newId != null)
                             {
-                                AddDbObject(game, (FieldType)newType, (Guid)newId);
+                                AddDbObjectToGame(game, (FieldType)newType, (Guid)newId);
                             }
 
                             API.Instance.Database.Games.Update(game);
@@ -180,7 +181,7 @@ namespace KNARZhelper
                         {
                             if (newType != null && newId != null)
                             {
-                                AddDbObject(game, (FieldType)newType, (Guid)newId);
+                                AddDbObjectToGame(game, (FieldType)newType, (Guid)newId);
                             }
 
                             API.Instance.Database.Games.Update(game);
@@ -200,7 +201,7 @@ namespace KNARZhelper
 
                         if (newType != null && newId != null)
                         {
-                            AddDbObject(game, (FieldType)newType, (Guid)newId);
+                            AddDbObjectToGame(game, (FieldType)newType, (Guid)newId);
                         }
 
                         API.Instance.Database.Games.Update(game);
@@ -214,7 +215,38 @@ namespace KNARZhelper
             }
         }
 
-        public static bool AddDbObject(Game game, FieldType type, Guid id)
+        public static Guid AddDbObject(FieldType type, string name)
+        {
+            Guid id = Guid.Empty;
+
+            switch (type)
+            {
+                case FieldType.Category:
+                    Category category = API.Instance.Database.Categories.Add(name);
+
+                    return category.Id;
+                case FieldType.Feature:
+                    GameFeature feature = API.Instance.Database.Features.Add(name);
+
+                    return feature.Id;
+                case FieldType.Genre:
+                    Genre genre = API.Instance.Database.Genres.Add(name);
+
+                    return genre.Id;
+                case FieldType.Series:
+                    Series series = API.Instance.Database.Series.Add(name);
+
+                    return series.Id;
+                case FieldType.Tag:
+                    Tag tag = API.Instance.Database.Tags.Add(name);
+
+                    return tag.Id;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        public static bool AddDbObjectToGame(Game game, FieldType type, Guid id)
         {
             List<Guid> ids;
 
@@ -241,5 +273,7 @@ namespace KNARZhelper
 
             return ids?.AddMissing(id) ?? false;
         }
+
+        public static bool AddDbObjectToGame(Game game, FieldType type, string name) => AddDbObjectToGame(game, type, AddDbObject(type, name));
     }
 }
