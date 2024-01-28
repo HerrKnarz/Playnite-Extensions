@@ -274,6 +274,34 @@ namespace KNARZhelper
             return ids?.AddMissing(id) ?? false;
         }
 
+        public static bool AddDbObjectToGame(Game game, FieldType type, List<Guid> idList)
+        {
+            List<Guid> ids;
+
+            switch (type)
+            {
+                case FieldType.Category:
+                    ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
+                    break;
+                case FieldType.Feature:
+                    ids = game.FeatureIds ?? (game.FeatureIds = new List<Guid>());
+                    break;
+                case FieldType.Genre:
+                    ids = game.GenreIds ?? (game.GenreIds = new List<Guid>());
+                    break;
+                case FieldType.Series:
+                    ids = game.SeriesIds ?? (game.SeriesIds = new List<Guid>());
+                    break;
+                case FieldType.Tag:
+                    ids = game.TagIds ?? (game.TagIds = new List<Guid>());
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            return ids?.AddMissing(idList) ?? false;
+        }
+
         public static bool AddDbObjectToGame(Game game, FieldType type, string name) => AddDbObjectToGame(game, type, AddDbObject(type, name));
     }
 }

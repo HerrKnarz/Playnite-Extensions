@@ -1,6 +1,9 @@
 ﻿using KNARZhelper;
+using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MetadataUtilities.Actions
@@ -9,6 +12,8 @@ namespace MetadataUtilities.Actions
     {
         private static AddDefaultsAction _instance;
         private static readonly object _mutex = new object();
+        private readonly List<Guid> _categoryIds = new List<Guid>();
+        private readonly List<Guid> _tagIds = new List<Guid>();
 
         private AddDefaultsAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
 
@@ -36,6 +41,24 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
+        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            _categoryIds.Clear();
+
+            foreach (MetadataListObject category in Settings.DefaultCategories)
+            {
+                _categoryIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Category, category.Name));
+            }
+
+            _tagIds.Clear();
+            foreach (MetadataListObject tag in Settings.DefaultTags)
+            {
+                _tagIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Tag, tag.Name));
+            }
+
+            return _categoryIds.Any() || _tagIds.Any();
+        }
+
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, isBulkAction))
@@ -43,13 +66,11 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            //TODO: Maybe get IDs of all items in prepare and just add them in execute, without trying to insert them every time?
-
-            bool mustUpdate = Settings.DefaultCategories.Aggregate(false, (current, category) => current | DatabaseObjectHelper.AddDbObjectToGame(game, category.Type, category.Name));
+            bool mustUpdate = DatabaseObjectHelper.AddDbObjectToGame(game, FieldType.Category, _categoryIds);
 
             if (!Settings.SetDefaultTagsOnlyIfEmpty || (game.TagIds?.Any() ?? false))
             {
-                mustUpdate = Settings.DefaultTags.Aggregate(mustUpdate, (current, tag) => current | DatabaseObjectHelper.AddDbObjectToGame(game, tag.Type, tag.Name));
+                mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, FieldType.Tag, _tagIds);
             }
 
             if (mustUpdate)
