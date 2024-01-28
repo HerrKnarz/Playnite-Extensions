@@ -2,17 +2,21 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCMetadataUtilitiesName">Utilitários de Metadados</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Added default categories/tags to {0} games!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Um {0} com esse nome já existe.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Removendo itens...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Mesclando itens...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Mesclar como</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Você precisa ter pelo menos dois itens selecionados para mesclar.</sys:String>
+
+    <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adding defaults...</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Abrir Editor de Metadados</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Editor de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Quantidade de partidas</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Mesclar</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Um {0} com esse nome já existe.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Removendo itens...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Mesclando itens...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Mesclar como</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Você precisa ter pelo menos dois itens selecionados para mesclar.</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Categoria</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Recurso</sys:String>
