@@ -17,17 +17,17 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Anzahl Spiele</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Zusammenführen</sys:String>
 
-
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Kategorie</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Feature</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Genre</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Series">Serie</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Tag">Schlagwort</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Add default categories/tags</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Add value</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Default categories for new game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Default tags for new game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Set only when no tags were added on metadata import</sys:String>
-
 
 </ResourceDictionary>
