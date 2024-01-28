@@ -67,6 +67,7 @@
     <Compile Include="Actions\BaseAction.cs" />
     <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\MergeRule.cs" />
+    <Compile Include="Models\MergeRules.cs" />
     <Compile Include="Models\MetadataListObject.cs" />
     <Compile Include="Models\MetadataListObjects.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />

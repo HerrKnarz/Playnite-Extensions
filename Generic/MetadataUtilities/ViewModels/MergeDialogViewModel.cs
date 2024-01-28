@@ -10,6 +10,7 @@ namespace MetadataUtilities
         private MetadataListObject _mergeDestination;
         private MetadataListObjects _metadataListObjects;
         private MetadataUtilities _plugin;
+        private bool _saveAsRule;
 
         public MetadataUtilities Plugin
         {
@@ -17,6 +18,7 @@ namespace MetadataUtilities
             set
             {
                 _plugin = value;
+                SaveAsRule = _plugin.Settings.Settings.AlwaysSaveManualMergeRules;
                 OnPropertyChanged("Plugin");
             }
         }
@@ -44,8 +46,33 @@ namespace MetadataUtilities
             }
         }
 
+        public bool SaveAsRule
+        {
+            get => _saveAsRule;
+            set
+            {
+                _saveAsRule = value;
+                OnPropertyChanged("SaveAsRule");
+            }
+        }
+
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
+            if (SaveAsRule)
+            {
+                MergeRule rule = new MergeRule
+                {
+                    Name = _mergeDestination.Name,
+                    Type = _mergeDestination.Type,
+                    Id = _mergeDestination.Id,
+                    SourceObjects = _metadataListObjects
+                };
+
+                _plugin.Settings.Settings.MergeRules.AddRule(rule);
+            }
+
+            _plugin.SavePluginSettings(_plugin.Settings.Settings);
+
             MetadataListObjects.MergeItems(MergeDestination.Type, MergeDestination.Id);
             win.DialogResult = true;
             win.Close();

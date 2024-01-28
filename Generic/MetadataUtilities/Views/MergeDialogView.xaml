@@ -29,6 +29,7 @@
             <Button Content="{DynamicResource LOCCancelLabel}" Margin="10,0,0,0"
                     Command="{Binding CancelCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+            <CheckBox IsChecked="{Binding SaveAsRule}" Content="{DynamicResource LOCMetadataUtilitiesDialogSaveAsRule}" Margin="10,0,0,0"/>
         </StackPanel>
     </DockPanel>
 </UserControl>

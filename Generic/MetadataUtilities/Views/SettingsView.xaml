@@ -63,5 +63,10 @@
                 </GroupBox>
             </DockPanel>
         </TabItem>
+        <TabItem Header="{DynamicResource LOCLinkUtilitiesSettingsTabMerging}">
+            <DockPanel Margin="10">
+                <CheckBox IsChecked="{Binding Settings.AlwaysSaveManualMergeRules}" Content="{DynamicResource LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules}"/>
+            </DockPanel>
+        </TabItem>
     </TabControl>
 </UserControl>
