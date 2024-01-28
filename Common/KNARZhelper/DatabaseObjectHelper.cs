@@ -29,7 +29,7 @@ namespace KNARZhelper
     {
         public static DbInteractionResult UpdateName(FieldType type, Guid id, string oldName, string newName)
         {
-            if (oldName != null && oldName != newName && newName.DbObjectExists(type, id))
+            if (oldName != null && oldName != newName && newName.NameExists(type, id))
             {
                 return DbInteractionResult.IsDuplicate;
             }
@@ -39,7 +39,7 @@ namespace KNARZhelper
             return DbInteractionResult.Updated;
         }
 
-        public static bool DbObjectExists(this string str, FieldType type, Guid id)
+        public static bool NameExists(this string str, FieldType type, Guid id)
         {
             switch (type)
             {
@@ -57,6 +57,26 @@ namespace KNARZhelper
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
+
+        public static bool DBObjectExists(string name, FieldType type)
+        {
+            switch (type)
+            {
+                case FieldType.Category:
+                    return API.Instance.Database.Categories?.Any(x => x.Name == name) ?? false;
+                case FieldType.Feature:
+                    return API.Instance.Database.Features?.Any(x => x.Name == name) ?? false;
+                case FieldType.Genre:
+                    return API.Instance.Database.Genres?.Any(x => x.Name == name) ?? false;
+                case FieldType.Series:
+                    return API.Instance.Database.Series?.Any(x => x.Name == name) ?? false;
+                case FieldType.Tag:
+                    return API.Instance.Database.Tags?.Any(x => x.Name == name) ?? false;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
 
         public static void UpdateDbObject(FieldType type, Guid id, string name)
         {

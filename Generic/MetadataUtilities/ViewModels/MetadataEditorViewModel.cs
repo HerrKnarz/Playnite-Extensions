@@ -4,13 +4,17 @@ using MetadataUtilities.Views;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 
 namespace MetadataUtilities
 {
     public class MetadataEditorViewModel : ViewModelBase
     {
+        private MetadataListObjects _completeMetadata;
+
         private bool _filterCategories = true;
 
         private bool _filterFeatures = true;
@@ -21,11 +25,19 @@ namespace MetadataUtilities
 
         private bool _filterTags = true;
 
-        private MetadataListObjects _metadataListObjects;
-
         private MetadataUtilities _plugin;
 
         private string _searchTerm = string.Empty;
+
+        public MetadataEditorViewModel()
+        {
+            _completeMetadata = new MetadataListObjects();
+            _completeMetadata.LoadMetadata();
+
+            Metadata = CollectionViewSource.GetDefaultView(_completeMetadata);
+
+            Metadata.Filter = Filter;
+        }
 
         public MetadataUtilities Plugin
         {
@@ -39,6 +51,7 @@ namespace MetadataUtilities
             set
             {
                 _filterCategories = value;
+                Metadata.Refresh();
                 OnPropertyChanged("FilterCategories");
             }
         }
@@ -49,6 +62,7 @@ namespace MetadataUtilities
             set
             {
                 _filterFeatures = value;
+                Metadata.Refresh();
                 OnPropertyChanged("FilterFeatures");
             }
         }
@@ -59,6 +73,7 @@ namespace MetadataUtilities
             set
             {
                 _filterGenres = value;
+                Metadata.Refresh();
                 OnPropertyChanged("FilterGenres");
             }
         }
@@ -69,6 +84,7 @@ namespace MetadataUtilities
             set
             {
                 _filterSeries = value;
+                Metadata.Refresh();
                 OnPropertyChanged("FilterSeries");
             }
         }
@@ -79,6 +95,7 @@ namespace MetadataUtilities
             set
             {
                 _filterTags = value;
+                Metadata.Refresh();
                 OnPropertyChanged("FilterTags");
             }
         }
@@ -89,14 +106,10 @@ namespace MetadataUtilities
             set
             {
                 _searchTerm = value;
+                Metadata.Refresh();
                 OnPropertyChanged("SearchTerm");
             }
         }
-
-        public RelayCommand FilterCommand => new RelayCommand(() =>
-        {
-            ExecuteFilter();
-        });
 
         public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -116,7 +129,13 @@ namespace MetadataUtilities
 
                     if (window.ShowDialog() ?? false)
                     {
-                        ExecuteFilter();
+                        foreach (MetadataListObject itemToRemove in mergeItems)
+                        {
+                            if (!DatabaseObjectHelper.DBObjectExists(itemToRemove.EditName, itemToRemove.Type))
+                            {
+                                CompleteMetadata.Remove(itemToRemove);
+                            }
+                        }
                     }
                 }
                 catch (Exception exception)
@@ -164,121 +183,59 @@ namespace MetadataUtilities
 
             foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
             {
-                MetadataListObjects.Remove(item);
+                CompleteMetadata.Remove(item);
             }
         }, items => items?.Any() ?? false);
 
-        public MetadataListObjects MetadataListObjects
+        public ICollectionView Metadata { get; }
+
+        public MetadataListObjects CompleteMetadata
         {
-            get => _metadataListObjects;
+            get => _completeMetadata;
             set
             {
-                _metadataListObjects = value;
-                OnPropertyChanged("MetadataListObjects");
+                _completeMetadata = value;
+                OnPropertyChanged("CompleteMetadata");
             }
         }
 
-        public void ExecuteFilter()
+        private bool Filter(object item)
         {
-            List<MetadataListObject> filteredObjects = new List<MetadataListObject>();
+            MetadataListObject metadataListObject = item as MetadataListObject;
 
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                ResourceProvider.GetString("LOCLoadingLabel"),
-                false
-            )
+            List<FieldType> types = new List<FieldType>();
+
+            if (FilterCategories)
             {
-                IsIndeterminate = true
-            };
+                types.Add(FieldType.Category);
+            }
 
-            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            if (FilterFeatures)
             {
-                try
-                {
-                    if (FilterCategories)
-                    {
-                        filteredObjects.AddRange(API.Instance.Database.Categories
-                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(category
-                                => new MetadataListObject
-                                {
-                                    Id = category.Id,
-                                    Name = category.Name,
-                                    EditName = category.Name,
-                                    GameCount = API.Instance.Database.Games.Count(g => g.CategoryIds?.Any(t => t == category.Id) ?? false),
-                                    Type = FieldType.Category
-                                }));
-                    }
+                types.Add(FieldType.Feature);
+            }
 
-                    if (FilterFeatures)
-                    {
-                        filteredObjects.AddRange(API.Instance.Database.Features
-                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(feature
-                                => new MetadataListObject
-                                {
-                                    Id = feature.Id,
-                                    Name = feature.Name,
-                                    EditName = feature.Name,
-                                    GameCount = API.Instance.Database.Games.Count(g => g.FeatureIds?.Any(t => t == feature.Id) ?? false),
-                                    Type = FieldType.Feature
-                                }));
-                    }
+            if (FilterGenres)
+            {
+                types.Add(FieldType.Genre);
+            }
 
-                    if (FilterGenres)
-                    {
-                        filteredObjects.AddRange(API.Instance.Database.Genres
-                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(genre
-                                => new MetadataListObject
-                                {
-                                    Id = genre.Id,
-                                    Name = genre.Name,
-                                    EditName = genre.Name,
-                                    GameCount = API.Instance.Database.Games.Count(g => g.GenreIds?.Any(t => t == genre.Id) ?? false),
-                                    Type = FieldType.Genre
-                                }));
-                    }
+            if (FilterSeries)
+            {
+                types.Add(FieldType.Series);
+            }
 
-                    if (FilterSeries)
-                    {
-                        filteredObjects.AddRange(API.Instance.Database.Series
-                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(series
-                                => new MetadataListObject
-                                {
-                                    Id = series.Id,
-                                    Name = series.Name,
-                                    EditName = series.Name,
-                                    GameCount = API.Instance.Database.Games.Count(g => g.SeriesIds?.Any(t => t == series.Id) ?? false),
-                                    Type = FieldType.Series
-                                }));
-                    }
+            if (FilterTags)
+            {
+                types.Add(FieldType.Tag);
+            }
 
-                    if (FilterTags)
-                    {
-                        filteredObjects.AddRange(API.Instance.Database.Tags
-                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(tag
-                                => new MetadataListObject
-                                {
-                                    Id = tag.Id,
-                                    Name = tag.Name,
-                                    EditName = tag.Name,
-                                    GameCount = API.Instance.Database.Games.Count(g => g.TagIds?.Any(t => t == tag.Id) ?? false),
-                                    Type = FieldType.Tag
-                                }));
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                }
-            }, globalProgressOptions);
-
-            MetadataListObjects.Clear();
-            MetadataListObjects.AddMissing(filteredObjects.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
+            return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) && types.Any(t => t == metadataListObject.Type);
         }
-
 
         private void InitializeView(MetadataUtilities plugin)
         {
             _plugin = plugin;
-            MetadataListObjects = new MetadataListObjects();
         }
     }
 }

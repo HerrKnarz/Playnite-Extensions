@@ -32,6 +32,7 @@ namespace MetadataUtilities.Models
                     {
                         case DbInteractionResult.Updated:
                             _editName = value;
+                            Name = value;
                             break;
                         case DbInteractionResult.IsDuplicate:
                             API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
@@ -44,6 +45,7 @@ namespace MetadataUtilities.Models
                 else
                 {
                     _editName = value;
+                    Name = value;
                 }
 
                 OnPropertyChanged();
