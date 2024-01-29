@@ -3,6 +3,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesName">Utilitários de Metadados</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Adicionar categorias/marcadores padrão a {0} jogos!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Add new object</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Um {0} com esse nome já existe.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Removendo itens...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Mesclando itens...</sys:String>
