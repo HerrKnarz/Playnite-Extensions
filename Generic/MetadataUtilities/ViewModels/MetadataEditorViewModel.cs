@@ -13,6 +13,8 @@ namespace MetadataUtilities
 {
     public class MetadataEditorViewModel : ViewModelBase
     {
+        //TODO: Work on sorting, because order by two fields doesn't seem to work...
+
         private MetadataListObjects _completeMetadata;
 
         private bool _filterCategories = true;
