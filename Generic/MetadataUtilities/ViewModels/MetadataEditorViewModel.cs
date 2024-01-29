@@ -111,6 +111,38 @@ namespace MetadataUtilities
             }
         }
 
+        public RelayCommand AddNewCommand => new RelayCommand(() =>
+        {
+            try
+            {
+                MetadataListObject newItem = new MetadataListObject();
+
+                AddNewObjectView newObjectViewView = new AddNewObjectView(Plugin, newItem);
+
+                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddNewObject"));
+
+                window.Content = newObjectViewView;
+
+                if (window.ShowDialog() ?? false)
+                {
+                    Guid id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
+
+                    if (CompleteMetadata.Any(x => x.Id == id))
+                    {
+                        return;
+                    }
+
+                    newItem.Id = id;
+                    newItem.EditName = newItem.Name;
+                    CompleteMetadata.Add(newItem);
+                }
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing merge dialog", true);
+            }
+        });
+
         public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
         {
             if ((items?.Count() ?? 0) > 1)

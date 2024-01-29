@@ -65,9 +65,9 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCLinkUtilitiesSettingsTabMerging}">
             <DockPanel Margin="10">
-                <CheckBox DockPanel.Dock="Bottom" IsChecked="{Binding Settings.AlwaysSaveManualMergeRules}" Margin="0,10,0,0"
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.AlwaysSaveManualMergeRules}"
                           Content="{DynamicResource LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules}"/>
-                <Grid DockPanel.Dock="Top" >
+                <Grid DockPanel.Dock="Top" Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
