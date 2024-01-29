@@ -70,10 +70,14 @@
     <Compile Include="Models\MergeRules.cs" />
     <Compile Include="Models\MetadataListObject.cs" />
     <Compile Include="Models\MetadataListObjects.cs" />
+    <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\Settings.cs" />
     <Compile Include="ViewModels\MetadataEditorViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\AddNewObjectView.xaml.cs">
+      <DependentUpon>AddNewObjectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -96,6 +100,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="Views\AddNewObjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

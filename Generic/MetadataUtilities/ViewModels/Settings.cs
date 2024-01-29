@@ -1,11 +1,13 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.Models;
+using MetadataUtilities.Views;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace MetadataUtilities
 {
@@ -143,6 +145,28 @@ namespace MetadataUtilities
                 Settings.DefaultTags.Remove(item);
             }
         }, items => items?.Any() ?? false);
+
+        public RelayCommand AddNewMergeSourceCommand => new RelayCommand(() =>
+        {
+            try
+            {
+                AddNewObjectView newObjectViewView = new AddNewObjectView(plugin);
+
+                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddNewObject"));
+
+                window.Content = newObjectViewView;
+
+                if (window.ShowDialog() ?? false)
+                {
+                    return;
+                }
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing merge dialog", true);
+            }
+        });
+
 
         public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
 
