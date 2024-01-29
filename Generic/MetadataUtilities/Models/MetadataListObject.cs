@@ -9,6 +9,7 @@ namespace MetadataUtilities.Models
     public class MetadataListObject : DatabaseObject
     {
         private string _editName;
+        private bool _selected;
         private FieldType _type;
 
         [DontSerialize]
@@ -16,6 +17,13 @@ namespace MetadataUtilities.Models
 
         [DontSerialize]
         public int GameCount { get; set; }
+
+        [DontSerialize]
+        public bool Selected
+        {
+            get => _selected;
+            set => SetValue(ref _selected, value);
+        }
 
         public FieldType Type
         {

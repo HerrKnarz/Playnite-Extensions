@@ -15,20 +15,22 @@ namespace MetadataUtilities
     {
         //TODO: Work on sorting, because order by two fields doesn't seem to work...
 
+        //TODO: Add OK, Cancel-Button, "Set as Destination"-Button and Rule name/type group box
+
+        //TODO: Change "Add new in SelectMode to "Selected" = true and don't really add object to database
+
+        //TODO: Add Filter "only show selected"
+
+        //TODO: Add MergeRule property and populate grid and rule name/type fields with it.
+
         private MetadataListObjects _completeMetadata;
-
         private bool _filterCategories = true;
-
         private bool _filterFeatures = true;
-
         private bool _filterGenres = true;
-
         private bool _filterSeries = true;
-
         private bool _filterTags = true;
-
+        private bool _isSelectMode;
         private MetadataUtilities _plugin;
-
         private string _searchTerm = string.Empty;
 
         public MetadataEditorViewModel()
@@ -40,6 +42,22 @@ namespace MetadataUtilities
 
             Metadata.Filter = Filter;
         }
+
+        public Visibility EditorButtonsVisibility => IsSelectMode ? Visibility.Collapsed : Visibility.Visible;
+
+        public bool IsSelectMode
+        {
+            get => _isSelectMode;
+            set
+            {
+                _isSelectMode = value;
+                OnPropertyChanged("IsSelectMode");
+                OnPropertyChanged("EditorButtonsVisibility");
+                OnPropertyChanged("SelectedVisibility");
+            }
+        }
+
+        public Visibility SelectedVisibility => IsSelectMode ? Visibility.Visible : Visibility.Collapsed;
 
         public MetadataUtilities Plugin
         {
@@ -267,7 +285,7 @@ namespace MetadataUtilities
             return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) && types.Any(t => t == metadataListObject.Type);
         }
 
-        private void InitializeView(MetadataUtilities plugin)
+        private void InitializeView(MetadataUtilities plugin, bool isSelectMode = false)
         {
             _plugin = plugin;
         }

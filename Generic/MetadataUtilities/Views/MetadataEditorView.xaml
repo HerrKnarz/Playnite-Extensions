@@ -36,19 +36,28 @@
                 <Button Content="{DynamicResource LOCAddNewItem}"
                         Command="{Binding AddNewCommand}"/>
                 <Button Content="{DynamicResource LOCMetadataUtilitiesEditorMerge}" Margin="10,0,0,0"
-                        Command="{Binding MergeItemsCommand}"
+                        Command="{Binding MergeItemsCommand}" Visibility="{Binding EditorButtonsVisibility}"
                         CommandParameter="{Binding SelectedItems, ElementName=DG}"/>
                 <Button Content="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
-                    Command="{Binding RemoveItemsCommand}"
+                    Command="{Binding RemoveItemsCommand}" Visibility="{Binding EditorButtonsVisibility}"
                     CommandParameter="{Binding SelectedItems, ElementName=DG}"/>
             </StackPanel>
+            <FrameworkElement x:Name="dummyElement" Visibility="Collapsed"/>
             <DataGrid Name="DG" ItemsSource="{Binding Metadata}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0"
                   CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}" Binding="{Binding TypeLabel}" IsReadOnly="True" SortDirection="Ascending" Width="SizeToCells" MinWidth="100" SortMemberPath="TypeAndName"/>
-                    <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding EditName, UpdateSourceTrigger=LostFocus}" MinWidth="100" SortDirection="Ascending"/>
-                    <DataGridTextColumn Header="{DynamicResource LOCMetadataUtilitiesEditorGameCount}"  ElementStyle="{StaticResource RightCell}"
-                                    Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="SizeToHeader" SortMemberPath="GameCountSorter" />
+                    <DataGridCheckBoxColumn Binding="{Binding Selected}" Width="SizeToCells" CanUserSort="False"
+                                            Visibility="{Binding DataContext.SelectedVisibility, Source={x:Reference dummyElement}}"/>
+                    <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}" Binding="{Binding TypeLabel}"
+                                        IsReadOnly="True" SortDirection="Ascending" Width="SizeToCells" MinWidth="100"
+                                        SortMemberPath="TypeAndName" />
+                    <DataGridTextColumn Header="{DynamicResource LOCNameLabel}"
+                                        Binding="{Binding EditName, UpdateSourceTrigger=LostFocus}" MinWidth="100"
+                                        SortDirection="Ascending"
+                                        IsReadOnly="{Binding DataContext.IsSelectMode, Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="{DynamicResource LOCMetadataUtilitiesEditorGameCount}"
+                                        ElementStyle="{StaticResource RightCell}"
+                                        Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="SizeToHeader" SortMemberPath="GameCountSorter" />
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>

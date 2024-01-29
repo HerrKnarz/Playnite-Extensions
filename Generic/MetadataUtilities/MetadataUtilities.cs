@@ -44,7 +44,6 @@ namespace MetadataUtilities
                 .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
 
             DoForAll(games, AddDefaultsAction.Instance(this));
-            // TODO: Add function to game menu, too!
 
             Settings.Settings.LastAutoLibUpdate = DateTime.Now;
 
