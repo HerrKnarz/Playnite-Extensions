@@ -3,7 +3,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Додано категорії/теги за замовчуванням до {0} гри/ігор!</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Add new object</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Додати новий об'єкт</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Уже є {0} з таким іменем.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Прибирання елементів...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Об’єднання елементів...</sys:String>
