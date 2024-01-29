@@ -9,6 +9,7 @@ namespace MetadataUtilities.Models
     public class MetadataListObject : DatabaseObject
     {
         private string _editName;
+        private FieldType _type;
 
         [DontSerialize]
         public new Guid Id { get; set; }
@@ -16,7 +17,11 @@ namespace MetadataUtilities.Models
         [DontSerialize]
         public int GameCount { get; set; }
 
-        public FieldType Type { get; set; }
+        public FieldType Type
+        {
+            get => _type;
+            set => SetValue(ref _type, value);
+        }
 
         [DontSerialize]
         public string EditName

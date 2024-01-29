@@ -146,11 +146,13 @@ namespace MetadataUtilities
             }
         }, items => items?.Any() ?? false);
 
-        public RelayCommand AddNewMergeSourceCommand => new RelayCommand(() =>
+        public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
             try
             {
-                AddNewObjectView newObjectViewView = new AddNewObjectView(plugin);
+                MetadataListObject newItem = new MetadataListObject();
+
+                AddNewObjectView newObjectViewView = new AddNewObjectView(plugin, newItem);
 
                 Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddNewObject"));
 
@@ -158,14 +160,17 @@ namespace MetadataUtilities
 
                 if (window.ShowDialog() ?? false)
                 {
-                    return;
+                    if (!((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
+                    {
+                        ((MergeRule)rule).SourceObjects.Add(newItem);
+                    }
                 }
             }
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during initializing merge dialog", true);
             }
-        });
+        }, rule => rule != null);
 
 
         public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);

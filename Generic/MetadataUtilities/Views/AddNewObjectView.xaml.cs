@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using MetadataUtilities.Models;
 using System;
 using System.Windows.Controls;
 
@@ -9,12 +10,13 @@ namespace MetadataUtilities.Views
     /// </summary>
     public partial class AddNewObjectView : UserControl
     {
-        public AddNewObjectView(MetadataUtilities plugin)
+        public AddNewObjectView(MetadataUtilities plugin, MetadataListObject item)
         {
             try
             {
                 InitializeComponent();
                 ((AddNewObjectViewModel)DataContext).Plugin = plugin;
+                ((AddNewObjectViewModel)DataContext).NewObject = item;
             }
             catch (Exception e)
             {
