@@ -1,37 +1,37 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
-
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Added default categories/tags to {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Add new object</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Added default categories/tags to {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">A {0} with that name already exists.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Removing items...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Merging items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Merge as</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Merging items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">You need to select at least one source item to merge into the target.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">You need to add a Name for the rule target.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Removing items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Save as merge rule</sys:String>
-
-    <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adding defaults...</sys:String>
-
-    <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Open Metadata Editor</sys:String>
-
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Metadata Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Only selected</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Game Count</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Merge</sys:String>
-
+    <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Rule target</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Set as Target</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">التصنيف</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Feature</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">النوع</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Series">السلسلة</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Tag">علامة</sys:String>
-
     <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Add default categories/tags</sys:String>
-
+    <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Open Metadata Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adding defaults...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Add value</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Always save manual merges as merge rules.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Default categories for new game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Default tags for new game</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Merge rules</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Set only when no tags were added on metadata import</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">General</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabMerging">Merging</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">General</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Merging</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Values to merge</sys:String>
 </ResourceDictionary>
