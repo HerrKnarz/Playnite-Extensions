@@ -7,30 +7,27 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace MetadataUtilities
 {
     public class MetadataEditorViewModel : ViewModelBase
     {
-        //TODO: Work on sorting, because order by two fields doesn't seem to work...
-
-        //TODO: Add OK, Cancel-Button, "Set as Destination"-Button and Rule name/type group box
-
-        //TODO: Change "Add new in SelectMode to "Selected" = true and don't really add object to database
-
-        //TODO: Add Filter "only show selected"
-
         //TODO: Add MergeRule property and populate grid and rule name/type fields with it.
 
         private MetadataListObjects _completeMetadata;
         private bool _filterCategories = true;
         private bool _filterFeatures = true;
         private bool _filterGenres = true;
+        private bool _filterSelected;
         private bool _filterSeries = true;
         private bool _filterTags = true;
         private bool _isSelectMode;
+        private MergeRule _mergeRule;
         private MetadataUtilities _plugin;
+        private string _ruleName = string.Empty;
+        private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
 
         public MetadataEditorViewModel()
@@ -43,7 +40,41 @@ namespace MetadataUtilities
             Metadata.Filter = Filter;
         }
 
-        public Visibility EditorButtonsVisibility => IsSelectMode ? Visibility.Collapsed : Visibility.Visible;
+        public MergeRule MergeRule
+        {
+            get => _mergeRule;
+            set
+            {
+                _mergeRule = value;
+
+                if (value == null)
+                {
+                    return;
+                }
+
+                RuleName = value.Name;
+                RuleType = value.Type;
+
+                foreach (MetadataListObject item in value.SourceObjects)
+                {
+                    MetadataListObject foundItem = CompleteMetadata.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+
+                    if (foundItem != null)
+                    {
+                        foundItem.Selected = true;
+                    }
+                    else
+                    {
+                        item.Selected = true;
+                        CompleteMetadata.Add(item);
+                    }
+                }
+            }
+        }
+
+        public Visibility VisibleInEditorMode => IsSelectMode ? Visibility.Collapsed : Visibility.Visible;
+
+        public Visibility VisibleInSelectMode => IsSelectMode ? Visibility.Visible : Visibility.Collapsed;
 
         public bool IsSelectMode
         {
@@ -52,12 +83,11 @@ namespace MetadataUtilities
             {
                 _isSelectMode = value;
                 OnPropertyChanged("IsSelectMode");
-                OnPropertyChanged("EditorButtonsVisibility");
-                OnPropertyChanged("SelectedVisibility");
+                OnPropertyChanged("SelectionMode");
+                OnPropertyChanged("VisibleInEditorMode");
+                OnPropertyChanged("VisibleInSelectMode");
             }
         }
-
-        public Visibility SelectedVisibility => IsSelectMode ? Visibility.Visible : Visibility.Collapsed;
 
         public MetadataUtilities Plugin
         {
@@ -98,6 +128,17 @@ namespace MetadataUtilities
             }
         }
 
+        public bool FilterSelected
+        {
+            get => _filterSelected;
+            set
+            {
+                _filterSelected = value;
+                Metadata.Refresh();
+                OnPropertyChanged("FilterSelected");
+            }
+        }
+
         public bool FilterSeries
         {
             get => _filterSeries;
@@ -120,6 +161,26 @@ namespace MetadataUtilities
             }
         }
 
+        public string RuleName
+        {
+            get => _ruleName;
+            set
+            {
+                _ruleName = value;
+                OnPropertyChanged("RuleName");
+            }
+        }
+
+        public FieldType RuleType
+        {
+            get => _ruleType;
+            set
+            {
+                _ruleType = value;
+                OnPropertyChanged("RuleType");
+            }
+        }
+
         public string SearchTerm
         {
             get => _searchTerm;
@@ -130,6 +191,8 @@ namespace MetadataUtilities
                 OnPropertyChanged("SearchTerm");
             }
         }
+
+        public SelectionMode SelectionMode => IsSelectMode ? SelectionMode.Single : SelectionMode.Extended;
 
         public RelayCommand AddNewCommand => new RelayCommand(() =>
         {
@@ -145,14 +208,20 @@ namespace MetadataUtilities
 
                 if (window.ShowDialog() ?? false)
                 {
-                    Guid id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
-
-                    if (CompleteMetadata.Any(x => x.Id == id))
+                    if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.EditName == newItem.Name))
                     {
                         return;
                     }
 
-                    newItem.Id = id;
+                    if (IsSelectMode)
+                    {
+                        newItem.Selected = true;
+                    }
+                    else
+                    {
+                        newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
+                    }
+
                     newItem.EditName = newItem.Name;
                     CompleteMetadata.Add(newItem);
                 }
@@ -198,7 +267,7 @@ namespace MetadataUtilities
                 return;
             }
 
-            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMultipleSelected"));
+            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMultipleSelected"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
         }, items => items?.Any() ?? false);
 
         public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
@@ -238,6 +307,41 @@ namespace MetadataUtilities
                 CompleteMetadata.Remove(item);
             }
         }, items => items?.Any() ?? false);
+
+        public RelayCommand<Window> SaveCommand => new RelayCommand<Window>(win =>
+        {
+            if (!RuleName?.Any() ?? false)
+            {
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoTargetSet"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (!CompleteMetadata.Any(x => x.Selected))
+            {
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoItemsSelected"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            MergeRule.Name = RuleName;
+            MergeRule.Type = RuleType;
+            MergeRule.SourceObjects.Clear();
+            MergeRule.SourceObjects.AddMissing(CompleteMetadata.Where(x => x.Selected).ToList());
+
+            win.DialogResult = true;
+            win.Close();
+        }, win => win != null);
+
+        public RelayCommand<Window> CancelCommand => new RelayCommand<Window>(win =>
+        {
+            win.DialogResult = false;
+            win.Close();
+        }, win => win != null);
+
+        public RelayCommand<object> SetAsTargetCommand => new RelayCommand<object>(item =>
+        {
+            RuleType = ((MetadataListObject)item).Type;
+            RuleName = ((MetadataListObject)item).Name;
+        });
 
         public ICollectionView Metadata { get; }
 
@@ -282,7 +386,9 @@ namespace MetadataUtilities
                 types.Add(FieldType.Tag);
             }
 
-            return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) && types.Any(t => t == metadataListObject.Type);
+            return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+                   types.Any(t => t == metadataListObject.Type) &&
+                   (!FilterSelected || metadataListObject.Selected);
         }
 
         private void InitializeView(MetadataUtilities plugin, bool isSelectMode = false)

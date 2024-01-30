@@ -12,7 +12,7 @@
     <DockPanel Margin="10">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
             <Label Content="{DynamicResource LOCMetadataUtilitiesDialogMergeAs}" />
-            <ComboBox Name="CB" Margin="10,0,0,0" ItemsSource="{Binding MetadataListObjects}" SelectedItem="{Binding MergeDestination}" Width="300">
+            <ComboBox Name="CB" Margin="10,0,0,0" ItemsSource="{Binding MetadataListObjects}" SelectedItem="{Binding MergeTarget}" Width="300">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

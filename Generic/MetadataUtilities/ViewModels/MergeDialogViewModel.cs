@@ -7,7 +7,7 @@ namespace MetadataUtilities
 {
     public class MergeDialogViewModel : ViewModelBase
     {
-        private MetadataListObject _mergeDestination;
+        private MetadataListObject _mergeTarget;
         private MetadataListObjects _metadataListObjects;
         private MetadataUtilities _plugin;
         private bool _saveAsRule;
@@ -30,19 +30,19 @@ namespace MetadataUtilities
             {
                 _metadataListObjects = value;
 
-                MergeDestination = _metadataListObjects.FirstOrDefault();
+                MergeTarget = _metadataListObjects.FirstOrDefault();
 
                 OnPropertyChanged("MetadataListObjects");
             }
         }
 
-        public MetadataListObject MergeDestination
+        public MetadataListObject MergeTarget
         {
-            get => _mergeDestination;
+            get => _mergeTarget;
             set
             {
-                _mergeDestination = value;
-                OnPropertyChanged("MergeDestination");
+                _mergeTarget = value;
+                OnPropertyChanged("MergeTarget");
             }
         }
 
@@ -62,9 +62,9 @@ namespace MetadataUtilities
             {
                 MergeRule rule = new MergeRule
                 {
-                    Name = _mergeDestination.Name,
-                    Type = _mergeDestination.Type,
-                    Id = _mergeDestination.Id,
+                    Name = _mergeTarget.Name,
+                    Type = _mergeTarget.Type,
+                    Id = _mergeTarget.Id,
                     SourceObjects = _metadataListObjects
                 };
 
@@ -73,7 +73,7 @@ namespace MetadataUtilities
 
             _plugin.SavePluginSettings(_plugin.Settings.Settings);
 
-            MetadataListObjects.MergeItems(MergeDestination.Type, MergeDestination.Id);
+            MetadataListObjects.MergeItems(MergeTarget.Type, MergeTarget.Id);
             win.DialogResult = true;
             win.Close();
         }, win => win != null);
