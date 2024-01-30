@@ -69,6 +69,8 @@ namespace MetadataUtilities
                         CompleteMetadata.Add(item);
                     }
                 }
+
+                Metadata.Refresh();
             }
         }
 
@@ -224,6 +226,8 @@ namespace MetadataUtilities
 
                     newItem.EditName = newItem.Name;
                     CompleteMetadata.Add(newItem);
+
+                    Metadata.Refresh();
                 }
             }
             catch (Exception exception)

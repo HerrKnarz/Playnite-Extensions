@@ -146,6 +146,22 @@ namespace MetadataUtilities
             }
         }, items => items?.Any() ?? false);
 
+        public RelayCommand AddNewMergeRuleCommand
+            => new RelayCommand(() =>
+            {
+                EditMergeRule();
+            });
+
+        public RelayCommand<object> EditMergeRuleCommand => new RelayCommand<object>(rule =>
+        {
+            EditMergeRule((MergeRule)rule);
+        }, rule => rule != null);
+
+        public RelayCommand<object> RemoveMergeRuleCommand => new RelayCommand<object>(rule =>
+        {
+            Settings.MergeRules.Remove((MergeRule)rule);
+        }, rule => rule != null);
+
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
             try
@@ -172,6 +188,13 @@ namespace MetadataUtilities
             }
         }, rule => rule != null);
 
+        public RelayCommand<IList<object>> RemoveMergeSourceCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            {
+                Settings.SelectedMergeRule.SourceObjects.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
 
         public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
 
@@ -183,6 +206,90 @@ namespace MetadataUtilities
         {
             errors = new List<string>();
             return true;
+        }
+
+        private void EditMergeRule(MergeRule rule = null)
+        {
+            try
+            {
+                bool isNewRule = rule == null;
+
+                MergeRule ruleToEdit = new MergeRule();
+
+                if (rule != null)
+                {
+                    ruleToEdit.Type = rule.Type;
+                    ruleToEdit.Name = rule.Name;
+
+                    foreach (MetadataListObject sourceItem in rule.SourceObjects)
+                    {
+                        ruleToEdit.SourceObjects.Add(new MetadataListObject
+                        {
+                            Name = sourceItem.Name,
+                            EditName = sourceItem.Name,
+                            Type = sourceItem.Type,
+                            GameCount = 0
+                        });
+                    }
+                }
+
+                MetadataEditorView editorView = new MetadataEditorView(plugin, true, ruleToEdit);
+
+                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 700, 600, false, true);
+
+                window.Content = editorView;
+
+                if (!(window.ShowDialog() ?? false))
+                {
+                    return;
+                }
+
+                // Case 1: The rule wasn't renamed => We simply replace the SourceObjects.
+                if (!isNewRule && rule.Name == ruleToEdit.Name && rule.Type == ruleToEdit.Type)
+                {
+                    rule.SourceObjects.Clear();
+                    rule.SourceObjects.AddMissing(ruleToEdit.SourceObjects);
+
+                    return;
+                }
+
+                // Case 2: The rule was renamed or is new and another one for that target already exists => We ask if merge, replace or cancel.
+                if (Settings.MergeRules.Any(x => x.Name == ruleToEdit.Name && x.Type == ruleToEdit.Type))
+                {
+                    MessageBoxResult response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergeOrReplace"), string.Empty, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+                    switch (response)
+                    {
+                        case MessageBoxResult.Yes:
+                            Settings.MergeRules.AddRule(ruleToEdit, true);
+                            Settings.MergeRules.Remove(rule);
+                            return;
+                        case MessageBoxResult.No:
+                            Settings.MergeRules.AddRule(ruleToEdit);
+                            Settings.MergeRules.Remove(rule);
+                            return;
+                        default:
+                            return;
+                    }
+                }
+
+                // Case 3: The rule was renamed, but no other with that target exists => We replace it.
+                if (!isNewRule)
+                {
+                    rule.Type = ruleToEdit.Type;
+                    rule.Name = ruleToEdit.Name;
+
+                    rule.SourceObjects.Clear();
+                    rule.SourceObjects.AddMissing(ruleToEdit.SourceObjects);
+                }
+
+                // Case 4: The rule is new and no other with that target exists => we simply add the new one.
+                Settings.MergeRules.AddRule(ruleToEdit);
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing Merge Rule Editor", true);
+            }
         }
     }
 }

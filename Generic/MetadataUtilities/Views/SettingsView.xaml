@@ -82,11 +82,21 @@
                               CanUserAddRows="False" HeadersVisibility="Column" SelectionMode="Single" SelectedItem="{Binding Settings.SelectedMergeRule}"
                               HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"
+                                                    SortMemberPath="TypeAndName" SortDirection="Ascending"/>
                                 <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name}" MinWidth="100" IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
+
+                    <StackPanel Margin="0,10,5,0"  Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
+                                Command="{Binding AddNewMergeRuleCommand}"/>
+                        <Button Content="&#xef10;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsEdit}"
+                                Margin="10,0,0,0" Command="{Binding EditMergeRuleCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
+                        <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
+                                Command="{Binding RemoveMergeRuleCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
+                    </StackPanel>
 
                     <DockPanel Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Stretch">
                         <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsValuesToMerge}" />
@@ -94,16 +104,18 @@
                               DockPanel.Dock="Top" Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" 
                               HorizontalContentAlignment="Stretch"  VerticalAlignment="Stretch">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"
+                                                    SortMemberPath="TypeAndName" SortDirection="Ascending"/>
                                 <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name}" MinWidth="100" IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
 
                     <StackPanel Margin="5,10,0,0"  Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Button Content="{DynamicResource LOCAddNewItem}"
-                                Command="{Binding AddNewMergeSourceCommand}"
-                                CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
+                        <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
+                                Command="{Binding AddNewMergeSourceCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
+                        <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
+                                Command="{Binding RemoveMergeSourceCommand}" CommandParameter="{Binding SelectedItems, ElementName=dgSources}"/>
                     </StackPanel>
                 </Grid>
             </DockPanel>
