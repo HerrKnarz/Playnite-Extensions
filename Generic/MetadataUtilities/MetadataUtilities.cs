@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.Actions;
+using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
@@ -30,6 +31,7 @@ namespace MetadataUtilities
             {
                 { "muEditorIcon", "\xef10" },
                 { "muMergeIcon", "\xef29" },
+                { "muRemoveIcon", "\xee09" },
                 { "muTagIcon", "\xf004" }
             };
 
@@ -55,6 +57,16 @@ namespace MetadataUtilities
             Settings.Settings.LastAutoLibUpdate = DateTime.Now;
 
             SavePluginSettings(Settings.Settings);
+        }
+
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            base.OnApplicationStarted(args);
+
+            if (Settings.Settings.RemoveUnusedOnStartup)
+            {
+                MetadataListObjects.RemoveUnusedMetadata(true);
+            }
         }
 
         public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
@@ -181,6 +193,13 @@ namespace MetadataUtilities
                     MenuSection = $"@{menuSection}",
                     Icon = "muEditorIcon",
                     Action = a => ShowEditor()
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnused"),
+                    MenuSection = $"@{menuSection}",
+                    Icon = "muRemoveIcon",
+                    Action = a => MetadataListObjects.RemoveUnusedMetadata()
                 }
             };
 

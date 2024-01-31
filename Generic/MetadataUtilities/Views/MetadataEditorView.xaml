@@ -68,6 +68,8 @@
                     <Button Content="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
                             Command="{Binding RemoveItemsCommand}" Visibility="{Binding VisibleInEditorMode}"
                             CommandParameter="{Binding SelectedItems, ElementName=DG}"/>
+                    <Button Content="{DynamicResource LOCMetadataUtilitiesEditorRemoveUnused}" Margin="10,0,0,0"
+                            Command="{Binding RemoveUnusedCommand}"/>
                 </StackPanel>
                 <FrameworkElement x:Name="dummyElement" Visibility="Collapsed"/>
                 <DataGrid Name="DG" ItemsSource="{Binding Metadata}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0"

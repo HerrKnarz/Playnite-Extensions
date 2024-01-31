@@ -2,6 +2,7 @@
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Resources;
 using System.Windows.Forms;
@@ -164,7 +165,36 @@ namespace KNARZhelper
             }
         }
 
-        public static void RemoveDbObject(FieldType type, Guid id) => ReplaceDbObject(type, id);
+        public static void RemoveDbObject(FieldType type, Guid id, bool checkIfUsed = true)
+        {
+            if (checkIfUsed)
+            {
+                ReplaceDbObject(type, id);
+            }
+            else
+            {
+                switch (type)
+                {
+                    case FieldType.Category:
+                        API.Instance.Database.Categories.Remove(id);
+                        break;
+                    case FieldType.Feature:
+                        API.Instance.Database.Features.Remove(id);
+                        break;
+                    case FieldType.Genre:
+                        API.Instance.Database.Genres.Remove(id);
+                        break;
+                    case FieldType.Series:
+                        API.Instance.Database.Series.Remove(id);
+                        break;
+                    case FieldType.Tag:
+                        API.Instance.Database.Tags.Remove(id);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                }
+            }
+        }
 
         public static void ReplaceDbObject(FieldType type, Guid id, FieldType? newType = null, Guid? newId = null)
         {

@@ -310,6 +310,23 @@ namespace MetadataUtilities
             }
         }, items => items?.Any() ?? false);
 
+        public RelayCommand RemoveUnusedCommand => new RelayCommand(() =>
+        {
+            List<MetadataListObject> removedItems = MetadataListObjects.RemoveUnusedMetadata();
+
+            if (!removedItems.Any())
+            {
+                return;
+            }
+
+            List<MetadataListObject> itemsToRemove = CompleteMetadata.Where(x => removedItems.Any(y => x.Type == y.Type && x.EditName == y.Name)).ToList();
+
+            foreach (MetadataListObject itemToRemove in itemsToRemove)
+            {
+                CompleteMetadata.Remove(itemToRemove);
+            }
+        });
+
         public RelayCommand<Window> SaveCommand => new RelayCommand<Window>(win =>
         {
             if (!RuleName?.Any() ?? false)

@@ -19,6 +19,7 @@ namespace MetadataUtilities
         private DateTime _lastAutoLibUpdate = DateTime.Now;
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
+        private bool _removeUnusedOnStartup;
         private MergeRule _selectedMergeRule;
         private bool _setDefaultTagsOnlyIfEmpty = true;
         private bool _writeDebugLog;
@@ -57,6 +58,12 @@ namespace MetadataUtilities
         {
             get => _mergeRules;
             set => SetValue(ref _mergeRules, value);
+        }
+
+        public bool RemoveUnusedOnStartup
+        {
+            get => _removeUnusedOnStartup;
+            set => SetValue(ref _removeUnusedOnStartup, value);
         }
 
         [DontSerialize]
