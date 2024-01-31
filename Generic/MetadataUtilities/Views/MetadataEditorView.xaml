@@ -74,21 +74,23 @@
                           CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
                           DataGridCell.Selected="DataGridCell_Selected" SelectionMode="{Binding SelectionMode}">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Width="SizeToCells" CanUserSort="False"
+                        <DataGridTemplateColumn Width="SizeToCells" SortDirection="Ascending" Header="{DynamicResource LOCNameLabel}"
                                                 Visibility="{Binding DataContext.VisibleInSelectMode, Source={x:Reference dummyElement}}">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" />
+                                    <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Content="{Binding TypeAndName}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}" Binding="{Binding TypeLabel}"
                                             IsReadOnly="True" SortDirection="Ascending" Width="SizeToCells" MinWidth="100"
-                                            SortMemberPath="TypeAndName" />
+                                            SortMemberPath="TypeAndName"
+                                            Visibility="{Binding DataContext.VisibleInEditorMode, Source={x:Reference dummyElement}}"/>
                         <DataGridTextColumn Header="{DynamicResource LOCNameLabel}"
                                             Binding="{Binding EditName, UpdateSourceTrigger=LostFocus}" MinWidth="100"
                                             SortDirection="Ascending"
-                                            IsReadOnly="{Binding DataContext.IsSelectMode, Source={x:Reference dummyElement}}" />
+                                            IsReadOnly="{Binding DataContext.IsSelectMode, Source={x:Reference dummyElement}}"
+                                            Visibility="{Binding DataContext.VisibleInEditorMode, Source={x:Reference dummyElement}}"/>
                         <DataGridTextColumn Header="{DynamicResource LOCMetadataUtilitiesEditorGameCount}"
                                             ElementStyle="{StaticResource RightCell}"
                                             Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}"
