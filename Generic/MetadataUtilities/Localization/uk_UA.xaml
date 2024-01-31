@@ -4,7 +4,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Додано категорії/теги за замовчуванням до {0} гри/ігор!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Уже є {0} з таким іменем.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Об'єднати як</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Another rule for that target already exists. Do you want to replace it (yes), merge them (no) or cancel the operation?</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Вже існує Інше правило для цієї цілі. Бажаєте замінити його (так), об'єднати їх (ні) або скасувати операцію?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Об’єднання елементів...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Треба мати принаймні два вибраних елементів для об'єднання.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">Треба вибрати принаймні один елемент, щоб об'єднати його у ціль.</sys:String>
