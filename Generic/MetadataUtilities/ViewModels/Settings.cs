@@ -17,9 +17,11 @@ namespace MetadataUtilities
         private ObservableCollection<MetadataListObject> _defaultCategories = new ObservableCollection<MetadataListObject>();
         private ObservableCollection<MetadataListObject> _defaultTags = new ObservableCollection<MetadataListObject>();
         private DateTime _lastAutoLibUpdate = DateTime.Now;
+        private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
         private MergeRule _selectedMergeRule;
-        private bool _setDefaultTagsOnlyIfEmpty;
+        private bool _setDefaultTagsOnlyIfEmpty = true;
+        private bool _writeDebugLog;
 
         public bool AlwaysSaveManualMergeRules
         {
@@ -45,6 +47,12 @@ namespace MetadataUtilities
             set => SetValue(ref _lastAutoLibUpdate, value);
         }
 
+        public bool MergeMetadataOnMetadataUpdate
+        {
+            get => _mergeMetadataOnMetadataUpdate;
+            set => SetValue(ref _mergeMetadataOnMetadataUpdate, value);
+        }
+
         public MergeRules MergeRules
         {
             get => _mergeRules;
@@ -62,6 +70,12 @@ namespace MetadataUtilities
         {
             get => _setDefaultTagsOnlyIfEmpty;
             set => SetValue(ref _setDefaultTagsOnlyIfEmpty, value);
+        }
+
+        public bool WriteDebugLog
+        {
+            get => _writeDebugLog;
+            set => SetValue(ref _writeDebugLog, value);
         }
     }
 

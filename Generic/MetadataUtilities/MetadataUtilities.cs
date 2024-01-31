@@ -22,9 +22,14 @@ namespace MetadataUtilities
                 HasSettings = true
             };
 
+            IsUpdating = false;
+
+            api.Database.Games.ItemUpdated += Games_ItemUpdated;
+
             Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
             {
                 { "muEditorIcon", "\xef10" },
+                { "muMergeIcon", "\xef29" },
                 { "muTagIcon", "\xf004" }
             };
 
@@ -33,6 +38,8 @@ namespace MetadataUtilities
                 MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
             }
         }
+
+        internal bool IsUpdating { get; set; }
 
         public SettingsViewModel Settings { get; }
 
@@ -50,6 +57,18 @@ namespace MetadataUtilities
             SavePluginSettings(Settings.Settings);
         }
 
+        public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
+        {
+            if (!Settings.Settings.MergeMetadataOnMetadataUpdate || IsUpdating)
+            {
+                return;
+            }
+
+            List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
+
+            DoForAll(games, MergeAction.Instance(this));
+        }
+
         /// <summary>
         ///     Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update
         ///     mode if the list contains more than one game.
@@ -60,66 +79,75 @@ namespace MetadataUtilities
         /// <param name="actionModifier">specifies the type of action to execute, if more than one is possible.</param>
         private void DoForAll(List<Game> games, BaseAction action, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
         {
-            if (games.Count == 1)
-            {
-                action.Execute(games.First(), actionModifier, false);
-            }
-            // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
-            else if (games.Count > 1)
-            {
-                int gamesAffected = 0;
+            IsUpdating = true;
 
-                using (PlayniteApi.Database.BufferedUpdate())
+            try
+            {
+                if (games.Count == 1)
                 {
-                    if (!action.Prepare(actionModifier))
+                    action.Execute(games.First(), actionModifier, false);
+                }
+                // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
+                else if (games.Count > 1)
+                {
+                    int gamesAffected = 0;
+
+                    using (PlayniteApi.Database.BufferedUpdate())
                     {
-                        return;
+                        if (!action.Prepare(actionModifier))
+                        {
+                            return;
+                        }
+
+                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                            $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")} - {ResourceProvider.GetString(action.ProgressMessage)}",
+                            true
+                        )
+                        {
+                            IsIndeterminate = false
+                        };
+
+                        PlayniteApi.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                        {
+                            try
+                            {
+                                activateGlobalProgress.ProgressMaxValue = games.Count;
+
+                                foreach (Game game in games)
+                                {
+                                    activateGlobalProgress.Text =
+                                        $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(action.ProgressMessage)}{Environment.NewLine}{game.Name}";
+
+                                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                                    {
+                                        break;
+                                    }
+
+                                    if (action.Execute(game, actionModifier))
+                                    {
+                                        gamesAffected++;
+                                    }
+
+                                    activateGlobalProgress.CurrentProgressValue++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Error(ex);
+                            }
+                        }, globalProgressOptions);
                     }
 
-                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                        $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")} - {ResourceProvider.GetString(action.ProgressMessage)}",
-                        true
-                    )
+                    // Shows a dialog with the number of games actually affected.
+                    if (showDialog)
                     {
-                        IsIndeterminate = false
-                    };
-
-                    PlayniteApi.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                    {
-                        try
-                        {
-                            activateGlobalProgress.ProgressMaxValue = games.Count;
-
-                            foreach (Game game in games)
-                            {
-                                activateGlobalProgress.Text =
-                                    $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(action.ProgressMessage)}{Environment.NewLine}{game.Name}";
-
-                                if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                                {
-                                    break;
-                                }
-
-                                if (action.Execute(game, actionModifier))
-                                {
-                                    gamesAffected++;
-                                }
-
-                                activateGlobalProgress.CurrentProgressValue++;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error(ex);
-                        }
-                    }, globalProgressOptions);
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(action.ResultMessage), gamesAffected));
+                    }
                 }
-
-                // Shows a dialog with the number of games actually affected.
-                if (showDialog)
-                {
-                    PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(action.ResultMessage), gamesAffected));
-                }
+            }
+            finally
+            {
+                IsUpdating = false;
             }
         }
 
@@ -147,7 +175,6 @@ namespace MetadataUtilities
 
             List<MainMenuItem> menuItems = new List<MainMenuItem>
             {
-                // Adds the "clean up" item to the main menu.
                 new MainMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
@@ -166,18 +193,26 @@ namespace MetadataUtilities
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
             List<Game> games = args.Games.Distinct().ToList();
 
-            menuItems.Add(new GameMenuItem
+            menuItems.AddRange(new List<GameMenuItem>
             {
-                Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuAddDefaults"),
-                MenuSection = menuSection,
-                Icon = "muTagIcon",
-                Action = a => DoForAll(games, AddDefaultsAction.Instance(this), true)
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuAddDefaults"),
+                    MenuSection = menuSection,
+                    Icon = "muTagIcon",
+                    Action = a => DoForAll(games, AddDefaultsAction.Instance(this), true)
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuMergeMetadata"),
+                    MenuSection = menuSection,
+                    Icon = "muMergeIcon",
+                    Action = a => DoForAll(games, MergeAction.Instance(this), true)
+                }
             });
-
 
             return menuItems;
         }
-
 
         public override ISettings GetSettings(bool firstRunSettings) => Settings;
 

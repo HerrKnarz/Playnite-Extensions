@@ -14,8 +14,6 @@ namespace MetadataUtilities
 {
     public class MetadataEditorViewModel : ViewModelBase
     {
-        //TODO: Add MergeRule property and populate grid and rule name/type fields with it.
-
         private MetadataListObjects _completeMetadata;
         private bool _filterCategories = true;
         private bool _filterFeatures = true;
@@ -256,7 +254,7 @@ namespace MetadataUtilities
                     {
                         foreach (MetadataListObject itemToRemove in mergeItems)
                         {
-                            if (!DatabaseObjectHelper.DBObjectExists(itemToRemove.EditName, itemToRemove.Type))
+                            if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
                             {
                                 CompleteMetadata.Remove(itemToRemove);
                             }

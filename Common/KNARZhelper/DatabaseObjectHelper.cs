@@ -58,7 +58,7 @@ namespace KNARZhelper
             }
         }
 
-        public static bool DBObjectExists(string name, FieldType type)
+        public static bool DbObjectExists(string name, FieldType type)
         {
             switch (type)
             {
@@ -77,6 +77,33 @@ namespace KNARZhelper
             }
         }
 
+        public static Guid GetDbObjectId(string name, FieldType type)
+        {
+            DatabaseObject item = null;
+
+            switch (type)
+            {
+                case FieldType.Category:
+                    item = API.Instance.Database.Categories?.FirstOrDefault(x => x.Name == name);
+                    break;
+                case FieldType.Feature:
+                    item = API.Instance.Database.Features?.FirstOrDefault(x => x.Name == name);
+                    break;
+                case FieldType.Genre:
+                    item = API.Instance.Database.Genres?.FirstOrDefault(x => x.Name == name);
+                    break;
+                case FieldType.Series:
+                    item = API.Instance.Database.Series?.FirstOrDefault(x => x.Name == name);
+                    break;
+                case FieldType.Tag:
+                    item = API.Instance.Database.Tags?.FirstOrDefault(x => x.Name == name);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            return item?.Id ?? Guid.Empty;
+        }
 
         public static void UpdateDbObject(FieldType type, Guid id, string name)
         {
@@ -323,5 +350,24 @@ namespace KNARZhelper
         }
 
         public static bool AddDbObjectToGame(Game game, FieldType type, string name) => AddDbObjectToGame(game, type, AddDbObject(type, name));
+
+        public static bool RemoveObjectFromGame(Game game, FieldType type, Guid id)
+        {
+            switch (type)
+            {
+                case FieldType.Category:
+                    return game.CategoryIds?.Remove(id) ?? false;
+                case FieldType.Feature:
+                    return game.FeatureIds?.Remove(id) ?? false;
+                case FieldType.Genre:
+                    return game.GenreIds?.Remove(id) ?? false;
+                case FieldType.Series:
+                    return game.SeriesIds?.Remove(id) ?? false;
+                case FieldType.Tag:
+                    return game.TagIds?.Remove(id) ?? false;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
     }
 }

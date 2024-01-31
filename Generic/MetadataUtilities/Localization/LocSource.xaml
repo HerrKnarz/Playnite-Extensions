@@ -4,8 +4,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Added default categories/tags to {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">A {0} with that name already exists.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Merge as</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Merged metadata in {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Another rule for that target already exists. Do you want to replace it (yes), merge them (no) or cancel the operation?</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Merging items...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Merging metadata...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">You need to select at least one source item to merge into the target.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">You need to add a Name for the rule target.</sys:String>
@@ -24,6 +25,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Tag">Tag</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Add default categories/tags</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Open Metadata Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Merge metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Merge Rule Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adding defaults...</sys:String>
@@ -32,9 +34,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Default categories for new game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Default tags for new game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Edit</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Automatically execute merge rules on metadata update</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Merge rules</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Set only when no tags were added on metadata import</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">General</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Merging</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Values to merge</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Write debug log messages (only use in case of suspected error!)</sys:String>
 </ResourceDictionary>
