@@ -240,6 +240,8 @@ namespace MetadataUtilities
             {
                 try
                 {
+                    Plugin.IsUpdating = true;
+
                     MetadataListObjects mergeItems = new MetadataListObjects();
 
                     mergeItems.AddMissing(items.ToList().Cast<MetadataListObject>());
@@ -269,6 +271,10 @@ namespace MetadataUtilities
                 {
                     Log.Error(exception, "Error during initializing merge dialog", true);
                 }
+                finally
+                {
+                    Plugin.IsUpdating = false;
+                }
 
                 return;
             }
@@ -278,39 +284,47 @@ namespace MetadataUtilities
 
         public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
         {
-            using (API.Instance.Database.BufferedUpdate())
+            Plugin.IsUpdating = true;
+            try
             {
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogRemovingItems"),
-                    false
-                )
+                using (API.Instance.Database.BufferedUpdate())
                 {
-                    IsIndeterminate = false
-                };
-
-                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                {
-                    try
+                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                        ResourceProvider.GetString("LOCMetadataUtilitiesDialogRemovingItems"),
+                        false
+                    )
                     {
-                        activateGlobalProgress.ProgressMaxValue = items.Count;
+                        IsIndeterminate = false
+                    };
 
-                        foreach (MetadataListObject item in items)
+                    API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                    {
+                        try
                         {
-                            DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id);
+                            activateGlobalProgress.ProgressMaxValue = items.Count;
 
-                            activateGlobalProgress.CurrentProgressValue++;
+                            foreach (MetadataListObject item in items)
+                            {
+                                DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id);
+
+                                activateGlobalProgress.CurrentProgressValue++;
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                    }
-                }, globalProgressOptions);
-            }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex);
+                        }
+                    }, globalProgressOptions);
+                }
 
-            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+                foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+                {
+                    CompleteMetadata.Remove(item);
+                }
+            }
+            finally
             {
-                CompleteMetadata.Remove(item);
+                Plugin.IsUpdating = false;
             }
         }, items => items?.Any() ?? false);
 
