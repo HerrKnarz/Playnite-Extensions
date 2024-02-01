@@ -1,22 +1,51 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
-
-    <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Відкрити редактор метаданих</sys:String>
-
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Додати новий об'єкт</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Додано категорії/теги за замовчуванням до {0} гри/ігор!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Уже є {0} з таким іменем.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Об'єднати як</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Об'єднано метадані в {0} іграх!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Вже існує Інше правило для цієї цілі. Бажаєте замінити його (так), об'єднати їх (ні) або скасувати операцію?</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Об'єднання метаданих...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Треба мати принаймні два вибраних елементів для об'єднання.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">Треба вибрати принаймні один елемент, щоб об'єднати його у ціль.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Немає невикористаних елементів метаданих.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Треба додати назву для цілі правила.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Прибирання елементів...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Зберегти як правило об’єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Редактор метаданих</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Тільки вибране</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Кількість ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Об'єднати</sys:String>
-
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Уже є {0} з таким іменем.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Прибирання елементів...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Об’єднання елементів...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Об'єднати як</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Треба мати принаймні два вибраних елементів для об'єднання.</sys:String>
-
+    <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Прибрати невикористані</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Ціль Правила</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Встановити як Ціль</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Категорія</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Особливість</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Жанр</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Series">Серія</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Tag">Тег</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Додати категорії/теги за замовчуванням</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Відкрити редактор метаданих</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Об'єднати метадані</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Прибрати невикористані метадані</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Редактор правил об'єднання</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Прибрано наступні невикористані елементи метаданих:</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Додавання елементів...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Прибирання невикористаних елементів метаданих...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Додати наявні елементи</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Add new item</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Завжди зберігати ручні об'єднання як правила об'єднання.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Категорії за замовчуванням для нової гри</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Теги за замовчуванням для нової гри</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Змінити</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Автоматично виконувати правила об'єднання при оновленні метаданих</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Об’єднати Ролі</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Прибирати невикористані метадані під час запуску</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Встановлювати тільки коли теги не були додані при імпорті метаданих</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Загальне</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Об'єднання</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Значення для об'єднання</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Записувати повідомлення журналу налагодження (використовуйте тільки якщо підозрюєте помилки!)</sys:String>
 </ResourceDictionary>

@@ -5,16 +5,16 @@
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseUrl">Response URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksStatusCode">Status code</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Response page title</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">equal?</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Check links</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filter by link name:</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">متساوي؟</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">التحقق من الروابط</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">فرز حسب اسم الرابط:</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Game</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCommonGameName">لعبة</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">URL</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Added links to {0} games!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Name the link</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Please enter a name for the link!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">تسمية الرابط</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">الرجاء إدخال اسم الرابط!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">No duplicates found!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNoLinksFound">No links found!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Unwanted links of {0} games removed!</sys:String>
@@ -78,7 +78,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Check all</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">Help</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remove</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">إزالة</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">Replace</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Reverse check</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sort</sys:String>

@@ -1,22 +1,51 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMetadataUtilitiesName">Metadaten-Werkzeuge</sys:String>
-
-    <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Öffne Metadaten-Editor</sys:String>
-
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Neues Objekt hinzufügen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Standardkategorien/Schlagworte zu {0} Spielen hinzugefügt!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">{0} mit diesem Namen existiert bereits.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Zusammenführen als</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Metadaten in {0} Spielen zusammengeführt!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Für dieses Ziel existiert bereits eine andere Regel. Möchten Sie diese ersetzen (ja), zusammenführen (nein) oder den Vorgang abbrechen?</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Metadaten zusammenführen...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Du musst mindestens zwei Elemente ausgewählt haben, um sie zusammenzuführen.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">Du musst mindestens ein Quellelement auswählen, das mit dem Ziel zusammengeführt werden soll.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Keine nicht verwendeten Metadatenelemente gefunden.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Du musst einen Namen für das Regelziel angeben.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Elemente werden entfernt...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Als Zusammenführungsregel speichern</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Metadaten-Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Nur ausgewählte</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Anzahl Spiele</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Zusammenführen</sys:String>
-
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">{0} mit diesem Namen existiert bereits.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Elemente werden entfernt...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Elemente werden zusammengeführt...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Zusammenführen als</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Du musst mindestens zwei Elemente ausgewählt haben, um sie zusammenzuführen.</sys:String>
-
+    <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Nicht verwendete entfernen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Regelziel</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Als Ziel festlegen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Kategorie</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Feature</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Genre</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Series">Serie</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Tag">Schlagwort</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Standardkategorien/Schlagworte hinzufügen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Öffne Metadaten-Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Metadaten zusammenführen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Nicht verwendete Metadaten entfernen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Zusammenführungsregel-Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesName">Metadaten-Werkzeuge</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Folgende nicht verwendete Metadatenelemente wurden entfernt:</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Standardwerte werden hinzugefügt...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Entferne nicht verwendete Metadatenelemente...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Existierende Elemente hinzufügen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Neues Element hinzufügen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Manuelle Zusammenführungen immer als Zusammenführungsregeln speichern.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Standardkategorien für neues Spiel</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Standard Schlagworte für neues Spiel</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editieren</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Zusammenführungsregeln beim Metadaten-Update automatisch ausführen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Zusammenführungsregeln</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Nicht verwendete Metadaten beim Start entfernen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Nur hinzufügen, wenn beim Import der Metadaten keine Schlagworte gefunden wurden</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Allgemein</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Zusammenführen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Werte zum Zusammenführen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Schreibe Debug-Logmeldungen (nur im Falle eines vermuteten Fehler verwenden!)</sys:String>
 </ResourceDictionary>
