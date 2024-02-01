@@ -79,7 +79,17 @@
                           CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
                           DataGridCell.Selected="DataGridCell_Selected" SelectionMode="{Binding SelectionMode}">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Width="SizeToCells" SortDirection="Ascending" Header="{DynamicResource LOCNameLabel}"
+                        <DataGridTemplateColumn Width="SizeToCells" CanUserSort="False"
+                                                Visibility="{Binding DataContext.VisibleInSelectMode, Source={x:Reference dummyElement}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="&#xedea;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{Binding SetAsTargetCommand}"
+                                            Command="{Binding DataContext.SetAsTargetCommand, Source={x:Reference dummyElement}}"
+                                            CommandParameter="{Binding SelectedItem, ElementName=DG}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn SortDirection="Ascending" Header="{DynamicResource LOCNameLabel}"
                                                 Visibility="{Binding DataContext.VisibleInSelectMode, Source={x:Reference dummyElement}}">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -100,16 +110,6 @@
                                             ElementStyle="{StaticResource RightCell}"
                                             Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}"
                                             IsReadOnly="True" Width="SizeToHeader" SortMemberPath="GameCountSorter" />
-                        <DataGridTemplateColumn Width="SizeToCells" CanUserSort="False"
-                                                Visibility="{Binding DataContext.VisibleInSelectMode, Source={x:Reference dummyElement}}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="&#xedea;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{Binding SetAsTargetCommand}"
-                                            Command="{Binding DataContext.SetAsTargetCommand, Source={x:Reference dummyElement}}"
-                                            CommandParameter="{Binding SelectedItem, ElementName=DG}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>

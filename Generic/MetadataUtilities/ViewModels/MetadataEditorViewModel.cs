@@ -258,6 +258,10 @@ namespace MetadataUtilities
                             {
                                 CompleteMetadata.Remove(itemToRemove);
                             }
+                            else
+                            {
+                                itemToRemove.GetGameCount();
+                            }
                         }
                     }
                 }

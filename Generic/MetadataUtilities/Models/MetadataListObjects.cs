@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace MetadataUtilities.Models
@@ -34,7 +35,6 @@ namespace MetadataUtilities.Models
                                 Id = category.Id,
                                 Name = category.Name,
                                 EditName = category.Name,
-                                GameCount = showGameNumber ? API.Instance.Database.Games.Count(g => g.CategoryIds?.Any(t => t == category.Id) ?? false) : 0,
                                 Type = FieldType.Category
                             }));
                     }
@@ -47,7 +47,6 @@ namespace MetadataUtilities.Models
                                 Id = feature.Id,
                                 Name = feature.Name,
                                 EditName = feature.Name,
-                                GameCount = showGameNumber ? API.Instance.Database.Games.Count(g => g.FeatureIds?.Any(t => t == feature.Id) ?? false) : 0,
                                 Type = FieldType.Feature
                             }));
                     }
@@ -60,7 +59,6 @@ namespace MetadataUtilities.Models
                                 Id = genre.Id,
                                 Name = genre.Name,
                                 EditName = genre.Name,
-                                GameCount = showGameNumber ? API.Instance.Database.Games.Count(g => g.GenreIds?.Any(t => t == genre.Id) ?? false) : 0,
                                 Type = FieldType.Genre
                             }));
                     }
@@ -73,7 +71,6 @@ namespace MetadataUtilities.Models
                                 Id = series.Id,
                                 Name = series.Name,
                                 EditName = series.Name,
-                                GameCount = showGameNumber ? API.Instance.Database.Games.Count(g => g.SeriesIds?.Any(t => t == series.Id) ?? false) : 0,
                                 Type = FieldType.Series
                             }));
                     }
@@ -86,9 +83,13 @@ namespace MetadataUtilities.Models
                                 Id = tag.Id,
                                 Name = tag.Name,
                                 EditName = tag.Name,
-                                GameCount = showGameNumber ? API.Instance.Database.Games.Count(g => g.TagIds?.Any(t => t == tag.Id) ?? false) : 0,
                                 Type = FieldType.Tag
                             }));
+                    }
+
+                    if (showGameNumber)
+                    {
+                        UpdateGameCounts(temporaryList);
                     }
                 }
                 catch (Exception ex)
@@ -203,6 +204,8 @@ namespace MetadataUtilities.Models
 
             return temporaryList;
         }
+
+        public static void UpdateGameCounts(List<MetadataListObject> itemList) => Parallel.ForEach(itemList, item => item.GetGameCount());
 
         public bool MergeItems(FieldType type, Guid id)
         {

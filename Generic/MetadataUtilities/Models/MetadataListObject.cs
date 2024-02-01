@@ -3,12 +3,14 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
+using System.Linq;
 
 namespace MetadataUtilities.Models
 {
     public class MetadataListObject : DatabaseObject
     {
         private string _editName;
+        private int _gameCount;
         private bool _selected;
         private FieldType _type;
 
@@ -16,7 +18,11 @@ namespace MetadataUtilities.Models
         public new Guid Id { get; set; }
 
         [DontSerialize]
-        public int GameCount { get; set; }
+        public int GameCount
+        {
+            get => _gameCount;
+            set => SetValue(ref _gameCount, value);
+        }
 
         [DontSerialize]
         public bool Selected
@@ -73,5 +79,29 @@ namespace MetadataUtilities.Models
 
         [DontSerialize]
         public string TypeLabel => Type.GetEnumDisplayName("MetadataUtilities");
+
+        public void GetGameCount()
+        {
+            switch (Type)
+            {
+                case FieldType.Category:
+                    GameCount = API.Instance.Database.Games.Count(g => g.CategoryIds?.Any(t => t == Id) ?? false);
+                    break;
+                case FieldType.Feature:
+                    GameCount = API.Instance.Database.Games.Count(g => g.FeatureIds?.Any(t => t == Id) ?? false);
+                    break;
+                case FieldType.Genre:
+                    GameCount = API.Instance.Database.Games.Count(g => g.CategoryIds?.Any(t => t == Id) ?? false);
+                    break;
+                case FieldType.Series:
+                    GameCount = API.Instance.Database.Games.Count(g => g.SeriesIds?.Any(t => t == Id) ?? false);
+                    break;
+                case FieldType.Tag:
+                    GameCount = API.Instance.Database.Games.Count(g => g.TagIds?.Any(t => t == Id) ?? false);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 }
