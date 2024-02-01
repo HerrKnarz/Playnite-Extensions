@@ -63,13 +63,26 @@
     <Compile Include="..\..\Common\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
+    <Compile Include="Actions\AddDefaultsAction.cs" />
+    <Compile Include="Actions\BaseAction.cs" />
+    <Compile Include="Actions\MergeAction.cs" />
     <Compile Include="MetadataUtilities.cs" />
+    <Compile Include="Models\MergeRule.cs" />
+    <Compile Include="Models\MergeRules.cs" />
     <Compile Include="Models\MetadataListObject.cs" />
     <Compile Include="Models\MetadataListObjects.cs" />
+    <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
+    <Compile Include="ViewModels\SelectMetadataViewModel.cs" />
     <Compile Include="ViewModels\Settings.cs" />
     <Compile Include="ViewModels\MetadataEditorViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\AddNewObjectView.xaml.cs">
+      <DependentUpon>AddNewObjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelectMetadataView.xaml.cs">
+      <DependentUpon>SelectMetadataView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -92,6 +105,14 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="Views\AddNewObjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelectMetadataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:VM="clr-namespace:MetadataUtilities"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:helper="clr-namespace:KNARZhelper"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -14,35 +16,103 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
+        <ObjectDataProvider MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}"
+                            x:Key="FieldTypeValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="helper:FieldType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
-    <DockPanel Margin="10">
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
-            <TextBox Text="{Binding SearchTerm}" Width="150"/>
-            <CheckBox IsChecked="{Binding FilterCategories}" Content="{DynamicResource LOCCategoriesLabel}" Margin="10,0,0,0"/>
-            <CheckBox IsChecked="{Binding FilterFeatures}" Content="{DynamicResource LOCFeaturesLabel}" Margin="10,0,0,0"/>
-            <CheckBox IsChecked="{Binding FilterGenres}" Content="{DynamicResource LOCGenresLabel}" Margin="10,0,0,0"/>
-            <CheckBox IsChecked="{Binding FilterSeries}" Content="{DynamicResource LOCSeriesLabel}" Margin="10,0,0,0"/>
-            <CheckBox IsChecked="{Binding FilterTags}" Content="{DynamicResource LOCTagsLabel}" Margin="10,0,0,0"/>
+    <DockPanel FocusManager.FocusedElement="{Binding ElementName=txtSearchBox}">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="10,0,10,10" HorizontalAlignment="Right" Visibility="{Binding VisibleInSelectMode}">
+            <Button Content="{DynamicResource LOCSaveLabel}" Command="{Binding SaveCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Button Content="{DynamicResource LOCCancelLabel}" Margin="10,0,0,0" Command="{Binding CancelCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+        </StackPanel>
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <DockPanel LastChildFill="False">
+                <GroupBox DockPanel.Dock="Top" Header="{DynamicResource LOCMetadataUtilitiesEditorRuleTarget}"
+                          HorizontalAlignment="Stretch" Margin="10,10,10,0" Visibility="{Binding VisibleInSelectMode}">
+                    <StackPanel Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                        <ComboBox SelectedItem="{Binding RuleType}" ItemsSource="{Binding Source={StaticResource FieldTypeValues}}" />
+                        <TextBox Text="{Binding RuleName, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" />
+                    </StackPanel>
+                </GroupBox>
 
-            <Button Content="&#xEF29;" FontFamily="{DynamicResource FontIcoFont}"
-                    Command="{Binding FilterCommand}" Margin="10,0,0,0"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
-            <Button Content="{DynamicResource LOCMetadataUtilitiesEditorMerge}"
-                    Command="{Binding MergeItemsCommand}"
-                    CommandParameter="{Binding SelectedItems, ElementName=DG}"/>
-            <Button Content="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
-                    Command="{Binding RemoveItemsCommand}"
-                    CommandParameter="{Binding SelectedItems, ElementName=DG}"/>
-        </StackPanel>
-        <DataGrid Name="DG" ItemsSource="{Binding MetadataListObjects}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0"
-                  CanUserAddRows="False" HeadersVisibility="Column">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding EditName, UpdateSourceTrigger=LostFocus}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource LOCMetadataUtilitiesEditorGameCount}"  ElementStyle="{StaticResource RightCell}"
-                                    Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <GroupBox DockPanel.Dock="Top" Header="{DynamicResource LOCFilter}"  HorizontalAlignment="Stretch" Margin="10">
+                    <StackPanel Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                        <DockPanel VerticalAlignment="Center">
+                            <Button Content="&#xef00;" FontFamily="{DynamicResource FontIcoFont}" Click="ClearSearchBox" DockPanel.Dock="Right" Margin="5,0,0,0" Padding="5,5,8,5"/>
+                            <TextBox Name="txtSearchBox" DockPanel.Dock="Left"  Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DockPanel>
+                        <CheckBox IsChecked="{Binding FilterCategories}" Content="{DynamicResource LOCCategoriesLabel}" Margin="0,10,0,0"/>
+                        <CheckBox IsChecked="{Binding FilterFeatures}" Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0"/>
+                        <CheckBox IsChecked="{Binding FilterGenres}" Content="{DynamicResource LOCGenresLabel}" Margin="0,10,0,0"/>
+                        <CheckBox IsChecked="{Binding FilterSeries}" Content="{DynamicResource LOCSeriesLabel}" Margin="0,10,0,0"/>
+                        <CheckBox IsChecked="{Binding FilterTags}" Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0"/>
+                        <CheckBox IsChecked="{Binding FilterSelected}" Content="{DynamicResource LOCMetadataUtilitiesEditorFilterSelected}"
+                                  Margin="0,20,0,0" Visibility="{Binding VisibleInSelectMode}" />
+                    </StackPanel>
+                </GroupBox>
+            </DockPanel>
+            <DockPanel Margin="0,0,10,10" HorizontalAlignment="Stretch" Grid.Column="1">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
+                    <Button Content="{DynamicResource LOCAddNewItem}"
+                            Command="{Binding AddNewCommand}"/>
+                    <Button Content="{DynamicResource LOCMetadataUtilitiesEditorMerge}" Margin="10,0,0,0"
+                            Command="{Binding MergeItemsCommand}" Visibility="{Binding VisibleInEditorMode}"
+                            CommandParameter="{Binding SelectedItems, ElementName=DG}"/>
+                    <Button Content="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
+                            Command="{Binding RemoveItemsCommand}" Visibility="{Binding VisibleInEditorMode}"
+                            CommandParameter="{Binding SelectedItems, ElementName=DG}"/>
+                    <Button Content="{DynamicResource LOCMetadataUtilitiesEditorRemoveUnused}" Margin="10,0,0,0"
+                            Command="{Binding RemoveUnusedCommand}"/>
+                </StackPanel>
+                <FrameworkElement x:Name="dummyElement" Visibility="Collapsed"/>
+                <DataGrid Name="DG" ItemsSource="{Binding Metadata}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0"
+                          CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
+                          DataGridCell.Selected="DataGridCell_Selected" SelectionMode="{Binding SelectionMode}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="SizeToCells" SortDirection="Ascending" Header="{DynamicResource LOCNameLabel}"
+                                                Visibility="{Binding DataContext.VisibleInSelectMode, Source={x:Reference dummyElement}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Content="{Binding TypeAndName}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}" Binding="{Binding TypeLabel}"
+                                            IsReadOnly="True" SortDirection="Ascending" Width="SizeToCells" MinWidth="100"
+                                            SortMemberPath="TypeAndName"
+                                            Visibility="{Binding DataContext.VisibleInEditorMode, Source={x:Reference dummyElement}}"/>
+                        <DataGridTextColumn Header="{DynamicResource LOCNameLabel}"
+                                            Binding="{Binding EditName, UpdateSourceTrigger=LostFocus}" MinWidth="100"
+                                            SortDirection="Ascending"
+                                            IsReadOnly="{Binding DataContext.IsSelectMode, Source={x:Reference dummyElement}}"
+                                            Visibility="{Binding DataContext.VisibleInEditorMode, Source={x:Reference dummyElement}}"/>
+                        <DataGridTextColumn Header="{DynamicResource LOCMetadataUtilitiesEditorGameCount}"
+                                            ElementStyle="{StaticResource RightCell}"
+                                            Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}"
+                                            IsReadOnly="True" Width="SizeToHeader" SortMemberPath="GameCountSorter" />
+                        <DataGridTemplateColumn Width="SizeToCells" CanUserSort="False"
+                                                Visibility="{Binding DataContext.VisibleInSelectMode, Source={x:Reference dummyElement}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="&#xedea;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{Binding SetAsTargetCommand}"
+                                            Command="{Binding DataContext.SetAsTargetCommand, Source={x:Reference dummyElement}}"
+                                            CommandParameter="{Binding SelectedItem, ElementName=DG}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Grid>
     </DockPanel>
 </UserControl>

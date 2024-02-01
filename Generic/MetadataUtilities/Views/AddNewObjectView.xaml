@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="MetadataUtilities.Views.AddNewObjectView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:VM="clr-namespace:MetadataUtilities"
+             xmlns:helper="clr-namespace:KNARZhelper"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <VM:AddNewObjectViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <ObjectDataProvider MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}"
+                            x:Key="FieldTypeValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="helper:FieldType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <DockPanel Margin="10" FocusManager.FocusedElement="{Binding ElementName=txtName}">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left">
+            <ComboBox SelectedItem="{Binding NewObject.Type}" ItemsSource="{Binding Source={StaticResource FieldTypeValues}}" Width="100" />
+            <TextBox Name="txtName" Margin="10,0,0,0" Text="{Binding NewObject.Name}" Width="300"/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Center">
+            <Button Content="{DynamicResource LOCOKLabel}"
+                    Command="{Binding OkCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+            <Button Content="{DynamicResource LOCCancelLabel}" Margin="10,0,0,0"
+                    Command="{Binding CancelCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

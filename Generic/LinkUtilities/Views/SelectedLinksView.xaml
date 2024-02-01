@@ -27,7 +27,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}"
-                                          HorizontalAlignment="Center"/>
+                                          HorizontalAlignment="Center" Margin="0,0,-15,0"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

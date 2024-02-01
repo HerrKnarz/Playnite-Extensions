@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 
@@ -8,9 +9,29 @@ namespace MetadataUtilities.Models
     public class MetadataListObject : DatabaseObject
     {
         private string _editName;
-        public int GameCount { get; set; }
-        public FieldType Type { get; set; }
+        private bool _selected;
+        private FieldType _type;
 
+        [DontSerialize]
+        public new Guid Id { get; set; }
+
+        [DontSerialize]
+        public int GameCount { get; set; }
+
+        [DontSerialize]
+        public bool Selected
+        {
+            get => _selected;
+            set => SetValue(ref _selected, value);
+        }
+
+        public FieldType Type
+        {
+            get => _type;
+            set => SetValue(ref _type, value);
+        }
+
+        [DontSerialize]
         public string EditName
         {
             get => _editName;
@@ -24,6 +45,7 @@ namespace MetadataUtilities.Models
                     {
                         case DbInteractionResult.Updated:
                             _editName = value;
+                            Name = value;
                             break;
                         case DbInteractionResult.IsDuplicate:
                             API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
@@ -36,13 +58,20 @@ namespace MetadataUtilities.Models
                 else
                 {
                     _editName = value;
+                    Name = value;
                 }
 
                 OnPropertyChanged();
             }
         }
 
+        [DontSerialize]
+        public string GameCountSorter => $"{string.Format("{0:000000000}", GameCount)}: {EditName}";
+
+        [DontSerialize]
         public string TypeAndName => $"{Type.GetEnumDisplayName("MetadataUtilities")}: {EditName}";
+
+        [DontSerialize]
         public string TypeLabel => Type.GetEnumDisplayName("MetadataUtilities");
     }
 }

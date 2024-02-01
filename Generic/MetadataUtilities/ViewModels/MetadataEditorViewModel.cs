@@ -4,28 +4,90 @@ using MetadataUtilities.Views;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace MetadataUtilities
 {
     public class MetadataEditorViewModel : ViewModelBase
     {
+        private MetadataListObjects _completeMetadata;
         private bool _filterCategories = true;
-
         private bool _filterFeatures = true;
-
         private bool _filterGenres = true;
-
+        private bool _filterSelected;
         private bool _filterSeries = true;
-
         private bool _filterTags = true;
-
-        private MetadataListObjects _metadataListObjects;
-
+        private bool _isSelectMode;
+        private MergeRule _mergeRule;
         private MetadataUtilities _plugin;
-
+        private string _ruleName = string.Empty;
+        private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
+
+        public MetadataEditorViewModel()
+        {
+            _completeMetadata = new MetadataListObjects();
+            _completeMetadata.LoadMetadata();
+
+            Metadata = CollectionViewSource.GetDefaultView(_completeMetadata);
+
+            Metadata.Filter = Filter;
+        }
+
+        public MergeRule MergeRule
+        {
+            get => _mergeRule;
+            set
+            {
+                _mergeRule = value;
+
+                if (value == null)
+                {
+                    return;
+                }
+
+                RuleName = value.Name;
+                RuleType = value.Type;
+
+                foreach (MetadataListObject item in value.SourceObjects)
+                {
+                    MetadataListObject foundItem = CompleteMetadata.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+
+                    if (foundItem != null)
+                    {
+                        foundItem.Selected = true;
+                    }
+                    else
+                    {
+                        item.Selected = true;
+                        CompleteMetadata.Add(item);
+                    }
+                }
+
+                Metadata.Refresh();
+            }
+        }
+
+        public Visibility VisibleInEditorMode => IsSelectMode ? Visibility.Collapsed : Visibility.Visible;
+
+        public Visibility VisibleInSelectMode => IsSelectMode ? Visibility.Visible : Visibility.Collapsed;
+
+        public bool IsSelectMode
+        {
+            get => _isSelectMode;
+            set
+            {
+                _isSelectMode = value;
+                OnPropertyChanged("IsSelectMode");
+                OnPropertyChanged("SelectionMode");
+                OnPropertyChanged("VisibleInEditorMode");
+                OnPropertyChanged("VisibleInSelectMode");
+            }
+        }
 
         public MetadataUtilities Plugin
         {
@@ -39,6 +101,7 @@ namespace MetadataUtilities
             set
             {
                 _filterCategories = value;
+                Metadata.Refresh();
                 OnPropertyChanged("FilterCategories");
             }
         }
@@ -49,6 +112,7 @@ namespace MetadataUtilities
             set
             {
                 _filterFeatures = value;
+                Metadata.Refresh();
                 OnPropertyChanged("FilterFeatures");
             }
         }
@@ -59,7 +123,19 @@ namespace MetadataUtilities
             set
             {
                 _filterGenres = value;
+                Metadata.Refresh();
                 OnPropertyChanged("FilterGenres");
+            }
+        }
+
+        public bool FilterSelected
+        {
+            get => _filterSelected;
+            set
+            {
+                _filterSelected = value;
+                Metadata.Refresh();
+                OnPropertyChanged("FilterSelected");
             }
         }
 
@@ -69,6 +145,7 @@ namespace MetadataUtilities
             set
             {
                 _filterSeries = value;
+                Metadata.Refresh();
                 OnPropertyChanged("FilterSeries");
             }
         }
@@ -79,7 +156,28 @@ namespace MetadataUtilities
             set
             {
                 _filterTags = value;
+                Metadata.Refresh();
                 OnPropertyChanged("FilterTags");
+            }
+        }
+
+        public string RuleName
+        {
+            get => _ruleName;
+            set
+            {
+                _ruleName = value;
+                OnPropertyChanged("RuleName");
+            }
+        }
+
+        public FieldType RuleType
+        {
+            get => _ruleType;
+            set
+            {
+                _ruleType = value;
+                OnPropertyChanged("RuleType");
             }
         }
 
@@ -89,13 +187,51 @@ namespace MetadataUtilities
             set
             {
                 _searchTerm = value;
+                Metadata.Refresh();
                 OnPropertyChanged("SearchTerm");
             }
         }
 
-        public RelayCommand FilterCommand => new RelayCommand(() =>
+        public SelectionMode SelectionMode => IsSelectMode ? SelectionMode.Single : SelectionMode.Extended;
+
+        public RelayCommand AddNewCommand => new RelayCommand(() =>
         {
-            ExecuteFilter();
+            try
+            {
+                MetadataListObject newItem = new MetadataListObject();
+
+                AddNewObjectView newObjectViewView = new AddNewObjectView(Plugin, newItem);
+
+                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddNewObject"));
+
+                window.Content = newObjectViewView;
+
+                if (window.ShowDialog() ?? false)
+                {
+                    if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.EditName == newItem.Name))
+                    {
+                        return;
+                    }
+
+                    if (IsSelectMode)
+                    {
+                        newItem.Selected = true;
+                    }
+                    else
+                    {
+                        newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
+                    }
+
+                    newItem.EditName = newItem.Name;
+                    CompleteMetadata.Add(newItem);
+
+                    Metadata.Refresh();
+                }
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing merge dialog", true);
+            }
         });
 
         public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
@@ -116,7 +252,13 @@ namespace MetadataUtilities
 
                     if (window.ShowDialog() ?? false)
                     {
-                        ExecuteFilter();
+                        foreach (MetadataListObject itemToRemove in mergeItems)
+                        {
+                            if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
+                            {
+                                CompleteMetadata.Remove(itemToRemove);
+                            }
+                        }
                     }
                 }
                 catch (Exception exception)
@@ -127,7 +269,7 @@ namespace MetadataUtilities
                 return;
             }
 
-            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMultipleSelected"));
+            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMultipleSelected"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
         }, items => items?.Any() ?? false);
 
         public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
@@ -164,121 +306,113 @@ namespace MetadataUtilities
 
             foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
             {
-                MetadataListObjects.Remove(item);
+                CompleteMetadata.Remove(item);
             }
         }, items => items?.Any() ?? false);
 
-        public MetadataListObjects MetadataListObjects
+        public RelayCommand RemoveUnusedCommand => new RelayCommand(() =>
         {
-            get => _metadataListObjects;
+            List<MetadataListObject> removedItems = MetadataListObjects.RemoveUnusedMetadata();
+
+            if (!removedItems.Any())
+            {
+                return;
+            }
+
+            List<MetadataListObject> itemsToRemove = CompleteMetadata.Where(x => removedItems.Any(y => x.Type == y.Type && x.EditName == y.Name)).ToList();
+
+            foreach (MetadataListObject itemToRemove in itemsToRemove)
+            {
+                CompleteMetadata.Remove(itemToRemove);
+            }
+        });
+
+        public RelayCommand<Window> SaveCommand => new RelayCommand<Window>(win =>
+        {
+            if (!RuleName?.Any() ?? false)
+            {
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoTargetSet"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (!CompleteMetadata.Any(x => x.Selected))
+            {
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoItemsSelected"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            MergeRule.Name = RuleName;
+            MergeRule.Type = RuleType;
+            MergeRule.SourceObjects.Clear();
+            MergeRule.SourceObjects.AddMissing(CompleteMetadata.Where(x => x.Selected).ToList());
+
+            win.DialogResult = true;
+            win.Close();
+        }, win => win != null);
+
+        public RelayCommand<Window> CancelCommand => new RelayCommand<Window>(win =>
+        {
+            win.DialogResult = false;
+            win.Close();
+        }, win => win != null);
+
+        public RelayCommand<object> SetAsTargetCommand => new RelayCommand<object>(item =>
+        {
+            RuleType = ((MetadataListObject)item).Type;
+            RuleName = ((MetadataListObject)item).Name;
+        });
+
+        public ICollectionView Metadata { get; }
+
+        public MetadataListObjects CompleteMetadata
+        {
+            get => _completeMetadata;
             set
             {
-                _metadataListObjects = value;
-                OnPropertyChanged("MetadataListObjects");
+                _completeMetadata = value;
+                OnPropertyChanged("CompleteMetadata");
             }
         }
 
-        public void ExecuteFilter()
+        private bool Filter(object item)
         {
-            List<MetadataListObject> filteredObjects = new List<MetadataListObject>();
+            MetadataListObject metadataListObject = item as MetadataListObject;
 
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                ResourceProvider.GetString("LOCLoadingLabel"),
-                false
-            )
+            List<FieldType> types = new List<FieldType>();
+
+            if (FilterCategories)
             {
-                IsIndeterminate = true
-            };
+                types.Add(FieldType.Category);
+            }
 
-            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            if (FilterFeatures)
             {
-                try
-                {
-                    if (FilterCategories)
-                    {
-                        filteredObjects.AddRange(API.Instance.Database.Categories
-                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(category
-                                => new MetadataListObject
-                                {
-                                    Id = category.Id,
-                                    Name = category.Name,
-                                    EditName = category.Name,
-                                    GameCount = API.Instance.Database.Games.Count(g => g.CategoryIds?.Any(t => t == category.Id) ?? false),
-                                    Type = FieldType.Category
-                                }));
-                    }
+                types.Add(FieldType.Feature);
+            }
 
-                    if (FilterFeatures)
-                    {
-                        filteredObjects.AddRange(API.Instance.Database.Features
-                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(feature
-                                => new MetadataListObject
-                                {
-                                    Id = feature.Id,
-                                    Name = feature.Name,
-                                    EditName = feature.Name,
-                                    GameCount = API.Instance.Database.Games.Count(g => g.FeatureIds?.Any(t => t == feature.Id) ?? false),
-                                    Type = FieldType.Feature
-                                }));
-                    }
+            if (FilterGenres)
+            {
+                types.Add(FieldType.Genre);
+            }
 
-                    if (FilterGenres)
-                    {
-                        filteredObjects.AddRange(API.Instance.Database.Genres
-                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(genre
-                                => new MetadataListObject
-                                {
-                                    Id = genre.Id,
-                                    Name = genre.Name,
-                                    EditName = genre.Name,
-                                    GameCount = API.Instance.Database.Games.Count(g => g.GenreIds?.Any(t => t == genre.Id) ?? false),
-                                    Type = FieldType.Genre
-                                }));
-                    }
+            if (FilterSeries)
+            {
+                types.Add(FieldType.Series);
+            }
 
-                    if (FilterSeries)
-                    {
-                        filteredObjects.AddRange(API.Instance.Database.Series
-                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(series
-                                => new MetadataListObject
-                                {
-                                    Id = series.Id,
-                                    Name = series.Name,
-                                    EditName = series.Name,
-                                    GameCount = API.Instance.Database.Games.Count(g => g.SeriesIds?.Any(t => t == series.Id) ?? false),
-                                    Type = FieldType.Series
-                                }));
-                    }
+            if (FilterTags)
+            {
+                types.Add(FieldType.Tag);
+            }
 
-                    if (FilterTags)
-                    {
-                        filteredObjects.AddRange(API.Instance.Database.Tags
-                            .Where(x => !SearchTerm.Any() || x.Name.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Select(tag
-                                => new MetadataListObject
-                                {
-                                    Id = tag.Id,
-                                    Name = tag.Name,
-                                    EditName = tag.Name,
-                                    GameCount = API.Instance.Database.Games.Count(g => g.TagIds?.Any(t => t == tag.Id) ?? false),
-                                    Type = FieldType.Tag
-                                }));
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                }
-            }, globalProgressOptions);
-
-            MetadataListObjects.Clear();
-            MetadataListObjects.AddMissing(filteredObjects.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
+            return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+                   types.Any(t => t == metadataListObject.Type) &&
+                   (!FilterSelected || metadataListObject.Selected);
         }
 
-
-        private void InitializeView(MetadataUtilities plugin)
+        private void InitializeView(MetadataUtilities plugin, bool isSelectMode = false)
         {
             _plugin = plugin;
-            MetadataListObjects = new MetadataListObjects();
         }
     }
 }
