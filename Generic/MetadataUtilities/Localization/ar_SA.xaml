@@ -19,7 +19,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Merge</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Rule target</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Set as Target</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Set as target</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">التصنيف</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Feature</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">النوع</sys:String>
