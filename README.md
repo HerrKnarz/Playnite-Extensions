@@ -61,6 +61,32 @@ To see which websites are already supported or planned to be added see the [wiki
 - add support for quick search to add links or search for games with specific links
 - option to remove links to manually added url mask from selected games 
 
+## Metadata Utilities
+
+Extension to manage metadata for the games in the playnite library. It can do the following:
+
+- Quickly filter and edit categories, features, genres, series and tags in new Metadata Editor.
+- Merge together similar categories, features, genres, series and tags without being constrained to only one type (you can easily merge categories and tags together for example).
+- Set up merge rules that can automatically be executed after metadata changes or manually.
+- Set default categories and/or tags that will automatically be added to new games on import.
+- Automatically remove unused categories, features, genres, series and tags on start up (deactivated by default).
+
+### Known issues
+- Sorting in the Metadata Editor and Merge Rule Editor is a bit wonky at the moment. Will be reworked in the near future.
+- Comboboxes aren't localized yet and always show the english text. Will also be reworked.
+
+### Planned features
+- Define features, genres, series and tags, that will automatically be removed after metadata updates.
+- Option to simply change the type of categories, features, genres, series and tags (can already be achieved as merge rules).
+- Regex support for filtering in Metadata Editor.
+- Define prefixes that then can be filtered or easily added in new items.
+- Integrate the functionality of my Quick Add extension into this one.
+- Add window to quickly edit categories, features, genres, series and tags for a game, that is easier to use for this use case than the standard game detail editor.
+- Option to setup "metadata sets" that then can be quickly assigned to a game with one click (for example setting feature "Controller support" together with the tag "TV gaming".
+- Add option to set specific metadata if certain conditions are met in a game. The idea isn't fully fleshed out yet...
+
+The addon is overlapping with the Library Management extension to some degree, because I wasn't really happy with how some of its features (merging mostly) work. Metadata Utilities does and will not comnpletely replace Library Management, so you can use both together. I'd just recommend to restrict your usage of merging and similar functions that automatically change mnetadata in the background to one of both addons.
+
 ## Company Companion
 
 Extension to manage game companies (see Developer and Publisher fields in Playnite). It can do the following:
@@ -81,7 +107,7 @@ Extension to manage game companies (see Developer and Publisher fields in Playni
 
 Extension to quickly add, remove or toggle categories, features and tags in games through the game context menu instead of going through the edit dialog.
 
-- You can configure which will show up in the menu via the addon settings. Per default non are shown.
+- You can configure which will show up in the menu via the addon settings. Per default none are shown.
 - An icon left of the values in the menu indicates, if it is already set in all selected games (check mark in a circle), some of the selectec games (check marl withot circle) or in none (cross in circle).
 
 ### Planned features
