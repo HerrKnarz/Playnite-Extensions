@@ -149,16 +149,21 @@ namespace MetadataUtilities
         public RelayCommand AddNewDefaultCategoryCommand
             => new RelayCommand(() =>
             {
-                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), "").SelectedString;
+                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
 
-                if (Settings.DefaultCategories.Any(x => x.Name == value))
+                if (!res.Result)
+                {
+                    return;
+                }
+
+                if (Settings.DefaultCategories.Any(x => x.Name == res.SelectedString))
                 {
                     return;
                 }
 
                 Settings.DefaultCategories.Add(new MetadataListObject
                 {
-                    Name = value,
+                    Name = res.SelectedString,
                     Type = FieldType.Category
                 });
 
@@ -201,16 +206,21 @@ namespace MetadataUtilities
         public RelayCommand AddNewDefaultTagCommand
             => new RelayCommand(() =>
             {
-                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), "").SelectedString;
+                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
 
-                if (Settings.DefaultTags.Any(x => x.Name == value))
+                if (!res.Result)
+                {
+                    return;
+                }
+
+                if (Settings.DefaultTags.Any(x => x.Name == res.SelectedString))
                 {
                     return;
                 }
 
                 Settings.DefaultTags.Add(new MetadataListObject
                 {
-                    Name = value,
+                    Name = res.SelectedString,
                     Type = FieldType.Tag
                 });
 
@@ -343,7 +353,7 @@ namespace MetadataUtilities
                 // Case 2: The rule was renamed or is new and another one for that target already exists => We ask if merge, replace or cancel.
                 if (Settings.MergeRules.Any(x => x.Name == ruleToEdit.Name && x.Type == ruleToEdit.Type))
                 {
-                    MessageBoxResult response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergeOrReplace"), string.Empty, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    MessageBoxResult response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergeOrReplace"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
                     switch (response)
                     {
