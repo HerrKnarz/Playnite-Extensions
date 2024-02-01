@@ -35,7 +35,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adicionando padrões...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Removing unused metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Add existing items</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Adicionar valor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Add new item</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Sempre salvar mesclagens manuais como regras de mesclagem.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Categorias padrão para um novo jogo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Marcador padrão para um novo jogo</sys:String>
