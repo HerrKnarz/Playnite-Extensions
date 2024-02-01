@@ -35,7 +35,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Додавання елементів...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Прибирання невикористаних елементів метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Додати наявні елементи</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Додати значення</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Add new item</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Завжди зберігати ручні об'єднання як правила об'єднання.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Категорії за замовчуванням для нової гри</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Теги за замовчуванням для нової гри</sys:String>
