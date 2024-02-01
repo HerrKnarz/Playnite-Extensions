@@ -47,5 +47,7 @@ namespace MetadataUtilities
             DataGrid grd = (DataGrid)sender;
             grd.BeginEdit(e);
         }
+
+        private void ClearSearchBox(object sender, RoutedEventArgs e) => txtSearchBox.Clear();
     }
 }

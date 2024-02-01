@@ -35,7 +35,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddAdd}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -43,7 +43,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddRemove}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -51,7 +51,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddToggle}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -81,7 +81,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddAdd}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -89,7 +89,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddRemove}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -97,7 +97,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddToggle}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -127,7 +127,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddAdd}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -135,7 +135,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddRemove}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -143,7 +143,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCQuickAddToggle}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>

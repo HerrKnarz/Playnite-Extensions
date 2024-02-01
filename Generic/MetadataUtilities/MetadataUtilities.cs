@@ -196,6 +196,11 @@ namespace MetadataUtilities
                 },
                 new MainMenuItem
                 {
+                    Description = "-",
+                    MenuSection = $"@{menuSection}"
+                },
+                new MainMenuItem
+                {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnused"),
                     MenuSection = $"@{menuSection}",
                     Icon = "muRemoveIcon",

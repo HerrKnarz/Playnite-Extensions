@@ -33,7 +33,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsAddLink}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding IsAddable, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding IsAddable, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   Visibility="{Binding IsAddableVisible}" HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -41,7 +41,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsSearchLink}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding IsSearchable, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding IsSearchable, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   Visibility="{Binding IsSearchableVisible}" HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -49,7 +49,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsShowInMenus}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding ShowInMenus, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding ShowInMenus, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -57,7 +57,7 @@
                             <GridViewColumn Width="200" Header="{DynamicResource LOCLinkUtilitiesSettingsApiKey}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}"
+                                        <TextBox Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                  Visibility="{Binding IsApiKeyVisible}" VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -127,7 +127,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCEnabledTitle}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Active, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding Active, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -135,7 +135,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding RemoveSpecialChars, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding RemoveSpecialChars, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveSpecialChars}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -144,7 +144,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding RemoveHyphens, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding RemoveHyphens, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -152,7 +152,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding RemoveWhitespaces, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding RemoveWhitespaces, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -160,7 +160,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksRemoveDiacritics}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding RemoveDiacritics, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding RemoveDiacritics, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -168,7 +168,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksRemoveEditionSuffix}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding RemoveEditionSuffix, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding RemoveEditionSuffix, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveEditionSuffix}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -177,7 +177,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksWhitespacesToHyphens}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding WhitespacesToHyphens, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding WhitespacesToHyphens, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -185,7 +185,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksUnderscoresToWhitespaces}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding UnderscoresToWhitespaces, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding UnderscoresToWhitespaces, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -193,7 +193,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksWhitespacesToUnderscores}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding WhitespacesToUnderscores, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding WhitespacesToUnderscores, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -201,7 +201,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksEscapeDataString}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding EscapeDataString, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding EscapeDataString, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionEscapeDataString}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -210,7 +210,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksUrlEncode}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding UrlEncode, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding UrlEncode, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionUrlEncode}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -219,7 +219,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksToLower}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding ToLower, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding ToLower, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -227,7 +227,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksToTitleCase}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding ToTitleCase, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding ToTitleCase, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionToTitleCase}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -236,7 +236,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksAllowRedirects}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding AllowRedirects, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding AllowRedirects, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionAllowRedirects}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -245,7 +245,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksReturnsSameUrl}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding ReturnsSameUrl, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding ReturnsSameUrl, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -254,7 +254,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksNeedsToBeChecked}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding NeedsToBeChecked, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding NeedsToBeChecked, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -361,7 +361,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsPartialMatch}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding PartialMatch, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding PartialMatch, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsPartialMatchHint}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -421,7 +421,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsPartialMatch}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding PartialMatch, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding PartialMatch, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsPartialMatchHint}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -492,7 +492,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsPartialMatch}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding PartialMatch, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding PartialMatch, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsPartialMatchHint}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>
@@ -557,7 +557,7 @@
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCLinkUtilitiesSettingsPartialMatch}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding PartialMatch, UpdateSourceTrigger=PropertyChanged}"
+                                        <CheckBox IsChecked="{Binding PartialMatch, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                   ToolTip="{DynamicResource LOCLinkUtilitiesSettingsPartialMatchHint}"
                                                   HorizontalAlignment="Center"/>
                                     </DataTemplate>

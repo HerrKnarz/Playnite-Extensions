@@ -74,7 +74,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding UrlIsEqual}" HorizontalAlignment="Center" IsHitTestVisible="False"
-                                          Focusable="False"/>
+                                          Focusable="False" Margin="0,0,-15,0"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

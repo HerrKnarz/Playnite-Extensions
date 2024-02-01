@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.Models;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace MetadataUtilities.Views
@@ -15,13 +16,14 @@ namespace MetadataUtilities.Views
             try
             {
                 InitializeComponent();
-                ((SelectMetadataViewModel)DataContext).MetadataListObjects = items;
-                ((SelectMetadataViewModel)DataContext).Plugin = plugin;
+                ((SelectMetadataViewModel)DataContext).InitializeView(plugin, items);
             }
             catch (Exception e)
             {
                 Log.Error(e, "Error during initializing Select Metadata dialog", true);
             }
         }
+
+        private void ClearSearchBox(object sender, RoutedEventArgs e) => txtSearchBox.Clear();
     }
 }
