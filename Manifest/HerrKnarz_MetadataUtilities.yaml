@@ -1,5 +1,17 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 0.2
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-02-01
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-02-01/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_2.pext
+    Changelog:
+      - reworked Metadata Editor window that now filters directly when typing in a search term or ticking check boxes.
+      - Option to define merge rules for categories, features, genres, series and tags that work across all these types. Those rules can then be automatically executed on metadata updates.
+      - Option to save manual merge in Metadata Editor as a merge rule
+      - Option to add new items in Metadata Editor
+      - Option to set up default categories and/or tags, that will be added to newly imported games (or others on button click)
+      - Option to automatically remove unused metadata on start up.
+      - updated localizations
   - Version: 0.1
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-01-23
