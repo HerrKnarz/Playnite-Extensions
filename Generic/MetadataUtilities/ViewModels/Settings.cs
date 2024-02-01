@@ -113,6 +113,39 @@ namespace MetadataUtilities
             }
         }
 
+        public RelayCommand AddExistingDefaultCategoriesCommand
+            => new RelayCommand(() =>
+            {
+                MetadataListObjects items = new MetadataListObjects();
+
+                items.LoadMetadata(false, FieldType.Category);
+
+                SelectMetadataView selectMetadataView = new SelectMetadataView(plugin, items);
+
+                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCCategoriesLabel"));
+
+                window.Content = selectMetadataView;
+
+                if (window.ShowDialog() ?? false)
+                {
+                    foreach (MetadataListObject item in items.Where(x => x.Selected))
+                    {
+                        if (Settings.DefaultCategories.Any(x => x.Name == item.Name))
+                        {
+                            continue;
+                        }
+
+                        Settings.DefaultCategories.Add(new MetadataListObject
+                        {
+                            Name = item.Name,
+                            Type = FieldType.Category
+                        });
+                    }
+                }
+
+                Settings.DefaultCategories = new ObservableCollection<MetadataListObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
+            });
+
         public RelayCommand AddNewDefaultCategoryCommand
             => new RelayCommand(() =>
             {
@@ -130,6 +163,39 @@ namespace MetadataUtilities
                 });
 
                 Settings.DefaultCategories = new ObservableCollection<MetadataListObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
+            });
+
+        public RelayCommand AddExistingDefaultTagsCommand
+            => new RelayCommand(() =>
+            {
+                MetadataListObjects items = new MetadataListObjects();
+
+                items.LoadMetadata(false, FieldType.Tag);
+
+                SelectMetadataView selectMetadataView = new SelectMetadataView(plugin, items);
+
+                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCTagsLabel"));
+
+                window.Content = selectMetadataView;
+
+                if (window.ShowDialog() ?? false)
+                {
+                    foreach (MetadataListObject item in items.Where(x => x.Selected))
+                    {
+                        if (Settings.DefaultTags.Any(x => x.Name == item.Name))
+                        {
+                            continue;
+                        }
+
+                        Settings.DefaultTags.Add(new MetadataListObject
+                        {
+                            Name = item.Name,
+                            Type = FieldType.Category
+                        });
+                    }
+                }
+
+                Settings.DefaultTags = new ObservableCollection<MetadataListObject>(Settings.DefaultTags.OrderBy(x => x.Name));
             });
 
         public RelayCommand AddNewDefaultTagCommand

@@ -34,7 +34,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removed the following unused metadata items:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adding defaults...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Removing unused metadata items...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Add value</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Add existing items</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Add new item</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Always save manual merges as merge rules.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Default categories for new game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Default tags for new game</sys:String>
