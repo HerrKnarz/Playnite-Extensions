@@ -1,5 +1,19 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 0.3
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-02-02
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-02-02/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_3.pext
+    Changelog:
+      - added option to ignore hidden games in game count and when removing unused metadata
+      - sped up loading time of metadata editor/merge editor
+      - recalculate game count after merging in metadata editor
+      - optimized texts in some dialogs
+      - make database updates in UI thread to avoid potential errors
+      - prevent unnecessary auto merge runs after merging or removing items in metadata editor
+      - fixed column widths in merge editor and put copy button first
+      - fixed "add new item" in settings also adding item when cancel was clicked
+      - fixed the sorting in Metadata Editor and Merge Rule Dialog
   - Version: 0.2
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-02-01
