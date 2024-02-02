@@ -19,7 +19,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Об'єднати</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Прибрати невикористані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Ціль Правила</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Встановити як Ціль</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Встановити як ціль</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Категорія</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Особливість</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Жанр</sys:String>
@@ -35,11 +35,13 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Додавання елементів...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Прибирання невикористаних елементів метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Додати наявні елементи</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Add new item</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Додати елемент</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Завжди зберігати ручні об'єднання як правила об'єднання.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Категорії за замовчуванням для нової гри</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Теги за замовчуванням для нової гри</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Змінити</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignore hidden games in game count</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignore hidden games when removing unused metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Автоматично виконувати правила об'єднання при оновленні метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Об’єднати Ролі</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Прибирати невикористані метадані під час запуску</sys:String>

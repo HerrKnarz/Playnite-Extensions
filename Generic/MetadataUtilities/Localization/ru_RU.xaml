@@ -19,7 +19,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Merge</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Rule target</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Set as Target</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Set as target</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Category</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Feature</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Genre</sys:String>
@@ -40,6 +40,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Default categories for new game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Default tags for new game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Edit</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignore hidden games in game count</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignore hidden games when removing unused metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Automatically execute merge rules on metadata update</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Merge rules</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Remove unused metadata on start up</sys:String>
