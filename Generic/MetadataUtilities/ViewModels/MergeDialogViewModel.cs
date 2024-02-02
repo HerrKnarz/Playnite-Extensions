@@ -77,11 +77,5 @@ namespace MetadataUtilities
             win.DialogResult = true;
             win.Close();
         }, win => win != null);
-
-        public RelayCommand<Window> CancelCommand => new RelayCommand<Window>(win =>
-        {
-            win.DialogResult = false;
-            win.Close();
-        }, win => win != null);
     }
 }

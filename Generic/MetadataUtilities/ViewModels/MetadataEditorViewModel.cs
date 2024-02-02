@@ -353,17 +353,22 @@ namespace MetadataUtilities
             MergeRule.Name = RuleName;
             MergeRule.Type = RuleType;
             MergeRule.SourceObjects.Clear();
-            MergeRule.SourceObjects.AddMissing(CompleteMetadata.Where(x => x.Selected).ToList());
+
+            foreach (MetadataListObject item in CompleteMetadata.Where(x => x.Selected).ToList())
+            {
+                MergeRule.SourceObjects.Add(new MetadataListObject
+                {
+                    Id = item.Id,
+                    EditName = item.EditName,
+                    Name = item.Name,
+                    Type = item.Type,
+                    Selected = item.Selected
+                });
+            }
 
             win.DialogResult = true;
             win.Close();
-        }, win => win != null);
-
-        public RelayCommand<Window> CancelCommand => new RelayCommand<Window>(win =>
-        {
-            win.DialogResult = false;
-            win.Close();
-        }, win => win != null);
+        });
 
         public RelayCommand<object> SetAsTargetCommand => new RelayCommand<object>(item =>
         {

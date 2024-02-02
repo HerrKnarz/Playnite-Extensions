@@ -15,8 +15,7 @@
                     Command="{Binding OkCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
             <Button Content="{DynamicResource LOCCancelLabel}" Margin="10,0,0,0"
-                    Command="{Binding CancelCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                    Command="{Binding CancelCommand}" IsCancel="True"/>
         </StackPanel>
         <DockPanel DockPanel.Dock="Top" VerticalAlignment="Center">
             <Button Content="&#xef00;" FontFamily="{DynamicResource FontIcoFont}" Click="ClearSearchBox" DockPanel.Dock="Right" Margin="5,0,0,0" Padding="5,5,8,5"/>
