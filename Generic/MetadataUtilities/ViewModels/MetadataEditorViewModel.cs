@@ -33,9 +33,15 @@ namespace MetadataUtilities
             _completeMetadata = new MetadataListObjects();
             _completeMetadata.LoadMetadata();
 
-            Metadata = CollectionViewSource.GetDefaultView(_completeMetadata);
+            MetadataViewSource = new CollectionViewSource
+            {
+                Source = _completeMetadata
+            };
 
-            Metadata.Filter = Filter;
+            MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+            MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            MetadataViewSource.IsLiveSortingRequested = true;
+            MetadataViewSource.View.Filter = Filter;
         }
 
         public MergeRule MergeRule
@@ -68,7 +74,7 @@ namespace MetadataUtilities
                     }
                 }
 
-                Metadata.Refresh();
+                MetadataViewSource.View.Refresh();
             }
         }
 
@@ -101,7 +107,7 @@ namespace MetadataUtilities
             set
             {
                 _filterCategories = value;
-                Metadata.Refresh();
+                MetadataViewSource.View.Refresh();
                 OnPropertyChanged("FilterCategories");
             }
         }
@@ -112,7 +118,7 @@ namespace MetadataUtilities
             set
             {
                 _filterFeatures = value;
-                Metadata.Refresh();
+                MetadataViewSource.View.Refresh();
                 OnPropertyChanged("FilterFeatures");
             }
         }
@@ -123,7 +129,7 @@ namespace MetadataUtilities
             set
             {
                 _filterGenres = value;
-                Metadata.Refresh();
+                MetadataViewSource.View.Refresh();
                 OnPropertyChanged("FilterGenres");
             }
         }
@@ -134,7 +140,7 @@ namespace MetadataUtilities
             set
             {
                 _filterSelected = value;
-                Metadata.Refresh();
+                MetadataViewSource.View.Refresh();
                 OnPropertyChanged("FilterSelected");
             }
         }
@@ -145,7 +151,7 @@ namespace MetadataUtilities
             set
             {
                 _filterSeries = value;
-                Metadata.Refresh();
+                MetadataViewSource.View.Refresh();
                 OnPropertyChanged("FilterSeries");
             }
         }
@@ -156,7 +162,7 @@ namespace MetadataUtilities
             set
             {
                 _filterTags = value;
-                Metadata.Refresh();
+                MetadataViewSource.View.Refresh();
                 OnPropertyChanged("FilterTags");
             }
         }
@@ -187,7 +193,7 @@ namespace MetadataUtilities
             set
             {
                 _searchTerm = value;
-                Metadata.Refresh();
+                MetadataViewSource.View.Refresh();
                 OnPropertyChanged("SearchTerm");
             }
         }
@@ -225,7 +231,7 @@ namespace MetadataUtilities
                     newItem.EditName = newItem.Name;
                     CompleteMetadata.Add(newItem);
 
-                    Metadata.Refresh();
+                    MetadataViewSource.View.Refresh();
                 }
             }
             catch (Exception exception)
@@ -380,7 +386,7 @@ namespace MetadataUtilities
             RuleName = ((MetadataListObject)item).Name;
         });
 
-        public ICollectionView Metadata { get; }
+        public CollectionViewSource MetadataViewSource { get; }
 
         public MetadataListObjects CompleteMetadata
         {
