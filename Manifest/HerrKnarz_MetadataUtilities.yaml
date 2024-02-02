@@ -3,7 +3,7 @@ Packages:
   - Version: 0.3.1
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-02-02
-    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-02-02/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_3_1.pext
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-02-02-2/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_3_1.pext
     Changelog:
       - significantly sped up loading time of metadata editor/merge editor
   - Version: 0.3
