@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using Playnite.SDK;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -209,7 +210,51 @@ namespace MetadataUtilities.Models
             return temporaryList;
         }
 
-        public static void UpdateGameCounts(List<MetadataListObject> itemList, bool ignoreHiddenGames) => Parallel.ForEach(itemList, item => item.GetGameCount(ignoreHiddenGames));
+        public static void UpdateGameCounts(List<MetadataListObject> itemList, bool ignoreHiddenGames)
+        {
+            ConcurrentQueue<Guid> items = new ConcurrentQueue<Guid>();
+
+            Parallel.ForEach(API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden)), game =>
+            {
+                game.CategoryIds?.ForEach(o => items.Enqueue(o));
+
+                game.FeatureIds?.ForEach(o => items.Enqueue(o));
+
+                game.GenreIds?.ForEach(o => items.Enqueue(o));
+
+                game.SeriesIds?.ForEach(o => items.Enqueue(o));
+
+                game.TagIds?.ForEach(o => items.Enqueue(o));
+            });
+
+            List<IGrouping<Guid, Guid>> li = items.GroupBy(i => i).ToList();
+
+            Parallel.ForEach(itemList, item =>
+            {
+                IGrouping<Guid, Guid> first = null;
+                foreach (IGrouping<Guid, Guid> i in li)
+                {
+                    if (i.Key == item.Id)
+                    {
+                        first = i;
+                        break;
+                    }
+                }
+
+                if (first == null)
+                {
+                    return;
+                }
+
+                int count = 0;
+                foreach (Guid guid in first)
+                {
+                    count++;
+                }
+
+                item.GameCount = count;
+            });
+        }
 
         public bool MergeItems(FieldType type, Guid id)
         {

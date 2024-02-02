@@ -72,9 +72,6 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
-        public string GameCountSorter => $"{string.Format("{0:000000000}", GameCount)}: {EditName}";
-
-        [DontSerialize]
         public string TypeAndName => $"{Type.GetEnumDisplayName("MetadataUtilities")}: {EditName}";
 
         [DontSerialize]
