@@ -40,6 +40,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Categorias padrão para um novo jogo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Marcador padrão para um novo jogo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editar</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignore hidden games in game count</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignore hidden games when removing unused metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Executar automaticamente regras de mesclagem ao atualizar os metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Mesclar regras</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Remover metadados não utilizados na inicialização</sys:String>
