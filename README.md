@@ -3,6 +3,7 @@
 [![LastCommit](https://img.shields.io/github/last-commit/HerrKnarz/Playnite-Extensions?style=flat)](https://github.com/HerrKnarz/Playnite-Extensions/commits/master)
 [![Crowdin](https://badges.crowdin.net/playnite-extension-linkutiliti/localized.svg)](https://crowdin.com/project/playnite-extension-linkutiliti)
 [![License](https://img.shields.io/github/license/HerrKnarz/Playnite-Extensions?style=flat)](https://github.com/HerrKnarz/Playnite-Extensions/blob/master/LICENSE.txt)
+[![Ko-fi Badge](https://img.shields.io/badge/Tip%20on%20Ko--fi-F16061)](https://ko-fi.com/herrknarz)
 
 # Playnite Extensions
 
@@ -70,9 +71,9 @@ Extension to manage metadata for the games in the playnite library. It can do th
 - Set up merge rules that can automatically be executed after metadata changes or manually.
 - Set default categories and/or tags that will automatically be added to new games on import.
 - Automatically remove unused categories, features, genres, series and tags on start up (deactivated by default).
+- Option to ignore hidden games in game counts and removing of unused items. A tag only used in hidden games would then be considered unused for example).
 
 ### Known issues
-- Sorting in the Metadata Editor and Merge Rule Editor is a bit wonky at the moment. Will be reworked in the near future.
 - Comboboxes aren't localized yet and always show the english text. Will also be reworked.
 
 ### Planned features
