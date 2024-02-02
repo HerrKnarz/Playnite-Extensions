@@ -11,6 +11,10 @@ namespace MetadataUtilities.Models
 {
     public class MetadataListObjects : ObservableCollection<MetadataListObject>
     {
+        private readonly Settings _settings;
+
+        public MetadataListObjects(Settings settings) => _settings = settings;
+
         public void LoadMetadata(bool showGameNumber = true, FieldType? type = null)
         {
             List<MetadataListObject> temporaryList = new List<MetadataListObject>();
@@ -89,7 +93,7 @@ namespace MetadataUtilities.Models
 
                     if (showGameNumber)
                     {
-                        UpdateGameCounts(temporaryList);
+                        UpdateGameCounts(temporaryList, _settings.IgnoreHiddenGamesInGameCount);
                     }
                 }
                 catch (Exception ex)
@@ -102,7 +106,7 @@ namespace MetadataUtilities.Models
             this.AddMissing(temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
         }
 
-        public static List<MetadataListObject> RemoveUnusedMetadata(bool AutoMode = false)
+        public static List<MetadataListObject> RemoveUnusedMetadata(bool AutoMode = false, bool ignoreHiddenGames = false)
         {
             List<MetadataListObject> temporaryList = new List<MetadataListObject>();
 
@@ -119,7 +123,7 @@ namespace MetadataUtilities.Models
                 try
                 {
                     temporaryList.AddRange(API.Instance.Database.Categories
-                        .Where(x => !API.Instance.Database.Games.Any(g => g.CategoryIds?.Any(t => t == x.Id) ?? false))
+                        .Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.CategoryIds?.Any(t => t == x.Id) ?? false)))
                         .Select(category
                             => new MetadataListObject
                             {
@@ -129,7 +133,7 @@ namespace MetadataUtilities.Models
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Features
-                        .Where(x => !API.Instance.Database.Games.Any(g => g.FeatureIds?.Any(t => t == x.Id) ?? false))
+                        .Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.FeatureIds?.Any(t => t == x.Id) ?? false)))
                         .Select(feature
                             => new MetadataListObject
                             {
@@ -139,7 +143,7 @@ namespace MetadataUtilities.Models
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Genres
-                        .Where(x => !API.Instance.Database.Games.Any(g => g.GenreIds?.Any(t => t == x.Id) ?? false))
+                        .Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.GenreIds?.Any(t => t == x.Id) ?? false)))
                         .Select(genre
                             => new MetadataListObject
                             {
@@ -149,7 +153,7 @@ namespace MetadataUtilities.Models
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Series
-                        .Where(x => !API.Instance.Database.Games.Any(g => g.SeriesIds?.Any(t => t == x.Id) ?? false))
+                        .Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.SeriesIds?.Any(t => t == x.Id) ?? false)))
                         .Select(series
                             => new MetadataListObject
                             {
@@ -159,7 +163,7 @@ namespace MetadataUtilities.Models
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Tags
-                        .Where(x => !API.Instance.Database.Games.Any(g => g.TagIds?.Any(t => t == x.Id) ?? false))
+                        .Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.TagIds?.Any(t => t == x.Id) ?? false)))
                         .Select(tag
                             => new MetadataListObject
                             {
@@ -170,7 +174,7 @@ namespace MetadataUtilities.Models
 
                     foreach (MetadataListObject item in temporaryList)
                     {
-                        DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id, false);
+                        DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id, ignoreHiddenGames);
                     }
                 }
                 catch (Exception ex)
@@ -205,7 +209,7 @@ namespace MetadataUtilities.Models
             return temporaryList;
         }
 
-        public static void UpdateGameCounts(List<MetadataListObject> itemList) => Parallel.ForEach(itemList, item => item.GetGameCount());
+        public static void UpdateGameCounts(List<MetadataListObject> itemList, bool ignoreHiddenGames) => Parallel.ForEach(itemList, item => item.GetGameCount(ignoreHiddenGames));
 
         public bool MergeItems(FieldType type, Guid id)
         {

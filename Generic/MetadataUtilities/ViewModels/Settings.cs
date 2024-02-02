@@ -16,6 +16,8 @@ namespace MetadataUtilities
         private bool _alwaysSaveManualMergeRules;
         private ObservableCollection<MetadataListObject> _defaultCategories = new ObservableCollection<MetadataListObject>();
         private ObservableCollection<MetadataListObject> _defaultTags = new ObservableCollection<MetadataListObject>();
+        private bool _ignoreHiddenGamesInGameCount;
+        private bool _ignoreHiddenGamesInRemoveUnused;
         private DateTime _lastAutoLibUpdate = DateTime.Now;
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
@@ -40,6 +42,18 @@ namespace MetadataUtilities
         {
             get => _defaultTags;
             set => SetValue(ref _defaultTags, value);
+        }
+
+        public bool IgnoreHiddenGamesInGameCount
+        {
+            get => _ignoreHiddenGamesInGameCount;
+            set => SetValue(ref _ignoreHiddenGamesInGameCount, value);
+        }
+
+        public bool IgnoreHiddenGamesInRemoveUnused
+        {
+            get => _ignoreHiddenGamesInRemoveUnused;
+            set => SetValue(ref _ignoreHiddenGamesInRemoveUnused, value);
         }
 
         public DateTime LastAutoLibUpdate
@@ -116,7 +130,7 @@ namespace MetadataUtilities
         public RelayCommand AddExistingDefaultCategoriesCommand
             => new RelayCommand(() =>
             {
-                MetadataListObjects items = new MetadataListObjects();
+                MetadataListObjects items = new MetadataListObjects(Settings);
 
                 items.LoadMetadata(false, FieldType.Category);
 
@@ -173,7 +187,7 @@ namespace MetadataUtilities
         public RelayCommand AddExistingDefaultTagsCommand
             => new RelayCommand(() =>
             {
-                MetadataListObjects items = new MetadataListObjects();
+                MetadataListObjects items = new MetadataListObjects(Settings);
 
                 items.LoadMetadata(false, FieldType.Tag);
 

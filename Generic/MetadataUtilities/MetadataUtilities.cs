@@ -65,7 +65,7 @@ namespace MetadataUtilities
 
             if (Settings.Settings.RemoveUnusedOnStartup)
             {
-                MetadataListObjects.RemoveUnusedMetadata(true);
+                MetadataListObjects.RemoveUnusedMetadata(true, Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
             }
         }
 
@@ -204,7 +204,7 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnused"),
                     MenuSection = $"@{menuSection}",
                     Icon = "muRemoveIcon",
-                    Action = a => MetadataListObjects.RemoveUnusedMetadata()
+                    Action = a => MetadataListObjects.RemoveUnusedMetadata(false, Settings.Settings.IgnoreHiddenGamesInRemoveUnused)
                 }
             };
 

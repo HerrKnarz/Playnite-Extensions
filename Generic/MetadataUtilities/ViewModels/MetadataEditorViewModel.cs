@@ -23,26 +23,11 @@ namespace MetadataUtilities
         private bool _filterTags = true;
         private bool _isSelectMode;
         private MergeRule _mergeRule;
+        private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
         private string _ruleName = string.Empty;
         private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
-
-        public MetadataEditorViewModel()
-        {
-            _completeMetadata = new MetadataListObjects();
-            _completeMetadata.LoadMetadata();
-
-            MetadataViewSource = new CollectionViewSource
-            {
-                Source = _completeMetadata
-            };
-
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            MetadataViewSource.IsLiveSortingRequested = true;
-            MetadataViewSource.View.Filter = Filter;
-        }
 
         public MergeRule MergeRule
         {
@@ -248,7 +233,7 @@ namespace MetadataUtilities
                 {
                     Plugin.IsUpdating = true;
 
-                    MetadataListObjects mergeItems = new MetadataListObjects();
+                    MetadataListObjects mergeItems = new MetadataListObjects(Plugin.Settings.Settings);
 
                     mergeItems.AddMissing(items.ToList().Cast<MetadataListObject>());
 
@@ -336,7 +321,7 @@ namespace MetadataUtilities
 
         public RelayCommand RemoveUnusedCommand => new RelayCommand(() =>
         {
-            List<MetadataListObject> removedItems = MetadataListObjects.RemoveUnusedMetadata();
+            List<MetadataListObject> removedItems = MetadataListObjects.RemoveUnusedMetadata(false, Plugin.Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
 
             if (!removedItems.Any())
             {
@@ -386,7 +371,15 @@ namespace MetadataUtilities
             RuleName = ((MetadataListObject)item).Name;
         });
 
-        public CollectionViewSource MetadataViewSource { get; }
+        public CollectionViewSource MetadataViewSource
+        {
+            get => _metadataViewSource;
+            set
+            {
+                _metadataViewSource = value;
+                OnPropertyChanged("MetadataViewSource");
+            }
+        }
 
         public MetadataListObjects CompleteMetadata
         {
@@ -437,6 +430,19 @@ namespace MetadataUtilities
         private void InitializeView(MetadataUtilities plugin, bool isSelectMode = false)
         {
             _plugin = plugin;
+
+            _completeMetadata = new MetadataListObjects(Plugin.Settings.Settings);
+            _completeMetadata.LoadMetadata();
+
+            MetadataViewSource = new CollectionViewSource
+            {
+                Source = _completeMetadata
+            };
+
+            MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+            MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            MetadataViewSource.IsLiveSortingRequested = true;
+            MetadataViewSource.View.Filter = Filter;
         }
     }
 }
