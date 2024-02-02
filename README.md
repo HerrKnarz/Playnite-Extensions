@@ -3,6 +3,7 @@
 [![LastCommit](https://img.shields.io/github/last-commit/HerrKnarz/Playnite-Extensions?style=flat)](https://github.com/HerrKnarz/Playnite-Extensions/commits/master)
 [![Crowdin](https://badges.crowdin.net/playnite-extension-linkutiliti/localized.svg)](https://crowdin.com/project/playnite-extension-linkutiliti)
 [![License](https://img.shields.io/github/license/HerrKnarz/Playnite-Extensions?style=flat)](https://github.com/HerrKnarz/Playnite-Extensions/blob/master/LICENSE.txt)
+[![Ko-fi Badge](https://img.shields.io/badge/Tip%20on%20Ko--fi-F16061)](https://ko-fi.com/herrknarz)
 
 # Playnite Extensions
 
