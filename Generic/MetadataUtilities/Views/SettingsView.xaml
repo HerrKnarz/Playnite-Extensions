@@ -101,8 +101,9 @@
                               HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"
-                                                    SortMemberPath="TypeAndName" SortDirection="Ascending"/>
-                                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name}" MinWidth="100" IsReadOnly="True"/>
+                                                    SortDirection="Ascending"/>
+                                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name}" MinWidth="100" IsReadOnly="True"
+                                                    SortDirection="Ascending"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
@@ -123,8 +124,9 @@
                               HorizontalContentAlignment="Stretch"  VerticalAlignment="Stretch">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"
-                                                    SortMemberPath="TypeAndName" SortDirection="Ascending"/>
-                                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name}" MinWidth="100" IsReadOnly="True"/>
+                                                    SortDirection="Ascending"/>
+                                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name}" MinWidth="100" IsReadOnly="True"
+                                                    SortDirection="Ascending"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>

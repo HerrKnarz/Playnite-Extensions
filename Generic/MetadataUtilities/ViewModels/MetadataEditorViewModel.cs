@@ -12,7 +12,7 @@ using System.Windows.Data;
 
 namespace MetadataUtilities
 {
-    public class MetadataEditorViewModel : ViewModelBase
+    public class MetadataEditorViewModel : ObservableObject
     {
         private MetadataListObjects _completeMetadata;
         private bool _filterCategories = true;
@@ -55,7 +55,7 @@ namespace MetadataUtilities
             set
             {
                 _isSelectMode = value;
-                OnPropertyChanged("IsSelectMode");
+                SetValue(ref _isSelectMode, value);
                 OnPropertyChanged("SelectionMode");
                 OnPropertyChanged("VisibleInEditorMode");
                 OnPropertyChanged("VisibleInSelectMode");
@@ -68,7 +68,7 @@ namespace MetadataUtilities
             set
             {
                 _plugin = value;
-                OnPropertyChanged("Plugin");
+                SetValue(ref _plugin, value);
             }
         }
 
@@ -79,7 +79,7 @@ namespace MetadataUtilities
             {
                 _filterCategories = value;
                 MetadataViewSource.View.Refresh();
-                OnPropertyChanged("FilterCategories");
+                SetValue(ref _filterCategories, value);
             }
         }
 
@@ -90,7 +90,7 @@ namespace MetadataUtilities
             {
                 _filterFeatures = value;
                 MetadataViewSource.View.Refresh();
-                OnPropertyChanged("FilterFeatures");
+                SetValue(ref _filterFeatures, value);
             }
         }
 
@@ -101,7 +101,7 @@ namespace MetadataUtilities
             {
                 _filterGenres = value;
                 MetadataViewSource.View.Refresh();
-                OnPropertyChanged("FilterGenres");
+                SetValue(ref _filterGenres, value);
             }
         }
 
@@ -112,7 +112,7 @@ namespace MetadataUtilities
             {
                 _filterSelected = value;
                 MetadataViewSource.View.Refresh();
-                OnPropertyChanged("FilterSelected");
+                SetValue(ref _filterSelected, value);
             }
         }
 
@@ -123,7 +123,7 @@ namespace MetadataUtilities
             {
                 _filterSeries = value;
                 MetadataViewSource.View.Refresh();
-                OnPropertyChanged("FilterSeries");
+                SetValue(ref _filterSeries, value);
             }
         }
 
@@ -134,7 +134,7 @@ namespace MetadataUtilities
             {
                 _filterTags = value;
                 MetadataViewSource.View.Refresh();
-                OnPropertyChanged("FilterTags");
+                SetValue(ref _filterTags, value);
             }
         }
 
@@ -144,7 +144,7 @@ namespace MetadataUtilities
             set
             {
                 _ruleName = value;
-                OnPropertyChanged("RuleName");
+                SetValue(ref _ruleName, value);
             }
         }
 
@@ -154,7 +154,7 @@ namespace MetadataUtilities
             set
             {
                 _ruleType = value;
-                OnPropertyChanged("RuleType");
+                SetValue(ref _ruleType, value);
             }
         }
 
@@ -165,7 +165,7 @@ namespace MetadataUtilities
             {
                 _searchTerm = value;
                 MetadataViewSource.View.Refresh();
-                OnPropertyChanged("SearchTerm");
+                SetValue(ref _searchTerm, value);
             }
         }
 
@@ -352,7 +352,7 @@ namespace MetadataUtilities
             set
             {
                 _metadataViewSource = value;
-                OnPropertyChanged("MetadataViewSource");
+                OnPropertyChanged();
             }
         }
 
@@ -362,7 +362,7 @@ namespace MetadataUtilities
             set
             {
                 _completeMetadata = value;
-                OnPropertyChanged("CompleteMetadata");
+                OnPropertyChanged();
             }
         }
 
