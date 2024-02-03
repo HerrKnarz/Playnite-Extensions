@@ -239,7 +239,7 @@ namespace MetadataUtilities
                             }
                             else
                             {
-                                itemToRemove.GetGameCount();
+                                itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
                             }
                         }
                     }
