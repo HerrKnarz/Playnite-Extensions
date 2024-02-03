@@ -76,7 +76,24 @@ namespace MetadataUtilities
                 return;
             }
 
-            List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
+            // Only run for games, that have values in one of the supported fields and those differ from the ones before.
+            List<Game> games = args.UpdatedItems.Where(item =>
+                item.OldData == null ||
+                (item.NewData.CategoryIds != null &&
+                 (item.OldData.CategoryIds == null ||
+                  !new HashSet<Guid>(item.OldData.CategoryIds).SetEquals(item.NewData.CategoryIds))) ||
+                (item.NewData.FeatureIds != null &&
+                 (item.OldData.FeatureIds == null ||
+                  !new HashSet<Guid>(item.OldData.FeatureIds).SetEquals(item.NewData.FeatureIds))) ||
+                (item.NewData.GenreIds != null &&
+                 (item.OldData.GenreIds == null ||
+                  !new HashSet<Guid>(item.OldData.GenreIds).SetEquals(item.NewData.GenreIds))) ||
+                (item.NewData.SeriesIds != null &&
+                 (item.OldData.SeriesIds == null ||
+                  !new HashSet<Guid>(item.OldData.SeriesIds).SetEquals(item.NewData.SeriesIds))) ||
+                (item.NewData.TagIds != null &&
+                 (item.OldData.TagIds == null ||
+                  !new HashSet<Guid>(item.OldData.TagIds).SetEquals(item.NewData.TagIds)))).Select(item => item.NewData).ToList();
 
             DoForAll(games, MergeAction.Instance(this));
         }
