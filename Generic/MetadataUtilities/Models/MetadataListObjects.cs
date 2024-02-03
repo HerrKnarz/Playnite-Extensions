@@ -214,7 +214,9 @@ namespace MetadataUtilities.Models
         {
             ConcurrentQueue<Guid> items = new ConcurrentQueue<Guid>();
 
-            Parallel.ForEach(API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden)), game =>
+            ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+
+            Parallel.ForEach(API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden)), opts, game =>
             {
                 game.CategoryIds?.ForEach(o => items.Enqueue(o));
 
@@ -229,7 +231,7 @@ namespace MetadataUtilities.Models
 
             List<IGrouping<Guid, Guid>> li = items.GroupBy(i => i).ToList();
 
-            Parallel.ForEach(itemList, item =>
+            Parallel.ForEach(itemList, opts, item =>
             {
                 IGrouping<Guid, Guid> first = null;
                 foreach (IGrouping<Guid, Guid> i in li)

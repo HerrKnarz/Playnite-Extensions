@@ -3,14 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:VM="clr-namespace:MetadataUtilities"
+             xmlns:metadataUtilities="clr-namespace:MetadataUtilities"
+             d:DataContext="{d:DesignInstance Type=metadataUtilities:MetadataEditorViewModel}"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:helper="clr-namespace:KNARZhelper"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <VM:MetadataEditorViewModel/>
-    </UserControl.DataContext>
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -28,7 +26,7 @@
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="10,0,10,10" HorizontalAlignment="Right" Visibility="{Binding VisibleInSelectMode}">
             <Button Content="{DynamicResource LOCSaveLabel}" Command="{Binding SaveCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" IsDefault="True"/>
-            <Button Content="{DynamicResource LOCCancelLabel}" Margin="10,0,0,0" Command="{Binding CancelCommand}" IsCancel="True"/>
+            <Button Content="{DynamicResource LOCCancelLabel}" Margin="10,0,0,0" IsCancel="True"/>
         </StackPanel>
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>

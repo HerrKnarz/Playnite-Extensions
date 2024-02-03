@@ -344,15 +344,54 @@ namespace MetadataUtilities
                     }
                 }
 
-                MetadataEditorView editorView = new MetadataEditorView(plugin, true, ruleToEdit);
+                MetadataListObjects metadataListObjects = new MetadataListObjects(Settings);
+                metadataListObjects.LoadMetadata();
+
+                foreach (MetadataListObject item in ruleToEdit.SourceObjects)
+                {
+                    MetadataListObject foundItem = metadataListObjects.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+
+                    if (foundItem != null)
+                    {
+                        foundItem.Selected = true;
+                    }
+                    else
+                    {
+                        item.Selected = true;
+                        metadataListObjects.Add(item);
+                    }
+                }
+
+                MetadataEditorViewModel viewModel = new MetadataEditorViewModel(plugin, metadataListObjects, true);
+                viewModel.RuleName = ruleToEdit.Name;
+                viewModel.RuleType = ruleToEdit.Type;
+
+                MetadataEditorView editorView = new MetadataEditorView(true);
 
                 Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 700, 600, false, true);
-
                 window.Content = editorView;
+                window.DataContext = viewModel;
+
 
                 if (!(window.ShowDialog() ?? false))
                 {
                     return;
+                }
+
+                ruleToEdit.Name = viewModel.RuleName;
+                ruleToEdit.Type = viewModel.RuleType;
+                ruleToEdit.SourceObjects.Clear();
+
+                foreach (MetadataListObject item in metadataListObjects.Where(x => x.Selected).ToList())
+                {
+                    ruleToEdit.SourceObjects.Add(new MetadataListObject
+                    {
+                        Id = item.Id,
+                        EditName = item.EditName,
+                        Name = item.Name,
+                        Type = item.Type,
+                        Selected = item.Selected
+                    });
                 }
 
                 // Case 1: The rule wasn't renamed => We simply replace the SourceObjects.

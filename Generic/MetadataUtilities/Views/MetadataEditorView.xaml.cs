@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using MetadataUtilities.Models;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,16 +12,13 @@ namespace MetadataUtilities
     {
         private readonly bool _isSelectMode;
 
-        public MetadataEditorView(MetadataUtilities plugin, bool isSelectMode = false, MergeRule mergeRule = null)
+        public MetadataEditorView(bool isSelectMode = false)
         {
             _isSelectMode = isSelectMode;
 
             try
             {
                 InitializeComponent();
-                ((MetadataEditorViewModel)DataContext).Plugin = plugin;
-                ((MetadataEditorViewModel)DataContext).IsSelectMode = isSelectMode;
-                ((MetadataEditorViewModel)DataContext).MergeRule = mergeRule;
             }
             catch (Exception e)
             {

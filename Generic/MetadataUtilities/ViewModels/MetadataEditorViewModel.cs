@@ -22,45 +22,27 @@ namespace MetadataUtilities
         private bool _filterSeries = true;
         private bool _filterTags = true;
         private bool _isSelectMode;
-        private MergeRule _mergeRule;
         private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
         private string _ruleName = string.Empty;
         private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
 
-        public MergeRule MergeRule
+        public MetadataEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects, bool isSelectMode = false)
         {
-            get => _mergeRule;
-            set
+            Plugin = plugin;
+            IsSelectMode = isSelectMode;
+            CompleteMetadata = objects;
+
+            MetadataViewSource = new CollectionViewSource
             {
-                _mergeRule = value;
+                Source = _completeMetadata
+            };
 
-                if (value == null)
-                {
-                    return;
-                }
-
-                RuleName = value.Name;
-                RuleType = value.Type;
-
-                foreach (MetadataListObject item in value.SourceObjects)
-                {
-                    MetadataListObject foundItem = CompleteMetadata.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
-
-                    if (foundItem != null)
-                    {
-                        foundItem.Selected = true;
-                    }
-                    else
-                    {
-                        item.Selected = true;
-                        CompleteMetadata.Add(item);
-                    }
-                }
-
-                MetadataViewSource.View.Refresh();
-            }
+            MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+            MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            MetadataViewSource.IsLiveSortingRequested = true;
+            MetadataViewSource.View.Filter = Filter;
         }
 
         public Visibility VisibleInEditorMode => IsSelectMode ? Visibility.Collapsed : Visibility.Visible;
@@ -83,7 +65,11 @@ namespace MetadataUtilities
         public MetadataUtilities Plugin
         {
             get => _plugin;
-            set => InitializeView(value);
+            set
+            {
+                _plugin = value;
+                OnPropertyChanged("Plugin");
+            }
         }
 
         public bool FilterCategories
@@ -350,22 +336,6 @@ namespace MetadataUtilities
                 return;
             }
 
-            MergeRule.Name = RuleName;
-            MergeRule.Type = RuleType;
-            MergeRule.SourceObjects.Clear();
-
-            foreach (MetadataListObject item in CompleteMetadata.Where(x => x.Selected).ToList())
-            {
-                MergeRule.SourceObjects.Add(new MetadataListObject
-                {
-                    Id = item.Id,
-                    EditName = item.EditName,
-                    Name = item.Name,
-                    Type = item.Type,
-                    Selected = item.Selected
-                });
-            }
-
             win.DialogResult = true;
             win.Close();
         });
@@ -430,24 +400,6 @@ namespace MetadataUtilities
             return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
                    types.Any(t => t == metadataListObject.Type) &&
                    (!FilterSelected || metadataListObject.Selected);
-        }
-
-        private void InitializeView(MetadataUtilities plugin, bool isSelectMode = false)
-        {
-            _plugin = plugin;
-
-            _completeMetadata = new MetadataListObjects(Plugin.Settings.Settings);
-            _completeMetadata.LoadMetadata();
-
-            MetadataViewSource = new CollectionViewSource
-            {
-                Source = _completeMetadata
-            };
-
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            MetadataViewSource.IsLiveSortingRequested = true;
-            MetadataViewSource.View.Filter = Filter;
         }
     }
 }

@@ -167,12 +167,16 @@ namespace MetadataUtilities
         {
             try
             {
-                MetadataEditorView editorView = new MetadataEditorView(this);
+                MetadataListObjects metadataListObjects = new MetadataListObjects(Settings.Settings);
+                metadataListObjects.LoadMetadata();
+
+                MetadataEditorViewModel viewModel = new MetadataEditorViewModel(this, metadataListObjects);
+
+                MetadataEditorView editorView = new MetadataEditorView(true);
 
                 Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesEditor"), 700, 600, false, true);
-
                 window.Content = editorView;
-
+                window.DataContext = viewModel;
                 window.ShowDialog();
             }
             catch (Exception exception)
