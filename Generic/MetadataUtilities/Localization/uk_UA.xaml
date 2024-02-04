@@ -46,6 +46,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Об’єднати Ролі</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Прибирати невикористані метадані під час запуску</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Встановлювати тільки коли теги не були додані при імпорті метаданих</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Show Metadata Editor button in top panel (requires restart)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Defaults</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Загальне</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Значення для об'єднання</sys:String>
