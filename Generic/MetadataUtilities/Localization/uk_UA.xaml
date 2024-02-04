@@ -20,7 +20,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Прибрати невикористані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Ціль Правила</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Встановити як ціль</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Statistics</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Статистика</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Категорія</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Особливість</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Жанр</sys:String>
