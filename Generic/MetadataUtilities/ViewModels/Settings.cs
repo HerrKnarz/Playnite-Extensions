@@ -24,6 +24,7 @@ namespace MetadataUtilities
         private bool _removeUnusedOnStartup;
         private MergeRule _selectedMergeRule;
         private bool _setDefaultTagsOnlyIfEmpty = true;
+        private bool _showTopPanelButton = true;
         private bool _writeDebugLog;
 
         public bool AlwaysSaveManualMergeRules
@@ -91,6 +92,12 @@ namespace MetadataUtilities
         {
             get => _setDefaultTagsOnlyIfEmpty;
             set => SetValue(ref _setDefaultTagsOnlyIfEmpty, value);
+        }
+
+        public bool ShowTopPanelButton
+        {
+            get => _showTopPanelButton;
+            set => SetValue(ref _showTopPanelButton, value);
         }
 
         public bool WriteDebugLog

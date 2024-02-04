@@ -12,63 +12,11 @@
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabGeneral}">
             <ScrollViewer>
                 <DockPanel Margin="10" LastChildFill="False">
-                    <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsDefaultCategories}" DockPanel.Dock="Top">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="200" />
-                            </Grid.ColumnDefinitions>
-                            <ListBox Name="lbDefaultCategories" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultCategories}" Height="200"
-                                 VerticalAlignment="Top" SelectionMode="Extended">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}" />
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                            <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddValue}"
-                                    Command="{Binding AddNewDefaultCategoryCommand}" />
-                                <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}" Margin="0,10,0,0"
-                                    Command="{Binding AddExistingDefaultCategoriesCommand}" />
-                                <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
-                                    Command="{Binding RemoveDefaultCategoryCommand}"
-                                    CommandParameter="{Binding SelectedItems, ElementName=lbDefaultCategories}"/>
-                            </StackPanel>
-                        </Grid>
-                    </GroupBox>
-
-                    <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsDefaultTags}" Margin="0,10,0,0" DockPanel.Dock="Top">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="200" />
-                            </Grid.ColumnDefinitions>
-                            <ListBox Name="lbDefaultTags" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultTags}" Height="200"
-                                 VerticalAlignment="Top" SelectionMode="Extended">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}" />
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                            <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddValue}"
-                                    Command="{Binding AddNewDefaultTagCommand}" />
-                                <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}" Margin="0,10,0,0"
-                                    Command="{Binding AddExistingDefaultTagsCommand}" />
-                                <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
-                                    Command="{Binding RemoveDefaultTagCommand}"
-                                    CommandParameter="{Binding SelectedItems, ElementName=lbDefaultTags}"/>
-                                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.SetDefaultTagsOnlyIfEmpty}" Margin="0,10,0,0">
-                                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty}" TextWrapping="Wrap"/>
-                                </CheckBox>
-                            </StackPanel>
-                        </Grid>
-                    </GroupBox>
                     <StackPanel DockPanel.Dock="Top">
+                        <CheckBox IsChecked="{Binding Settings.ShowTopPanelButton}" Margin="0,0,0,0"
+                                  Content="{DynamicResource LOCMetadataUtilitiesSettingsShowTopPanelButton}"/>
                         <CheckBox IsChecked="{Binding Settings.RemoveUnusedOnStartup}" Margin="0,10,0,0"
-                              Content="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}"/>
+                                  Content="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}"/>
                         <CheckBox IsChecked="{Binding Settings.IgnoreHiddenGamesInRemoveUnused}" Margin="0,10,0,0"
                               Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}"/>
                         <CheckBox IsChecked="{Binding Settings.IgnoreHiddenGamesInGameCount}" Margin="0,10,0,0"
@@ -139,6 +87,66 @@
                     </StackPanel>
                 </Grid>
             </DockPanel>
+        </TabItem>
+        <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabDefaults}">
+            <ScrollViewer>
+                <DockPanel Margin="10" LastChildFill="False">
+                    <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsDefaultCategories}" DockPanel.Dock="Top">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="200" />
+                            </Grid.ColumnDefinitions>
+                            <ListBox Name="lbDefaultCategories" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultCategories}" Height="200"
+                                 VerticalAlignment="Top" SelectionMode="Extended">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddValue}"
+                                    Command="{Binding AddNewDefaultCategoryCommand}" />
+                                <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}" Margin="0,10,0,0"
+                                    Command="{Binding AddExistingDefaultCategoriesCommand}" />
+                                <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
+                                    Command="{Binding RemoveDefaultCategoryCommand}"
+                                    CommandParameter="{Binding SelectedItems, ElementName=lbDefaultCategories}"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsDefaultTags}" Margin="0,10,0,0" DockPanel.Dock="Top">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="200" />
+                            </Grid.ColumnDefinitions>
+                            <ListBox Name="lbDefaultTags" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultTags}" Height="200"
+                                 VerticalAlignment="Top" SelectionMode="Extended">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddValue}"
+                                    Command="{Binding AddNewDefaultTagCommand}" />
+                                <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}" Margin="0,10,0,0"
+                                    Command="{Binding AddExistingDefaultTagsCommand}" />
+                                <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
+                                    Command="{Binding RemoveDefaultTagCommand}"
+                                    CommandParameter="{Binding SelectedItems, ElementName=lbDefaultTags}"/>
+                                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.SetDefaultTagsOnlyIfEmpty}" Margin="0,10,0,0">
+                                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty}" TextWrapping="Wrap"/>
+                                </CheckBox>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                </DockPanel>
+            </ScrollViewer>
         </TabItem>
     </TabControl>
 </UserControl>

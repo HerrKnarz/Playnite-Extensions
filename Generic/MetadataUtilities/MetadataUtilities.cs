@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace MetadataUtilities
 {
@@ -29,7 +30,7 @@ namespace MetadataUtilities
 
             Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
             {
-                { "muEditorIcon", "\xef10" },
+                { "muEditorIcon", "\xf005" },
                 { "muMergeIcon", "\xef29" },
                 { "muRemoveIcon", "\xee09" },
                 { "muTagIcon", "\xf004" }
@@ -178,6 +179,27 @@ namespace MetadataUtilities
             {
                 IsUpdating = false;
             }
+        }
+
+        public override IEnumerable<TopPanelItem> GetTopPanelItems()
+        {
+            if (!Settings.Settings.ShowTopPanelButton)
+            {
+                yield break;
+            }
+
+            yield return new TopPanelItem
+            {
+                Icon = new TextBlock
+                {
+                    Text = char.ConvertFromUtf32(0xf005),
+                    FontSize = 20,
+                    FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
+                },
+                Visible = true,
+                Title = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
+                Activated = ShowEditor
+            };
         }
 
         private void ShowEditor()
