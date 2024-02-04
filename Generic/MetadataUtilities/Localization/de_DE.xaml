@@ -20,6 +20,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Nicht verwendete entfernen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Regelziel</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Als Ziel festlegen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Statistics</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Kategorie</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Feature</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Genre</sys:String>
