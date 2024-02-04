@@ -181,27 +181,6 @@ namespace MetadataUtilities
             }
         }
 
-        public override IEnumerable<TopPanelItem> GetTopPanelItems()
-        {
-            if (!Settings.Settings.ShowTopPanelButton)
-            {
-                yield break;
-            }
-
-            yield return new TopPanelItem
-            {
-                Icon = new TextBlock
-                {
-                    Text = char.ConvertFromUtf32(0xf005),
-                    FontSize = 20,
-                    FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
-                },
-                Visible = true,
-                Title = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
-                Activated = ShowEditor
-            };
-        }
-
         private void ShowEditor()
         {
             try
@@ -222,6 +201,27 @@ namespace MetadataUtilities
             {
                 Log.Error(exception, "Error during initializing Metadata Editor", true);
             }
+        }
+
+        public override IEnumerable<TopPanelItem> GetTopPanelItems()
+        {
+            if (!Settings.Settings.ShowTopPanelButton)
+            {
+                yield break;
+            }
+
+            yield return new TopPanelItem
+            {
+                Icon = new TextBlock
+                {
+                    Text = char.ConvertFromUtf32(0xf005),
+                    FontSize = 20,
+                    FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
+                },
+                Visible = true,
+                Title = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
+                Activated = ShowEditor
+            };
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
