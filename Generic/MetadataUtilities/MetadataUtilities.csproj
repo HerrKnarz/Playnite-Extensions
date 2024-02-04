@@ -71,6 +71,7 @@
     <Compile Include="Models\MergeRules.cs" />
     <Compile Include="Models\MetadataListObject.cs" />
     <Compile Include="Models\MetadataListObjects.cs" />
+    <Compile Include="Models\MyGame.cs" />
     <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\SelectMetadataViewModel.cs" />

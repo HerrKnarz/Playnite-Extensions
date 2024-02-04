@@ -2,8 +2,10 @@
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -14,6 +16,7 @@ namespace MetadataUtilities
 {
     public class MetadataEditorViewModel : ObservableObject
     {
+        private readonly bool _showRelatedGames = true;
         private int _categoryCount;
         private MetadataListObjects _completeMetadata;
         private int _featureCount;
@@ -23,6 +26,8 @@ namespace MetadataUtilities
         private bool _filterSelected;
         private bool _filterSeries = true;
         private bool _filterTags = true;
+        private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
+        private CollectionViewSource _gamesViewSource;
         private int _genreCount;
         private bool _isSelectMode;
         private CollectionViewSource _metadataViewSource;
@@ -39,17 +44,29 @@ namespace MetadataUtilities
             IsSelectMode = isSelectMode;
             CompleteMetadata = objects;
 
+            CalculateItemCount();
+
+            GamesViewSource = new CollectionViewSource
+            {
+                Source = _games
+            };
+
+            //GamesViewSource.SortDescriptions.Add(new SortDescription("SortingName", ListSortDirection.Ascending));
+            GamesViewSource.SortDescriptions.Add(new SortDescription("RealSortingName", ListSortDirection.Ascending));
+            GamesViewSource.IsLiveSortingRequested = true;
+
             MetadataViewSource = new CollectionViewSource
             {
                 Source = _completeMetadata
             };
 
-            CalculateItemCount();
-
             MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
             MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             MetadataViewSource.IsLiveSortingRequested = true;
             MetadataViewSource.View.Filter = Filter;
+            MetadataViewSource.View.CurrentChanged += CurrentChanged;
+            MetadataViewSource.View.MoveCurrentToFirst();
+            MetadataViewSource.View.Refresh();
         }
 
         public int CategoryCount
@@ -144,6 +161,18 @@ namespace MetadataUtilities
                 SetValue(ref _filterTags, value);
                 MetadataViewSource.View.Refresh();
             }
+        }
+
+        public ObservableCollection<MyGame> Games
+        {
+            get => _games;
+            set => SetValue(ref _games, value);
+        }
+
+        public CollectionViewSource GamesViewSource
+        {
+            get => _gamesViewSource;
+            set => SetValue(ref _gamesViewSource, value);
         }
 
         public int GenreCount
@@ -384,6 +413,38 @@ namespace MetadataUtilities
         {
             get => _completeMetadata;
             set => SetValue(ref _completeMetadata, value);
+        }
+
+        private void CurrentChanged(object sender, EventArgs e)
+        {
+            if (!_showRelatedGames)
+            {
+                return;
+            }
+
+            Games.Clear();
+
+            MetadataListObject currItem = (MetadataListObject)_metadataViewSource.View.CurrentItem;
+
+            foreach (Game game in API.Instance.Database.Games.Where(g =>
+                !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
+                    (currItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currItem.Id) ?? false)) ||
+                    (currItem.Type == FieldType.Feature && (g.FeatureIds?.Contains(currItem.Id) ?? false)) ||
+                    (currItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currItem.Id) ?? false)) ||
+                    (currItem.Type == FieldType.Series && (g.SeriesIds?.Contains(currItem.Id) ?? false)) ||
+                    (currItem.Type == FieldType.Tag && (g.TagIds?.Contains(currItem.Id) ?? false)))
+            ).OrderBy(g => g.Name).ToList())
+            {
+                Games.Add(new MyGame
+                {
+                    Name = game.Name,
+                    SortingName = game.SortingName,
+                    CompletionStatus = game.CompletionStatus,
+                    ReleaseYear = game.ReleaseYear
+                });
+            }
+
+            GamesViewSource.View.Refresh();
         }
 
         public void CalculateItemCount()
