@@ -1,35 +1,37 @@
-﻿using MetadataUtilities.Models;
+﻿using KNARZhelper;
+using MetadataUtilities.Models;
+using MetadataUtilities.Views;
 using Playnite.SDK;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
 namespace MetadataUtilities
 {
-    public class AddNewObjectViewModel : ViewModelBase
+    public class AddNewObjectViewModel : ObservableObject
     {
         //TODO: Try to add localization to combobox!
 
         private MetadataListObject _newObject = new MetadataListObject();
         private MetadataUtilities _plugin;
 
+        public AddNewObjectViewModel(MetadataUtilities plugin, MetadataListObject newObject)
+        {
+            Plugin = plugin;
+            NewObject = newObject;
+        }
+
         public MetadataUtilities Plugin
         {
             get => _plugin;
-            set
-            {
-                _plugin = value;
-                OnPropertyChanged("Plugin");
-            }
+            set => SetValue(ref _plugin, value);
         }
 
         public MetadataListObject NewObject
         {
             get => _newObject;
-            set
-            {
-                _newObject = value;
-                OnPropertyChanged("NewObject");
-            }
+            set => SetValue(ref _newObject, value);
         }
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
@@ -37,5 +39,27 @@ namespace MetadataUtilities
             win.DialogResult = NewObject.Name?.Any() ?? false;
             win.Close();
         }, win => win != null);
+
+        public static Window GetWindow(MetadataUtilities plugin, MetadataListObject newObject)
+        {
+            try
+            {
+                AddNewObjectViewModel viewModel = new AddNewObjectViewModel(plugin, newObject);
+
+                AddNewObjectView newObjectViewView = new AddNewObjectView();
+
+                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddNewObject"));
+                window.Content = newObjectViewView;
+                window.DataContext = viewModel;
+
+                return window;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing add new item dialog", true);
+
+                return null;
+            }
+        }
     }
 }

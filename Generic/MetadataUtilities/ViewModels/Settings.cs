@@ -1,6 +1,5 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.Models;
-using MetadataUtilities.Views;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
@@ -189,11 +188,12 @@ namespace MetadataUtilities
 
                 items.LoadMetadata(false, FieldType.Category);
 
-                SelectMetadataView selectMetadataView = new SelectMetadataView(plugin, items);
+                Window window = SelectMetadataViewModel.GetWindow(plugin, items, ResourceProvider.GetString("LOCCategoriesLabel"));
 
-                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCCategoriesLabel"));
-
-                window.Content = selectMetadataView;
+                if (window == null)
+                {
+                    return;
+                }
 
                 if (window.ShowDialog() ?? false)
                 {
@@ -246,11 +246,12 @@ namespace MetadataUtilities
 
                 items.LoadMetadata(false, FieldType.Tag);
 
-                SelectMetadataView selectMetadataView = new SelectMetadataView(plugin, items);
+                Window window = SelectMetadataViewModel.GetWindow(plugin, items, ResourceProvider.GetString("LOCTagsLabel"));
 
-                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCTagsLabel"));
-
-                window.Content = selectMetadataView;
+                if (window == null)
+                {
+                    return;
+                }
 
                 if (window.ShowDialog() ?? false)
                 {
@@ -330,27 +331,21 @@ namespace MetadataUtilities
 
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
-            try
+            MetadataListObject newItem = new MetadataListObject();
+
+            Window window = AddNewObjectViewModel.GetWindow(plugin, newItem);
+
+            if (window == null)
             {
-                MetadataListObject newItem = new MetadataListObject();
-
-                AddNewObjectView newObjectViewView = new AddNewObjectView(plugin, newItem);
-
-                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddNewObject"));
-
-                window.Content = newObjectViewView;
-
-                if (window.ShowDialog() ?? false)
-                {
-                    if (!((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
-                    {
-                        ((MergeRule)rule).SourceObjects.Add(newItem);
-                    }
-                }
+                return;
             }
-            catch (Exception exception)
+
+            if (window.ShowDialog() ?? false)
             {
-                Log.Error(exception, "Error during initializing merge dialog", true);
+                if (!((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
+                {
+                    ((MergeRule)rule).SourceObjects.Add(newItem);
+                }
             }
         }, rule => rule != null);
 

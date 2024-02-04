@@ -1,14 +1,16 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.Models;
+using MetadataUtilities.Views;
 using Playnite.SDK;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 
 namespace MetadataUtilities
 {
-    public class SelectMetadataViewModel : ViewModelBase
+    public class SelectMetadataViewModel : ObservableObject
     {
         private ICollectionView _filteredMetadata;
         private bool _filterSelected;
@@ -16,14 +18,18 @@ namespace MetadataUtilities
         private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
 
+        public SelectMetadataViewModel(MetadataUtilities plugin, MetadataListObjects items)
+        {
+            Plugin = plugin;
+            MetadataListObjects = items;
+            FilteredMetadata = CollectionViewSource.GetDefaultView(_metadataListObjects);
+            FilteredMetadata.Filter = Filter;
+        }
+
         public ICollectionView FilteredMetadata
         {
             get => _filteredMetadata;
-            set
-            {
-                _filteredMetadata = value;
-                OnPropertyChanged("FilteredMetadata");
-            }
+            set => SetValue(ref _filteredMetadata, value);
         }
 
         public bool FilterSelected
@@ -31,20 +37,15 @@ namespace MetadataUtilities
             get => _filterSelected;
             set
             {
-                _filterSelected = value;
+                SetValue(ref _filterSelected, value);
                 FilteredMetadata.Refresh();
-                OnPropertyChanged("FilterSelected");
             }
         }
 
         public MetadataUtilities Plugin
         {
             get => _plugin;
-            set
-            {
-                _plugin = value;
-                OnPropertyChanged("Plugin");
-            }
+            set => SetValue(ref _plugin, value);
         }
 
         public MetadataListObjects MetadataListObjects
@@ -53,7 +54,7 @@ namespace MetadataUtilities
             set
             {
                 _metadataListObjects = value;
-                OnPropertyChanged("MetadataListObjects");
+                OnPropertyChanged();
             }
         }
 
@@ -62,9 +63,8 @@ namespace MetadataUtilities
             get => _searchTerm;
             set
             {
-                _searchTerm = value;
+                SetValue(ref _searchTerm, value);
                 FilteredMetadata.Refresh();
-                OnPropertyChanged("SearchTerm");
             }
         }
 
@@ -74,14 +74,27 @@ namespace MetadataUtilities
             win.Close();
         }, win => win != null);
 
-        public void InitializeView(MetadataUtilities plugin, MetadataListObjects metadataListObjects)
+        public static Window GetWindow(MetadataUtilities plugin, MetadataListObjects items, string windowTitle)
         {
-            _plugin = plugin;
-            MetadataListObjects = metadataListObjects;
+            try
+            {
+                SelectMetadataViewModel viewModel = new SelectMetadataViewModel(plugin, items);
 
-            FilteredMetadata = CollectionViewSource.GetDefaultView(_metadataListObjects);
+                SelectMetadataView selectMetadataView = new SelectMetadataView();
 
-            FilteredMetadata.Filter = Filter;
+                Window window = WindowHelper.CreateFixedDialog(windowTitle);
+
+                window.Content = selectMetadataView;
+                window.DataContext = viewModel;
+
+                return window;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing select metadata dialog", true);
+
+                return null;
+            }
         }
 
         private bool Filter(object item)

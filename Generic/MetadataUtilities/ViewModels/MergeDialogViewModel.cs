@@ -1,25 +1,31 @@
 ﻿using MetadataUtilities.Models;
 using Playnite.SDK;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
 namespace MetadataUtilities
 {
-    public class MergeDialogViewModel : ViewModelBase
+    public class MergeDialogViewModel : ObservableObject
     {
         private MetadataListObject _mergeTarget;
         private MetadataListObjects _metadataListObjects;
         private MetadataUtilities _plugin;
         private bool _saveAsRule;
 
+        public MergeDialogViewModel(MetadataUtilities plugin, MetadataListObjects items)
+        {
+            Plugin = plugin;
+            MetadataListObjects = items;
+        }
+
         public MetadataUtilities Plugin
         {
             get => _plugin;
             set
             {
-                _plugin = value;
+                SetValue(ref _plugin, value);
                 SaveAsRule = _plugin.Settings.Settings.AlwaysSaveManualMergeRules;
-                OnPropertyChanged("Plugin");
             }
         }
 
@@ -28,32 +34,21 @@ namespace MetadataUtilities
             get => _metadataListObjects;
             set
             {
-                _metadataListObjects = value;
-
+                SetValue(ref _metadataListObjects, value);
                 MergeTarget = _metadataListObjects.FirstOrDefault();
-
-                OnPropertyChanged("MetadataListObjects");
             }
         }
 
         public MetadataListObject MergeTarget
         {
             get => _mergeTarget;
-            set
-            {
-                _mergeTarget = value;
-                OnPropertyChanged("MergeTarget");
-            }
+            set => SetValue(ref _mergeTarget, value);
         }
 
         public bool SaveAsRule
         {
             get => _saveAsRule;
-            set
-            {
-                _saveAsRule = value;
-                OnPropertyChanged("SaveAsRule");
-            }
+            set => SetValue(ref _saveAsRule, value);
         }
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>

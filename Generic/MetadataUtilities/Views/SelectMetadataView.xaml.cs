@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using MetadataUtilities.Models;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,12 +10,11 @@ namespace MetadataUtilities.Views
     /// </summary>
     public partial class SelectMetadataView : UserControl
     {
-        public SelectMetadataView(MetadataUtilities plugin, MetadataListObjects items)
+        public SelectMetadataView()
         {
             try
             {
                 InitializeComponent();
-                ((SelectMetadataViewModel)DataContext).InitializeView(plugin, items);
             }
             catch (Exception e)
             {

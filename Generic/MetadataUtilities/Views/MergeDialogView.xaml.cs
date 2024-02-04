@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using MetadataUtilities.Models;
 using System;
 using System.Windows.Controls;
 
@@ -10,13 +9,11 @@ namespace MetadataUtilities.Views
     /// </summary>
     public partial class MergeDialogView : UserControl
     {
-        public MergeDialogView(MetadataUtilities plugin, MetadataListObjects items)
+        public MergeDialogView()
         {
             try
             {
                 InitializeComponent();
-                ((MergeDialogViewModel)DataContext).MetadataListObjects = items;
-                ((MergeDialogViewModel)DataContext).Plugin = plugin;
             }
             catch (Exception e)
             {

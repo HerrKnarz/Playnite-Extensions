@@ -14,19 +14,24 @@ namespace MetadataUtilities
 {
     public class MetadataEditorViewModel : ObservableObject
     {
+        private int _categoryCount;
         private MetadataListObjects _completeMetadata;
+        private int _featureCount;
         private bool _filterCategories = true;
         private bool _filterFeatures = true;
         private bool _filterGenres = true;
         private bool _filterSelected;
         private bool _filterSeries = true;
         private bool _filterTags = true;
+        private int _genreCount;
         private bool _isSelectMode;
         private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
         private string _ruleName = string.Empty;
         private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
+        private int _seriesCount;
+        private int _tagCount;
 
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects, bool isSelectMode = false)
         {
@@ -39,10 +44,18 @@ namespace MetadataUtilities
                 Source = _completeMetadata
             };
 
+            CalculateItemCount();
+
             MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
             MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             MetadataViewSource.IsLiveSortingRequested = true;
             MetadataViewSource.View.Filter = Filter;
+        }
+
+        public int CategoryCount
+        {
+            get => _categoryCount;
+            set => SetValue(ref _categoryCount, value);
         }
 
         public Visibility VisibleInEditorMode => IsSelectMode ? Visibility.Collapsed : Visibility.Visible;
@@ -54,7 +67,6 @@ namespace MetadataUtilities
             get => _isSelectMode;
             set
             {
-                _isSelectMode = value;
                 SetValue(ref _isSelectMode, value);
                 OnPropertyChanged("SelectionMode");
                 OnPropertyChanged("VisibleInEditorMode");
@@ -65,11 +77,13 @@ namespace MetadataUtilities
         public MetadataUtilities Plugin
         {
             get => _plugin;
-            set
-            {
-                _plugin = value;
-                SetValue(ref _plugin, value);
-            }
+            set => SetValue(ref _plugin, value);
+        }
+
+        public int FeatureCount
+        {
+            get => _featureCount;
+            set => SetValue(ref _featureCount, value);
         }
 
         public bool FilterCategories
@@ -77,9 +91,8 @@ namespace MetadataUtilities
             get => _filterCategories;
             set
             {
-                _filterCategories = value;
-                MetadataViewSource.View.Refresh();
                 SetValue(ref _filterCategories, value);
+                MetadataViewSource.View.Refresh();
             }
         }
 
@@ -88,9 +101,8 @@ namespace MetadataUtilities
             get => _filterFeatures;
             set
             {
-                _filterFeatures = value;
-                MetadataViewSource.View.Refresh();
                 SetValue(ref _filterFeatures, value);
+                MetadataViewSource.View.Refresh();
             }
         }
 
@@ -99,9 +111,8 @@ namespace MetadataUtilities
             get => _filterGenres;
             set
             {
-                _filterGenres = value;
-                MetadataViewSource.View.Refresh();
                 SetValue(ref _filterGenres, value);
+                MetadataViewSource.View.Refresh();
             }
         }
 
@@ -110,9 +121,8 @@ namespace MetadataUtilities
             get => _filterSelected;
             set
             {
-                _filterSelected = value;
-                MetadataViewSource.View.Refresh();
                 SetValue(ref _filterSelected, value);
+                MetadataViewSource.View.Refresh();
             }
         }
 
@@ -121,9 +131,8 @@ namespace MetadataUtilities
             get => _filterSeries;
             set
             {
-                _filterSeries = value;
-                MetadataViewSource.View.Refresh();
                 SetValue(ref _filterSeries, value);
+                MetadataViewSource.View.Refresh();
             }
         }
 
@@ -132,30 +141,27 @@ namespace MetadataUtilities
             get => _filterTags;
             set
             {
-                _filterTags = value;
-                MetadataViewSource.View.Refresh();
                 SetValue(ref _filterTags, value);
+                MetadataViewSource.View.Refresh();
             }
+        }
+
+        public int GenreCount
+        {
+            get => _genreCount;
+            set => SetValue(ref _genreCount, value);
         }
 
         public string RuleName
         {
             get => _ruleName;
-            set
-            {
-                _ruleName = value;
-                SetValue(ref _ruleName, value);
-            }
+            set => SetValue(ref _ruleName, value);
         }
 
         public FieldType RuleType
         {
             get => _ruleType;
-            set
-            {
-                _ruleType = value;
-                SetValue(ref _ruleType, value);
-            }
+            set => SetValue(ref _ruleType, value);
         }
 
         public string SearchTerm
@@ -163,10 +169,21 @@ namespace MetadataUtilities
             get => _searchTerm;
             set
             {
-                _searchTerm = value;
-                MetadataViewSource.View.Refresh();
                 SetValue(ref _searchTerm, value);
+                MetadataViewSource.View.Refresh();
             }
+        }
+
+        public int SeriesCount
+        {
+            get => _seriesCount;
+            set => SetValue(ref _seriesCount, value);
+        }
+
+        public int TagCount
+        {
+            get => _tagCount;
+            set => SetValue(ref _tagCount, value);
         }
 
         public SelectionMode SelectionMode => IsSelectMode ? SelectionMode.Single : SelectionMode.Extended;
@@ -177,11 +194,12 @@ namespace MetadataUtilities
             {
                 MetadataListObject newItem = new MetadataListObject();
 
-                AddNewObjectView newObjectViewView = new AddNewObjectView(Plugin, newItem);
+                Window window = AddNewObjectViewModel.GetWindow(Plugin, newItem);
 
-                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddNewObject"));
-
-                window.Content = newObjectViewView;
+                if (window == null)
+                {
+                    return;
+                }
 
                 if (window.ShowDialog() ?? false)
                 {
@@ -202,6 +220,8 @@ namespace MetadataUtilities
                     newItem.EditName = newItem.Name;
                     CompleteMetadata.Add(newItem);
 
+                    CalculateItemCount();
+
                     MetadataViewSource.View.Refresh();
                 }
             }
@@ -213,7 +233,7 @@ namespace MetadataUtilities
 
         public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
         {
-            if ((items?.Count() ?? 0) > 1)
+            if ((int)items?.Count() > 1)
             {
                 try
                 {
@@ -223,11 +243,13 @@ namespace MetadataUtilities
 
                     mergeItems.AddMissing(items.ToList().Cast<MetadataListObject>());
 
-                    MergeDialogView mergeView = new MergeDialogView(Plugin, mergeItems);
+                    MergeDialogViewModel viewModel = new MergeDialogViewModel(Plugin, mergeItems);
+
+                    MergeDialogView mergeView = new MergeDialogView();
 
                     Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesEditorMerge"));
-
                     window.Content = mergeView;
+                    window.DataContext = viewModel;
 
                     if (window.ShowDialog() ?? false)
                     {
@@ -242,6 +264,8 @@ namespace MetadataUtilities
                                 itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
                             }
                         }
+
+                        CalculateItemCount();
                     }
                 }
                 catch (Exception exception)
@@ -298,6 +322,8 @@ namespace MetadataUtilities
                 {
                     CompleteMetadata.Remove(item);
                 }
+
+                CalculateItemCount();
             }
             finally
             {
@@ -315,6 +341,8 @@ namespace MetadataUtilities
             }
 
             List<MetadataListObject> itemsToRemove = CompleteMetadata.Where(x => removedItems.Any(y => x.Type == y.Type && x.EditName == y.Name)).ToList();
+
+            CalculateItemCount();
 
             foreach (MetadataListObject itemToRemove in itemsToRemove)
             {
@@ -349,21 +377,22 @@ namespace MetadataUtilities
         public CollectionViewSource MetadataViewSource
         {
             get => _metadataViewSource;
-            set
-            {
-                _metadataViewSource = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref _metadataViewSource, value);
         }
 
         public MetadataListObjects CompleteMetadata
         {
             get => _completeMetadata;
-            set
-            {
-                _completeMetadata = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref _completeMetadata, value);
+        }
+
+        public void CalculateItemCount()
+        {
+            CategoryCount = (int)API.Instance.Database.Categories?.Count;
+            FeatureCount = (int)API.Instance.Database.Features?.Count;
+            GenreCount = (int)API.Instance.Database.Genres?.Count;
+            SeriesCount = (int)API.Instance.Database.Series?.Count;
+            TagCount = (int)API.Instance.Database.Tags?.Count;
         }
 
         private bool Filter(object item)
