@@ -17,6 +17,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Somente selecionado</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Quantidade de partidas</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Mesclar</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Related games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Remover não utilizadas</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Alvo da regra</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Definir como alvo</sys:String>
