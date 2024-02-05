@@ -10,12 +10,8 @@ namespace MetadataUtilities
     /// </summary>
     public partial class MetadataEditorView : UserControl
     {
-        private readonly bool _isSelectMode;
-
-        public MetadataEditorView(bool isSelectMode = false)
+        public MetadataEditorView()
         {
-            _isSelectMode = isSelectMode;
-
             try
             {
                 InitializeComponent();
@@ -28,11 +24,6 @@ namespace MetadataUtilities
 
         private void DataGridCell_Selected(object sender, RoutedEventArgs e)
         {
-            if (_isSelectMode)
-            {
-                return;
-            }
-
             // Lookup for the source to be DataGridCell
             if (e.OriginalSource.GetType() != typeof(DataGridCell))
             {

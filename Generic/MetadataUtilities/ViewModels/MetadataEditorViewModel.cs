@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace MetadataUtilities
@@ -23,25 +22,20 @@ namespace MetadataUtilities
         private bool _filterCategories = true;
         private bool _filterFeatures = true;
         private bool _filterGenres = true;
-        private bool _filterSelected;
         private bool _filterSeries = true;
         private bool _filterTags = true;
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
         private CollectionViewSource _gamesViewSource;
         private int _genreCount;
-        private bool _isSelectMode;
         private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
-        private string _ruleName = string.Empty;
-        private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
         private int _seriesCount;
         private int _tagCount;
 
-        public MetadataEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects, bool isSelectMode = false)
+        public MetadataEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects)
         {
             Plugin = plugin;
-            IsSelectMode = isSelectMode;
             CompleteMetadata = objects;
 
             CalculateItemCount();
@@ -51,7 +45,6 @@ namespace MetadataUtilities
                 Source = _games
             };
 
-            //GamesViewSource.SortDescriptions.Add(new SortDescription("SortingName", ListSortDirection.Ascending));
             GamesViewSource.SortDescriptions.Add(new SortDescription("RealSortingName", ListSortDirection.Ascending));
             GamesViewSource.IsLiveSortingRequested = true;
 
@@ -73,22 +66,6 @@ namespace MetadataUtilities
         {
             get => _categoryCount;
             set => SetValue(ref _categoryCount, value);
-        }
-
-        public Visibility VisibleInEditorMode => IsSelectMode ? Visibility.Collapsed : Visibility.Visible;
-
-        public Visibility VisibleInSelectMode => IsSelectMode ? Visibility.Visible : Visibility.Collapsed;
-
-        public bool IsSelectMode
-        {
-            get => _isSelectMode;
-            set
-            {
-                SetValue(ref _isSelectMode, value);
-                OnPropertyChanged("SelectionMode");
-                OnPropertyChanged("VisibleInEditorMode");
-                OnPropertyChanged("VisibleInSelectMode");
-            }
         }
 
         public MetadataUtilities Plugin
@@ -133,16 +110,6 @@ namespace MetadataUtilities
             }
         }
 
-        public bool FilterSelected
-        {
-            get => _filterSelected;
-            set
-            {
-                SetValue(ref _filterSelected, value);
-                MetadataViewSource.View.Refresh();
-            }
-        }
-
         public bool FilterSeries
         {
             get => _filterSeries;
@@ -181,18 +148,6 @@ namespace MetadataUtilities
             set => SetValue(ref _genreCount, value);
         }
 
-        public string RuleName
-        {
-            get => _ruleName;
-            set => SetValue(ref _ruleName, value);
-        }
-
-        public FieldType RuleType
-        {
-            get => _ruleType;
-            set => SetValue(ref _ruleType, value);
-        }
-
         public string SearchTerm
         {
             get => _searchTerm;
@@ -215,8 +170,6 @@ namespace MetadataUtilities
             set => SetValue(ref _tagCount, value);
         }
 
-        public SelectionMode SelectionMode => IsSelectMode ? SelectionMode.Single : SelectionMode.Extended;
-
         public RelayCommand AddNewCommand => new RelayCommand(() =>
         {
             try
@@ -237,15 +190,7 @@ namespace MetadataUtilities
                         return;
                     }
 
-                    if (IsSelectMode)
-                    {
-                        newItem.Selected = true;
-                    }
-                    else
-                    {
-                        newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
-                    }
-
+                    newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
                     newItem.EditName = newItem.Name;
                     CompleteMetadata.Add(newItem);
 
@@ -379,30 +324,6 @@ namespace MetadataUtilities
             }
         });
 
-        public RelayCommand<Window> SaveCommand => new RelayCommand<Window>(win =>
-        {
-            if (!RuleName?.Any() ?? false)
-            {
-                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoTargetSet"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            if (!CompleteMetadata.Any(x => x.Selected))
-            {
-                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoItemsSelected"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            win.DialogResult = true;
-            win.Close();
-        });
-
-        public RelayCommand<object> SetAsTargetCommand => new RelayCommand<object>(item =>
-        {
-            RuleType = ((MetadataListObject)item).Type;
-            RuleName = ((MetadataListObject)item).Name;
-        });
-
         public CollectionViewSource MetadataViewSource
         {
             get => _metadataViewSource;
@@ -488,8 +409,7 @@ namespace MetadataUtilities
             }
 
             return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
-                   types.Any(t => t == metadataListObject.Type) &&
-                   (!FilterSelected || metadataListObject.Selected);
+                   types.Any(t => t == metadataListObject.Type);
         }
     }
 }

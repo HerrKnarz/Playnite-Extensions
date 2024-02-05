@@ -190,7 +190,7 @@ namespace MetadataUtilities
 
                 MetadataEditorViewModel viewModel = new MetadataEditorViewModel(this, metadataListObjects);
 
-                MetadataEditorView editorView = new MetadataEditorView(true);
+                MetadataEditorView editorView = new MetadataEditorView();
 
                 Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesEditor"), 1200, 600, false, true);
                 window.Content = editorView;

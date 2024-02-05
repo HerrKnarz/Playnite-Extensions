@@ -412,13 +412,13 @@ namespace MetadataUtilities
                     }
                 }
 
-                MetadataEditorViewModel viewModel = new MetadataEditorViewModel(plugin, metadataListObjects, true);
+                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(plugin, metadataListObjects);
                 viewModel.RuleName = ruleToEdit.Name;
                 viewModel.RuleType = ruleToEdit.Type;
 
-                MetadataEditorView editorView = new MetadataEditorView(true);
+                MergeRuleEditorView editorView = new MergeRuleEditorView();
 
-                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 700, 600, false, true);
+                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 700, 700, false, true);
                 window.Content = editorView;
                 window.DataContext = viewModel;
 
