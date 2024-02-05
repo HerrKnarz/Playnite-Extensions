@@ -192,7 +192,7 @@ namespace MetadataUtilities
 
                 MetadataEditorView editorView = new MetadataEditorView();
 
-                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesEditor"), 1200, 600, false, true);
+                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesEditor"), Settings.Settings.EditorWindowWidth, Settings.Settings.EditorWindowHeight);
                 window.Content = editorView;
                 window.DataContext = viewModel;
                 window.ShowDialog();

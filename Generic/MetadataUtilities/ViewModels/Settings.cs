@@ -17,6 +17,8 @@ namespace MetadataUtilities
         private bool _alwaysSaveManualMergeRules;
         private ObservableCollection<MetadataListObject> _defaultCategories = new ObservableCollection<MetadataListObject>();
         private ObservableCollection<MetadataListObject> _defaultTags = new ObservableCollection<MetadataListObject>();
+        private int _editorWindowHeight = 600;
+        private int _editorWindowWidth = 1200;
         private bool _ignoreHiddenGamesInGameCount;
         private bool _ignoreHiddenGamesInRemoveUnused;
         private DateTime _lastAutoLibUpdate = DateTime.Now;
@@ -29,6 +31,7 @@ namespace MetadataUtilities
         private bool _showTopPanelButton = true;
         private CollectionViewSource _sourceObjectsViewSource;
         private bool _writeDebugLog;
+
 
         public Settings()
         {
@@ -64,6 +67,18 @@ namespace MetadataUtilities
         {
             get => _defaultTags;
             set => SetValue(ref _defaultTags, value);
+        }
+
+        public int EditorWindowHeight
+        {
+            get => _editorWindowHeight;
+            set => SetValue(ref _editorWindowHeight, value);
+        }
+
+        public int EditorWindowWidth
+        {
+            get => _editorWindowWidth;
+            set => SetValue(ref _editorWindowWidth, value);
         }
 
         public bool IgnoreHiddenGamesInGameCount

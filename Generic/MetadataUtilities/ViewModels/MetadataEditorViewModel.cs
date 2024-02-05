@@ -324,6 +324,17 @@ namespace MetadataUtilities
             }
         });
 
+        public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
+        {
+            Plugin.Settings.Settings.EditorWindowHeight = Convert.ToInt32(win.Height);
+            Plugin.Settings.Settings.EditorWindowWidth = Convert.ToInt32(win.Width);
+            Plugin.SavePluginSettings(Plugin.Settings.Settings);
+
+            win.DialogResult = true;
+            win.Close();
+        });
+
+
         public CollectionViewSource MetadataViewSource
         {
             get => _metadataViewSource;

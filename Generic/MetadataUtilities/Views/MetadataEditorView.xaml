@@ -24,7 +24,8 @@
     </UserControl.Resources>
     <DockPanel FocusManager.FocusedElement="{Binding ElementName=txtSearchBox}">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="10,0,10,10" HorizontalAlignment="Right">
-            <Button Content="{DynamicResource LOCCloseLabel}" Margin="10,0,0,0" IsCancel="True"/>
+            <Button Content="{DynamicResource LOCCloseLabel}" Margin="10,0,0,0" Command="{Binding CloseCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" IsDefault="True"/>
         </StackPanel>
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
