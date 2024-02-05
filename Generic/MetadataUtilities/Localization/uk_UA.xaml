@@ -17,6 +17,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Тільки вибране</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Кількість ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Об'єднати</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Related games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Прибрати невикористані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Ціль Правила</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Встановити як ціль</sys:String>
