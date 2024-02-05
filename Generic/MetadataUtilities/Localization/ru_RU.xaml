@@ -3,6 +3,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Add new object</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Added default categories/tags to {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">A {0} with that name already exists.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Change metadata type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Merge as</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Merged metadata in {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Another rule for that target already exists. Do you want to replace it (yes), merge them (no) or cancel the operation?</sys:String>
@@ -13,13 +14,17 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">You need to add a Name for the rule target.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Removing items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Save as merge rule</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Select new type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Metadata Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Change type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Only selected</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Game Count</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Merge</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Related games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Rule target</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Set as target</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Statistics</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Category</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Feature</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Genre</sys:String>
@@ -46,6 +51,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Merge rules</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Remove unused metadata on start up</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Set only when no tags were added on metadata import</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Show Metadata Editor button in top panel (requires restart)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Defaults</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">General</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Merging</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Values to merge</sys:String>
