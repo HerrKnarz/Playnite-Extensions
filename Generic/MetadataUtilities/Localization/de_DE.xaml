@@ -3,6 +3,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Neues Objekt hinzufügen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Standardkategorien/Schlagworte zu {0} Spielen hinzugefügt!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">{0} mit diesem Namen existiert bereits.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Change metadata type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Zusammenführen als</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Metadaten in {0} Spielen zusammengeführt!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Für dieses Ziel existiert bereits eine andere Regel. Möchten Sie diese ersetzen (ja), zusammenführen (nein) oder den Vorgang abbrechen?</sys:String>
@@ -13,7 +14,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Du musst einen Namen für das Regelziel angeben.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Elemente werden entfernt...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Als Zusammenführungsregel speichern</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Select new type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Metadaten-Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Change type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Nur ausgewählte</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Spielanzahl</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Zusammenführen</sys:String>
