@@ -1,5 +1,20 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 0.4
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-02-05
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-02-05/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_4.pext
+    Changelog:
+      - added data grid showing all related games of a metadata item to the Metadata Editor
+      - added option to change the type of the selected metadata items to the Metadata Editor. The changes can also be saved as an automatic merge rule.
+      - added top panel button for Metadata Editor
+      - the window dimensions of Metadata Editor will now be saved when closing the window with the close button
+      - the Metadata Editor now remembers, which filter checkboxes are ticked, when closing the window with the close button
+      - put settings of default categories and tags into their own tab in the settings
+      - automatic merging after changes in a game now only triggers, when at least one of the supported types changed
+      - fixed sorting of the merge rule grids in the addon settings
+      - fixed recalculation of game count after merging to count hidden games, even if they are set to ignore
+      - performance optimizations
   - Version: 0.3.1
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-02-02
