@@ -19,6 +19,11 @@ namespace MetadataUtilities
         private ObservableCollection<MetadataListObject> _defaultTags = new ObservableCollection<MetadataListObject>();
         private int _editorWindowHeight = 600;
         private int _editorWindowWidth = 1200;
+        private bool _filterCategories = true;
+        private bool _filterFeatures = true;
+        private bool _filterGenres = true;
+        private bool _filterSeries = true;
+        private bool _filterTags = true;
         private bool _ignoreHiddenGamesInGameCount;
         private bool _ignoreHiddenGamesInRemoveUnused;
         private DateTime _lastAutoLibUpdate = DateTime.Now;
@@ -79,6 +84,36 @@ namespace MetadataUtilities
         {
             get => _editorWindowWidth;
             set => SetValue(ref _editorWindowWidth, value);
+        }
+
+        public bool FilterCategories
+        {
+            get => _filterCategories;
+            set => SetValue(ref _filterCategories, value);
+        }
+
+        public bool FilterFeatures
+        {
+            get => _filterFeatures;
+            set => SetValue(ref _filterFeatures, value);
+        }
+
+        public bool FilterGenres
+        {
+            get => _filterGenres;
+            set => SetValue(ref _filterGenres, value);
+        }
+
+        public bool FilterSeries
+        {
+            get => _filterSeries;
+            set => SetValue(ref _filterSeries, value);
+        }
+
+        public bool FilterTags
+        {
+            get => _filterTags;
+            set => SetValue(ref _filterTags, value);
         }
 
         public bool IgnoreHiddenGamesInGameCount

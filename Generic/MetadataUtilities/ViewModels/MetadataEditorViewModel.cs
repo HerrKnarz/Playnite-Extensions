@@ -56,10 +56,15 @@ namespace MetadataUtilities
             MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
             MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             MetadataViewSource.IsLiveSortingRequested = true;
-            MetadataViewSource.View.Filter = Filter;
             MetadataViewSource.View.CurrentChanged += CurrentChanged;
-            MetadataViewSource.View.MoveCurrentToFirst();
+            FilterCategories = Plugin.Settings.Settings.FilterCategories;
+            FilterFeatures = Plugin.Settings.Settings.FilterFeatures;
+            FilterGenres = Plugin.Settings.Settings.FilterGenres;
+            FilterSeries = Plugin.Settings.Settings.FilterSeries;
+            FilterTags = Plugin.Settings.Settings.FilterTags;
+            MetadataViewSource.View.Filter = Filter;
             MetadataViewSource.View.Refresh();
+            MetadataViewSource.View.MoveCurrentToFirst();
         }
 
         public int CategoryCount
@@ -326,6 +331,11 @@ namespace MetadataUtilities
 
         public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
         {
+            Plugin.Settings.Settings.FilterCategories = FilterCategories;
+            Plugin.Settings.Settings.FilterFeatures = FilterFeatures;
+            Plugin.Settings.Settings.FilterGenres = FilterGenres;
+            Plugin.Settings.Settings.FilterSeries = FilterSeries;
+            Plugin.Settings.Settings.FilterTags = FilterTags;
             Plugin.Settings.Settings.EditorWindowHeight = Convert.ToInt32(win.Height);
             Plugin.Settings.Settings.EditorWindowWidth = Convert.ToInt32(win.Width);
             Plugin.SavePluginSettings(Plugin.Settings.Settings);

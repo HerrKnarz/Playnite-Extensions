@@ -113,7 +113,7 @@
                           CanUserAddRows="False" IsReadOnly="True" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True" EnableRowVirtualization="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource LOCGameNameTitle}" Binding="{Binding Name}" MinWidth="100" SortMemberPath="RealSortingName"/>
-                        <DataGridTextColumn Header="{DynamicResource LOCCompletionStatus}" Binding="{Binding CompletionStatus.Name}" MinWidth="100"/>
+                        <DataGridTextColumn Header="{DynamicResource LOCCompletionStatus}" Binding="{Binding CompletionStatus.Name}" MinWidth="100" Width="SizeToCells"/>
                         <DataGridTextColumn Header="{DynamicResource LOCGameReleaseYearTitle}" Binding="{Binding ReleaseYear}" Width="SizeToHeader"
                                             ElementStyle="{StaticResource RightCell}"/>
                     </DataGrid.Columns>
