@@ -78,7 +78,7 @@
                 </GroupBox>
             </DockPanel>
             <DockPanel Margin="0,0,10,10" HorizontalAlignment="Stretch" Grid.Column="1">
-                <FrameworkElement x:Name="dummyElement" Visibility="Collapsed"/>
+                <Label Content="{DynamicResource LOCSettingsMetadataLabel}" DockPanel.Dock="Top" Margin="0,10,0,0"/>
                 <DataGrid Name="DG" ItemsSource="{Binding MetadataViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0"
                           CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
                           DataGridCell.Selected="DataGridCell_Selected" SelectionMode="Extended" EnableRowVirtualization="True">
@@ -107,6 +107,7 @@
                         Command="{Binding RemoveUnusedCommand}"/>
             </StackPanel>
             <DockPanel Margin="0,0,10,10" HorizontalAlignment="Stretch" Grid.Column="2">
+                <Label Content="{DynamicResource LOCMetadataUtilitiesEditorRelatedGames}" DockPanel.Dock="Top" Margin="0,10,0,0"/>
                 <DataGrid Name="DGgames" ItemsSource="{Binding GamesViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0"
                           CanUserAddRows="False" IsReadOnly="True" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True" EnableRowVirtualization="True">
                     <DataGrid.Columns>
