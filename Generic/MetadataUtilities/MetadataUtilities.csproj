@@ -73,6 +73,7 @@
     <Compile Include="Models\MetadataListObjects.cs" />
     <Compile Include="Models\MyGame.cs" />
     <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
+    <Compile Include="ViewModels\ChangeTypeViewModel.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\MergeRuleEditorViewModel.cs" />
     <Compile Include="ViewModels\SelectMetadataViewModel.cs" />
@@ -80,6 +81,9 @@
     <Compile Include="ViewModels\MetadataEditorViewModel.cs" />
     <Compile Include="Views\AddNewObjectView.xaml.cs">
       <DependentUpon>AddNewObjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChangeTypeView.xaml.cs">
+      <DependentUpon>ChangeTypeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MergeRuleEditorView.xaml.cs">
       <DependentUpon>MergeRuleEditorView.xaml</DependentUpon>
@@ -110,6 +114,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Page Include="Views\AddNewObjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChangeTypeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

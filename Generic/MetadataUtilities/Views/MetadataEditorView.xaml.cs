@@ -8,7 +8,7 @@ namespace MetadataUtilities
     /// <summary>
     ///     Interaction logic for MetadataEditor.xaml
     /// </summary>
-    public partial class MetadataEditorView : UserControl
+    public partial class MetadataEditorView
     {
         public MetadataEditorView()
         {

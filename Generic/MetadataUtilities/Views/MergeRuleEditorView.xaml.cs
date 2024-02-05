@@ -1,14 +1,13 @@
 ﻿using KNARZhelper;
 using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace MetadataUtilities
 {
     /// <summary>
     ///     Interaction logic for MergeRuleEditorView.xaml
     /// </summary>
-    public partial class MergeRuleEditorView : UserControl
+    public partial class MergeRuleEditorView
     {
         public MergeRuleEditorView()
         {

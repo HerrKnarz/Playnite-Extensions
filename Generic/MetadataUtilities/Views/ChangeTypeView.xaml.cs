@@ -4,11 +4,11 @@ using System;
 namespace MetadataUtilities.Views
 {
     /// <summary>
-    ///     Interaction logic for UserControl1.xaml
+    ///     Interaction logic for ChangeTypeView.xaml
     /// </summary>
-    public partial class MergeDialogView
+    public partial class ChangeTypeView
     {
-        public MergeDialogView()
+        public ChangeTypeView()
         {
             try
             {
@@ -16,7 +16,7 @@ namespace MetadataUtilities.Views
             }
             catch (Exception e)
             {
-                Log.Error(e, "Error during initializing Metadata Editor", true);
+                Log.Error(e, "Error during initializing Change Type dialog", true);
             }
         }
     }

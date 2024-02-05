@@ -1,12 +1,7 @@
-﻿using System.Windows.Controls;
-
-namespace MetadataUtilities
+﻿namespace MetadataUtilities
 {
-    public partial class SettingsView : UserControl
+    public partial class SettingsView
     {
-        public SettingsView()
-        {
-            InitializeComponent();
-        }
+        public SettingsView() => InitializeComponent();
     }
 }

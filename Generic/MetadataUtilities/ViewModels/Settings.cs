@@ -170,7 +170,11 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _selectedMergeRule, value);
-                SourceObjectsViewSource.Source = _selectedMergeRule.SourceObjects;
+
+                SourceObjectsViewSource.Source = _selectedMergeRule == null
+                    ? new ObservableCollection<MetadataListObject>()
+                    : _selectedMergeRule.SourceObjects;
+
                 SourceObjectsViewSource.View.Refresh();
             }
         }

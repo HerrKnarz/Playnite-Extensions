@@ -210,6 +210,59 @@ namespace MetadataUtilities
             }
         });
 
+        public RelayCommand<IList<object>> ChangeTypeCommand => new RelayCommand<IList<object>>(items =>
+        {
+            try
+            {
+                Plugin.IsUpdating = true;
+
+                MetadataListObjects changeItems = new MetadataListObjects(Plugin.Settings.Settings);
+
+                changeItems.AddMissing(items.ToList().Cast<MetadataListObject>());
+
+
+                ChangeTypeViewModel viewModel = new ChangeTypeViewModel(Plugin, changeItems);
+
+                ChangeTypeView view = new ChangeTypeView();
+
+                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogChangeType"));
+                window.Content = view;
+                window.DataContext = viewModel;
+
+                if (window.ShowDialog() ?? false)
+                {
+                    foreach (MetadataListObject itemToRemove in changeItems)
+                    {
+                        if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
+                        {
+                            CompleteMetadata.Remove(itemToRemove);
+                        }
+                        else
+                        {
+                            itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
+                        }
+                    }
+
+                    foreach (MetadataListObject itemToAdd in viewModel.NewObjects)
+                    {
+                        itemToAdd.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
+                    }
+
+                    CompleteMetadata.AddMissing(viewModel.NewObjects);
+
+                    CalculateItemCount();
+                }
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing change type dialog", true);
+            }
+            finally
+            {
+                Plugin.IsUpdating = false;
+            }
+        }, items => items?.Any() ?? false);
+
         public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
         {
             if ((int)items?.Count() > 1)
@@ -367,6 +420,11 @@ namespace MetadataUtilities
             Games.Clear();
 
             MetadataListObject currItem = (MetadataListObject)_metadataViewSource.View.CurrentItem;
+
+            if (currItem == null)
+            {
+                return;
+            }
 
             foreach (Game game in API.Instance.Database.Games.Where(g =>
                 !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
