@@ -3,6 +3,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Adicionar novo objeto</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Adicionar categorias/marcadores padrão a {0} jogos!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Um {0} com esse nome já existe.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Change metadata type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Mesclar como</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Metadados mesclados em {0} jogos!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Outra regra para esse alvo já existe. Você deseja substituí-la (sim), mesclá-las (não) ou cancelar a operação?</sys:String>
@@ -13,7 +14,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Você precisa adicionar um Nome para o alvo da regra.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Removendo itens...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Salvar como regra de mesclagem</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Select new type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Editor de Metadados</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Change type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Somente selecionado</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Quantidade de partidas</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Mesclar</sys:String>
