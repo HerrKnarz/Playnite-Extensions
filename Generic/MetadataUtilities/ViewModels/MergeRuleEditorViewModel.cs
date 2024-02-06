@@ -43,20 +43,26 @@ namespace MetadataUtilities
                 Source = _completeMetadata
             };
 
+            Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            ts = DateTime.Now;
+
             _filterTypes.Add(FieldType.Category);
             _filterTypes.Add(FieldType.Feature);
             _filterTypes.Add(FieldType.Genre);
             _filterTypes.Add(FieldType.Series);
             _filterTypes.Add(FieldType.Tag);
 
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAndName", ListSortDirection.Ascending));
-            MetadataViewSource.IsLiveSortingRequested = true;
-            MetadataViewSource.View.MoveCurrentToFirst();
+            using (MetadataViewSource.DeferRefresh())
+            {
+                MetadataViewSource.View.Filter = Filter;
+                MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAndName", ListSortDirection.Ascending));
+                MetadataViewSource.IsLiveSortingRequested = true;
+            }
 
-            Log.Debug($"=== MetadataEditorViewModel: Start Filter ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             ts = DateTime.Now;
 
-            MetadataViewSource.View.Filter = Filter;
+            MetadataViewSource.View.MoveCurrentToFirst();
 
             Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }

@@ -61,22 +61,34 @@ namespace MetadataUtilities
                 Source = _completeMetadata
             };
 
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            MetadataViewSource.IsLiveSortingRequested = true;
-            FilterCategories = Plugin.Settings.Settings.FilterCategories;
-            FilterFeatures = Plugin.Settings.Settings.FilterFeatures;
-            FilterGenres = Plugin.Settings.Settings.FilterGenres;
-            FilterSeries = Plugin.Settings.Settings.FilterSeries;
-            FilterTags = Plugin.Settings.Settings.FilterTags;
-
-            MetadataViewSource.View.CurrentChanged += CurrentChanged;
-            MetadataViewSource.View.MoveCurrentToFirst();
-
-            Log.Debug($"=== MetadataEditorViewModel: Start Filter ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             ts = DateTime.Now;
 
-            MetadataViewSource.View.Filter = Filter;
+
+            using (MetadataViewSource.DeferRefresh())
+            {
+                MetadataViewSource.View.Filter = Filter;
+
+                MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+                MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                MetadataViewSource.IsLiveSortingRequested = true;
+
+                Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+
+                FilterCategories = Plugin.Settings.Settings.FilterCategories;
+                FilterFeatures = Plugin.Settings.Settings.FilterFeatures;
+                FilterGenres = Plugin.Settings.Settings.FilterGenres;
+                FilterSeries = Plugin.Settings.Settings.FilterSeries;
+                FilterTags = Plugin.Settings.Settings.FilterTags;
+
+                MetadataViewSource.View.CurrentChanged += CurrentChanged;
+            }
+
+            Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            ts = DateTime.Now;
+
+            MetadataViewSource.View.MoveCurrentToFirst();
 
             Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }

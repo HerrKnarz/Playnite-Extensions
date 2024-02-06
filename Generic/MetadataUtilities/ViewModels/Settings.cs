@@ -449,21 +449,33 @@ namespace MetadataUtilities
                 }
 
                 MetadataListObjects metadataListObjects = new MetadataListObjects(Settings);
-                metadataListObjects.LoadMetadata();
 
-                foreach (MetadataListObject item in ruleToEdit.SourceObjects)
+                if (isNewRule)
                 {
-                    MetadataListObject foundItem = metadataListObjects.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+                    metadataListObjects.LoadMetadata();
+                }
+                else
+                {
+                    MetadataListObjects tempList = new MetadataListObjects(Settings);
+                    tempList.LoadMetadata();
 
-                    if (foundItem != null)
+                    foreach (MetadataListObject item in ruleToEdit.SourceObjects)
                     {
-                        foundItem.Selected = true;
+                        MetadataListObject foundItem = tempList.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+
+                        if (foundItem != null)
+                        {
+                            foundItem.Selected = true;
+                        }
+                        else
+                        {
+                            item.Selected = true;
+                            item.Id = new Guid();
+                            tempList.Add(item);
+                        }
                     }
-                    else
-                    {
-                        item.Selected = true;
-                        metadataListObjects.Add(item);
-                    }
+
+                    metadataListObjects.AddMissing(tempList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
                 }
 
                 MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(plugin, metadataListObjects)
