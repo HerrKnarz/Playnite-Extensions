@@ -257,6 +257,11 @@ namespace MetadataUtilities
             {
                 MetadataListObject newItem = new MetadataListObject();
 
+                if (MetadataViewSource.View.CurrentItem != null)
+                {
+                    newItem.Type = ((MetadataListObject)MetadataViewSource.View.CurrentItem).Type;
+                }
+
                 Window window = AddNewObjectViewModel.GetWindow(Plugin, newItem);
 
                 if (window == null)
@@ -278,6 +283,7 @@ namespace MetadataUtilities
                     CalculateItemCount();
 
                     MetadataViewSource.View.Refresh();
+                    MetadataViewSource.View.MoveCurrentTo(newItem);
                 }
             }
             catch (Exception exception)
