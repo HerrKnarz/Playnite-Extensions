@@ -18,6 +18,9 @@ namespace MetadataUtilities.Models
 
         public void LoadMetadata(bool showGameNumber = true, FieldType? type = null)
         {
+            Log.Debug("=== LoadMetadata: Start ===");
+            DateTime ts = DateTime.Now;
+
             List<MetadataListObject> temporaryList = new List<MetadataListObject>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
@@ -105,6 +108,7 @@ namespace MetadataUtilities.Models
 
             Clear();
             this.AddMissing(temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
+            Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         public static List<MetadataListObject> RemoveUnusedMetadata(bool AutoMode = false, bool ignoreHiddenGames = false)
@@ -212,6 +216,9 @@ namespace MetadataUtilities.Models
 
         public static void UpdateGameCounts(List<MetadataListObject> itemList, bool ignoreHiddenGames)
         {
+            Log.Debug("=== UpdateGameCounts: Start ===");
+            DateTime ts = DateTime.Now;
+
             ConcurrentQueue<Guid> items = new ConcurrentQueue<Guid>();
 
             ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
@@ -256,6 +263,8 @@ namespace MetadataUtilities.Models
 
                 item.GameCount = count;
             });
+
+            Log.Debug($"=== UpdateGameCounts: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         public bool MergeItems(FieldType type, Guid id)

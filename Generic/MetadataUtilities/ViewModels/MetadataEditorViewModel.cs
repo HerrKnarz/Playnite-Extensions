@@ -15,6 +15,7 @@ namespace MetadataUtilities
 {
     public class MetadataEditorViewModel : ObservableObject
     {
+        private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
         private readonly bool _showRelatedGames = true;
         private int _categoryCount;
         private MetadataListObjects _completeMetadata;
@@ -35,6 +36,10 @@ namespace MetadataUtilities
 
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects)
         {
+            Log.Debug("=== MetadataEditorViewModel: Start ===");
+            DateTime ts = DateTime.Now;
+
+
             Plugin = plugin;
             CompleteMetadata = objects;
 
@@ -48,6 +53,9 @@ namespace MetadataUtilities
             GamesViewSource.SortDescriptions.Add(new SortDescription("RealSortingName", ListSortDirection.Ascending));
             GamesViewSource.IsLiveSortingRequested = true;
 
+            Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            ts = DateTime.Now;
+
             MetadataViewSource = new CollectionViewSource
             {
                 Source = _completeMetadata
@@ -56,15 +64,21 @@ namespace MetadataUtilities
             MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
             MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             MetadataViewSource.IsLiveSortingRequested = true;
-            MetadataViewSource.View.CurrentChanged += CurrentChanged;
             FilterCategories = Plugin.Settings.Settings.FilterCategories;
             FilterFeatures = Plugin.Settings.Settings.FilterFeatures;
             FilterGenres = Plugin.Settings.Settings.FilterGenres;
             FilterSeries = Plugin.Settings.Settings.FilterSeries;
             FilterTags = Plugin.Settings.Settings.FilterTags;
-            MetadataViewSource.View.Filter = Filter;
-            MetadataViewSource.View.Refresh();
+
+            MetadataViewSource.View.CurrentChanged += CurrentChanged;
             MetadataViewSource.View.MoveCurrentToFirst();
+
+            Log.Debug($"=== MetadataEditorViewModel: Start Filter ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            ts = DateTime.Now;
+
+            MetadataViewSource.View.Filter = Filter;
+
+            Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         public int CategoryCount
@@ -91,6 +105,16 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterCategories, value);
+
+                if (_filterCategories)
+                {
+                    _filterTypes.Add(FieldType.Category);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Category);
+                }
+
                 MetadataViewSource.View.Refresh();
             }
         }
@@ -101,6 +125,16 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterFeatures, value);
+
+                if (_filterFeatures)
+                {
+                    _filterTypes.Add(FieldType.Feature);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Feature);
+                }
+
                 MetadataViewSource.View.Refresh();
             }
         }
@@ -111,6 +145,16 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterGenres, value);
+
+                if (_filterGenres)
+                {
+                    _filterTypes.Add(FieldType.Genre);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Genre);
+                }
+
                 MetadataViewSource.View.Refresh();
             }
         }
@@ -121,6 +165,16 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterSeries, value);
+
+                if (_filterSeries)
+                {
+                    _filterTypes.Add(FieldType.Series);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Series);
+                }
+
                 MetadataViewSource.View.Refresh();
             }
         }
@@ -131,6 +185,16 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterTags, value);
+
+                if (_filterTags)
+                {
+                    _filterTypes.Add(FieldType.Tag);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Tag);
+                }
+
                 MetadataViewSource.View.Refresh();
             }
         }
@@ -397,7 +461,6 @@ namespace MetadataUtilities
             win.Close();
         });
 
-
         public CollectionViewSource MetadataViewSource
         {
             get => _metadataViewSource;
@@ -416,6 +479,9 @@ namespace MetadataUtilities
             {
                 return;
             }
+
+            Log.Debug("=== CurrentChanged: Start ===");
+            DateTime ts = DateTime.Now;
 
             Games.Clear();
 
@@ -444,7 +510,12 @@ namespace MetadataUtilities
                 });
             }
 
+            Log.Debug($"=== CurrentChanged: Start refresh ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            ts = DateTime.Now;
+
             GamesViewSource.View.Refresh();
+
+            Log.Debug($"=== CurrentChanged: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         public void CalculateItemCount()
@@ -460,35 +531,8 @@ namespace MetadataUtilities
         {
             MetadataListObject metadataListObject = item as MetadataListObject;
 
-            List<FieldType> types = new List<FieldType>();
-
-            if (FilterCategories)
-            {
-                types.Add(FieldType.Category);
-            }
-
-            if (FilterFeatures)
-            {
-                types.Add(FieldType.Feature);
-            }
-
-            if (FilterGenres)
-            {
-                types.Add(FieldType.Genre);
-            }
-
-            if (FilterSeries)
-            {
-                types.Add(FieldType.Series);
-            }
-
-            if (FilterTags)
-            {
-                types.Add(FieldType.Tag);
-            }
-
             return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
-                   types.Any(t => t == metadataListObject.Type);
+                   _filterTypes.Contains(metadataListObject.Type);
         }
     }
 }

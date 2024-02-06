@@ -466,9 +466,11 @@ namespace MetadataUtilities
                     }
                 }
 
-                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(plugin, metadataListObjects);
-                viewModel.RuleName = ruleToEdit.Name;
-                viewModel.RuleType = ruleToEdit.Type;
+                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(plugin, metadataListObjects)
+                {
+                    RuleName = ruleToEdit.Name,
+                    RuleType = ruleToEdit.Type
+                };
 
                 MergeRuleEditorView editorView = new MergeRuleEditorView();
 

@@ -12,6 +12,7 @@ namespace MetadataUtilities
 {
     public class MergeRuleEditorViewModel : ObservableObject
     {
+        private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
         private MetadataListObjects _completeMetadata;
         private bool _filterCategories = true;
         private bool _filterFeatures = true;
@@ -27,20 +28,37 @@ namespace MetadataUtilities
 
         public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects)
         {
+            Log.Debug("=== MetadataEditorViewModel: Start ===");
+            DateTime ts = DateTime.Now;
+
+
             Plugin = plugin;
             CompleteMetadata = objects;
+
+            Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            ts = DateTime.Now;
 
             MetadataViewSource = new CollectionViewSource
             {
                 Source = _completeMetadata
             };
 
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            _filterTypes.Add(FieldType.Category);
+            _filterTypes.Add(FieldType.Feature);
+            _filterTypes.Add(FieldType.Genre);
+            _filterTypes.Add(FieldType.Series);
+            _filterTypes.Add(FieldType.Tag);
+
+            MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAndName", ListSortDirection.Ascending));
             MetadataViewSource.IsLiveSortingRequested = true;
-            MetadataViewSource.View.Filter = Filter;
             MetadataViewSource.View.MoveCurrentToFirst();
-            MetadataViewSource.View.Refresh();
+
+            Log.Debug($"=== MetadataEditorViewModel: Start Filter ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            ts = DateTime.Now;
+
+            MetadataViewSource.View.Filter = Filter;
+
+            Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         public MetadataUtilities Plugin
@@ -55,6 +73,16 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterCategories, value);
+
+                if (_filterCategories)
+                {
+                    _filterTypes.Add(FieldType.Category);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Category);
+                }
+
                 MetadataViewSource.View.Refresh();
             }
         }
@@ -65,6 +93,16 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterFeatures, value);
+
+                if (_filterFeatures)
+                {
+                    _filterTypes.Add(FieldType.Feature);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Feature);
+                }
+
                 MetadataViewSource.View.Refresh();
             }
         }
@@ -75,6 +113,16 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterGenres, value);
+
+                if (_filterGenres)
+                {
+                    _filterTypes.Add(FieldType.Genre);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Genre);
+                }
+
                 MetadataViewSource.View.Refresh();
             }
         }
@@ -95,6 +143,16 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterSeries, value);
+
+                if (_filterSeries)
+                {
+                    _filterTypes.Add(FieldType.Series);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Series);
+                }
+
                 MetadataViewSource.View.Refresh();
             }
         }
@@ -105,6 +163,16 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterTags, value);
+
+                if (_filterTags)
+                {
+                    _filterTypes.Add(FieldType.Tag);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Tag);
+                }
+
                 MetadataViewSource.View.Refresh();
             }
         }
@@ -204,35 +272,8 @@ namespace MetadataUtilities
         {
             MetadataListObject metadataListObject = item as MetadataListObject;
 
-            List<FieldType> types = new List<FieldType>();
-
-            if (FilterCategories)
-            {
-                types.Add(FieldType.Category);
-            }
-
-            if (FilterFeatures)
-            {
-                types.Add(FieldType.Feature);
-            }
-
-            if (FilterGenres)
-            {
-                types.Add(FieldType.Genre);
-            }
-
-            if (FilterSeries)
-            {
-                types.Add(FieldType.Series);
-            }
-
-            if (FilterTags)
-            {
-                types.Add(FieldType.Tag);
-            }
-
             return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
-                   types.Any(t => t == metadataListObject.Type) &&
+                   _filterTypes.Contains(metadataListObject.Type) &&
                    (!FilterSelected || metadataListObject.Selected);
         }
     }

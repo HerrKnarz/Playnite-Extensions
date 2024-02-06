@@ -183,6 +183,9 @@ namespace MetadataUtilities
 
         private void ShowEditor()
         {
+            Log.Debug("=== ShowEditor: Start ===");
+            DateTime ts = DateTime.Now;
+
             try
             {
                 MetadataListObjects metadataListObjects = new MetadataListObjects(Settings.Settings);
@@ -195,6 +198,9 @@ namespace MetadataUtilities
                 Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesEditor"), Settings.Settings.EditorWindowWidth, Settings.Settings.EditorWindowHeight);
                 window.Content = editorView;
                 window.DataContext = viewModel;
+
+                Log.Debug($"=== ShowEditor: Show Dialog ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+
                 window.ShowDialog();
             }
             catch (Exception exception)
