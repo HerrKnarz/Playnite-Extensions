@@ -387,6 +387,11 @@ namespace MetadataUtilities
         {
             MetadataListObject newItem = new MetadataListObject();
 
+            if (Settings.SourceObjectsViewSource.View?.CurrentItem != null)
+            {
+                newItem.Type = ((MetadataListObject)Settings.SourceObjectsViewSource.View.CurrentItem).Type;
+            }
+
             Window window = AddNewObjectViewModel.GetWindow(plugin, newItem);
 
             if (window == null)
@@ -394,12 +399,15 @@ namespace MetadataUtilities
                 return;
             }
 
-            if (window.ShowDialog() ?? false)
+            if (!(window.ShowDialog() ?? false))
             {
-                if (!((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
-                {
-                    ((MergeRule)rule).SourceObjects.Add(newItem);
-                }
+                return;
+            }
+
+            if (!((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
+            {
+                ((MergeRule)rule).SourceObjects.Add(newItem);
+                Settings.SourceObjectsViewSource.View.MoveCurrentTo(newItem);
             }
         }, rule => rule != null);
 
@@ -478,7 +486,34 @@ namespace MetadataUtilities
                     metadataListObjects.AddMissing(tempList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
                 }
 
-                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(plugin, metadataListObjects)
+                HashSet<FieldType> filteredTypes = new HashSet<FieldType>();
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Category))
+                {
+                    filteredTypes.Add(FieldType.Category);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Feature))
+                {
+                    filteredTypes.Add(FieldType.Feature);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Genre))
+                {
+                    filteredTypes.Add(FieldType.Genre);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Series))
+                {
+                    filteredTypes.Add(FieldType.Series);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Tag))
+                {
+                    filteredTypes.Add(FieldType.Tag);
+                }
+
+                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(plugin, metadataListObjects, filteredTypes)
                 {
                     RuleName = ruleToEdit.Name,
                     RuleType = ruleToEdit.Type
@@ -531,10 +566,12 @@ namespace MetadataUtilities
                         case MessageBoxResult.Yes:
                             Settings.MergeRules.AddRule(ruleToEdit, true);
                             Settings.MergeRules.Remove(rule);
+                            Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                             return;
                         case MessageBoxResult.No:
                             Settings.MergeRules.AddRule(ruleToEdit);
                             Settings.MergeRules.Remove(rule);
+                            Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                             return;
                         default:
                             return;
@@ -549,10 +586,12 @@ namespace MetadataUtilities
 
                     rule.SourceObjects.Clear();
                     rule.SourceObjects.AddMissing(ruleToEdit.SourceObjects);
+                    Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                 }
 
                 // Case 4: The rule is new and no other with that target exists => we simply add the new one.
                 Settings.MergeRules.AddRule(ruleToEdit);
+                Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
             }
             catch (Exception exception)
             {

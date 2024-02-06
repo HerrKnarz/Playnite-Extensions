@@ -269,22 +269,24 @@ namespace MetadataUtilities
                     return;
                 }
 
-                if (window.ShowDialog() ?? false)
+                if (!(window.ShowDialog() ?? false))
                 {
-                    if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.EditName == newItem.Name))
-                    {
-                        return;
-                    }
-
-                    newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
-                    newItem.EditName = newItem.Name;
-                    CompleteMetadata.Add(newItem);
-
-                    CalculateItemCount();
-
-                    MetadataViewSource.View.Refresh();
-                    MetadataViewSource.View.MoveCurrentTo(newItem);
+                    return;
                 }
+
+                if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.EditName == newItem.Name))
+                {
+                    return;
+                }
+
+                newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
+                newItem.EditName = newItem.Name;
+                CompleteMetadata.Add(newItem);
+
+                CalculateItemCount();
+
+                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.MoveCurrentTo(newItem);
             }
             catch (Exception exception)
             {

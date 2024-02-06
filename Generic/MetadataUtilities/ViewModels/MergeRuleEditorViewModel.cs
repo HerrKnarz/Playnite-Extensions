@@ -14,19 +14,19 @@ namespace MetadataUtilities
     {
         private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
         private MetadataListObjects _completeMetadata;
-        private bool _filterCategories = true;
-        private bool _filterFeatures = true;
-        private bool _filterGenres = true;
+        private bool _filterCategories;
+        private bool _filterFeatures;
+        private bool _filterGenres;
         private bool _filterSelected;
-        private bool _filterSeries = true;
-        private bool _filterTags = true;
+        private bool _filterSeries;
+        private bool _filterTags;
         private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
         private string _ruleName = string.Empty;
         private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
 
-        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects)
+        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects, HashSet<FieldType> filteredTypes)
         {
             Log.Debug("=== MetadataEditorViewModel: Start ===");
             DateTime ts = DateTime.Now;
@@ -46,15 +46,16 @@ namespace MetadataUtilities
             Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             ts = DateTime.Now;
 
-            _filterTypes.Add(FieldType.Category);
-            _filterTypes.Add(FieldType.Feature);
-            _filterTypes.Add(FieldType.Genre);
-            _filterTypes.Add(FieldType.Series);
-            _filterTypes.Add(FieldType.Tag);
-
             using (MetadataViewSource.DeferRefresh())
             {
                 MetadataViewSource.View.Filter = Filter;
+
+                FilterCategories = filteredTypes.Contains(FieldType.Category) || !filteredTypes.Any();
+                FilterFeatures = filteredTypes.Contains(FieldType.Feature) || !filteredTypes.Any();
+                FilterGenres = filteredTypes.Contains(FieldType.Genre) || !filteredTypes.Any();
+                FilterSeries = filteredTypes.Contains(FieldType.Series) || !filteredTypes.Any();
+                FilterTags = filteredTypes.Contains(FieldType.Tag) || !filteredTypes.Any();
+
                 MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAndName", ListSortDirection.Ascending));
                 MetadataViewSource.IsLiveSortingRequested = true;
             }
