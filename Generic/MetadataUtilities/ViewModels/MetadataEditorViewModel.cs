@@ -67,8 +67,6 @@ namespace MetadataUtilities
 
             using (MetadataViewSource.DeferRefresh())
             {
-                MetadataViewSource.View.Filter = Filter;
-
                 MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
                 MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
                 MetadataViewSource.IsLiveSortingRequested = true;
@@ -84,6 +82,8 @@ namespace MetadataUtilities
 
                 MetadataViewSource.View.CurrentChanged += CurrentChanged;
             }
+
+            MetadataViewSource.View.Filter = Filter;
 
             Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             ts = DateTime.Now;
@@ -127,7 +127,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Category);
                 }
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -147,7 +147,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Feature);
                 }
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -167,7 +167,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Genre);
                 }
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -187,7 +187,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Series);
                 }
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -207,7 +207,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Tag);
                 }
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -235,7 +235,7 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _searchTerm, value);
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -285,7 +285,7 @@ namespace MetadataUtilities
 
                 CalculateItemCount();
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
                 MetadataViewSource.View.MoveCurrentTo(newItem);
             }
             catch (Exception exception)

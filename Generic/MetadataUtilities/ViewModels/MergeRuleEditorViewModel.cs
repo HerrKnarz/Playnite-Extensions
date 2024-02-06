@@ -48,8 +48,6 @@ namespace MetadataUtilities
 
             using (MetadataViewSource.DeferRefresh())
             {
-                MetadataViewSource.View.Filter = Filter;
-
                 FilterCategories = filteredTypes.Contains(FieldType.Category) || !filteredTypes.Any();
                 FilterFeatures = filteredTypes.Contains(FieldType.Feature) || !filteredTypes.Any();
                 FilterGenres = filteredTypes.Contains(FieldType.Genre) || !filteredTypes.Any();
@@ -59,6 +57,8 @@ namespace MetadataUtilities
                 MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAndName", ListSortDirection.Ascending));
                 MetadataViewSource.IsLiveSortingRequested = true;
             }
+
+            MetadataViewSource.View.Filter = Filter;
 
             Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             ts = DateTime.Now;
@@ -90,7 +90,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Category);
                 }
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -110,7 +110,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Feature);
                 }
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -130,7 +130,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Genre);
                 }
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -140,7 +140,7 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterSelected, value);
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -160,7 +160,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Series);
                 }
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -180,7 +180,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Tag);
                 }
 
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -202,7 +202,7 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _searchTerm, value);
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -235,7 +235,7 @@ namespace MetadataUtilities
                     newItem.EditName = newItem.Name;
                     CompleteMetadata.Add(newItem);
 
-                    MetadataViewSource.View.Refresh();
+                    MetadataViewSource.View.Filter = Filter;
                     MetadataViewSource.View.MoveCurrentTo(newItem);
                 }
             }
