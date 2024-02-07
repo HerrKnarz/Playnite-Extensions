@@ -3,7 +3,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Додати новий об'єкт</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Додано категорії/теги за замовчуванням до {0} гри/ігор!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Уже є {0} з таким іменем.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Change metadata type</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Змінити тип метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Об'єднати як</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Об'єднано метадані в {0} іграх!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Вже існує Інше правило для цієї цілі. Бажаєте замінити його (так), об'єднати їх (ні) або скасувати операцію?</sys:String>
@@ -14,11 +14,12 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Треба додати назву для цілі правила.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Прибирання елементів...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Зберегти як правило об’єднання</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Select new type</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Оберіть новий тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Редактор метаданих</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Change type</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Змінити тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Тільки вибране</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Кількість ігор</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Згрупувати збіги</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Об'єднати</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Пов'язані ігри</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Прибрати невикористані</sys:String>
