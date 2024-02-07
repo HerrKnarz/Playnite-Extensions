@@ -442,13 +442,12 @@ namespace MetadataUtilities
                 if (rule != null)
                 {
                     ruleToEdit.Type = rule.Type;
-                    ruleToEdit.Name = rule.Name;
+                    ruleToEdit.EditName = rule.Name;
 
                     foreach (MetadataListObject sourceItem in rule.SourceObjects)
                     {
                         ruleToEdit.SourceObjects.Add(new MetadataListObject
                         {
-                            Name = sourceItem.Name,
                             EditName = sourceItem.Name,
                             Type = sourceItem.Type,
                             GameCount = 0
@@ -541,7 +540,6 @@ namespace MetadataUtilities
                     {
                         Id = item.Id,
                         EditName = item.EditName,
-                        Name = item.Name,
                         Type = item.Type,
                         Selected = item.Selected
                     });

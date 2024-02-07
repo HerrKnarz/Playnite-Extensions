@@ -71,7 +71,6 @@ namespace MetadataUtilities
                 NewObjects.Add(new MetadataListObject
                 {
                     Type = NewType,
-                    Name = item.Name,
                     EditName = item.EditName,
                     Id = newId
                 });
@@ -84,7 +83,6 @@ namespace MetadataUtilities
                 MergeRule rule = new MergeRule
                 {
                     Type = NewType,
-                    Name = item.Name,
                     EditName = item.EditName,
                     Id = newId,
                     SourceObjects = new ObservableCollection<MetadataListObject>
@@ -92,7 +90,6 @@ namespace MetadataUtilities
                         new MetadataListObject
                         {
                             Type = item.Type,
-                            Name = item.Name,
                             EditName = item.EditName,
                             Id = item.Id
                         }

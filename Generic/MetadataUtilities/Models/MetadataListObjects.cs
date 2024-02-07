@@ -41,7 +41,6 @@ namespace MetadataUtilities.Models
                             => new MetadataListObject
                             {
                                 Id = category.Id,
-                                Name = category.Name,
                                 EditName = category.Name,
                                 Type = FieldType.Category
                             }));
@@ -53,7 +52,6 @@ namespace MetadataUtilities.Models
                             => new MetadataListObject
                             {
                                 Id = feature.Id,
-                                Name = feature.Name,
                                 EditName = feature.Name,
                                 Type = FieldType.Feature
                             }));
@@ -65,7 +63,6 @@ namespace MetadataUtilities.Models
                             => new MetadataListObject
                             {
                                 Id = genre.Id,
-                                Name = genre.Name,
                                 EditName = genre.Name,
                                 Type = FieldType.Genre
                             }));
@@ -77,7 +74,6 @@ namespace MetadataUtilities.Models
                             => new MetadataListObject
                             {
                                 Id = series.Id,
-                                Name = series.Name,
                                 EditName = series.Name,
                                 Type = FieldType.Series
                             }));
@@ -89,7 +85,6 @@ namespace MetadataUtilities.Models
                             => new MetadataListObject
                             {
                                 Id = tag.Id,
-                                Name = tag.Name,
                                 EditName = tag.Name,
                                 Type = FieldType.Tag
                             }));
@@ -265,6 +260,18 @@ namespace MetadataUtilities.Models
             });
 
             Log.Debug($"=== UpdateGameCounts: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+        }
+
+        public static void UpdateGroupDisplay(List<MetadataListObject> itemList)
+        {
+            Log.Debug("=== UpdateGroupDisplay: Start ===");
+            DateTime ts = DateTime.Now;
+
+            ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+
+            Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
+
+            Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         public bool MergeItems(FieldType type, Guid id)

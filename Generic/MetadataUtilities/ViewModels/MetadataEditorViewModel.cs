@@ -28,6 +28,7 @@ namespace MetadataUtilities
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
         private CollectionViewSource _gamesViewSource;
         private int _genreCount;
+        private bool _groupMatches;
         private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
@@ -231,6 +232,28 @@ namespace MetadataUtilities
             set => SetValue(ref _genreCount, value);
         }
 
+        public bool GroupMatches
+        {
+            get => _groupMatches;
+            set
+            {
+                SetValue(ref _groupMatches, value);
+
+                if (_groupMatches)
+                {
+                    MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+                    MetadataViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("CleanedUpName"));
+                    //MetadataViewSource.IsLiveGroupingRequested = true;
+                    MetadataViewSource.View.Filter = Filter;
+                }
+                else
+                {
+                    MetadataViewSource.View.GroupDescriptions.Clear();
+                    MetadataViewSource.View.Filter = Filter;
+                }
+            }
+        }
+
         public string SearchTerm
         {
             get => _searchTerm;
@@ -283,7 +306,10 @@ namespace MetadataUtilities
 
                 newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
                 newItem.EditName = newItem.Name;
+
                 CompleteMetadata.Add(newItem);
+
+                MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
 
                 CalculateItemCount();
 
@@ -336,6 +362,8 @@ namespace MetadataUtilities
 
                     CompleteMetadata.AddMissing(viewModel.NewObjects);
 
+                    MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+
                     CalculateItemCount();
                 }
             }
@@ -382,6 +410,8 @@ namespace MetadataUtilities
                                 itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
                             }
                         }
+
+                        MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
 
                         CalculateItemCount();
                     }
@@ -441,6 +471,8 @@ namespace MetadataUtilities
                     CompleteMetadata.Remove(item);
                 }
 
+                MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+
                 CalculateItemCount();
             }
             finally
@@ -466,6 +498,8 @@ namespace MetadataUtilities
             {
                 CompleteMetadata.Remove(itemToRemove);
             }
+
+            MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
         });
 
         public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
@@ -556,7 +590,8 @@ namespace MetadataUtilities
         {
             MetadataListObject metadataListObject = item as MetadataListObject;
 
-            return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+            return (!GroupMatches || metadataListObject.ShowGrouped) &&
+                   metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
                    _filterTypes.Contains(metadataListObject.Type);
         }
     }
