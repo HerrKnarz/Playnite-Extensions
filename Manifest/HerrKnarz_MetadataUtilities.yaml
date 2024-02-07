@@ -1,5 +1,17 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 0.5
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-02-07
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-02-07/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_5.pext
+    Changelog:
+      - Added option to filter matching items in the Metadata Editor. The grid will then only show matching items and group them. To determine a match he addon strips the item name of diactritics and special chars.
+      - When adding a new item in the Metadata or Merge Rule Editor the type in the add dialog will default to the type of the currently selected item
+      - After adding a new item, it will now automatically be selected in the grid
+      - Editing an existing merge rule will now automatically set the filter to the types of the items in the source item list
+      - Performance improvements in the Metadata Editor and Merge Rule Editor
+      - small optimizations in different places
+      - updated localizations
   - Version: 0.4
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-02-05
