@@ -12,6 +12,6 @@ namespace MetadataUtilities.Models
 
         public int? ReleaseYear { get; set; }
 
-        public string RealSortingName => string.IsNullOrWhiteSpace(SortingName) ? Name : SortingName;
+        public string RealSortingName => string.IsNullOrEmpty(SortingName) ? Name : SortingName;
     }
 }

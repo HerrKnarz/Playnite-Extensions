@@ -16,7 +16,7 @@ namespace MetadataUtilities
     public class MetadataEditorViewModel : ObservableObject
     {
         private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
-        private readonly bool _showRelatedGames = true;
+        private readonly bool _showRelatedGames;
         private int _categoryCount;
         private MetadataListObjects _completeMetadata;
         private int _featureCount;
@@ -82,6 +82,8 @@ namespace MetadataUtilities
 
                 MetadataViewSource.View.CurrentChanged += CurrentChanged;
             }
+
+            _showRelatedGames = true;
 
             MetadataViewSource.View.Filter = Filter;
 
@@ -512,6 +514,9 @@ namespace MetadataUtilities
                 return;
             }
 
+            Log.Debug($"=== CurrentChanged: Start game load ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            ts = DateTime.Now;
+
             foreach (Game game in API.Instance.Database.Games.Where(g =>
                 !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
                     (currItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currItem.Id) ?? false)) ||
@@ -519,7 +524,7 @@ namespace MetadataUtilities
                     (currItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currItem.Id) ?? false)) ||
                     (currItem.Type == FieldType.Series && (g.SeriesIds?.Contains(currItem.Id) ?? false)) ||
                     (currItem.Type == FieldType.Tag && (g.TagIds?.Contains(currItem.Id) ?? false)))
-            ).OrderBy(g => g.Name).ToList())
+            ).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName).ToList())
             {
                 Games.Add(new MyGame
                 {
@@ -530,10 +535,10 @@ namespace MetadataUtilities
                 });
             }
 
-            Log.Debug($"=== CurrentChanged: Start refresh ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-            ts = DateTime.Now;
+            //Log.Debug($"=== CurrentChanged: Start refresh ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            //ts = DateTime.Now;
 
-            GamesViewSource.View.Refresh();
+            //GamesViewSource.View.Refresh();
 
             Log.Debug($"=== CurrentChanged: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
