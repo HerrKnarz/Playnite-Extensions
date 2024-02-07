@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace MetadataUtilities
 {
@@ -57,49 +58,57 @@ namespace MetadataUtilities
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
-            foreach (MetadataListObject item in _metadataListObjects)
+            Cursor.Current = Cursors.WaitCursor;
+            try
             {
-                if (item.Type == NewType)
+                foreach (MetadataListObject item in _metadataListObjects)
                 {
-                    continue;
-                }
-
-                Guid newId = DatabaseObjectHelper.AddDbObject(NewType, item.Name);
-
-                DatabaseObjectHelper.ReplaceDbObject(item.Type, item.Id, NewType, newId);
-
-                NewObjects.Add(new MetadataListObject
-                {
-                    Type = NewType,
-                    EditName = item.EditName,
-                    Id = newId
-                });
-
-                if (!SaveAsRule)
-                {
-                    continue;
-                }
-
-                MergeRule rule = new MergeRule
-                {
-                    Type = NewType,
-                    EditName = item.EditName,
-                    Id = newId,
-                    SourceObjects = new ObservableCollection<MetadataListObject>
+                    if (item.Type == NewType)
                     {
-                        new MetadataListObject
-                        {
-                            Type = item.Type,
-                            EditName = item.EditName,
-                            Id = item.Id
-                        }
+                        continue;
                     }
-                };
 
-                _plugin.Settings.Settings.MergeRules.AddRule(rule);
+                    Guid newId = DatabaseObjectHelper.AddDbObject(NewType, item.Name);
+
+                    DatabaseObjectHelper.ReplaceDbObject(item.Type, item.Id, NewType, newId);
+
+                    NewObjects.Add(new MetadataListObject
+                    {
+                        Type = NewType,
+                        EditName = item.EditName,
+                        Id = newId
+                    });
+
+                    if (!SaveAsRule)
+                    {
+                        continue;
+                    }
+
+                    MergeRule rule = new MergeRule
+                    {
+                        Type = NewType,
+                        EditName = item.EditName,
+                        Id = newId,
+                        SourceObjects = new ObservableCollection<MetadataListObject>
+                        {
+                            new MetadataListObject
+                            {
+                                Type = item.Type,
+                                EditName = item.EditName,
+                                Id = item.Id
+                            }
+                        }
+                    };
+
+                    _plugin.Settings.Settings.MergeRules.AddRule(rule);
+                }
+
+                _plugin.SavePluginSettings(_plugin.Settings.Settings);
             }
-
-            _plugin.SavePluginSettings(_plugin.Settings.Settings);
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
 
             win.DialogResult = true;
             win.Close();

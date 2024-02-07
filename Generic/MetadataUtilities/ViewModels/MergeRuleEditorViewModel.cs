@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Forms;
 
 namespace MetadataUtilities
 {
@@ -28,44 +29,51 @@ namespace MetadataUtilities
 
         public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects, HashSet<FieldType> filteredTypes)
         {
-            Log.Debug("=== MetadataEditorViewModel: Start ===");
-            DateTime ts = DateTime.Now;
-
-
-            Plugin = plugin;
-            CompleteMetadata = objects;
-
-            Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-            ts = DateTime.Now;
-
-            MetadataViewSource = new CollectionViewSource
+            Cursor.Current = Cursors.WaitCursor;
+            try
             {
-                Source = _completeMetadata
-            };
+                Log.Debug("=== MetadataEditorViewModel: Start ===");
+                DateTime ts = DateTime.Now;
 
-            Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-            ts = DateTime.Now;
+                Plugin = plugin;
+                CompleteMetadata = objects;
 
-            using (MetadataViewSource.DeferRefresh())
-            {
-                FilterCategories = filteredTypes.Contains(FieldType.Category) || !filteredTypes.Any();
-                FilterFeatures = filteredTypes.Contains(FieldType.Feature) || !filteredTypes.Any();
-                FilterGenres = filteredTypes.Contains(FieldType.Genre) || !filteredTypes.Any();
-                FilterSeries = filteredTypes.Contains(FieldType.Series) || !filteredTypes.Any();
-                FilterTags = filteredTypes.Contains(FieldType.Tag) || !filteredTypes.Any();
+                Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
 
-                MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAndName", ListSortDirection.Ascending));
-                MetadataViewSource.IsLiveSortingRequested = true;
+                MetadataViewSource = new CollectionViewSource
+                {
+                    Source = _completeMetadata
+                };
+
+                Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+
+                using (MetadataViewSource.DeferRefresh())
+                {
+                    FilterCategories = filteredTypes.Contains(FieldType.Category) || !filteredTypes.Any();
+                    FilterFeatures = filteredTypes.Contains(FieldType.Feature) || !filteredTypes.Any();
+                    FilterGenres = filteredTypes.Contains(FieldType.Genre) || !filteredTypes.Any();
+                    FilterSeries = filteredTypes.Contains(FieldType.Series) || !filteredTypes.Any();
+                    FilterTags = filteredTypes.Contains(FieldType.Tag) || !filteredTypes.Any();
+
+                    MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAndName", ListSortDirection.Ascending));
+                    MetadataViewSource.IsLiveSortingRequested = true;
+                }
+
+                MetadataViewSource.View.Filter = Filter;
+
+                Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+
+                MetadataViewSource.View.MoveCurrentToFirst();
+
+                Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             }
-
-            MetadataViewSource.View.Filter = Filter;
-
-            Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-            ts = DateTime.Now;
-
-            MetadataViewSource.View.MoveCurrentToFirst();
-
-            Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
         }
 
         public MetadataUtilities Plugin
@@ -231,6 +239,8 @@ namespace MetadataUtilities
                         return;
                     }
 
+                    Cursor.Current = Cursors.WaitCursor;
+
                     newItem.Selected = true;
                     newItem.EditName = newItem.Name;
                     CompleteMetadata.Add(newItem);
@@ -242,6 +252,10 @@ namespace MetadataUtilities
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during initializing merge dialog", true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         });
 

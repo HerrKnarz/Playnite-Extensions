@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Forms;
 
 namespace MetadataUtilities
 {
@@ -433,6 +434,7 @@ namespace MetadataUtilities
 
         private void EditMergeRule(MergeRule rule = null)
         {
+            Cursor.Current = Cursors.WaitCursor;
             try
             {
                 bool isNewRule = rule == null;
@@ -530,6 +532,8 @@ namespace MetadataUtilities
                     return;
                 }
 
+                Cursor.Current = Cursors.WaitCursor;
+
                 ruleToEdit.Name = viewModel.RuleName;
                 ruleToEdit.Type = viewModel.RuleType;
                 ruleToEdit.SourceObjects.Clear();
@@ -557,7 +561,9 @@ namespace MetadataUtilities
                 // Case 2: The rule was renamed or is new and another one for that target already exists => We ask if merge, replace or cancel.
                 if (Settings.MergeRules.Any(x => x.Name == ruleToEdit.Name && x.Type == ruleToEdit.Type))
                 {
+                    Cursor.Current = Cursors.Default;
                     MessageBoxResult response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergeOrReplace"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    Cursor.Current = Cursors.WaitCursor;
 
                     switch (response)
                     {
@@ -594,6 +600,10 @@ namespace MetadataUtilities
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during initializing Merge Rule Editor", true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         }
     }

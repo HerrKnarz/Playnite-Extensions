@@ -10,7 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media;
+using MergeAction = MetadataUtilities.Actions.MergeAction;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace MetadataUtilities
 {
@@ -60,13 +63,22 @@ namespace MetadataUtilities
             SavePluginSettings(Settings.Settings);
         }
 
+
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             base.OnApplicationStarted(args);
 
             if (Settings.Settings.RemoveUnusedOnStartup)
             {
-                MetadataListObjects.RemoveUnusedMetadata(true, Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
+                Cursor.Current = Cursors.WaitCursor;
+                try
+                {
+                    MetadataListObjects.RemoveUnusedMetadata(true, Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
+                }
+                finally
+                {
+                    Cursor.Current = Cursors.Default;
+                }
             }
         }
 
@@ -111,6 +123,7 @@ namespace MetadataUtilities
         {
             IsUpdating = true;
 
+            Cursor.Current = Cursors.WaitCursor;
             try
             {
                 if (games.Count == 1)
@@ -171,6 +184,7 @@ namespace MetadataUtilities
                     // Shows a dialog with the number of games actually affected.
                     if (showDialog)
                     {
+                        Cursor.Current = Cursors.Default;
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(action.ResultMessage), gamesAffected));
                     }
                 }
@@ -178,6 +192,7 @@ namespace MetadataUtilities
             finally
             {
                 IsUpdating = false;
+                Cursor.Current = Cursors.Default;
             }
         }
 
@@ -186,6 +201,7 @@ namespace MetadataUtilities
             Log.Debug("=== ShowEditor: Start ===");
             DateTime ts = DateTime.Now;
 
+            Cursor.Current = Cursors.WaitCursor;
             try
             {
                 MetadataListObjects metadataListObjects = new MetadataListObjects(Settings.Settings);
@@ -206,6 +222,10 @@ namespace MetadataUtilities
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during initializing Metadata Editor", true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         }
 

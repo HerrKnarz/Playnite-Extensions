@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Forms;
 
 namespace MetadataUtilities
 {
@@ -41,59 +42,67 @@ namespace MetadataUtilities
             DateTime ts = DateTime.Now;
 
 
-            Plugin = plugin;
-            CompleteMetadata = objects;
-
-            CalculateItemCount();
-
-            GamesViewSource = new CollectionViewSource
+            Cursor.Current = Cursors.WaitCursor;
+            try
             {
-                Source = _games
-            };
+                Plugin = plugin;
+                CompleteMetadata = objects;
 
-            GamesViewSource.SortDescriptions.Add(new SortDescription("RealSortingName", ListSortDirection.Ascending));
-            GamesViewSource.IsLiveSortingRequested = true;
+                CalculateItemCount();
 
-            Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-            ts = DateTime.Now;
+                GamesViewSource = new CollectionViewSource
+                {
+                    Source = _games
+                };
 
-            MetadataViewSource = new CollectionViewSource
-            {
-                Source = _completeMetadata
-            };
+                GamesViewSource.SortDescriptions.Add(new SortDescription("RealSortingName", ListSortDirection.Ascending));
+                GamesViewSource.IsLiveSortingRequested = true;
 
-            Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-            ts = DateTime.Now;
-
-
-            using (MetadataViewSource.DeferRefresh())
-            {
-                MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
-                MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-                MetadataViewSource.IsLiveSortingRequested = true;
-
-                Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                 ts = DateTime.Now;
 
-                FilterCategories = Plugin.Settings.Settings.FilterCategories;
-                FilterFeatures = Plugin.Settings.Settings.FilterFeatures;
-                FilterGenres = Plugin.Settings.Settings.FilterGenres;
-                FilterSeries = Plugin.Settings.Settings.FilterSeries;
-                FilterTags = Plugin.Settings.Settings.FilterTags;
+                MetadataViewSource = new CollectionViewSource
+                {
+                    Source = _completeMetadata
+                };
 
-                MetadataViewSource.View.CurrentChanged += CurrentChanged;
+                Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+
+
+                using (MetadataViewSource.DeferRefresh())
+                {
+                    MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+                    MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                    MetadataViewSource.IsLiveSortingRequested = true;
+
+                    Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+
+                    FilterCategories = Plugin.Settings.Settings.FilterCategories;
+                    FilterFeatures = Plugin.Settings.Settings.FilterFeatures;
+                    FilterGenres = Plugin.Settings.Settings.FilterGenres;
+                    FilterSeries = Plugin.Settings.Settings.FilterSeries;
+                    FilterTags = Plugin.Settings.Settings.FilterTags;
+
+                    MetadataViewSource.View.CurrentChanged += CurrentChanged;
+                }
+
+                _showRelatedGames = true;
+
+                MetadataViewSource.View.Filter = Filter;
+
+                Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+
+                MetadataViewSource.View.MoveCurrentToFirst();
+
+                Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             }
-
-            _showRelatedGames = true;
-
-            MetadataViewSource.View.Filter = Filter;
-
-            Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-            ts = DateTime.Now;
-
-            MetadataViewSource.View.MoveCurrentToFirst();
-
-            Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
         }
 
         public int CategoryCount
@@ -241,9 +250,17 @@ namespace MetadataUtilities
 
                 if (_groupMatches)
                 {
-                    MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
-                    MetadataViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("CleanedUpName"));
-                    MetadataViewSource.View.Filter = Filter;
+                    Cursor.Current = Cursors.WaitCursor;
+                    try
+                    {
+                        MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+                        MetadataViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("CleanedUpName"));
+                        MetadataViewSource.View.Filter = Filter;
+                    }
+                    finally
+                    {
+                        Cursor.Current = Cursors.Default;
+                    }
                 }
                 else
                 {
@@ -303,6 +320,8 @@ namespace MetadataUtilities
                     return;
                 }
 
+                Cursor.Current = Cursors.WaitCursor;
+
                 newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
                 newItem.EditName = newItem.Name;
 
@@ -318,6 +337,10 @@ namespace MetadataUtilities
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during initializing merge dialog", true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         });
 
@@ -340,31 +363,35 @@ namespace MetadataUtilities
                 window.Content = view;
                 window.DataContext = viewModel;
 
-                if (window.ShowDialog() ?? false)
+                if (!(window.ShowDialog() ?? false))
                 {
-                    foreach (MetadataListObject itemToRemove in changeItems)
-                    {
-                        if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
-                        {
-                            CompleteMetadata.Remove(itemToRemove);
-                        }
-                        else
-                        {
-                            itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
-                        }
-                    }
-
-                    foreach (MetadataListObject itemToAdd in viewModel.NewObjects)
-                    {
-                        itemToAdd.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
-                    }
-
-                    CompleteMetadata.AddMissing(viewModel.NewObjects);
-
-                    MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
-
-                    CalculateItemCount();
+                    return;
                 }
+
+                Cursor.Current = Cursors.WaitCursor;
+
+                foreach (MetadataListObject itemToRemove in changeItems)
+                {
+                    if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
+                    {
+                        CompleteMetadata.Remove(itemToRemove);
+                    }
+                    else
+                    {
+                        itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
+                    }
+                }
+
+                foreach (MetadataListObject itemToAdd in viewModel.NewObjects)
+                {
+                    itemToAdd.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
+                }
+
+                CompleteMetadata.AddMissing(viewModel.NewObjects);
+
+                MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+
+                CalculateItemCount();
             }
             catch (Exception exception)
             {
@@ -373,6 +400,7 @@ namespace MetadataUtilities
             finally
             {
                 Plugin.IsUpdating = false;
+                Cursor.Current = Cursors.Default;
             }
         }, items => items?.Any() ?? false);
 
@@ -398,6 +426,8 @@ namespace MetadataUtilities
 
                     if (window.ShowDialog() ?? false)
                     {
+                        Cursor.Current = Cursors.WaitCursor;
+
                         foreach (MetadataListObject itemToRemove in mergeItems)
                         {
                             if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
@@ -422,6 +452,7 @@ namespace MetadataUtilities
                 finally
                 {
                     Plugin.IsUpdating = false;
+                    Cursor.Current = Cursors.Default;
                 }
 
                 return;
@@ -433,6 +464,8 @@ namespace MetadataUtilities
         public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
         {
             Plugin.IsUpdating = true;
+            Cursor.Current = Cursors.WaitCursor;
+
             try
             {
                 using (API.Instance.Database.BufferedUpdate())
@@ -477,28 +510,38 @@ namespace MetadataUtilities
             finally
             {
                 Plugin.IsUpdating = false;
+                Cursor.Current = Cursors.Default;
             }
         }, items => items?.Any() ?? false);
 
         public RelayCommand RemoveUnusedCommand => new RelayCommand(() =>
         {
-            List<MetadataListObject> removedItems = MetadataListObjects.RemoveUnusedMetadata(false, Plugin.Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
+            Cursor.Current = Cursors.WaitCursor;
 
-            if (!removedItems.Any())
+            try
             {
-                return;
+                List<MetadataListObject> removedItems = MetadataListObjects.RemoveUnusedMetadata(false, Plugin.Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
+
+                if (!removedItems.Any())
+                {
+                    return;
+                }
+
+                List<MetadataListObject> itemsToRemove = CompleteMetadata.Where(x => removedItems.Any(y => x.Type == y.Type && x.EditName == y.Name)).ToList();
+
+                CalculateItemCount();
+
+                foreach (MetadataListObject itemToRemove in itemsToRemove)
+                {
+                    CompleteMetadata.Remove(itemToRemove);
+                }
+
+                MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
             }
-
-            List<MetadataListObject> itemsToRemove = CompleteMetadata.Where(x => removedItems.Any(y => x.Type == y.Type && x.EditName == y.Name)).ToList();
-
-            CalculateItemCount();
-
-            foreach (MetadataListObject itemToRemove in itemsToRemove)
+            finally
             {
-                CompleteMetadata.Remove(itemToRemove);
+                Cursor.Current = Cursors.Default;
             }
-
-            MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
         });
 
         public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
@@ -547,31 +590,35 @@ namespace MetadataUtilities
                 return;
             }
 
-            Log.Debug($"=== CurrentChanged: Start game load ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-            ts = DateTime.Now;
+            Cursor.Current = Cursors.WaitCursor;
 
-            foreach (Game game in API.Instance.Database.Games.Where(g =>
-                !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
-                    (currItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currItem.Id) ?? false)) ||
-                    (currItem.Type == FieldType.Feature && (g.FeatureIds?.Contains(currItem.Id) ?? false)) ||
-                    (currItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currItem.Id) ?? false)) ||
-                    (currItem.Type == FieldType.Series && (g.SeriesIds?.Contains(currItem.Id) ?? false)) ||
-                    (currItem.Type == FieldType.Tag && (g.TagIds?.Contains(currItem.Id) ?? false)))
-            ).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName).ToList())
+            try
             {
-                Games.Add(new MyGame
+                Log.Debug($"=== CurrentChanged: Start game load ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+
+                foreach (Game game in API.Instance.Database.Games.Where(g =>
+                    !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
+                        (currItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currItem.Id) ?? false)) ||
+                        (currItem.Type == FieldType.Feature && (g.FeatureIds?.Contains(currItem.Id) ?? false)) ||
+                        (currItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currItem.Id) ?? false)) ||
+                        (currItem.Type == FieldType.Series && (g.SeriesIds?.Contains(currItem.Id) ?? false)) ||
+                        (currItem.Type == FieldType.Tag && (g.TagIds?.Contains(currItem.Id) ?? false)))
+                ).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName).ToList())
                 {
-                    Name = game.Name,
-                    SortingName = game.SortingName,
-                    CompletionStatus = game.CompletionStatus,
-                    ReleaseYear = game.ReleaseYear
-                });
+                    Games.Add(new MyGame
+                    {
+                        Name = game.Name,
+                        SortingName = game.SortingName,
+                        CompletionStatus = game.CompletionStatus,
+                        ReleaseYear = game.ReleaseYear
+                    });
+                }
             }
-
-            //Log.Debug($"=== CurrentChanged: Start refresh ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-            //ts = DateTime.Now;
-
-            //GamesViewSource.View.Refresh();
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
 
             Log.Debug($"=== CurrentChanged: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
