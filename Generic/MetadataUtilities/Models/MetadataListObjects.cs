@@ -18,6 +18,9 @@ namespace MetadataUtilities.Models
 
         public void LoadMetadata(bool showGameNumber = true, FieldType? type = null)
         {
+            Log.Debug("=== LoadMetadata: Start ===");
+            DateTime ts = DateTime.Now;
+
             List<MetadataListObject> temporaryList = new List<MetadataListObject>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
@@ -38,7 +41,6 @@ namespace MetadataUtilities.Models
                             => new MetadataListObject
                             {
                                 Id = category.Id,
-                                Name = category.Name,
                                 EditName = category.Name,
                                 Type = FieldType.Category
                             }));
@@ -50,7 +52,6 @@ namespace MetadataUtilities.Models
                             => new MetadataListObject
                             {
                                 Id = feature.Id,
-                                Name = feature.Name,
                                 EditName = feature.Name,
                                 Type = FieldType.Feature
                             }));
@@ -62,7 +63,6 @@ namespace MetadataUtilities.Models
                             => new MetadataListObject
                             {
                                 Id = genre.Id,
-                                Name = genre.Name,
                                 EditName = genre.Name,
                                 Type = FieldType.Genre
                             }));
@@ -74,7 +74,6 @@ namespace MetadataUtilities.Models
                             => new MetadataListObject
                             {
                                 Id = series.Id,
-                                Name = series.Name,
                                 EditName = series.Name,
                                 Type = FieldType.Series
                             }));
@@ -86,7 +85,6 @@ namespace MetadataUtilities.Models
                             => new MetadataListObject
                             {
                                 Id = tag.Id,
-                                Name = tag.Name,
                                 EditName = tag.Name,
                                 Type = FieldType.Tag
                             }));
@@ -105,6 +103,7 @@ namespace MetadataUtilities.Models
 
             Clear();
             this.AddMissing(temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
+            Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         public static List<MetadataListObject> RemoveUnusedMetadata(bool AutoMode = false, bool ignoreHiddenGames = false)
@@ -212,6 +211,9 @@ namespace MetadataUtilities.Models
 
         public static void UpdateGameCounts(List<MetadataListObject> itemList, bool ignoreHiddenGames)
         {
+            Log.Debug("=== UpdateGameCounts: Start ===");
+            DateTime ts = DateTime.Now;
+
             ConcurrentQueue<Guid> items = new ConcurrentQueue<Guid>();
 
             ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
@@ -256,6 +258,20 @@ namespace MetadataUtilities.Models
 
                 item.GameCount = count;
             });
+
+            Log.Debug($"=== UpdateGameCounts: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+        }
+
+        public static void UpdateGroupDisplay(List<MetadataListObject> itemList)
+        {
+            Log.Debug("=== UpdateGroupDisplay: Start ===");
+            DateTime ts = DateTime.Now;
+
+            ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+
+            Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
+
+            Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         public bool MergeItems(FieldType type, Guid id)

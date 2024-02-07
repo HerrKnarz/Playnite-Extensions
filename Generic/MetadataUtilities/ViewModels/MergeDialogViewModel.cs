@@ -3,6 +3,7 @@ using Playnite.SDK;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace MetadataUtilities
 {
@@ -53,22 +54,31 @@ namespace MetadataUtilities
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
-            if (SaveAsRule)
+            Cursor.Current = Cursors.WaitCursor;
+            try
             {
-                MergeRule rule = new MergeRule
+                if (SaveAsRule)
                 {
-                    Name = _mergeTarget.Name,
-                    Type = _mergeTarget.Type,
-                    Id = _mergeTarget.Id,
-                    SourceObjects = _metadataListObjects
-                };
+                    MergeRule rule = new MergeRule
+                    {
+                        Name = _mergeTarget.Name,
+                        Type = _mergeTarget.Type,
+                        Id = _mergeTarget.Id,
+                        SourceObjects = _metadataListObjects
+                    };
 
-                _plugin.Settings.Settings.MergeRules.AddRule(rule);
+                    _plugin.Settings.Settings.MergeRules.AddRule(rule);
+                }
+
+                _plugin.SavePluginSettings(_plugin.Settings.Settings);
+
+                MetadataListObjects.MergeItems(MergeTarget.Type, MergeTarget.Id);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
 
-            _plugin.SavePluginSettings(_plugin.Settings.Settings);
-
-            MetadataListObjects.MergeItems(MergeTarget.Type, MergeTarget.Id);
             win.DialogResult = true;
             win.Close();
         }, win => win != null);

@@ -10,12 +10,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Forms;
 
 namespace MetadataUtilities
 {
     public class MetadataEditorViewModel : ObservableObject
     {
-        private readonly bool _showRelatedGames = true;
+        private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
+        private readonly bool _showRelatedGames;
         private int _categoryCount;
         private MetadataListObjects _completeMetadata;
         private int _featureCount;
@@ -27,6 +29,7 @@ namespace MetadataUtilities
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
         private CollectionViewSource _gamesViewSource;
         private int _genreCount;
+        private bool _groupMatches;
         private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
@@ -35,36 +38,71 @@ namespace MetadataUtilities
 
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects)
         {
-            Plugin = plugin;
-            CompleteMetadata = objects;
+            Log.Debug("=== MetadataEditorViewModel: Start ===");
+            DateTime ts = DateTime.Now;
 
-            CalculateItemCount();
 
-            GamesViewSource = new CollectionViewSource
+            Cursor.Current = Cursors.WaitCursor;
+            try
             {
-                Source = _games
-            };
+                Plugin = plugin;
+                CompleteMetadata = objects;
 
-            GamesViewSource.SortDescriptions.Add(new SortDescription("RealSortingName", ListSortDirection.Ascending));
-            GamesViewSource.IsLiveSortingRequested = true;
+                CalculateItemCount();
 
-            MetadataViewSource = new CollectionViewSource
+                GamesViewSource = new CollectionViewSource
+                {
+                    Source = _games
+                };
+
+                GamesViewSource.SortDescriptions.Add(new SortDescription("RealSortingName", ListSortDirection.Ascending));
+                GamesViewSource.IsLiveSortingRequested = true;
+
+                Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+
+                MetadataViewSource = new CollectionViewSource
+                {
+                    Source = _completeMetadata
+                };
+
+                Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+
+
+                using (MetadataViewSource.DeferRefresh())
+                {
+                    MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+                    MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                    MetadataViewSource.IsLiveSortingRequested = true;
+
+                    Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+
+                    FilterCategories = Plugin.Settings.Settings.FilterCategories;
+                    FilterFeatures = Plugin.Settings.Settings.FilterFeatures;
+                    FilterGenres = Plugin.Settings.Settings.FilterGenres;
+                    FilterSeries = Plugin.Settings.Settings.FilterSeries;
+                    FilterTags = Plugin.Settings.Settings.FilterTags;
+
+                    MetadataViewSource.View.CurrentChanged += CurrentChanged;
+                }
+
+                _showRelatedGames = true;
+
+                MetadataViewSource.View.Filter = Filter;
+
+                Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+
+                MetadataViewSource.View.MoveCurrentToFirst();
+
+                Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            }
+            finally
             {
-                Source = _completeMetadata
-            };
-
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
-            MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            MetadataViewSource.IsLiveSortingRequested = true;
-            MetadataViewSource.View.CurrentChanged += CurrentChanged;
-            FilterCategories = Plugin.Settings.Settings.FilterCategories;
-            FilterFeatures = Plugin.Settings.Settings.FilterFeatures;
-            FilterGenres = Plugin.Settings.Settings.FilterGenres;
-            FilterSeries = Plugin.Settings.Settings.FilterSeries;
-            FilterTags = Plugin.Settings.Settings.FilterTags;
-            MetadataViewSource.View.Filter = Filter;
-            MetadataViewSource.View.Refresh();
-            MetadataViewSource.View.MoveCurrentToFirst();
+                Cursor.Current = Cursors.Default;
+            }
         }
 
         public int CategoryCount
@@ -91,7 +129,17 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterCategories, value);
-                MetadataViewSource.View.Refresh();
+
+                if (_filterCategories)
+                {
+                    _filterTypes.Add(FieldType.Category);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Category);
+                }
+
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -101,7 +149,17 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterFeatures, value);
-                MetadataViewSource.View.Refresh();
+
+                if (_filterFeatures)
+                {
+                    _filterTypes.Add(FieldType.Feature);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Feature);
+                }
+
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -111,7 +169,17 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterGenres, value);
-                MetadataViewSource.View.Refresh();
+
+                if (_filterGenres)
+                {
+                    _filterTypes.Add(FieldType.Genre);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Genre);
+                }
+
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -121,7 +189,17 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterSeries, value);
-                MetadataViewSource.View.Refresh();
+
+                if (_filterSeries)
+                {
+                    _filterTypes.Add(FieldType.Series);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Series);
+                }
+
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -131,7 +209,17 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _filterTags, value);
-                MetadataViewSource.View.Refresh();
+
+                if (_filterTags)
+                {
+                    _filterTypes.Add(FieldType.Tag);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.Tag);
+                }
+
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -153,13 +241,42 @@ namespace MetadataUtilities
             set => SetValue(ref _genreCount, value);
         }
 
+        public bool GroupMatches
+        {
+            get => _groupMatches;
+            set
+            {
+                SetValue(ref _groupMatches, value);
+
+                if (_groupMatches)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    try
+                    {
+                        MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+                        MetadataViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("CleanedUpName"));
+                        MetadataViewSource.View.Filter = Filter;
+                    }
+                    finally
+                    {
+                        Cursor.Current = Cursors.Default;
+                    }
+                }
+                else
+                {
+                    MetadataViewSource.View.GroupDescriptions.Clear();
+                    MetadataViewSource.View.Filter = Filter;
+                }
+            }
+        }
+
         public string SearchTerm
         {
             get => _searchTerm;
             set
             {
                 SetValue(ref _searchTerm, value);
-                MetadataViewSource.View.Refresh();
+                MetadataViewSource.View.Filter = Filter;
             }
         }
 
@@ -181,6 +298,11 @@ namespace MetadataUtilities
             {
                 MetadataListObject newItem = new MetadataListObject();
 
+                if (MetadataViewSource.View.CurrentItem != null)
+                {
+                    newItem.Type = ((MetadataListObject)MetadataViewSource.View.CurrentItem).Type;
+                }
+
                 Window window = AddNewObjectViewModel.GetWindow(Plugin, newItem);
 
                 if (window == null)
@@ -188,25 +310,37 @@ namespace MetadataUtilities
                     return;
                 }
 
-                if (window.ShowDialog() ?? false)
+                if (!(window.ShowDialog() ?? false))
                 {
-                    if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.EditName == newItem.Name))
-                    {
-                        return;
-                    }
-
-                    newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
-                    newItem.EditName = newItem.Name;
-                    CompleteMetadata.Add(newItem);
-
-                    CalculateItemCount();
-
-                    MetadataViewSource.View.Refresh();
+                    return;
                 }
+
+                if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.EditName == newItem.Name))
+                {
+                    return;
+                }
+
+                Cursor.Current = Cursors.WaitCursor;
+
+                newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
+                newItem.EditName = newItem.Name;
+
+                CompleteMetadata.Add(newItem);
+
+                MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+
+                CalculateItemCount();
+
+                MetadataViewSource.View.Filter = Filter;
+                MetadataViewSource.View.MoveCurrentTo(newItem);
             }
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during initializing merge dialog", true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         });
 
@@ -229,29 +363,35 @@ namespace MetadataUtilities
                 window.Content = view;
                 window.DataContext = viewModel;
 
-                if (window.ShowDialog() ?? false)
+                if (!(window.ShowDialog() ?? false))
                 {
-                    foreach (MetadataListObject itemToRemove in changeItems)
-                    {
-                        if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
-                        {
-                            CompleteMetadata.Remove(itemToRemove);
-                        }
-                        else
-                        {
-                            itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
-                        }
-                    }
-
-                    foreach (MetadataListObject itemToAdd in viewModel.NewObjects)
-                    {
-                        itemToAdd.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
-                    }
-
-                    CompleteMetadata.AddMissing(viewModel.NewObjects);
-
-                    CalculateItemCount();
+                    return;
                 }
+
+                Cursor.Current = Cursors.WaitCursor;
+
+                foreach (MetadataListObject itemToRemove in changeItems)
+                {
+                    if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
+                    {
+                        CompleteMetadata.Remove(itemToRemove);
+                    }
+                    else
+                    {
+                        itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
+                    }
+                }
+
+                foreach (MetadataListObject itemToAdd in viewModel.NewObjects)
+                {
+                    itemToAdd.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
+                }
+
+                CompleteMetadata.AddMissing(viewModel.NewObjects);
+
+                MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+
+                CalculateItemCount();
             }
             catch (Exception exception)
             {
@@ -260,6 +400,7 @@ namespace MetadataUtilities
             finally
             {
                 Plugin.IsUpdating = false;
+                Cursor.Current = Cursors.Default;
             }
         }, items => items?.Any() ?? false);
 
@@ -285,6 +426,8 @@ namespace MetadataUtilities
 
                     if (window.ShowDialog() ?? false)
                     {
+                        Cursor.Current = Cursors.WaitCursor;
+
                         foreach (MetadataListObject itemToRemove in mergeItems)
                         {
                             if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
@@ -297,6 +440,8 @@ namespace MetadataUtilities
                             }
                         }
 
+                        MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+
                         CalculateItemCount();
                     }
                 }
@@ -307,6 +452,7 @@ namespace MetadataUtilities
                 finally
                 {
                     Plugin.IsUpdating = false;
+                    Cursor.Current = Cursors.Default;
                 }
 
                 return;
@@ -318,6 +464,8 @@ namespace MetadataUtilities
         public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
         {
             Plugin.IsUpdating = true;
+            Cursor.Current = Cursors.WaitCursor;
+
             try
             {
                 using (API.Instance.Database.BufferedUpdate())
@@ -355,30 +503,44 @@ namespace MetadataUtilities
                     CompleteMetadata.Remove(item);
                 }
 
+                MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+
                 CalculateItemCount();
             }
             finally
             {
                 Plugin.IsUpdating = false;
+                Cursor.Current = Cursors.Default;
             }
         }, items => items?.Any() ?? false);
 
         public RelayCommand RemoveUnusedCommand => new RelayCommand(() =>
         {
-            List<MetadataListObject> removedItems = MetadataListObjects.RemoveUnusedMetadata(false, Plugin.Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
+            Cursor.Current = Cursors.WaitCursor;
 
-            if (!removedItems.Any())
+            try
             {
-                return;
+                List<MetadataListObject> removedItems = MetadataListObjects.RemoveUnusedMetadata(false, Plugin.Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
+
+                if (!removedItems.Any())
+                {
+                    return;
+                }
+
+                List<MetadataListObject> itemsToRemove = CompleteMetadata.Where(x => removedItems.Any(y => x.Type == y.Type && x.EditName == y.Name)).ToList();
+
+                CalculateItemCount();
+
+                foreach (MetadataListObject itemToRemove in itemsToRemove)
+                {
+                    CompleteMetadata.Remove(itemToRemove);
+                }
+
+                MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
             }
-
-            List<MetadataListObject> itemsToRemove = CompleteMetadata.Where(x => removedItems.Any(y => x.Type == y.Type && x.EditName == y.Name)).ToList();
-
-            CalculateItemCount();
-
-            foreach (MetadataListObject itemToRemove in itemsToRemove)
+            finally
             {
-                CompleteMetadata.Remove(itemToRemove);
+                Cursor.Current = Cursors.Default;
             }
         });
 
@@ -396,7 +558,6 @@ namespace MetadataUtilities
             win.DialogResult = true;
             win.Close();
         });
-
 
         public CollectionViewSource MetadataViewSource
         {
@@ -417,6 +578,9 @@ namespace MetadataUtilities
                 return;
             }
 
+            Log.Debug("=== CurrentChanged: Start ===");
+            DateTime ts = DateTime.Now;
+
             Games.Clear();
 
             MetadataListObject currItem = (MetadataListObject)_metadataViewSource.View.CurrentItem;
@@ -426,25 +590,37 @@ namespace MetadataUtilities
                 return;
             }
 
-            foreach (Game game in API.Instance.Database.Games.Where(g =>
-                !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
-                    (currItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currItem.Id) ?? false)) ||
-                    (currItem.Type == FieldType.Feature && (g.FeatureIds?.Contains(currItem.Id) ?? false)) ||
-                    (currItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currItem.Id) ?? false)) ||
-                    (currItem.Type == FieldType.Series && (g.SeriesIds?.Contains(currItem.Id) ?? false)) ||
-                    (currItem.Type == FieldType.Tag && (g.TagIds?.Contains(currItem.Id) ?? false)))
-            ).OrderBy(g => g.Name).ToList())
+            Cursor.Current = Cursors.WaitCursor;
+
+            try
             {
-                Games.Add(new MyGame
+                Log.Debug($"=== CurrentChanged: Start game load ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+
+                foreach (Game game in API.Instance.Database.Games.Where(g =>
+                    !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
+                        (currItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currItem.Id) ?? false)) ||
+                        (currItem.Type == FieldType.Feature && (g.FeatureIds?.Contains(currItem.Id) ?? false)) ||
+                        (currItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currItem.Id) ?? false)) ||
+                        (currItem.Type == FieldType.Series && (g.SeriesIds?.Contains(currItem.Id) ?? false)) ||
+                        (currItem.Type == FieldType.Tag && (g.TagIds?.Contains(currItem.Id) ?? false)))
+                ).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName).ToList())
                 {
-                    Name = game.Name,
-                    SortingName = game.SortingName,
-                    CompletionStatus = game.CompletionStatus,
-                    ReleaseYear = game.ReleaseYear
-                });
+                    Games.Add(new MyGame
+                    {
+                        Name = game.Name,
+                        SortingName = game.SortingName,
+                        CompletionStatus = game.CompletionStatus,
+                        ReleaseYear = game.ReleaseYear
+                    });
+                }
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
 
-            GamesViewSource.View.Refresh();
+            Log.Debug($"=== CurrentChanged: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         public void CalculateItemCount()
@@ -460,35 +636,9 @@ namespace MetadataUtilities
         {
             MetadataListObject metadataListObject = item as MetadataListObject;
 
-            List<FieldType> types = new List<FieldType>();
-
-            if (FilterCategories)
-            {
-                types.Add(FieldType.Category);
-            }
-
-            if (FilterFeatures)
-            {
-                types.Add(FieldType.Feature);
-            }
-
-            if (FilterGenres)
-            {
-                types.Add(FieldType.Genre);
-            }
-
-            if (FilterSeries)
-            {
-                types.Add(FieldType.Series);
-            }
-
-            if (FilterTags)
-            {
-                types.Add(FieldType.Tag);
-            }
-
-            return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
-                   types.Any(t => t == metadataListObject.Type);
+            return (!GroupMatches || metadataListObject.ShowGrouped) &&
+                   metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+                   _filterTypes.Contains(metadataListObject.Type);
         }
     }
 }

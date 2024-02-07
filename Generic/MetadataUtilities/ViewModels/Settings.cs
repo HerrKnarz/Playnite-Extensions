@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Forms;
 
 namespace MetadataUtilities
 {
@@ -387,6 +388,11 @@ namespace MetadataUtilities
         {
             MetadataListObject newItem = new MetadataListObject();
 
+            if (Settings.SourceObjectsViewSource.View?.CurrentItem != null)
+            {
+                newItem.Type = ((MetadataListObject)Settings.SourceObjectsViewSource.View.CurrentItem).Type;
+            }
+
             Window window = AddNewObjectViewModel.GetWindow(plugin, newItem);
 
             if (window == null)
@@ -394,12 +400,15 @@ namespace MetadataUtilities
                 return;
             }
 
-            if (window.ShowDialog() ?? false)
+            if (!(window.ShowDialog() ?? false))
             {
-                if (!((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
-                {
-                    ((MergeRule)rule).SourceObjects.Add(newItem);
-                }
+                return;
+            }
+
+            if (!((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
+            {
+                ((MergeRule)rule).SourceObjects.Add(newItem);
+                Settings.SourceObjectsViewSource.View.MoveCurrentTo(newItem);
             }
         }, rule => rule != null);
 
@@ -425,6 +434,7 @@ namespace MetadataUtilities
 
         private void EditMergeRule(MergeRule rule = null)
         {
+            Cursor.Current = Cursors.WaitCursor;
             try
             {
                 bool isNewRule = rule == null;
@@ -434,13 +444,12 @@ namespace MetadataUtilities
                 if (rule != null)
                 {
                     ruleToEdit.Type = rule.Type;
-                    ruleToEdit.Name = rule.Name;
+                    ruleToEdit.EditName = rule.Name;
 
                     foreach (MetadataListObject sourceItem in rule.SourceObjects)
                     {
                         ruleToEdit.SourceObjects.Add(new MetadataListObject
                         {
-                            Name = sourceItem.Name,
                             EditName = sourceItem.Name,
                             Type = sourceItem.Type,
                             GameCount = 0
@@ -449,26 +458,67 @@ namespace MetadataUtilities
                 }
 
                 MetadataListObjects metadataListObjects = new MetadataListObjects(Settings);
-                metadataListObjects.LoadMetadata();
 
-                foreach (MetadataListObject item in ruleToEdit.SourceObjects)
+                if (isNewRule)
                 {
-                    MetadataListObject foundItem = metadataListObjects.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+                    metadataListObjects.LoadMetadata();
+                }
+                else
+                {
+                    MetadataListObjects tempList = new MetadataListObjects(Settings);
+                    tempList.LoadMetadata();
 
-                    if (foundItem != null)
+                    foreach (MetadataListObject item in ruleToEdit.SourceObjects)
                     {
-                        foundItem.Selected = true;
+                        MetadataListObject foundItem = tempList.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+
+                        if (foundItem != null)
+                        {
+                            foundItem.Selected = true;
+                        }
+                        else
+                        {
+                            item.Selected = true;
+                            item.Id = new Guid();
+                            tempList.Add(item);
+                        }
                     }
-                    else
-                    {
-                        item.Selected = true;
-                        metadataListObjects.Add(item);
-                    }
+
+                    metadataListObjects.AddMissing(tempList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
                 }
 
-                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(plugin, metadataListObjects);
-                viewModel.RuleName = ruleToEdit.Name;
-                viewModel.RuleType = ruleToEdit.Type;
+                HashSet<FieldType> filteredTypes = new HashSet<FieldType>();
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Category))
+                {
+                    filteredTypes.Add(FieldType.Category);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Feature))
+                {
+                    filteredTypes.Add(FieldType.Feature);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Genre))
+                {
+                    filteredTypes.Add(FieldType.Genre);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Series))
+                {
+                    filteredTypes.Add(FieldType.Series);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Tag))
+                {
+                    filteredTypes.Add(FieldType.Tag);
+                }
+
+                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(plugin, metadataListObjects, filteredTypes)
+                {
+                    RuleName = ruleToEdit.Name,
+                    RuleType = ruleToEdit.Type
+                };
 
                 MergeRuleEditorView editorView = new MergeRuleEditorView();
 
@@ -482,6 +532,8 @@ namespace MetadataUtilities
                     return;
                 }
 
+                Cursor.Current = Cursors.WaitCursor;
+
                 ruleToEdit.Name = viewModel.RuleName;
                 ruleToEdit.Type = viewModel.RuleType;
                 ruleToEdit.SourceObjects.Clear();
@@ -492,7 +544,6 @@ namespace MetadataUtilities
                     {
                         Id = item.Id,
                         EditName = item.EditName,
-                        Name = item.Name,
                         Type = item.Type,
                         Selected = item.Selected
                     });
@@ -510,17 +561,21 @@ namespace MetadataUtilities
                 // Case 2: The rule was renamed or is new and another one for that target already exists => We ask if merge, replace or cancel.
                 if (Settings.MergeRules.Any(x => x.Name == ruleToEdit.Name && x.Type == ruleToEdit.Type))
                 {
+                    Cursor.Current = Cursors.Default;
                     MessageBoxResult response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergeOrReplace"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    Cursor.Current = Cursors.WaitCursor;
 
                     switch (response)
                     {
                         case MessageBoxResult.Yes:
                             Settings.MergeRules.AddRule(ruleToEdit, true);
                             Settings.MergeRules.Remove(rule);
+                            Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                             return;
                         case MessageBoxResult.No:
                             Settings.MergeRules.AddRule(ruleToEdit);
                             Settings.MergeRules.Remove(rule);
+                            Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                             return;
                         default:
                             return;
@@ -535,14 +590,20 @@ namespace MetadataUtilities
 
                     rule.SourceObjects.Clear();
                     rule.SourceObjects.AddMissing(ruleToEdit.SourceObjects);
+                    Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                 }
 
                 // Case 4: The rule is new and no other with that target exists => we simply add the new one.
                 Settings.MergeRules.AddRule(ruleToEdit);
+                Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
             }
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during initializing Merge Rule Editor", true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         }
     }

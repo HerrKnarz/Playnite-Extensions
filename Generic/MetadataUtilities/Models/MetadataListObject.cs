@@ -3,15 +3,18 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MetadataUtilities.Models
 {
     public class MetadataListObject : DatabaseObject
     {
+        private string _cleanedUpName;
         private string _editName;
         private int _gameCount;
         private bool _selected;
+        private bool _showGrouped;
         private FieldType _type;
 
         [DontSerialize]
@@ -35,6 +38,13 @@ namespace MetadataUtilities.Models
         {
             get => _type;
             set => SetValue(ref _type, value);
+        }
+
+        [DontSerialize]
+        public string CleanedUpName
+        {
+            get => _cleanedUpName;
+            set => SetValue(ref _cleanedUpName, value);
         }
 
         [DontSerialize]
@@ -67,6 +77,8 @@ namespace MetadataUtilities.Models
                     Name = value;
                 }
 
+                CleanedUpName = Name.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
+
                 OnPropertyChanged();
             }
         }
@@ -76,6 +88,13 @@ namespace MetadataUtilities.Models
 
         [DontSerialize]
         public string TypeLabel => Type.GetEnumDisplayName("MetadataUtilities");
+
+        [DontSerialize]
+        public bool ShowGrouped
+        {
+            get => _showGrouped;
+            set => SetValue(ref _showGrouped, value);
+        }
 
         public void GetGameCount(bool ignoreHiddenGames = false)
         {
@@ -99,6 +118,11 @@ namespace MetadataUtilities.Models
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public void CheckGroup(List<MetadataListObject> metadataList)
+        {
+            ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && x != this);
         }
     }
 }
