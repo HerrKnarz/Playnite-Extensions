@@ -243,7 +243,6 @@ namespace MetadataUtilities
                 {
                     MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
                     MetadataViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("CleanedUpName"));
-                    //MetadataViewSource.IsLiveGroupingRequested = true;
                     MetadataViewSource.View.Filter = Filter;
                 }
                 else

@@ -77,7 +77,7 @@ namespace MetadataUtilities.Models
                     Name = value;
                 }
 
-                CleanedUpName = Name.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace(" ", "");
+                CleanedUpName = Name.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
 
                 OnPropertyChanged();
             }
