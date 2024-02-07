@@ -19,7 +19,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Typ ändern</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Nur ausgewählte</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Spielanzahl</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Group matches</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Gruppiere übereinstimmende Objekte</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Zusammenführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Zugehörige Spiele</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Nicht verwendete entfernen</sys:String>
