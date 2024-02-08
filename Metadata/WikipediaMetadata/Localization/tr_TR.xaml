@@ -16,13 +16,13 @@
     <sys:String x:Key="LOCWikipediaMetadataSettingsTagsText">Burada hangi değerleri etiket olarak eklemek istediğinizi tanımlayabilir ve etiket için bir önek belirleyebilirsiniz.</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsTagsName">Ad</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsTagsPrefix">Önek</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDateEarliest">Erken tarih</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDateLatest">Latest date</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDateFirst">First date in the list</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingLowest">Lowest rating</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingHighest">Highest rating</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingAverage">Average of all ratings</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsAddValue">Add value</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateEarliest">En erken tarih</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateLatest">Son tarih</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateFirst">Listedeki ilk tarih</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingLowest">En düşük puan</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingHighest">En yüksek puan</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingAverage">Tüm puanların ortalaması</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsAddValue">Bir değer girin</sys:String>
 
-    <sys:String x:Key="LOCWikipediaMetadataSearchDialog">select game</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSearchDialog">oyununu seç</sys:String>
 </ResourceDictionary>
