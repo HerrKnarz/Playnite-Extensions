@@ -46,12 +46,7 @@ namespace MetadataUtilities.Actions
             // We refresh the id of all items, so we always have the actual existing ones and can merge them easier.
             foreach (MergeRule mergeRule in Settings.MergeRules)
             {
-                mergeRule.Id = DatabaseObjectHelper.AddDbObject(mergeRule.Type, mergeRule.Name);
-
-                foreach (MetadataListObject item in mergeRule.SourceObjects)
-                {
-                    item.Id = DatabaseObjectHelper.GetDbObjectId(item.Name, item.Type);
-                }
+                mergeRule.GetIds();
             }
 
             return true;
@@ -97,22 +92,7 @@ namespace MetadataUtilities.Actions
 
             foreach (MergeRule mergeRule in Settings.MergeRules.Where(x => x.SourceObjects.Any(i => i.Id != x.Id && i.Id != Guid.Empty)).ToList())
             {
-                bool needToAdd = false;
-
-                foreach (MetadataListObject item in mergeRule.SourceObjects)
-                {
-                    if (item.Id != mergeRule.Id && item.Id != Guid.Empty)
-                    {
-                        needToAdd |= DatabaseObjectHelper.RemoveObjectFromGame(game, item.Type, item.Id);
-                    }
-                }
-
-                if (needToAdd)
-                {
-                    DatabaseObjectHelper.AddDbObjectToGame(game, mergeRule.Type, mergeRule.Id);
-                }
-
-                mustUpdate |= needToAdd;
+                mustUpdate |= mergeRule.Merge(game, true, false);
             }
 
             if (mustUpdate)

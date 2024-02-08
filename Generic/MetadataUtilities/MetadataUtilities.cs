@@ -119,7 +119,7 @@ namespace MetadataUtilities
         /// <param name="action">Instance of the action to be executed</param>
         /// <param name="showDialog">If true a dialog will be shown after completion</param>
         /// <param name="actionModifier">specifies the type of action to execute, if more than one is possible.</param>
-        private void DoForAll(List<Game> games, BaseAction action, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
+        private void DoForAll(List<Game> games, IBaseAction action, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
         {
             IsUpdating = true;
 
@@ -283,6 +283,7 @@ namespace MetadataUtilities
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             string menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
+            string mergeSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsMergeRules");
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
             List<Game> games = args.Games.Distinct().ToList();
 
@@ -303,6 +304,17 @@ namespace MetadataUtilities
                     Action = a => DoForAll(games, MergeAction.Instance(this), true)
                 }
             });
+
+            foreach (MergeRule rule in Settings.Settings.MergeRules.OrderBy(x => x.TypeAndName))
+            {
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = rule.TypeAndName,
+                    MenuSection = $"{menuSection}|{mergeSection}",
+                    Action = a => DoForAll(games, rule, true)
+                });
+            }
+
 
             return menuItems;
         }

@@ -84,7 +84,7 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
-        public string TypeAndName => $"{Type.GetEnumDisplayName("MetadataUtilities")}: {EditName}";
+        public string TypeAndName => $"{Type.GetEnumDisplayName("MetadataUtilities")}: {Name}";
 
         [DontSerialize]
         public string TypeLabel => Type.GetEnumDisplayName("MetadataUtilities");

@@ -7,7 +7,7 @@ namespace MetadataUtilities.Actions
         None
     }
 
-    public abstract class BaseAction
+    public abstract class BaseAction : IBaseAction
     {
         public abstract string ProgressMessage { get; }
 
