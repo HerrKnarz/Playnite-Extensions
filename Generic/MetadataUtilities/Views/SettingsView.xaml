@@ -63,6 +63,8 @@
                                 Margin="10,0,0,0" Command="{Binding EditMergeRuleCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
                         <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
                                 Command="{Binding RemoveMergeRuleCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
+                        <Button Content="{DynamicResource LOCMetadataUtilitiesEditorMerge}" Margin="10,0,0,0"
+                                Command="{Binding MergeItemsCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
                     </StackPanel>
 
                     <DockPanel Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Stretch">

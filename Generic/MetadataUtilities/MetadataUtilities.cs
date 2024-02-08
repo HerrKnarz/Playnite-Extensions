@@ -119,7 +119,7 @@ namespace MetadataUtilities
         /// <param name="action">Instance of the action to be executed</param>
         /// <param name="showDialog">If true a dialog will be shown after completion</param>
         /// <param name="actionModifier">specifies the type of action to execute, if more than one is possible.</param>
-        private void DoForAll(List<Game> games, IBaseAction action, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
+        internal void DoForAll(List<Game> games, IBaseAction action, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
         {
             IsUpdating = true;
 

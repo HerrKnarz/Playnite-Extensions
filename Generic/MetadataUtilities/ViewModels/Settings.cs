@@ -384,6 +384,11 @@ namespace MetadataUtilities
             Settings.MergeRules.Remove((MergeRule)rule);
         }, rule => rule != null);
 
+        public RelayCommand<object> MergeItemsCommand => new RelayCommand<object>(rule =>
+        {
+            plugin.DoForAll(API.Instance.Database.Games.ToList(), (MergeRule)rule, true);
+        }, rule => rule != null);
+
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
             MetadataListObject newItem = new MetadataListObject();
