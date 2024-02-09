@@ -10,8 +10,6 @@ namespace MetadataUtilities
 {
     public class ChangeTypeViewModel : ObservableObject
     {
-        //TODO: Try to add localization to combobox!
-
         private readonly MetadataListObjects _metadataListObjects;
 
         private MetadataListObjects _newObjects;

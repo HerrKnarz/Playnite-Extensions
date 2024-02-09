@@ -66,6 +66,8 @@
     <Compile Include="Actions\AddDefaultsAction.cs" />
     <Compile Include="Actions\BaseAction.cs" />
     <Compile Include="Actions\IBaseAction.cs" />
+    <Compile Include="EnumHelper.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\MergeRule.cs" />
     <Compile Include="Models\MergeRules.cs" />

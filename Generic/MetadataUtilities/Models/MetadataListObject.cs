@@ -65,8 +65,10 @@ namespace MetadataUtilities.Models
                             break;
                         case DbInteractionResult.IsDuplicate:
                             API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
-                                Type.GetEnumDisplayName("MetadataUtilities")));
+                                Type.GetEnumDisplayName()));
                             break;
+                        case DbInteractionResult.Created:
+                        case DbInteractionResult.Error:
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -84,10 +86,10 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
-        public string TypeAndName => $"{Type.GetEnumDisplayName("MetadataUtilities")}: {Name}";
+        public string TypeAndName => $"{Type.GetEnumDisplayName()}: {Name}";
 
         [DontSerialize]
-        public string TypeLabel => Type.GetEnumDisplayName("MetadataUtilities");
+        public string TypeLabel => Type.GetEnumDisplayName();
 
         [DontSerialize]
         public bool ShowGrouped
@@ -121,8 +123,6 @@ namespace MetadataUtilities.Models
         }
 
         public void CheckGroup(List<MetadataListObject> metadataList)
-        {
-            ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && x != this);
-        }
+            => ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && x != this);
     }
 }
