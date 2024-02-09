@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
-using MergeAction = MetadataUtilities.Actions.MergeAction;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace MetadataUtilities
@@ -63,22 +62,23 @@ namespace MetadataUtilities
             SavePluginSettings(Settings.Settings);
         }
 
-
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             base.OnApplicationStarted(args);
 
-            if (Settings.Settings.RemoveUnusedOnStartup)
+            if (!Settings.Settings.RemoveUnusedOnStartup)
             {
-                Cursor.Current = Cursors.WaitCursor;
-                try
-                {
-                    MetadataListObjects.RemoveUnusedMetadata(true, Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
-                }
-                finally
-                {
-                    Cursor.Current = Cursors.Default;
-                }
+                return;
+            }
+
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                MetadataListObjects.RemoveUnusedMetadata(true, Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         }
 
@@ -108,7 +108,74 @@ namespace MetadataUtilities
                  (item.OldData.TagIds == null ||
                   !new HashSet<Guid>(item.OldData.TagIds).SetEquals(item.NewData.TagIds)))).Select(item => item.NewData).ToList();
 
-            DoForAll(games, MergeAction.Instance(this));
+            MergeItems(games);
+        }
+
+        public void MergeItems(List<Game> games, MergeRule rule) => MergeItems(games, new List<MergeRule> { rule }, true);
+
+        public void MergeItems(List<Game> games = null, List<MergeRule> rules = null, bool showDialog = false)
+        {
+            List<Guid> gamesAffected = new List<Guid>();
+
+            IsUpdating = true;
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                using (API.Instance.Database.BufferedUpdate())
+                {
+                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                        ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergingItems"),
+                        false
+                    )
+                    {
+                        IsIndeterminate = true
+                    };
+
+                    API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                    {
+                        try
+                        {
+                            bool removeUnused = false;
+
+                            if (games == null)
+                            {
+                                removeUnused = true;
+                                games = new List<Game>();
+                                games.AddRange(API.Instance.Database.Games);
+                            }
+
+                            if (rules == null)
+                            {
+                                rules = new List<MergeRule>();
+                                rules.AddRange(Settings.Settings.MergeRules);
+                            }
+
+                            foreach (MergeRule rule in rules)
+                            {
+                                gamesAffected.AddMissing(rule.Merge(games, removeUnused));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex);
+                        }
+                    }, globalProgressOptions);
+                }
+            }
+            finally
+            {
+                IsUpdating = false;
+                Cursor.Current = Cursors.Default;
+            }
+
+            // Shows a dialog with the number of games actually affected.
+            if (!showDialog || games?.Count() == 1)
+            {
+                return;
+            }
+
+            Cursor.Current = Cursors.Default;
+            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergedMetadataMessage"), gamesAffected.Distinct().Count()));
         }
 
         /// <summary>
@@ -182,11 +249,13 @@ namespace MetadataUtilities
                     }
 
                     // Shows a dialog with the number of games actually affected.
-                    if (showDialog)
+                    if (!showDialog)
                     {
-                        Cursor.Current = Cursors.Default;
-                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(action.ResultMessage), gamesAffected));
+                        return;
                     }
+
+                    Cursor.Current = Cursors.Default;
+                    PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(action.ResultMessage), gamesAffected));
                 }
             }
             finally
@@ -301,20 +370,16 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuMergeMetadata"),
                     MenuSection = menuSection,
                     Icon = "muMergeIcon",
-                    Action = a => DoForAll(games, MergeAction.Instance(this), true)
+                    Action = a => MergeItems(games, null, true)
                 }
             });
 
-            foreach (MergeRule rule in Settings.Settings.MergeRules.OrderBy(x => x.TypeAndName))
+            menuItems.AddRange(Settings.Settings.MergeRules.OrderBy(x => x.TypeAndName).Select(rule => new GameMenuItem
             {
-                menuItems.Add(new GameMenuItem
-                {
-                    Description = rule.TypeAndName,
-                    MenuSection = $"{menuSection}|{mergeSection}",
-                    Action = a => DoForAll(games, rule, true)
-                });
-            }
-
+                Description = rule.TypeAndName,
+                MenuSection = $"{menuSection}|{mergeSection}",
+                Action = a => MergeItems(games, rule)
+            }));
 
             return menuItems;
         }

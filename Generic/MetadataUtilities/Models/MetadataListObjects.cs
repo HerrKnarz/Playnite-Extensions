@@ -273,47 +273,5 @@ namespace MetadataUtilities.Models
 
             Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
-
-        public bool MergeItems(FieldType type, Guid id)
-        {
-            bool result = false;
-
-            using (API.Instance.Database.BufferedUpdate())
-            {
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergingItems"),
-                    false
-                )
-                {
-                    IsIndeterminate = false
-                };
-
-                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                {
-                    try
-                    {
-                        activateGlobalProgress.ProgressMaxValue = Count - 1;
-
-                        foreach (MetadataListObject item in this)
-                        {
-                            if (item.Id != id)
-                            {
-                                DatabaseObjectHelper.ReplaceDbObject(item.Type, item.Id, type, id);
-
-                                activateGlobalProgress.CurrentProgressValue++;
-                            }
-                        }
-
-                        result = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                    }
-                }, globalProgressOptions);
-            }
-
-            return result;
-        }
     }
 }

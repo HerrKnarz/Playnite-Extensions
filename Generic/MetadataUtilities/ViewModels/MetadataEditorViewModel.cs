@@ -41,7 +41,6 @@ namespace MetadataUtilities
             Log.Debug("=== MetadataEditorViewModel: Start ===");
             DateTime ts = DateTime.Now;
 
-
             Cursor.Current = Cursors.WaitCursor;
             try
             {
@@ -68,7 +67,6 @@ namespace MetadataUtilities
 
                 Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                 ts = DateTime.Now;
-
 
                 using (MetadataViewSource.DeferRefresh())
                 {
@@ -353,7 +351,6 @@ namespace MetadataUtilities
                 MetadataListObjects changeItems = new MetadataListObjects(Plugin.Settings.Settings);
 
                 changeItems.AddMissing(items.ToList().Cast<MetadataListObject>());
-
 
                 ChangeTypeViewModel viewModel = new ChangeTypeViewModel(Plugin, changeItems);
 

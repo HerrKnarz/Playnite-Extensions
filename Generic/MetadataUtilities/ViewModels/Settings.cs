@@ -38,7 +38,6 @@ namespace MetadataUtilities
         private CollectionViewSource _sourceObjectsViewSource;
         private bool _writeDebugLog;
 
-
         public Settings()
         {
             MergeRuleViewSource = new CollectionViewSource
@@ -384,10 +383,7 @@ namespace MetadataUtilities
             Settings.MergeRules.Remove((MergeRule)rule);
         }, rule => rule != null);
 
-        public RelayCommand<object> MergeItemsCommand => new RelayCommand<object>(rule =>
-        {
-            plugin.DoForAll(API.Instance.Database.Games.ToList(), (MergeRule)rule, true);
-        }, rule => rule != null);
+        public RelayCommand<object> MergeItemsCommand => new RelayCommand<object>(rule => plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);
 
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
@@ -530,7 +526,6 @@ namespace MetadataUtilities
                 Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 700, 700, false, true);
                 window.Content = editorView;
                 window.DataContext = viewModel;
-
 
                 if (!(window.ShowDialog() ?? false))
                 {

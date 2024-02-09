@@ -27,7 +27,7 @@ namespace MetadataUtilities
         private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
 
-        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects, HashSet<FieldType> filteredTypes)
+        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects, ICollection<FieldType> filteredTypes)
         {
             Cursor.Current = Cursors.WaitCursor;
             try
@@ -232,22 +232,24 @@ namespace MetadataUtilities
                     return;
                 }
 
-                if (window.ShowDialog() ?? false)
+                if (!(window.ShowDialog() ?? false))
                 {
-                    if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.EditName == newItem.Name))
-                    {
-                        return;
-                    }
-
-                    Cursor.Current = Cursors.WaitCursor;
-
-                    newItem.Selected = true;
-                    newItem.EditName = newItem.Name;
-                    CompleteMetadata.Add(newItem);
-
-                    MetadataViewSource.View.Filter = Filter;
-                    MetadataViewSource.View.MoveCurrentTo(newItem);
+                    return;
                 }
+
+                if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.EditName == newItem.Name))
+                {
+                    return;
+                }
+
+                Cursor.Current = Cursors.WaitCursor;
+
+                newItem.Selected = true;
+                newItem.EditName = newItem.Name;
+                CompleteMetadata.Add(newItem);
+
+                MetadataViewSource.View.Filter = Filter;
+                MetadataViewSource.View.MoveCurrentTo(newItem);
             }
             catch (Exception exception)
             {
@@ -296,12 +298,8 @@ namespace MetadataUtilities
         }
 
         private bool Filter(object item)
-        {
-            MetadataListObject metadataListObject = item as MetadataListObject;
-
-            return metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
-                   _filterTypes.Contains(metadataListObject.Type) &&
-                   (!FilterSelected || metadataListObject.Selected);
-        }
+            => item is MetadataListObject metadataListObject &&
+               metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+               _filterTypes.Contains(metadataListObject.Type) && (!FilterSelected || metadataListObject.Selected);
     }
 }

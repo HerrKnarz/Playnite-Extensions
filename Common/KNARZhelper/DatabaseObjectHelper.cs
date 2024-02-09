@@ -2,10 +2,7 @@
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Resources;
-using System.Windows.Forms;
 
 namespace KNARZhelper
 {
@@ -189,7 +186,7 @@ namespace KNARZhelper
         {
             if (checkIfUsed)
             {
-                ReplaceDbObject(type, id);
+                ReplaceDbObject(API.Instance.Database.Games.ToList(), type, id);
             }
             else
             {
@@ -231,12 +228,17 @@ namespace KNARZhelper
             }
         }
 
-        public static void ReplaceDbObject(FieldType type, Guid id, FieldType? newType = null, Guid? newId = null)
+        public static IEnumerable<Guid> ReplaceDbObject(List<Game> games, FieldType type, Guid id, FieldType? newType = null, Guid? newId = null, bool removeAfter = true)
         {
+            if (id == Guid.Empty)
+            {
+                yield break;
+            }
+
             switch (type)
             {
                 case FieldType.Category:
-                    foreach (Game game in API.Instance.Database.Games.Where(g => g.CategoryIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.CategoryIds?.Any(t => t == id) ?? false))
                     {
                         if (!game.CategoryIds.Remove(id))
                         {
@@ -252,16 +254,21 @@ namespace KNARZhelper
                         {
                             API.Instance.Database.Games.Update(game);
                         });
+
+                        yield return game.Id;
                     }
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (removeAfter)
                     {
-                        API.Instance.Database.Categories.Remove(id);
-                    });
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Categories.Remove(id);
+                        });
+                    }
 
                     break;
                 case FieldType.Feature:
-                    foreach (Game game in API.Instance.Database.Games.Where(g => g.FeatureIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.FeatureIds?.Any(t => t == id) ?? false))
                     {
                         if (!game.FeatureIds.Remove(id))
                         {
@@ -277,16 +284,21 @@ namespace KNARZhelper
                         {
                             API.Instance.Database.Games.Update(game);
                         });
+
+                        yield return game.Id;
                     }
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (removeAfter)
                     {
-                        API.Instance.Database.Features.Remove(id);
-                    });
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Features.Remove(id);
+                        });
+                    }
 
                     break;
                 case FieldType.Genre:
-                    foreach (Game game in API.Instance.Database.Games.Where(g => g.GenreIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.GenreIds?.Any(t => t == id) ?? false))
                     {
                         if (!game.GenreIds.Remove(id))
                         {
@@ -302,16 +314,21 @@ namespace KNARZhelper
                         {
                             API.Instance.Database.Games.Update(game);
                         });
+
+                        yield return game.Id;
                     }
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (removeAfter)
                     {
-                        API.Instance.Database.Genres.Remove(id);
-                    });
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Genres.Remove(id);
+                        });
+                    }
 
                     break;
                 case FieldType.Series:
-                    foreach (Game game in API.Instance.Database.Games.Where(g => g.SeriesIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.SeriesIds?.Any(t => t == id) ?? false))
                     {
                         if (!game.SeriesIds.Remove(id))
                         {
@@ -327,16 +344,21 @@ namespace KNARZhelper
                         {
                             API.Instance.Database.Games.Update(game);
                         });
+
+                        yield return game.Id;
                     }
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (removeAfter)
                     {
-                        API.Instance.Database.Series.Remove(id);
-                    });
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Series.Remove(id);
+                        });
+                    }
 
                     break;
                 case FieldType.Tag:
-                    foreach (Game game in API.Instance.Database.Games.Where(g => g.TagIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.TagIds?.Any(t => t == id) ?? false))
                     {
                         if (!game.TagIds.Remove(id))
                         {
@@ -352,12 +374,17 @@ namespace KNARZhelper
                         {
                             API.Instance.Database.Games.Update(game);
                         });
+
+                        yield return game.Id;
                     }
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (removeAfter)
                     {
-                        API.Instance.Database.Tags.Remove(id);
-                    });
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Tags.Remove(id);
+                        });
+                    }
 
                     break;
                 default:
@@ -367,8 +394,6 @@ namespace KNARZhelper
 
         public static Guid AddDbObject(FieldType type, string name)
         {
-            Guid id = Guid.Empty;
-
             switch (type)
             {
                 case FieldType.Category:

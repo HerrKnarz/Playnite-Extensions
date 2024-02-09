@@ -1,13 +1,14 @@
 ﻿using KNARZhelper;
-using MetadataUtilities.Actions;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MetadataUtilities.Models
 {
-    public class MergeRule : MetadataListObject, IBaseAction
+    public class MergeRule : MetadataListObject
     {
         private ObservableCollection<MetadataListObject> _sourceObjects = new ObservableCollection<MetadataListObject>();
 
@@ -21,15 +22,6 @@ namespace MetadataUtilities.Models
             }
         }
 
-        public string ProgressMessage => "LOCMetadataUtilitiesDialogMergingItems";
-
-        public string ResultMessage => "LOCMetadataUtilitiesDialogMergedMetadataMessage";
-
-        public bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => Merge(game, isBulkAction, false);
-
-        public bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true) => GetIds();
-
         public bool GetIds()
         {
             Id = DatabaseObjectHelper.AddDbObject(Type, Name);
@@ -42,36 +34,35 @@ namespace MetadataUtilities.Models
             return true;
         }
 
-        public bool Merge(Game game, bool isPrepared = false, bool updateGame = true)
+        public IEnumerable<Guid> Merge(List<Game> games = null, bool removeUnused = true)
         {
-            if (!isPrepared)
-            {
-                GetIds();
-            }
+            List<Guid> result = new List<Guid>();
 
-            bool needToAdd = false;
+            GetIds();
 
-            foreach (MetadataListObject item in SourceObjects)
+            try
             {
-                if (item.Id != Id && item.Id != Guid.Empty)
+                foreach (MetadataListObject item in SourceObjects)
                 {
-                    needToAdd |= DatabaseObjectHelper.RemoveObjectFromGame(game, item.Type, item.Id);
+                    if (item.Id == Id)
+                    {
+                        continue;
+                    }
+
+                    if (games == null)
+                    {
+                        games = API.Instance.Database.Games.ToList();
+                    }
+
+                    result.AddMissing(DatabaseObjectHelper.ReplaceDbObject(games, item.Type, item.Id, Type, Id, removeUnused));
                 }
             }
-
-            if (!needToAdd)
+            catch (Exception ex)
             {
-                return false;
+                Log.Error(ex);
             }
 
-            DatabaseObjectHelper.AddDbObjectToGame(game, Type, Id);
-
-            if (updateGame)
-            {
-                API.Instance.Database.Games.Update(game);
-            }
-
-            return needToAdd;
+            return result;
         }
     }
 }

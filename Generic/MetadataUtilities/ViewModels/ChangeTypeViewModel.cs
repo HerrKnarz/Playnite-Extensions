@@ -1,7 +1,6 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.Models;
 using Playnite.SDK;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -68,27 +67,10 @@ namespace MetadataUtilities
                         continue;
                     }
 
-                    Guid newId = DatabaseObjectHelper.AddDbObject(NewType, item.Name);
-
-                    DatabaseObjectHelper.ReplaceDbObject(item.Type, item.Id, NewType, newId);
-
-                    NewObjects.Add(new MetadataListObject
-                    {
-                        Type = NewType,
-                        EditName = item.EditName,
-                        Id = newId
-                    });
-
-                    if (!SaveAsRule)
-                    {
-                        continue;
-                    }
-
                     MergeRule rule = new MergeRule
                     {
                         Type = NewType,
                         EditName = item.EditName,
-                        Id = newId,
                         SourceObjects = new ObservableCollection<MetadataListObject>
                         {
                             new MetadataListObject
@@ -99,6 +81,20 @@ namespace MetadataUtilities
                             }
                         }
                     };
+
+                    rule.Merge();
+
+                    NewObjects.Add(new MetadataListObject
+                    {
+                        Type = NewType,
+                        EditName = item.EditName,
+                        Id = rule.Id
+                    });
+
+                    if (!SaveAsRule)
+                    {
+                        continue;
+                    }
 
                     _plugin.Settings.Settings.MergeRules.AddRule(rule);
                 }
