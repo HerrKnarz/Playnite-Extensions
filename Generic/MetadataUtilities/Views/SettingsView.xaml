@@ -56,7 +56,7 @@
                         </DataGrid>
                     </DockPanel>
 
-                    <StackPanel Margin="0,10,5,0"  Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <StackPanel Margin="0,10,5,0" Grid.Column="0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
                         <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
                                 Command="{Binding AddNewMergeRuleCommand}"/>
                         <Button Content="&#xef10;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsEdit}"
@@ -67,7 +67,7 @@
                                 Command="{Binding MergeItemsCommand}" CommandParameter="{Binding SelectedItem, ElementName=DgRules}"/>
                     </StackPanel>
 
-                    <DockPanel Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Stretch">
+                    <DockPanel Grid.Column="1" Grid.Row="0" Margin="5,0,0,0" VerticalAlignment="Stretch">
                         <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsValuesToMerge}" />
                         <DataGrid Name="DgSources" ItemsSource="{Binding SourceObjectsViewSource.View}" AutoGenerateColumns="False"
                               DockPanel.Dock="Top" Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" 
@@ -149,6 +149,19 @@
                     </GroupBox>
                 </DockPanel>
             </ScrollViewer>
+        </TabItem>
+        <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabPrefixes}">
+            <DockPanel Margin="10">
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                    <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
+                            Command="{Binding AddPrefixCommand}" />
+                    <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
+                            Command="{Binding RemovePrefixCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=ListBoxPrefixes}"/>
+                </StackPanel>
+                <ListBox DockPanel.Dock="Top" Name="ListBoxPrefixes" SelectionMode="Extended"
+                         ItemsSource="{Binding Settings.Prefixes}" />
+            </DockPanel>
         </TabItem>
     </TabControl>
 </UserControl>

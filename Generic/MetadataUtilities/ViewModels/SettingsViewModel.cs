@@ -263,11 +263,13 @@ namespace MetadataUtilities
                 return;
             }
 
-            if (!((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
+            if (((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
             {
-                ((MergeRule)rule).SourceObjects.Add(newItem);
-                SourceObjectsViewSource.View.MoveCurrentTo(newItem);
+                return;
             }
+
+            ((MergeRule)rule).SourceObjects.Add(newItem);
+            SourceObjectsViewSource.View?.MoveCurrentTo(newItem);
         }, rule => rule != null);
 
         public RelayCommand<IList<object>> RemoveMergeSourceCommand => new RelayCommand<IList<object>>(items =>
@@ -275,6 +277,28 @@ namespace MetadataUtilities
             foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
             {
                 SelectedMergeRule.SourceObjects.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand AddPrefixCommand
+            => new RelayCommand(() =>
+            {
+                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
+
+                if (!res.Result)
+                {
+                    return;
+                }
+
+                Settings.Prefixes.AddMissing(res.SelectedString);
+                Settings.Prefixes = new ObservableCollection<string>(Settings.Prefixes.OrderBy(x => x));
+            });
+
+        public RelayCommand<IList<object>> RemovePrefixCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (string item in items.ToList().Cast<string>())
+            {
+                Settings.Prefixes.Remove(item);
             }
         }, items => items?.Any() ?? false);
 

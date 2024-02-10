@@ -22,7 +22,7 @@ namespace MetadataUtilities
         private DateTime _lastAutoLibUpdate = DateTime.Now;
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
-        private HashSet<string> _prefixes = new HashSet<string>();
+        private ObservableCollection<string> _prefixes = new ObservableCollection<string>();
         private bool _removeUnusedOnStartup;
         private bool _setDefaultTagsOnlyIfEmpty = true;
         private bool _showTopPanelButton = true;
@@ -118,7 +118,7 @@ namespace MetadataUtilities
             set => SetValue(ref _mergeRules, value);
         }
 
-        public HashSet<string> Prefixes
+        public ObservableCollection<string> Prefixes
         {
             get => _prefixes;
             set => SetValue(ref _prefixes, value);
