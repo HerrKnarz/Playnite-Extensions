@@ -26,6 +26,7 @@ namespace MetadataUtilities
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
         private CollectionViewSource _mergeRuleViewSource;
+        private HashSet<string> _prefixes = new HashSet<string>();
         private bool _removeUnusedOnStartup;
         private MergeRule _selectedMergeRule;
         private bool _setDefaultTagsOnlyIfEmpty = true;
@@ -150,6 +151,12 @@ namespace MetadataUtilities
                 _mergeRuleViewSource = value;
                 OnPropertyChanged();
             }
+        }
+
+        public HashSet<string> Prefixes
+        {
+            get => _prefixes;
+            set => SetValue(ref _prefixes, value);
         }
 
         public bool RemoveUnusedOnStartup
