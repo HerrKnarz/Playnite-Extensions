@@ -1,0 +1,415 @@
+﻿using KNARZhelper;
+using MetadataUtilities.Models;
+using Playnite.SDK;
+using Playnite.SDK.Data;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Forms;
+
+namespace MetadataUtilities
+{
+    public class SettingsViewModel : ObservableObject, ISettings
+    {
+        private readonly MetadataUtilities _plugin;
+        private Settings _settings;
+
+        public SettingsViewModel(MetadataUtilities plugin)
+        {
+            _plugin = plugin;
+
+            Settings savedSettings = plugin.LoadPluginSettings<Settings>();
+
+            Settings = savedSettings ?? new Settings();
+        }
+
+        private Settings EditingClone { get; set; }
+
+        public Settings Settings
+        {
+            get => _settings;
+            set
+            {
+                _settings = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public RelayCommand AddExistingDefaultCategoriesCommand
+            => new RelayCommand(() =>
+            {
+                MetadataListObjects items = new MetadataListObjects(Settings);
+
+                items.LoadMetadata(false, FieldType.Category);
+
+                Window window = SelectMetadataViewModel.GetWindow(_plugin, items, ResourceProvider.GetString("LOCCategoriesLabel"));
+
+                if (window == null)
+                {
+                    return;
+                }
+
+                if (window.ShowDialog() ?? false)
+                {
+                    foreach (MetadataListObject item in items.Where(x => x.Selected))
+                    {
+                        if (Settings.DefaultCategories.Any(x => x.Name == item.Name))
+                        {
+                            continue;
+                        }
+
+                        Settings.DefaultCategories.Add(new MetadataListObject
+                        {
+                            Name = item.Name,
+                            Type = FieldType.Category
+                        });
+                    }
+                }
+
+                Settings.DefaultCategories = new ObservableCollection<MetadataListObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
+            });
+
+        public RelayCommand AddNewDefaultCategoryCommand
+            => new RelayCommand(() =>
+            {
+                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
+
+                if (!res.Result)
+                {
+                    return;
+                }
+
+                if (Settings.DefaultCategories.Any(x => x.Name == res.SelectedString))
+                {
+                    return;
+                }
+
+                Settings.DefaultCategories.Add(new MetadataListObject
+                {
+                    Name = res.SelectedString,
+                    Type = FieldType.Category
+                });
+
+                Settings.DefaultCategories = new ObservableCollection<MetadataListObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
+            });
+
+        public RelayCommand AddExistingDefaultTagsCommand
+            => new RelayCommand(() =>
+            {
+                MetadataListObjects items = new MetadataListObjects(Settings);
+
+                items.LoadMetadata(false, FieldType.Tag);
+
+                Window window = SelectMetadataViewModel.GetWindow(_plugin, items, ResourceProvider.GetString("LOCTagsLabel"));
+
+                if (window == null)
+                {
+                    return;
+                }
+
+                if (window.ShowDialog() ?? false)
+                {
+                    foreach (MetadataListObject item in items.Where(x => x.Selected))
+                    {
+                        if (Settings.DefaultTags.Any(x => x.Name == item.Name))
+                        {
+                            continue;
+                        }
+
+                        Settings.DefaultTags.Add(new MetadataListObject
+                        {
+                            Name = item.Name,
+                            Type = FieldType.Category
+                        });
+                    }
+                }
+
+                Settings.DefaultTags = new ObservableCollection<MetadataListObject>(Settings.DefaultTags.OrderBy(x => x.Name));
+            });
+
+        public RelayCommand AddNewDefaultTagCommand
+            => new RelayCommand(() =>
+            {
+                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
+
+                if (!res.Result)
+                {
+                    return;
+                }
+
+                if (Settings.DefaultTags.Any(x => x.Name == res.SelectedString))
+                {
+                    return;
+                }
+
+                Settings.DefaultTags.Add(new MetadataListObject
+                {
+                    Name = res.SelectedString,
+                    Type = FieldType.Tag
+                });
+
+                Settings.DefaultTags = new ObservableCollection<MetadataListObject>(Settings.DefaultTags.OrderBy(x => x.Name));
+            });
+
+        public RelayCommand<IList<object>> RemoveDefaultCategoryCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            {
+                Settings.DefaultCategories.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveDefaultTagCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            {
+                Settings.DefaultTags.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand AddNewMergeRuleCommand
+            => new RelayCommand(() =>
+            {
+                EditMergeRule();
+            });
+
+        public RelayCommand<object> EditMergeRuleCommand => new RelayCommand<object>(rule =>
+        {
+            EditMergeRule((MergeRule)rule);
+        }, rule => rule != null);
+
+        public RelayCommand<object> RemoveMergeRuleCommand => new RelayCommand<object>(rule =>
+        {
+            Settings.MergeRules.Remove((MergeRule)rule);
+        }, rule => rule != null);
+
+        public RelayCommand<object> MergeItemsCommand => new RelayCommand<object>(rule => _plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);
+
+        public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
+        {
+            MetadataListObject newItem = new MetadataListObject();
+
+            if (Settings.SourceObjectsViewSource.View?.CurrentItem != null)
+            {
+                newItem.Type = ((MetadataListObject)Settings.SourceObjectsViewSource.View.CurrentItem).Type;
+            }
+
+            Window window = AddNewObjectViewModel.GetWindow(_plugin, newItem);
+
+            if (window == null)
+            {
+                return;
+            }
+
+            if (!(window.ShowDialog() ?? false))
+            {
+                return;
+            }
+
+            if (!((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
+            {
+                ((MergeRule)rule).SourceObjects.Add(newItem);
+                Settings.SourceObjectsViewSource.View.MoveCurrentTo(newItem);
+            }
+        }, rule => rule != null);
+
+        public RelayCommand<IList<object>> RemoveMergeSourceCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            {
+                Settings.SelectedMergeRule.SourceObjects.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
+
+        public void CancelEdit() => Settings = EditingClone;
+
+        public void EndEdit() => _plugin.SavePluginSettings(Settings);
+
+        public bool VerifySettings(out List<string> errors)
+        {
+            errors = new List<string>();
+            return true;
+        }
+
+        private void EditMergeRule(MergeRule rule = null)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                bool isNewRule = rule == null;
+
+                MergeRule ruleToEdit = new MergeRule();
+
+                if (rule != null)
+                {
+                    ruleToEdit.Type = rule.Type;
+                    ruleToEdit.EditName = rule.Name;
+
+                    foreach (MetadataListObject sourceItem in rule.SourceObjects)
+                    {
+                        ruleToEdit.SourceObjects.Add(new MetadataListObject
+                        {
+                            EditName = sourceItem.Name,
+                            Type = sourceItem.Type,
+                            GameCount = 0
+                        });
+                    }
+                }
+
+                MetadataListObjects metadataListObjects = new MetadataListObjects(Settings);
+
+                if (isNewRule)
+                {
+                    metadataListObjects.LoadMetadata();
+                }
+                else
+                {
+                    MetadataListObjects tempList = new MetadataListObjects(Settings);
+                    tempList.LoadMetadata();
+
+                    foreach (MetadataListObject item in ruleToEdit.SourceObjects)
+                    {
+                        MetadataListObject foundItem = tempList.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+
+                        if (foundItem != null)
+                        {
+                            foundItem.Selected = true;
+                        }
+                        else
+                        {
+                            item.Selected = true;
+                            item.Id = new Guid();
+                            tempList.Add(item);
+                        }
+                    }
+
+                    metadataListObjects.AddMissing(tempList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
+                }
+
+                HashSet<FieldType> filteredTypes = new HashSet<FieldType>();
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Category))
+                {
+                    filteredTypes.Add(FieldType.Category);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Feature))
+                {
+                    filteredTypes.Add(FieldType.Feature);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Genre))
+                {
+                    filteredTypes.Add(FieldType.Genre);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Series))
+                {
+                    filteredTypes.Add(FieldType.Series);
+                }
+
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Tag))
+                {
+                    filteredTypes.Add(FieldType.Tag);
+                }
+
+                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(_plugin, metadataListObjects, filteredTypes)
+                {
+                    RuleName = ruleToEdit.Name,
+                    RuleType = ruleToEdit.Type
+                };
+
+                MergeRuleEditorView editorView = new MergeRuleEditorView();
+
+                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 700, 700, false, true);
+                window.Content = editorView;
+                window.DataContext = viewModel;
+
+                if (!(window.ShowDialog() ?? false))
+                {
+                    return;
+                }
+
+                Cursor.Current = Cursors.WaitCursor;
+
+                ruleToEdit.Name = viewModel.RuleName;
+                ruleToEdit.Type = viewModel.RuleType;
+                ruleToEdit.SourceObjects.Clear();
+
+                foreach (MetadataListObject item in metadataListObjects.Where(x => x.Selected).ToList())
+                {
+                    ruleToEdit.SourceObjects.Add(new MetadataListObject
+                    {
+                        Id = item.Id,
+                        EditName = item.EditName,
+                        Type = item.Type,
+                        Selected = item.Selected
+                    });
+                }
+
+                // Case 1: The rule wasn't renamed => We simply replace the SourceObjects.
+                if (!isNewRule && rule.Name == ruleToEdit.Name && rule.Type == ruleToEdit.Type)
+                {
+                    rule.SourceObjects.Clear();
+                    rule.SourceObjects.AddMissing(ruleToEdit.SourceObjects);
+
+                    return;
+                }
+
+                // Case 2: The rule was renamed or is new and another one for that target already exists => We ask if merge, replace or cancel.
+                if (Settings.MergeRules.Any(x => x.Name == ruleToEdit.Name && x.Type == ruleToEdit.Type))
+                {
+                    Cursor.Current = Cursors.Default;
+                    MessageBoxResult response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergeOrReplace"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    Cursor.Current = Cursors.WaitCursor;
+
+                    switch (response)
+                    {
+                        case MessageBoxResult.Yes:
+                            Settings.MergeRules.AddRule(ruleToEdit, true);
+                            Settings.MergeRules.Remove(rule);
+                            Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
+                            return;
+                        case MessageBoxResult.No:
+                            Settings.MergeRules.AddRule(ruleToEdit);
+                            Settings.MergeRules.Remove(rule);
+                            Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
+                            return;
+                        case MessageBoxResult.None:
+                        case MessageBoxResult.OK:
+                        case MessageBoxResult.Cancel:
+                        default:
+                            return;
+                    }
+                }
+
+                // Case 3: The rule was renamed, but no other with that target exists => We replace it.
+                if (!isNewRule)
+                {
+                    rule.Type = ruleToEdit.Type;
+                    rule.Name = ruleToEdit.Name;
+
+                    rule.SourceObjects.Clear();
+                    rule.SourceObjects.AddMissing(ruleToEdit.SourceObjects);
+                    Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
+                }
+
+                // Case 4: The rule is new and no other with that target exists => we simply add the new one.
+                Settings.MergeRules.AddRule(ruleToEdit);
+                Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing Merge Rule Editor", true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+    }
+}

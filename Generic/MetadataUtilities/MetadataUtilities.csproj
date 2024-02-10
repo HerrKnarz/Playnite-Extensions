@@ -81,6 +81,7 @@
     <Compile Include="ViewModels\SelectMetadataViewModel.cs" />
     <Compile Include="ViewModels\Settings.cs" />
     <Compile Include="ViewModels\MetadataEditorViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\AddNewObjectView.xaml.cs">
       <DependentUpon>AddNewObjectView.xaml</DependentUpon>
     </Compile>
