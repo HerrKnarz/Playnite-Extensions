@@ -65,16 +65,16 @@ namespace MetadataUtilities
                         continue;
                     }
 
-                    MergeRule rule = new MergeRule
+                    MergeRule rule = new MergeRule(_plugin.Settings.Settings)
                     {
                         Type = NewType,
-                        EditName = item.EditName,
+                        Name = item.Name,
                         SourceObjects = new ObservableCollection<MetadataListObject>
                         {
-                            new MetadataListObject
+                            new MetadataListObject(_plugin.Settings.Settings)
                             {
                                 Type = item.Type,
-                                EditName = item.EditName,
+                                Name = item.Name,
                                 Id = item.Id
                             }
                         }
@@ -82,10 +82,10 @@ namespace MetadataUtilities
 
                     rule.Merge();
 
-                    NewObjects.Add(new MetadataListObject
+                    NewObjects.Add(new MetadataListObject(_plugin.Settings.Settings)
                     {
                         Type = NewType,
-                        EditName = item.EditName,
+                        Name = item.Name,
                         Id = rule.Id
                     });
 
@@ -98,6 +98,7 @@ namespace MetadataUtilities
                 }
 
                 _plugin.SavePluginSettings(_plugin.Settings.Settings);
+                _plugin.Settings.MergeRuleViewSource.View.Refresh();
             }
             finally
             {

@@ -74,7 +74,7 @@ namespace MetadataUtilities
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                MetadataListObjects.RemoveUnusedMetadata(true, Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
+                MetadataListObjects.RemoveUnusedMetadata(Settings.Settings, true);
             }
             finally
             {
@@ -342,7 +342,7 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnused"),
                     MenuSection = $"@{menuSection}",
                     Icon = "muRemoveIcon",
-                    Action = a => MetadataListObjects.RemoveUnusedMetadata(false, Settings.Settings.IgnoreHiddenGamesInRemoveUnused)
+                    Action = a => MetadataListObjects.RemoveUnusedMetadata(Settings.Settings)
                 }
             };
 

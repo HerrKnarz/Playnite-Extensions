@@ -13,7 +13,7 @@ namespace MetadataUtilities
     {
         //TODO: Try to add localization to combobox!
 
-        private MetadataListObject _newObject = new MetadataListObject();
+        private MetadataListObject _newObject;
         private MetadataUtilities _plugin;
 
         public AddNewObjectViewModel(MetadataUtilities plugin, MetadataListObject newObject)

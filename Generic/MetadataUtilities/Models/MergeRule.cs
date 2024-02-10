@@ -12,6 +12,8 @@ namespace MetadataUtilities.Models
     {
         private ObservableCollection<MetadataListObject> _sourceObjects = new ObservableCollection<MetadataListObject>();
 
+        public MergeRule(Settings settings) : base(settings) { }
+
         public ObservableCollection<MetadataListObject> SourceObjects
         {
             get => _sourceObjects;

@@ -10,12 +10,17 @@ namespace MetadataUtilities.Models
 {
     public class MetadataListObject : DatabaseObject
     {
+        private readonly Settings _settings;
         private string _cleanedUpName;
         private string _editName;
         private int _gameCount;
+        private string _name = string.Empty;
+        private string _prefix = string.Empty;
         private bool _selected;
         private bool _showGrouped;
         private FieldType _type;
+
+        public MetadataListObject(Settings settings) => _settings = settings;
 
         [DontSerialize]
         public new Guid Id { get; set; }
@@ -55,13 +60,13 @@ namespace MetadataUtilities.Models
             {
                 if (_editName != null && _editName != value)
                 {
-                    DbInteractionResult res = DatabaseObjectHelper.UpdateName(Type, Id, _editName, value);
+                    DbInteractionResult res = DatabaseObjectHelper.UpdateName(Type, Id, Prefix + _editName, value);
 
                     switch (res)
                     {
                         case DbInteractionResult.Updated:
                             _editName = value;
-                            Name = value;
+                            _name = Prefix + value;
                             break;
                         case DbInteractionResult.IsDuplicate:
                             API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
@@ -76,12 +81,38 @@ namespace MetadataUtilities.Models
                 else
                 {
                     _editName = value;
-                    Name = value;
+                    _name = Prefix + value;
                 }
 
                 CleanedUpName = Name.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
 
                 OnPropertyChanged();
+            }
+        }
+
+        public new string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+
+                _prefix = GetPrefix();
+
+                _editName = _prefix == string.Empty ? value : value.RemoveFirst(_prefix);
+
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        public string Prefix
+        {
+            get => _prefix;
+            set
+            {
+                SetValue(ref _prefix, value);
+                _name = Prefix + EditName;
             }
         }
 
@@ -96,6 +127,24 @@ namespace MetadataUtilities.Models
         {
             get => _showGrouped;
             set => SetValue(ref _showGrouped, value);
+        }
+
+        public string GetPrefix()
+        {
+            if (_settings?.Prefixes == null)
+            {
+                return string.Empty;
+            }
+
+            foreach (string prefix in _settings.Prefixes)
+            {
+                if (Name.StartsWith(prefix))
+                {
+                    return prefix;
+                }
+            }
+
+            return string.Empty;
         }
 
         public void GetGameCount(bool ignoreHiddenGames = false)
@@ -123,6 +172,6 @@ namespace MetadataUtilities.Models
         }
 
         public void CheckGroup(List<MetadataListObject> metadataList)
-            => ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && x != this);
+            => ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && !x.Equals(this));
     }
 }

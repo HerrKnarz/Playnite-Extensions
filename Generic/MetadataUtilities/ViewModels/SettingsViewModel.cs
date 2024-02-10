@@ -115,7 +115,7 @@ namespace MetadataUtilities
                             continue;
                         }
 
-                        Settings.DefaultCategories.Add(new MetadataListObject
+                        Settings.DefaultCategories.Add(new MetadataListObject(_settings)
                         {
                             Name = item.Name,
                             Type = FieldType.Category
@@ -141,7 +141,7 @@ namespace MetadataUtilities
                     return;
                 }
 
-                Settings.DefaultCategories.Add(new MetadataListObject
+                Settings.DefaultCategories.Add(new MetadataListObject(_settings)
                 {
                     Name = res.SelectedString,
                     Type = FieldType.Category
@@ -173,7 +173,7 @@ namespace MetadataUtilities
                             continue;
                         }
 
-                        Settings.DefaultTags.Add(new MetadataListObject
+                        Settings.DefaultTags.Add(new MetadataListObject(_settings)
                         {
                             Name = item.Name,
                             Type = FieldType.Category
@@ -199,7 +199,7 @@ namespace MetadataUtilities
                     return;
                 }
 
-                Settings.DefaultTags.Add(new MetadataListObject
+                Settings.DefaultTags.Add(new MetadataListObject(_settings)
                 {
                     Name = res.SelectedString,
                     Type = FieldType.Tag
@@ -224,11 +224,7 @@ namespace MetadataUtilities
             }
         }, items => items?.Any() ?? false);
 
-        public RelayCommand AddNewMergeRuleCommand
-            => new RelayCommand(() =>
-            {
-                EditMergeRule();
-            });
+        public RelayCommand AddNewMergeRuleCommand => new RelayCommand(() => EditMergeRule());
 
         public RelayCommand<object> EditMergeRuleCommand => new RelayCommand<object>(rule =>
         {
@@ -244,7 +240,7 @@ namespace MetadataUtilities
 
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
-            MetadataListObject newItem = new MetadataListObject();
+            MetadataListObject newItem = new MetadataListObject(_settings);
 
             if (SourceObjectsViewSource.View?.CurrentItem != null)
             {
@@ -321,18 +317,18 @@ namespace MetadataUtilities
             {
                 bool isNewRule = rule == null;
 
-                MergeRule ruleToEdit = new MergeRule();
+                MergeRule ruleToEdit = new MergeRule(_settings);
 
                 if (rule != null)
                 {
                     ruleToEdit.Type = rule.Type;
-                    ruleToEdit.EditName = rule.Name;
+                    ruleToEdit.Name = rule.Name;
 
                     foreach (MetadataListObject sourceItem in rule.SourceObjects)
                     {
-                        ruleToEdit.SourceObjects.Add(new MetadataListObject
+                        ruleToEdit.SourceObjects.Add(new MetadataListObject(_settings)
                         {
-                            EditName = sourceItem.Name,
+                            Name = sourceItem.Name,
                             Type = sourceItem.Type,
                             GameCount = 0
                         });
@@ -421,10 +417,10 @@ namespace MetadataUtilities
 
                 foreach (MetadataListObject item in metadataListObjects.Where(x => x.Selected).ToList())
                 {
-                    ruleToEdit.SourceObjects.Add(new MetadataListObject
+                    ruleToEdit.SourceObjects.Add(new MetadataListObject(_settings)
                     {
                         Id = item.Id,
-                        EditName = item.EditName,
+                        Name = item.Name,
                         Type = item.Type,
                         Selected = item.Selected
                     });

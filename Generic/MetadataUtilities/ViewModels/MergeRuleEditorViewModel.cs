@@ -13,8 +13,8 @@ namespace MetadataUtilities
 {
     public class MergeRuleEditorViewModel : ObservableObject
     {
+        private readonly MetadataListObjects _completeMetadata;
         private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
-        private MetadataListObjects _completeMetadata;
         private bool _filterCategories;
         private bool _filterFeatures;
         private bool _filterGenres;
@@ -36,7 +36,7 @@ namespace MetadataUtilities
                 DateTime ts = DateTime.Now;
 
                 Plugin = plugin;
-                CompleteMetadata = objects;
+                _completeMetadata = objects;
 
                 Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                 ts = DateTime.Now;
@@ -218,7 +218,7 @@ namespace MetadataUtilities
         {
             try
             {
-                MetadataListObject newItem = new MetadataListObject();
+                MetadataListObject newItem = new MetadataListObject(_plugin.Settings.Settings);
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
@@ -237,7 +237,7 @@ namespace MetadataUtilities
                     return;
                 }
 
-                if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.EditName == newItem.Name))
+                if (_completeMetadata.Any(x => x.Type == newItem.Type && x.Name == newItem.Name))
                 {
                     return;
                 }
@@ -245,8 +245,8 @@ namespace MetadataUtilities
                 Cursor.Current = Cursors.WaitCursor;
 
                 newItem.Selected = true;
-                newItem.EditName = newItem.Name;
-                CompleteMetadata.Add(newItem);
+                newItem.Name = newItem.Name;
+                _completeMetadata.Add(newItem);
 
                 MetadataViewSource.View.Filter = Filter;
                 MetadataViewSource.View.MoveCurrentTo(newItem);
@@ -269,7 +269,7 @@ namespace MetadataUtilities
                 return;
             }
 
-            if (!CompleteMetadata.Any(x => x.Selected))
+            if (!_completeMetadata.Any(x => x.Selected))
             {
                 API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoItemsSelected"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -291,15 +291,9 @@ namespace MetadataUtilities
             set => SetValue(ref _metadataViewSource, value);
         }
 
-        public MetadataListObjects CompleteMetadata
-        {
-            get => _completeMetadata;
-            set => SetValue(ref _completeMetadata, value);
-        }
-
         private bool Filter(object item)
             => item is MetadataListObject metadataListObject &&
-               metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+               metadataListObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
                _filterTypes.Contains(metadataListObject.Type) && (!FilterSelected || metadataListObject.Selected);
     }
 }

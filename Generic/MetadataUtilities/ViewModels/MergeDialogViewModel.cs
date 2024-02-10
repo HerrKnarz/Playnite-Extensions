@@ -53,7 +53,7 @@ namespace MetadataUtilities
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
-            MergeRule rule = new MergeRule
+            MergeRule rule = new MergeRule(_plugin.Settings.Settings)
             {
                 Name = _mergeTarget.Name,
                 Type = _mergeTarget.Type,
@@ -65,6 +65,7 @@ namespace MetadataUtilities
             {
                 _plugin.Settings.Settings.MergeRules.AddRule(rule);
                 _plugin.SavePluginSettings(_plugin.Settings.Settings);
+                _plugin.Settings.MergeRuleViewSource.View.Refresh();
             }
 
             Plugin.MergeItems(null, rule);

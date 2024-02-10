@@ -294,7 +294,7 @@ namespace MetadataUtilities
         {
             try
             {
-                MetadataListObject newItem = new MetadataListObject();
+                MetadataListObject newItem = new MetadataListObject(_plugin.Settings.Settings);
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
@@ -313,7 +313,7 @@ namespace MetadataUtilities
                     return;
                 }
 
-                if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.EditName == newItem.Name))
+                if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.Name == newItem.Name))
                 {
                     return;
                 }
@@ -321,7 +321,7 @@ namespace MetadataUtilities
                 Cursor.Current = Cursors.WaitCursor;
 
                 newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
-                newItem.EditName = newItem.Name;
+                newItem.Name = newItem.Name;
 
                 CompleteMetadata.Add(newItem);
 
@@ -369,7 +369,7 @@ namespace MetadataUtilities
 
                 foreach (MetadataListObject itemToRemove in changeItems)
                 {
-                    if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
+                    if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.Name, itemToRemove.Type))
                     {
                         CompleteMetadata.Remove(itemToRemove);
                     }
@@ -403,59 +403,60 @@ namespace MetadataUtilities
 
         public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
         {
-            if ((int)items?.Count() > 1)
+            if (items == null || items.Count < 2)
             {
-                try
-                {
-                    Plugin.IsUpdating = true;
-
-                    MetadataListObjects mergeItems = new MetadataListObjects(Plugin.Settings.Settings);
-
-                    mergeItems.AddMissing(items.ToList().Cast<MetadataListObject>());
-
-                    MergeDialogViewModel viewModel = new MergeDialogViewModel(Plugin, mergeItems);
-
-                    MergeDialogView mergeView = new MergeDialogView();
-
-                    Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesEditorMerge"));
-                    window.Content = mergeView;
-                    window.DataContext = viewModel;
-
-                    if (window.ShowDialog() ?? false)
-                    {
-                        Cursor.Current = Cursors.WaitCursor;
-
-                        foreach (MetadataListObject itemToRemove in mergeItems)
-                        {
-                            if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.EditName, itemToRemove.Type))
-                            {
-                                CompleteMetadata.Remove(itemToRemove);
-                            }
-                            else
-                            {
-                                itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
-                            }
-                        }
-
-                        MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
-
-                        CalculateItemCount();
-                    }
-                }
-                catch (Exception exception)
-                {
-                    Log.Error(exception, "Error during initializing merge dialog", true);
-                }
-                finally
-                {
-                    Plugin.IsUpdating = false;
-                    Cursor.Current = Cursors.Default;
-                }
-
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMultipleSelected"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMultipleSelected"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                Plugin.IsUpdating = true;
+
+                MetadataListObjects mergeItems = new MetadataListObjects(Plugin.Settings.Settings);
+
+                mergeItems.AddMissing(items.ToList().Cast<MetadataListObject>());
+
+                MergeDialogViewModel viewModel = new MergeDialogViewModel(Plugin, mergeItems);
+
+                MergeDialogView mergeView = new MergeDialogView();
+
+                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesEditorMerge"));
+                window.Content = mergeView;
+                window.DataContext = viewModel;
+
+                if (!(window.ShowDialog() ?? false))
+                {
+                    return;
+                }
+
+                Cursor.Current = Cursors.WaitCursor;
+
+                foreach (MetadataListObject itemToRemove in mergeItems)
+                {
+                    if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.Name, itemToRemove.Type))
+                    {
+                        CompleteMetadata.Remove(itemToRemove);
+                    }
+                    else
+                    {
+                        itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
+                    }
+                }
+
+                MetadataListObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+
+                CalculateItemCount();
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing merge dialog", true);
+            }
+            finally
+            {
+                Plugin.IsUpdating = false;
+                Cursor.Current = Cursors.Default;
+            }
         }, items => items?.Any() ?? false);
 
         public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
@@ -481,7 +482,7 @@ namespace MetadataUtilities
                         {
                             activateGlobalProgress.ProgressMaxValue = items.Count;
 
-                            foreach (MetadataListObject item in items)
+                            foreach (MetadataListObject item in items.Cast<MetadataListObject>())
                             {
                                 DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id);
 
@@ -517,14 +518,15 @@ namespace MetadataUtilities
 
             try
             {
-                List<MetadataListObject> removedItems = MetadataListObjects.RemoveUnusedMetadata(false, Plugin.Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
+                List<MetadataListObject> removedItems = MetadataListObjects.RemoveUnusedMetadata(_plugin.Settings.Settings);
 
                 if (!removedItems.Any())
                 {
                     return;
                 }
 
-                List<MetadataListObject> itemsToRemove = CompleteMetadata.Where(x => removedItems.Any(y => x.Type == y.Type && x.EditName == y.Name)).ToList();
+                List<MetadataListObject> itemsToRemove = CompleteMetadata
+                    .Where(x => removedItems.Any(y => x.Type == y.Type && x.Name == y.Name)).ToList();
 
                 CalculateItemCount();
 
@@ -580,9 +582,9 @@ namespace MetadataUtilities
 
             Games.Clear();
 
-            MetadataListObject currItem = (MetadataListObject)_metadataViewSource.View.CurrentItem;
+            MetadataListObject currentItem = (MetadataListObject)_metadataViewSource.View.CurrentItem;
 
-            if (currItem == null)
+            if (currentItem == null)
             {
                 return;
             }
@@ -596,11 +598,11 @@ namespace MetadataUtilities
 
                 foreach (Game game in API.Instance.Database.Games.Where(g =>
                     !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
-                        (currItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currItem.Id) ?? false)) ||
-                        (currItem.Type == FieldType.Feature && (g.FeatureIds?.Contains(currItem.Id) ?? false)) ||
-                        (currItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currItem.Id) ?? false)) ||
-                        (currItem.Type == FieldType.Series && (g.SeriesIds?.Contains(currItem.Id) ?? false)) ||
-                        (currItem.Type == FieldType.Tag && (g.TagIds?.Contains(currItem.Id) ?? false)))
+                        (currentItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currentItem.Id) ?? false)) ||
+                        (currentItem.Type == FieldType.Feature && (g.FeatureIds?.Contains(currentItem.Id) ?? false)) ||
+                        (currentItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currentItem.Id) ?? false)) ||
+                        (currentItem.Type == FieldType.Series && (g.SeriesIds?.Contains(currentItem.Id) ?? false)) ||
+                        (currentItem.Type == FieldType.Tag && (g.TagIds?.Contains(currentItem.Id) ?? false)))
                 ).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName).ToList())
                 {
                     Games.Add(new MyGame
@@ -622,20 +624,17 @@ namespace MetadataUtilities
 
         public void CalculateItemCount()
         {
-            CategoryCount = (int)API.Instance.Database.Categories?.Count;
-            FeatureCount = (int)API.Instance.Database.Features?.Count;
-            GenreCount = (int)API.Instance.Database.Genres?.Count;
-            SeriesCount = (int)API.Instance.Database.Series?.Count;
-            TagCount = (int)API.Instance.Database.Tags?.Count;
+            CategoryCount = API.Instance.Database.Categories?.Count ?? 0;
+            FeatureCount = API.Instance.Database.Features?.Count ?? 0;
+            GenreCount = API.Instance.Database.Genres?.Count ?? 0;
+            SeriesCount = API.Instance.Database.Series?.Count ?? 0;
+            TagCount = API.Instance.Database.Tags?.Count ?? 0;
         }
 
-        private bool Filter(object item)
-        {
-            MetadataListObject metadataListObject = item as MetadataListObject;
-
-            return (!GroupMatches || metadataListObject.ShowGrouped) &&
-                   metadataListObject.EditName.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
-                   _filterTypes.Contains(metadataListObject.Type);
-        }
+        private bool Filter(object item) =>
+            item is MetadataListObject metadataListObject &&
+            (!GroupMatches || metadataListObject.ShowGrouped) &&
+            metadataListObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+            _filterTypes.Contains(metadataListObject.Type);
     }
 }
