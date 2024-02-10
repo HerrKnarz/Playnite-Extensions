@@ -56,6 +56,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Padrões</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Geral</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Mesclando</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefixes</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valores a serem mesclados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Escrever mensagens de log de depuração (use somente em caso de suspeita de erro!)</sys:String>
 </ResourceDictionary>
