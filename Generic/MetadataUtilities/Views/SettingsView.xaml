@@ -44,8 +44,8 @@
                     </Grid.RowDefinitions>
                     <DockPanel Margin="0,0,5,0" VerticalAlignment="Stretch">
                         <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsMergeRules}" />
-                        <DataGrid Name="dgRules" ItemsSource="{Binding Settings.MergeRuleViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0"
-                              CanUserAddRows="False" HeadersVisibility="Column" SelectionMode="Single" SelectedItem="{Binding Settings.SelectedMergeRule}"
+                        <DataGrid Name="DgRules" ItemsSource="{Binding MergeRuleViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0"
+                              CanUserAddRows="False" HeadersVisibility="Column" SelectionMode="Single" SelectedItem="{Binding SelectedMergeRule}"
                               HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"
@@ -60,16 +60,16 @@
                         <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
                                 Command="{Binding AddNewMergeRuleCommand}"/>
                         <Button Content="&#xef10;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsEdit}"
-                                Margin="10,0,0,0" Command="{Binding EditMergeRuleCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
+                                Margin="10,0,0,0" Command="{Binding EditMergeRuleCommand}" CommandParameter="{Binding SelectedItem, ElementName=DgRules}"/>
                         <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
-                                Command="{Binding RemoveMergeRuleCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
+                                Command="{Binding RemoveMergeRuleCommand}" CommandParameter="{Binding SelectedItem, ElementName=DgRules}"/>
                         <Button Content="{DynamicResource LOCMetadataUtilitiesEditorMerge}" Margin="10,0,0,0"
-                                Command="{Binding MergeItemsCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
+                                Command="{Binding MergeItemsCommand}" CommandParameter="{Binding SelectedItem, ElementName=DgRules}"/>
                     </StackPanel>
 
                     <DockPanel Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Stretch">
                         <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsValuesToMerge}" />
-                        <DataGrid Name="dgSources" ItemsSource="{Binding Settings.SourceObjectsViewSource.View}" AutoGenerateColumns="False"
+                        <DataGrid Name="DgSources" ItemsSource="{Binding SourceObjectsViewSource.View}" AutoGenerateColumns="False"
                               DockPanel.Dock="Top" Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" 
                               HorizontalContentAlignment="Stretch"  VerticalAlignment="Stretch">
                             <DataGrid.Columns>
@@ -83,9 +83,9 @@
 
                     <StackPanel Margin="5,10,0,0"  Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
                         <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
-                                Command="{Binding AddNewMergeSourceCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
+                                Command="{Binding AddNewMergeSourceCommand}" CommandParameter="{Binding SelectedItem, ElementName=DgRules}"/>
                         <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
-                                Command="{Binding RemoveMergeSourceCommand}" CommandParameter="{Binding SelectedItems, ElementName=dgSources}"/>
+                                Command="{Binding RemoveMergeSourceCommand}" CommandParameter="{Binding SelectedItems, ElementName=DgSources}"/>
                     </StackPanel>
                 </Grid>
             </DockPanel>
@@ -99,7 +99,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
-                            <ListBox Name="lbDefaultCategories" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultCategories}" Height="200"
+                            <ListBox Name="LbDefaultCategories" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultCategories}" Height="200"
                                  VerticalAlignment="Top" SelectionMode="Extended">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
@@ -114,7 +114,7 @@
                                     Command="{Binding AddExistingDefaultCategoriesCommand}" />
                                 <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
                                     Command="{Binding RemoveDefaultCategoryCommand}"
-                                    CommandParameter="{Binding SelectedItems, ElementName=lbDefaultCategories}"/>
+                                    CommandParameter="{Binding SelectedItems, ElementName=LbDefaultCategories}"/>
                             </StackPanel>
                         </Grid>
                     </GroupBox>
@@ -125,7 +125,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
-                            <ListBox Name="lbDefaultTags" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultTags}" Height="200"
+                            <ListBox Name="LbDefaultTags" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultTags}" Height="200"
                                  VerticalAlignment="Top" SelectionMode="Extended">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
@@ -140,7 +140,7 @@
                                     Command="{Binding AddExistingDefaultTagsCommand}" />
                                 <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
                                     Command="{Binding RemoveDefaultTagCommand}"
-                                    CommandParameter="{Binding SelectedItems, ElementName=lbDefaultTags}"/>
+                                    CommandParameter="{Binding SelectedItems, ElementName=LbDefaultTags}"/>
                                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.SetDefaultTagsOnlyIfEmpty}" Margin="0,10,0,0">
                                     <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty}" TextWrapping="Wrap"/>
                                 </CheckBox>

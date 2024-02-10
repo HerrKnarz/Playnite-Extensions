@@ -1,10 +1,7 @@
 ﻿using MetadataUtilities.Models;
-using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Data;
 
 namespace MetadataUtilities
 {
@@ -25,32 +22,11 @@ namespace MetadataUtilities
         private DateTime _lastAutoLibUpdate = DateTime.Now;
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
-        private CollectionViewSource _mergeRuleViewSource;
         private HashSet<string> _prefixes = new HashSet<string>();
         private bool _removeUnusedOnStartup;
-        private MergeRule _selectedMergeRule;
         private bool _setDefaultTagsOnlyIfEmpty = true;
         private bool _showTopPanelButton = true;
-        private CollectionViewSource _sourceObjectsViewSource;
         private bool _writeDebugLog;
-
-        public Settings()
-        {
-            MergeRuleViewSource = new CollectionViewSource
-            {
-                Source = MergeRules
-            };
-
-            MergeRuleViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
-            MergeRuleViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            MergeRuleViewSource.IsLiveSortingRequested = true;
-
-            SourceObjectsViewSource = new CollectionViewSource();
-
-            SourceObjectsViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
-            SourceObjectsViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            SourceObjectsViewSource.IsLiveSortingRequested = true;
-        }
 
         public bool AlwaysSaveManualMergeRules
         {
@@ -142,17 +118,6 @@ namespace MetadataUtilities
             set => SetValue(ref _mergeRules, value);
         }
 
-        [DontSerialize]
-        public CollectionViewSource MergeRuleViewSource
-        {
-            get => _mergeRuleViewSource;
-            set
-            {
-                _mergeRuleViewSource = value;
-                OnPropertyChanged();
-            }
-        }
-
         public HashSet<string> Prefixes
         {
             get => _prefixes;
@@ -165,22 +130,6 @@ namespace MetadataUtilities
             set => SetValue(ref _removeUnusedOnStartup, value);
         }
 
-        [DontSerialize]
-        public MergeRule SelectedMergeRule
-        {
-            get => _selectedMergeRule;
-            set
-            {
-                SetValue(ref _selectedMergeRule, value);
-
-                SourceObjectsViewSource.Source = _selectedMergeRule == null
-                    ? new ObservableCollection<MetadataListObject>()
-                    : _selectedMergeRule.SourceObjects;
-
-                SourceObjectsViewSource.View.Refresh();
-            }
-        }
-
         public bool SetDefaultTagsOnlyIfEmpty
         {
             get => _setDefaultTagsOnlyIfEmpty;
@@ -191,17 +140,6 @@ namespace MetadataUtilities
         {
             get => _showTopPanelButton;
             set => SetValue(ref _showTopPanelButton, value);
-        }
-
-        [DontSerialize]
-        public CollectionViewSource SourceObjectsViewSource
-        {
-            get => _sourceObjectsViewSource;
-            set
-            {
-                _sourceObjectsViewSource = value;
-                OnPropertyChanged();
-            }
         }
 
         public bool WriteDebugLog

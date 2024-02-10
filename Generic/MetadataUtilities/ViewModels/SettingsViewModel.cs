@@ -5,8 +5,10 @@ using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Forms;
 
 namespace MetadataUtilities
@@ -14,7 +16,10 @@ namespace MetadataUtilities
     public class SettingsViewModel : ObservableObject, ISettings
     {
         private readonly MetadataUtilities _plugin;
+        private CollectionViewSource _mergeRuleViewSource;
+        private MergeRule _selectedMergeRule;
         private Settings _settings;
+        private CollectionViewSource _sourceObjectsViewSource;
 
         public SettingsViewModel(MetadataUtilities plugin)
         {
@@ -23,9 +28,49 @@ namespace MetadataUtilities
             Settings savedSettings = plugin.LoadPluginSettings<Settings>();
 
             Settings = savedSettings ?? new Settings();
+
+            MergeRuleViewSource = new CollectionViewSource
+            {
+                Source = Settings.MergeRules
+            };
+
+            MergeRuleViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+            MergeRuleViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            MergeRuleViewSource.IsLiveSortingRequested = true;
+
+            SourceObjectsViewSource = new CollectionViewSource();
+
+            SourceObjectsViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+            SourceObjectsViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            SourceObjectsViewSource.IsLiveSortingRequested = true;
         }
 
         private Settings EditingClone { get; set; }
+
+        public CollectionViewSource MergeRuleViewSource
+        {
+            get => _mergeRuleViewSource;
+            set
+            {
+                _mergeRuleViewSource = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public MergeRule SelectedMergeRule
+        {
+            get => _selectedMergeRule;
+            set
+            {
+                SetValue(ref _selectedMergeRule, value);
+
+                SourceObjectsViewSource.Source = _selectedMergeRule == null
+                    ? new ObservableCollection<MetadataListObject>()
+                    : _selectedMergeRule.SourceObjects;
+
+                SourceObjectsViewSource.View.Refresh();
+            }
+        }
 
         public Settings Settings
         {
@@ -33,6 +78,16 @@ namespace MetadataUtilities
             set
             {
                 _settings = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public CollectionViewSource SourceObjectsViewSource
+        {
+            get => _sourceObjectsViewSource;
+            set
+            {
+                _sourceObjectsViewSource = value;
                 OnPropertyChanged();
             }
         }
@@ -191,9 +246,9 @@ namespace MetadataUtilities
         {
             MetadataListObject newItem = new MetadataListObject();
 
-            if (Settings.SourceObjectsViewSource.View?.CurrentItem != null)
+            if (SourceObjectsViewSource.View?.CurrentItem != null)
             {
-                newItem.Type = ((MetadataListObject)Settings.SourceObjectsViewSource.View.CurrentItem).Type;
+                newItem.Type = ((MetadataListObject)SourceObjectsViewSource.View.CurrentItem).Type;
             }
 
             Window window = AddNewObjectViewModel.GetWindow(_plugin, newItem);
@@ -211,7 +266,7 @@ namespace MetadataUtilities
             if (!((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
             {
                 ((MergeRule)rule).SourceObjects.Add(newItem);
-                Settings.SourceObjectsViewSource.View.MoveCurrentTo(newItem);
+                SourceObjectsViewSource.View.MoveCurrentTo(newItem);
             }
         }, rule => rule != null);
 
@@ -219,7 +274,7 @@ namespace MetadataUtilities
         {
             foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
             {
-                Settings.SelectedMergeRule.SourceObjects.Remove(item);
+                SelectedMergeRule.SourceObjects.Remove(item);
             }
         }, items => items?.Any() ?? false);
 
@@ -372,12 +427,12 @@ namespace MetadataUtilities
                         case MessageBoxResult.Yes:
                             Settings.MergeRules.AddRule(ruleToEdit, true);
                             Settings.MergeRules.Remove(rule);
-                            Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
+                            MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                             return;
                         case MessageBoxResult.No:
                             Settings.MergeRules.AddRule(ruleToEdit);
                             Settings.MergeRules.Remove(rule);
-                            Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
+                            MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                             return;
                         case MessageBoxResult.None:
                         case MessageBoxResult.OK:
@@ -395,12 +450,12 @@ namespace MetadataUtilities
 
                     rule.SourceObjects.Clear();
                     rule.SourceObjects.AddMissing(ruleToEdit.SourceObjects);
-                    Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
+                    MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                 }
 
                 // Case 4: The rule is new and no other with that target exists => we simply add the new one.
                 Settings.MergeRules.AddRule(ruleToEdit);
-                Settings.MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
+                MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
             }
             catch (Exception exception)
             {
