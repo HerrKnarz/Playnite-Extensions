@@ -56,7 +56,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">За замовчуванням</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Загальне</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Об'єднання</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefixes</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Префікси</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Значення для об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Записувати повідомлення журналу налагодження (використовуйте тільки якщо підозрюєте помилки!)</sys:String>
 </ResourceDictionary>
