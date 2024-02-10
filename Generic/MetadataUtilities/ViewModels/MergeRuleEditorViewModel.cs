@@ -13,7 +13,7 @@ namespace MetadataUtilities
 {
     public class MergeRuleEditorViewModel : ObservableObject
     {
-        private readonly MetadataListObjects _completeMetadata;
+        private readonly MetadataObjects _completeMetadata;
         private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
         private bool _filterCategories;
         private bool _filterFeatures;
@@ -27,7 +27,7 @@ namespace MetadataUtilities
         private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
 
-        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataListObjects objects, ICollection<FieldType> filteredTypes)
+        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataObjects objects, ICollection<FieldType> filteredTypes)
         {
             Cursor.Current = Cursors.WaitCursor;
             try
@@ -218,11 +218,11 @@ namespace MetadataUtilities
         {
             try
             {
-                MetadataListObject newItem = new MetadataListObject(_plugin.Settings.Settings);
+                MetadataObject newItem = new MetadataObject(_plugin.Settings.Settings);
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
-                    newItem.Type = ((MetadataListObject)MetadataViewSource.View.CurrentItem).Type;
+                    newItem.Type = ((MetadataObject)MetadataViewSource.View.CurrentItem).Type;
                 }
 
                 Window window = AddNewObjectViewModel.GetWindow(Plugin, newItem);
@@ -281,8 +281,8 @@ namespace MetadataUtilities
 
         public RelayCommand<object> SetAsTargetCommand => new RelayCommand<object>(item =>
         {
-            RuleType = ((MetadataListObject)item).Type;
-            RuleName = ((MetadataListObject)item).Name;
+            RuleType = ((MetadataObject)item).Type;
+            RuleName = ((MetadataObject)item).Name;
         });
 
         public CollectionViewSource MetadataViewSource
@@ -292,7 +292,7 @@ namespace MetadataUtilities
         }
 
         private bool Filter(object item)
-            => item is MetadataListObject metadataListObject &&
+            => item is MetadataObject metadataListObject &&
                metadataListObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
                _filterTypes.Contains(metadataListObject.Type) && (!FilterSelected || metadataListObject.Selected);
     }

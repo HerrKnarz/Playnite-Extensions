@@ -10,19 +10,19 @@ namespace MetadataUtilities
 {
     public class ChangeTypeViewModel : ObservableObject
     {
-        private readonly MetadataListObjects _metadataListObjects;
+        private readonly MetadataObjects _metadataObjects;
 
-        private MetadataListObjects _newObjects;
+        private MetadataObjects _newObjects;
 
         private FieldType _newType = FieldType.Category;
         private MetadataUtilities _plugin;
         private bool _saveAsRule;
 
-        public ChangeTypeViewModel(MetadataUtilities plugin, MetadataListObjects items)
+        public ChangeTypeViewModel(MetadataUtilities plugin, MetadataObjects items)
         {
             Plugin = plugin;
-            _metadataListObjects = items;
-            _newObjects = new MetadataListObjects(plugin.Settings.Settings);
+            _metadataObjects = items;
+            _newObjects = new MetadataObjects(plugin.Settings.Settings);
         }
 
         public MetadataUtilities Plugin
@@ -35,7 +35,7 @@ namespace MetadataUtilities
             }
         }
 
-        public MetadataListObjects NewObjects
+        public MetadataObjects NewObjects
         {
             get => _newObjects;
             set => SetValue(ref _newObjects, value);
@@ -58,7 +58,7 @@ namespace MetadataUtilities
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                foreach (MetadataListObject item in _metadataListObjects)
+                foreach (MetadataObject item in _metadataObjects)
                 {
                     if (item.Type == NewType)
                     {
@@ -69,9 +69,9 @@ namespace MetadataUtilities
                     {
                         Type = NewType,
                         Name = item.Name,
-                        SourceObjects = new ObservableCollection<MetadataListObject>
+                        SourceObjects = new ObservableCollection<MetadataObject>
                         {
-                            new MetadataListObject(_plugin.Settings.Settings)
+                            new MetadataObject(_plugin.Settings.Settings)
                             {
                                 Type = item.Type,
                                 Name = item.Name,
@@ -82,7 +82,7 @@ namespace MetadataUtilities
 
                     rule.Merge();
 
-                    NewObjects.Add(new MetadataListObject(_plugin.Settings.Settings)
+                    NewObjects.Add(new MetadataObject(_plugin.Settings.Settings)
                     {
                         Type = NewType,
                         Name = item.Name,

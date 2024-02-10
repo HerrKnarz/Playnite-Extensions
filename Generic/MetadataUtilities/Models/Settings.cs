@@ -8,8 +8,8 @@ namespace MetadataUtilities
     public class Settings : ObservableObject
     {
         private bool _alwaysSaveManualMergeRules;
-        private ObservableCollection<MetadataListObject> _defaultCategories = new ObservableCollection<MetadataListObject>();
-        private ObservableCollection<MetadataListObject> _defaultTags = new ObservableCollection<MetadataListObject>();
+        private ObservableCollection<MetadataObject> _defaultCategories = new ObservableCollection<MetadataObject>();
+        private ObservableCollection<MetadataObject> _defaultTags = new ObservableCollection<MetadataObject>();
         private int _editorWindowHeight = 600;
         private int _editorWindowWidth = 1200;
         private bool _filterCategories = true;
@@ -34,13 +34,13 @@ namespace MetadataUtilities
             set => SetValue(ref _alwaysSaveManualMergeRules, value);
         }
 
-        public ObservableCollection<MetadataListObject> DefaultCategories
+        public ObservableCollection<MetadataObject> DefaultCategories
         {
             get => _defaultCategories;
             set => SetValue(ref _defaultCategories, value);
         }
 
-        public ObservableCollection<MetadataListObject> DefaultTags
+        public ObservableCollection<MetadataObject> DefaultTags
         {
             get => _defaultTags;
             set => SetValue(ref _defaultTags, value);

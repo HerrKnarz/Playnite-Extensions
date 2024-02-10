@@ -8,13 +8,13 @@ using System.Linq;
 
 namespace MetadataUtilities.Models
 {
-    public class MergeRule : MetadataListObject
+    public class MergeRule : MetadataObject
     {
-        private ObservableCollection<MetadataListObject> _sourceObjects = new ObservableCollection<MetadataListObject>();
+        private ObservableCollection<MetadataObject> _sourceObjects = new ObservableCollection<MetadataObject>();
 
         public MergeRule(Settings settings) : base(settings) { }
 
-        public ObservableCollection<MetadataListObject> SourceObjects
+        public ObservableCollection<MetadataObject> SourceObjects
         {
             get => _sourceObjects;
             set
@@ -28,7 +28,7 @@ namespace MetadataUtilities.Models
         {
             Id = DatabaseObjectHelper.AddDbObject(Type, Name);
 
-            foreach (MetadataListObject item in SourceObjects)
+            foreach (MetadataObject item in SourceObjects)
             {
                 item.Id = DatabaseObjectHelper.GetDbObjectId(item.Name, item.Type);
             }
@@ -44,7 +44,7 @@ namespace MetadataUtilities.Models
 
             try
             {
-                foreach (MetadataListObject item in SourceObjects)
+                foreach (MetadataObject item in SourceObjects)
                 {
                     if (item.Id == Id)
                     {

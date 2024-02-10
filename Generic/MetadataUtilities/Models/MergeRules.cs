@@ -24,7 +24,7 @@ namespace MetadataUtilities.Models
                 return;
             }
 
-            foreach (MetadataListObject obj in rule.SourceObjects)
+            foreach (MetadataObject obj in rule.SourceObjects)
             {
                 if (!dest.SourceObjects.Any(x => x.Name == obj.Name && x.Type == obj.Type))
                 {

@@ -13,10 +13,10 @@ namespace MetadataUtilities
     {
         //TODO: Try to add localization to combobox!
 
-        private MetadataListObject _newObject;
+        private MetadataObject _newObject;
         private MetadataUtilities _plugin;
 
-        public AddNewObjectViewModel(MetadataUtilities plugin, MetadataListObject newObject)
+        public AddNewObjectViewModel(MetadataUtilities plugin, MetadataObject newObject)
         {
             Plugin = plugin;
             NewObject = newObject;
@@ -28,7 +28,7 @@ namespace MetadataUtilities
             set => SetValue(ref _plugin, value);
         }
 
-        public MetadataListObject NewObject
+        public MetadataObject NewObject
         {
             get => _newObject;
             set => SetValue(ref _newObject, value);
@@ -40,7 +40,7 @@ namespace MetadataUtilities
             win.Close();
         }, win => win != null);
 
-        public static Window GetWindow(MetadataUtilities plugin, MetadataListObject newObject)
+        public static Window GetWindow(MetadataUtilities plugin, MetadataObject newObject)
         {
             try
             {

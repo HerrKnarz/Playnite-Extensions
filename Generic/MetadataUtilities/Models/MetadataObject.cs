@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace MetadataUtilities.Models
 {
-    public class MetadataListObject : DatabaseObject
+    public class MetadataObject : DatabaseObject
     {
         private readonly Settings _settings;
         private string _cleanedUpName;
@@ -20,7 +20,7 @@ namespace MetadataUtilities.Models
         private bool _showGrouped;
         private FieldType _type;
 
-        public MetadataListObject(Settings settings) => _settings = settings;
+        public MetadataObject(Settings settings) => _settings = settings;
 
         [DontSerialize]
         public new Guid Id { get; set; }
@@ -171,7 +171,7 @@ namespace MetadataUtilities.Models
             }
         }
 
-        public void CheckGroup(List<MetadataListObject> metadataList)
+        public void CheckGroup(List<MetadataObject> metadataList)
             => ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && !x.Equals(this));
     }
 }

@@ -74,7 +74,7 @@ namespace MetadataUtilities
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                MetadataListObjects.RemoveUnusedMetadata(Settings.Settings, true);
+                MetadataObjects.RemoveUnusedMetadata(Settings.Settings, true);
             }
             finally
             {
@@ -273,10 +273,10 @@ namespace MetadataUtilities
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                MetadataListObjects metadataListObjects = new MetadataListObjects(Settings.Settings);
-                metadataListObjects.LoadMetadata();
+                MetadataObjects metadataObjects = new MetadataObjects(Settings.Settings);
+                metadataObjects.LoadMetadata();
 
-                MetadataEditorViewModel viewModel = new MetadataEditorViewModel(this, metadataListObjects);
+                MetadataEditorViewModel viewModel = new MetadataEditorViewModel(this, metadataObjects);
 
                 MetadataEditorView editorView = new MetadataEditorView();
 
@@ -342,7 +342,7 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnused"),
                     MenuSection = $"@{menuSection}",
                     Icon = "muRemoveIcon",
-                    Action = a => MetadataListObjects.RemoveUnusedMetadata(Settings.Settings)
+                    Action = a => MetadataObjects.RemoveUnusedMetadata(Settings.Settings)
                 }
             };
 

@@ -65,7 +65,7 @@ namespace MetadataUtilities
                 SetValue(ref _selectedMergeRule, value);
 
                 SourceObjectsViewSource.Source = _selectedMergeRule == null
-                    ? new ObservableCollection<MetadataListObject>()
+                    ? new ObservableCollection<MetadataObject>()
                     : _selectedMergeRule.SourceObjects;
 
                 SourceObjectsViewSource.View.Refresh();
@@ -95,7 +95,7 @@ namespace MetadataUtilities
         public RelayCommand AddExistingDefaultCategoriesCommand
             => new RelayCommand(() =>
             {
-                MetadataListObjects items = new MetadataListObjects(Settings);
+                MetadataObjects items = new MetadataObjects(Settings);
 
                 items.LoadMetadata(false, FieldType.Category);
 
@@ -108,14 +108,14 @@ namespace MetadataUtilities
 
                 if (window.ShowDialog() ?? false)
                 {
-                    foreach (MetadataListObject item in items.Where(x => x.Selected))
+                    foreach (MetadataObject item in items.Where(x => x.Selected))
                     {
                         if (Settings.DefaultCategories.Any(x => x.Name == item.Name))
                         {
                             continue;
                         }
 
-                        Settings.DefaultCategories.Add(new MetadataListObject(_settings)
+                        Settings.DefaultCategories.Add(new MetadataObject(_settings)
                         {
                             Name = item.Name,
                             Type = FieldType.Category
@@ -123,7 +123,7 @@ namespace MetadataUtilities
                     }
                 }
 
-                Settings.DefaultCategories = new ObservableCollection<MetadataListObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
+                Settings.DefaultCategories = new ObservableCollection<MetadataObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
             });
 
         public RelayCommand AddNewDefaultCategoryCommand
@@ -141,19 +141,19 @@ namespace MetadataUtilities
                     return;
                 }
 
-                Settings.DefaultCategories.Add(new MetadataListObject(_settings)
+                Settings.DefaultCategories.Add(new MetadataObject(_settings)
                 {
                     Name = res.SelectedString,
                     Type = FieldType.Category
                 });
 
-                Settings.DefaultCategories = new ObservableCollection<MetadataListObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
+                Settings.DefaultCategories = new ObservableCollection<MetadataObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
             });
 
         public RelayCommand AddExistingDefaultTagsCommand
             => new RelayCommand(() =>
             {
-                MetadataListObjects items = new MetadataListObjects(Settings);
+                MetadataObjects items = new MetadataObjects(Settings);
 
                 items.LoadMetadata(false, FieldType.Tag);
 
@@ -166,14 +166,14 @@ namespace MetadataUtilities
 
                 if (window.ShowDialog() ?? false)
                 {
-                    foreach (MetadataListObject item in items.Where(x => x.Selected))
+                    foreach (MetadataObject item in items.Where(x => x.Selected))
                     {
                         if (Settings.DefaultTags.Any(x => x.Name == item.Name))
                         {
                             continue;
                         }
 
-                        Settings.DefaultTags.Add(new MetadataListObject(_settings)
+                        Settings.DefaultTags.Add(new MetadataObject(_settings)
                         {
                             Name = item.Name,
                             Type = FieldType.Category
@@ -181,7 +181,7 @@ namespace MetadataUtilities
                     }
                 }
 
-                Settings.DefaultTags = new ObservableCollection<MetadataListObject>(Settings.DefaultTags.OrderBy(x => x.Name));
+                Settings.DefaultTags = new ObservableCollection<MetadataObject>(Settings.DefaultTags.OrderBy(x => x.Name));
             });
 
         public RelayCommand AddNewDefaultTagCommand
@@ -199,18 +199,18 @@ namespace MetadataUtilities
                     return;
                 }
 
-                Settings.DefaultTags.Add(new MetadataListObject(_settings)
+                Settings.DefaultTags.Add(new MetadataObject(_settings)
                 {
                     Name = res.SelectedString,
                     Type = FieldType.Tag
                 });
 
-                Settings.DefaultTags = new ObservableCollection<MetadataListObject>(Settings.DefaultTags.OrderBy(x => x.Name));
+                Settings.DefaultTags = new ObservableCollection<MetadataObject>(Settings.DefaultTags.OrderBy(x => x.Name));
             });
 
         public RelayCommand<IList<object>> RemoveDefaultCategoryCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
             {
                 Settings.DefaultCategories.Remove(item);
             }
@@ -218,7 +218,7 @@ namespace MetadataUtilities
 
         public RelayCommand<IList<object>> RemoveDefaultTagCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
             {
                 Settings.DefaultTags.Remove(item);
             }
@@ -240,11 +240,11 @@ namespace MetadataUtilities
 
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
-            MetadataListObject newItem = new MetadataListObject(_settings);
+            MetadataObject newItem = new MetadataObject(_settings);
 
             if (SourceObjectsViewSource.View?.CurrentItem != null)
             {
-                newItem.Type = ((MetadataListObject)SourceObjectsViewSource.View.CurrentItem).Type;
+                newItem.Type = ((MetadataObject)SourceObjectsViewSource.View.CurrentItem).Type;
             }
 
             Window window = AddNewObjectViewModel.GetWindow(_plugin, newItem);
@@ -270,7 +270,7 @@ namespace MetadataUtilities
 
         public RelayCommand<IList<object>> RemoveMergeSourceCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (MetadataListObject item in items.ToList().Cast<MetadataListObject>())
+            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
             {
                 SelectedMergeRule.SourceObjects.Remove(item);
             }
@@ -324,9 +324,9 @@ namespace MetadataUtilities
                     ruleToEdit.Type = rule.Type;
                     ruleToEdit.Name = rule.Name;
 
-                    foreach (MetadataListObject sourceItem in rule.SourceObjects)
+                    foreach (MetadataObject sourceItem in rule.SourceObjects)
                     {
-                        ruleToEdit.SourceObjects.Add(new MetadataListObject(_settings)
+                        ruleToEdit.SourceObjects.Add(new MetadataObject(_settings)
                         {
                             Name = sourceItem.Name,
                             Type = sourceItem.Type,
@@ -335,20 +335,20 @@ namespace MetadataUtilities
                     }
                 }
 
-                MetadataListObjects metadataListObjects = new MetadataListObjects(Settings);
+                MetadataObjects metadataObjects = new MetadataObjects(Settings);
 
                 if (isNewRule)
                 {
-                    metadataListObjects.LoadMetadata();
+                    metadataObjects.LoadMetadata();
                 }
                 else
                 {
-                    MetadataListObjects tempList = new MetadataListObjects(Settings);
-                    tempList.LoadMetadata();
+                    MetadataObjects temp = new MetadataObjects(Settings);
+                    temp.LoadMetadata();
 
-                    foreach (MetadataListObject item in ruleToEdit.SourceObjects)
+                    foreach (MetadataObject item in ruleToEdit.SourceObjects)
                     {
-                        MetadataListObject foundItem = tempList.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+                        MetadataObject foundItem = temp.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
 
                         if (foundItem != null)
                         {
@@ -358,11 +358,11 @@ namespace MetadataUtilities
                         {
                             item.Selected = true;
                             item.Id = new Guid();
-                            tempList.Add(item);
+                            temp.Add(item);
                         }
                     }
 
-                    metadataListObjects.AddMissing(tempList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
+                    metadataObjects.AddMissing(temp.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
                 }
 
                 HashSet<FieldType> filteredTypes = new HashSet<FieldType>();
@@ -392,7 +392,7 @@ namespace MetadataUtilities
                     filteredTypes.Add(FieldType.Tag);
                 }
 
-                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(_plugin, metadataListObjects, filteredTypes)
+                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(_plugin, metadataObjects, filteredTypes)
                 {
                     RuleName = ruleToEdit.Name,
                     RuleType = ruleToEdit.Type
@@ -415,9 +415,9 @@ namespace MetadataUtilities
                 ruleToEdit.Type = viewModel.RuleType;
                 ruleToEdit.SourceObjects.Clear();
 
-                foreach (MetadataListObject item in metadataListObjects.Where(x => x.Selected).ToList())
+                foreach (MetadataObject item in metadataObjects.Where(x => x.Selected).ToList())
                 {
-                    ruleToEdit.SourceObjects.Add(new MetadataListObject(_settings)
+                    ruleToEdit.SourceObjects.Add(new MetadataObject(_settings)
                     {
                         Id = item.Id,
                         Name = item.Name,

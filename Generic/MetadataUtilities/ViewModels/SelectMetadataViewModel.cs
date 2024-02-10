@@ -17,7 +17,7 @@ namespace MetadataUtilities
         private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
 
-        public SelectMetadataViewModel(MetadataUtilities plugin, MetadataListObjects items)
+        public SelectMetadataViewModel(MetadataUtilities plugin, MetadataObjects items)
         {
             Plugin = plugin;
             FilteredMetadata = CollectionViewSource.GetDefaultView(items);
@@ -62,7 +62,7 @@ namespace MetadataUtilities
             win.Close();
         }, win => win != null);
 
-        public static Window GetWindow(MetadataUtilities plugin, MetadataListObjects items, string windowTitle)
+        public static Window GetWindow(MetadataUtilities plugin, MetadataObjects items, string windowTitle)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace MetadataUtilities
         }
 
         private bool Filter(object item) =>
-            item is MetadataListObject metadataListObject &&
+            item is MetadataObject metadataListObject &&
             metadataListObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
             (!FilterSelected || metadataListObject.Selected);
     }

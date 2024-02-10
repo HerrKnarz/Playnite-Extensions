@@ -8,15 +8,15 @@ namespace MetadataUtilities
 {
     public class MergeDialogViewModel : ObservableObject
     {
-        private MetadataListObject _mergeTarget;
-        private MetadataListObjects _metadataListObjects;
+        private MetadataObject _mergeTarget;
+        private MetadataObjects _metadataObjects;
         private MetadataUtilities _plugin;
         private bool _saveAsRule;
 
-        public MergeDialogViewModel(MetadataUtilities plugin, MetadataListObjects items)
+        public MergeDialogViewModel(MetadataUtilities plugin, MetadataObjects items)
         {
             Plugin = plugin;
-            MetadataListObjects = items;
+            MetadataObjects = items;
         }
 
         public MetadataUtilities Plugin
@@ -29,17 +29,17 @@ namespace MetadataUtilities
             }
         }
 
-        public MetadataListObjects MetadataListObjects
+        public MetadataObjects MetadataObjects
         {
-            get => _metadataListObjects;
+            get => _metadataObjects;
             set
             {
-                SetValue(ref _metadataListObjects, value);
-                MergeTarget = _metadataListObjects.FirstOrDefault();
+                SetValue(ref _metadataObjects, value);
+                MergeTarget = _metadataObjects.FirstOrDefault();
             }
         }
 
-        public MetadataListObject MergeTarget
+        public MetadataObject MergeTarget
         {
             get => _mergeTarget;
             set => SetValue(ref _mergeTarget, value);
@@ -58,7 +58,7 @@ namespace MetadataUtilities
                 Name = _mergeTarget.Name,
                 Type = _mergeTarget.Type,
                 Id = _mergeTarget.Id,
-                SourceObjects = _metadataListObjects
+                SourceObjects = _metadataObjects
             };
 
             if (SaveAsRule)

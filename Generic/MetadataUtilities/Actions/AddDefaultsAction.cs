@@ -45,13 +45,13 @@ namespace MetadataUtilities.Actions
         {
             _categoryIds.Clear();
 
-            foreach (MetadataListObject category in Settings.DefaultCategories)
+            foreach (MetadataObject category in Settings.DefaultCategories)
             {
                 _categoryIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Category, category.Name));
             }
 
             _tagIds.Clear();
-            foreach (MetadataListObject tag in Settings.DefaultTags)
+            foreach (MetadataObject tag in Settings.DefaultTags)
             {
                 _tagIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Tag, tag.Name));
             }

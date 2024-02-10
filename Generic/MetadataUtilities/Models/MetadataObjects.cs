@@ -10,18 +10,18 @@ using System.Windows;
 
 namespace MetadataUtilities.Models
 {
-    public class MetadataListObjects : ObservableCollection<MetadataListObject>
+    public class MetadataObjects : ObservableCollection<MetadataObject>
     {
         private readonly Settings _settings;
 
-        public MetadataListObjects(Settings settings) => _settings = settings;
+        public MetadataObjects(Settings settings) => _settings = settings;
 
         public void LoadMetadata(bool showGameNumber = true, FieldType? type = null)
         {
             Log.Debug("=== LoadMetadata: Start ===");
             DateTime ts = DateTime.Now;
 
-            List<MetadataListObject> temporaryList = new List<MetadataListObject>();
+            List<MetadataObject> temporaryList = new List<MetadataObject>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCLoadingLabel"),
@@ -38,7 +38,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Category)
                     {
                         temporaryList.AddRange(API.Instance.Database.Categories.Select(category
-                            => new MetadataListObject(_settings)
+                            => new MetadataObject(_settings)
                             {
                                 Id = category.Id,
                                 Name = category.Name,
@@ -49,7 +49,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Feature)
                     {
                         temporaryList.AddRange(API.Instance.Database.Features.Select(feature
-                            => new MetadataListObject(_settings)
+                            => new MetadataObject(_settings)
                             {
                                 Id = feature.Id,
                                 Name = feature.Name,
@@ -60,7 +60,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Genre)
                     {
                         temporaryList.AddRange(API.Instance.Database.Genres.Select(genre
-                            => new MetadataListObject(_settings)
+                            => new MetadataObject(_settings)
                             {
                                 Id = genre.Id,
                                 Name = genre.Name,
@@ -71,7 +71,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Series)
                     {
                         temporaryList.AddRange(API.Instance.Database.Series.Select(series
-                            => new MetadataListObject(_settings)
+                            => new MetadataObject(_settings)
                             {
                                 Id = series.Id,
                                 Name = series.Name,
@@ -82,7 +82,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Tag)
                     {
                         temporaryList.AddRange(API.Instance.Database.Tags.Select(tag
-                            => new MetadataListObject(_settings)
+                            => new MetadataObject(_settings)
                             {
                                 Id = tag.Id,
                                 Name = tag.Name,
@@ -106,9 +106,9 @@ namespace MetadataUtilities.Models
             Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
-        public static List<MetadataListObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
+        public static List<MetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
         {
-            List<MetadataListObject> temporaryList = new List<MetadataListObject>();
+            List<MetadataObject> temporaryList = new List<MetadataObject>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
@@ -127,7 +127,7 @@ namespace MetadataUtilities.Models
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.CategoryIds?.Any(t => t == x.Id) ?? false)))
                         .Select(category
-                            => new MetadataListObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = category.Id,
                                 Name = category.Name,
@@ -139,7 +139,7 @@ namespace MetadataUtilities.Models
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.FeatureIds?.Any(t => t == x.Id) ?? false)))
                         .Select(feature
-                            => new MetadataListObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = feature.Id,
                                 Name = feature.Name,
@@ -151,7 +151,7 @@ namespace MetadataUtilities.Models
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.GenreIds?.Any(t => t == x.Id) ?? false)))
                         .Select(genre
-                            => new MetadataListObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = genre.Id,
                                 Name = genre.Name,
@@ -163,7 +163,7 @@ namespace MetadataUtilities.Models
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.SeriesIds?.Any(t => t == x.Id) ?? false)))
                         .Select(series
-                            => new MetadataListObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = series.Id,
                                 Name = series.Name,
@@ -175,14 +175,14 @@ namespace MetadataUtilities.Models
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.TagIds?.Any(t => t == x.Id) ?? false)))
                         .Select(tag
-                            => new MetadataListObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = tag.Id,
                                 Name = tag.Name,
                                 Type = FieldType.Tag
                             }));
 
-                    foreach (MetadataListObject item in temporaryList)
+                    foreach (MetadataObject item in temporaryList)
                     {
                         DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id, settings.IgnoreHiddenGamesInRemoveUnused);
                     }
@@ -219,7 +219,7 @@ namespace MetadataUtilities.Models
             return temporaryList;
         }
 
-        public static void UpdateGameCounts(List<MetadataListObject> itemList, bool ignoreHiddenGames)
+        public static void UpdateGameCounts(List<MetadataObject> itemList, bool ignoreHiddenGames)
         {
             Log.Debug("=== UpdateGameCounts: Start ===");
             DateTime ts = DateTime.Now;
@@ -248,7 +248,7 @@ namespace MetadataUtilities.Models
             Log.Debug($"=== UpdateGameCounts: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
-        public static void UpdateGroupDisplay(List<MetadataListObject> itemList)
+        public static void UpdateGroupDisplay(List<MetadataObject> itemList)
         {
             Log.Debug("=== UpdateGroupDisplay: Start ===");
             DateTime ts = DateTime.Now;
