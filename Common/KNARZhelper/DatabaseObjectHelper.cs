@@ -192,49 +192,36 @@ namespace KNARZhelper
             }
         }
 
-        public static void RemoveDbObject(FieldType type, Guid id, bool checkIfUsed = true)
+        public static bool RemoveDbObject(FieldType type, Guid id, bool checkIfUsed = true)
         {
             if (checkIfUsed)
             {
-                ReplaceDbObject(API.Instance.Database.Games.ToList(), type, id);
+                return ReplaceDbObject(API.Instance.Database.Games.ToList(), type, id)?.Count() > 0;
             }
             else
             {
                 switch (type)
                 {
                     case FieldType.Category:
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Categories.Remove(id);
-                        });
+                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Categories.Remove(id));
                         break;
                     case FieldType.Feature:
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Features.Remove(id);
-                        });
+                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Features.Remove(id));
                         break;
                     case FieldType.Genre:
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Genres.Remove(id);
-                        });
+                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Genres.Remove(id));
                         break;
                     case FieldType.Series:
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Series.Remove(id);
-                        });
+                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Series.Remove(id));
                         break;
                     case FieldType.Tag:
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Tags.Remove(id);
-                        });
+                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Tags.Remove(id));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
                 }
+
+                return false;
             }
         }
 

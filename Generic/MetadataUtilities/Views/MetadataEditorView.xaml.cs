@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace MetadataUtilities
 {
@@ -23,27 +24,12 @@ namespace MetadataUtilities
 
         private void ClearSearchBox(object sender, RoutedEventArgs e) => txtSearchBox.Clear();
 
-        /*  private void DataGridCell_Selected(object sender, RoutedEventArgs e)
-          {
-              // Lookup for the source to be DataGridCell
-              if (e.OriginalSource.GetType() != typeof(DataGridCell))
-              {
-                  return;
-              }
-
-              // Starts the Edit on the row;
-              DataGrid grd = (DataGrid)sender;
-              grd.BeginEdit(e);
-          }
-
-          private void OnCellLostFocus(object sender, RoutedEventArgs e)
-          {
-              var myCell = sender as DataGridCell;
-
-              if (myCell.IsEditing)
-              {
-
-              }
-          }*/
+        private void DataGrid_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
+        {
+            if (e.EditingElement is ComboBox t)
+            {
+                t.IsDropDownOpen = true;
+            }
+        }
     }
 }

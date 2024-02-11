@@ -36,9 +36,7 @@ namespace MetadataUtilities
         private int _seriesCount;
         private int _tagCount;
 
-        // TODO: Check how I can change the text color of the combobox in a selected row
         // TODO: Add prefix to filter
-        // TODO: Check why I can't remove items in the metadata editor anymore
 
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
         {
