@@ -159,7 +159,8 @@
                             Command="{Binding RemovePrefixCommand}"
                             CommandParameter="{Binding SelectedItems, ElementName=ListBoxPrefixes}"/>
                 </StackPanel>
-                <ListBox DockPanel.Dock="Top" Name="ListBoxPrefixes" SelectionMode="Extended"
+                <TextBlock DockPanel.Dock="Top" Text="{DynamicResource LOCMetadataUtilitiesSettingsPrefixDescription}" TextWrapping="Wrap"/>
+                <ListBox DockPanel.Dock="Top" Name="ListBoxPrefixes" SelectionMode="Extended" Margin="0,10,0,0"
                          ItemsSource="{Binding Settings.Prefixes}" />
             </DockPanel>
         </TabItem>
