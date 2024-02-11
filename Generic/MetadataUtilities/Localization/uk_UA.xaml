@@ -51,6 +51,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ігнорувати приховані ігри при прибиранні невикористаних метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Автоматично виконувати правила об'єднання при оновленні метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Об’єднати Ролі</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsPrefixDescription">Here you can define prefixes to further categorize your metadata types. These prefixes can than be filtered, sorted and changed in the Metadata Editor. The corresponding combo boxes will only appear, if you have at least one prefix defined. If you want a whitespace between the prefix and the item name, you need to add it to the prefix here. So if you for example have a tag like &quot;[art style] realistic&quot;, you need to add &quot;[art style] &quot; as your prefix. In the Metadata editor the tag will then have this prefix and the name will be shown as &quot;realistic&quot;.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Прибирати невикористані метадані під час запуску</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Встановлювати тільки коли теги не були додані при імпорті метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Показувати кнопку редактора метаданих у верхній панелі (потрібен перезапуск)</sys:String>
