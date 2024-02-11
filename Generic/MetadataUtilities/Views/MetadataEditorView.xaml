@@ -99,8 +99,9 @@
                                                 <Expander IsExpanded="True" Background="{DynamicResource ExpanderBackgroundBrush}">
                                                     <Expander.Header>
                                                         <DockPanel>
-                                                            <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="0,0,5,0" Width="Auto" Foreground="{DynamicResource TextBrush}"/>
-                                                            <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}" Foreground="{DynamicResource TextBrush}"/>
+                                                            <TextBlock FontWeight="Bold" Text="{Binding Name}" Margin="0,0,5,0" Width="Auto" Foreground="{DynamicResource TextBrush}"/>
+                                                            <TextBlock FontWeight="Bold" Text="{Binding ItemCount, StringFormat={}({0})}" 
+                                                                       Foreground="{DynamicResource HighlightGlyphBrush}"/>
                                                         </DockPanel>
                                                     </Expander.Header>
                                                     <Expander.Content>

@@ -21,6 +21,6 @@ namespace MetadataUtilities
             }
         }
 
-        private void ClearSearchBox(object sender, RoutedEventArgs e) => txtSearchBox.Clear();
+        private void ClearSearchBox(object sender, RoutedEventArgs e) => SearchBox.Clear();
     }
 }

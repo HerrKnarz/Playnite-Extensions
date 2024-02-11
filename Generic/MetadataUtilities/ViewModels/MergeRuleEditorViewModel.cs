@@ -3,6 +3,7 @@ using MetadataUtilities.Models;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -13,11 +14,12 @@ namespace MetadataUtilities
 {
     public class MergeRuleEditorViewModel : ObservableObject
     {
-        private readonly MetadataObjects _completeMetadata;
         private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
+        private MetadataObjects _completeMetadata;
         private bool _filterCategories;
         private bool _filterFeatures;
         private bool _filterGenres;
+        private string _filterPrefix = string.Empty;
         private bool _filterSelected;
         private bool _filterSeries;
         private bool _filterTags;
@@ -36,7 +38,10 @@ namespace MetadataUtilities
                 DateTime ts = DateTime.Now;
 
                 Plugin = plugin;
-                _completeMetadata = objects;
+                CompleteMetadata = objects;
+
+                Prefixes.Add(string.Empty);
+                Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
 
                 Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                 ts = DateTime.Now;
@@ -142,6 +147,17 @@ namespace MetadataUtilities
             }
         }
 
+        public string FilterPrefix
+        {
+            get => _filterPrefix;
+            set
+            {
+                SetValue(ref _filterPrefix, value);
+
+                MetadataViewSource.View.Filter = Filter;
+            }
+        }
+
         public bool FilterSelected
         {
             get => _filterSelected;
@@ -204,6 +220,12 @@ namespace MetadataUtilities
             set => SetValue(ref _ruleType, value);
         }
 
+        public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
+
+        public Visibility PrefixVisibility => _plugin.Settings.Settings.Prefixes?.Any() ?? false
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+
         public string SearchTerm
         {
             get => _searchTerm;
@@ -240,7 +262,7 @@ namespace MetadataUtilities
                     return;
                 }
 
-                if (_completeMetadata.Any(x => x.Type == newItem.Type && x.Name == newItem.Name))
+                if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.Name == newItem.Name))
                 {
                     return;
                 }
@@ -249,7 +271,7 @@ namespace MetadataUtilities
 
                 newItem.Selected = true;
                 newItem.Name = newItem.Name;
-                _completeMetadata.Add(newItem);
+                CompleteMetadata.Add(newItem);
 
                 MetadataViewSource.View.Filter = Filter;
                 MetadataViewSource.View.MoveCurrentTo(newItem);
@@ -272,7 +294,7 @@ namespace MetadataUtilities
                 return;
             }
 
-            if (!_completeMetadata.Any(x => x.Selected))
+            if (!CompleteMetadata.Any(x => x.Selected))
             {
                 API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoItemsSelected"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -294,9 +316,16 @@ namespace MetadataUtilities
             set => SetValue(ref _metadataViewSource, value);
         }
 
+        public MetadataObjects CompleteMetadata
+        {
+            get => _completeMetadata;
+            set => SetValue(ref _completeMetadata, value);
+        }
+
         private bool Filter(object item)
-            => item is MetadataObject metadataListObject &&
-               metadataListObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
-               _filterTypes.Contains(metadataListObject.Type) && (!FilterSelected || metadataListObject.Selected);
+            => item is MetadataObject metadataObject &&
+               metadataObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+               _filterTypes.Contains(metadataObject.Type) && (!FilterSelected || metadataObject.Selected) &&
+               (_filterPrefix == string.Empty || metadataObject.Prefix.Equals(_filterPrefix));
     }
 }

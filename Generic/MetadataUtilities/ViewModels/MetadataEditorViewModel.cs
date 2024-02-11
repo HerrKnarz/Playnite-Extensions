@@ -37,8 +37,6 @@ namespace MetadataUtilities
         private int _seriesCount;
         private int _tagCount;
 
-        // TODO: Add prefix to filter
-
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
         {
             Log.Debug("=== MetadataEditorViewModel: Start ===");
