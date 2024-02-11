@@ -22,7 +22,7 @@ namespace MetadataUtilities
             }
         }
 
-        private void ClearSearchBox(object sender, RoutedEventArgs e) => txtSearchBox.Clear();
+        private void ClearSearchBox(object sender, RoutedEventArgs e) => SearchBox.Clear();
 
         private void DataGrid_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
         {

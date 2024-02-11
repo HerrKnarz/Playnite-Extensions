@@ -24,6 +24,7 @@ namespace MetadataUtilities
         private bool _filterCategories = true;
         private bool _filterFeatures = true;
         private bool _filterGenres = true;
+        private string _filterPrefix = string.Empty;
         private bool _filterSeries = true;
         private bool _filterTags = true;
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
@@ -184,6 +185,18 @@ namespace MetadataUtilities
                 {
                     _filterTypes.Remove(FieldType.Genre);
                 }
+
+                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
+                MetadataViewSource.View.Filter = Filter;
+            }
+        }
+
+        public string FilterPrefix
+        {
+            get => _filterPrefix;
+            set
+            {
+                SetValue(ref _filterPrefix, value);
 
                 ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                 MetadataViewSource.View.Filter = Filter;
@@ -661,9 +674,10 @@ namespace MetadataUtilities
         }
 
         private bool Filter(object item) =>
-            item is MetadataObject metadataListObject &&
-            (!GroupMatches || metadataListObject.ShowGrouped) &&
-            metadataListObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
-            _filterTypes.Contains(metadataListObject.Type);
+            item is MetadataObject metadataObject &&
+            (!GroupMatches || metadataObject.ShowGrouped) &&
+            metadataObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+            _filterTypes.Contains(metadataObject.Type) &&
+            (_filterPrefix == string.Empty || metadataObject.Prefix.Equals(_filterPrefix));
     }
 }
