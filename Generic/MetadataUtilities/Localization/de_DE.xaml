@@ -51,6 +51,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Versteckte Spiele ignorieren, wenn nicht verwendete Metadaten entfernt werden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Zusammenführungsregeln beim Metadaten-Update automatisch ausführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Zusammenführungsregeln</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsPrefixDescription">Here you can define prefixes to further categorize your metadata types. These prefixes can than be filtered, sorted and changed in the Metadata Editor. The corresponding combo boxes will only appear, if you have at least one prefix defined. If you want a whitespace between the prefix and the item name, you need to add it to the prefix here. So if you for example have a tag like &quot;[art style] realistic&quot;, you need to add &quot;[art style] &quot; as your prefix. In the Metadata editor the tag will then have this prefix and the name will be shown as &quot;realistic&quot;.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Nicht verwendete Metadaten beim Start entfernen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Nur hinzufügen, wenn beim Import der Metadaten keine Schlagworte gefunden wurden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Metadaten-Editor-Button im oberen Panel anzeigen (Neustart erforderlich)</sys:String>
