@@ -58,33 +58,17 @@ namespace MetadataUtilities.Models
             get => _editName;
             set
             {
-                if (_editName != null && _editName != value)
+                if (value == null)
                 {
-                    DbInteractionResult res = DatabaseObjectHelper.UpdateName(Type, Id, Prefix + _editName, value);
-
-                    switch (res)
-                    {
-                        case DbInteractionResult.Updated:
-                            _editName = value;
-                            _name = Prefix + value;
-                            break;
-                        case DbInteractionResult.IsDuplicate:
-                            API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
-                                Type.GetEnumDisplayName()));
-                            break;
-                        case DbInteractionResult.Created:
-                        case DbInteractionResult.Error:
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                    return;
                 }
-                else
+
+                if (_editName != value && UpdateItem(Name, Prefix + value))
                 {
                     _editName = value;
                     _name = Prefix + value;
+                    CleanedUpName = EditName.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
                 }
-
-                CleanedUpName = Name.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
 
                 OnPropertyChanged();
             }
@@ -95,11 +79,26 @@ namespace MetadataUtilities.Models
             get => _name;
             set
             {
+                if (value == null)
+                {
+                    value = string.Empty;
+                }
+
                 _name = value;
 
                 _prefix = GetPrefix();
 
-                _editName = _prefix == string.Empty ? value : value.RemoveFirst(_prefix);
+                if (value.Equals(_prefix))
+                {
+                    _prefix = string.Empty;
+                    _editName = value;
+                }
+                else
+                {
+                    _editName = _prefix == string.Empty ? value : value.RemoveFirst(_prefix);
+                }
+
+                CleanedUpName = EditName.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
 
                 OnPropertyChanged();
             }
@@ -111,8 +110,18 @@ namespace MetadataUtilities.Models
             get => _prefix;
             set
             {
-                SetValue(ref _prefix, value);
-                _name = Prefix + EditName;
+                if (value == null)
+                {
+                    value = string.Empty;
+                }
+
+                if (_prefix != value && UpdateItem(Name, value + EditName))
+                {
+                    _prefix = value;
+                    _name = value + EditName;
+                }
+
+                OnPropertyChanged();
             }
         }
 
@@ -129,6 +138,25 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _showGrouped, value);
         }
 
+        public bool UpdateItem(string oldName, string newName)
+        {
+            // If we don't have an id, the item is new and doesn't need to be updated.
+            if (Id == Guid.Empty)
+            {
+                return true;
+            }
+
+            DbInteractionResult res = DatabaseObjectHelper.UpdateName(Type, Id, oldName, newName);
+
+            if (res == DbInteractionResult.IsDuplicate)
+            {
+                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
+                    Type.GetEnumDisplayName()));
+            }
+
+            return res == DbInteractionResult.Updated;
+        }
+
         public string GetPrefix()
         {
             if (_settings?.Prefixes == null)
@@ -138,7 +166,7 @@ namespace MetadataUtilities.Models
 
             foreach (string prefix in _settings.Prefixes)
             {
-                if (Name.StartsWith(prefix))
+                if (Name?.StartsWith(prefix) ?? false)
                 {
                     return prefix;
                 }

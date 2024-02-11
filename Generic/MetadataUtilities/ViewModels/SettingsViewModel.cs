@@ -226,17 +226,16 @@ namespace MetadataUtilities
 
         public RelayCommand AddNewMergeRuleCommand => new RelayCommand(() => EditMergeRule());
 
-        public RelayCommand<object> EditMergeRuleCommand => new RelayCommand<object>(rule =>
-        {
-            EditMergeRule((MergeRule)rule);
-        }, rule => rule != null);
+        public RelayCommand<object> EditMergeRuleCommand
+            => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
 
         public RelayCommand<object> RemoveMergeRuleCommand => new RelayCommand<object>(rule =>
         {
             Settings.MergeRules.Remove((MergeRule)rule);
         }, rule => rule != null);
 
-        public RelayCommand<object> MergeItemsCommand => new RelayCommand<object>(rule => _plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);
+        public RelayCommand<object> MergeItemsCommand
+            => new RelayCommand<object>(rule => _plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);
 
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
@@ -244,7 +243,10 @@ namespace MetadataUtilities
 
             if (SourceObjectsViewSource.View?.CurrentItem != null)
             {
-                newItem.Type = ((MetadataObject)SourceObjectsViewSource.View.CurrentItem).Type;
+                MetadataObject templateItem = (MetadataObject)SourceObjectsViewSource.View.CurrentItem;
+
+                newItem.Type = templateItem.Type;
+                newItem.Prefix = templateItem.Prefix;
             }
 
             Window window = AddNewObjectViewModel.GetWindow(_plugin, newItem);
@@ -400,7 +402,8 @@ namespace MetadataUtilities
 
                 MergeRuleEditorView editorView = new MergeRuleEditorView();
 
-                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 700, 700, false, true);
+                Window window = WindowHelper.CreateSizedWindow(
+                    ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 700, 700, false, true);
                 window.Content = editorView;
                 window.DataContext = viewModel;
 
@@ -435,11 +438,15 @@ namespace MetadataUtilities
                     return;
                 }
 
-                // Case 2: The rule was renamed or is new and another one for that target already exists => We ask if merge, replace or cancel.
+                // Case 2: The rule was renamed or is new and another one for that target already exists => We ask if merge,
+                // replace or cancel.
                 if (Settings.MergeRules.Any(x => x.Name == ruleToEdit.Name && x.Type == ruleToEdit.Type))
                 {
                     Cursor.Current = Cursors.Default;
-                    MessageBoxResult response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergeOrReplace"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    MessageBoxResult response = API.Instance.Dialogs.ShowMessage(
+                        ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergeOrReplace"),
+                        ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel,
+                        MessageBoxImage.Question);
                     Cursor.Current = Cursors.WaitCursor;
 
                     switch (response)

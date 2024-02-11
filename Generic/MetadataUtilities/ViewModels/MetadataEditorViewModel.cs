@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace MetadataUtilities
 {
-    public class MetadataEditorViewModel : ObservableObject
+    public class MetadataEditorViewModel : ObservableObject, IEditableObject
     {
         private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
         private readonly bool _showRelatedGames;
@@ -36,6 +36,10 @@ namespace MetadataUtilities
         private int _seriesCount;
         private int _tagCount;
 
+        // TODO: Check how I can change the text color of the combobox in a selected row
+        // TODO: Add prefix to filter
+        // TODO: Check why I can't remove items in the metadata editor anymore
+
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
         {
             Log.Debug("=== MetadataEditorViewModel: Start ===");
@@ -46,6 +50,9 @@ namespace MetadataUtilities
             {
                 Plugin = plugin;
                 CompleteMetadata = objects;
+
+                Prefixes.Add(string.Empty);
+                Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
 
                 CalculateItemCount();
 
@@ -71,7 +78,8 @@ namespace MetadataUtilities
                 using (MetadataViewSource.DeferRefresh())
                 {
                     MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
-                    MetadataViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                    MetadataViewSource.SortDescriptions.Add(new SortDescription("Prefix", ListSortDirection.Ascending));
+                    MetadataViewSource.SortDescriptions.Add(new SortDescription("EditName", ListSortDirection.Ascending));
                     MetadataViewSource.IsLiveSortingRequested = true;
 
                     Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
@@ -137,6 +145,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Category);
                 }
 
+                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                 MetadataViewSource.View.Filter = Filter;
             }
         }
@@ -157,6 +166,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Feature);
                 }
 
+                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                 MetadataViewSource.View.Filter = Filter;
             }
         }
@@ -177,6 +187,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Genre);
                 }
 
+                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                 MetadataViewSource.View.Filter = Filter;
             }
         }
@@ -197,6 +208,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Series);
                 }
 
+                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                 MetadataViewSource.View.Filter = Filter;
             }
         }
@@ -217,6 +229,7 @@ namespace MetadataUtilities
                     _filterTypes.Remove(FieldType.Tag);
                 }
 
+                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                 MetadataViewSource.View.Filter = Filter;
             }
         }
@@ -253,6 +266,7 @@ namespace MetadataUtilities
                     {
                         MetadataObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
                         MetadataViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("CleanedUpName"));
+                        ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                         MetadataViewSource.View.Filter = Filter;
                     }
                     finally
@@ -263,10 +277,17 @@ namespace MetadataUtilities
                 else
                 {
                     MetadataViewSource.View.GroupDescriptions.Clear();
+                    ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                     MetadataViewSource.View.Filter = Filter;
                 }
             }
         }
+
+        public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
+
+        public Visibility PrefixVisibility => _plugin.Settings.Settings.Prefixes?.Any() ?? false
+            ? Visibility.Visible
+            : Visibility.Collapsed;
 
         public string SearchTerm
         {
@@ -274,6 +295,7 @@ namespace MetadataUtilities
             set
             {
                 SetValue(ref _searchTerm, value);
+                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                 MetadataViewSource.View.Filter = Filter;
             }
         }
@@ -298,7 +320,10 @@ namespace MetadataUtilities
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
-                    newItem.Type = ((MetadataObject)MetadataViewSource.View.CurrentItem).Type;
+                    MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+
+                    newItem.Type = templateItem.Type;
+                    newItem.Prefix = templateItem.Prefix;
                 }
 
                 Window window = AddNewObjectViewModel.GetWindow(Plugin, newItem);
@@ -569,6 +594,12 @@ namespace MetadataUtilities
             get => _completeMetadata;
             set => SetValue(ref _completeMetadata, value);
         }
+
+        public void BeginEdit() { }
+
+        public void EndEdit() { }
+
+        public void CancelEdit() { }
 
         private void CurrentChanged(object sender, EventArgs e)
         {

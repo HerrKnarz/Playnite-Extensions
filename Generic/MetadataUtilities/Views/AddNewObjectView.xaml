@@ -19,7 +19,7 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
-    <DockPanel Margin="10" FocusManager.FocusedElement="{Binding ElementName=txtName}">
+    <DockPanel Margin="10" FocusManager.FocusedElement="{Binding ElementName=TxtName}">
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left">
             <ComboBox SelectedItem="{Binding NewObject.Type}" ItemsSource="{Binding Source={StaticResource FieldTypeValues}}" 
                       Margin="10,0,0,0" Width="100">
@@ -29,7 +29,9 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBox Name="txtName" Margin="10,0,0,0" Text="{Binding NewObject.EditName}" Width="300"/>
+            <ComboBox SelectedItem="{Binding NewObject.Prefix}" ItemsSource="{Binding Prefixes}" 
+                      Margin="10,0,0,0" Width="100" Visibility="{Binding PrefixVisibility}"/>
+            <TextBox Name="TxtName" Margin="10,0,0,0" Text="{Binding NewObject.EditName}" Width="300"/>
         </StackPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Center">
             <Button Content="{DynamicResource LOCOKLabel}"

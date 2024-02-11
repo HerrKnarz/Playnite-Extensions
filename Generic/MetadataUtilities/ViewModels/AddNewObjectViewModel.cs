@@ -4,6 +4,7 @@ using MetadataUtilities.Views;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 
@@ -20,6 +21,8 @@ namespace MetadataUtilities
         {
             Plugin = plugin;
             NewObject = newObject;
+            Prefixes.Add(string.Empty);
+            Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
         }
 
         public MetadataUtilities Plugin
@@ -39,6 +42,10 @@ namespace MetadataUtilities
             win.DialogResult = NewObject.Name?.Any() ?? false;
             win.Close();
         }, win => win != null);
+
+        public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
+
+        public Visibility PrefixVisibility => _plugin.Settings.Settings.Prefixes?.Any() ?? false ? Visibility.Visible : Visibility.Collapsed;
 
         public static Window GetWindow(MetadataUtilities plugin, MetadataObject newObject)
         {

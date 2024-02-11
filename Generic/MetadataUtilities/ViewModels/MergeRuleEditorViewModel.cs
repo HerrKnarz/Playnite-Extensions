@@ -222,7 +222,10 @@ namespace MetadataUtilities
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
-                    newItem.Type = ((MetadataObject)MetadataViewSource.View.CurrentItem).Type;
+                    MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+
+                    newItem.Type = templateItem.Type;
+                    newItem.Prefix = templateItem.Prefix;
                 }
 
                 Window window = AddNewObjectViewModel.GetWindow(Plugin, newItem);

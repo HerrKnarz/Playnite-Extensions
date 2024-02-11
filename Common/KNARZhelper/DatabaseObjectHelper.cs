@@ -77,7 +77,7 @@ namespace KNARZhelper
 
         public static Guid GetDbObjectId(string name, FieldType type)
         {
-            DatabaseObject item = null;
+            DatabaseObject item;
 
             switch (type)
             {
@@ -110,71 +110,81 @@ namespace KNARZhelper
                 case FieldType.Category:
                     Category category = API.Instance.Database.Categories?.FirstOrDefault(x => x.Id == id);
 
-                    if (category != null)
+                    if (category == null)
                     {
-                        category.Name = name;
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Categories.Update(category);
-                        });
+                        return;
                     }
+
+                    category.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Categories.Update(category);
+                    });
 
                     return;
                 case FieldType.Feature:
                     GameFeature feature = API.Instance.Database.Features?.FirstOrDefault(x => x.Id == id);
 
-                    if (feature != null)
+                    if (feature == null)
                     {
-                        feature.Name = name;
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Features.Update(feature);
-                        });
+                        return;
                     }
+
+                    feature.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Features.Update(feature);
+                    });
 
                     return;
                 case FieldType.Genre:
                     Genre genre = API.Instance.Database.Genres?.FirstOrDefault(x => x.Id == id);
 
-                    if (genre != null)
+                    if (genre == null)
                     {
-                        genre.Name = name;
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Genres.Update(genre);
-                        });
+                        return;
                     }
+
+                    genre.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Genres.Update(genre);
+                    });
 
                     return;
                 case FieldType.Series:
                     Series series = API.Instance.Database.Series?.FirstOrDefault(x => x.Id == id);
 
-                    if (series != null)
+                    if (series == null)
                     {
-                        series.Name = name;
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Series.Update(series);
-                        });
+                        return;
                     }
+
+                    series.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Series.Update(series);
+                    });
 
                     return;
                 case FieldType.Tag:
                     Tag tag = API.Instance.Database.Tags?.FirstOrDefault(x => x.Id == id);
 
-                    if (tag != null)
+                    if (tag == null)
                     {
-                        tag.Name = name;
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Tags.Update(tag);
-                        });
+                        return;
                     }
+
+                    tag.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Tags.Update(tag);
+                    });
 
                     return;
                 default:
