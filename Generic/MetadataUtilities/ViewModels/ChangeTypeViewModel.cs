@@ -98,7 +98,6 @@ namespace MetadataUtilities
                 }
 
                 _plugin.SavePluginSettings(_plugin.Settings.Settings);
-                _plugin.Settings.MergeRuleViewSource.View.Refresh();
             }
             finally
             {

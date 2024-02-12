@@ -650,7 +650,7 @@ namespace MetadataUtilities
                         Name = game.Name,
                         SortingName = game.SortingName,
                         CompletionStatus = game.CompletionStatus,
-                        Platforms = string.Join(", ", game.Platforms.Select(x => x.Name).ToList()),
+                        Platforms = string.Join(", ", game.Platforms?.Select(x => x.Name).ToList() ?? new List<string>()),
                         ReleaseYear = game.ReleaseYear
                     });
                 }

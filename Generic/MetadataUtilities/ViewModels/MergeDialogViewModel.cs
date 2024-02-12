@@ -65,7 +65,6 @@ namespace MetadataUtilities
             {
                 _plugin.Settings.Settings.MergeRules.AddRule(rule);
                 _plugin.SavePluginSettings(_plugin.Settings.Settings);
-                _plugin.Settings.MergeRuleViewSource.View.Refresh();
             }
 
             Plugin.MergeItems(null, rule);

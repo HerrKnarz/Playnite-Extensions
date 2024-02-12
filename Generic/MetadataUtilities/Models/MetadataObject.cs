@@ -65,7 +65,7 @@ namespace MetadataUtilities.Models
 
                 if (_editName != value && UpdateItem(Name, Prefix + value))
                 {
-                    _editName = value;
+                    SetValue(ref _editName, value);
                     _name = Prefix + value;
                     CleanedUpName = EditName.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
                 }
@@ -84,7 +84,7 @@ namespace MetadataUtilities.Models
                     value = string.Empty;
                 }
 
-                _name = value;
+                SetValue(ref _name, value);
 
                 _prefix = GetPrefix();
 
@@ -99,8 +99,6 @@ namespace MetadataUtilities.Models
                 }
 
                 CleanedUpName = EditName.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
-
-                OnPropertyChanged();
             }
         }
 
@@ -115,13 +113,13 @@ namespace MetadataUtilities.Models
                     value = string.Empty;
                 }
 
-                if (_prefix != value && UpdateItem(Name, value + EditName))
+                if (_prefix == value || !UpdateItem(Name, value + EditName))
                 {
-                    _prefix = value;
-                    _name = value + EditName;
+                    return;
                 }
 
-                OnPropertyChanged();
+                SetValue(ref _prefix, value);
+                _name = value + EditName;
             }
         }
 

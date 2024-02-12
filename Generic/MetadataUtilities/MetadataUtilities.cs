@@ -29,6 +29,11 @@ namespace MetadataUtilities
             IsUpdating = false;
 
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
+            api.Database.Categories.ItemUpdated += Categories_ItemUpdated;
+            api.Database.Features.ItemUpdated += Features_ItemUpdated;
+            api.Database.Genres.ItemUpdated += Genres_ItemUpdated;
+            api.Database.Series.ItemUpdated += Series_ItemUpdated;
+            api.Database.Tags.ItemUpdated += Tags_ItemUpdated;
 
             Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
             {
@@ -49,6 +54,71 @@ namespace MetadataUtilities
         public SettingsViewModel Settings { get; }
 
         public override Guid Id { get; } = Guid.Parse("485ab5f0-bfb1-4c17-93cc-20d8338673be");
+
+        private void Tags_ItemUpdated(object sender, ItemUpdatedEventArgs<Tag> args)
+        {
+            if (args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
+                .ToList().Aggregate(false,
+                    (current, item)
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Tag,
+                            item.OldData.Name, item.NewData.Name)))
+            {
+                SavePluginSettings(Settings.Settings);
+            }
+        }
+
+        private void Series_ItemUpdated(object sender, ItemUpdatedEventArgs<Series> args)
+        {
+            if (args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
+                .ToList().Aggregate(false,
+                    (current, item)
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Series,
+                            item.OldData.Name, item.NewData.Name)))
+            {
+                SavePluginSettings(Settings.Settings);
+            }
+        }
+
+        private void Genres_ItemUpdated(object sender, ItemUpdatedEventArgs<Genre> args)
+        {
+            if (args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
+                .ToList().Aggregate(false,
+                    (current, item)
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Genre,
+                            item.OldData.Name, item.NewData.Name)))
+            {
+                SavePluginSettings(Settings.Settings);
+            }
+        }
+
+        private void Features_ItemUpdated(object sender, ItemUpdatedEventArgs<GameFeature> args)
+        {
+            if (args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
+                .ToList().Aggregate(false,
+                    (current, item)
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Feature,
+                            item.OldData.Name, item.NewData.Name)))
+            {
+                SavePluginSettings(Settings.Settings);
+            }
+        }
+
+        private void Categories_ItemUpdated(object sender, ItemUpdatedEventArgs<Category> args)
+        {
+            if (args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
+                .ToList().Aggregate(false,
+                    (current, item)
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Category,
+                            item.OldData.Name, item.NewData.Name)))
+            {
+                SavePluginSettings(Settings.Settings);
+            }
+        }
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {

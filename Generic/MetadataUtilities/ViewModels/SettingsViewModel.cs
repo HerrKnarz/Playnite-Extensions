@@ -16,6 +16,7 @@ namespace MetadataUtilities
     public class SettingsViewModel : ObservableObject, ISettings
     {
         private readonly MetadataUtilities _plugin;
+        private MergeRules _mergeRules;
         private CollectionViewSource _mergeRuleViewSource;
         private MergeRule _selectedMergeRule;
         private Settings _settings;
@@ -25,14 +26,13 @@ namespace MetadataUtilities
         {
             _plugin = plugin;
 
+            _mergeRules = Settings?.MergeRules;
+
             Settings savedSettings = plugin.LoadPluginSettings<Settings>();
 
             Settings = savedSettings ?? new Settings();
 
-            MergeRuleViewSource = new CollectionViewSource
-            {
-                Source = Settings.MergeRules
-            };
+            MergeRuleViewSource = new CollectionViewSource();
 
             MergeRuleViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
             MergeRuleViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
@@ -70,6 +70,12 @@ namespace MetadataUtilities
 
                 SourceObjectsViewSource.View.Refresh();
             }
+        }
+
+        public MergeRules MergeRules
+        {
+            get => _mergeRules;
+            set => SetValue(ref _mergeRules, value);
         }
 
         public Settings Settings
@@ -300,7 +306,12 @@ namespace MetadataUtilities
             }
         }, items => items?.Any() ?? false);
 
-        public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
+        public void BeginEdit()
+        {
+            MergeRules = Settings.MergeRules;
+            MergeRuleViewSource.Source = MergeRules;
+            EditingClone = Serialization.GetClone(Settings);
+        }
 
         public void CancelEdit() => Settings = EditingClone;
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using KNARZhelper;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -31,6 +32,20 @@ namespace MetadataUtilities.Models
                     dest.SourceObjects.Add(obj);
                 }
             }
+        }
+
+        public bool FindAndRenameRule(FieldType fieldType, string name, string newName)
+        {
+            MergeRule rule = this.FirstOrDefault(x => x.Name == name && x.Type == fieldType);
+
+            if (rule == null)
+            {
+                return false;
+            }
+
+            rule.Name = newName;
+
+            return true;
         }
     }
 }
