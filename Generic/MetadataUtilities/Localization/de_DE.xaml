@@ -19,7 +19,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Typ ändern</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Nur ausgewählte</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Spielanzahl</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Group matching items</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Zusammenpassende Elemente gruppieren</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Zusammenführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Zugehörige Spiele</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Nicht verwendete entfernen</sys:String>
@@ -38,7 +38,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Zusammenführungsregel-Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadaten-Werkzeuge</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Folgende nicht verwendete Metadatenelemente wurden entfernt:</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefix</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Präfix</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Standardwerte werden hinzugefügt...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Entferne nicht verwendete Metadatenelemente...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Existierende Elemente hinzufügen</sys:String>
@@ -51,16 +51,16 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Versteckte Spiele ignorieren, wenn nicht verwendete Metadaten entfernt werden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Zusammenführungsregeln beim Metadaten-Update automatisch ausführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Zusammenführungsregeln</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsPrefixDescription">Here you can define prefixes to further categorize your metadata types. These prefixes can than be filtered, sorted and changed in the Metadata Editor. The corresponding combo boxes will only appear, if you have at least one prefix defined. If you want a whitespace between the prefix and the item name, you need to add it to the prefix here. So if you for example have a tag like &quot;[art style] realistic&quot;, you need to add &quot;[art style] &quot; as your prefix. In the Metadata editor the tag will then have this prefix and the name will be shown as &quot;realistic&quot;.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsPrefixDescription">Hier kannst du Präfixe zur weiteren Kategorisierung deiner Metadatentypen definieren. Diese Präfixe können im Metadaten-Editor gefiltert, sortiert und geändert werden. Die entsprechenden Comboboxen werden nur angezeigt, wenn mindestens ein Präfix definiert ist. Wenn Du ein Leerzeichen zwischen dem Präfix und dem Elementnamen willst, musst du ihn hier hinter dem Präfix mit eingeben. Hast du also zum Beispiel einen Tag wie &quot;[Art style] realistisch&quot;, musst du &quot;[Art style] &quot; als Präfix hinzufügen. Im Metadaten-Editor wird das Schlagwort dann dieses Präfix haben und der Name wird als &quot;realistisch&quot; angezeigt.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Nicht verwendete Metadaten beim Start entfernen</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Automatically rename default tags/categories when the corresponding original item is renamed.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Automatically rename merge rule target when the corresponding original item is renamed.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Standard-Tags/Kategorien automatisch umbenennen, wenn das zugehörige Originalelement umbenannt wird.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Das Ziel einer Zusammenführungsregel automatisch umbenennen, wenn das zugehörige Originalelement umbenannt wird.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Nur hinzufügen, wenn beim Import der Metadaten keine Schlagworte gefunden wurden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Metadaten-Editor-Button im oberen Panel anzeigen (Neustart erforderlich)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Standardwerte</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Allgemein</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Zusammenführen</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefixes</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Präfixe</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Werte zum Zusammenführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Schreibe Debug-Logmeldungen (nur im Falle eines vermuteten Fehler verwenden!)</sys:String>
 </ResourceDictionary>
