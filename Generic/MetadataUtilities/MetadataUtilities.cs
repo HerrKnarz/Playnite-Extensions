@@ -57,6 +57,11 @@ namespace MetadataUtilities
 
         private void Tags_ItemUpdated(object sender, ItemUpdatedEventArgs<Tag> args)
         {
+            if (!Settings.Settings.RenameDefaults && !Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
             List<ItemUpdateEvent<Tag>> items = args.UpdatedItems
                 .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name) &&
                                !string.IsNullOrEmpty(item.NewData.Name))
@@ -69,24 +74,30 @@ namespace MetadataUtilities
 
             bool mustSave = false;
 
-            foreach (ItemUpdateEvent<Tag> item in items)
+            if (Settings.Settings.RenameDefaults)
             {
-                MetadataObject tag = Settings.Settings.DefaultTags?.FirstOrDefault(x => x.Name == item.OldData.Name);
-
-                if (tag == null)
+                foreach (ItemUpdateEvent<Tag> item in items)
                 {
-                    continue;
-                }
+                    MetadataObject tag = Settings.Settings.DefaultTags?.FirstOrDefault(x => x.Name == item.OldData.Name);
 
-                tag.Name = item.NewData.Name;
-                mustSave = true;
+                    if (tag == null)
+                    {
+                        continue;
+                    }
+
+                    tag.Name = item.NewData.Name;
+                    mustSave = true;
+                }
             }
 
-            mustSave = items.Aggregate(mustSave,
-                (current, item)
-                    => current |
-                       Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Tag, item.OldData.Name,
-                           item.NewData.Name));
+            if (Settings.Settings.RenameMergeRules)
+            {
+                mustSave = items.Aggregate(mustSave,
+                    (current, item)
+                        => current |
+                           Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Tag, item.OldData.Name,
+                               item.NewData.Name));
+            }
 
             if (mustSave)
             {
@@ -96,6 +107,11 @@ namespace MetadataUtilities
 
         private void Series_ItemUpdated(object sender, ItemUpdatedEventArgs<Series> args)
         {
+            if (!Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
             if (args.UpdatedItems
                 .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
                 .ToList().Aggregate(false,
@@ -109,6 +125,11 @@ namespace MetadataUtilities
 
         private void Genres_ItemUpdated(object sender, ItemUpdatedEventArgs<Genre> args)
         {
+            if (!Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
             if (args.UpdatedItems
                 .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
                 .ToList().Aggregate(false,
@@ -122,6 +143,11 @@ namespace MetadataUtilities
 
         private void Features_ItemUpdated(object sender, ItemUpdatedEventArgs<GameFeature> args)
         {
+            if (!Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
             if (args.UpdatedItems
                 .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
                 .ToList().Aggregate(false,
@@ -135,6 +161,11 @@ namespace MetadataUtilities
 
         private void Categories_ItemUpdated(object sender, ItemUpdatedEventArgs<Category> args)
         {
+            if (!Settings.Settings.RenameDefaults && !Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
             List<ItemUpdateEvent<Category>> items = args.UpdatedItems
                 .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name) &&
                                !string.IsNullOrEmpty(item.NewData.Name))
@@ -147,24 +178,30 @@ namespace MetadataUtilities
 
             bool mustSave = false;
 
-            foreach (ItemUpdateEvent<Category> item in items)
+            if (Settings.Settings.RenameDefaults)
             {
-                MetadataObject tag = Settings.Settings.DefaultCategories?.FirstOrDefault(x => x.Name == item.OldData.Name);
-
-                if (tag == null)
+                foreach (ItemUpdateEvent<Category> item in items)
                 {
-                    continue;
-                }
+                    MetadataObject tag = Settings.Settings.DefaultCategories?.FirstOrDefault(x => x.Name == item.OldData.Name);
 
-                tag.Name = item.NewData.Name;
-                mustSave = true;
+                    if (tag == null)
+                    {
+                        continue;
+                    }
+
+                    tag.Name = item.NewData.Name;
+                    mustSave = true;
+                }
             }
 
-            mustSave = items.Aggregate(mustSave,
-                (current, item)
-                    => current |
-                       Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Category, item.OldData.Name,
-                           item.NewData.Name));
+            if (Settings.Settings.RenameMergeRules)
+            {
+                mustSave = items.Aggregate(mustSave,
+                    (current, item)
+                        => current |
+                           Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Category, item.OldData.Name,
+                               item.NewData.Name));
+            }
 
             if (mustSave)
             {

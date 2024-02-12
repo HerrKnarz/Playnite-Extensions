@@ -33,6 +33,8 @@
                           Content="{DynamicResource LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules}"/>
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.MergeMetadataOnMetadataUpdate}" Margin="0,10,0,0"
                           Content="{DynamicResource LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate}"/>
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameMergeRules}" Margin="0,10,0,0"
+                          Content="{DynamicResource LOCMetadataUtilitiesSettingsRenameDefaults}"/>
                 <Grid DockPanel.Dock="Top" Margin="0,20,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -97,13 +99,18 @@
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabDefaults}">
             <ScrollViewer>
                 <DockPanel Margin="10" LastChildFill="False">
-                    <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsDefaultCategories}" DockPanel.Dock="Top" Padding="10">
+                    <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameDefaults}" 
+                              Content="{DynamicResource LOCMetadataUtilitiesSettingsRenameDefaults}"/>
+
+                    <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsDefaultCategories}" Margin="0,10,0,0" DockPanel.Dock="Top" 
+                              Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
-                            <ListBox Name="LbDefaultCategories" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultCategories}"
+                            <ListBox Name="LbDefaultCategories" HorizontalContentAlignment="Stretch" 
+                                     ItemsSource="{Binding Settings.DefaultCategories}"
                                      Height="200" VerticalAlignment="Top" SelectionMode="Extended">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
@@ -129,8 +136,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
-                            <ListBox Name="LbDefaultTags" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultTags}" Height="200" 
-                                     VerticalAlignment="Top" SelectionMode="Extended">
+                            <ListBox Name="LbDefaultTags" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultTags}" 
+                                     Height="200" VerticalAlignment="Top" SelectionMode="Extended">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Name}" />
