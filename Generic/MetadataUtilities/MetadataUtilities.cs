@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
-using MergeAction = MetadataUtilities.Actions.MergeAction;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace MetadataUtilities
@@ -30,6 +29,11 @@ namespace MetadataUtilities
             IsUpdating = false;
 
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
+            api.Database.Categories.ItemUpdated += Categories_ItemUpdated;
+            api.Database.Features.ItemUpdated += Features_ItemUpdated;
+            api.Database.Genres.ItemUpdated += Genres_ItemUpdated;
+            api.Database.Series.ItemUpdated += Series_ItemUpdated;
+            api.Database.Tags.ItemUpdated += Tags_ItemUpdated;
 
             Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
             {
@@ -51,6 +55,160 @@ namespace MetadataUtilities
 
         public override Guid Id { get; } = Guid.Parse("485ab5f0-bfb1-4c17-93cc-20d8338673be");
 
+        private void Tags_ItemUpdated(object sender, ItemUpdatedEventArgs<Tag> args)
+        {
+            if (!Settings.Settings.RenameDefaults && !Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
+            List<ItemUpdateEvent<Tag>> items = args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name) &&
+                               !string.IsNullOrEmpty(item.NewData.Name))
+                .ToList();
+
+            if (!items.Any())
+            {
+                return;
+            }
+
+            bool mustSave = false;
+
+            if (Settings.Settings.RenameDefaults)
+            {
+                foreach (ItemUpdateEvent<Tag> item in items)
+                {
+                    MetadataObject tag = Settings.Settings.DefaultTags?.FirstOrDefault(x => x.Name == item.OldData.Name);
+
+                    if (tag == null)
+                    {
+                        continue;
+                    }
+
+                    tag.Name = item.NewData.Name;
+                    mustSave = true;
+                }
+            }
+
+            if (Settings.Settings.RenameMergeRules)
+            {
+                mustSave = items.Aggregate(mustSave,
+                    (current, item)
+                        => current |
+                           Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Tag, item.OldData.Name,
+                               item.NewData.Name));
+            }
+
+            if (mustSave)
+            {
+                SavePluginSettings(Settings.Settings);
+            }
+        }
+
+        private void Series_ItemUpdated(object sender, ItemUpdatedEventArgs<Series> args)
+        {
+            if (!Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
+            if (args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
+                .ToList().Aggregate(false,
+                    (current, item)
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Series,
+                            item.OldData.Name, item.NewData.Name)))
+            {
+                SavePluginSettings(Settings.Settings);
+            }
+        }
+
+        private void Genres_ItemUpdated(object sender, ItemUpdatedEventArgs<Genre> args)
+        {
+            if (!Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
+            if (args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
+                .ToList().Aggregate(false,
+                    (current, item)
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Genre,
+                            item.OldData.Name, item.NewData.Name)))
+            {
+                SavePluginSettings(Settings.Settings);
+            }
+        }
+
+        private void Features_ItemUpdated(object sender, ItemUpdatedEventArgs<GameFeature> args)
+        {
+            if (!Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
+            if (args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
+                .ToList().Aggregate(false,
+                    (current, item)
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Feature,
+                            item.OldData.Name, item.NewData.Name)))
+            {
+                SavePluginSettings(Settings.Settings);
+            }
+        }
+
+        private void Categories_ItemUpdated(object sender, ItemUpdatedEventArgs<Category> args)
+        {
+            if (!Settings.Settings.RenameDefaults && !Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
+            List<ItemUpdateEvent<Category>> items = args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name) &&
+                               !string.IsNullOrEmpty(item.NewData.Name))
+                .ToList();
+
+            if (!items.Any())
+            {
+                return;
+            }
+
+            bool mustSave = false;
+
+            if (Settings.Settings.RenameDefaults)
+            {
+                foreach (ItemUpdateEvent<Category> item in items)
+                {
+                    MetadataObject tag = Settings.Settings.DefaultCategories?.FirstOrDefault(x => x.Name == item.OldData.Name);
+
+                    if (tag == null)
+                    {
+                        continue;
+                    }
+
+                    tag.Name = item.NewData.Name;
+                    mustSave = true;
+                }
+            }
+
+            if (Settings.Settings.RenameMergeRules)
+            {
+                mustSave = items.Aggregate(mustSave,
+                    (current, item)
+                        => current |
+                           Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Category, item.OldData.Name,
+                               item.NewData.Name));
+            }
+
+            if (mustSave)
+            {
+                SavePluginSettings(Settings.Settings);
+            }
+        }
+
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
             List<Game> games = PlayniteApi.Database.Games
@@ -63,22 +221,23 @@ namespace MetadataUtilities
             SavePluginSettings(Settings.Settings);
         }
 
-
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             base.OnApplicationStarted(args);
 
-            if (Settings.Settings.RemoveUnusedOnStartup)
+            if (!Settings.Settings.RemoveUnusedOnStartup)
             {
-                Cursor.Current = Cursors.WaitCursor;
-                try
-                {
-                    MetadataListObjects.RemoveUnusedMetadata(true, Settings.Settings.IgnoreHiddenGamesInRemoveUnused);
-                }
-                finally
-                {
-                    Cursor.Current = Cursors.Default;
-                }
+                return;
+            }
+
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                MetadataObjects.RemoveUnusedMetadata(Settings.Settings, true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         }
 
@@ -108,7 +267,74 @@ namespace MetadataUtilities
                  (item.OldData.TagIds == null ||
                   !new HashSet<Guid>(item.OldData.TagIds).SetEquals(item.NewData.TagIds)))).Select(item => item.NewData).ToList();
 
-            DoForAll(games, MergeAction.Instance(this));
+            MergeItems(games);
+        }
+
+        public void MergeItems(List<Game> games, MergeRule rule) => MergeItems(games, new List<MergeRule> { rule }, true);
+
+        public void MergeItems(List<Game> games = null, List<MergeRule> rules = null, bool showDialog = false)
+        {
+            List<Guid> gamesAffected = new List<Guid>();
+
+            IsUpdating = true;
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                using (API.Instance.Database.BufferedUpdate())
+                {
+                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                        ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergingItems"),
+                        false
+                    )
+                    {
+                        IsIndeterminate = true
+                    };
+
+                    API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                    {
+                        try
+                        {
+                            bool removeUnused = false;
+
+                            if (games == null)
+                            {
+                                removeUnused = true;
+                                games = new List<Game>();
+                                games.AddRange(API.Instance.Database.Games);
+                            }
+
+                            if (rules == null)
+                            {
+                                rules = new List<MergeRule>();
+                                rules.AddRange(Settings.Settings.MergeRules);
+                            }
+
+                            foreach (MergeRule rule in rules)
+                            {
+                                gamesAffected.AddMissing(rule.Merge(games, removeUnused));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex);
+                        }
+                    }, globalProgressOptions);
+                }
+            }
+            finally
+            {
+                IsUpdating = false;
+                Cursor.Current = Cursors.Default;
+            }
+
+            // Shows a dialog with the number of games actually affected.
+            if (!showDialog || games?.Count() == 1)
+            {
+                return;
+            }
+
+            Cursor.Current = Cursors.Default;
+            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergedMetadataMessage"), gamesAffected.Distinct().Count()));
         }
 
         /// <summary>
@@ -119,7 +345,7 @@ namespace MetadataUtilities
         /// <param name="action">Instance of the action to be executed</param>
         /// <param name="showDialog">If true a dialog will be shown after completion</param>
         /// <param name="actionModifier">specifies the type of action to execute, if more than one is possible.</param>
-        private void DoForAll(List<Game> games, BaseAction action, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
+        internal void DoForAll(List<Game> games, IBaseAction action, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
         {
             IsUpdating = true;
 
@@ -182,11 +408,13 @@ namespace MetadataUtilities
                     }
 
                     // Shows a dialog with the number of games actually affected.
-                    if (showDialog)
+                    if (!showDialog)
                     {
-                        Cursor.Current = Cursors.Default;
-                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(action.ResultMessage), gamesAffected));
+                        return;
                     }
+
+                    Cursor.Current = Cursors.Default;
+                    PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(action.ResultMessage), gamesAffected));
                 }
             }
             finally
@@ -204,10 +432,10 @@ namespace MetadataUtilities
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                MetadataListObjects metadataListObjects = new MetadataListObjects(Settings.Settings);
-                metadataListObjects.LoadMetadata();
+                MetadataObjects metadataObjects = new MetadataObjects(Settings.Settings);
+                metadataObjects.LoadMetadata();
 
-                MetadataEditorViewModel viewModel = new MetadataEditorViewModel(this, metadataListObjects);
+                MetadataEditorViewModel viewModel = new MetadataEditorViewModel(this, metadataObjects);
 
                 MetadataEditorView editorView = new MetadataEditorView();
 
@@ -273,7 +501,7 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnused"),
                     MenuSection = $"@{menuSection}",
                     Icon = "muRemoveIcon",
-                    Action = a => MetadataListObjects.RemoveUnusedMetadata(false, Settings.Settings.IgnoreHiddenGamesInRemoveUnused)
+                    Action = a => MetadataObjects.RemoveUnusedMetadata(Settings.Settings)
                 }
             };
 
@@ -283,6 +511,7 @@ namespace MetadataUtilities
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             string menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
+            string mergeSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsMergeRules");
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
             List<Game> games = args.Games.Distinct().ToList();
 
@@ -300,9 +529,16 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuMergeMetadata"),
                     MenuSection = menuSection,
                     Icon = "muMergeIcon",
-                    Action = a => DoForAll(games, MergeAction.Instance(this), true)
+                    Action = a => MergeItems(games, null, true)
                 }
             });
+
+            menuItems.AddRange(Settings.Settings.MergeRules.OrderBy(x => x.TypeAndName).Select(rule => new GameMenuItem
+            {
+                Description = rule.TypeAndName,
+                MenuSection = $"{menuSection}|{mergeSection}",
+                Action = a => MergeItems(games, rule)
+            }));
 
             return menuItems;
         }

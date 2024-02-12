@@ -1,7 +1,6 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.Models;
 using Playnite.SDK;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -11,21 +10,19 @@ namespace MetadataUtilities
 {
     public class ChangeTypeViewModel : ObservableObject
     {
-        //TODO: Try to add localization to combobox!
+        private readonly MetadataObjects _metadataObjects;
 
-        private readonly MetadataListObjects _metadataListObjects;
-
-        private MetadataListObjects _newObjects;
+        private MetadataObjects _newObjects;
 
         private FieldType _newType = FieldType.Category;
         private MetadataUtilities _plugin;
         private bool _saveAsRule;
 
-        public ChangeTypeViewModel(MetadataUtilities plugin, MetadataListObjects items)
+        public ChangeTypeViewModel(MetadataUtilities plugin, MetadataObjects items)
         {
             Plugin = plugin;
-            _metadataListObjects = items;
-            _newObjects = new MetadataListObjects(plugin.Settings.Settings);
+            _metadataObjects = items;
+            _newObjects = new MetadataObjects(plugin.Settings.Settings);
         }
 
         public MetadataUtilities Plugin
@@ -38,7 +35,7 @@ namespace MetadataUtilities
             }
         }
 
-        public MetadataListObjects NewObjects
+        public MetadataObjects NewObjects
         {
             get => _newObjects;
             set => SetValue(ref _newObjects, value);
@@ -61,44 +58,41 @@ namespace MetadataUtilities
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                foreach (MetadataListObject item in _metadataListObjects)
+                foreach (MetadataObject item in _metadataObjects)
                 {
                     if (item.Type == NewType)
                     {
                         continue;
                     }
 
-                    Guid newId = DatabaseObjectHelper.AddDbObject(NewType, item.Name);
-
-                    DatabaseObjectHelper.ReplaceDbObject(item.Type, item.Id, NewType, newId);
-
-                    NewObjects.Add(new MetadataListObject
+                    MergeRule rule = new MergeRule(_plugin.Settings.Settings)
                     {
                         Type = NewType,
-                        EditName = item.EditName,
-                        Id = newId
+                        Name = item.Name,
+                        SourceObjects = new ObservableCollection<MetadataObject>
+                        {
+                            new MetadataObject(_plugin.Settings.Settings)
+                            {
+                                Type = item.Type,
+                                Name = item.Name,
+                                Id = item.Id
+                            }
+                        }
+                    };
+
+                    rule.Merge();
+
+                    NewObjects.Add(new MetadataObject(_plugin.Settings.Settings)
+                    {
+                        Type = NewType,
+                        Name = item.Name,
+                        Id = rule.Id
                     });
 
                     if (!SaveAsRule)
                     {
                         continue;
                     }
-
-                    MergeRule rule = new MergeRule
-                    {
-                        Type = NewType,
-                        EditName = item.EditName,
-                        Id = newId,
-                        SourceObjects = new ObservableCollection<MetadataListObject>
-                        {
-                            new MetadataListObject
-                            {
-                                Type = item.Type,
-                                EditName = item.EditName,
-                                Id = item.Id
-                            }
-                        }
-                    };
 
                     _plugin.Settings.Settings.MergeRules.AddRule(rule);
                 }

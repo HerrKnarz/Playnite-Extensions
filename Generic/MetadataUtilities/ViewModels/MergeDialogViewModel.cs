@@ -3,21 +3,20 @@ using Playnite.SDK;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace MetadataUtilities
 {
     public class MergeDialogViewModel : ObservableObject
     {
-        private MetadataListObject _mergeTarget;
-        private MetadataListObjects _metadataListObjects;
+        private MetadataObject _mergeTarget;
+        private MetadataObjects _metadataObjects;
         private MetadataUtilities _plugin;
         private bool _saveAsRule;
 
-        public MergeDialogViewModel(MetadataUtilities plugin, MetadataListObjects items)
+        public MergeDialogViewModel(MetadataUtilities plugin, MetadataObjects items)
         {
             Plugin = plugin;
-            MetadataListObjects = items;
+            MetadataObjects = items;
         }
 
         public MetadataUtilities Plugin
@@ -30,17 +29,17 @@ namespace MetadataUtilities
             }
         }
 
-        public MetadataListObjects MetadataListObjects
+        public MetadataObjects MetadataObjects
         {
-            get => _metadataListObjects;
+            get => _metadataObjects;
             set
             {
-                SetValue(ref _metadataListObjects, value);
-                MergeTarget = _metadataListObjects.FirstOrDefault();
+                SetValue(ref _metadataObjects, value);
+                MergeTarget = _metadataObjects.FirstOrDefault();
             }
         }
 
-        public MetadataListObject MergeTarget
+        public MetadataObject MergeTarget
         {
             get => _mergeTarget;
             set => SetValue(ref _mergeTarget, value);
@@ -54,30 +53,21 @@ namespace MetadataUtilities
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
-            Cursor.Current = Cursors.WaitCursor;
-            try
+            MergeRule rule = new MergeRule(_plugin.Settings.Settings)
             {
-                if (SaveAsRule)
-                {
-                    MergeRule rule = new MergeRule
-                    {
-                        Name = _mergeTarget.Name,
-                        Type = _mergeTarget.Type,
-                        Id = _mergeTarget.Id,
-                        SourceObjects = _metadataListObjects
-                    };
+                Name = _mergeTarget.Name,
+                Type = _mergeTarget.Type,
+                Id = _mergeTarget.Id,
+                SourceObjects = _metadataObjects
+            };
 
-                    _plugin.Settings.Settings.MergeRules.AddRule(rule);
-                }
-
+            if (SaveAsRule)
+            {
+                _plugin.Settings.Settings.MergeRules.AddRule(rule);
                 _plugin.SavePluginSettings(_plugin.Settings.Settings);
+            }
 
-                MetadataListObjects.MergeItems(MergeTarget.Type, MergeTarget.Id);
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
-            }
+            Plugin.MergeItems(null, rule);
 
             win.DialogResult = true;
             win.Close();

@@ -19,7 +19,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Change type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Only selected</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Game Count</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Group matches</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Group matching items</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Merge</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Related games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Remove unused</sys:String>
@@ -38,6 +38,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Merge Rule Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removed the following unused metadata items:</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefix</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adding defaults...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Removing unused metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Add existing items</sys:String>
@@ -50,12 +51,16 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignore hidden games when removing unused metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Automatically execute merge rules on metadata update</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Merge rules</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsPrefixDescription">Here you can define prefixes to further categorize your metadata types. These prefixes can than be filtered, sorted and changed in the Metadata Editor. The corresponding combo boxes will only appear, if you have at least one prefix defined. If you want a whitespace between the prefix and the item name, you need to add it to the prefix here. So if you for example have a tag like "[art style] realistic", you need to add "[art style] " as your prefix. In the Metadata editor the tag will then have this prefix and the name will be shown as "realistic".</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Remove unused metadata on start up</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Automatically rename default tags/categories when the corresponding original item is renamed.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Automatically rename merge rule target when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Set only when no tags were added on metadata import</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Show Metadata Editor button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Defaults</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">General</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Merging</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefixes</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Values to merge</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Write debug log messages (only use in case of suspected error!)</sys:String>
 </ResourceDictionary>

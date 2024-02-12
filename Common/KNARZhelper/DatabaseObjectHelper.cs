@@ -2,10 +2,7 @@
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Resources;
-using System.Windows.Forms;
 
 namespace KNARZhelper
 {
@@ -80,7 +77,7 @@ namespace KNARZhelper
 
         public static Guid GetDbObjectId(string name, FieldType type)
         {
-            DatabaseObject item = null;
+            DatabaseObject item;
 
             switch (type)
             {
@@ -113,71 +110,81 @@ namespace KNARZhelper
                 case FieldType.Category:
                     Category category = API.Instance.Database.Categories?.FirstOrDefault(x => x.Id == id);
 
-                    if (category != null)
+                    if (category == null)
                     {
-                        category.Name = name;
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Categories.Update(category);
-                        });
+                        return;
                     }
+
+                    category.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Categories.Update(category);
+                    });
 
                     return;
                 case FieldType.Feature:
                     GameFeature feature = API.Instance.Database.Features?.FirstOrDefault(x => x.Id == id);
 
-                    if (feature != null)
+                    if (feature == null)
                     {
-                        feature.Name = name;
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Features.Update(feature);
-                        });
+                        return;
                     }
+
+                    feature.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Features.Update(feature);
+                    });
 
                     return;
                 case FieldType.Genre:
                     Genre genre = API.Instance.Database.Genres?.FirstOrDefault(x => x.Id == id);
 
-                    if (genre != null)
+                    if (genre == null)
                     {
-                        genre.Name = name;
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Genres.Update(genre);
-                        });
+                        return;
                     }
+
+                    genre.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Genres.Update(genre);
+                    });
 
                     return;
                 case FieldType.Series:
                     Series series = API.Instance.Database.Series?.FirstOrDefault(x => x.Id == id);
 
-                    if (series != null)
+                    if (series == null)
                     {
-                        series.Name = name;
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Series.Update(series);
-                        });
+                        return;
                     }
+
+                    series.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Series.Update(series);
+                    });
 
                     return;
                 case FieldType.Tag:
                     Tag tag = API.Instance.Database.Tags?.FirstOrDefault(x => x.Id == id);
 
-                    if (tag != null)
+                    if (tag == null)
                     {
-                        tag.Name = name;
-
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Tags.Update(tag);
-                        });
+                        return;
                     }
+
+                    tag.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Tags.Update(tag);
+                    });
 
                     return;
                 default:
@@ -185,58 +192,50 @@ namespace KNARZhelper
             }
         }
 
-        public static void RemoveDbObject(FieldType type, Guid id, bool checkIfUsed = true)
+        public static bool RemoveDbObject(FieldType type, Guid id, bool checkIfUsed = true)
         {
             if (checkIfUsed)
             {
-                ReplaceDbObject(type, id);
+                return ReplaceDbObject(API.Instance.Database.Games.ToList(), type, id)?.Count() > 0;
             }
             else
             {
                 switch (type)
                 {
                     case FieldType.Category:
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Categories.Remove(id);
-                        });
+                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Categories.Remove(id));
                         break;
                     case FieldType.Feature:
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Features.Remove(id);
-                        });
+                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Features.Remove(id));
                         break;
                     case FieldType.Genre:
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Genres.Remove(id);
-                        });
+                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Genres.Remove(id));
                         break;
                     case FieldType.Series:
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Series.Remove(id);
-                        });
+                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Series.Remove(id));
                         break;
                     case FieldType.Tag:
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Tags.Remove(id);
-                        });
+                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Tags.Remove(id));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
                 }
+
+                return false;
             }
         }
 
-        public static void ReplaceDbObject(FieldType type, Guid id, FieldType? newType = null, Guid? newId = null)
+        public static IEnumerable<Guid> ReplaceDbObject(List<Game> games, FieldType type, Guid id, FieldType? newType = null, Guid? newId = null, bool removeAfter = true)
         {
+            if (id == Guid.Empty)
+            {
+                yield break;
+            }
+
             switch (type)
             {
                 case FieldType.Category:
-                    foreach (Game game in API.Instance.Database.Games.Where(g => g.CategoryIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.CategoryIds?.Any(t => t == id) ?? false))
                     {
                         if (!game.CategoryIds.Remove(id))
                         {
@@ -252,16 +251,21 @@ namespace KNARZhelper
                         {
                             API.Instance.Database.Games.Update(game);
                         });
+
+                        yield return game.Id;
                     }
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (removeAfter)
                     {
-                        API.Instance.Database.Categories.Remove(id);
-                    });
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Categories.Remove(id);
+                        });
+                    }
 
                     break;
                 case FieldType.Feature:
-                    foreach (Game game in API.Instance.Database.Games.Where(g => g.FeatureIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.FeatureIds?.Any(t => t == id) ?? false))
                     {
                         if (!game.FeatureIds.Remove(id))
                         {
@@ -277,16 +281,21 @@ namespace KNARZhelper
                         {
                             API.Instance.Database.Games.Update(game);
                         });
+
+                        yield return game.Id;
                     }
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (removeAfter)
                     {
-                        API.Instance.Database.Features.Remove(id);
-                    });
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Features.Remove(id);
+                        });
+                    }
 
                     break;
                 case FieldType.Genre:
-                    foreach (Game game in API.Instance.Database.Games.Where(g => g.GenreIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.GenreIds?.Any(t => t == id) ?? false))
                     {
                         if (!game.GenreIds.Remove(id))
                         {
@@ -302,16 +311,21 @@ namespace KNARZhelper
                         {
                             API.Instance.Database.Games.Update(game);
                         });
+
+                        yield return game.Id;
                     }
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (removeAfter)
                     {
-                        API.Instance.Database.Genres.Remove(id);
-                    });
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Genres.Remove(id);
+                        });
+                    }
 
                     break;
                 case FieldType.Series:
-                    foreach (Game game in API.Instance.Database.Games.Where(g => g.SeriesIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.SeriesIds?.Any(t => t == id) ?? false))
                     {
                         if (!game.SeriesIds.Remove(id))
                         {
@@ -327,16 +341,21 @@ namespace KNARZhelper
                         {
                             API.Instance.Database.Games.Update(game);
                         });
+
+                        yield return game.Id;
                     }
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (removeAfter)
                     {
-                        API.Instance.Database.Series.Remove(id);
-                    });
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Series.Remove(id);
+                        });
+                    }
 
                     break;
                 case FieldType.Tag:
-                    foreach (Game game in API.Instance.Database.Games.Where(g => g.TagIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.TagIds?.Any(t => t == id) ?? false))
                     {
                         if (!game.TagIds.Remove(id))
                         {
@@ -352,12 +371,17 @@ namespace KNARZhelper
                         {
                             API.Instance.Database.Games.Update(game);
                         });
+
+                        yield return game.Id;
                     }
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    if (removeAfter)
                     {
-                        API.Instance.Database.Tags.Remove(id);
-                    });
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Tags.Remove(id);
+                        });
+                    }
 
                     break;
                 default:
@@ -367,8 +391,6 @@ namespace KNARZhelper
 
         public static Guid AddDbObject(FieldType type, string name)
         {
-            Guid id = Guid.Empty;
-
             switch (type)
             {
                 case FieldType.Category:

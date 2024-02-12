@@ -10,18 +10,18 @@ using System.Windows;
 
 namespace MetadataUtilities.Models
 {
-    public class MetadataListObjects : ObservableCollection<MetadataListObject>
+    public class MetadataObjects : ObservableCollection<MetadataObject>
     {
         private readonly Settings _settings;
 
-        public MetadataListObjects(Settings settings) => _settings = settings;
+        public MetadataObjects(Settings settings) => _settings = settings;
 
         public void LoadMetadata(bool showGameNumber = true, FieldType? type = null)
         {
             Log.Debug("=== LoadMetadata: Start ===");
             DateTime ts = DateTime.Now;
 
-            List<MetadataListObject> temporaryList = new List<MetadataListObject>();
+            List<MetadataObject> temporaryList = new List<MetadataObject>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCLoadingLabel"),
@@ -38,10 +38,10 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Category)
                     {
                         temporaryList.AddRange(API.Instance.Database.Categories.Select(category
-                            => new MetadataListObject
+                            => new MetadataObject(_settings)
                             {
                                 Id = category.Id,
-                                EditName = category.Name,
+                                Name = category.Name,
                                 Type = FieldType.Category
                             }));
                     }
@@ -49,10 +49,10 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Feature)
                     {
                         temporaryList.AddRange(API.Instance.Database.Features.Select(feature
-                            => new MetadataListObject
+                            => new MetadataObject(_settings)
                             {
                                 Id = feature.Id,
-                                EditName = feature.Name,
+                                Name = feature.Name,
                                 Type = FieldType.Feature
                             }));
                     }
@@ -60,10 +60,10 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Genre)
                     {
                         temporaryList.AddRange(API.Instance.Database.Genres.Select(genre
-                            => new MetadataListObject
+                            => new MetadataObject(_settings)
                             {
                                 Id = genre.Id,
-                                EditName = genre.Name,
+                                Name = genre.Name,
                                 Type = FieldType.Genre
                             }));
                     }
@@ -71,10 +71,10 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Series)
                     {
                         temporaryList.AddRange(API.Instance.Database.Series.Select(series
-                            => new MetadataListObject
+                            => new MetadataObject(_settings)
                             {
                                 Id = series.Id,
-                                EditName = series.Name,
+                                Name = series.Name,
                                 Type = FieldType.Series
                             }));
                     }
@@ -82,10 +82,10 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Tag)
                     {
                         temporaryList.AddRange(API.Instance.Database.Tags.Select(tag
-                            => new MetadataListObject
+                            => new MetadataObject(_settings)
                             {
                                 Id = tag.Id,
-                                EditName = tag.Name,
+                                Name = tag.Name,
                                 Type = FieldType.Tag
                             }));
                     }
@@ -106,9 +106,9 @@ namespace MetadataUtilities.Models
             Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
-        public static List<MetadataListObject> RemoveUnusedMetadata(bool AutoMode = false, bool ignoreHiddenGames = false)
+        public static List<MetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
         {
-            List<MetadataListObject> temporaryList = new List<MetadataListObject>();
+            List<MetadataObject> temporaryList = new List<MetadataObject>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
@@ -123,58 +123,68 @@ namespace MetadataUtilities.Models
                 try
                 {
                     temporaryList.AddRange(API.Instance.Database.Categories
-                        .Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.CategoryIds?.Any(t => t == x.Id) ?? false)))
+                        .Where(x => !API.Instance.Database.Games.Any(g
+                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
+                               (g.CategoryIds?.Any(t => t == x.Id) ?? false)))
                         .Select(category
-                            => new MetadataListObject
+                            => new MetadataObject(settings)
                             {
                                 Id = category.Id,
-                                EditName = category.Name,
+                                Name = category.Name,
                                 Type = FieldType.Category
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Features
-                        .Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.FeatureIds?.Any(t => t == x.Id) ?? false)))
+                        .Where(x => !API.Instance.Database.Games.Any(g
+                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
+                               (g.FeatureIds?.Any(t => t == x.Id) ?? false)))
                         .Select(feature
-                            => new MetadataListObject
+                            => new MetadataObject(settings)
                             {
                                 Id = feature.Id,
-                                EditName = feature.Name,
+                                Name = feature.Name,
                                 Type = FieldType.Feature
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Genres
-                        .Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.GenreIds?.Any(t => t == x.Id) ?? false)))
+                        .Where(x => !API.Instance.Database.Games.Any(g
+                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
+                               (g.GenreIds?.Any(t => t == x.Id) ?? false)))
                         .Select(genre
-                            => new MetadataListObject
+                            => new MetadataObject(settings)
                             {
                                 Id = genre.Id,
-                                EditName = genre.Name,
+                                Name = genre.Name,
                                 Type = FieldType.Genre
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Series
-                        .Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.SeriesIds?.Any(t => t == x.Id) ?? false)))
+                        .Where(x => !API.Instance.Database.Games.Any(g
+                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
+                               (g.SeriesIds?.Any(t => t == x.Id) ?? false)))
                         .Select(series
-                            => new MetadataListObject
+                            => new MetadataObject(settings)
                             {
                                 Id = series.Id,
-                                EditName = series.Name,
+                                Name = series.Name,
                                 Type = FieldType.Series
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Tags
-                        .Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.TagIds?.Any(t => t == x.Id) ?? false)))
+                        .Where(x => !API.Instance.Database.Games.Any(g
+                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
+                               (g.TagIds?.Any(t => t == x.Id) ?? false)))
                         .Select(tag
-                            => new MetadataListObject
+                            => new MetadataObject(settings)
                             {
                                 Id = tag.Id,
-                                EditName = tag.Name,
+                                Name = tag.Name,
                                 Type = FieldType.Tag
                             }));
 
-                    foreach (MetadataListObject item in temporaryList)
+                    foreach (MetadataObject item in temporaryList)
                     {
-                        DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id, ignoreHiddenGames);
+                        DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id, settings.IgnoreHiddenGamesInRemoveUnused);
                     }
                 }
                 catch (Exception ex)
@@ -187,7 +197,7 @@ namespace MetadataUtilities.Models
             {
                 string items = string.Join(Environment.NewLine, temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
 
-                if (AutoMode)
+                if (autoMode)
                 {
                     API.Instance.Notifications.Add("MetadataUtilities",
                         $"{ResourceProvider.GetString("LOCMetadataUtilitiesNotificationRemovedItems")}{Environment.NewLine}{Environment.NewLine}{items}",
@@ -199,7 +209,7 @@ namespace MetadataUtilities.Models
                         ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-            else if (!AutoMode)
+            else if (!autoMode)
             {
                 API.Instance.Dialogs.ShowMessage(
                     ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoUnusedItemsFound"),
@@ -209,7 +219,7 @@ namespace MetadataUtilities.Models
             return temporaryList;
         }
 
-        public static void UpdateGameCounts(List<MetadataListObject> itemList, bool ignoreHiddenGames)
+        public static void UpdateGameCounts(List<MetadataObject> itemList, bool ignoreHiddenGames)
         {
             Log.Debug("=== UpdateGameCounts: Start ===");
             DateTime ts = DateTime.Now;
@@ -233,36 +243,12 @@ namespace MetadataUtilities.Models
 
             List<IGrouping<Guid, Guid>> li = items.GroupBy(i => i).ToList();
 
-            Parallel.ForEach(itemList, opts, item =>
-            {
-                IGrouping<Guid, Guid> first = null;
-                foreach (IGrouping<Guid, Guid> i in li)
-                {
-                    if (i.Key == item.Id)
-                    {
-                        first = i;
-                        break;
-                    }
-                }
-
-                if (first == null)
-                {
-                    return;
-                }
-
-                int count = 0;
-                foreach (Guid guid in first)
-                {
-                    count++;
-                }
-
-                item.GameCount = count;
-            });
+            Parallel.ForEach(itemList, opts, item => item.GameCount = li.FirstOrDefault(i => i.Key == item.Id)?.Count() ?? 0);
 
             Log.Debug($"=== UpdateGameCounts: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
-        public static void UpdateGroupDisplay(List<MetadataListObject> itemList)
+        public static void UpdateGroupDisplay(List<MetadataObject> itemList)
         {
             Log.Debug("=== UpdateGroupDisplay: Start ===");
             DateTime ts = DateTime.Now;
@@ -272,48 +258,6 @@ namespace MetadataUtilities.Models
             Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
 
             Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-        }
-
-        public bool MergeItems(FieldType type, Guid id)
-        {
-            bool result = false;
-
-            using (API.Instance.Database.BufferedUpdate())
-            {
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergingItems"),
-                    false
-                )
-                {
-                    IsIndeterminate = false
-                };
-
-                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                {
-                    try
-                    {
-                        activateGlobalProgress.ProgressMaxValue = Count - 1;
-
-                        foreach (MetadataListObject item in this)
-                        {
-                            if (item.Id != id)
-                            {
-                                DatabaseObjectHelper.ReplaceDbObject(item.Type, item.Id, type, id);
-
-                                activateGlobalProgress.CurrentProgressValue++;
-                            }
-                        }
-
-                        result = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                    }
-                }, globalProgressOptions);
-            }
-
-            return result;
         }
     }
 }

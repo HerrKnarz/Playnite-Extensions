@@ -4,6 +4,7 @@ using MetadataUtilities.Views;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 
@@ -13,13 +14,15 @@ namespace MetadataUtilities
     {
         //TODO: Try to add localization to combobox!
 
-        private MetadataListObject _newObject = new MetadataListObject();
+        private MetadataObject _newObject;
         private MetadataUtilities _plugin;
 
-        public AddNewObjectViewModel(MetadataUtilities plugin, MetadataListObject newObject)
+        public AddNewObjectViewModel(MetadataUtilities plugin, MetadataObject newObject)
         {
             Plugin = plugin;
             NewObject = newObject;
+            Prefixes.Add(string.Empty);
+            Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
         }
 
         public MetadataUtilities Plugin
@@ -28,7 +31,7 @@ namespace MetadataUtilities
             set => SetValue(ref _plugin, value);
         }
 
-        public MetadataListObject NewObject
+        public MetadataObject NewObject
         {
             get => _newObject;
             set => SetValue(ref _newObject, value);
@@ -40,7 +43,11 @@ namespace MetadataUtilities
             win.Close();
         }, win => win != null);
 
-        public static Window GetWindow(MetadataUtilities plugin, MetadataListObject newObject)
+        public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
+
+        public Visibility PrefixVisibility => _plugin.Settings.Settings.Prefixes?.Any() ?? false ? Visibility.Visible : Visibility.Collapsed;
+
+        public static Window GetWindow(MetadataUtilities plugin, MetadataObject newObject)
         {
             try
             {

@@ -10,7 +10,7 @@
     <DockPanel Margin="10" FocusManager.FocusedElement="{Binding ElementName=CB}">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
             <Label Content="{DynamicResource LOCMetadataUtilitiesDialogMergeAs}" />
-            <ComboBox Name="CB" Margin="10,0,0,0" ItemsSource="{Binding MetadataListObjects}" SelectedItem="{Binding MergeTarget}" Width="300">
+            <ComboBox Name="CB" Margin="10,0,0,0" ItemsSource="{Binding MetadataObjects}" SelectedItem="{Binding MergeTarget}" Width="300">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

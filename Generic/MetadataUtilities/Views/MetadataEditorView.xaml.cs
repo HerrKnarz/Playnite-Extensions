@@ -22,19 +22,14 @@ namespace MetadataUtilities
             }
         }
 
-        private void DataGridCell_Selected(object sender, RoutedEventArgs e)
+        private void ClearSearchBox(object sender, RoutedEventArgs e) => SearchBox.Clear();
+
+        private void DataGrid_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
         {
-            // Lookup for the source to be DataGridCell
-            if (e.OriginalSource.GetType() != typeof(DataGridCell))
+            if (e.EditingElement is ComboBox t)
             {
-                return;
+                t.IsDropDownOpen = true;
             }
-
-            // Starts the Edit on the row;
-            DataGrid grd = (DataGrid)sender;
-            grd.BeginEdit(e);
         }
-
-        private void ClearSearchBox(object sender, RoutedEventArgs e) => txtSearchBox.Clear();
     }
 }

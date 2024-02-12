@@ -65,20 +65,23 @@
     </Compile>
     <Compile Include="Actions\AddDefaultsAction.cs" />
     <Compile Include="Actions\BaseAction.cs" />
-    <Compile Include="Actions\MergeAction.cs" />
+    <Compile Include="Actions\IBaseAction.cs" />
+    <Compile Include="EnumHelper.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\MergeRule.cs" />
     <Compile Include="Models\MergeRules.cs" />
-    <Compile Include="Models\MetadataListObject.cs" />
-    <Compile Include="Models\MetadataListObjects.cs" />
+    <Compile Include="Models\MetadataObject.cs" />
+    <Compile Include="Models\MetadataObjects.cs" />
     <Compile Include="Models\MyGame.cs" />
     <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
     <Compile Include="ViewModels\ChangeTypeViewModel.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\MergeRuleEditorViewModel.cs" />
     <Compile Include="ViewModels\SelectMetadataViewModel.cs" />
-    <Compile Include="ViewModels\Settings.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="ViewModels\MetadataEditorViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\AddNewObjectView.xaml.cs">
       <DependentUpon>AddNewObjectView.xaml</DependentUpon>
     </Compile>

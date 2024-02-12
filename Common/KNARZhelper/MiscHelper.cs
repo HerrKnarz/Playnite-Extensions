@@ -1,6 +1,5 @@
 ﻿using Playnite.SDK;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -32,9 +31,6 @@ namespace KNARZhelper
                 FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
             });
         }
-
-        public static string GetEnumDisplayName(this Enum e, string locPrefix)
-            => ResourceProvider.GetString($"LOC{locPrefix}Enum_{e.GetType().Name}_{e}");
 
         public static int RemoveAll<T>(
             this ObservableCollection<T> coll, Func<T, bool> condition)

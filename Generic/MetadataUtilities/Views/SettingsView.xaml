@@ -33,6 +33,8 @@
                           Content="{DynamicResource LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules}"/>
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.MergeMetadataOnMetadataUpdate}" Margin="0,10,0,0"
                           Content="{DynamicResource LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate}"/>
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameMergeRules}" Margin="0,10,0,0"
+                          Content="{DynamicResource LOCMetadataUtilitiesSettingsRenameDefaults}"/>
                 <Grid DockPanel.Dock="Top" Margin="0,20,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -44,35 +46,40 @@
                     </Grid.RowDefinitions>
                     <DockPanel Margin="0,0,5,0" VerticalAlignment="Stretch">
                         <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsMergeRules}" />
-                        <DataGrid Name="dgRules" ItemsSource="{Binding Settings.MergeRuleViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top" Margin="0,10,0,0"
-                              CanUserAddRows="False" HeadersVisibility="Column" SelectionMode="Single" SelectedItem="{Binding Settings.SelectedMergeRule}"
-                              HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                        <DataGrid Name="DgRules" ItemsSource="{Binding MergeRuleViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top"
+                                  Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" SelectionMode="Single"
+                                  SelectedItem="{Binding SelectedMergeRule}" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" 
+                                  ColumnWidth="*">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"
-                                                    SortDirection="Ascending"/>
+                                                    SortDirection="Ascending" Width="SizeToCells" MinWidth="50"/>
                                 <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name}" MinWidth="100" IsReadOnly="True"
                                                     SortDirection="Ascending"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
 
-                    <StackPanel Margin="0,10,5,0"  Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <StackPanel Margin="0,10,5,0" Grid.Column="0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
                         <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
                                 Command="{Binding AddNewMergeRuleCommand}"/>
-                        <Button Content="&#xef10;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsEdit}"
-                                Margin="10,0,0,0" Command="{Binding EditMergeRuleCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
-                        <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
-                                Command="{Binding RemoveMergeRuleCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
+                        <Button Content="&#xef10;" FontFamily="{DynamicResource FontIcoFont}" Margin="10,0,0,0" 
+                                ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsEdit}" Command="{Binding EditMergeRuleCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=DgRules}"/>
+                        <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" 
+                                Margin="10,0,0,0" Command="{Binding RemoveMergeRuleCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=DgRules}"/>
+                        <Button Content="{DynamicResource LOCMetadataUtilitiesEditorMerge}" Margin="10,0,0,0"
+                                Command="{Binding MergeItemsCommand}" CommandParameter="{Binding SelectedItem, ElementName=DgRules}"/>
                     </StackPanel>
 
-                    <DockPanel Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Stretch">
+                    <DockPanel Grid.Column="1" Grid.Row="0" Margin="5,0,0,0" VerticalAlignment="Stretch">
                         <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsValuesToMerge}" />
-                        <DataGrid Name="dgSources" ItemsSource="{Binding Settings.SourceObjectsViewSource.View}" AutoGenerateColumns="False"
-                              DockPanel.Dock="Top" Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" 
-                              HorizontalContentAlignment="Stretch"  VerticalAlignment="Stretch">
+                        <DataGrid Name="DgSources" ItemsSource="{Binding SourceObjectsViewSource.View}" AutoGenerateColumns="False"
+                                DockPanel.Dock="Top" Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" 
+                                HorizontalContentAlignment="Stretch"  VerticalAlignment="Stretch" ColumnWidth="*">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"
-                                                    SortDirection="Ascending"/>
+                                                    SortDirection="Ascending" Width="SizeToCells" MinWidth="50"/>
                                 <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name}" MinWidth="100" IsReadOnly="True"
                                                     SortDirection="Ascending"/>
                             </DataGrid.Columns>
@@ -81,9 +88,10 @@
 
                     <StackPanel Margin="5,10,0,0"  Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
                         <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
-                                Command="{Binding AddNewMergeSourceCommand}" CommandParameter="{Binding SelectedItem, ElementName=dgRules}"/>
-                        <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
-                                Command="{Binding RemoveMergeSourceCommand}" CommandParameter="{Binding SelectedItems, ElementName=dgSources}"/>
+                                Command="{Binding AddNewMergeSourceCommand}" CommandParameter="{Binding SelectedItem, ElementName=DgRules}"/>
+                        <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" 
+                                Margin="10,0,0,0"
+                                Command="{Binding RemoveMergeSourceCommand}" CommandParameter="{Binding SelectedItems, ElementName=DgSources}"/>
                     </StackPanel>
                 </Grid>
             </DockPanel>
@@ -91,14 +99,19 @@
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabDefaults}">
             <ScrollViewer>
                 <DockPanel Margin="10" LastChildFill="False">
-                    <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsDefaultCategories}" DockPanel.Dock="Top">
+                    <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameDefaults}" 
+                              Content="{DynamicResource LOCMetadataUtilitiesSettingsRenameDefaults}"/>
+
+                    <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsDefaultCategories}" Margin="0,10,0,0" DockPanel.Dock="Top" 
+                              Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
-                            <ListBox Name="lbDefaultCategories" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultCategories}" Height="200"
-                                 VerticalAlignment="Top" SelectionMode="Extended">
+                            <ListBox Name="LbDefaultCategories" HorizontalContentAlignment="Stretch" 
+                                     ItemsSource="{Binding Settings.DefaultCategories}"
+                                     Height="200" VerticalAlignment="Top" SelectionMode="Extended">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Name}" />
@@ -107,24 +120,24 @@
                             </ListBox>
                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                 <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddValue}"
-                                    Command="{Binding AddNewDefaultCategoryCommand}" />
+                                        Command="{Binding AddNewDefaultCategoryCommand}" />
                                 <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}" Margin="0,10,0,0"
-                                    Command="{Binding AddExistingDefaultCategoriesCommand}" />
+                                        Command="{Binding AddExistingDefaultCategoriesCommand}" />
                                 <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
-                                    Command="{Binding RemoveDefaultCategoryCommand}"
-                                    CommandParameter="{Binding SelectedItems, ElementName=lbDefaultCategories}"/>
+                                        Command="{Binding RemoveDefaultCategoryCommand}"
+                                        CommandParameter="{Binding SelectedItems, ElementName=LbDefaultCategories}"/>
                             </StackPanel>
                         </Grid>
                     </GroupBox>
 
-                    <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsDefaultTags}" Margin="0,10,0,0" DockPanel.Dock="Top">
+                    <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsDefaultTags}" Margin="0,10,0,0" DockPanel.Dock="Top" Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
-                            <ListBox Name="lbDefaultTags" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultTags}" Height="200"
-                                 VerticalAlignment="Top" SelectionMode="Extended">
+                            <ListBox Name="LbDefaultTags" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Settings.DefaultTags}" 
+                                     Height="200" VerticalAlignment="Top" SelectionMode="Extended">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Name}" />
@@ -133,12 +146,12 @@
                             </ListBox>
                             <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                 <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddValue}"
-                                    Command="{Binding AddNewDefaultTagCommand}" />
+                                        Command="{Binding AddNewDefaultTagCommand}" />
                                 <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}" Margin="0,10,0,0"
-                                    Command="{Binding AddExistingDefaultTagsCommand}" />
+                                        Command="{Binding AddExistingDefaultTagsCommand}" />
                                 <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
-                                    Command="{Binding RemoveDefaultTagCommand}"
-                                    CommandParameter="{Binding SelectedItems, ElementName=lbDefaultTags}"/>
+                                        Command="{Binding RemoveDefaultTagCommand}"
+                                        CommandParameter="{Binding SelectedItems, ElementName=LbDefaultTags}"/>
                                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.SetDefaultTagsOnlyIfEmpty}" Margin="0,10,0,0">
                                     <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty}" TextWrapping="Wrap"/>
                                 </CheckBox>
@@ -147,6 +160,20 @@
                     </GroupBox>
                 </DockPanel>
             </ScrollViewer>
+        </TabItem>
+        <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabPrefixes}">
+            <DockPanel Margin="10">
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                    <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
+                            Command="{Binding AddPrefixCommand}" />
+                    <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
+                            Command="{Binding RemovePrefixCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=ListBoxPrefixes}"/>
+                </StackPanel>
+                <TextBlock DockPanel.Dock="Top" Text="{DynamicResource LOCMetadataUtilitiesSettingsPrefixDescription}" TextWrapping="Wrap"/>
+                <ListBox DockPanel.Dock="Top" Name="ListBoxPrefixes" SelectionMode="Extended" Margin="0,10,0,0"
+                         ItemsSource="{Binding Settings.Prefixes}" />
+            </DockPanel>
         </TabItem>
     </TabControl>
 </UserControl>

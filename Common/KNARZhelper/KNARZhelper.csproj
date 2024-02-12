@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseObjectHelper.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MiscHelper.cs" />
     <Compile Include="PlatformHelper.cs" />

@@ -14,15 +14,13 @@ namespace MetadataUtilities
     {
         private ICollectionView _filteredMetadata;
         private bool _filterSelected;
-        private MetadataListObjects _metadataListObjects;
         private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
 
-        public SelectMetadataViewModel(MetadataUtilities plugin, MetadataListObjects items)
+        public SelectMetadataViewModel(MetadataUtilities plugin, MetadataObjects items)
         {
             Plugin = plugin;
-            MetadataListObjects = items;
-            FilteredMetadata = CollectionViewSource.GetDefaultView(_metadataListObjects);
+            FilteredMetadata = CollectionViewSource.GetDefaultView(items);
             FilteredMetadata.Filter = Filter;
         }
 
@@ -48,16 +46,6 @@ namespace MetadataUtilities
             set => SetValue(ref _plugin, value);
         }
 
-        public MetadataListObjects MetadataListObjects
-        {
-            get => _metadataListObjects;
-            set
-            {
-                _metadataListObjects = value;
-                OnPropertyChanged();
-            }
-        }
-
         public string SearchTerm
         {
             get => _searchTerm;
@@ -74,7 +62,7 @@ namespace MetadataUtilities
             win.Close();
         }, win => win != null);
 
-        public static Window GetWindow(MetadataUtilities plugin, MetadataListObjects items, string windowTitle)
+        public static Window GetWindow(MetadataUtilities plugin, MetadataObjects items, string windowTitle)
         {
             try
             {
@@ -97,11 +85,9 @@ namespace MetadataUtilities
             }
         }
 
-        private bool Filter(object item)
-        {
-            MetadataListObject metadataListObject = item as MetadataListObject;
-
-            return metadataListObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) && (!FilterSelected || metadataListObject.Selected);
-        }
+        private bool Filter(object item) =>
+            item is MetadataObject metadataListObject &&
+            metadataListObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+            (!FilterSelected || metadataListObject.Selected);
     }
 }
