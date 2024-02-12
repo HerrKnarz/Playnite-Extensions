@@ -1,5 +1,19 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 0.6
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-02-12
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-02-12/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_6.pext
+    Changelog:
+      - Added option to define prefixes. These will then show up in the Metadata Editor as a separate combobox and can be filtered and sorted separately.
+      - Added option to execute single merge rules in the game menu
+      - Added option to execute a merge rule in the addon settings
+      - Added platforms column to the game datagrid in Metadata Editor
+      - Default tags/categories will now automatically renamed, when the corresponding original item was renamed. Can be deactivated in the settings
+      - The target of merge rules will now automatically renamed, when the corresponding original item was renamed. Can be deactivated in the settings
+      - Field type comboboxes are now localized
+      - Performance optimizations for merging metadata in several games
+      - updated localizations
   - Version: 0.5
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-02-07
