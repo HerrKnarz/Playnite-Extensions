@@ -173,6 +173,8 @@
                                             SortMemberPath="RealSortingName"/>
                         <DataGridTextColumn Header="{DynamicResource LOCCompletionStatus}" Binding="{Binding CompletionStatus.Name}" 
                                             MinWidth="100" Width="SizeToCells"/>
+                        <DataGridTextColumn Header="{DynamicResource LOCPlatformsTitle}" Binding="{Binding Platforms}" 
+                                            MinWidth="100" Width="SizeToCells"/>
                         <DataGridTextColumn Header="{DynamicResource LOCGameReleaseYearTitle}" Binding="{Binding ReleaseYear}"
                                             Width="SizeToHeader" ElementStyle="{StaticResource RightCell}"/>
                     </DataGrid.Columns>

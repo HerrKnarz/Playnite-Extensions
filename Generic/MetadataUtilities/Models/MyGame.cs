@@ -10,6 +10,8 @@ namespace MetadataUtilities.Models
 
         public CompletionStatus CompletionStatus { get; set; }
 
+        public string Platforms { get; set; }
+
         public int? ReleaseYear { get; set; }
 
         public string RealSortingName => string.IsNullOrEmpty(SortingName) ? Name : SortingName;
