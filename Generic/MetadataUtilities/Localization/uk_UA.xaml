@@ -19,7 +19,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Змінити тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Тільки вибране</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Кількість ігор</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Згрупувати збіги</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Групувати елементи зі збігами</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Об'єднати</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Пов'язані ігри</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Прибрати невикористані</sys:String>
@@ -38,6 +38,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Редактор правил об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Прибрано наступні невикористані елементи метаданих:</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Префікс</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Додавання елементів...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Прибирання невикористаних елементів метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Додати наявні елементи</sys:String>
@@ -50,12 +51,16 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ігнорувати приховані ігри при прибиранні невикористаних метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Автоматично виконувати правила об'єднання при оновленні метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Об’єднати Ролі</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsPrefixDescription">Тут ви можете визначити префікси для подальшої категоризації типів метаданих. Потім ці префікси можна фільтрувати, сортувати та змінювати в Редакторі Метаданих. Відповідні поля зі списком з’являться, лише якщо у вас визначено хоча б один префікс. Якщо вам потрібен пробіл між префіксом і назвою елемента, вам потрібно додати його до префікса тут. Отже, якщо у вас, наприклад, є такий тег, як «[художній стиль] реалістичний», вам потрібно додати «[художній стиль]» як префікс. У Редакторі Метаданих тег матиме цей префікс, а ім’я показуватиметься як «реалістичний».</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Прибирати невикористані метадані під час запуску</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Автоматично перейменовувати теги/категорії за замовчуванням, коли перейменований відповідний елемент.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Автоматично перейменовувати ціль правила злиття коли перейменований відповідний елемент.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Встановлювати тільки коли теги не були додані при імпорті метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Показувати кнопку редактора метаданих у верхній панелі (потрібен перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">За замовчуванням</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Загальне</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Об'єднання</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Префікси</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Значення для об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Записувати повідомлення журналу налагодження (використовуйте тільки якщо підозрюєте помилки!)</sys:String>
 </ResourceDictionary>

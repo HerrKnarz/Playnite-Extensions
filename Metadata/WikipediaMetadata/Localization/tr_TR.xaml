@@ -1,28 +1,28 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCWikipediaMetadataSettingsTabGeneral">General settings</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsTabDescription">Description</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsTagTags">Tags</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsAdvancedSearch">Use advanced search result sorting (untick to use wikipedia default).</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsArcadeSystem">Add arcade system as platform.</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsReleaseDate">Release date to use</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsMetacritic">Metacritic score to use</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionOverviewOnly">Only use overview of the wiki page as description.</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsRemoveDescriptionLinks">Remove links from the description.</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionText">Here you can define sections from the wikipedia page you want to remove when fetching the description. Just add the names of the headings you don't want.</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionAdd">Add</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionRemove">Remove</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsText">Here you can define which values you want to add as tags and specify a prefix for the tag.</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsName">Name</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsPrefix">Prefix</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDateEarliest">Earliest date</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDateLatest">Latest date</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDateFirst">First date in the list</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingLowest">Lowest rating</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingHighest">Highest rating</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingAverage">Average of all ratings</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsAddValue">Add value</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTabGeneral">Genel ayarlar</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTabDescription">Açıklama</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagTags">Etiketler</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsAdvancedSearch">Gelişmiş arama sonucu sıralamasını kullan (wikipedia varsayılanını kullanmak için işareti kaldırın).</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsArcadeSystem">Arcade sistemini platform olarak ekle.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsReleaseDate">Çıkış tarihi</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsMetacritic">Metacritic puanı</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionOverviewOnly">Açıklama olarak yalnızca viki sayfasının genel özetini kullan.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRemoveDescriptionLinks">Açıklamadaki bağlantıları kaldır.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionText">Açıklamayı alırken vikipedi sayfasındaki kaldırmak istediğiniz bölümleri buradan tanımlayabilirsiniz. Sadece istemediğiniz başlıkların isimlerini girin.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionAdd">Ekle</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionRemove">Kaldır</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsText">Burada hangi değerleri etiket olarak eklemek istediğinizi tanımlayabilir ve etiket için bir önek belirleyebilirsiniz.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsName">Ad</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsPrefix">Önek</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateEarliest">En erken tarih</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateLatest">Son tarih</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateFirst">Listedeki ilk tarih</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingLowest">En düşük puan</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingHighest">En yüksek puan</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingAverage">Tüm puanların ortalaması</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsAddValue">Bir değer girin</sys:String>
 
-    <sys:String x:Key="LOCWikipediaMetadataSearchDialog">select game</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSearchDialog">oyununu seç</sys:String>
 </ResourceDictionary>
