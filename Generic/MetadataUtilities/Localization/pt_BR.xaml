@@ -53,8 +53,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Mesclar regras</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPrefixDescription">Here you can define prefixes to further categorize your metadata types. These prefixes can than be filtered, sorted and changed in the Metadata Editor. The corresponding combo boxes will only appear, if you have at least one prefix defined. If you want a whitespace between the prefix and the item name, you need to add it to the prefix here. So if you for example have a tag like &quot;[art style] realistic&quot;, you need to add &quot;[art style] &quot; as your prefix. In the Metadata editor the tag will then have this prefix and the name will be shown as &quot;realistic&quot;.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Remover metadados não utilizados na inicialização</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Automatically rename default tags/categories when the corresponding original item is renamed.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Automatically rename merge rule target when the corresponding original item is renamed.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Renomear automaticamente marcadores/categorias padrão quando o item original correspondente for renomeado.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Renomear automaticamente o alvo da regra de mesclagem quando o item original correspondente for renomeado.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Definir apenas quando nenhum marcador foi adicionado na importação de metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Exibir botão do Editor de Metadados no painel superior (requer reinicialização)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Padrões</sys:String>
