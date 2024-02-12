@@ -57,12 +57,38 @@ namespace MetadataUtilities
 
         private void Tags_ItemUpdated(object sender, ItemUpdatedEventArgs<Tag> args)
         {
-            if (args.UpdatedItems
-                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
-                .ToList().Aggregate(false,
-                    (current, item)
-                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Tag,
-                            item.OldData.Name, item.NewData.Name)))
+            List<ItemUpdateEvent<Tag>> items = args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name) &&
+                               !string.IsNullOrEmpty(item.NewData.Name))
+                .ToList();
+
+            if (!items.Any())
+            {
+                return;
+            }
+
+            bool mustSave = false;
+
+            foreach (ItemUpdateEvent<Tag> item in items)
+            {
+                MetadataObject tag = Settings.Settings.DefaultTags?.FirstOrDefault(x => x.Name == item.OldData.Name);
+
+                if (tag == null)
+                {
+                    continue;
+                }
+
+                tag.Name = item.NewData.Name;
+                mustSave = true;
+            }
+
+            mustSave = items.Aggregate(mustSave,
+                (current, item)
+                    => current |
+                       Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Tag, item.OldData.Name,
+                           item.NewData.Name));
+
+            if (mustSave)
             {
                 SavePluginSettings(Settings.Settings);
             }
@@ -109,12 +135,38 @@ namespace MetadataUtilities
 
         private void Categories_ItemUpdated(object sender, ItemUpdatedEventArgs<Category> args)
         {
-            if (args.UpdatedItems
-                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
-                .ToList().Aggregate(false,
-                    (current, item)
-                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Category,
-                            item.OldData.Name, item.NewData.Name)))
+            List<ItemUpdateEvent<Category>> items = args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name) &&
+                               !string.IsNullOrEmpty(item.NewData.Name))
+                .ToList();
+
+            if (!items.Any())
+            {
+                return;
+            }
+
+            bool mustSave = false;
+
+            foreach (ItemUpdateEvent<Category> item in items)
+            {
+                MetadataObject tag = Settings.Settings.DefaultCategories?.FirstOrDefault(x => x.Name == item.OldData.Name);
+
+                if (tag == null)
+                {
+                    continue;
+                }
+
+                tag.Name = item.NewData.Name;
+                mustSave = true;
+            }
+
+            mustSave = items.Aggregate(mustSave,
+                (current, item)
+                    => current |
+                       Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Category, item.OldData.Name,
+                           item.NewData.Name));
+
+            if (mustSave)
             {
                 SavePluginSettings(Settings.Settings);
             }
