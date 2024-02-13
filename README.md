@@ -70,17 +70,14 @@ Extension to manage metadata for the games in the playnite library. It can do th
 - Merge together similar categories, features, genres, series and tags without being constrained to only one type (you can easily merge categories and tags together for example).
 - Simply change the type of categories, features, genres, series and tags.
 - Set up merge rules that can automatically be executed after metadata changes or manually.
+- Define prefixes that then can be filtered or easily added in new items.
 - Set default categories and/or tags that will automatically be added to new games on import.
 - Automatically remove unused categories, features, genres, series and tags on start up (deactivated by default).
 - Option to ignore hidden games in game counts and removing of unused items. A tag only used in hidden games would then be considered unused for example).
 
-### Known issues
-- Comboboxes aren't localized yet and always show the english text. Will be reworked.
-
 ### Planned features
 - Define features, genres, series and tags, that will automatically be removed after metadata updates.
 - Regex support for filtering in Metadata Editor.
-- Define prefixes that then can be filtered or easily added in new items.
 - Integrate the functionality of my Quick Add extension into this one.
 - Add window to quickly edit categories, features, genres, series and tags for a game, that is easier to use for this use case than the standard game detail editor.
 - Option to setup "metadata sets" that then can be quickly assigned to a game with one click (for example setting feature "Controller support" together with the tag "TV gaming".
