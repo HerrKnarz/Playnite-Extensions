@@ -87,7 +87,7 @@
                 <DataGrid Name="MetadataGrid" ItemsSource="{Binding MetadataViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top" 
                           Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
                           SelectionMode="Extended" EnableRowVirtualization="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                          PreparingCellForEdit="DataGrid_PreparingCellForEdit">
+                          PreparingCellForEdit="DataGrid_PreparingCellForEdit" RowHeaderWidth="0">
                     <DataGrid.GroupStyle>
                         <GroupStyle>
                             <GroupStyle.ContainerStyle>
@@ -144,7 +144,7 @@
                         <DataGridTextColumn Header="{DynamicResource LOCMetadataUtilitiesEditorGameCount}"
                                             ElementStyle="{StaticResource RightCell}"
                                             Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}"
-                                            IsReadOnly="True" Width="SizeToHeader" />
+                                            IsReadOnly="True" Width="SizeToHeader" MinWidth="50" />
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
@@ -174,9 +174,9 @@
                         <DataGridTextColumn Header="{DynamicResource LOCCompletionStatus}" Binding="{Binding CompletionStatus.Name}" 
                                             MinWidth="100" Width="SizeToCells"/>
                         <DataGridTextColumn Header="{DynamicResource LOCPlatformsTitle}" Binding="{Binding Platforms}" 
-                                            MinWidth="100" Width="SizeToCells"/>
+                                            MinWidth="100" Width="200"/>
                         <DataGridTextColumn Header="{DynamicResource LOCGameReleaseYearTitle}" Binding="{Binding ReleaseYear}"
-                                            Width="SizeToHeader" ElementStyle="{StaticResource RightCell}"/>
+                                            Width="SizeToHeader" ElementStyle="{StaticResource RightCell}" MinWidth="50"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
