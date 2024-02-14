@@ -36,6 +36,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Abrir Editor de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Mesclar metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Remover metadados não utilizados</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Remove unwanted metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Editor de Regras de Mesclagem</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Utilitários de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removido os seguintes itens de metadados não utilizados:</sys:String>
@@ -53,12 +54,15 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignorar jogos ocultos ao remover metadados não utilizados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Executar automaticamente regras de mesclagem ao atualizar os metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Mesclar regras</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsMetadataToRemove">Metadata to remove</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPrefixDescription">Here you can define prefixes to further categorize your metadata types. These prefixes can than be filtered, sorted and changed in the Metadata Editor. The corresponding combo boxes will only appear, if you have at least one prefix defined. If you want a whitespace between the prefix and the item name, you need to add it to the prefix here. So if you for example have a tag like &quot;[art style] realistic&quot;, you need to add &quot;[art style] &quot; as your prefix. In the Metadata editor the tag will then have this prefix and the name will be shown as &quot;realistic&quot;.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Remover metadados não utilizados na inicialização</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Remove unwanted items on metadata update</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Renomear automaticamente marcadores/categorias padrão quando o item original correspondente for renomeado.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Renomear automaticamente o alvo da regra de mesclagem quando o item original correspondente for renomeado.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Definir apenas quando nenhum marcador foi adicionado na importação de metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Exibir botão do Editor de Metadados no painel superior (requer reinicialização)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabAutoRemoval">Auto removal</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Padrões</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Geral</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Mesclando</sys:String>
