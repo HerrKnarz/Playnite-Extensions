@@ -44,6 +44,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Existierende Elemente hinzufügen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Neues Element hinzufügen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Manuelle Zusammenführungen immer als Zusammenführungsregeln speichern.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Columns in the Metadata Editor game grid</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Standardkategorien für neues Spiel</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Standard Schlagworte für neues Spiel</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editieren</sys:String>
