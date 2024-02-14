@@ -132,30 +132,6 @@ namespace MetadataUtilities
                 Settings.DefaultCategories = new ObservableCollection<MetadataObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
             });
 
-        public RelayCommand AddNewDefaultCategoryCommand
-            => new RelayCommand(() =>
-            {
-                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
-
-                if (!res.Result)
-                {
-                    return;
-                }
-
-                if (Settings.DefaultCategories.Any(x => x.Name == res.SelectedString))
-                {
-                    return;
-                }
-
-                Settings.DefaultCategories.Add(new MetadataObject(_settings)
-                {
-                    Name = res.SelectedString,
-                    Type = FieldType.Category
-                });
-
-                Settings.DefaultCategories = new ObservableCollection<MetadataObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
-            });
-
         public RelayCommand AddExistingDefaultTagsCommand
             => new RelayCommand(() =>
             {
@@ -190,6 +166,30 @@ namespace MetadataUtilities
                 Settings.DefaultTags = new ObservableCollection<MetadataObject>(Settings.DefaultTags.OrderBy(x => x.Name));
             });
 
+        public RelayCommand AddNewDefaultCategoryCommand
+            => new RelayCommand(() =>
+            {
+                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
+
+                if (!res.Result)
+                {
+                    return;
+                }
+
+                if (Settings.DefaultCategories.Any(x => x.Name == res.SelectedString))
+                {
+                    return;
+                }
+
+                Settings.DefaultCategories.Add(new MetadataObject(_settings)
+                {
+                    Name = res.SelectedString,
+                    Type = FieldType.Category
+                });
+
+                Settings.DefaultCategories = new ObservableCollection<MetadataObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
+            });
+
         public RelayCommand AddNewDefaultTagCommand
             => new RelayCommand(() =>
             {
@@ -214,34 +214,7 @@ namespace MetadataUtilities
                 Settings.DefaultTags = new ObservableCollection<MetadataObject>(Settings.DefaultTags.OrderBy(x => x.Name));
             });
 
-        public RelayCommand<IList<object>> RemoveDefaultCategoryCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
-            {
-                Settings.DefaultCategories.Remove(item);
-            }
-        }, items => items?.Any() ?? false);
-
-        public RelayCommand<IList<object>> RemoveDefaultTagCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
-            {
-                Settings.DefaultTags.Remove(item);
-            }
-        }, items => items?.Any() ?? false);
-
         public RelayCommand AddNewMergeRuleCommand => new RelayCommand(() => EditMergeRule());
-
-        public RelayCommand<object> EditMergeRuleCommand
-            => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
-
-        public RelayCommand<object> RemoveMergeRuleCommand => new RelayCommand<object>(rule =>
-        {
-            Settings.MergeRules.Remove((MergeRule)rule);
-        }, rule => rule != null);
-
-        public RelayCommand<object> MergeItemsCommand
-            => new RelayCommand<object>(rule => _plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);
 
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
@@ -276,14 +249,6 @@ namespace MetadataUtilities
             SourceObjectsViewSource.View?.MoveCurrentTo(newItem);
         }, rule => rule != null);
 
-        public RelayCommand<IList<object>> RemoveMergeSourceCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
-            {
-                SelectedMergeRule.SourceObjects.Remove(item);
-            }
-        }, items => items?.Any() ?? false);
-
         public RelayCommand AddPrefixCommand
             => new RelayCommand(() =>
             {
@@ -298,11 +263,69 @@ namespace MetadataUtilities
                 Settings.Prefixes = new ObservableCollection<string>(Settings.Prefixes.OrderBy(x => x));
             });
 
+        public RelayCommand AddUnwantedCategoriesCommand
+            => new RelayCommand(() => AddUnwantedItems(FieldType.Category));
+
+        public RelayCommand AddUnwantedFeaturesCommand
+            => new RelayCommand(() => AddUnwantedItems(FieldType.Feature));
+
+        public RelayCommand AddUnwantedGenresCommand
+            => new RelayCommand(() => AddUnwantedItems(FieldType.Genre));
+
+        public RelayCommand AddUnwantedSeriesCommand
+            => new RelayCommand(() => AddUnwantedItems(FieldType.Series));
+
+        public RelayCommand AddUnwantedTagsCommand
+            => new RelayCommand(() => AddUnwantedItems(FieldType.Tag));
+
+        public RelayCommand<object> EditMergeRuleCommand
+            => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
+
+        public RelayCommand<object> MergeItemsCommand
+            => new RelayCommand<object>(rule => _plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);
+
+        public RelayCommand<IList<object>> RemoveDefaultCategoryCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+            {
+                Settings.DefaultCategories.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveDefaultTagCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+            {
+                Settings.DefaultTags.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<object> RemoveMergeRuleCommand => new RelayCommand<object>(rule =>
+        {
+            Settings.MergeRules.Remove((MergeRule)rule);
+        }, rule => rule != null);
+
+        public RelayCommand<IList<object>> RemoveMergeSourceCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+            {
+                SelectedMergeRule.SourceObjects.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
         public RelayCommand<IList<object>> RemovePrefixCommand => new RelayCommand<IList<object>>(items =>
         {
             foreach (string item in items.ToList().Cast<string>())
             {
                 Settings.Prefixes.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveUnwantedFromListCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+            {
+                Settings.UnwantedItems.Remove(item);
             }
         }, items => items?.Any() ?? false);
 
@@ -321,6 +344,62 @@ namespace MetadataUtilities
         {
             errors = new List<string>();
             return true;
+        }
+
+        public void AddUnwantedItems(FieldType type)
+        {
+            MetadataObjects items = new MetadataObjects(Settings);
+
+            items.LoadMetadata(false, type);
+
+            string label;
+
+            switch (type)
+            {
+                case FieldType.Category:
+                    label = ResourceProvider.GetString("LOCCategoriesLabel");
+                    break;
+                case FieldType.Feature:
+                    label = ResourceProvider.GetString("LOCFeaturesLabel");
+                    break;
+                case FieldType.Genre:
+                    label = ResourceProvider.GetString("LOCGenresLabel");
+                    break;
+                case FieldType.Series:
+                    label = ResourceProvider.GetString("LOCSeriesLabel");
+                    break;
+                case FieldType.Tag:
+                    label = ResourceProvider.GetString("LOCTagsLabel");
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            Window window = SelectMetadataViewModel.GetWindow(_plugin, items, label);
+
+            if (window == null)
+            {
+                return;
+            }
+
+            if (window.ShowDialog() ?? false)
+            {
+                foreach (MetadataObject item in items.Where(x => x.Selected))
+                {
+                    if (Settings.UnwantedItems.Any(x => x.TypeAndName == item.TypeAndName))
+                    {
+                        continue;
+                    }
+
+                    Settings.UnwantedItems.Add(new MetadataObject(_settings)
+                    {
+                        Name = item.Name,
+                        Type = item.Type
+                    });
+                }
+            }
+
+            Settings.UnwantedItems = new ObservableCollection<MetadataObject>(Settings.UnwantedItems.OrderBy(x => x.TypeAndName));
         }
 
         private void EditMergeRule(MergeRule rule = null)

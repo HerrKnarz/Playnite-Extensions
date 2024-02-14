@@ -31,6 +31,7 @@ namespace MetadataUtilities
         private bool _renameMergeRules = true;
         private bool _setDefaultTagsOnlyIfEmpty = true;
         private bool _showTopPanelButton = true;
+        private ObservableCollection<MetadataObject> _unwantedItems = new ObservableCollection<MetadataObject>();
         private bool _writeDebugLog;
 
         public bool AlwaysSaveManualMergeRules
@@ -175,6 +176,12 @@ namespace MetadataUtilities
         {
             get => _showTopPanelButton;
             set => SetValue(ref _showTopPanelButton, value);
+        }
+
+        public ObservableCollection<MetadataObject> UnwantedItems
+        {
+            get => _unwantedItems;
+            set => SetValue(ref _unwantedItems, value);
         }
 
         public bool WriteDebugLog

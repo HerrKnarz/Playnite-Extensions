@@ -15,10 +15,6 @@
                     <StackPanel DockPanel.Dock="Top">
                         <CheckBox IsChecked="{Binding Settings.ShowTopPanelButton}" Margin="0,0,0,0"
                                   Content="{DynamicResource LOCMetadataUtilitiesSettingsShowTopPanelButton}"/>
-                        <CheckBox IsChecked="{Binding Settings.RemoveUnusedOnStartup}" Margin="0,10,0,0"
-                                  Content="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}"/>
-                        <CheckBox IsChecked="{Binding Settings.IgnoreHiddenGamesInRemoveUnused}" Margin="0,10,0,0"
-                              Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}"/>
                         <CheckBox IsChecked="{Binding Settings.IgnoreHiddenGamesInGameCount}" Margin="0,10,0,0"
                               Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount}"/>
                         <CheckBox IsChecked="{Binding Settings.WriteDebugLog}" Margin="0,10,0,0"
@@ -171,6 +167,50 @@
                     </GroupBox>
                 </DockPanel>
             </ScrollViewer>
+        </TabItem>
+        <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabAutoRemoval}">
+            <DockPanel Margin="10">
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RemoveUnusedOnStartup}" Margin="0,0,0,0"
+                          Content="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}"/>
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.IgnoreHiddenGamesInRemoveUnused}" Margin="0,10,0,0"
+                          Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}"/>
+
+                <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsMetadataToRemove}" Margin="0,10,0,0" DockPanel.Dock="Top" 
+                          Padding="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+                        <ListBox Name="LbItemsToRemove" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                 ItemsSource="{Binding Settings.UnwantedItems}" VerticalAlignment="Stretch" SelectionMode="Extended">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TypeAndName}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <Button Content="{DynamicResource LOCCategoriesLabel}" Margin="0,0,0,0"
+                                    Command="{Binding AddUnwantedCategoriesCommand}" />
+                            <Button Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0"
+                                    Command="{Binding AddUnwantedFeaturesCommand}" />
+                            <Button Content="{DynamicResource LOCGenresLabel}" Margin="0,10,0,0"
+                                    Command="{Binding AddUnwantedGenresCommand}" />
+                            <Button Content="{DynamicResource LOCSeriesLabel}" Margin="0,10,0,0"
+                                    Command="{Binding AddUnwantedSeriesCommand}" />
+                            <Button Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0"
+                                    Command="{Binding AddUnwantedTagsCommand}" />
+                            <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
+                                    Command="{Binding RemoveUnwantedFromListCommand}"
+                                    CommandParameter="{Binding SelectedItems, ElementName=LbItemsToRemove}"/>
+                            <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RemoveUnwantedOnMetadataUpdate}" Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate}" TextWrapping="Wrap"/>
+                            </CheckBox>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+            </DockPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabPrefixes}">
             <DockPanel Margin="10">
