@@ -12,6 +12,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">Du musst mindestens ein Quellelement auswählen, das mit dem Ziel zusammengeführt werden soll.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Keine nicht verwendeten Metadatenelemente gefunden.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Du musst einen Namen für das Regelziel angeben.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Removed {0} from {1} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Elemente werden entfernt...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Als Zusammenführungsregel speichern</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Neuen Typ wählen</sys:String>
