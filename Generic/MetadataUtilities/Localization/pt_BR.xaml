@@ -12,6 +12,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">Você precisa selecionar pelo menos um item de origem para mesclar no alvo.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Nenhum item de metadados não utilizado foi encontrado.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Você precisa adicionar um Nome para o alvo da regra.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Removed {0} from {1} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Removendo itens...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Salvar como regra de mesclagem</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Selecionar novo tipo</sys:String>
