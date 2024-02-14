@@ -17,6 +17,9 @@ namespace MetadataUtilities
         private bool _filterGenres = true;
         private bool _filterSeries = true;
         private bool _filterTags = true;
+        private bool _gameGridShowCompletionStatus = true;
+        private bool _gameGridShowPlatform = true;
+        private bool _gameGridShowReleaseYear = true;
         private bool _ignoreHiddenGamesInGameCount;
         private bool _ignoreHiddenGamesInRemoveUnused;
         private DateTime _lastAutoLibUpdate = DateTime.Now;
@@ -88,6 +91,24 @@ namespace MetadataUtilities
         {
             get => _filterTags;
             set => SetValue(ref _filterTags, value);
+        }
+
+        public bool GameGridShowCompletionStatus
+        {
+            get => _gameGridShowCompletionStatus;
+            set => SetValue(ref _gameGridShowCompletionStatus, value);
+        }
+
+        public bool GameGridShowPlatform
+        {
+            get => _gameGridShowPlatform;
+            set => SetValue(ref _gameGridShowPlatform, value);
+        }
+
+        public bool GameGridShowReleaseYear
+        {
+            get => _gameGridShowReleaseYear;
+            set => SetValue(ref _gameGridShowReleaseYear, value);
         }
 
         public bool IgnoreHiddenGamesInGameCount

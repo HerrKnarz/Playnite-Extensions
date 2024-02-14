@@ -243,6 +243,18 @@ namespace MetadataUtilities
             }
         }
 
+        public Visibility GameGridCompletionStatusVisibility => _plugin.Settings.Settings.GameGridShowCompletionStatus
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+
+        public Visibility GameGridPlatformVisibility => _plugin.Settings.Settings.GameGridShowPlatform
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+
+        public Visibility GameGridReleaseVisibility => _plugin.Settings.Settings.GameGridShowReleaseYear
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+
         public ObservableCollection<MyGame> Games
         {
             get => _games;

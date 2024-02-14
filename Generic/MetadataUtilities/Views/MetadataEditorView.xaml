@@ -172,11 +172,14 @@
                         <DataGridTextColumn Header="{DynamicResource LOCGameNameTitle}" Binding="{Binding Name}" MinWidth="100" 
                                             SortMemberPath="RealSortingName"/>
                         <DataGridTextColumn Header="{DynamicResource LOCCompletionStatus}" Binding="{Binding CompletionStatus.Name}" 
-                                            MinWidth="100" Width="SizeToCells"/>
+                                            MinWidth="100" Width="SizeToCells"
+                                            Visibility="{Binding DataContext.GameGridCompletionStatusVisibility, Source={x:Reference DummyElement}}"/>
                         <DataGridTextColumn Header="{DynamicResource LOCPlatformsTitle}" Binding="{Binding Platforms}" 
-                                            MinWidth="100" Width="200"/>
+                                            MinWidth="100" Width="200"
+                                            Visibility="{Binding DataContext.GameGridPlatformVisibility, Source={x:Reference DummyElement}}"/>
                         <DataGridTextColumn Header="{DynamicResource LOCGameReleaseYearTitle}" Binding="{Binding ReleaseYear}"
-                                            Width="SizeToHeader" ElementStyle="{StaticResource RightCell}" MinWidth="50"/>
+                                            Width="SizeToHeader" ElementStyle="{StaticResource RightCell}" MinWidth="50"
+                                            Visibility="{Binding DataContext.GameGridReleaseVisibility, Source={x:Reference DummyElement}}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
