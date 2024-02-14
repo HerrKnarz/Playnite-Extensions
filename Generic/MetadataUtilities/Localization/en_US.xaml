@@ -12,6 +12,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">You need to select at least one source item to merge into the target.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">No unused metadata items found.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">You need to add a Name for the rule target.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Removed {0} from {1} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Removing items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Save as merge rule</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Select new type</sys:String>

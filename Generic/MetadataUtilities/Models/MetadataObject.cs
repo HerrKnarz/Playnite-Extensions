@@ -173,24 +173,34 @@ namespace MetadataUtilities.Models
             return string.Empty;
         }
 
-        public void GetGameCount(bool ignoreHiddenGames = false)
+        public void GetGameCount()
         {
             switch (Type)
             {
                 case FieldType.Category:
-                    GameCount = API.Instance.Database.Games.Count(g => !(ignoreHiddenGames && g.Hidden) && (g.CategoryIds?.Any(t => t == Id) ?? false));
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.CategoryIds?.Any(t => t == Id) ?? false));
                     break;
                 case FieldType.Feature:
-                    GameCount = API.Instance.Database.Games.Count(g => !(ignoreHiddenGames && g.Hidden) && (g.FeatureIds?.Any(t => t == Id) ?? false));
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.FeatureIds?.Any(t => t == Id) ?? false));
                     break;
                 case FieldType.Genre:
-                    GameCount = API.Instance.Database.Games.Count(g => !(ignoreHiddenGames && g.Hidden) && (g.GenreIds?.Any(t => t == Id) ?? false));
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.GenreIds?.Any(t => t == Id) ?? false));
                     break;
                 case FieldType.Series:
-                    GameCount = API.Instance.Database.Games.Count(g => !(ignoreHiddenGames && g.Hidden) && (g.SeriesIds?.Any(t => t == Id) ?? false));
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.SeriesIds?.Any(t => t == Id) ?? false));
                     break;
                 case FieldType.Tag:
-                    GameCount = API.Instance.Database.Games.Count(g => !(ignoreHiddenGames && g.Hidden) && (g.TagIds?.Any(t => t == Id) ?? false));
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.TagIds?.Any(t => t == Id) ?? false));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -421,13 +421,13 @@ namespace MetadataUtilities
                     }
                     else
                     {
-                        itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
+                        itemToRemove.GetGameCount();
                     }
                 }
 
                 foreach (MetadataObject itemToAdd in viewModel.NewObjects)
                 {
-                    itemToAdd.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
+                    itemToAdd.GetGameCount();
                 }
 
                 CompleteMetadata.AddMissing(viewModel.NewObjects);
@@ -486,7 +486,7 @@ namespace MetadataUtilities
                     }
                     else
                     {
-                        itemToRemove.GetGameCount(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount);
+                        itemToRemove.GetGameCount();
                     }
                 }
 
@@ -550,6 +550,49 @@ namespace MetadataUtilities
                 MetadataObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
 
                 CalculateItemCount();
+            }
+            finally
+            {
+                Plugin.IsUpdating = false;
+                Cursor.Current = Cursors.Default;
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveGamesCommand => new RelayCommand<IList<object>>(items =>
+        {
+            Plugin.IsUpdating = true;
+            Cursor.Current = Cursors.WaitCursor;
+
+            try
+            {
+                MetadataObject selectedItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+
+                if (selectedItem == null)
+                {
+                    return;
+                }
+
+                List<Game> games = items.Cast<MyGame>().Select(x => x.Game).ToList();
+
+                if (!games.Any())
+                {
+                    return;
+                }
+
+                List<Guid> gamesAffected = DatabaseObjectHelper.ReplaceDbObject(games, selectedItem.Type, selectedItem.Id, null, null, false).ToList();
+
+                if (!gamesAffected.Any())
+                {
+                    return;
+                }
+
+                LoadRelatedGames();
+                selectedItem.GetGameCount();
+
+                Cursor.Current = Cursors.Default;
+                API.Instance.Dialogs.ShowMessage(string.Format(
+                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogRemovedMetadataMessage"),
+                    selectedItem.TypeAndName, gamesAffected.Distinct().Count()));
             }
             finally
             {
@@ -622,15 +665,14 @@ namespace MetadataUtilities
 
         public void CancelEdit() { }
 
-        private void CurrentChanged(object sender, EventArgs e)
+        private void CurrentChanged(object sender, EventArgs e) => LoadRelatedGames();
+
+        private void LoadRelatedGames()
         {
             if (!_showRelatedGames)
             {
                 return;
             }
-
-            Log.Debug("=== CurrentChanged: Start ===");
-            DateTime ts = DateTime.Now;
 
             Games.Clear();
 
@@ -645,9 +687,6 @@ namespace MetadataUtilities
 
             try
             {
-                Log.Debug($"=== CurrentChanged: Start game load ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                ts = DateTime.Now;
-
                 foreach (Game game in API.Instance.Database.Games.Where(g =>
                     !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
                         (currentItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currentItem.Id) ?? false)) ||
@@ -659,11 +698,8 @@ namespace MetadataUtilities
                 {
                     Games.Add(new MyGame
                     {
-                        Name = game.Name,
-                        SortingName = game.SortingName,
-                        CompletionStatus = game.CompletionStatus,
-                        Platforms = string.Join(", ", game.Platforms?.Select(x => x.Name).ToList() ?? new List<string>()),
-                        ReleaseYear = game.ReleaseYear
+                        Game = game,
+                        Platforms = string.Join(", ", game.Platforms?.Select(x => x.Name).ToList() ?? new List<string>())
                     });
                 }
             }
@@ -671,8 +707,6 @@ namespace MetadataUtilities
             {
                 Cursor.Current = Cursors.Default;
             }
-
-            Log.Debug($"=== CurrentChanged: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         public void CalculateItemCount()
