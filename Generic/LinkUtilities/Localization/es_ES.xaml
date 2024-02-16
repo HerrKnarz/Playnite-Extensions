@@ -7,7 +7,7 @@
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Título de la página de respuesta</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">es igual a</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Comprobar enlaces</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filter by link name:</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filtrar por nombre de enlace:</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Juego</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">URL</sys:String>
@@ -71,7 +71,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Añadir automáticamente enlaces a nuevos juegos</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">Clave API</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Usando un marcador, puedes añadir el sitio web activo en su navegador directamente a los juegos seleccionados en Playnite. Para encontrar un nombre de enlace adecuado, puede definir patrones para la URL y el título del enlace aquí. Los patrones pueden contener comodines. Un * puede ser cero o más caracteres, un ? tiene que ser exactamente un carácter.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">Browser search URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">URL de búsqueda de navegador</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Añadir</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Añadir predeterminados</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancelar</sys:String>
@@ -85,7 +85,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Desmarcar todo</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configurar patrones de nombre de enlace (Para los enlaces del portapapeles sólo se marcará el patrón de la url para encontrar un nombre, ya que no tenemos nombre para empezar.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configurar sitios web</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Here you can add your own links for websites with urls, that contain either the game name, rom name, steam ID or GOG ID and have no variable parts. In the Game URL field you can use the placeholders {GameName}, {RomName}, {SteamId} and {GogId} for that. The following checkboxes define, how the game name will be modified to fit the url scheme and how to check for link validity. You can also add a Browser search url that then can be opened in a browser to search for the game. This field only supports the {GameName} placeholder. For further information on custom link profiles click the questionmark button.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Aquí puedes añadir tus propios enlaces para sitios web con urls, que contienen el nombre del juego, nombre de la ROM, ID de Steam o ID de GOG, y no tienen partes variables. En el campo URL del juego puedes usar los marcadores de posición {GameName}, {RomName}, {SteamId} y {GogId} para eso. Las casillas de verificación siguientes definen cómo se modificará el nombre del juego para ajustarse al esquema de url y cómo comprobar la validez del enlace. También puede agregar una url de búsqueda del navegador que luego se puede abrir en un navegador para buscar el juego. Este campo sólo soporta el marcador de posición {GameName} . Para más información sobre perfiles de enlaces personalizados haga clic en el botón de signo de pregunta.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">Remove special chars</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens">Remove hyphens</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces">Remove whitespaces</sys:String>
