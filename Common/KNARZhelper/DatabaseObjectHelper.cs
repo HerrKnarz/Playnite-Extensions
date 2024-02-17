@@ -476,20 +476,25 @@ namespace KNARZhelper
 
         public static bool AddDbObjectToGame(Game game, FieldType type, string name) => AddDbObjectToGame(game, type, AddDbObject(type, name));
 
-        public static bool RemoveObjectFromGame(Game game, FieldType type, Guid id)
+        public static bool RemoveObjectFromGame(Game game, FieldType type, List<Guid> ids)
         {
+            if (!ids.Any())
+            {
+                return false;
+            }
+
             switch (type)
             {
                 case FieldType.Category:
-                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.CategoryIds?.Remove(id) ?? false);
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.CategoryIds?.Remove(id) ?? false));
                 case FieldType.Feature:
-                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.FeatureIds?.Remove(id) ?? false);
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.FeatureIds?.Remove(id) ?? false));
                 case FieldType.Genre:
-                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.GenreIds?.Remove(id) ?? false);
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.GenreIds?.Remove(id) ?? false));
                 case FieldType.Series:
-                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.SeriesIds?.Remove(id) ?? false);
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.SeriesIds?.Remove(id) ?? false));
                 case FieldType.Tag:
-                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.TagIds?.Remove(id) ?? false);
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.TagIds?.Remove(id) ?? false));
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }

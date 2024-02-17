@@ -267,6 +267,11 @@ namespace MetadataUtilities
                  (item.OldData.TagIds == null ||
                   !new HashSet<Guid>(item.OldData.TagIds).SetEquals(item.NewData.TagIds)))).Select(item => item.NewData).ToList();
 
+            if (Settings.Settings.RemoveUnwantedOnMetadataUpdate)
+            {
+                DoForAll(games, RemoveUnwantedAction.Instance(this));
+            }
+
             MergeItems(games);
         }
 
@@ -283,7 +288,7 @@ namespace MetadataUtilities
                 using (API.Instance.Database.BufferedUpdate())
                 {
                     GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                        ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergingItems"),
+                        ResourceProvider.GetString("LOCMetadataUtilitiesProgressMergingItems"),
                         false
                     )
                     {
@@ -523,6 +528,13 @@ namespace MetadataUtilities
                     MenuSection = menuSection,
                     Icon = "muTagIcon",
                     Action = a => DoForAll(games, AddDefaultsAction.Instance(this), true)
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnwanted"),
+                    MenuSection = menuSection,
+                    Icon = "muRemoveIcon",
+                    Action = a => DoForAll(games, RemoveUnwantedAction.Instance(this), true)
                 },
                 new GameMenuItem
                 {

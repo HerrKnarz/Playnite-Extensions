@@ -17,7 +17,7 @@ namespace MetadataUtilities.Actions
 
         private AddDefaultsAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
 
-        public override string ProgressMessage { get; } = "LOCMetadataUtilitiesDialogAddedDefaultsMessage";
+        public override string ProgressMessage { get; } = "LOCMetadataUtilitiesProgressAddingDefaults";
 
         public override string ResultMessage { get; } = "LOCMetadataUtilitiesDialogAddedDefaultsMessage";
 

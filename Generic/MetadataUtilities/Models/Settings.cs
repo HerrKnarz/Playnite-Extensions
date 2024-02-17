@@ -27,6 +27,7 @@ namespace MetadataUtilities
         private MergeRules _mergeRules = new MergeRules();
         private ObservableCollection<string> _prefixes = new ObservableCollection<string>();
         private bool _removeUnusedOnStartup;
+        private bool _removeUnwantedOnMetadataUpdate = true;
         private bool _renameDefaults = true;
         private bool _renameMergeRules = true;
         private bool _setDefaultTagsOnlyIfEmpty = true;
@@ -152,6 +153,12 @@ namespace MetadataUtilities
         {
             get => _removeUnusedOnStartup;
             set => SetValue(ref _removeUnusedOnStartup, value);
+        }
+
+        public bool RemoveUnwantedOnMetadataUpdate
+        {
+            get => _removeUnwantedOnMetadataUpdate;
+            set => SetValue(ref _removeUnwantedOnMetadataUpdate, value);
         }
 
         public bool RenameDefaults

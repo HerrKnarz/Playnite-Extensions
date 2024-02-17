@@ -515,7 +515,7 @@ namespace MetadataUtilities
                 using (API.Instance.Database.BufferedUpdate())
                 {
                     GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                        ResourceProvider.GetString("LOCMetadataUtilitiesDialogRemovingItems"),
+                        ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingItems"),
                         false
                     )
                     {
