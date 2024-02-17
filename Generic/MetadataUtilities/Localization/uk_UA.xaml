@@ -7,13 +7,12 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Об'єднати як</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Об'єднано метадані в {0} іграх!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Вже існує Інше правило для цієї цілі. Бажаєте замінити його (так), об'єднати їх (ні) або скасувати операцію?</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Об'єднання метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Треба мати принаймні два вибраних елементів для об'єднання.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">Треба вибрати принаймні один елемент, щоб об'єднати його у ціль.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Немає невикористаних елементів метаданих.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Треба додати назву для цілі правила.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Прибрано {0} з {1} ігор!</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Прибирання елементів...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Removed unwanted metadata items from {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Зберегти як правило об’єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Оберіть новий тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Редактор метаданих</sys:String>
@@ -42,7 +41,10 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Прибрано наступні невикористані елементи метаданих:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Префікс</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Додавання елементів...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Merging metadata...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingItems">Removing metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Прибирання невикористаних елементів метаданих...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Removing unwanted metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Додати наявні елементи</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Додати елемент</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Завжди зберігати ручні об'єднання як правила об'єднання.</sys:String>
