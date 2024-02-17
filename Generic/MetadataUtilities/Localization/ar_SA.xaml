@@ -7,13 +7,12 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Merge as</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Merged metadata in {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Another rule for that target already exists. Do you want to replace it (yes), merge them (no) or cancel the operation?</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergingItems">Merging metadata...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">You need to select at least one source item to merge into the target.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">No unused metadata items found.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">You need to add a Name for the rule target.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Removed {0} from {1} games!</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovingItems">Removing items...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Removed unwanted metadata items from {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Save as merge rule</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Select new type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Metadata Editor</sys:String>
@@ -42,7 +41,10 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removed the following unused metadata items:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefix</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adding defaults...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Merging metadata...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingItems">Removing metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Removing unused metadata items...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Removing unwanted metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Add existing items</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Add new item</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Always save manual merges as merge rules.</sys:String>
