@@ -56,7 +56,7 @@ namespace MetadataUtilities.Actions
                 _tagIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Tag, tag.Name));
             }
 
-            return _categoryIds.Any() || _tagIds.Any();
+            return _categoryIds.Count != 0 || _tagIds.Count != 0;
         }
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
@@ -68,7 +68,7 @@ namespace MetadataUtilities.Actions
 
             bool mustUpdate = DatabaseObjectHelper.AddDbObjectToGame(game, FieldType.Category, _categoryIds);
 
-            if (!Settings.SetDefaultTagsOnlyIfEmpty || (game.TagIds?.Any() ?? false))
+            if (!Settings.SetDefaultTagsOnlyIfEmpty || (game.TagIds?.Count != 0))
             {
                 mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, FieldType.Tag, _tagIds);
             }

@@ -125,7 +125,7 @@ namespace MetadataUtilities.Models
                     temporaryList.AddRange(API.Instance.Database.Categories
                         .Where(x => !API.Instance.Database.Games.Any(g
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.CategoryIds?.Any(t => t == x.Id) ?? false)))
+                               (g.CategoryIds?.Contains(x.Id) ?? false)))
                         .Select(category
                             => new MetadataObject(settings)
                             {
@@ -137,7 +137,7 @@ namespace MetadataUtilities.Models
                     temporaryList.AddRange(API.Instance.Database.Features
                         .Where(x => !API.Instance.Database.Games.Any(g
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.FeatureIds?.Any(t => t == x.Id) ?? false)))
+                               (g.FeatureIds?.Contains(x.Id) ?? false)))
                         .Select(feature
                             => new MetadataObject(settings)
                             {
@@ -149,7 +149,7 @@ namespace MetadataUtilities.Models
                     temporaryList.AddRange(API.Instance.Database.Genres
                         .Where(x => !API.Instance.Database.Games.Any(g
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.GenreIds?.Any(t => t == x.Id) ?? false)))
+                               (g.GenreIds?.Contains(x.Id) ?? false)))
                         .Select(genre
                             => new MetadataObject(settings)
                             {
@@ -161,7 +161,7 @@ namespace MetadataUtilities.Models
                     temporaryList.AddRange(API.Instance.Database.Series
                         .Where(x => !API.Instance.Database.Games.Any(g
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.SeriesIds?.Any(t => t == x.Id) ?? false)))
+                               (g.SeriesIds?.Contains(x.Id) ?? false)))
                         .Select(series
                             => new MetadataObject(settings)
                             {
@@ -173,7 +173,7 @@ namespace MetadataUtilities.Models
                     temporaryList.AddRange(API.Instance.Database.Tags
                         .Where(x => !API.Instance.Database.Games.Any(g
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.TagIds?.Any(t => t == x.Id) ?? false)))
+                               (g.TagIds?.Contains(x.Id) ?? false)))
                         .Select(tag
                             => new MetadataObject(settings)
                             {
@@ -193,7 +193,7 @@ namespace MetadataUtilities.Models
                 }
             }, globalProgressOptions);
 
-            if (temporaryList.Any())
+            if (temporaryList.Count != 0)
             {
                 if (autoMode)
                 {

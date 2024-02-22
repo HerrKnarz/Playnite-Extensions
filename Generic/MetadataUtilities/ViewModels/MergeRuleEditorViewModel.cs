@@ -288,7 +288,7 @@ namespace MetadataUtilities
 
         public RelayCommand<Window> SaveCommand => new RelayCommand<Window>(win =>
         {
-            if (!RuleName?.Any() ?? false)
+            if (RuleName == null || RuleName?.Length == 0)
             {
                 API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoTargetSet"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
                 return;

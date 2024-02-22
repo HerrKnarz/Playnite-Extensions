@@ -5,6 +5,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace MetadataUtilities.Actions
 {
@@ -105,6 +106,17 @@ namespace MetadataUtilities.Actions
             }
 
             return mustUpdate;
+        }
+
+        public override void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            foreach (MetadataObject item in Settings.UnwantedItems)
+            {
+                if (!DatabaseObjectHelper.DbObjectInUse(item.Type, item.Id))
+                {
+                    DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id);
+                }
+            }
         }
     }
 }

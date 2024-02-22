@@ -67,7 +67,7 @@ namespace MetadataUtilities
                                !string.IsNullOrEmpty(item.NewData.Name))
                 .ToList();
 
-            if (!items.Any())
+            if (items.Count == 0)
             {
                 return;
             }
@@ -171,7 +171,7 @@ namespace MetadataUtilities
                                !string.IsNullOrEmpty(item.NewData.Name))
                 .ToList();
 
-            if (!items.Any())
+            if (items.Count == 0)
             {
                 return;
             }
@@ -299,11 +299,8 @@ namespace MetadataUtilities
                     {
                         try
                         {
-                            bool removeUnused = false;
-
                             if (games == null)
                             {
-                                removeUnused = true;
                                 games = new List<Game>();
                                 games.AddRange(API.Instance.Database.Games);
                             }
@@ -316,7 +313,7 @@ namespace MetadataUtilities
 
                             foreach (MergeRule rule in rules)
                             {
-                                gamesAffected.AddMissing(rule.Merge(games, removeUnused));
+                                gamesAffected.AddMissing(rule.Merge(games));
                             }
                         }
                         catch (Exception ex)

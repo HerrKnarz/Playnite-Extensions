@@ -36,7 +36,7 @@ namespace MetadataUtilities.Models
             return true;
         }
 
-        public IEnumerable<Guid> Merge(List<Game> games = null, bool removeUnused = true)
+        public IEnumerable<Guid> Merge(List<Game> games = null)
         {
             List<Guid> result = new List<Guid>();
 
@@ -56,7 +56,7 @@ namespace MetadataUtilities.Models
                         games = API.Instance.Database.Games.ToList();
                     }
 
-                    result.AddMissing(DatabaseObjectHelper.ReplaceDbObject(games, item.Type, item.Id, Type, Id, removeUnused));
+                    result.AddMissing(DatabaseObjectHelper.ReplaceDbObject(games, item.Type, item.Id, Type, Id));
                 }
             }
             catch (Exception ex)

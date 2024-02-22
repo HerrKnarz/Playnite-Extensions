@@ -39,7 +39,7 @@ namespace MetadataUtilities
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
-            win.DialogResult = NewObject.Name?.Any() ?? false;
+            win.DialogResult = NewObject.Name?.Length != 0;
             win.Close();
         }, win => win != null);
 

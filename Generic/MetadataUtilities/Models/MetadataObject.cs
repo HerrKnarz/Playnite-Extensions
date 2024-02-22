@@ -180,27 +180,27 @@ namespace MetadataUtilities.Models
                 case FieldType.Category:
                     GameCount = API.Instance.Database.Games.Count(g
                         => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
-                           (g.CategoryIds?.Any(t => t == Id) ?? false));
+                           (g.CategoryIds?.Contains(Id) ?? false));
                     break;
                 case FieldType.Feature:
                     GameCount = API.Instance.Database.Games.Count(g
                         => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
-                           (g.FeatureIds?.Any(t => t == Id) ?? false));
+                           (g.FeatureIds?.Contains(Id) ?? false));
                     break;
                 case FieldType.Genre:
                     GameCount = API.Instance.Database.Games.Count(g
                         => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
-                           (g.GenreIds?.Any(t => t == Id) ?? false));
+                           (g.GenreIds?.Contains(Id) ?? false));
                     break;
                 case FieldType.Series:
                     GameCount = API.Instance.Database.Games.Count(g
                         => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
-                           (g.SeriesIds?.Any(t => t == Id) ?? false));
+                           (g.SeriesIds?.Contains(Id) ?? false));
                     break;
                 case FieldType.Tag:
                     GameCount = API.Instance.Database.Games.Count(g
                         => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
-                           (g.TagIds?.Any(t => t == Id) ?? false));
+                           (g.TagIds?.Contains(Id) ?? false));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

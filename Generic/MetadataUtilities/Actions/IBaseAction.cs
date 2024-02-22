@@ -37,5 +37,16 @@ namespace MetadataUtilities.Actions
         /// </param>
         /// <returns>true, if the action was successful</returns>
         bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true);
+
+        /// <summary>
+        ///     Executes follow-up steps after the execute method was run. Should be executed after a loop containing the Execute method.
+        /// </summary>
+        /// <param name="actionModifier">Optional modifier for the underlying class to do different things in the execute method</param>
+        /// <param name="isBulkAction">
+        ///     If true the action is executed for more than one game in a loop. Can be used to do things
+        ///     differently if only one game is processed.
+        /// </param>
+        /// <returns>true, if the action was successful</returns>
+        void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true);
     }
 }

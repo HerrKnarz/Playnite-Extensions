@@ -290,7 +290,7 @@ namespace MetadataUtilities
             {
                 Settings.DefaultCategories.Remove(item);
             }
-        }, items => items?.Any() ?? false);
+        }, items => items?.Count != 0);
 
         public RelayCommand<IList<object>> RemoveDefaultTagCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -298,7 +298,7 @@ namespace MetadataUtilities
             {
                 Settings.DefaultTags.Remove(item);
             }
-        }, items => items?.Any() ?? false);
+        }, items => items?.Count != 0);
 
         public RelayCommand<object> RemoveMergeRuleCommand => new RelayCommand<object>(rule =>
         {
@@ -311,7 +311,7 @@ namespace MetadataUtilities
             {
                 SelectedMergeRule.SourceObjects.Remove(item);
             }
-        }, items => items?.Any() ?? false);
+        }, items => items?.Count != 0);
 
         public RelayCommand<IList<object>> RemovePrefixCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -319,7 +319,7 @@ namespace MetadataUtilities
             {
                 Settings.Prefixes.Remove(item);
             }
-        }, items => items?.Any() ?? false);
+        }, items => items?.Count != 0);
 
         public RelayCommand<IList<object>> RemoveUnwantedFromListCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -327,7 +327,7 @@ namespace MetadataUtilities
             {
                 Settings.UnwantedItems.Remove(item);
             }
-        }, items => items?.Any() ?? false);
+        }, items => items?.Count != 0);
 
         public void BeginEdit()
         {

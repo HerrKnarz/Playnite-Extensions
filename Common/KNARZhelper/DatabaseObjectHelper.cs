@@ -75,6 +75,25 @@ namespace KNARZhelper
             }
         }
 
+        public static bool DbObjectInUse(FieldType type, Guid id)
+        {
+            switch (type)
+            {
+                case FieldType.Category:
+                    return API.Instance.Database.Games.Any(x => x.CategoryIds?.Contains(id) ?? false);
+                case FieldType.Feature:
+                    return API.Instance.Database.Games.Any(x => x.FeatureIds?.Contains(id) ?? false);
+                case FieldType.Genre:
+                    return API.Instance.Database.Games.Any(x => x.GenreIds?.Contains(id) ?? false);
+                case FieldType.Series:
+                    return API.Instance.Database.Games.Any(x => x.SeriesIds?.Contains(id) ?? false);
+                case FieldType.Tag:
+                    return API.Instance.Database.Games.Any(x => x.TagIds?.Contains(id) ?? false);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
         public static Guid GetDbObjectId(string name, FieldType type)
         {
             DatabaseObject item;
@@ -235,7 +254,7 @@ namespace KNARZhelper
             switch (type)
             {
                 case FieldType.Category:
-                    foreach (Game game in games.Where(g => g.CategoryIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.CategoryIds?.Contains(id) ?? false))
                     {
                         if (!game.CategoryIds.Remove(id))
                         {
@@ -255,17 +274,14 @@ namespace KNARZhelper
                         yield return game.Id;
                     }
 
-                    if (removeAfter)
+                    if (removeAfter && !DbObjectInUse(FieldType.Category, id))
                     {
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Categories.Remove(id);
-                        });
+                        RemoveDbObject(FieldType.Category, id, false);
                     }
 
                     break;
                 case FieldType.Feature:
-                    foreach (Game game in games.Where(g => g.FeatureIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.FeatureIds?.Contains(id) ?? false))
                     {
                         if (!game.FeatureIds.Remove(id))
                         {
@@ -285,17 +301,14 @@ namespace KNARZhelper
                         yield return game.Id;
                     }
 
-                    if (removeAfter)
+                    if (removeAfter && !DbObjectInUse(FieldType.Feature, id))
                     {
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Features.Remove(id);
-                        });
+                        RemoveDbObject(FieldType.Feature, id, false);
                     }
 
                     break;
                 case FieldType.Genre:
-                    foreach (Game game in games.Where(g => g.GenreIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.GenreIds?.Contains(id) ?? false))
                     {
                         if (!game.GenreIds.Remove(id))
                         {
@@ -315,17 +328,14 @@ namespace KNARZhelper
                         yield return game.Id;
                     }
 
-                    if (removeAfter)
+                    if (removeAfter && !DbObjectInUse(FieldType.Genre, id))
                     {
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Genres.Remove(id);
-                        });
+                        RemoveDbObject(FieldType.Genre, id, false);
                     }
 
                     break;
                 case FieldType.Series:
-                    foreach (Game game in games.Where(g => g.SeriesIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.SeriesIds?.Contains(id) ?? false))
                     {
                         if (!game.SeriesIds.Remove(id))
                         {
@@ -345,17 +355,14 @@ namespace KNARZhelper
                         yield return game.Id;
                     }
 
-                    if (removeAfter)
+                    if (removeAfter && !DbObjectInUse(FieldType.Series, id))
                     {
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Series.Remove(id);
-                        });
+                        RemoveDbObject(FieldType.Series, id, false);
                     }
 
                     break;
                 case FieldType.Tag:
-                    foreach (Game game in games.Where(g => g.TagIds?.Any(t => t == id) ?? false))
+                    foreach (Game game in games.Where(g => g.TagIds?.Contains(id) ?? false))
                     {
                         if (!game.TagIds.Remove(id))
                         {
@@ -375,12 +382,9 @@ namespace KNARZhelper
                         yield return game.Id;
                     }
 
-                    if (removeAfter)
+                    if (removeAfter && !DbObjectInUse(FieldType.Tag, id))
                     {
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            API.Instance.Database.Tags.Remove(id);
-                        });
+                        RemoveDbObject(FieldType.Tag, id, false);
                     }
 
                     break;
@@ -478,7 +482,7 @@ namespace KNARZhelper
 
         public static bool RemoveObjectFromGame(Game game, FieldType type, List<Guid> ids)
         {
-            if (!ids.Any())
+            if (ids.Count == 0)
             {
                 return false;
             }

@@ -445,7 +445,7 @@ namespace MetadataUtilities
                 Plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
-        }, items => items?.Any() ?? false);
+        }, items => items?.Count != 0);
 
         public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -505,7 +505,7 @@ namespace MetadataUtilities
                 Plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
-        }, items => items?.Any() ?? false);
+        }, items => items?.Count != 0);
 
         public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -558,7 +558,7 @@ namespace MetadataUtilities
                 Plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
-        }, items => items?.Any() ?? false);
+        }, items => items?.Count != 0);
 
         public RelayCommand<IList<object>> RemoveGamesCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -576,14 +576,14 @@ namespace MetadataUtilities
 
                 List<Game> games = items.Cast<MyGame>().Select(x => x.Game).ToList();
 
-                if (!games.Any())
+                if (games.Count == 0)
                 {
                     return;
                 }
 
                 List<Guid> gamesAffected = DatabaseObjectHelper.ReplaceDbObject(games, selectedItem.Type, selectedItem.Id, null, null, false).ToList();
 
-                if (!gamesAffected.Any())
+                if (gamesAffected.Count == 0)
                 {
                     return;
                 }
@@ -601,7 +601,7 @@ namespace MetadataUtilities
                 Plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
-        }, items => items?.Any() ?? false);
+        }, items => items?.Count != 0);
 
         public RelayCommand RemoveUnusedCommand => new RelayCommand(() =>
         {
@@ -612,7 +612,7 @@ namespace MetadataUtilities
             {
                 List<MetadataObject> removedItems = MetadataObjects.RemoveUnusedMetadata(_plugin.Settings.Settings);
 
-                if (!removedItems.Any())
+                if (removedItems.Count == 0)
                 {
                     return;
                 }
