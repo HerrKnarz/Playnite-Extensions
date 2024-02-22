@@ -493,6 +493,8 @@ namespace MetadataUtilities
                 MetadataObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
 
                 CalculateItemCount();
+
+                LoadRelatedGames();
             }
             catch (Exception exception)
             {
