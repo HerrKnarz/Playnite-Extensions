@@ -604,6 +604,7 @@ namespace MetadataUtilities
         public RelayCommand RemoveUnusedCommand => new RelayCommand(() =>
         {
             Cursor.Current = Cursors.WaitCursor;
+            Plugin.IsUpdating = true;
 
             try
             {
@@ -629,6 +630,7 @@ namespace MetadataUtilities
             finally
             {
                 Cursor.Current = Cursors.Default;
+                Plugin.IsUpdating = false;
             }
         });
 

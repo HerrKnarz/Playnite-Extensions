@@ -342,6 +342,22 @@ namespace MetadataUtilities
             PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergedMetadataMessage"), gamesAffected.Distinct().Count()));
         }
 
+        public void RemoveUnused()
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            IsUpdating = true;
+
+            try
+            {
+                MetadataObjects.RemoveUnusedMetadata(Settings.Settings);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+                IsUpdating = false;
+            }
+        }
+
         /// <summary>
         ///     Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update
         ///     mode if the list contains more than one game.
@@ -506,7 +522,7 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnused"),
                     MenuSection = $"@{menuSection}",
                     Icon = "muRemoveIcon",
-                    Action = a => MetadataObjects.RemoveUnusedMetadata(Settings.Settings)
+                    Action = a => RemoveUnused()
                 }
             };
 
