@@ -146,6 +146,19 @@
                                             Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}"
                                             IsReadOnly="True" Width="SizeToHeader" MinWidth="50" />
                     </DataGrid.Columns>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{DynamicResource LOCMetadataUtilitiesEditorMerge}"
+                                      CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}}"
+                                      Command="{Binding MergeItemsCommand}"/>
+                            <MenuItem Header="{DynamicResource LOCMetadataUtilitiesEditorChangeType}"
+                                      CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}}"
+                                      Command="{Binding ChangeTypeCommand}"/>
+                            <MenuItem Header="{DynamicResource LOCRemoveTitle}"
+                                      CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}}"
+                                      Command="{Binding RemoveItemsCommand}"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
                 </DataGrid>
             </DockPanel>
             <WrapPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Margin="0,0,0,10" HorizontalAlignment="Left">
@@ -181,6 +194,15 @@
                                             Width="SizeToHeader" ElementStyle="{StaticResource RightCell}" MinWidth="50"
                                             Visibility="{Binding DataContext.GameGridReleaseVisibility, Source={x:Reference DummyElement}}"/>
                     </DataGrid.Columns>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{DynamicResource LOCRemoveTitle}"
+                                      CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}}"
+                                      Command="{Binding RemoveGamesCommand}"
+                                      ToolTip="{DynamicResource LOCMetadataUtilitiesEditorRemovesGamesFromSelectedItem}"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
                 </DataGrid>
             </DockPanel>
             <WrapPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1" Margin="0,0,0,10" HorizontalAlignment="Left">

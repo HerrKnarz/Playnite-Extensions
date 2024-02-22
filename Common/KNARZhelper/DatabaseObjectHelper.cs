@@ -217,31 +217,29 @@ namespace KNARZhelper
             {
                 return ReplaceDbObject(API.Instance.Database.Games.ToList(), type, id)?.Count() > 0;
             }
-            else
-            {
-                switch (type)
-                {
-                    case FieldType.Category:
-                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Categories.Remove(id));
-                        break;
-                    case FieldType.Feature:
-                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Features.Remove(id));
-                        break;
-                    case FieldType.Genre:
-                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Genres.Remove(id));
-                        break;
-                    case FieldType.Series:
-                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Series.Remove(id));
-                        break;
-                    case FieldType.Tag:
-                        API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Tags.Remove(id));
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
-                }
 
-                return false;
+            switch (type)
+            {
+                case FieldType.Category:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Categories.Remove(id));
+                    break;
+                case FieldType.Feature:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Features.Remove(id));
+                    break;
+                case FieldType.Genre:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Genres.Remove(id));
+                    break;
+                case FieldType.Series:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Series.Remove(id));
+                    break;
+                case FieldType.Tag:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Tags.Remove(id));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
+
+            return false;
         }
 
         public static IEnumerable<Guid> ReplaceDbObject(List<Game> games, FieldType type, Guid id, FieldType? newType = null, Guid? newId = null, bool removeAfter = true)

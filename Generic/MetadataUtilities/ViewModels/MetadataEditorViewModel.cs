@@ -36,6 +36,7 @@ namespace MetadataUtilities
         private string _searchTerm = string.Empty;
         private int _seriesCount;
         private int _tagCount;
+        private List<MetadataObject> _selectedItems = new List<MetadataObject>();
 
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
         {
@@ -390,6 +391,11 @@ namespace MetadataUtilities
 
         public RelayCommand<IList<object>> ChangeTypeCommand => new RelayCommand<IList<object>>(items =>
         {
+            if (items == null || items.Count < 1)
+            {
+                return;
+            }
+
             try
             {
                 Plugin.IsUpdating = true;
@@ -445,7 +451,7 @@ namespace MetadataUtilities
                 Plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
-        }, items => items?.Count != 0);
+        }, items => items?.Count > 0);
 
         public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -505,10 +511,15 @@ namespace MetadataUtilities
                 Plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
-        }, items => items?.Count != 0);
+        }, items => items?.Count > 1);
 
         public RelayCommand<IList<object>> RemoveItemsCommand => new RelayCommand<IList<object>>(items =>
         {
+            if (items == null || items.Count < 1)
+            {
+                return;
+            }
+
             Plugin.IsUpdating = true;
             Cursor.Current = Cursors.WaitCursor;
 
@@ -558,7 +569,7 @@ namespace MetadataUtilities
                 Plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
-        }, items => items?.Count != 0);
+        }, items => items != null && items?.Count > 0);
 
         public RelayCommand<IList<object>> RemoveGamesCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -601,7 +612,7 @@ namespace MetadataUtilities
                 Plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
-        }, items => items?.Count != 0);
+        }, items => items != null && items?.Count > 0);
 
         public RelayCommand RemoveUnusedCommand => new RelayCommand(() =>
         {
@@ -661,6 +672,12 @@ namespace MetadataUtilities
         {
             get => _completeMetadata;
             set => SetValue(ref _completeMetadata, value);
+        }
+
+        public List<MetadataObject> SelectedItems
+        {
+            get => _selectedItems;
+            set => SetValue(ref _selectedItems, value);
         }
 
         public void BeginEdit() { }
