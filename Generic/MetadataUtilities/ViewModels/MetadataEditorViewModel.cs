@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -581,7 +580,12 @@ namespace MetadataUtilities
                 return;
             }
 
-            MessageBoxResult response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddToUnwanted"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            MessageBoxResult response = MessageBoxResult.Yes;
+
+            if (!Plugin.Settings.Settings.AddRemovedToUnwanted)
+            {
+                response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddToUnwanted"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            }
 
             if (response == MessageBoxResult.Cancel)
             {

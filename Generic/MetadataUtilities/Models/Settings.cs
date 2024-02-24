@@ -7,6 +7,7 @@ namespace MetadataUtilities
 {
     public class Settings : ObservableObject
     {
+        private bool _addRemovedToUnwanted;
         private bool _alwaysSaveManualMergeRules;
         private ObservableCollection<MetadataObject> _defaultCategories = new ObservableCollection<MetadataObject>();
         private ObservableCollection<MetadataObject> _defaultTags = new ObservableCollection<MetadataObject>();
@@ -34,6 +35,12 @@ namespace MetadataUtilities
         private bool _showTopPanelButton = true;
         private ObservableCollection<MetadataObject> _unwantedItems = new ObservableCollection<MetadataObject>();
         private bool _writeDebugLog;
+
+        public bool AddRemovedToUnwanted
+        {
+            get => _addRemovedToUnwanted;
+            set => SetValue(ref _addRemovedToUnwanted, value);
+        }
 
         public bool AlwaysSaveManualMergeRules
         {
