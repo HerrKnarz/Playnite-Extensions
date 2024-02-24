@@ -75,6 +75,7 @@
     <Compile Include="Models\MetadataObject.cs" />
     <Compile Include="Models\MetadataObjects.cs" />
     <Compile Include="Models\MyGame.cs" />
+    <Compile Include="Models\QuickAddObject.cs" />
     <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
     <Compile Include="ViewModels\ChangeTypeViewModel.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />

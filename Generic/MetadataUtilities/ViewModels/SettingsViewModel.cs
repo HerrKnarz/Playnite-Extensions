@@ -210,6 +210,21 @@ namespace MetadataUtilities
                 Settings.Prefixes = new ObservableCollection<string>(Settings.Prefixes.OrderBy(x => x));
             });
 
+        public RelayCommand AddQuickAddCategoriesCommand
+            => new RelayCommand(() => AddQuickAddItems(FieldType.Category));
+
+        public RelayCommand AddQuickAddFeaturesCommand
+            => new RelayCommand(() => AddQuickAddItems(FieldType.Feature));
+
+        public RelayCommand AddQuickAddGenresCommand
+            => new RelayCommand(() => AddQuickAddItems(FieldType.Genre));
+
+        public RelayCommand AddQuickAddSeriesCommand
+            => new RelayCommand(() => AddQuickAddItems(FieldType.Series));
+
+        public RelayCommand AddQuickAddTagsCommand
+            => new RelayCommand(() => AddQuickAddItems(FieldType.Tag));
+
         public RelayCommand AddUnwantedCategoriesCommand
             => new RelayCommand(() => AddUnwantedItems(FieldType.Category));
 
@@ -284,6 +299,14 @@ namespace MetadataUtilities
             }
         }, items => items?.Count != 0);
 
+        public RelayCommand<IList<object>> RemoveQuickAddFromListCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (QuickAddObject item in items.ToList().Cast<QuickAddObject>())
+            {
+                Settings.QuickAddObjects.Remove(item);
+            }
+        }, items => items?.Count != 0);
+
         public RelayCommand<IList<object>> RemoveUnwantedFromListCommand => new RelayCommand<IList<object>>(items =>
         {
             foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
@@ -329,6 +352,25 @@ namespace MetadataUtilities
 
         private Settings EditingClone { get; set; }
 
+        public void AddItemsToQuickAddList(List<MetadataObject> items)
+        {
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            foreach (MetadataObject item in items.Where(item => Settings.QuickAddObjects.All(x => x.TypeAndName != item.TypeAndName)))
+            {
+                Settings.QuickAddObjects.Add(new QuickAddObject(_settings)
+                {
+                    Name = item.Name,
+                    Type = item.Type
+                });
+            }
+
+            Settings.QuickAddObjects = new ObservableCollection<QuickAddObject>(Settings.QuickAddObjects.OrderBy(x => x.TypeAndName));
+        }
+
         public void AddItemsToUnwantedList(List<MetadataObject> items)
         {
             if (items.Count == 0)
@@ -336,7 +378,7 @@ namespace MetadataUtilities
                 return;
             }
 
-            foreach (MetadataObject item in items.Where(item => !Settings.UnwantedItems.Any(x => x.TypeAndName == item.TypeAndName)))
+            foreach (MetadataObject item in items.Where(item => Settings.UnwantedItems.All(x => x.TypeAndName != item.TypeAndName)))
             {
                 Settings.UnwantedItems.Add(new MetadataObject(_settings)
                 {
@@ -348,51 +390,28 @@ namespace MetadataUtilities
             Settings.UnwantedItems = new ObservableCollection<MetadataObject>(Settings.UnwantedItems.OrderBy(x => x.TypeAndName));
         }
 
-        public void AddUnwantedItems(FieldType type)
+        public void AddQuickAddItems(FieldType type)
         {
-            MetadataObjects items = new MetadataObjects(Settings);
+            List<MetadataObject> items = GetItemsFromAddDialog(type);
 
-            items.LoadMetadata(false, type);
-
-            string label;
-
-            switch (type)
-            {
-                case FieldType.Category:
-                    label = ResourceProvider.GetString("LOCCategoriesLabel");
-                    break;
-
-                case FieldType.Feature:
-                    label = ResourceProvider.GetString("LOCFeaturesLabel");
-                    break;
-
-                case FieldType.Genre:
-                    label = ResourceProvider.GetString("LOCGenresLabel");
-                    break;
-
-                case FieldType.Series:
-                    label = ResourceProvider.GetString("LOCSeriesLabel");
-                    break;
-
-                case FieldType.Tag:
-                    label = ResourceProvider.GetString("LOCTagsLabel");
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-
-            Window window = SelectMetadataViewModel.GetWindow(_plugin, items, label);
-
-            if (window == null)
+            if (items.Count == 0)
             {
                 return;
             }
 
-            if (window.ShowDialog() ?? false)
+            AddItemsToQuickAddList(items);
+        }
+
+        public void AddUnwantedItems(FieldType type)
+        {
+            List<MetadataObject> items = GetItemsFromAddDialog(type);
+
+            if (items.Count == 0)
             {
-                AddItemsToUnwantedList(items.Where(x => x.Selected).ToList());
+                return;
             }
+
+            AddItemsToUnwantedList(items);
         }
 
         public void BeginEdit()
@@ -595,6 +614,47 @@ namespace MetadataUtilities
             {
                 Cursor.Current = Cursors.Default;
             }
+        }
+
+        private List<MetadataObject> GetItemsFromAddDialog(FieldType type)
+        {
+            MetadataObjects items = new MetadataObjects(Settings);
+
+            items.LoadMetadata(false, type);
+
+            string label;
+
+            switch (type)
+            {
+                case FieldType.Category:
+                    label = ResourceProvider.GetString("LOCCategoriesLabel");
+                    break;
+
+                case FieldType.Feature:
+                    label = ResourceProvider.GetString("LOCFeaturesLabel");
+                    break;
+
+                case FieldType.Genre:
+                    label = ResourceProvider.GetString("LOCGenresLabel");
+                    break;
+
+                case FieldType.Series:
+                    label = ResourceProvider.GetString("LOCSeriesLabel");
+                    break;
+
+                case FieldType.Tag:
+                    label = ResourceProvider.GetString("LOCTagsLabel");
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            Window window = SelectMetadataViewModel.GetWindow(_plugin, items, label);
+
+            return (window?.ShowDialog() ?? false)
+                ? items.Where(x => x.Selected).ToList()
+                : items.ToList();
         }
     }
 }

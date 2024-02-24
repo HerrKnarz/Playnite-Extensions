@@ -27,6 +27,10 @@ namespace MetadataUtilities
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
         private ObservableCollection<string> _prefixes = new ObservableCollection<string>();
+        private string _quickAddCustomPath = string.Empty;
+        private ObservableCollection<QuickAddObject> _quickAddObjects = new ObservableCollection<QuickAddObject>();
+        private bool _quickAddShowDialog = true;
+        private bool _quickAddSingleMenuEntry;
         private bool _removeUnusedOnStartup;
         private bool _removeUnwantedOnMetadataUpdate = true;
         private bool _renameDefaults = true;
@@ -154,6 +158,30 @@ namespace MetadataUtilities
         {
             get => _prefixes;
             set => SetValue(ref _prefixes, value);
+        }
+
+        public string QuickAddCustomPath
+        {
+            get => _quickAddCustomPath;
+            set => SetValue(ref _quickAddCustomPath, value);
+        }
+
+        public ObservableCollection<QuickAddObject> QuickAddObjects
+        {
+            get => _quickAddObjects;
+            set => SetValue(ref _quickAddObjects, value);
+        }
+
+        public bool QuickAddShowDialog
+        {
+            get => _quickAddShowDialog;
+            set => SetValue(ref _quickAddShowDialog, value);
+        }
+
+        public bool QuickAddSingleMenuEntry
+        {
+            get => _quickAddSingleMenuEntry;
+            set => SetValue(ref _quickAddSingleMenuEntry, value);
         }
 
         public bool RemoveUnusedOnStartup
