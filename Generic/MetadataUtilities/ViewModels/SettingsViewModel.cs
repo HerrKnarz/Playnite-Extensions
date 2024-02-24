@@ -45,59 +45,6 @@ namespace MetadataUtilities
             SourceObjectsViewSource.IsLiveSortingRequested = true;
         }
 
-        private Settings EditingClone { get; set; }
-
-        public CollectionViewSource MergeRuleViewSource
-        {
-            get => _mergeRuleViewSource;
-            set
-            {
-                _mergeRuleViewSource = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public MergeRule SelectedMergeRule
-        {
-            get => _selectedMergeRule;
-            set
-            {
-                SetValue(ref _selectedMergeRule, value);
-
-                SourceObjectsViewSource.Source = _selectedMergeRule == null
-                    ? new ObservableCollection<MetadataObject>()
-                    : _selectedMergeRule.SourceObjects;
-
-                SourceObjectsViewSource.View.Refresh();
-            }
-        }
-
-        public MergeRules MergeRules
-        {
-            get => _mergeRules;
-            set => SetValue(ref _mergeRules, value);
-        }
-
-        public Settings Settings
-        {
-            get => _settings;
-            set
-            {
-                _settings = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public CollectionViewSource SourceObjectsViewSource
-        {
-            get => _sourceObjectsViewSource;
-            set
-            {
-                _sourceObjectsViewSource = value;
-                OnPropertyChanged();
-            }
-        }
-
         public RelayCommand AddExistingDefaultCategoriesCommand
             => new RelayCommand(() =>
             {
@@ -284,6 +231,22 @@ namespace MetadataUtilities
         public RelayCommand<object> MergeItemsCommand
             => new RelayCommand<object>(rule => _plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);
 
+        public MergeRules MergeRules
+        {
+            get => _mergeRules;
+            set => SetValue(ref _mergeRules, value);
+        }
+
+        public CollectionViewSource MergeRuleViewSource
+        {
+            get => _mergeRuleViewSource;
+            set
+            {
+                _mergeRuleViewSource = value;
+                OnPropertyChanged();
+            }
+        }
+
         public RelayCommand<IList<object>> RemoveDefaultCategoryCommand => new RelayCommand<IList<object>>(items =>
         {
             foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
@@ -329,21 +292,60 @@ namespace MetadataUtilities
             }
         }, items => items?.Count != 0);
 
-        public void BeginEdit()
+        public MergeRule SelectedMergeRule
         {
-            MergeRules = Settings.MergeRules;
-            MergeRuleViewSource.Source = MergeRules;
-            EditingClone = Serialization.GetClone(Settings);
+            get => _selectedMergeRule;
+            set
+            {
+                SetValue(ref _selectedMergeRule, value);
+
+                SourceObjectsViewSource.Source = _selectedMergeRule == null
+                    ? new ObservableCollection<MetadataObject>()
+                    : _selectedMergeRule.SourceObjects;
+
+                SourceObjectsViewSource.View.Refresh();
+            }
         }
 
-        public void CancelEdit() => Settings = EditingClone;
-
-        public void EndEdit() => _plugin.SavePluginSettings(Settings);
-
-        public bool VerifySettings(out List<string> errors)
+        public Settings Settings
         {
-            errors = new List<string>();
-            return true;
+            get => _settings;
+            set
+            {
+                _settings = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public CollectionViewSource SourceObjectsViewSource
+        {
+            get => _sourceObjectsViewSource;
+            set
+            {
+                _sourceObjectsViewSource = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Settings EditingClone { get; set; }
+
+        public void AddItemsToUnwantedList(List<MetadataObject> items)
+        {
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            foreach (MetadataObject item in items.Where(item => !Settings.UnwantedItems.Any(x => x.TypeAndName == item.TypeAndName)))
+            {
+                Settings.UnwantedItems.Add(new MetadataObject(_settings)
+                {
+                    Name = item.Name,
+                    Type = item.Type
+                });
+            }
+
+            Settings.UnwantedItems = new ObservableCollection<MetadataObject>(Settings.UnwantedItems.OrderBy(x => x.TypeAndName));
         }
 
         public void AddUnwantedItems(FieldType type)
@@ -359,18 +361,23 @@ namespace MetadataUtilities
                 case FieldType.Category:
                     label = ResourceProvider.GetString("LOCCategoriesLabel");
                     break;
+
                 case FieldType.Feature:
                     label = ResourceProvider.GetString("LOCFeaturesLabel");
                     break;
+
                 case FieldType.Genre:
                     label = ResourceProvider.GetString("LOCGenresLabel");
                     break;
+
                 case FieldType.Series:
                     label = ResourceProvider.GetString("LOCSeriesLabel");
                     break;
+
                 case FieldType.Tag:
                     label = ResourceProvider.GetString("LOCTagsLabel");
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -384,22 +391,25 @@ namespace MetadataUtilities
 
             if (window.ShowDialog() ?? false)
             {
-                foreach (MetadataObject item in items.Where(x => x.Selected))
-                {
-                    if (Settings.UnwantedItems.Any(x => x.TypeAndName == item.TypeAndName))
-                    {
-                        continue;
-                    }
-
-                    Settings.UnwantedItems.Add(new MetadataObject(_settings)
-                    {
-                        Name = item.Name,
-                        Type = item.Type
-                    });
-                }
+                AddItemsToUnwantedList(items.Where(x => x.Selected).ToList());
             }
+        }
 
-            Settings.UnwantedItems = new ObservableCollection<MetadataObject>(Settings.UnwantedItems.OrderBy(x => x.TypeAndName));
+        public void BeginEdit()
+        {
+            MergeRules = Settings.MergeRules;
+            MergeRuleViewSource.Source = MergeRules;
+            EditingClone = Serialization.GetClone(Settings);
+        }
+
+        public void CancelEdit() => Settings = EditingClone;
+
+        public void EndEdit() => _plugin.SavePluginSettings(Settings);
+
+        public bool VerifySettings(out List<string> errors)
+        {
+            errors = new List<string>();
+            return true;
         }
 
         private void EditMergeRule(MergeRule rule = null)
@@ -528,8 +538,8 @@ namespace MetadataUtilities
                     return;
                 }
 
-                // Case 2: The rule was renamed or is new and another one for that target already exists => We ask if merge,
-                // replace or cancel.
+                // Case 2: The rule was renamed or is new and another one for that target already
+                // exists => We ask if merge, replace or cancel.
                 if (Settings.MergeRules.Any(x => x.Name == ruleToEdit.Name && x.Type == ruleToEdit.Type))
                 {
                     Cursor.Current = Cursors.Default;
@@ -546,11 +556,13 @@ namespace MetadataUtilities
                             Settings.MergeRules.Remove(rule);
                             MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                             return;
+
                         case MessageBoxResult.No:
                             Settings.MergeRules.AddRule(ruleToEdit);
                             Settings.MergeRules.Remove(rule);
                             MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                             return;
+
                         case MessageBoxResult.None:
                         case MessageBoxResult.OK:
                         case MessageBoxResult.Cancel:
@@ -570,7 +582,8 @@ namespace MetadataUtilities
                     MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                 }
 
-                // Case 4: The rule is new and no other with that target exists => we simply add the new one.
+                // Case 4: The rule is new and no other with that target exists => we simply add the
+                // new one.
                 Settings.MergeRules.AddRule(ruleToEdit);
                 MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
             }

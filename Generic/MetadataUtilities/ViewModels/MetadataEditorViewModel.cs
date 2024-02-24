@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -580,6 +581,13 @@ namespace MetadataUtilities
                 return;
             }
 
+            MessageBoxResult response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddToUnwanted"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+            if (response == MessageBoxResult.Cancel)
+            {
+                return;
+            }
+
             Plugin.IsUpdating = true;
             Cursor.Current = Cursors.WaitCursor;
 
@@ -615,9 +623,18 @@ namespace MetadataUtilities
                     }, globalProgressOptions);
                 }
 
+                List<MetadataObject> unwantedItems = new List<MetadataObject>();
+
                 foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
                 {
+                    unwantedItems.Add(item);
+
                     CompleteMetadata.Remove(item);
+                }
+
+                if (response == MessageBoxResult.Yes)
+                {
+                    Plugin.Settings.AddItemsToUnwantedList(unwantedItems);
                 }
 
                 MetadataObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
