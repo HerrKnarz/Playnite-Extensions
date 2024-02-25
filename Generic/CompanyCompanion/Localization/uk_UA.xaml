@@ -15,13 +15,13 @@
     <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Використовувати як назву</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Обʼєднати дублікати</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Видалити дескриптори суб’єктів господарювання</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Прибрати дескриптори суб’єктів господарювання</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Показати Об'єднувач компаній</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Додати</sys:String>
     <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Дескриптори суб'єктів господарювання:</sys:String>
     <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Слова, які ігнорувати для пошуку подібних компаній:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Вилучити</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Прибрати</sys:String>
     <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Показати ключ групи у вікні об'єднання.</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionProgressMerging">об'єднання компаній</sys:String>

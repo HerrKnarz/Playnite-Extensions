@@ -17,8 +17,8 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Будь ласка, введіть назву для посилання!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">Дублікатів не знайдено!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogNoLinksFound">Посилань не знайдено!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Небажані посилання в {0} іграх видалені!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Повторювані посилання видалені з {0} ігор!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Небажані посилання в {0} іграх прибрані!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Повторювані посилання прибрані з {0} ігор!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Посилання {0} ігор перейменовано!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Посилання на {0} вже існує. Ви можете замінити наявне посилання або додати нове, ввівши нове ім'я посилання.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Пошук гри</sys:String>
@@ -39,7 +39,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Перетворити вебпосилання Steam на клієнт-посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Перетворити клієнт-посилання Steam на вебпосилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Перевірити посилання...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Очистити посилання (перейменувати, видалити, сортувати)</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Очистити посилання (перейменувати, прибрати, сортувати)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Відфільтровані ігри</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Прибрати повторювані посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Прибрати небажані посилання</sys:String>
@@ -78,7 +78,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Вибрати все</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">Довідка</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Вилучити</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Прибрати</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">Замінити</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Зворотній вибір</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Сортувати</sys:String>
@@ -89,7 +89,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">Прибрати спеціальні символи</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens">Прибрати дефіси</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces">Прибрати пробіли</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveDiacritics">Видалити діакритичні знаки</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveDiacritics">Прибрати діакритичні знаки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveEditionSuffix">Прибрати суфікс типу видання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksWhitespacesToHyphens">Пробіли на суфікси</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksUnderscoresToWhitespaces">Підкреслення у пробіли</sys:String>
@@ -101,8 +101,8 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksAllowRedirects">Дозволити перенаправлення</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksReturnsSameUrl">Повертає той самий URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksNeedsToBeChecked">Потребує перевірки</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveSpecialChars">Видаляє всі символи, які не є частиною алфавіту, номером, пробілом чи дефісом.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveEditionSuffix">Видаляє з кінця назви гри речі типу &quot;Special Edition&quot; або HD.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveSpecialChars">Прибирає всі символи, які не є частиною алфавіту, номером, пробілом чи дефісом.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveEditionSuffix">Прибирає з кінця назви гри речі типу &quot;Special Edition&quot; або HD.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionEscapeDataString">Екранує рядок для використання в URL.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionUrlEncode">Кодує назву гри, що її можна було використати в URL-адресі</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionToTitleCase">Змінює назву гри, щоб кожне слово починалося з великої літери.</sys:String>
@@ -128,7 +128,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">Якщо позначено лише один з обох шаблонів має збігатися.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPrefixMissingLinkTag">Префікс для тегів відсутніх посилань</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksAfterChange">Прибрати небажані посилання після оновлення метаданих</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">Часто постачальники метаданих автоматично додають посилання на не потрібні вам сайти. Тут ви можете визначити шаблони для посилань, які хочете видалити. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">Часто постачальники метаданих автоматично додають посилання на не потрібні вам сайти. Тут ви можете визначити шаблони для посилань, які хочете прибрати. Шаблони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksAfterChange">Перейменувати посилання після оновлення метаданих</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksDescription">Якщо ви хочете змінити назву певних посилань, тому що вони не відповідають вашим потребам, ви можете зробити це за допомогою цих шаблонів. Вони можуть містити символи підставлення. * може бути нуль або більше символів, ? має бути рівно одним символом.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSearchLink">Шукати посилання</sys:String>
@@ -138,7 +138,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">Букмарклет/Буфер Обміну</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabCustomLinks">Користувацькі профілі посилань</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">Загальні налаштування</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Вилучити посилання</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Прибрати посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Перейменувати посилання</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Сортування</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Позначити тегом відсутні посилання</sys:String>

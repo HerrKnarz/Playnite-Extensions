@@ -7,7 +7,7 @@
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Titre de la page de réponse</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">égal ?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Vérifier les liens</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filter by link name:</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filtrer par nom de lien :</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Jeu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">URL</sys:String>
@@ -35,7 +35,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">Tous les sites Web configurés</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Tous les sites manquants</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Tous les jeux</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Open browser search on...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Ouvrir la recherche dans le navigateur...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Vérifier les liens...</sys:String>
@@ -51,7 +51,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">Trier les liens par ordre de tri</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Étiqueter les liens manquants</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Converting steam links...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">Conversion des liens Steam...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressCheckingLinks">Recherche des liens...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLibraryLink">Ajout des liens de la bibliothèque...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressLink">Ajout des liens...</sys:String>
@@ -86,19 +86,19 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configurer les sites web</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Here you can add your own links for websites with urls, that contain either the game name, rom name, steam ID or GOG ID and have no variable parts. In the Game URL field you can use the placeholders {GameName}, {RomName}, {SteamId} and {GogId} for that. The following checkboxes define, how the game name will be modified to fit the url scheme and how to check for link validity. You can also add a Browser search url that then can be opened in a browser to search for the game. This field only supports the {GameName} placeholder. For further information on custom link profiles click the questionmark button.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">Remove special chars</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens">Remove hyphens</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces">Remove whitespaces</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveDiacritics">Remove diacritics</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveEditionSuffix">Remove edition suffix</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksWhitespacesToHyphens">Whitespaces to hyphens</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksUnderscoresToWhitespaces">Underscores to whitespaces</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksWhitespacesToUnderscores">Whitespaces to underscores</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">Retirer les caractères spéciaux</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens">Retirer les tirets</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces">Retirer les espaces</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveDiacritics">Retirer les diacritiques</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveEditionSuffix">Retirer le suffixe d'édition</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksWhitespacesToHyphens">Espaces en tirets</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksUnderscoresToWhitespaces">Tirets bas en espaces</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksWhitespacesToUnderscores">Espaces en tirets bas</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksEscapeDataString">Escape data string</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksUrlEncode">Url encode</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksToLower">To lowercase</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksToLower">En minuscule</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksToTitleCase">To title case</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksAllowRedirects">Allow redirects</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksAllowRedirects">Autoriser les redirections</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksReturnsSameUrl">Returns the same URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksNeedsToBeChecked">Needs to be checked</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveSpecialChars">Removes all characters that aren't part of the alphabet, a number, a whitespace or a hyphen.</sys:String>
@@ -151,11 +151,11 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamUseAppLinks">Add links for the steam client instead of the website.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Automatically change steam web links to steam client links on library update.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">If none of the check boxes below are ticked, adding or searching for a steam link will add the usual store page link with &quot;Steam&quot; as link name.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Achievements</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Community Hub</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Progrès</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Hub de la communauté</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamDiscussion">Discussion</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamGuides">Guides</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">News</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Store Page</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamNews">Actualités</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamStorePage">Page du magasin</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamWorkshop">Workshop</sys:String>
 </ResourceDictionary>
