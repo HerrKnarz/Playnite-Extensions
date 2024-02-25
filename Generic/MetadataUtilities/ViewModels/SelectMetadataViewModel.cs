@@ -1,14 +1,14 @@
-﻿using KNARZhelper;
-using MetadataUtilities.Models;
-using MetadataUtilities.Views;
-using Playnite.SDK;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
+using KNARZhelper;
+using MetadataUtilities.Models;
+using MetadataUtilities.Views;
+using Playnite.SDK;
 
-namespace MetadataUtilities
+namespace MetadataUtilities.ViewModels
 {
     public class SelectMetadataViewModel : ObservableObject
     {
@@ -40,6 +40,12 @@ namespace MetadataUtilities
             }
         }
 
+        public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
+        {
+            win.DialogResult = true;
+            win.Close();
+        }, win => win != null);
+
         public MetadataUtilities Plugin
         {
             get => _plugin;
@@ -55,12 +61,6 @@ namespace MetadataUtilities
                 FilteredMetadata.Refresh();
             }
         }
-
-        public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
-        {
-            win.DialogResult = true;
-            win.Close();
-        }, win => win != null);
 
         public static Window GetWindow(MetadataUtilities plugin, MetadataObjects items, string windowTitle)
         {

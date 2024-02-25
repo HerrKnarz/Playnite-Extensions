@@ -1,10 +1,10 @@
-﻿using MetadataUtilities.Models;
-using Playnite.SDK;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using MetadataUtilities.Models;
+using Playnite.SDK;
 
-namespace MetadataUtilities
+namespace MetadataUtilities.ViewModels
 {
     public class MergeDialogViewModel : ObservableObject
     {
@@ -19,14 +19,10 @@ namespace MetadataUtilities
             MetadataObjects = items;
         }
 
-        public MetadataUtilities Plugin
+        public MetadataObject MergeTarget
         {
-            get => _plugin;
-            set
-            {
-                SetValue(ref _plugin, value);
-                SaveAsRule = _plugin.Settings.Settings.AlwaysSaveManualMergeRules;
-            }
+            get => _mergeTarget;
+            set => SetValue(ref _mergeTarget, value);
         }
 
         public MetadataObjects MetadataObjects
@@ -37,18 +33,6 @@ namespace MetadataUtilities
                 SetValue(ref _metadataObjects, value);
                 MergeTarget = _metadataObjects.FirstOrDefault();
             }
-        }
-
-        public MetadataObject MergeTarget
-        {
-            get => _mergeTarget;
-            set => SetValue(ref _mergeTarget, value);
-        }
-
-        public bool SaveAsRule
-        {
-            get => _saveAsRule;
-            set => SetValue(ref _saveAsRule, value);
         }
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
@@ -72,5 +56,21 @@ namespace MetadataUtilities
             win.DialogResult = true;
             win.Close();
         }, win => win != null);
+
+        public MetadataUtilities Plugin
+        {
+            get => _plugin;
+            set
+            {
+                SetValue(ref _plugin, value);
+                SaveAsRule = _plugin.Settings.Settings.AlwaysSaveManualMergeRules;
+            }
+        }
+
+        public bool SaveAsRule
+        {
+            get => _saveAsRule;
+            set => SetValue(ref _saveAsRule, value);
+        }
     }
 }

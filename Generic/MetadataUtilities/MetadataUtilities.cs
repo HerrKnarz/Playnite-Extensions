@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
+using MetadataUtilities.ViewModels;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace MetadataUtilities

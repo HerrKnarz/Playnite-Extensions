@@ -1,12 +1,12 @@
-﻿using KNARZhelper;
-using MetadataUtilities.Models;
-using Playnite.SDK;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Forms;
+using KNARZhelper;
+using MetadataUtilities.Models;
+using Playnite.SDK;
 
-namespace MetadataUtilities
+namespace MetadataUtilities.ViewModels
 {
     public class ChangeTypeViewModel : ObservableObject
     {
@@ -25,16 +25,6 @@ namespace MetadataUtilities
             _newObjects = new MetadataObjects(plugin.Settings.Settings);
         }
 
-        public MetadataUtilities Plugin
-        {
-            get => _plugin;
-            set
-            {
-                SetValue(ref _plugin, value);
-                SaveAsRule = _plugin.Settings.Settings.AlwaysSaveManualMergeRules;
-            }
-        }
-
         public MetadataObjects NewObjects
         {
             get => _newObjects;
@@ -45,12 +35,6 @@ namespace MetadataUtilities
         {
             get => _newType;
             set => SetValue(ref _newType, value);
-        }
-
-        public bool SaveAsRule
-        {
-            get => _saveAsRule;
-            set => SetValue(ref _saveAsRule, value);
         }
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
@@ -107,5 +91,21 @@ namespace MetadataUtilities
             win.DialogResult = true;
             win.Close();
         }, win => win != null);
+
+        public MetadataUtilities Plugin
+        {
+            get => _plugin;
+            set
+            {
+                SetValue(ref _plugin, value);
+                SaveAsRule = _plugin.Settings.Settings.AlwaysSaveManualMergeRules;
+            }
+        }
+
+        public bool SaveAsRule
+        {
+            get => _saveAsRule;
+            set => SetValue(ref _saveAsRule, value);
+        }
     }
 }

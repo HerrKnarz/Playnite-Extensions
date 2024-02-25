@@ -1,9 +1,8 @@
-﻿using MetadataUtilities.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace MetadataUtilities
+namespace MetadataUtilities.Models
 {
     public class Settings : ObservableObject
     {

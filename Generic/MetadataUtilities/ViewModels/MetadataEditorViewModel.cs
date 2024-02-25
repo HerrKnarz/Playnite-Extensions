@@ -1,9 +1,4 @@
-﻿using KNARZhelper;
-using MetadataUtilities.Models;
-using MetadataUtilities.Views;
-using Playnite.SDK;
-using Playnite.SDK.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,8 +6,13 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
+using KNARZhelper;
+using MetadataUtilities.Models;
+using MetadataUtilities.Views;
+using Playnite.SDK;
+using Playnite.SDK.Models;
 
-namespace MetadataUtilities
+namespace MetadataUtilities.ViewModels
 {
     public class MetadataEditorViewModel : ObservableObject, IEditableObject
     {

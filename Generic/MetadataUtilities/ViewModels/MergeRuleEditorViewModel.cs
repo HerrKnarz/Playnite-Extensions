@@ -1,7 +1,4 @@
-﻿using KNARZhelper;
-using MetadataUtilities.Models;
-using Playnite.SDK;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,8 +6,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
+using KNARZhelper;
+using MetadataUtilities.Models;
+using Playnite.SDK;
 
-namespace MetadataUtilities
+namespace MetadataUtilities.ViewModels
 {
     public class MergeRuleEditorViewModel : ObservableObject
     {
@@ -81,10 +81,60 @@ namespace MetadataUtilities
             }
         }
 
-        public MetadataUtilities Plugin
+        public RelayCommand AddNewCommand => new RelayCommand(() =>
         {
-            get => _plugin;
-            set => SetValue(ref _plugin, value);
+            try
+            {
+                MetadataObject newItem = new MetadataObject(_plugin.Settings.Settings);
+
+                if (MetadataViewSource.View.CurrentItem != null)
+                {
+                    MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+
+                    newItem.Type = templateItem.Type;
+                    newItem.Prefix = templateItem.Prefix;
+                }
+
+                Window window = AddNewObjectViewModel.GetWindow(Plugin, newItem);
+
+                if (window == null)
+                {
+                    return;
+                }
+
+                if (!(window.ShowDialog() ?? false))
+                {
+                    return;
+                }
+
+                if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.Name == newItem.Name))
+                {
+                    return;
+                }
+
+                Cursor.Current = Cursors.WaitCursor;
+
+                newItem.Selected = true;
+                newItem.Name = newItem.Name;
+                CompleteMetadata.Add(newItem);
+
+                MetadataViewSource.View.Filter = Filter;
+                MetadataViewSource.View.MoveCurrentTo(newItem);
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing merge dialog", true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        });
+
+        public MetadataObjects CompleteMetadata
+        {
+            get => _completeMetadata;
+            set => SetValue(ref _completeMetadata, value);
         }
 
         public bool FilterCategories
@@ -208,6 +258,24 @@ namespace MetadataUtilities
             }
         }
 
+        public CollectionViewSource MetadataViewSource
+        {
+            get => _metadataViewSource;
+            set => SetValue(ref _metadataViewSource, value);
+        }
+
+        public MetadataUtilities Plugin
+        {
+            get => _plugin;
+            set => SetValue(ref _plugin, value);
+        }
+
+        public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
+
+        public Visibility PrefixVisibility => _plugin.Settings.Settings.Prefixes?.Any() ?? false
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+
         public string RuleName
         {
             get => _ruleName;
@@ -219,72 +287,6 @@ namespace MetadataUtilities
             get => _ruleType;
             set => SetValue(ref _ruleType, value);
         }
-
-        public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
-
-        public Visibility PrefixVisibility => _plugin.Settings.Settings.Prefixes?.Any() ?? false
-            ? Visibility.Visible
-            : Visibility.Collapsed;
-
-        public string SearchTerm
-        {
-            get => _searchTerm;
-            set
-            {
-                SetValue(ref _searchTerm, value);
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
-        public RelayCommand AddNewCommand => new RelayCommand(() =>
-        {
-            try
-            {
-                MetadataObject newItem = new MetadataObject(_plugin.Settings.Settings);
-
-                if (MetadataViewSource.View.CurrentItem != null)
-                {
-                    MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
-
-                    newItem.Type = templateItem.Type;
-                    newItem.Prefix = templateItem.Prefix;
-                }
-
-                Window window = AddNewObjectViewModel.GetWindow(Plugin, newItem);
-
-                if (window == null)
-                {
-                    return;
-                }
-
-                if (!(window.ShowDialog() ?? false))
-                {
-                    return;
-                }
-
-                if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.Name == newItem.Name))
-                {
-                    return;
-                }
-
-                Cursor.Current = Cursors.WaitCursor;
-
-                newItem.Selected = true;
-                newItem.Name = newItem.Name;
-                CompleteMetadata.Add(newItem);
-
-                MetadataViewSource.View.Filter = Filter;
-                MetadataViewSource.View.MoveCurrentTo(newItem);
-            }
-            catch (Exception exception)
-            {
-                Log.Error(exception, "Error during initializing merge dialog", true);
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
-            }
-        });
 
         public RelayCommand<Window> SaveCommand => new RelayCommand<Window>(win =>
         {
@@ -304,23 +306,21 @@ namespace MetadataUtilities
             win.Close();
         });
 
+        public string SearchTerm
+        {
+            get => _searchTerm;
+            set
+            {
+                SetValue(ref _searchTerm, value);
+                MetadataViewSource.View.Filter = Filter;
+            }
+        }
+
         public RelayCommand<object> SetAsTargetCommand => new RelayCommand<object>(item =>
         {
             RuleType = ((MetadataObject)item).Type;
             RuleName = ((MetadataObject)item).Name;
         });
-
-        public CollectionViewSource MetadataViewSource
-        {
-            get => _metadataViewSource;
-            set => SetValue(ref _metadataViewSource, value);
-        }
-
-        public MetadataObjects CompleteMetadata
-        {
-            get => _completeMetadata;
-            set => SetValue(ref _completeMetadata, value);
-        }
 
         private bool Filter(object item)
             => item is MetadataObject metadataObject &&

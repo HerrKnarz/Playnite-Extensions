@@ -1,8 +1,4 @@
-﻿using KNARZhelper;
-using MetadataUtilities.Models;
-using Playnite.SDK;
-using Playnite.SDK.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,8 +6,12 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
+using KNARZhelper;
+using MetadataUtilities.Models;
+using Playnite.SDK;
+using Playnite.SDK.Data;
 
-namespace MetadataUtilities
+namespace MetadataUtilities.ViewModels
 {
     public class SettingsViewModel : ObservableObject, ISettings
     {

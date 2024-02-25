@@ -1,19 +1,17 @@
-﻿using KNARZhelper;
-using MetadataUtilities.Models;
-using MetadataUtilities.Views;
-using Playnite.SDK;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using KNARZhelper;
+using MetadataUtilities.Models;
+using MetadataUtilities.Views;
+using Playnite.SDK;
 
-namespace MetadataUtilities
+namespace MetadataUtilities.ViewModels
 {
     public class AddNewObjectViewModel : ObservableObject
     {
-        //TODO: Try to add localization to combobox!
-
         private MetadataObject _newObject;
         private MetadataUtilities _plugin;
 
@@ -23,12 +21,6 @@ namespace MetadataUtilities
             NewObject = newObject;
             Prefixes.Add(string.Empty);
             Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
-        }
-
-        public MetadataUtilities Plugin
-        {
-            get => _plugin;
-            set => SetValue(ref _plugin, value);
         }
 
         public MetadataObject NewObject
@@ -42,6 +34,12 @@ namespace MetadataUtilities
             win.DialogResult = NewObject.Name?.Length != 0;
             win.Close();
         }, win => win != null);
+
+        public MetadataUtilities Plugin
+        {
+            get => _plugin;
+            set => SetValue(ref _plugin, value);
+        }
 
         public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
 

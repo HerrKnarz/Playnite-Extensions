@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:metadataUtilities="clr-namespace:MetadataUtilities"
-             d:DataContext="{d:DesignInstance Type=metadataUtilities:AddNewObjectViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewModels:AddNewObjectViewModel}"
              xmlns:helper="clr-namespace:KNARZhelper"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
