@@ -5,14 +5,13 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace MetadataUtilities.Actions
 {
     internal class RemoveUnwantedAction : BaseAction
     {
-        private static RemoveUnwantedAction _instance;
         private static readonly object _mutex = new object();
+        private static RemoveUnwantedAction _instance;
         private readonly List<Guid> _categoryIds = new List<Guid>();
         private readonly List<Guid> _featureIds = new List<Guid>();
         private readonly List<Guid> _genreIds = new List<Guid>();
@@ -21,9 +20,9 @@ namespace MetadataUtilities.Actions
 
         private RemoveUnwantedAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
 
-        public override string ProgressMessage { get; } = "LOCMetadataUtilitiesProgressRemovingUnwantedMessage";
+        public override string ProgressMessage => ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnwantedMessage");
 
-        public override string ResultMessage { get; } = "LOCMetadataUtilitiesDialogRemovedUnwantedMessage";
+        public override string ResultMessage => "LOCMetadataUtilitiesDialogRemovedUnwantedMessage";
 
         public Settings Settings { get; set; }
 
@@ -45,51 +44,9 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
         {
-            _categoryIds.Clear();
-            _featureIds.Clear();
-            _genreIds.Clear();
-            _seriesIds.Clear();
-            _tagIds.Clear();
-
-            if (!Settings.UnwantedItems.Any())
-            {
-                return false;
-            }
-
-            foreach (MetadataObject item in Settings.UnwantedItems)
-            {
-                item.Id = DatabaseObjectHelper.GetDbObjectId(item.Name, item.Type);
-
-                switch (item.Type)
-                {
-                    case FieldType.Category:
-                        _categoryIds.Add(item.Id);
-                        break;
-                    case FieldType.Feature:
-                        _featureIds.Add(item.Id);
-                        break;
-                    case FieldType.Genre:
-                        _genreIds.Add(item.Id);
-                        break;
-                    case FieldType.Series:
-                        _seriesIds.Add(item.Id);
-                        break;
-                    case FieldType.Tag:
-                        _tagIds.Add(item.Id);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-
-            return true;
-        }
-
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            if (!base.Execute(game, actionModifier, isBulkAction))
+            if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
                 return false;
             }
@@ -108,15 +65,62 @@ namespace MetadataUtilities.Actions
             return mustUpdate;
         }
 
-        public override void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        public override void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
         {
-            foreach (MetadataObject item in Settings.UnwantedItems)
+            foreach (MetadataObject metaDataItem in Settings.UnwantedItems)
             {
-                if (!DatabaseObjectHelper.DbObjectInUse(item.Type, item.Id))
+                if (!DatabaseObjectHelper.DbObjectInUse(metaDataItem.Type, metaDataItem.Id))
                 {
-                    DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id);
+                    DatabaseObjectHelper.RemoveDbObject(metaDataItem.Type, metaDataItem.Id);
                 }
             }
+        }
+
+        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
+        {
+            _categoryIds.Clear();
+            _featureIds.Clear();
+            _genreIds.Clear();
+            _seriesIds.Clear();
+            _tagIds.Clear();
+
+            if (!Settings.UnwantedItems.Any())
+            {
+                return false;
+            }
+
+            foreach (MetadataObject metaDataItem in Settings.UnwantedItems)
+            {
+                metaDataItem.Id = DatabaseObjectHelper.GetDbObjectId(metaDataItem.Name, metaDataItem.Type);
+
+                switch (metaDataItem.Type)
+                {
+                    case FieldType.Category:
+                        _categoryIds.Add(metaDataItem.Id);
+                        break;
+
+                    case FieldType.Feature:
+                        _featureIds.Add(metaDataItem.Id);
+                        break;
+
+                    case FieldType.Genre:
+                        _genreIds.Add(metaDataItem.Id);
+                        break;
+
+                    case FieldType.Series:
+                        _seriesIds.Add(metaDataItem.Id);
+                        break;
+
+                    case FieldType.Tag:
+                        _tagIds.Add(metaDataItem.Id);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return true;
         }
     }
 }

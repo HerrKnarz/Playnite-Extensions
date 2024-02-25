@@ -4,22 +4,21 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MetadataUtilities.Actions
 {
     public class AddDefaultsAction : BaseAction
     {
-        private static AddDefaultsAction _instance;
         private static readonly object _mutex = new object();
+        private static AddDefaultsAction _instance;
         private readonly List<Guid> _categoryIds = new List<Guid>();
         private readonly List<Guid> _tagIds = new List<Guid>();
 
         private AddDefaultsAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
 
-        public override string ProgressMessage { get; } = "LOCMetadataUtilitiesProgressAddingDefaults";
+        public override string ProgressMessage => ResourceProvider.GetString("LOCMetadataUtilitiesProgressAddingDefaults");
 
-        public override string ResultMessage { get; } = "LOCMetadataUtilitiesDialogAddedDefaultsMessage";
+        public override string ResultMessage => "LOCMetadataUtilitiesDialogAddedDefaultsMessage";
 
         public Settings Settings { get; set; }
 
@@ -41,27 +40,9 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
         {
-            _categoryIds.Clear();
-
-            foreach (MetadataObject category in Settings.DefaultCategories)
-            {
-                _categoryIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Category, category.Name));
-            }
-
-            _tagIds.Clear();
-            foreach (MetadataObject tag in Settings.DefaultTags)
-            {
-                _tagIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Tag, tag.Name));
-            }
-
-            return _categoryIds.Count != 0 || _tagIds.Count != 0;
-        }
-
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            if (!base.Execute(game, actionModifier, isBulkAction))
+            if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
                 return false;
             }
@@ -79,6 +60,24 @@ namespace MetadataUtilities.Actions
             }
 
             return mustUpdate;
+        }
+
+        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
+        {
+            _categoryIds.Clear();
+
+            foreach (MetadataObject category in Settings.DefaultCategories)
+            {
+                _categoryIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Category, category.Name));
+            }
+
+            _tagIds.Clear();
+            foreach (MetadataObject tag in Settings.DefaultTags)
+            {
+                _tagIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Tag, tag.Name));
+            }
+
+            return _categoryIds.Count != 0 || _tagIds.Count != 0;
         }
     }
 }

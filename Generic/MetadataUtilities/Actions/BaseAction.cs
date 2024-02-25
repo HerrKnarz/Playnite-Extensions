@@ -4,7 +4,10 @@ namespace MetadataUtilities.Actions
 {
     public enum ActionModifierTypes
     {
-        None
+        None,
+        Add,
+        Remove,
+        Toggle
     }
 
     public abstract class BaseAction : IBaseAction
@@ -13,15 +16,15 @@ namespace MetadataUtilities.Actions
 
         public abstract string ResultMessage { get; }
 
-        public virtual bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None,
-            bool isBulkAction = true) => true;
+        public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null,
+            bool isBulkAction = true) => isBulkAction || Prepare(actionModifier, item, false);
 
-        public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None,
-            bool isBulkAction = true) => isBulkAction || Prepare(actionModifier, false);
-
-        public virtual void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None,
+        public virtual void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null,
             bool isBulkAction = true)
         {
         }
+
+        public virtual bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null,
+            bool isBulkAction = true) => true;
     }
 }

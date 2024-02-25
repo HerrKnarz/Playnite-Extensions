@@ -6,6 +6,14 @@ using System.Linq;
 
 namespace KNARZhelper
 {
+    public enum DbInteractionResult
+    {
+        Updated,
+        Created,
+        IsDuplicate,
+        Error
+    }
+
     public enum FieldType
     {
         Category,
@@ -15,46 +23,109 @@ namespace KNARZhelper
         Tag
     }
 
-    public enum DbInteractionResult
-    {
-        Updated,
-        Created,
-        IsDuplicate,
-        Error
-    }
-
     public static class DatabaseObjectHelper
     {
-        public static DbInteractionResult UpdateName(FieldType type, Guid id, string oldName, string newName)
-        {
-            if (oldName != null && oldName != newName && newName.NameExists(type, id))
-            {
-                return DbInteractionResult.IsDuplicate;
-            }
-
-            UpdateDbObject(type, id, newName);
-
-            return DbInteractionResult.Updated;
-        }
-
-        public static bool NameExists(this string str, FieldType type, Guid id)
+        public static Guid AddDbObject(FieldType type, string name)
         {
             switch (type)
             {
                 case FieldType.Category:
-                    return API.Instance.Database.Categories?.Any(x => x.Name == str && x.Id != id) ?? false;
+                    Category category = API.Instance.Database.Categories.Add(name);
+
+                    return category.Id;
+
                 case FieldType.Feature:
-                    return API.Instance.Database.Features?.Any(x => x.Name == str && x.Id != id) ?? false;
+                    GameFeature feature = API.Instance.Database.Features.Add(name);
+
+                    return feature.Id;
+
                 case FieldType.Genre:
-                    return API.Instance.Database.Genres?.Any(x => x.Name == str && x.Id != id) ?? false;
+                    Genre genre = API.Instance.Database.Genres.Add(name);
+
+                    return genre.Id;
+
                 case FieldType.Series:
-                    return API.Instance.Database.Series?.Any(x => x.Name == str && x.Id != id) ?? false;
+                    Series series = API.Instance.Database.Series.Add(name);
+
+                    return series.Id;
+
                 case FieldType.Tag:
-                    return API.Instance.Database.Tags?.Any(x => x.Name == str && x.Id != id) ?? false;
+                    Tag tag = API.Instance.Database.Tags.Add(name);
+
+                    return tag.Id;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
+
+        public static bool AddDbObjectToGame(Game game, FieldType type, Guid id)
+        {
+            List<Guid> ids;
+
+            switch (type)
+            {
+                case FieldType.Category:
+                    ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
+                    break;
+
+                case FieldType.Feature:
+                    ids = game.FeatureIds ?? (game.FeatureIds = new List<Guid>());
+                    break;
+
+                case FieldType.Genre:
+                    ids = game.GenreIds ?? (game.GenreIds = new List<Guid>());
+                    break;
+
+                case FieldType.Series:
+                    ids = game.SeriesIds ?? (game.SeriesIds = new List<Guid>());
+                    break;
+
+                case FieldType.Tag:
+                    ids = game.TagIds ?? (game.TagIds = new List<Guid>());
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            return API.Instance.MainView.UIDispatcher.Invoke(() => ids?.AddMissing(id) ?? false);
+        }
+
+        public static bool AddDbObjectToGame(Game game, FieldType type, List<Guid> idList)
+        {
+            List<Guid> ids;
+
+            switch (type)
+            {
+                case FieldType.Category:
+                    ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
+                    break;
+
+                case FieldType.Feature:
+                    ids = game.FeatureIds ?? (game.FeatureIds = new List<Guid>());
+                    break;
+
+                case FieldType.Genre:
+                    ids = game.GenreIds ?? (game.GenreIds = new List<Guid>());
+                    break;
+
+                case FieldType.Series:
+                    ids = game.SeriesIds ?? (game.SeriesIds = new List<Guid>());
+                    break;
+
+                case FieldType.Tag:
+                    ids = game.TagIds ?? (game.TagIds = new List<Guid>());
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            return API.Instance.MainView.UIDispatcher.Invoke(() => ids?.AddMissing(idList) ?? false);
+        }
+
+        public static bool AddDbObjectToGame(Game game, FieldType type, string name) => AddDbObjectToGame(game, type, AddDbObject(type, name));
 
         public static bool DbObjectExists(string name, FieldType type)
         {
@@ -62,14 +133,43 @@ namespace KNARZhelper
             {
                 case FieldType.Category:
                     return API.Instance.Database.Categories?.Any(x => x.Name == name) ?? false;
+
                 case FieldType.Feature:
                     return API.Instance.Database.Features?.Any(x => x.Name == name) ?? false;
+
                 case FieldType.Genre:
                     return API.Instance.Database.Genres?.Any(x => x.Name == name) ?? false;
+
                 case FieldType.Series:
                     return API.Instance.Database.Series?.Any(x => x.Name == name) ?? false;
+
                 case FieldType.Tag:
                     return API.Instance.Database.Tags?.Any(x => x.Name == name) ?? false;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        public static bool DbObjectInGame(Game game, FieldType type, Guid id)
+        {
+            switch (type)
+            {
+                case FieldType.Category:
+                    return game.CategoryIds?.Contains(id) ?? false;
+
+                case FieldType.Feature:
+                    return game.FeatureIds?.Contains(id) ?? false;
+
+                case FieldType.Genre:
+                    return game.GenreIds?.Contains(id) ?? false;
+
+                case FieldType.Series:
+                    return game.SeriesIds?.Contains(id) ?? false;
+
+                case FieldType.Tag:
+                    return game.TagIds?.Contains(id) ?? false;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -81,14 +181,19 @@ namespace KNARZhelper
             {
                 case FieldType.Category:
                     return API.Instance.Database.Games.Any(x => x.CategoryIds?.Contains(id) ?? false);
+
                 case FieldType.Feature:
                     return API.Instance.Database.Games.Any(x => x.FeatureIds?.Contains(id) ?? false);
+
                 case FieldType.Genre:
                     return API.Instance.Database.Games.Any(x => x.GenreIds?.Contains(id) ?? false);
+
                 case FieldType.Series:
                     return API.Instance.Database.Games.Any(x => x.SeriesIds?.Contains(id) ?? false);
+
                 case FieldType.Tag:
                     return API.Instance.Database.Games.Any(x => x.TagIds?.Contains(id) ?? false);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -103,18 +208,23 @@ namespace KNARZhelper
                 case FieldType.Category:
                     item = API.Instance.Database.Categories?.FirstOrDefault(x => x.Name == name);
                     break;
+
                 case FieldType.Feature:
                     item = API.Instance.Database.Features?.FirstOrDefault(x => x.Name == name);
                     break;
+
                 case FieldType.Genre:
                     item = API.Instance.Database.Genres?.FirstOrDefault(x => x.Name == name);
                     break;
+
                 case FieldType.Series:
                     item = API.Instance.Database.Series?.FirstOrDefault(x => x.Name == name);
                     break;
+
                 case FieldType.Tag:
                     item = API.Instance.Database.Tags?.FirstOrDefault(x => x.Name == name);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -122,90 +232,25 @@ namespace KNARZhelper
             return item?.Id ?? Guid.Empty;
         }
 
-        public static void UpdateDbObject(FieldType type, Guid id, string name)
+        public static bool NameExists(this string str, FieldType type, Guid id)
         {
             switch (type)
             {
                 case FieldType.Category:
-                    Category category = API.Instance.Database.Categories?.FirstOrDefault(x => x.Id == id);
+                    return API.Instance.Database.Categories?.Any(x => x.Name == str && x.Id != id) ?? false;
 
-                    if (category == null)
-                    {
-                        return;
-                    }
-
-                    category.Name = name;
-
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
-                    {
-                        API.Instance.Database.Categories.Update(category);
-                    });
-
-                    return;
                 case FieldType.Feature:
-                    GameFeature feature = API.Instance.Database.Features?.FirstOrDefault(x => x.Id == id);
+                    return API.Instance.Database.Features?.Any(x => x.Name == str && x.Id != id) ?? false;
 
-                    if (feature == null)
-                    {
-                        return;
-                    }
-
-                    feature.Name = name;
-
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
-                    {
-                        API.Instance.Database.Features.Update(feature);
-                    });
-
-                    return;
                 case FieldType.Genre:
-                    Genre genre = API.Instance.Database.Genres?.FirstOrDefault(x => x.Id == id);
+                    return API.Instance.Database.Genres?.Any(x => x.Name == str && x.Id != id) ?? false;
 
-                    if (genre == null)
-                    {
-                        return;
-                    }
-
-                    genre.Name = name;
-
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
-                    {
-                        API.Instance.Database.Genres.Update(genre);
-                    });
-
-                    return;
                 case FieldType.Series:
-                    Series series = API.Instance.Database.Series?.FirstOrDefault(x => x.Id == id);
+                    return API.Instance.Database.Series?.Any(x => x.Name == str && x.Id != id) ?? false;
 
-                    if (series == null)
-                    {
-                        return;
-                    }
-
-                    series.Name = name;
-
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
-                    {
-                        API.Instance.Database.Series.Update(series);
-                    });
-
-                    return;
                 case FieldType.Tag:
-                    Tag tag = API.Instance.Database.Tags?.FirstOrDefault(x => x.Id == id);
+                    return API.Instance.Database.Tags?.Any(x => x.Name == str && x.Id != id) ?? false;
 
-                    if (tag == null)
-                    {
-                        return;
-                    }
-
-                    tag.Name = name;
-
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
-                    {
-                        API.Instance.Database.Tags.Update(tag);
-                    });
-
-                    return;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -223,23 +268,57 @@ namespace KNARZhelper
                 case FieldType.Category:
                     API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Categories.Remove(id));
                     break;
+
                 case FieldType.Feature:
                     API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Features.Remove(id));
                     break;
+
                 case FieldType.Genre:
                     API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Genres.Remove(id));
                     break;
+
                 case FieldType.Series:
                     API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Series.Remove(id));
                     break;
+
                 case FieldType.Tag:
                     API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Tags.Remove(id));
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
 
             return false;
+        }
+
+        public static bool RemoveObjectFromGame(Game game, FieldType type, List<Guid> ids)
+        {
+            if (ids.Count == 0)
+            {
+                return false;
+            }
+
+            switch (type)
+            {
+                case FieldType.Category:
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.CategoryIds?.Remove(id) ?? false));
+
+                case FieldType.Feature:
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.FeatureIds?.Remove(id) ?? false));
+
+                case FieldType.Genre:
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.GenreIds?.Remove(id) ?? false));
+
+                case FieldType.Series:
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.SeriesIds?.Remove(id) ?? false));
+
+                case FieldType.Tag:
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.TagIds?.Remove(id) ?? false));
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
 
         public static IEnumerable<Guid> ReplaceDbObject(List<Game> games, FieldType type, Guid id, FieldType? newType = null, Guid? newId = null, bool removeAfter = true)
@@ -278,6 +357,7 @@ namespace KNARZhelper
                     }
 
                     break;
+
                 case FieldType.Feature:
                     foreach (Game game in games.Where(g => g.FeatureIds?.Contains(id) ?? false))
                     {
@@ -305,6 +385,7 @@ namespace KNARZhelper
                     }
 
                     break;
+
                 case FieldType.Genre:
                     foreach (Game game in games.Where(g => g.GenreIds?.Contains(id) ?? false))
                     {
@@ -332,6 +413,7 @@ namespace KNARZhelper
                     }
 
                     break;
+
                 case FieldType.Series:
                     foreach (Game game in games.Where(g => g.SeriesIds?.Contains(id) ?? false))
                     {
@@ -359,6 +441,7 @@ namespace KNARZhelper
                     }
 
                     break;
+
                 case FieldType.Tag:
                     foreach (Game game in games.Where(g => g.TagIds?.Contains(id) ?? false))
                     {
@@ -386,120 +469,116 @@ namespace KNARZhelper
                     }
 
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 
-        public static Guid AddDbObject(FieldType type, string name)
+        public static void UpdateDbObject(FieldType type, Guid id, string name)
         {
             switch (type)
             {
                 case FieldType.Category:
-                    Category category = API.Instance.Database.Categories.Add(name);
+                    Category category = API.Instance.Database.Categories?.FirstOrDefault(x => x.Id == id);
 
-                    return category.Id;
+                    if (category == null)
+                    {
+                        return;
+                    }
+
+                    category.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Categories.Update(category);
+                    });
+
+                    return;
+
                 case FieldType.Feature:
-                    GameFeature feature = API.Instance.Database.Features.Add(name);
+                    GameFeature feature = API.Instance.Database.Features?.FirstOrDefault(x => x.Id == id);
 
-                    return feature.Id;
+                    if (feature == null)
+                    {
+                        return;
+                    }
+
+                    feature.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Features.Update(feature);
+                    });
+
+                    return;
+
                 case FieldType.Genre:
-                    Genre genre = API.Instance.Database.Genres.Add(name);
+                    Genre genre = API.Instance.Database.Genres?.FirstOrDefault(x => x.Id == id);
 
-                    return genre.Id;
+                    if (genre == null)
+                    {
+                        return;
+                    }
+
+                    genre.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Genres.Update(genre);
+                    });
+
+                    return;
+
                 case FieldType.Series:
-                    Series series = API.Instance.Database.Series.Add(name);
+                    Series series = API.Instance.Database.Series?.FirstOrDefault(x => x.Id == id);
 
-                    return series.Id;
+                    if (series == null)
+                    {
+                        return;
+                    }
+
+                    series.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Series.Update(series);
+                    });
+
+                    return;
+
                 case FieldType.Tag:
-                    Tag tag = API.Instance.Database.Tags.Add(name);
+                    Tag tag = API.Instance.Database.Tags?.FirstOrDefault(x => x.Id == id);
 
-                    return tag.Id;
+                    if (tag == null)
+                    {
+                        return;
+                    }
+
+                    tag.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.Tags.Update(tag);
+                    });
+
+                    return;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 
-        public static bool AddDbObjectToGame(Game game, FieldType type, Guid id)
+        public static DbInteractionResult UpdateName(FieldType type, Guid id, string oldName, string newName)
         {
-            List<Guid> ids;
-
-            switch (type)
+            if (oldName != null && oldName != newName && newName.NameExists(type, id))
             {
-                case FieldType.Category:
-                    ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
-                    break;
-                case FieldType.Feature:
-                    ids = game.FeatureIds ?? (game.FeatureIds = new List<Guid>());
-                    break;
-                case FieldType.Genre:
-                    ids = game.GenreIds ?? (game.GenreIds = new List<Guid>());
-                    break;
-                case FieldType.Series:
-                    ids = game.SeriesIds ?? (game.SeriesIds = new List<Guid>());
-                    break;
-                case FieldType.Tag:
-                    ids = game.TagIds ?? (game.TagIds = new List<Guid>());
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                return DbInteractionResult.IsDuplicate;
             }
 
-            return API.Instance.MainView.UIDispatcher.Invoke(() => ids?.AddMissing(id) ?? false);
-        }
+            UpdateDbObject(type, id, newName);
 
-        public static bool AddDbObjectToGame(Game game, FieldType type, List<Guid> idList)
-        {
-            List<Guid> ids;
-
-            switch (type)
-            {
-                case FieldType.Category:
-                    ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
-                    break;
-                case FieldType.Feature:
-                    ids = game.FeatureIds ?? (game.FeatureIds = new List<Guid>());
-                    break;
-                case FieldType.Genre:
-                    ids = game.GenreIds ?? (game.GenreIds = new List<Guid>());
-                    break;
-                case FieldType.Series:
-                    ids = game.SeriesIds ?? (game.SeriesIds = new List<Guid>());
-                    break;
-                case FieldType.Tag:
-                    ids = game.TagIds ?? (game.TagIds = new List<Guid>());
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-
-            return API.Instance.MainView.UIDispatcher.Invoke(() => ids?.AddMissing(idList) ?? false);
-        }
-
-        public static bool AddDbObjectToGame(Game game, FieldType type, string name) => AddDbObjectToGame(game, type, AddDbObject(type, name));
-
-        public static bool RemoveObjectFromGame(Game game, FieldType type, List<Guid> ids)
-        {
-            if (ids.Count == 0)
-            {
-                return false;
-            }
-
-            switch (type)
-            {
-                case FieldType.Category:
-                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.CategoryIds?.Remove(id) ?? false));
-                case FieldType.Feature:
-                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.FeatureIds?.Remove(id) ?? false));
-                case FieldType.Genre:
-                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.GenreIds?.Remove(id) ?? false));
-                case FieldType.Series:
-                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.SeriesIds?.Remove(id) ?? false));
-                case FieldType.Tag:
-                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.TagIds?.Remove(id) ?? false));
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+            return DbInteractionResult.Updated;
         }
     }
 }

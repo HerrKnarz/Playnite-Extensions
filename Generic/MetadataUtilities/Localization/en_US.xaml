@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Add new object</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Added default categories/tags to {0} games!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Add new object</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">Do you want to add the item(s) to unwanted list?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">A {0} with that name already exists.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Change metadata type</sys:String>
@@ -10,8 +10,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Another rule for that target already exists. Do you want to replace it (yes), merge them (no) or cancel the operation?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">You need to select at least one source item to merge into the target.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">No unused metadata items found.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">You need to add a Name for the rule target.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">No unused metadata items found.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">item added to {0} games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">item removed from {0} games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">item toggled in {0} games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Removed {0} from {1} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Removed unwanted metadata items from {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Save as merge rule</sys:String>
@@ -36,6 +39,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Add default categories/tags</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Open Metadata Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Merge metadata</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">Add {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddRemove">Remove {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddToggle">Toggle {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Remove unused metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Remove unwanted metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Merge Rule Editor</sys:String>
@@ -44,6 +50,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefix</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adding defaults...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Merging metadata...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Adding {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddRemove">Removing {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddToggle">Toggling {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingItems">Removing metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Removing unused metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Removing unwanted metadata items...</sys:String>
@@ -71,7 +80,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Set only when no tags were added on metadata import</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Show result dialog after setting a value for more than one game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Show Metadata Editor button in top panel (requires restart)</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Put the sub menus under a single &quot;Quick Add&quot; menu entry</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Put the sub menus under the Metadata Utilities menu entry</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabAutoRemoval">Auto removal</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Defaults</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">General</sys:String>
