@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Adicionar novo objeto</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Adicionar categorias/marcadores padrão a {0} jogos!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Adicionar novo objeto</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">Do you want to add the item(s) to unwanted list?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Um {0} com esse nome já existe.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Alterar tipo de metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Mesclar como</sys:String>
@@ -9,8 +10,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Outra regra para esse alvo já existe. Você deseja substituí-la (sim), mesclá-las (não) ou cancelar a operação?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Você precisa ter pelo menos dois itens selecionados para mesclar.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">Você precisa selecionar pelo menos um item de origem para mesclar no alvo.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Nenhum item de metadados não utilizado foi encontrado.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Você precisa adicionar um Nome para o alvo da regra.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Nenhum item de metadados não utilizado foi encontrado.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">item added to {0} games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">item removed from {0} games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">item toggled in {0} games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Removed {0} from {1} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Removed unwanted metadata items from {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Salvar como regra de mesclagem</sys:String>
@@ -20,6 +24,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Somente selecionado</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Quantidade de partidas</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Grupo de itens correspondentes</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorHideUnused">Hide unused items</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Mesclar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Jogos Relacionados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Remover não utilizadas</sys:String>
@@ -34,6 +39,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Adicionar categorias/marcadores padrões</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Abrir Editor de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Mesclar metadados</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">Add {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddRemove">Remove {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddToggle">Toggle {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Remover metadados não utilizados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Remove unwanted metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Editor de Regras de Mesclagem</sys:String>
@@ -42,14 +50,21 @@
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefixo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adicionando padrões...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Merging metadata...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Adding {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddRemove">Removing {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddToggle">Toggling {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingItems">Removing metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Remover metadados não utilizados...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Removing unwanted metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Adicionar item existente</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Always add items you remove in the Metadata Editor to the unwanted list without asking.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Adicionar novo item</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Sempre salvar mesclagens manuais como regras de mesclagem.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Columns in the Metadata Editor game grid</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Custom menu path</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPathDescription">Using custom menu paths you can change how your buttons in the context menu will show up, so you can group them or simply change the layout. You can add sub menus by adding a &quot;|&quot;, so &quot;test|menu&quot; will add the menu &quot;test&quot; with the sub menu &quot;menu&quot;. You can also add the action (add, toggle, remove) and type (category, feature, tag) to your menu entry by adding the placeholder &quot;{action}&quot; or &quot;{type}&quot; respectively. This works for the default and separate custom paths for each value.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Categorias padrão para um novo jogo</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Default custom menu path</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Marcador padrão para um novo jogo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignorar jogos ocultos na contagem de jogos</sys:String>
@@ -63,12 +78,16 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Renomear automaticamente marcadores/categorias padrão quando o item original correspondente for renomeado.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Renomear automaticamente o alvo da regra de mesclagem quando o item original correspondente for renomeado.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Definir apenas quando nenhum marcador foi adicionado na importação de metadados</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Show result dialog after setting a value for more than one game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Exibir botão do Editor de Metadados no painel superior (requer reinicialização)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Put the sub menus under the Metadata Utilities menu entry</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabAutoRemoval">Auto removal</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Padrões</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Geral</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Mesclando</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefixos</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Quick Add</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Toggle</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valores a serem mesclados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Escrever mensagens de log de depuração (use somente em caso de suspeita de erro!)</sys:String>
 </ResourceDictionary>
