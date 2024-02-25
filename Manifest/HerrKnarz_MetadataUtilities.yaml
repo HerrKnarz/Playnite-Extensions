@@ -3,7 +3,7 @@ Packages:
   - Version: 0.7
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-02-25
-    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-02-25/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_7.pext
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-02-25/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_7_0.pext
     Changelog:
       - Merged QuickAdd addon into Metadata Utilities and expanded it to genres and series. QuickAdd is now obsolete, if you also use Metadata Utilities.
       - Added option to remove unwanted metadata items via a blacklist either manually or on metadata updates
