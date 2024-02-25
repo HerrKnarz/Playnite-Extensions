@@ -1,5 +1,23 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 0.7
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-02-25
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-02-25/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_7.pext
+    Changelog:
+      - Merged QuickAdd addon into Metadata Utilities and expanded it to genres and series. QuickAdd is now obsolete, if you also use Metadata Utilities.
+      - Added option to remove unwanted metadata items via a blacklist either manually or on metadata updates
+      - Items will now be deleted from the database after they were removed from a game, if they aren't used in other games anymore. This affects merging and removing unwanted items.
+      - Added context menu to the grids in Metadata Editor providing the same functionality as the buttons below the grids
+      - Added option to hide columns in the game grid in Metadata Editor
+      - Added option to remove a metadata item from the selected games in the game grid in Metadata Editor
+      - Added option to hide unused items in Metadata Editor
+      - The OK button in the "add new" dialog will now also be triggered by hitting Enter in the text box
+      - Show removed unused items in dialog comma separated instead of new line, so the dialog doesn't get too huge so easily
+      - fixed strange row header behavior in some data grid rows
+      - fixed possible infinite loop when removing unused metadata
+      - fixed game grid not reloading after merging metadata in Metadata Editor
+      - updated localizations
   - Version: 0.6
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-02-12
