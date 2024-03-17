@@ -22,7 +22,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Редактор Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Змінити тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Тільки вибране</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Metadata Editor for selected games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Редактор Метаданих для вибраних ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Кількість ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Групувати елементи зі збігами</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorHideUnused">Сховати невикористані елементи</sys:String>
