@@ -1,5 +1,14 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 0.8
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-03-17
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-03-17/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_8.pext
+    Changelog:
+      - Added option to open Metadata Editor from the game menu. It then only shows the metadata items present in the selected games
+      - Added help buttons to the settings tabs for merging, prefixes and quick add and removed the description texts
+      - Fixed wrong text for the rename merge rules check box
+      - updated localizations
   - Version: 0.7
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-02-25
