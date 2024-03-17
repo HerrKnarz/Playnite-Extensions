@@ -22,7 +22,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Metadaten-Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Typ ändern</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Nur ausgewählte</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Metadata Editor for selected games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Metadaten-Editor für ausgewählte Spiele</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Spielanzahl</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Zusammenpassende Elemente gruppieren</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorHideUnused">Ungenutzte Elemente ausblenden</sys:String>
