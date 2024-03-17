@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -243,8 +244,20 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand<object> EditMergeRuleCommand
             => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
 
+        public RelayCommand HelpMergingCommand
+            => new RelayCommand(()
+                => Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Merge-Rules")));
+
+        public RelayCommand HelpPrefixesCommand
+            => new RelayCommand(()
+                => Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#prefixes")));
+
+        public RelayCommand HelpQuickAddCommand
+            => new RelayCommand(()
+                => Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Quick-Add")));
+
         public RelayCommand<object> MergeItemsCommand
-            => new RelayCommand<object>(rule => _plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);
+                    => new RelayCommand<object>(rule => _plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);
 
         public MergeRules MergeRules
         {
