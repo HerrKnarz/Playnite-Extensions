@@ -102,6 +102,13 @@ namespace MetadataUtilities
             {
                 new GameMenuItem
                 {
+                    Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
+                    MenuSection = menuSection,
+                    Icon = "muEditorIcon",
+                    Action = a => ShowEditor(games)
+                },
+                new GameMenuItem
+                {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuAddDefaults"),
                     MenuSection = menuSection,
                     Icon = "muTagIcon",
@@ -646,7 +653,9 @@ namespace MetadataUtilities
             }
         }
 
-        private void ShowEditor()
+        private void ShowEditor() => ShowEditor(null);
+
+        private void ShowEditor(List<Game> games = null)
         {
             Log.Debug("=== ShowEditor: Start ===");
             DateTime ts = DateTime.Now;
@@ -655,13 +664,23 @@ namespace MetadataUtilities
             try
             {
                 MetadataObjects metadataObjects = new MetadataObjects(Settings.Settings);
-                metadataObjects.LoadMetadata();
+                string windowTitle = "LOCMetadataUtilitiesEditor";
+
+                if (games != null)
+                {
+                    metadataObjects.LoadGameMetadata(games);
+                    windowTitle = "LOCMetadataUtilitiesEditorForGames";
+                }
+                else
+                {
+                    metadataObjects.LoadMetadata();
+                }
 
                 MetadataEditorViewModel viewModel = new MetadataEditorViewModel(this, metadataObjects);
 
                 MetadataEditorView editorView = new MetadataEditorView();
 
-                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesEditor"), Settings.Settings.EditorWindowWidth, Settings.Settings.EditorWindowHeight);
+                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString(windowTitle), Settings.Settings.EditorWindowWidth, Settings.Settings.EditorWindowHeight);
                 window.Content = editorView;
                 window.DataContext = viewModel;
 

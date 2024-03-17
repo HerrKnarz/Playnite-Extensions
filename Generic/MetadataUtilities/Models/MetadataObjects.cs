@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -15,96 +16,6 @@ namespace MetadataUtilities.Models
         private readonly Settings _settings;
 
         public MetadataObjects(Settings settings) => _settings = settings;
-
-        public void LoadMetadata(bool showGameNumber = true, FieldType? type = null)
-        {
-            Log.Debug("=== LoadMetadata: Start ===");
-            DateTime ts = DateTime.Now;
-
-            List<MetadataObject> temporaryList = new List<MetadataObject>();
-
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                ResourceProvider.GetString("LOCLoadingLabel"),
-                false
-            )
-            {
-                IsIndeterminate = true
-            };
-
-            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-            {
-                try
-                {
-                    if (type == null || type == FieldType.Category)
-                    {
-                        temporaryList.AddRange(API.Instance.Database.Categories.Select(category
-                            => new MetadataObject(_settings)
-                            {
-                                Id = category.Id,
-                                Name = category.Name,
-                                Type = FieldType.Category
-                            }));
-                    }
-
-                    if (type == null || type == FieldType.Feature)
-                    {
-                        temporaryList.AddRange(API.Instance.Database.Features.Select(feature
-                            => new MetadataObject(_settings)
-                            {
-                                Id = feature.Id,
-                                Name = feature.Name,
-                                Type = FieldType.Feature
-                            }));
-                    }
-
-                    if (type == null || type == FieldType.Genre)
-                    {
-                        temporaryList.AddRange(API.Instance.Database.Genres.Select(genre
-                            => new MetadataObject(_settings)
-                            {
-                                Id = genre.Id,
-                                Name = genre.Name,
-                                Type = FieldType.Genre
-                            }));
-                    }
-
-                    if (type == null || type == FieldType.Series)
-                    {
-                        temporaryList.AddRange(API.Instance.Database.Series.Select(series
-                            => new MetadataObject(_settings)
-                            {
-                                Id = series.Id,
-                                Name = series.Name,
-                                Type = FieldType.Series
-                            }));
-                    }
-
-                    if (type == null || type == FieldType.Tag)
-                    {
-                        temporaryList.AddRange(API.Instance.Database.Tags.Select(tag
-                            => new MetadataObject(_settings)
-                            {
-                                Id = tag.Id,
-                                Name = tag.Name,
-                                Type = FieldType.Tag
-                            }));
-                    }
-
-                    if (showGameNumber)
-                    {
-                        UpdateGameCounts(temporaryList, _settings.IgnoreHiddenGamesInGameCount);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                }
-            }, globalProgressOptions);
-
-            Clear();
-            this.AddMissing(temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
-            Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-        }
 
         public static List<MetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
         {
@@ -259,6 +170,179 @@ namespace MetadataUtilities.Models
             Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
 
             Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+        }
+
+        public void LoadGameMetadata(List<Game> games)
+        {
+            List<MetadataObject> temporaryList = new List<MetadataObject>();
+
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                ResourceProvider.GetString("LOCLoadingLabel"),
+                false
+            )
+            {
+                IsIndeterminate = true
+            };
+
+            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            {
+                try
+                {
+                    List<Category> categories = new List<Category>();
+                    List<GameFeature> features = new List<GameFeature>();
+                    List<Genre> genres = new List<Genre>();
+                    List<Series> seriesList = new List<Series>();
+                    List<Tag> tags = new List<Tag>();
+
+                    foreach (Game game in games)
+                    {
+                        categories.AddMissing(game.Categories);
+                        features.AddMissing(game.Features);
+                        genres.AddMissing(game.Genres);
+                        seriesList.AddMissing(game.Series);
+                        tags.AddMissing(game.Tags);
+                    }
+
+                    temporaryList.AddRange(categories.Select(category
+                        => new MetadataObject(_settings)
+                        {
+                            Id = category.Id,
+                            Name = category.Name,
+                            Type = FieldType.Category
+                        }));
+
+                    temporaryList.AddRange(features.Select(feature
+                        => new MetadataObject(_settings)
+                        {
+                            Id = feature.Id,
+                            Name = feature.Name,
+                            Type = FieldType.Feature
+                        }));
+
+                    temporaryList.AddRange(genres.Select(genre
+                        => new MetadataObject(_settings)
+                        {
+                            Id = genre.Id,
+                            Name = genre.Name,
+                            Type = FieldType.Genre
+                        }));
+
+                    temporaryList.AddRange(seriesList.Select(series
+                        => new MetadataObject(_settings)
+                        {
+                            Id = series.Id,
+                            Name = series.Name,
+                            Type = FieldType.Series
+                        }));
+
+                    temporaryList.AddRange(tags.Select(tag
+                        => new MetadataObject(_settings)
+                        {
+                            Id = tag.Id,
+                            Name = tag.Name,
+                            Type = FieldType.Tag
+                        }));
+
+                    UpdateGameCounts(temporaryList, _settings.IgnoreHiddenGamesInGameCount);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            }, globalProgressOptions);
+
+            Clear();
+            this.AddMissing(temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
+        }
+
+        public void LoadMetadata(bool showGameNumber = true, FieldType? type = null)
+        {
+            Log.Debug("=== LoadMetadata: Start ===");
+            DateTime ts = DateTime.Now;
+
+            List<MetadataObject> temporaryList = new List<MetadataObject>();
+
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                ResourceProvider.GetString("LOCLoadingLabel"),
+                false
+            )
+            {
+                IsIndeterminate = true
+            };
+
+            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            {
+                try
+                {
+                    if (type == null || type == FieldType.Category)
+                    {
+                        temporaryList.AddRange(API.Instance.Database.Categories.Select(category
+                            => new MetadataObject(_settings)
+                            {
+                                Id = category.Id,
+                                Name = category.Name,
+                                Type = FieldType.Category
+                            }));
+                    }
+
+                    if (type == null || type == FieldType.Feature)
+                    {
+                        temporaryList.AddRange(API.Instance.Database.Features.Select(feature
+                            => new MetadataObject(_settings)
+                            {
+                                Id = feature.Id,
+                                Name = feature.Name,
+                                Type = FieldType.Feature
+                            }));
+                    }
+
+                    if (type == null || type == FieldType.Genre)
+                    {
+                        temporaryList.AddRange(API.Instance.Database.Genres.Select(genre
+                            => new MetadataObject(_settings)
+                            {
+                                Id = genre.Id,
+                                Name = genre.Name,
+                                Type = FieldType.Genre
+                            }));
+                    }
+
+                    if (type == null || type == FieldType.Series)
+                    {
+                        temporaryList.AddRange(API.Instance.Database.Series.Select(series
+                            => new MetadataObject(_settings)
+                            {
+                                Id = series.Id,
+                                Name = series.Name,
+                                Type = FieldType.Series
+                            }));
+                    }
+
+                    if (type == null || type == FieldType.Tag)
+                    {
+                        temporaryList.AddRange(API.Instance.Database.Tags.Select(tag
+                            => new MetadataObject(_settings)
+                            {
+                                Id = tag.Id,
+                                Name = tag.Name,
+                                Type = FieldType.Tag
+                            }));
+                    }
+
+                    if (showGameNumber)
+                    {
+                        UpdateGameCounts(temporaryList, _settings.IgnoreHiddenGamesInGameCount);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            }, globalProgressOptions);
+
+            Clear();
+            this.AddMissing(temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
+            Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
     }
 }
