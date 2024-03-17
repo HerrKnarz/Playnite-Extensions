@@ -22,6 +22,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Metadaten-Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Typ ändern</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Nur ausgewählte</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Metadaten-Editor für ausgewählte Spiele</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Spielanzahl</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Zusammenpassende Elemente gruppieren</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorHideUnused">Ungenutzte Elemente ausblenden</sys:String>
@@ -62,7 +63,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Manuelle Zusammenführungen immer als Zusammenführungsregeln speichern.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Spalten im Spiele-Grid des Metadaten-Editors</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Eigener Menüpfad</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPathDescription">Mit benutzerdefinierten Menüpfaden kannst du ändern, wie die Buttons im Kontextmenü angezeigt werden, so dass du sie gruppieren oder einfach das Layout ändern kannst. Du kannst Untermenüs hinzufügen, indem du ein &quot;|&quot; verwendest, so fügt &quot;test|Menü&quot; z.B. Menü &quot;test&quot; mit dem Untermenü &quot;Menü&quot; hinzu. Du kannst auch die Aktion (hinzufügen, umschalten, entfernen) und den Typ (Kategorie, Feature, Tag) in deinen Menüpfad einfügen, indem du den Platzhalter &quot;{action}&quot; bzw. &quot;{type}&quot; verwendest. Dies funktioniert für die Standard- und einzelnen Pfade für jeden Wert.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Standardkategorien für neues Spiel</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Standard-Menüpfad</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Standard Schlagworte für neues Spiel</sys:String>
@@ -72,7 +72,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Zusammenführungsregeln beim Metadaten-Update automatisch ausführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Zusammenführungsregeln</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMetadataToRemove">Zu entfernende Metadaten</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsPrefixDescription">Hier kannst du Präfixe zur weiteren Kategorisierung deiner Metadatentypen definieren. Diese Präfixe können im Metadaten-Editor gefiltert, sortiert und geändert werden. Die entsprechenden Comboboxen werden nur angezeigt, wenn mindestens ein Präfix definiert ist. Wenn Du ein Leerzeichen zwischen dem Präfix und dem Elementnamen willst, musst du ihn hier hinter dem Präfix mit eingeben. Hast du also zum Beispiel einen Tag wie &quot;[Art style] realistisch&quot;, musst du &quot;[Art style] &quot; als Präfix hinzufügen. Im Metadaten-Editor wird das Schlagwort dann dieses Präfix haben und der Name wird als &quot;realistisch&quot; angezeigt.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Nicht verwendete Metadaten beim Start entfernen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Unerwünschte Elemente bei Metadatenaktualisierung entfernen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Standard-Tags/Kategorien automatisch umbenennen, wenn das zugehörige Originalelement umbenannt wird.</sys:String>
