@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Added default categories/tags to {0} games!</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Add new object</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">Do you want to add the item(s) to unwanted list?</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">A {0} with that name already exists.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Change metadata type</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Merge as</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Merged metadata in {0} games!</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Another rule for that target already exists. Do you want to replace it (yes), merge them (no) or cancel the operation?</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">Ajout des catégories/étiquettes par défaut à {0} jeux !</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Ajouter un nouvel objet</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">Voulez-vous ajouter le(s) élément(s) à la liste des indésirables ?</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">{0} avec ce nom existe déjà !</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Changer le type de métadonnée</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Fusionner comme</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Métadonnées fusionnées pour {0} jeux !</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Une autre règle pour cette cible existe déjà. Voulez-vous la remplacer (oui), la fusionner (non) ou annuler l'opération ?</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Vous devez avoir au moins deux éléments sélectionnés pour fusionner.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">You need to select at least one source item to merge into the target.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">You need to add a Name for the rule target.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">No unused metadata items found.</sys:String>
