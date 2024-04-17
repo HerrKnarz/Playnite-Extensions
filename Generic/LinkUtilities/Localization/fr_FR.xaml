@@ -24,7 +24,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Rechercher un jeu</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Sélectionner une option</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Liens de {0} jeux triés !</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Steam links of {0} games converted!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Liens Steam pour {0} jeux convertis !</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Liens manquants des {0} jeux taggés !</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Vous avez des doublons dans votre ordre de tri. Veuillez vous assurer que chaque nom de lien est unique.</sys:String>
@@ -36,8 +36,8 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">Tous les sites manquants</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">Tous les jeux</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Ouvrir la recherche dans le navigateur...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convertir les liens web Steam en client</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convertir les liens du client Steam en web</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">Vérifier les liens...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Nettoyer les liens (renommer, retirer, trier)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Filtrer les jeux</sys:String>
