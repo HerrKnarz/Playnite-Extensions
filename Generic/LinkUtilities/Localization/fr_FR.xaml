@@ -71,7 +71,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Ajouter automatiquement des liens aux jeux récemment ajoutés</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">Clé d'API</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">En utilisant un bookmarklet, vous pouvez ajouter le site Web actif dans votre navigateur directement aux jeux sélectionnés dans Playnite. Pour trouver un nom de lien adapté, vous pouvez définir des modèles pour l'URL et le titre du lien ici. Les masques peuvent contenir des jokers. Un &quot;*&quot; représente zéro ou plusieurs caractères, un &quot;?&quot; représente un seul caractère.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">Browser search URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">URL de recherche du navigateur</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Ajouter</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Ajouter des valeurs par défaut</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Annuler</sys:String>
@@ -83,9 +83,9 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Inverser la sélection</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Trier</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Tout décocher</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configurer les modèles de nom de lien (Pour les liens du presse-papiers, seul le modèle d'url sera vérifié pour trouver un nom, puisque nous n'avons pas de nom pour commencer.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configurer les sites web</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Here you can add your own links for websites with urls, that contain either the game name, rom name, steam ID or GOG ID and have no variable parts. In the Game URL field you can use the placeholders {GameName}, {RomName}, {SteamId} and {GogId} for that. The following checkboxes define, how the game name will be modified to fit the url scheme and how to check for link validity. You can also add a Browser search url that then can be opened in a browser to search for the game. This field only supports the {GameName} placeholder. For further information on custom link profiles click the questionmark button.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Ici vous pouvez ajouter vos propres liens pour les sites web avec des URL, qui contiennent soit le nom du jeu, rom nom, Steam ID ou GOG ID et n'ont pas de parties variables. Dans le champ URL du jeu, vous pouvez utiliser les marqueurs {GameName}, {RomName}, {SteamId} et {GogId} pour cela. Les cases à cocher suivantes définissent, comment le nom du jeu sera modifié pour correspondre au schéma d'url et comment vérifier la validité du lien. Vous pouvez également ajouter une URL de recherche de navigateur qui peut ensuite être ouverte dans un navigateur pour rechercher le jeu. Ce champ ne prend en charge que le placeholder {GameName} . Pour plus d'informations sur les profils de liens personnalisés, cliquez sur le bouton &quot;point d'interrogation&quot;.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">Retirer les caractères spéciaux</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens">Retirer les tirets</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces">Retirer les espaces</sys:String>
@@ -95,11 +95,11 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksUnderscoresToWhitespaces">Tirets bas en espaces</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksWhitespacesToUnderscores">Espaces en tirets bas</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksEscapeDataString">Escape data string</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksUrlEncode">Url encode</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksUrlEncode">Encodage Url</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksToLower">En minuscule</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksToTitleCase">To title case</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksAllowRedirects">Autoriser les redirections</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksReturnsSameUrl">Returns the same URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksReturnsSameUrl">Renvoie la même URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksNeedsToBeChecked">Needs to be checked</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveSpecialChars">Removes all characters that aren't part of the alphabet, a number, a whitespace or a hyphen.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveEditionSuffix">Removes stuff like &quot;Special Edition&quot; or HD from the end of a game name.</sys:String>
