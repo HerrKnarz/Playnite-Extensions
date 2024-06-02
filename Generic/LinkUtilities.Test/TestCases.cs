@@ -8,11 +8,11 @@ namespace LinkUtilities.Test
     internal class TestCase
     {
         public string CaseName { get; set; }
-        public BaseClasses.Linker Link { get; set; }
         public string GameName { get; set; }
         public string GamePath { get; set; }
-        public string Url { get; set; }
+        public BaseClasses.Linker Link { get; set; }
         public string SearchedUrl { get; set; }
+        public string Url { get; set; }
     }
 
     internal class TestCases : IEnumerable<object[]>
@@ -52,7 +52,7 @@ namespace LinkUtilities.Test
                     Link = new LinkGamePressureGuides(),
                     GameName = "Assassin's Creed: Odyssey",
                     GamePath = "assassins-creed-odyssey/",
-                    Url = "https://guides.gamepressure.com/assassins-creed-odyssey/",
+                    Url = "https://www.gamepressure.com/assassins-creed-odyssey/",
                     SearchedUrl = "not found!"
                 }
             },
@@ -208,8 +208,8 @@ namespace LinkUtilities.Test
                     CaseName = "MobyGames",
                     Link = new LinkMobyGames(),
                     GameName = "Dragon Age: Inquisition",
-                    GamePath = "dragon-age-inquisition",
-                    Url = "https://www.mobygames.com/game/dragon-age-inquisition",
+                    GamePath = "https://www.mobygames.com/game/70317/dragon-age-inquisition/",
+                    Url = "https://www.mobygames.com/game/70317/dragon-age-inquisition/",
                     SearchedUrl = "https://www.mobygames.com/game/70317/dragon-age-inquisition/"
                 }
             },
@@ -246,7 +246,7 @@ namespace LinkUtilities.Test
                     GameName = "Trüberbrook",
                     GamePath = "Tr%C3%BCberbrook",
                     Url = "https://www.pcgamingwiki.com/wiki/Tr%C3%BCberbrook",
-                    SearchedUrl = "https://www.pcgamingwiki.com/wiki/Tr%C3%BCberbrook"
+                    SearchedUrl = "https://www.pcgamingwiki.com/wiki/Tr%C3%BCberbrook_-_A_Nerd_Saves_the_World"
                 }
             },
             new object[]
@@ -336,6 +336,7 @@ namespace LinkUtilities.Test
         };
 
         public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
+
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
