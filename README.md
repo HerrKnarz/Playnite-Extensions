@@ -43,7 +43,7 @@ Extension to manage links for the games in the playnite library. It can do the f
 - Remove duplicate links.
 - Rename links (e.g. shorten wikipedia to wiki).
 - Add links to several websites directly by trying to find a valid link using the game name.
-- limited option for [custom link profiles](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Supported-websites-for-add-&-search-function) to add your own websites to the add or browser search function.
+- limited option for [custom link profiles](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Custom-link-profiles) to add your own websites to the add or browser search function.
 - Add library links: add links to the game page of its library
 - Add tags to games to keep track of missing links to specific websites.
 
