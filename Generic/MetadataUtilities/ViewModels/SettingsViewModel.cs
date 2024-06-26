@@ -682,7 +682,7 @@ namespace MetadataUtilities.ViewModels
 
             return (window?.ShowDialog() ?? false)
                 ? items.Where(x => x.Selected).ToList()
-                : items.ToList();
+                : new List<MetadataObject>();
         }
     }
 }
