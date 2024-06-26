@@ -32,6 +32,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Rule target</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Définir comme cible</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Statistiques</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_AgeRating">Age Rating</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Catégorie</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Fonctionnalité</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Genre</sys:String>
