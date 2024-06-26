@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
+using System.Xml;
 using KNARZhelper;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
@@ -165,6 +167,40 @@ namespace MetadataUtilities.ViewModels
             finally
             {
                 Cursor.Current = Cursors.Default;
+            }
+        });
+
+        public RelayCommand AddNewGameCommand => new RelayCommand(() =>
+        {
+            try
+            {
+                GenericItemOption result = API.Instance.Dialogs.ChooseItemWithSearch(
+                        new List<GenericItemOption>(),
+                        GetGameSearchResults,
+                        "",
+                        ResourceProvider.GetString("LOCSearchLabel"));
+
+                if (result == null)
+                    return;
+
+                Game game = API.Instance.Database.Games.Get(Guid.Parse(result.Description));
+
+                if (game == null)
+                    return;
+
+                MetadataObject currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
+
+                if (currentItem == null)
+                    return;
+
+                DatabaseObjectHelper.AddDbObjectToGame(game, currentItem.Type, currentItem.Id);
+
+                LoadRelatedGames();
+                currentItem.GetGameCount();
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during game search", true);
             }
         });
 
@@ -763,6 +799,27 @@ namespace MetadataUtilities.ViewModels
 
         public void EndEdit()
         { }
+
+        public List<GenericItemOption> GetGameSearchResults(string searchTerm)
+        {
+            try
+            {
+                FilterPresetSettings filterSettings = new FilterPresetSettings
+                {
+                    Name = searchTerm
+                };
+
+                IEnumerable<Game> games = API.Instance.Database.GetFilteredGames(filterSettings, true);
+
+                return games.Select(game => new GenericItemOption { Name = game.Name, Description = game.Id.ToString() }).ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error loading game search data");
+            }
+
+            return null;
+        }
 
         private void CurrentChanged(object sender, EventArgs e) => LoadRelatedGames();
 

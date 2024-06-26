@@ -212,6 +212,8 @@
                 </DataGrid>
             </DockPanel>
             <WrapPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1" Margin="0,0,0,10" HorizontalAlignment="Left">
+                <Button Content="{DynamicResource LOCMenuAddGame}" Margin="0,0,10,10"
+                        Command="{Binding AddNewGameCommand}" />
                 <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,0,10,10"
                         Command="{Binding RemoveGamesCommand}" ToolTip="{DynamicResource LOCMetadataUtilitiesEditorRemovesGamesFromSelectedItem}"
                         CommandParameter="{Binding SelectedItems, ElementName=GamesGrid}" />
