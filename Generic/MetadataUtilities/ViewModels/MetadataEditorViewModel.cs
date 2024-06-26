@@ -769,7 +769,7 @@ namespace MetadataUtilities.ViewModels
         private bool Filter(object item) =>
             item is MetadataObject metadataObject &&
             (!GroupMatches || metadataObject.ShowGrouped) &&
-            metadataObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+            metadataObject.Name.RegExIsMatch(SearchTerm) &&
             _filterTypes.Contains(metadataObject.Type) &&
             (_filterPrefix == string.Empty || metadataObject.Prefix.Equals(_filterPrefix)) &&
             (!_filterHideUnused || metadataObject.GameCount > 0);

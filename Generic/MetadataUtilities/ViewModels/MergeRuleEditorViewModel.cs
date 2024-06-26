@@ -345,8 +345,7 @@ namespace MetadataUtilities.ViewModels
         });
 
         private bool Filter(object item)
-            => item is MetadataObject metadataObject &&
-               metadataObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+            => item is MetadataObject metadataObject && metadataObject.Name.RegExIsMatch(SearchTerm) &&
                _filterTypes.Contains(metadataObject.Type) && (!FilterSelected || metadataObject.Selected) &&
                (_filterPrefix == string.Empty || metadataObject.Prefix.Equals(_filterPrefix));
     }

@@ -87,7 +87,7 @@ namespace MetadataUtilities.ViewModels
 
         private bool Filter(object item) =>
             item is MetadataObject metadataListObject &&
-            metadataListObject.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) &&
+            metadataListObject.Name.RegExIsMatch(SearchTerm) &&
             (!FilterSelected || metadataListObject.Selected);
     }
 }
