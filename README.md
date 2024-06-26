@@ -43,7 +43,7 @@ Extension to manage links for the games in the playnite library. It can do the f
 - Remove duplicate links.
 - Rename links (e.g. shorten wikipedia to wiki).
 - Add links to several websites directly by trying to find a valid link using the game name.
-- limited option for [custom link profiles](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Supported-websites-for-add-&-search-function) to add your own websites to the add or browser search function.
+- limited option for [custom link profiles](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Custom-link-profiles) to add your own websites to the add or browser search function.
 - Add library links: add links to the game page of its library
 - Add tags to games to keep track of missing links to specific websites.
 
@@ -82,7 +82,7 @@ Extension to manage metadata for the games in the playnite library. It can do th
 - Option to setup "metadata sets" that then can be quickly assigned to a game with one click (for example setting feature "Controller support" together with the tag "TV gaming".
 - Add option to change specific metadata if certain conditions are met in a game. The idea isn't fully fleshed out yet...
 
-The addon is overlapping with the Library Management extension to some degree, because I wasn't really happy with how some of its features (merging mostly) work. Metadata Utilities does and will not comnpletely replace Library Management, so you can use both together. I'd just recommend to restrict your usage of merging and similar functions that automatically change mnetadata in the background to one of both addons.
+The addon is overlapping with the Library Management extension to some degree, because I wasn't really happy with how some of its features (merging mostly) work. Metadata Utilities doesn't and won't completely replace Library Management, so you can use both together. I'd just recommend to restrict your usage of merging and similar functions that automatically change mnetadata in the background to one of both addons.
 
 ## Company Companion
 
