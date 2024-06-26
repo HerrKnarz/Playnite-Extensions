@@ -12,6 +12,7 @@ namespace MetadataUtilities.Models
         private ObservableCollection<MetadataObject> _defaultTags = new ObservableCollection<MetadataObject>();
         private int _editorWindowHeight = 600;
         private int _editorWindowWidth = 1200;
+        private bool _filterAgeRatings = true;
         private bool _filterCategories = true;
         private bool _filterFeatures = true;
         private bool _filterGenres = true;
@@ -73,6 +74,12 @@ namespace MetadataUtilities.Models
         {
             get => _editorWindowWidth;
             set => SetValue(ref _editorWindowWidth, value);
+        }
+
+        public bool FilterAgeRatings
+        {
+            get => _filterAgeRatings;
+            set => SetValue(ref _filterAgeRatings, value);
         }
 
         public bool FilterCategories

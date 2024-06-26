@@ -16,6 +16,7 @@ namespace MetadataUtilities.ViewModels
     {
         private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
         private MetadataObjects _completeMetadata;
+        private bool _filterAgeRatings;
         private bool _filterCategories;
         private bool _filterFeatures;
         private bool _filterGenres;
@@ -56,6 +57,7 @@ namespace MetadataUtilities.ViewModels
 
                 using (MetadataViewSource.DeferRefresh())
                 {
+                    FilterAgeRatings = filteredTypes.Contains(FieldType.AgeRating) || !filteredTypes.Any();
                     FilterCategories = filteredTypes.Contains(FieldType.Category) || !filteredTypes.Any();
                     FilterFeatures = filteredTypes.Contains(FieldType.Feature) || !filteredTypes.Any();
                     FilterGenres = filteredTypes.Contains(FieldType.Genre) || !filteredTypes.Any();
@@ -135,6 +137,26 @@ namespace MetadataUtilities.ViewModels
         {
             get => _completeMetadata;
             set => SetValue(ref _completeMetadata, value);
+        }
+
+        public bool FilterAgeRatings
+        {
+            get => _filterAgeRatings;
+            set
+            {
+                SetValue(ref _filterAgeRatings, value);
+
+                if (_filterAgeRatings)
+                {
+                    _filterTypes.Add(FieldType.AgeRating);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.AgeRating);
+                }
+
+                MetadataViewSource.View.Filter = Filter;
+            }
         }
 
         public bool FilterCategories

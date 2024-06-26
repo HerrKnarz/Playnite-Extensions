@@ -16,6 +16,7 @@ namespace KNARZhelper
 
     public enum FieldType
     {
+        AgeRating,
         Category,
         Feature,
         Genre,
@@ -29,6 +30,11 @@ namespace KNARZhelper
         {
             switch (type)
             {
+                case FieldType.AgeRating:
+                    AgeRating ageRating = API.Instance.Database.AgeRatings.Add(name);
+
+                    return ageRating.Id;
+
                 case FieldType.Category:
                     Category category = API.Instance.Database.Categories.Add(name);
 
@@ -65,6 +71,10 @@ namespace KNARZhelper
 
             switch (type)
             {
+                case FieldType.AgeRating:
+                    ids = game.AgeRatingIds ?? (game.AgeRatingIds = new List<Guid>());
+                    break;
+
                 case FieldType.Category:
                     ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
                     break;
@@ -98,6 +108,10 @@ namespace KNARZhelper
 
             switch (type)
             {
+                case FieldType.AgeRating:
+                    ids = game.AgeRatingIds ?? (game.AgeRatingIds = new List<Guid>());
+                    break;
+
                 case FieldType.Category:
                     ids = game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
                     break;
@@ -131,6 +145,9 @@ namespace KNARZhelper
         {
             switch (type)
             {
+                case FieldType.AgeRating:
+                    return API.Instance.Database.AgeRatings?.Any(x => x.Name == name) ?? false;
+
                 case FieldType.Category:
                     return API.Instance.Database.Categories?.Any(x => x.Name == name) ?? false;
 
@@ -155,6 +172,9 @@ namespace KNARZhelper
         {
             switch (type)
             {
+                case FieldType.AgeRating:
+                    return game.AgeRatingIds?.Contains(id) ?? false;
+
                 case FieldType.Category:
                     return game.CategoryIds?.Contains(id) ?? false;
 
@@ -179,6 +199,9 @@ namespace KNARZhelper
         {
             switch (type)
             {
+                case FieldType.AgeRating:
+                    return API.Instance.Database.Games.Any(x => x.AgeRatingIds?.Contains(id) ?? false);
+
                 case FieldType.Category:
                     return API.Instance.Database.Games.Any(x => x.CategoryIds?.Contains(id) ?? false);
 
@@ -205,6 +228,10 @@ namespace KNARZhelper
 
             switch (type)
             {
+                case FieldType.AgeRating:
+                    item = API.Instance.Database.AgeRatings?.FirstOrDefault(x => x.Name == name);
+                    break;
+
                 case FieldType.Category:
                     item = API.Instance.Database.Categories?.FirstOrDefault(x => x.Name == name);
                     break;
@@ -236,6 +263,9 @@ namespace KNARZhelper
         {
             switch (type)
             {
+                case FieldType.AgeRating:
+                    return API.Instance.Database.AgeRatings?.Any(x => x.Name == str && x.Id != id) ?? false;
+
                 case FieldType.Category:
                     return API.Instance.Database.Categories?.Any(x => x.Name == str && x.Id != id) ?? false;
 
@@ -265,6 +295,10 @@ namespace KNARZhelper
 
             switch (type)
             {
+                case FieldType.AgeRating:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.AgeRatings.Remove(id));
+                    break;
+
                 case FieldType.Category:
                     API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Categories.Remove(id));
                     break;
@@ -301,6 +335,9 @@ namespace KNARZhelper
 
             switch (type)
             {
+                case FieldType.AgeRating:
+                    return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.AgeRatingIds?.Remove(id) ?? false));
+
                 case FieldType.Category:
                     return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.CategoryIds?.Remove(id) ?? false));
 
@@ -330,6 +367,34 @@ namespace KNARZhelper
 
             switch (type)
             {
+                case FieldType.AgeRating:
+                    foreach (Game game in games.Where(g => g.AgeRatingIds?.Contains(id) ?? false))
+                    {
+                        if (!game.AgeRatingIds.Remove(id))
+                        {
+                            continue;
+                        }
+
+                        if (newType != null && newId != null)
+                        {
+                            AddDbObjectToGame(game, (FieldType)newType, (Guid)newId);
+                        }
+
+                        API.Instance.MainView.UIDispatcher.Invoke(delegate
+                        {
+                            API.Instance.Database.Games.Update(game);
+                        });
+
+                        yield return game.Id;
+                    }
+
+                    if (removeAfter && !DbObjectInUse(FieldType.AgeRating, id))
+                    {
+                        RemoveDbObject(FieldType.AgeRating, id, false);
+                    }
+
+                    break;
+
                 case FieldType.Category:
                     foreach (Game game in games.Where(g => g.CategoryIds?.Contains(id) ?? false))
                     {
@@ -479,6 +544,23 @@ namespace KNARZhelper
         {
             switch (type)
             {
+                case FieldType.AgeRating:
+                    AgeRating ageRating = API.Instance.Database.AgeRatings?.FirstOrDefault(x => x.Id == id);
+
+                    if (ageRating == null)
+                    {
+                        return;
+                    }
+
+                    ageRating.Name = name;
+
+                    API.Instance.MainView.UIDispatcher.Invoke(delegate
+                    {
+                        API.Instance.Database.AgeRatings.Update(ageRating);
+                    });
+
+                    return;
+
                 case FieldType.Category:
                     Category category = API.Instance.Database.Categories?.FirstOrDefault(x => x.Id == id);
 

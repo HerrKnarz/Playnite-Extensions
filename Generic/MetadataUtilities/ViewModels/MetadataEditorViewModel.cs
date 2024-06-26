@@ -18,9 +18,11 @@ namespace MetadataUtilities.ViewModels
     {
         private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
         private readonly bool _showRelatedGames;
+        private int _ageRatingCount;
         private int _categoryCount;
         private MetadataObjects _completeMetadata;
         private int _featureCount;
+        private bool _filterAgeRatings = true;
         private bool _filterCategories = true;
         private bool _filterFeatures = true;
         private bool _filterGenres = true;
@@ -84,6 +86,7 @@ namespace MetadataUtilities.ViewModels
                     Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                     ts = DateTime.Now;
 
+                    FilterAgeRatings = Plugin.Settings.Settings.FilterAgeRatings;
                     FilterCategories = Plugin.Settings.Settings.FilterCategories;
                     FilterFeatures = Plugin.Settings.Settings.FilterFeatures;
                     FilterGenres = Plugin.Settings.Settings.FilterGenres;
@@ -165,6 +168,12 @@ namespace MetadataUtilities.ViewModels
             }
         });
 
+        public int AgeRatingCount
+        {
+            get => _ageRatingCount;
+            set => SetValue(ref _ageRatingCount, value);
+        }
+
         public int CategoryCount
         {
             get => _categoryCount;
@@ -237,6 +246,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
         {
+            Plugin.Settings.Settings.FilterAgeRatings = FilterAgeRatings;
             Plugin.Settings.Settings.FilterCategories = FilterCategories;
             Plugin.Settings.Settings.FilterFeatures = FilterFeatures;
             Plugin.Settings.Settings.FilterGenres = FilterGenres;
@@ -260,6 +270,27 @@ namespace MetadataUtilities.ViewModels
         {
             get => _featureCount;
             set => SetValue(ref _featureCount, value);
+        }
+
+        public bool FilterAgeRatings
+        {
+            get => _filterAgeRatings;
+            set
+            {
+                SetValue(ref _filterAgeRatings, value);
+
+                if (_filterAgeRatings)
+                {
+                    _filterTypes.Add(FieldType.AgeRating);
+                }
+                else
+                {
+                    _filterTypes.Remove(FieldType.AgeRating);
+                }
+
+                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
+                MetadataViewSource.View.Filter = Filter;
+            }
         }
 
         public bool FilterCategories
@@ -719,6 +750,7 @@ namespace MetadataUtilities.ViewModels
 
         public void CalculateItemCount()
         {
+            AgeRatingCount = API.Instance.Database.AgeRatings?.Count ?? 0;
             CategoryCount = API.Instance.Database.Categories?.Count ?? 0;
             FeatureCount = API.Instance.Database.Features?.Count ?? 0;
             GenreCount = API.Instance.Database.Genres?.Count ?? 0;
@@ -764,6 +796,7 @@ namespace MetadataUtilities.ViewModels
             {
                 foreach (Game game in API.Instance.Database.Games.Where(g =>
                     !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
+                        (currentItem.Type == FieldType.AgeRating && (g.AgeRatingIds?.Contains(currentItem.Id) ?? false)) ||
                         (currentItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currentItem.Id) ?? false)) ||
                         (currentItem.Type == FieldType.Feature && (g.FeatureIds?.Contains(currentItem.Id) ?? false)) ||
                         (currentItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currentItem.Id) ?? false)) ||

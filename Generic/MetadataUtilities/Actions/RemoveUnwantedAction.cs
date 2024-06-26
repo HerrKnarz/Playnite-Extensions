@@ -12,6 +12,7 @@ namespace MetadataUtilities.Actions
     {
         private static readonly object _mutex = new object();
         private static RemoveUnwantedAction _instance;
+        private readonly List<Guid> _ageRatingIds = new List<Guid>();
         private readonly List<Guid> _categoryIds = new List<Guid>();
         private readonly List<Guid> _featureIds = new List<Guid>();
         private readonly List<Guid> _genreIds = new List<Guid>();
@@ -51,7 +52,8 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool mustUpdate = DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.Category, _categoryIds);
+            bool mustUpdate = DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.AgeRating, _ageRatingIds);
+            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.Category, _categoryIds);
             mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.Feature, _featureIds);
             mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.Genre, _genreIds);
             mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.Series, _seriesIds);
@@ -78,6 +80,7 @@ namespace MetadataUtilities.Actions
 
         public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
         {
+            _ageRatingIds.Clear();
             _categoryIds.Clear();
             _featureIds.Clear();
             _genreIds.Clear();
@@ -95,6 +98,10 @@ namespace MetadataUtilities.Actions
 
                 switch (metaDataItem.Type)
                 {
+                    case FieldType.AgeRating:
+                        _ageRatingIds.Add(metaDataItem.Id);
+                        break;
+
                     case FieldType.Category:
                         _categoryIds.Add(metaDataItem.Id);
                         break;

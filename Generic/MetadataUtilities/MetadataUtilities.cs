@@ -30,6 +30,7 @@ namespace MetadataUtilities
             IsUpdating = false;
 
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
+            api.Database.AgeRatings.ItemUpdated += ItemUpdatedAgeRatings;
             api.Database.Categories.ItemUpdated += ItemUpdatedCategories;
             api.Database.Features.ItemUpdated += ItemUpdatedFeatures;
             api.Database.Genres.ItemUpdated += ItemUpdatedGenres;
@@ -462,6 +463,10 @@ namespace MetadataUtilities
 
                 switch (dbObject.Type)
                 {
+                    case FieldType.AgeRating:
+                        checkedCount = games.Count(x => x.AgeRatingIds?.Contains(dbObject.Id) ?? false);
+                        break;
+
                     case FieldType.Category:
                         checkedCount = games.Count(x => x.CategoryIds?.Contains(dbObject.Id) ?? false);
                         break;
@@ -497,6 +502,24 @@ namespace MetadataUtilities
             }
 
             return menuItems;
+        }
+
+        private void ItemUpdatedAgeRatings(object sender, ItemUpdatedEventArgs<AgeRating> args)
+        {
+            if (!Settings.Settings.RenameMergeRules)
+            {
+                return;
+            }
+
+            if (args.UpdatedItems
+                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
+                .ToList().Aggregate(false,
+                    (current, item)
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.AgeRating,
+                            item.OldData.Name, item.NewData.Name)))
+            {
+                SavePluginSettings(Settings.Settings);
+            }
         }
 
         private void ItemUpdatedCategories(object sender, ItemUpdatedEventArgs<Category> args)
@@ -655,7 +678,7 @@ namespace MetadataUtilities
 
         private void ShowEditor() => ShowEditor(null);
 
-        private void ShowEditor(List<Game> games = null)
+        private void ShowEditor(List<Game> games)
         {
             Log.Debug("=== ShowEditor: Start ===");
             DateTime ts = DateTime.Now;

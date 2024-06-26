@@ -211,6 +211,9 @@ namespace MetadataUtilities.ViewModels
                 Settings.Prefixes = new ObservableCollection<string>(Settings.Prefixes.OrderBy(x => x));
             });
 
+        public RelayCommand AddQuickAddAgeRatingsCommand
+            => new RelayCommand(() => AddQuickAddItems(FieldType.AgeRating));
+
         public RelayCommand AddQuickAddCategoriesCommand
             => new RelayCommand(() => AddQuickAddItems(FieldType.Category));
 
@@ -225,6 +228,9 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand AddQuickAddTagsCommand
             => new RelayCommand(() => AddQuickAddItems(FieldType.Tag));
+
+        public RelayCommand AddUnwantedAgeRatingsCommand
+            => new RelayCommand(() => AddUnwantedItems(FieldType.AgeRating));
 
         public RelayCommand AddUnwantedCategoriesCommand
             => new RelayCommand(() => AddUnwantedItems(FieldType.Category));
@@ -501,6 +507,11 @@ namespace MetadataUtilities.ViewModels
 
                 HashSet<FieldType> filteredTypes = new HashSet<FieldType>();
 
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.AgeRating))
+                {
+                    filteredTypes.Add(FieldType.AgeRating);
+                }
+
                 if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Category))
                 {
                     filteredTypes.Add(FieldType.Category);
@@ -639,6 +650,10 @@ namespace MetadataUtilities.ViewModels
 
             switch (type)
             {
+                case FieldType.AgeRating:
+                    label = ResourceProvider.GetString("LOCAgeRatingsLabel");
+                    break;
+
                 case FieldType.Category:
                     label = ResourceProvider.GetString("LOCCategoriesLabel");
                     break;

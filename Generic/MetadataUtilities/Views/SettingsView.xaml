@@ -205,7 +205,9 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                         <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                            <Button Content="{DynamicResource LOCCategoriesLabel}" Margin="0,0,0,0"
+                            <Button Content="{DynamicResource LOCAgeRatingsLabel}" Margin="0,0,0,0"
+                                    Command="{Binding AddUnwantedAgeRatingsCommand}" />
+                            <Button Content="{DynamicResource LOCCategoriesLabel}" Margin="0,10,0,0"
                                     Command="{Binding AddUnwantedCategoriesCommand}" />
                             <Button Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0"
                                     Command="{Binding AddUnwantedFeaturesCommand}" />
@@ -313,7 +315,9 @@
                         </ListView.View>
                     </ListView>
                     <StackPanel Grid.Column="1" Margin="10,10,0,0">
-                        <Button Content="{DynamicResource LOCCategoriesLabel}" Margin="0,0,0,0"
+                        <Button Content="{DynamicResource LOCAgeRatingsLabel}" Margin="0,0,0,0"
+                                Command="{Binding AddQuickAddAgeRatingsCommand}" />
+                        <Button Content="{DynamicResource LOCCategoriesLabel}" Margin="0,10,0,0"
                                 Command="{Binding AddQuickAddCategoriesCommand}" />
                         <Button Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0"
                                 Command="{Binding AddQuickAddFeaturesCommand}" />

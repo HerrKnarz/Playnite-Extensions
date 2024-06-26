@@ -33,6 +33,18 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
+                    temporaryList.AddRange(API.Instance.Database.AgeRatings
+                        .Where(x => !API.Instance.Database.Games.Any(g
+                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
+                               (g.AgeRatingIds?.Contains(x.Id) ?? false)))
+                        .Select(ageRating
+                            => new MetadataObject(settings)
+                            {
+                                Id = ageRating.Id,
+                                Name = ageRating.Name,
+                                Type = FieldType.AgeRating
+                            }));
+
                     temporaryList.AddRange(API.Instance.Database.Categories
                         .Where(x => !API.Instance.Database.Games.Any(g
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
@@ -142,6 +154,8 @@ namespace MetadataUtilities.Models
 
             Parallel.ForEach(API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden)), opts, game =>
             {
+                game.AgeRatingIds?.ForEach(o => items.Enqueue(o));
+
                 game.CategoryIds?.ForEach(o => items.Enqueue(o));
 
                 game.FeatureIds?.ForEach(o => items.Enqueue(o));
@@ -188,6 +202,7 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
+                    List<AgeRating> ageRatings = new List<AgeRating>();
                     List<Category> categories = new List<Category>();
                     List<GameFeature> features = new List<GameFeature>();
                     List<Genre> genres = new List<Genre>();
@@ -196,12 +211,21 @@ namespace MetadataUtilities.Models
 
                     foreach (Game game in games)
                     {
+                        ageRatings.AddMissing(game.AgeRatings);
                         categories.AddMissing(game.Categories);
                         features.AddMissing(game.Features);
                         genres.AddMissing(game.Genres);
                         seriesList.AddMissing(game.Series);
                         tags.AddMissing(game.Tags);
                     }
+
+                    temporaryList.AddRange(ageRatings.Select(ageRating
+                        => new MetadataObject(_settings)
+                        {
+                            Id = ageRating.Id,
+                            Name = ageRating.Name,
+                            Type = FieldType.AgeRating
+                        }));
 
                     temporaryList.AddRange(categories.Select(category
                         => new MetadataObject(_settings)
@@ -274,6 +298,17 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
+                    if (type == null || type == FieldType.AgeRating)
+                    {
+                        temporaryList.AddRange(API.Instance.Database.AgeRatings.Select(ageRating
+                            => new MetadataObject(_settings)
+                            {
+                                Id = ageRating.Id,
+                                Name = ageRating.Name,
+                                Type = FieldType.AgeRating
+                            }));
+                    }
+
                     if (type == null || type == FieldType.Category)
                     {
                         temporaryList.AddRange(API.Instance.Database.Categories.Select(category

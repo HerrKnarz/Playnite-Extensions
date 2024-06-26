@@ -67,6 +67,7 @@
                             <ComboBox Name="PrefixFilterBox" DockPanel.Dock="Left" ItemsSource="{Binding Source={StaticResource PrefixesFilter}}"
                                       SelectedItem="{Binding FilterPrefix, UpdateSourceTrigger=PropertyChanged}" />
                         </DockPanel>
+                        <CheckBox IsChecked="{Binding FilterAgeRatings}" Content="{DynamicResource LOCAgeRatingsLabel}" Margin="0,10,0,0" />
                         <CheckBox IsChecked="{Binding FilterCategories}" Content="{DynamicResource LOCCategoriesLabel}" Margin="0,10,0,0" />
                         <CheckBox IsChecked="{Binding FilterFeatures}" Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0" />
                         <CheckBox IsChecked="{Binding FilterGenres}" Content="{DynamicResource LOCGenresLabel}" Margin="0,10,0,0" />

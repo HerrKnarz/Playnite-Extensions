@@ -23,29 +23,6 @@ namespace MetadataUtilities.Models
         public MetadataObject(Settings settings) => _settings = settings;
 
         [DontSerialize]
-        public new Guid Id { get; set; }
-
-        [DontSerialize]
-        public int GameCount
-        {
-            get => _gameCount;
-            set => SetValue(ref _gameCount, value);
-        }
-
-        [DontSerialize]
-        public bool Selected
-        {
-            get => _selected;
-            set => SetValue(ref _selected, value);
-        }
-
-        public FieldType Type
-        {
-            get => _type;
-            set => SetValue(ref _type, value);
-        }
-
-        [DontSerialize]
         public string CleanedUpName
         {
             get => _cleanedUpName;
@@ -73,6 +50,16 @@ namespace MetadataUtilities.Models
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        public int GameCount
+        {
+            get => _gameCount;
+            set => SetValue(ref _gameCount, value);
+        }
+
+        [DontSerialize]
+        public new Guid Id { get; set; }
 
         public new string Name
         {
@@ -124,10 +111,11 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
-        public string TypeAndName => $"{Type.GetEnumDisplayName()}: {Name}";
-
-        [DontSerialize]
-        public string TypeLabel => Type.GetEnumDisplayName();
+        public bool Selected
+        {
+            get => _selected;
+            set => SetValue(ref _selected, value);
+        }
 
         [DontSerialize]
         public bool ShowGrouped
@@ -136,23 +124,64 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _showGrouped, value);
         }
 
-        public bool UpdateItem(string oldName, string newName)
+        public FieldType Type
         {
-            // If we don't have an id, the item is new and doesn't need to be updated.
-            if (Id == Guid.Empty)
+            get => _type;
+            set => SetValue(ref _type, value);
+        }
+
+        [DontSerialize]
+        public string TypeAndName => $"{Type.GetEnumDisplayName()}: {Name}";
+
+        [DontSerialize]
+        public string TypeLabel => Type.GetEnumDisplayName();
+
+        public void CheckGroup(List<MetadataObject> metadataList)
+            => ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && !x.Equals(this));
+
+        public void GetGameCount()
+        {
+            switch (Type)
             {
-                return true;
+                case FieldType.AgeRating:
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.AgeRatingIds?.Contains(Id) ?? false));
+                    break;
+
+                case FieldType.Category:
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.CategoryIds?.Contains(Id) ?? false));
+                    break;
+
+                case FieldType.Feature:
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.FeatureIds?.Contains(Id) ?? false));
+                    break;
+
+                case FieldType.Genre:
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.GenreIds?.Contains(Id) ?? false));
+                    break;
+
+                case FieldType.Series:
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.SeriesIds?.Contains(Id) ?? false));
+                    break;
+
+                case FieldType.Tag:
+                    GameCount = API.Instance.Database.Games.Count(g
+                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
+                           (g.TagIds?.Contains(Id) ?? false));
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
-            DbInteractionResult res = DatabaseObjectHelper.UpdateName(Type, Id, oldName, newName);
-
-            if (res == DbInteractionResult.IsDuplicate)
-            {
-                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
-                    Type.GetEnumDisplayName()));
-            }
-
-            return res == DbInteractionResult.Updated;
         }
 
         public string GetPrefix()
@@ -173,41 +202,23 @@ namespace MetadataUtilities.Models
             return string.Empty;
         }
 
-        public void GetGameCount()
+        public bool UpdateItem(string oldName, string newName)
         {
-            switch (Type)
+            // If we don't have an id, the item is new and doesn't need to be updated.
+            if (Id == Guid.Empty)
             {
-                case FieldType.Category:
-                    GameCount = API.Instance.Database.Games.Count(g
-                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
-                           (g.CategoryIds?.Contains(Id) ?? false));
-                    break;
-                case FieldType.Feature:
-                    GameCount = API.Instance.Database.Games.Count(g
-                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
-                           (g.FeatureIds?.Contains(Id) ?? false));
-                    break;
-                case FieldType.Genre:
-                    GameCount = API.Instance.Database.Games.Count(g
-                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
-                           (g.GenreIds?.Contains(Id) ?? false));
-                    break;
-                case FieldType.Series:
-                    GameCount = API.Instance.Database.Games.Count(g
-                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
-                           (g.SeriesIds?.Contains(Id) ?? false));
-                    break;
-                case FieldType.Tag:
-                    GameCount = API.Instance.Database.Games.Count(g
-                        => !(_settings.IgnoreHiddenGamesInGameCount && g.Hidden) &&
-                           (g.TagIds?.Contains(Id) ?? false));
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                return true;
             }
-        }
 
-        public void CheckGroup(List<MetadataObject> metadataList)
-            => ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && !x.Equals(this));
+            DbInteractionResult res = DatabaseObjectHelper.UpdateName(Type, Id, oldName, newName);
+
+            if (res == DbInteractionResult.IsDuplicate)
+            {
+                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
+                    Type.GetEnumDisplayName()));
+            }
+
+            return res == DbInteractionResult.Updated;
+        }
     }
 }
