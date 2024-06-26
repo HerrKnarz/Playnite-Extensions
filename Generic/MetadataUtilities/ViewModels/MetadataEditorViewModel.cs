@@ -175,10 +175,10 @@ namespace MetadataUtilities.ViewModels
             try
             {
                 GenericItemOption result = API.Instance.Dialogs.ChooseItemWithSearch(
-                        new List<GenericItemOption>(),
-                        GetGameSearchResults,
-                        "",
-                        ResourceProvider.GetString("LOCSearchLabel"));
+                    new List<GenericItemOption>(),
+                    GetGameSearchResults,
+                    "",
+                    ResourceProvider.GetString("LOCSearchLabel"));
 
                 if (result == null)
                     return;
@@ -193,7 +193,16 @@ namespace MetadataUtilities.ViewModels
                 if (currentItem == null)
                     return;
 
-                DatabaseObjectHelper.AddDbObjectToGame(game, currentItem.Type, currentItem.Id);
+                Plugin.IsUpdating = true;
+                Cursor.Current = Cursors.WaitCursor;
+
+                if (!DatabaseObjectHelper.AddDbObjectToGame(game, currentItem.Type, currentItem.Id))
+                    return;
+
+                API.Instance.MainView.UIDispatcher.Invoke(delegate
+                {
+                    API.Instance.Database.Games.Update(game);
+                });
 
                 LoadRelatedGames();
                 currentItem.GetGameCount();
@@ -201,6 +210,11 @@ namespace MetadataUtilities.ViewModels
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during game search", true);
+            }
+            finally
+            {
+                Plugin.IsUpdating = false;
+                Cursor.Current = Cursors.Default;
             }
         });
 
