@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:metadataUtilities="clr-namespace:MetadataUtilities"
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:MetadataEditorViewModel}"
              mc:Ignorable="d"
@@ -212,7 +211,7 @@
                 </DataGrid>
             </DockPanel>
             <WrapPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1" Margin="0,0,0,10" HorizontalAlignment="Left">
-                <Button Content="{DynamicResource LOCMenuAddGame}" Margin="0,0,10,10"
+                <Button Content="{DynamicResource LOCAddGames}" Margin="0,0,10,10"
                         Command="{Binding AddNewGameCommand}" />
                 <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,0,10,10"
                         Command="{Binding RemoveGamesCommand}" ToolTip="{DynamicResource LOCMetadataUtilitiesEditorRemovesGamesFromSelectedItem}"

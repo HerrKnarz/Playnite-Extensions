@@ -170,50 +170,19 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand AddNewGameCommand => new RelayCommand(() =>
         {
-            try
-            {
-                GenericItemOption result = API.Instance.Dialogs.ChooseItemWithSearch(
-                    new List<GenericItemOption>(),
-                    GetGameSearchResults,
-                    "",
-                    ResourceProvider.GetString("LOCSearchLabel"));
+            MetadataObject currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
 
-                if (result == null)
-                    return;
+            SearchGameViewModel viewModel = new SearchGameViewModel(Plugin, currentItem);
 
-                Game game = API.Instance.Database.Games.Get(Guid.Parse(result.Description));
+            SearchGameView searchGameView = new SearchGameView();
 
-                if (game == null)
-                    return;
+            Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"), 700, 700);
+            window.Content = searchGameView;
+            window.DataContext = viewModel;
 
-                MetadataObject currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
-
-                if (currentItem == null)
-                    return;
-
-                Plugin.IsUpdating = true;
-                Cursor.Current = Cursors.WaitCursor;
-
-                if (!DatabaseObjectHelper.AddDbObjectToGame(game, currentItem.Type, currentItem.Id))
-                    return;
-
-                API.Instance.MainView.UIDispatcher.Invoke(delegate
-                {
-                    API.Instance.Database.Games.Update(game);
-                });
-
-                LoadRelatedGames();
-                currentItem.GetGameCount();
-            }
-            catch (Exception exception)
-            {
-                Log.Error(exception, "Error during game search", true);
-            }
-            finally
-            {
-                Plugin.IsUpdating = false;
-                Cursor.Current = Cursors.Default;
-            }
+            window.ShowDialog();
+            LoadRelatedGames();
+            currentItem.GetGameCount();
         });
 
         public int AgeRatingCount
@@ -811,27 +780,6 @@ namespace MetadataUtilities.ViewModels
 
         public void EndEdit()
         { }
-
-        public List<GenericItemOption> GetGameSearchResults(string searchTerm)
-        {
-            try
-            {
-                FilterPresetSettings filterSettings = new FilterPresetSettings
-                {
-                    Name = searchTerm
-                };
-
-                IEnumerable<Game> games = API.Instance.Database.GetFilteredGames(filterSettings, true);
-
-                return games.Select(game => new GenericItemOption { Name = game.Name, Description = game.Id.ToString() }).ToList();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, $"Error loading game search data");
-            }
-
-            return null;
-        }
 
         private void CurrentChanged(object sender, EventArgs e) => LoadRelatedGames();
 

@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="MetadataUtilities.Views.SearchGameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:SearchGameViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="TextAlignment" Value="Right" />
+        </Style>
+    </UserControl.Resources>
+    <DockPanel Margin="10">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Right">
+            <Button Content="{DynamicResource LOCAddGames}" Margin="0,0,10,0"
+                    Command="{Binding AddGamesCommand}"
+                    CommandParameter="{Binding SelectedItems, ElementName=GamesGrid}" />
+            <Button Content="{DynamicResource LOCCloseLabel}" Command="{Binding CloseCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" IsDefault="True" />
+        </StackPanel>
+        <DockPanel VerticalAlignment="Center" DockPanel.Dock="Top">
+            <Button Content="&#xef00;" FontFamily="{DynamicResource FontIcoFont}" Click="ClearSearchBox" DockPanel.Dock="Right"
+                    Margin="5,0,0,0" Padding="5,5,8,5" />
+            <TextBox Name="SearchBox" DockPanel.Dock="Left"  Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
+        </DockPanel>
+        <FrameworkElement x:Name="DummyElement" Visibility="Collapsed" />
+        <DataGrid Name="GamesGrid" ItemsSource="{Binding GamesViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top"
+                  CanUserAddRows="False" IsReadOnly="True" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
+                  EnableRowVirtualization="True" SelectionMode="Extended" Margin="0,10,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{DynamicResource LOCGameNameTitle}" Binding="{Binding Game.Name}" MinWidth="100"
+                                SortMemberPath="RealSortingName" />
+                <DataGridTextColumn Header="{DynamicResource LOCCompletionStatus}" Binding="{Binding Game.CompletionStatus.Name}"
+                                MinWidth="100" Width="SizeToCells"
+                                Visibility="{Binding DataContext.GameGridCompletionStatusVisibility, Source={x:Reference DummyElement}}" />
+                <DataGridTextColumn Header="{DynamicResource LOCPlatformsTitle}" Binding="{Binding Platforms}"
+                                MinWidth="100" Width="200"
+                                Visibility="{Binding DataContext.GameGridPlatformVisibility, Source={x:Reference DummyElement}}" />
+                <DataGridTextColumn Header="{DynamicResource LOCGameReleaseYearTitle}" Binding="{Binding Game.ReleaseYear}"
+                                Width="SizeToHeader" ElementStyle="{StaticResource RightCell}" MinWidth="50"
+                                Visibility="{Binding DataContext.GameGridReleaseVisibility, Source={x:Reference DummyElement}}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
