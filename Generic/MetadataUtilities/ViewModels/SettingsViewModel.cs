@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using KNARZhelper;
 using MetadataUtilities.Models;
+using MetadataUtilities.Views;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 
@@ -297,10 +298,8 @@ namespace MetadataUtilities.ViewModels
             }
         }, items => items?.Count != 0);
 
-        public RelayCommand<object> RemoveMergeRuleCommand => new RelayCommand<object>(rule =>
-        {
-            Settings.MergeRules.Remove((MergeRule)rule);
-        }, rule => rule != null);
+        public RelayCommand<object> RemoveMergeRuleCommand =>
+            new RelayCommand<object>(rule => Settings.MergeRules.Remove((MergeRule)rule), rule => rule != null);
 
         public RelayCommand<IList<object>> RemoveMergeSourceCommand => new RelayCommand<IList<object>>(items =>
         {

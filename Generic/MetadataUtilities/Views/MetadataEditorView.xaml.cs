@@ -3,10 +3,10 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MetadataUtilities
+namespace MetadataUtilities.Views
 {
     /// <summary>
-    ///     Interaction logic for MetadataEditor.xaml
+    /// Interaction logic for MetadataEditor.xaml
     /// </summary>
     public partial class MetadataEditorView
     {

@@ -2,10 +2,10 @@
 using System;
 using System.Windows;
 
-namespace MetadataUtilities
+namespace MetadataUtilities.Views
 {
     /// <summary>
-    ///     Interaction logic for MergeRuleEditorView.xaml
+    /// Interaction logic for MergeRuleEditorView.xaml
     /// </summary>
     public partial class MergeRuleEditorView
     {

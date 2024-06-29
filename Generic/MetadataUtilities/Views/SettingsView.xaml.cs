@@ -1,4 +1,4 @@
-﻿namespace MetadataUtilities
+﻿namespace MetadataUtilities.Views
 {
     public partial class SettingsView
     {

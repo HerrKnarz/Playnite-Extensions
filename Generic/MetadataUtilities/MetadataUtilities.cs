@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.Actions;
+using MetadataUtilities.Views;
 using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Events;

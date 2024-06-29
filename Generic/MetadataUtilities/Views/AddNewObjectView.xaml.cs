@@ -1,13 +1,12 @@
 ﻿using KNARZhelper;
 using System;
-using System.Windows.Controls;
 
 namespace MetadataUtilities.Views
 {
     /// <summary>
-    ///     Interaction logic for AddNewObject.xaml
+    /// Interaction logic for AddNewObject.xaml
     /// </summary>
-    public partial class AddNewObjectView : UserControl
+    public partial class AddNewObjectView
     {
         public AddNewObjectView()
         {
