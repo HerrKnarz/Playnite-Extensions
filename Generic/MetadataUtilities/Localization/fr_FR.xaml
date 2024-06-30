@@ -88,6 +88,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Remove unwanted</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Inverser</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Whitelist (These items won't be removed when unused)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valeurs à fusionner</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Écrire les messages de débogage (utiliser uniquement en cas d'erreur suspecte !)</sys:String>
 </ResourceDictionary>
