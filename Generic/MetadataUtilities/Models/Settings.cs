@@ -39,6 +39,7 @@ namespace MetadataUtilities.Models
         private bool _renameMergeRules = true;
         private bool _setDefaultTagsOnlyIfEmpty = true;
         private bool _showTopPanelButton = true;
+        private ObservableCollection<MetadataObject> _unusedItemsWhiteList = new ObservableCollection<MetadataObject>();
         private ObservableCollection<MetadataObject> _unwantedItems = new ObservableCollection<MetadataObject>();
         private bool _writeDebugLog;
 
@@ -238,6 +239,12 @@ namespace MetadataUtilities.Models
         {
             get => _showTopPanelButton;
             set => SetValue(ref _showTopPanelButton, value);
+        }
+
+        public ObservableCollection<MetadataObject> UnusedItemsWhiteList
+        {
+            get => _unusedItemsWhiteList;
+            set => SetValue(ref _unusedItemsWhiteList, value);
         }
 
         public ObservableCollection<MetadataObject> UnwantedItems

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -230,23 +231,41 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand AddQuickAddTagsCommand
             => new RelayCommand(() => AddQuickAddItems(FieldType.Tag));
 
+        public RelayCommand AddUnusedAgeRatingsCommand
+            => new RelayCommand(() => AddItems(FieldType.AgeRating, Settings.UnusedItemsWhiteList));
+
+        public RelayCommand AddUnusedCategoriesCommand
+            => new RelayCommand(() => AddItems(FieldType.Category, Settings.UnusedItemsWhiteList));
+
+        public RelayCommand AddUnusedFeaturesCommand
+            => new RelayCommand(() => AddItems(FieldType.Feature, Settings.UnusedItemsWhiteList));
+
+        public RelayCommand AddUnusedGenresCommand
+            => new RelayCommand(() => AddItems(FieldType.Genre, Settings.UnusedItemsWhiteList));
+
+        public RelayCommand AddUnusedSeriesCommand
+            => new RelayCommand(() => AddItems(FieldType.Series, Settings.UnusedItemsWhiteList));
+
+        public RelayCommand AddUnusedTagsCommand
+            => new RelayCommand(() => AddItems(FieldType.Tag, Settings.UnusedItemsWhiteList));
+
         public RelayCommand AddUnwantedAgeRatingsCommand
-            => new RelayCommand(() => AddUnwantedItems(FieldType.AgeRating));
+            => new RelayCommand(() => AddItems(FieldType.AgeRating, Settings.UnwantedItems));
 
         public RelayCommand AddUnwantedCategoriesCommand
-            => new RelayCommand(() => AddUnwantedItems(FieldType.Category));
+            => new RelayCommand(() => AddItems(FieldType.Category, Settings.UnwantedItems));
 
         public RelayCommand AddUnwantedFeaturesCommand
-            => new RelayCommand(() => AddUnwantedItems(FieldType.Feature));
+            => new RelayCommand(() => AddItems(FieldType.Feature, Settings.UnwantedItems));
 
         public RelayCommand AddUnwantedGenresCommand
-            => new RelayCommand(() => AddUnwantedItems(FieldType.Genre));
+            => new RelayCommand(() => AddItems(FieldType.Genre, Settings.UnwantedItems));
 
         public RelayCommand AddUnwantedSeriesCommand
-            => new RelayCommand(() => AddUnwantedItems(FieldType.Series));
+            => new RelayCommand(() => AddItems(FieldType.Series, Settings.UnwantedItems));
 
         public RelayCommand AddUnwantedTagsCommand
-            => new RelayCommand(() => AddUnwantedItems(FieldType.Tag));
+            => new RelayCommand(() => AddItems(FieldType.Tag, Settings.UnwantedItems));
 
         public RelayCommand<object> EditMergeRuleCommand
             => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
@@ -325,13 +344,21 @@ namespace MetadataUtilities.ViewModels
             }
         }, items => items?.Count != 0);
 
-        public RelayCommand<IList<object>> RemoveUnwantedFromListCommand => new RelayCommand<IList<object>>(items =>
+        public RelayCommand<IList<object>> RemoveUnusedFromListCommand => new RelayCommand<IList<object>>(items =>
         {
             foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
             {
-                Settings.UnwantedItems.Remove(item);
+                Settings.UnusedItemsWhiteList.Remove(item);
             }
         }, items => items?.Count != 0);
+
+        public RelayCommand<IList<object>> RemoveUnwantedFromListCommand => new RelayCommand<IList<object>>(items =>
+                {
+                    foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+                    {
+                        Settings.UnwantedItems.Remove(item);
+                    }
+                }, items => items?.Count != 0);
 
         public MergeRule SelectedMergeRule
         {
@@ -370,6 +397,37 @@ namespace MetadataUtilities.ViewModels
 
         private Settings EditingClone { get; set; }
 
+        public void AddItems(FieldType type, ObservableCollection<MetadataObject> list)
+        {
+            List<MetadataObject> items = GetItemsFromAddDialog(type);
+
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            AddItemsToList(items, list);
+        }
+
+        public void AddItemsToList(List<MetadataObject> items, ObservableCollection<MetadataObject> list)
+        {
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            foreach (MetadataObject item in items.Where(item => list.All(x => x.TypeAndName != item.TypeAndName)))
+            {
+                list.Add(new MetadataObject(_settings)
+                {
+                    Name = item.Name,
+                    Type = item.Type
+                });
+            }
+
+            list = new ObservableCollection<MetadataObject>(list.OrderBy(x => x.TypeAndName));
+        }
+
         public void AddItemsToQuickAddList(List<MetadataObject> items)
         {
             if (items.Count == 0)
@@ -389,25 +447,6 @@ namespace MetadataUtilities.ViewModels
             Settings.QuickAddObjects = new ObservableCollection<QuickAddObject>(Settings.QuickAddObjects.OrderBy(x => x.TypeAndName));
         }
 
-        public void AddItemsToUnwantedList(List<MetadataObject> items)
-        {
-            if (items.Count == 0)
-            {
-                return;
-            }
-
-            foreach (MetadataObject item in items.Where(item => Settings.UnwantedItems.All(x => x.TypeAndName != item.TypeAndName)))
-            {
-                Settings.UnwantedItems.Add(new MetadataObject(_settings)
-                {
-                    Name = item.Name,
-                    Type = item.Type
-                });
-            }
-
-            Settings.UnwantedItems = new ObservableCollection<MetadataObject>(Settings.UnwantedItems.OrderBy(x => x.TypeAndName));
-        }
-
         public void AddQuickAddItems(FieldType type)
         {
             List<MetadataObject> items = GetItemsFromAddDialog(type);
@@ -420,7 +459,7 @@ namespace MetadataUtilities.ViewModels
             AddItemsToQuickAddList(items);
         }
 
-        public void AddUnwantedItems(FieldType type)
+        public void AddUnusedItems(FieldType type)
         {
             List<MetadataObject> items = GetItemsFromAddDialog(type);
 
@@ -429,7 +468,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            AddItemsToUnwantedList(items);
+            AddItemsToList(items, Settings.UnusedItemsWhiteList);
         }
 
         public void BeginEdit()
