@@ -88,6 +88,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Прибрати невикористані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Прибрати небажані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Перемкнути</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Whitelist (These items won't be removed when unused)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Значення для об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Записувати повідомлення журналу налагодження (використовуйте тільки якщо підозрюєте помилки!)</sys:String>
 </ResourceDictionary>
