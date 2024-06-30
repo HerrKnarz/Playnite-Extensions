@@ -387,7 +387,7 @@ namespace MetadataUtilities.ViewModels
 
         public void EndEdit() => _plugin.SavePluginSettings(Settings);
 
-        public void RemoveFromList(IList<Object> items, ObservableCollection<MetadataObject> list)
+        public void RemoveFromList(IList<object> items, ObservableCollection<MetadataObject> list)
         {
             foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
             {

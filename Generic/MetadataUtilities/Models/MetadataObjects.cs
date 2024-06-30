@@ -105,6 +105,12 @@ namespace MetadataUtilities.Models
                                 Type = FieldType.Tag
                             }));
 
+                    if (temporaryList.Any() && (settings.UnusedItemsWhiteList?.Any() ?? false))
+                    {
+                        temporaryList = temporaryList.Where(x =>
+                            settings.UnusedItemsWhiteList.All(y => y.TypeAndName != x.TypeAndName)).ToList();
+                    }
+
                     foreach (MetadataObject item in temporaryList)
                     {
                         DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id, settings.IgnoreHiddenGamesInRemoveUnused);
