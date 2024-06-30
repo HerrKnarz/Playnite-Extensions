@@ -47,73 +47,11 @@ namespace MetadataUtilities.ViewModels
             SourceObjectsViewSource.IsLiveSortingRequested = true;
         }
 
-        public RelayCommand AddExistingDefaultCategoriesCommand
-            => new RelayCommand(() =>
-            {
-                MetadataObjects items = new MetadataObjects(Settings);
+        public RelayCommand AddExistingDefaultCategoriesCommand =>
+            new RelayCommand(() => AddItems(FieldType.Category, Settings.DefaultCategories));
 
-                items.LoadMetadata(false, FieldType.Category);
-
-                Window window = SelectMetadataViewModel.GetWindow(_plugin, items, ResourceProvider.GetString("LOCCategoriesLabel"));
-
-                if (window == null)
-                {
-                    return;
-                }
-
-                if (window.ShowDialog() ?? false)
-                {
-                    foreach (MetadataObject item in items.Where(x => x.Selected))
-                    {
-                        if (Settings.DefaultCategories.Any(x => x.Name == item.Name))
-                        {
-                            continue;
-                        }
-
-                        Settings.DefaultCategories.Add(new MetadataObject(_settings)
-                        {
-                            Name = item.Name,
-                            Type = FieldType.Category
-                        });
-                    }
-                }
-
-                Settings.DefaultCategories = new ObservableCollection<MetadataObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
-            });
-
-        public RelayCommand AddExistingDefaultTagsCommand
-            => new RelayCommand(() =>
-            {
-                MetadataObjects items = new MetadataObjects(Settings);
-
-                items.LoadMetadata(false, FieldType.Tag);
-
-                Window window = SelectMetadataViewModel.GetWindow(_plugin, items, ResourceProvider.GetString("LOCTagsLabel"));
-
-                if (window == null)
-                {
-                    return;
-                }
-
-                if (window.ShowDialog() ?? false)
-                {
-                    foreach (MetadataObject item in items.Where(x => x.Selected))
-                    {
-                        if (Settings.DefaultTags.Any(x => x.Name == item.Name))
-                        {
-                            continue;
-                        }
-
-                        Settings.DefaultTags.Add(new MetadataObject(_settings)
-                        {
-                            Name = item.Name,
-                            Type = FieldType.Category
-                        });
-                    }
-                }
-
-                Settings.DefaultTags = new ObservableCollection<MetadataObject>(Settings.DefaultTags.OrderBy(x => x.Name));
-            });
+        public RelayCommand AddExistingDefaultTagsCommand =>
+            new RelayCommand(() => AddItems(FieldType.Tag, Settings.DefaultTags));
 
         public RelayCommand AddNewDefaultCategoryCommand
             => new RelayCommand(() =>
@@ -300,32 +238,20 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public RelayCommand<IList<object>> RemoveDefaultCategoryCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
-            {
-                Settings.DefaultCategories.Remove(item);
-            }
-        }, items => items?.Count != 0);
+        public RelayCommand<IList<object>> RemoveDefaultCategoryCommand =>
+            new RelayCommand<IList<object>>(items => RemoveFromList(items, Settings.DefaultCategories),
+                items => items?.Count != 0);
 
-        public RelayCommand<IList<object>> RemoveDefaultTagCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
-            {
-                Settings.DefaultTags.Remove(item);
-            }
-        }, items => items?.Count != 0);
+        public RelayCommand<IList<object>> RemoveDefaultTagCommand =>
+            new RelayCommand<IList<object>>(items => RemoveFromList(items, Settings.DefaultTags),
+                items => items?.Count != 0);
 
         public RelayCommand<object> RemoveMergeRuleCommand =>
             new RelayCommand<object>(rule => Settings.MergeRules.Remove((MergeRule)rule), rule => rule != null);
 
-        public RelayCommand<IList<object>> RemoveMergeSourceCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
-            {
-                SelectedMergeRule.SourceObjects.Remove(item);
-            }
-        }, items => items?.Count != 0);
+        public RelayCommand<IList<object>> RemoveMergeSourceCommand =>
+            new RelayCommand<IList<object>>(items => RemoveFromList(items, SelectedMergeRule.SourceObjects),
+                items => items?.Count != 0);
 
         public RelayCommand<IList<object>> RemovePrefixCommand => new RelayCommand<IList<object>>(items =>
         {
