@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -344,21 +343,13 @@ namespace MetadataUtilities.ViewModels
             }
         }, items => items?.Count != 0);
 
-        public RelayCommand<IList<object>> RemoveUnusedFromListCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
-            {
-                Settings.UnusedItemsWhiteList.Remove(item);
-            }
-        }, items => items?.Count != 0);
+        public RelayCommand<IList<object>> RemoveUnusedFromListCommand =>
+            new RelayCommand<IList<object>>(items => RemoveFromList(items, Settings.UnusedItemsWhiteList),
+                items => items?.Count != 0);
 
-        public RelayCommand<IList<object>> RemoveUnwantedFromListCommand => new RelayCommand<IList<object>>(items =>
-                {
-                    foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
-                    {
-                        Settings.UnwantedItems.Remove(item);
-                    }
-                }, items => items?.Count != 0);
+        public RelayCommand<IList<object>> RemoveUnwantedFromListCommand =>
+            new RelayCommand<IList<object>>(items => RemoveFromList(items, Settings.UnwantedItems),
+                items => items?.Count != 0);
 
         public MergeRule SelectedMergeRule
         {
@@ -459,18 +450,6 @@ namespace MetadataUtilities.ViewModels
             AddItemsToQuickAddList(items);
         }
 
-        public void AddUnusedItems(FieldType type)
-        {
-            List<MetadataObject> items = GetItemsFromAddDialog(type);
-
-            if (items.Count == 0)
-            {
-                return;
-            }
-
-            AddItemsToList(items, Settings.UnusedItemsWhiteList);
-        }
-
         public void BeginEdit()
         {
             MergeRules = Settings.MergeRules;
@@ -481,6 +460,14 @@ namespace MetadataUtilities.ViewModels
         public void CancelEdit() => Settings = EditingClone;
 
         public void EndEdit() => _plugin.SavePluginSettings(Settings);
+
+        public void RemoveFromList(IList<Object> items, ObservableCollection<MetadataObject> list)
+        {
+            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+            {
+                list.Remove(item);
+            }
+        }
 
         public bool VerifySettings(out List<string> errors)
         {
