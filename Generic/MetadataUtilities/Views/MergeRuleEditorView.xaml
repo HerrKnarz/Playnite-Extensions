@@ -42,7 +42,7 @@
             </Grid.RowDefinitions>
             <DockPanel LastChildFill="False" Margin="10">
                 <GroupBox DockPanel.Dock="Top" Header="{DynamicResource LOCMetadataUtilitiesEditorRuleTarget}"
-                          HorizontalAlignment="Stretch" Padding="10">
+                          HorizontalAlignment="Stretch" Padding="10" Margin="0, 0, 0, 10">
                     <StackPanel Margin="0,5,0,0" HorizontalAlignment="Stretch">
                         <ComboBox SelectedItem="{Binding RuleType}" ItemsSource="{Binding Source={StaticResource FieldTypeValues}}">
                             <ComboBox.ItemTemplate>
