@@ -183,44 +183,48 @@
             </ScrollViewer>
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabRemoveUnused}">
-            <DockPanel Margin="10">
+            <DockPanel Margin="10" Name="DpUnusedSettings">
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RemoveUnusedOnStartup}" Margin="0,0,0,0">
                     <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}" TextWrapping="Wrap" />
                 </CheckBox>
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.IgnoreHiddenGamesInRemoveUnused}" Margin="0,10,0,0">
                     <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}" TextWrapping="Wrap" />
                 </CheckBox>
-                <Grid Margin="0,10,0,0" DockPanel.Dock="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="200" />
-                    </Grid.ColumnDefinitions>
-                    <ListBox Name="LbUnusedWhiteList" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                             ItemsSource="{Binding Settings.UnusedItemsWhiteList}" VerticalAlignment="Stretch" SelectionMode="Extended">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding TypeAndName}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                        <Button Content="{DynamicResource LOCAgeRatingsLabel}" Margin="0,0,0,0"
+                <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsUnusedWhiteList}" Margin="0,10,0,0" DockPanel.Dock="Top"
+                          Padding="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+                        <ListBox DockPanel.Dock="Bottom" Name="LbUnusedWhiteList" HorizontalContentAlignment="Stretch"
+                                 VerticalContentAlignment="Stretch" ItemsSource="{Binding Settings.UnusedItemsWhiteList}"
+                                 VerticalAlignment="Stretch" SelectionMode="Extended">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TypeAndName}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <Button Content="{DynamicResource LOCAgeRatingsLabel}" Margin="0,0,0,0"
                                 Command="{Binding AddUnusedAgeRatingsCommand}" />
-                        <Button Content="{DynamicResource LOCCategoriesLabel}" Margin="0,10,0,0"
+                            <Button Content="{DynamicResource LOCCategoriesLabel}" Margin="0,10,0,0"
                                 Command="{Binding AddUnusedCategoriesCommand}" />
-                        <Button Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0"
+                            <Button Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0"
                                 Command="{Binding AddUnusedFeaturesCommand}" />
-                        <Button Content="{DynamicResource LOCGenresLabel}" Margin="0,10,0,0"
+                            <Button Content="{DynamicResource LOCGenresLabel}" Margin="0,10,0,0"
                                 Command="{Binding AddUnusedGenresCommand}" />
-                        <Button Content="{DynamicResource LOCSeriesLabel}" Margin="0,10,0,0"
+                            <Button Content="{DynamicResource LOCSeriesLabel}" Margin="0,10,0,0"
                                 Command="{Binding AddUnusedSeriesCommand}" />
-                        <Button Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0"
+                            <Button Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0"
                                 Command="{Binding AddUnusedTagsCommand}" />
-                        <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
+                            <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
                                 Command="{Binding RemoveUnusedFromListCommand}"
                                 CommandParameter="{Binding SelectedItems, ElementName=LbUnusedWhiteList}" />
-                    </StackPanel>
-                </Grid>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
             </DockPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabRemoveUnwanted}">
