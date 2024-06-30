@@ -11,10 +11,14 @@ using KNARZhelper;
 using Playnite.SDK.Models;
 
 namespace MetadataUtilities.ViewModels
+
+//TODO: Add combobox with filter presets
 {
     public class SearchGameViewModel : ObservableObject, IEditableObject
     {
         private readonly MetadataObject _metadataObject;
+        private FilterPreset _currentPreset;
+        private ObservableCollection<FilterPreset> _filterPresets;
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
         private CollectionViewSource _gamesViewSource;
         private MetadataUtilities _plugin;
@@ -24,6 +28,8 @@ namespace MetadataUtilities.ViewModels
         {
             Plugin = plugin;
             _metadataObject = metadataObject;
+
+            _filterPresets = API.Instance.Database.FilterPresets.OrderBy(x => x.Name).ToObservable();
 
             GamesViewSource = new CollectionViewSource
             {
@@ -78,6 +84,22 @@ namespace MetadataUtilities.ViewModels
                     win.DialogResult = true;
                     win.Close();
                 });
+
+        public FilterPreset CurrentPreset
+        {
+            get => _currentPreset;
+            set
+            {
+                SetValue(ref _currentPreset, value);
+                LoadGames();
+            }
+        }
+
+        public ObservableCollection<FilterPreset> FilterPresets
+        {
+            get => _filterPresets;
+            set => SetValue(ref _filterPresets, value);
+        }
 
         public Visibility GameGridCompletionStatusVisibility => _plugin.Settings.Settings.GameGridShowCompletionStatus
             ? Visibility.Visible
@@ -144,10 +166,20 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                FilterPresetSettings filterSettings = new FilterPresetSettings
+                FilterPresetSettings filterSettings;
+
+                if (_currentPreset != null)
                 {
-                    Name = _searchTerm
-                };
+                    filterSettings = _currentPreset.Settings;
+                    filterSettings.Name = _searchTerm;
+                }
+                else
+                {
+                    filterSettings = new FilterPresetSettings
+                    {
+                        Name = _searchTerm
+                    };
+                }
 
                 IEnumerable<Game> games = API.Instance.Database.GetFilteredGames(filterSettings, true);
 

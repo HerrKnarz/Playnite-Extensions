@@ -21,11 +21,23 @@
             <Button Content="{DynamicResource LOCCloseLabel}" Command="{Binding CloseCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" IsDefault="True" />
         </StackPanel>
-        <DockPanel VerticalAlignment="Center" DockPanel.Dock="Top">
-            <Button Content="&#xef00;" FontFamily="{DynamicResource FontIcoFont}" Click="ClearSearchBox" DockPanel.Dock="Right"
-                    Margin="5,0,0,0" Padding="5,5,8,5" />
-            <TextBox Name="SearchBox" DockPanel.Dock="Left"  Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
+        <Grid DockPanel.Dock="Top" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <DockPanel VerticalAlignment="Center">
+                <Button Content="&#xef00;" FontFamily="{DynamicResource FontIcoFont}" Click="ClearSearchBox" DockPanel.Dock="Right"
+                        Margin="5,0,0,0" Padding="5,5,8,5" />
+                <TextBox Name="SearchBox" DockPanel.Dock="Left"  Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+            <DockPanel Grid.Column="1" Margin="10, 0, 0, 0">
+                <Label Content="{DynamicResource LOCFilters}" DockPanel.Dock="Left" />
+                <ComboBox DockPanel.Dock="Right" Margin="10, 0, 0, 0" ItemsSource="{Binding FilterPresets}" DisplayMemberPath="Name" SelectedItem="{Binding CurrentPreset}" />
+            </DockPanel>
+        </Grid>
+
         <FrameworkElement x:Name="DummyElement" Visibility="Collapsed" />
         <DataGrid Name="GamesGrid" ItemsSource="{Binding GamesViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top"
                   CanUserAddRows="False" IsReadOnly="True" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
