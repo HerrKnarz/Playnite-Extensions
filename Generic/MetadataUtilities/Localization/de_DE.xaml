@@ -72,7 +72,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Versteckte Spiele ignorieren, wenn nicht verwendete Metadaten entfernt werden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Zusammenführungsregeln beim Metadaten-Update automatisch ausführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Zusammenführungsregeln</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsMetadataToRemove">Zu entfernende Metadaten</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Nicht verwendete Metadaten beim Start entfernen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Unerwünschte Elemente bei Metadatenaktualisierung entfernen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Standard-Tags/Kategorien automatisch umbenennen, wenn das zugehörige Originalelement umbenannt wird.</sys:String>
@@ -81,12 +80,13 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Ergebnisdialog anzeigen, nachdem ein Wert für mehr als ein Spiel gesetzt wurde</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Metadaten-Editor-Button im oberen Panel anzeigen (Neustart erforderlich)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Lege die Untermenüs unter den Menüeintrag Metadaten-Werkzeuge</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabAutoRemoval">Auto-Entfernen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Standardwerte</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Allgemein</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Zusammenführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Präfixe</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Schnelles Hinzufügen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Remove unused</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Remove unwanted</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Umschalten</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Werte zum Zusammenführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Schreibe Debug-Logmeldungen (nur im Falle eines vermuteten Fehler verwenden!)</sys:String>
