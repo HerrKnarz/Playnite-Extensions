@@ -1,4 +1,5 @@
-﻿using MetadataUtilities.Models;
+﻿using System;
+using MetadataUtilities.Models;
 using Playnite.SDK;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -78,8 +79,9 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
                 {
-                    // Plugin.Settings.Settings.EditorWindowHeight = Convert.ToInt32(win.Height);
-                    // Plugin.Settings.Settings.EditorWindowWidth = Convert.ToInt32(win.Width); Plugin.SavePluginSettings(Plugin.Settings.Settings);
+                    Plugin.Settings.Settings.GameSearchWindowHeight = Convert.ToInt32(win.Height);
+                    Plugin.Settings.Settings.GameSearchWindowWidth = Convert.ToInt32(win.Width);
+                    Plugin.SavePluginSettings(Plugin.Settings.Settings);
 
                     win.DialogResult = true;
                     win.Close();

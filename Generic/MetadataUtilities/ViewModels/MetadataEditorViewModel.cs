@@ -176,7 +176,8 @@ namespace MetadataUtilities.ViewModels
 
             SearchGameView searchGameView = new SearchGameView();
 
-            Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"), 700, 700);
+            Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
+                Plugin.Settings.Settings.GameSearchWindowWidth, Plugin.Settings.Settings.GameSearchWindowHeight);
             window.Content = searchGameView;
             window.DataContext = viewModel;
 

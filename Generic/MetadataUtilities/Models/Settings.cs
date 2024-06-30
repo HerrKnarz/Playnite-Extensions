@@ -21,6 +21,8 @@ namespace MetadataUtilities.Models
         private bool _gameGridShowCompletionStatus = true;
         private bool _gameGridShowPlatform = true;
         private bool _gameGridShowReleaseYear = true;
+        private int _gameSearchWindowHeight = 700;
+        private int _gameSearchWindowWidth = 700;
         private bool _ignoreHiddenGamesInGameCount;
         private bool _ignoreHiddenGamesInRemoveUnused;
         private DateTime _lastAutoLibUpdate = DateTime.Now;
@@ -128,6 +130,18 @@ namespace MetadataUtilities.Models
         {
             get => _gameGridShowReleaseYear;
             set => SetValue(ref _gameGridShowReleaseYear, value);
+        }
+
+        public int GameSearchWindowHeight
+        {
+            get => _gameSearchWindowHeight;
+            set => SetValue(ref _gameSearchWindowHeight, value);
+        }
+
+        public int GameSearchWindowWidth
+        {
+            get => _gameSearchWindowWidth;
+            set => SetValue(ref _gameSearchWindowWidth, value);
         }
 
         public bool IgnoreHiddenGamesInGameCount
