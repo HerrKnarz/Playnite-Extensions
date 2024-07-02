@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -82,10 +83,14 @@ namespace MetadataUtilities.ViewModels
             }
         }, rule => rule != null);
 
+        public RelayCommand AddNewUnusedCommand => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddNewItem(FieldType.Tag));
+
+        public RelayCommand AddNewUnwantedCommand => new RelayCommand(() => Settings.UnwantedItems.AddNewItem(FieldType.Tag));
+
         public RelayCommand AddPrefixCommand
             => new RelayCommand(() =>
             {
-                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
+                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCAddNewItem"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
 
                 if (!res.Result)
                 {
