@@ -14,12 +14,10 @@ namespace MetadataUtilities.ViewModels
     {
         private ICollectionView _filteredMetadata;
         private bool _filterSelected;
-        private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
 
-        public SelectMetadataViewModel(MetadataUtilities plugin, MetadataObjects items)
+        public SelectMetadataViewModel(MetadataObjects items)
         {
-            Plugin = plugin;
             FilteredMetadata = CollectionViewSource.GetDefaultView(items);
             FilteredMetadata.Filter = Filter;
         }
@@ -46,12 +44,6 @@ namespace MetadataUtilities.ViewModels
             win.Close();
         }, win => win != null);
 
-        public MetadataUtilities Plugin
-        {
-            get => _plugin;
-            set => SetValue(ref _plugin, value);
-        }
-
         public string SearchTerm
         {
             get => _searchTerm;
@@ -62,11 +54,11 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public static Window GetWindow(MetadataUtilities plugin, MetadataObjects items, string windowTitle)
+        public static Window GetWindow(MetadataObjects items, string windowTitle)
         {
             try
             {
-                SelectMetadataViewModel viewModel = new SelectMetadataViewModel(plugin, items);
+                SelectMetadataViewModel viewModel = new SelectMetadataViewModel(items);
 
                 SelectMetadataView selectMetadataView = new SelectMetadataView();
 

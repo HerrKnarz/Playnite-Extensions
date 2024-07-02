@@ -12,10 +12,7 @@ namespace MetadataUtilities.Models
     {
         private MetadataObjects _sourceObjects;
 
-        public MergeRule(Settings settings) : base(settings)
-        {
-            _sourceObjects = new MetadataObjects(settings);
-        }
+        public MergeRule(Settings settings) : base(settings) => _sourceObjects = new MetadataObjects(settings);
 
         public MetadataObjects SourceObjects
         {

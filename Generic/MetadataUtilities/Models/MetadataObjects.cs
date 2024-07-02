@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace MetadataUtilities.Models
 {
@@ -20,6 +21,37 @@ namespace MetadataUtilities.Models
         { }
 
         public MetadataObjects(Settings settings) => _settings = settings;
+
+        public void AddItems(FieldType type)
+        {
+            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(type, _settings);
+
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            AddItems(items);
+        }
+
+        public void AddItems(List<MetadataObject> items)
+        {
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            foreach (MetadataObject item in items.Where(item => this.All(x => x.TypeAndName != item.TypeAndName)))
+            {
+                Add(new MetadataObject(_settings)
+                {
+                    Name = item.Name,
+                    Type = item.Type
+                });
+            }
+
+            this.Sort(x => x.TypeAndName);
+        }
 
         public MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
         {

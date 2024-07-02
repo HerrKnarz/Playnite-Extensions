@@ -5,11 +5,57 @@ using System.Windows;
 using System;
 using System.Linq;
 using KNARZhelper;
+using MetadataUtilities.ViewModels;
 
 namespace MetadataUtilities
 {
     public static class MetadataFunctions
     {
+        public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, Settings settings)
+        {
+            MetadataObjects items = new MetadataObjects(settings);
+
+            items.LoadMetadata(false, type);
+
+            string label;
+
+            switch (type)
+            {
+                case FieldType.AgeRating:
+                    label = ResourceProvider.GetString("LOCAgeRatingsLabel");
+                    break;
+
+                case FieldType.Category:
+                    label = ResourceProvider.GetString("LOCCategoriesLabel");
+                    break;
+
+                case FieldType.Feature:
+                    label = ResourceProvider.GetString("LOCFeaturesLabel");
+                    break;
+
+                case FieldType.Genre:
+                    label = ResourceProvider.GetString("LOCGenresLabel");
+                    break;
+
+                case FieldType.Series:
+                    label = ResourceProvider.GetString("LOCSeriesLabel");
+                    break;
+
+                case FieldType.Tag:
+                    label = ResourceProvider.GetString("LOCTagsLabel");
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            Window window = SelectMetadataViewModel.GetWindow(items, label);
+
+            return (window?.ShowDialog() ?? false)
+                ? items.Where(x => x.Selected).ToList()
+                : new List<MetadataObject>();
+        }
+
         public static List<MetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
         {
             List<MetadataObject> temporaryList = new List<MetadataObject>();

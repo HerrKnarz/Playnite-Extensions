@@ -48,10 +48,10 @@ namespace MetadataUtilities.ViewModels
         }
 
         public RelayCommand AddExistingDefaultCategoriesCommand =>
-            new RelayCommand(() => AddItems(FieldType.Category, Settings.DefaultCategories));
+            new RelayCommand(() => Settings.DefaultCategories.AddItems(FieldType.Category));
 
         public RelayCommand AddExistingDefaultTagsCommand =>
-            new RelayCommand(() => AddItems(FieldType.Tag, Settings.DefaultTags));
+            new RelayCommand(() => Settings.DefaultTags.AddItems(FieldType.Tag));
 
         public RelayCommand AddNewDefaultCategoryCommand
             => new RelayCommand(() => Settings.DefaultCategories.AddNewItem(FieldType.Category, "", false));
@@ -115,40 +115,40 @@ namespace MetadataUtilities.ViewModels
             => new RelayCommand(() => AddQuickAddItems(FieldType.Tag));
 
         public RelayCommand AddUnusedAgeRatingsCommand
-            => new RelayCommand(() => AddItems(FieldType.AgeRating, Settings.UnusedItemsWhiteList));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.AgeRating));
 
         public RelayCommand AddUnusedCategoriesCommand
-            => new RelayCommand(() => AddItems(FieldType.Category, Settings.UnusedItemsWhiteList));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Category));
 
         public RelayCommand AddUnusedFeaturesCommand
-            => new RelayCommand(() => AddItems(FieldType.Feature, Settings.UnusedItemsWhiteList));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Feature));
 
         public RelayCommand AddUnusedGenresCommand
-            => new RelayCommand(() => AddItems(FieldType.Genre, Settings.UnusedItemsWhiteList));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Genre));
 
         public RelayCommand AddUnusedSeriesCommand
-            => new RelayCommand(() => AddItems(FieldType.Series, Settings.UnusedItemsWhiteList));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Series));
 
         public RelayCommand AddUnusedTagsCommand
-            => new RelayCommand(() => AddItems(FieldType.Tag, Settings.UnusedItemsWhiteList));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Tag));
 
         public RelayCommand AddUnwantedAgeRatingsCommand
-            => new RelayCommand(() => AddItems(FieldType.AgeRating, Settings.UnwantedItems));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.AgeRating));
 
         public RelayCommand AddUnwantedCategoriesCommand
-            => new RelayCommand(() => AddItems(FieldType.Category, Settings.UnwantedItems));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Category));
 
         public RelayCommand AddUnwantedFeaturesCommand
-            => new RelayCommand(() => AddItems(FieldType.Feature, Settings.UnwantedItems));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Feature));
 
         public RelayCommand AddUnwantedGenresCommand
-            => new RelayCommand(() => AddItems(FieldType.Genre, Settings.UnwantedItems));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Genre));
 
         public RelayCommand AddUnwantedSeriesCommand
-            => new RelayCommand(() => AddItems(FieldType.Series, Settings.UnwantedItems));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Series));
 
         public RelayCommand AddUnwantedTagsCommand
-            => new RelayCommand(() => AddItems(FieldType.Tag, Settings.UnwantedItems));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Tag));
 
         public RelayCommand<object> EditMergeRuleCommand
             => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
@@ -231,7 +231,7 @@ namespace MetadataUtilities.ViewModels
                 SetValue(ref _selectedMergeRule, value);
 
                 SourceObjectsViewSource.Source = _selectedMergeRule == null
-                    ? new ObservableCollection<MetadataObject>()
+                    ? new MetadataObjects(Settings)
                     : _selectedMergeRule.SourceObjects;
 
                 SourceObjectsViewSource.View.Refresh();
@@ -260,37 +260,6 @@ namespace MetadataUtilities.ViewModels
 
         private Settings EditingClone { get; set; }
 
-        public void AddItems(FieldType type, ObservableCollection<MetadataObject> list)
-        {
-            List<MetadataObject> items = GetItemsFromAddDialog(type);
-
-            if (items.Count == 0)
-            {
-                return;
-            }
-
-            AddItemsToList(items, list);
-        }
-
-        public void AddItemsToList(List<MetadataObject> items, ObservableCollection<MetadataObject> list)
-        {
-            if (items.Count == 0)
-            {
-                return;
-            }
-
-            foreach (MetadataObject item in items.Where(item => list.All(x => x.TypeAndName != item.TypeAndName)))
-            {
-                list.Add(new MetadataObject(_settings)
-                {
-                    Name = item.Name,
-                    Type = item.Type
-                });
-            }
-
-            list = new ObservableCollection<MetadataObject>(list.OrderBy(x => x.TypeAndName));
-        }
-
         public void AddItemsToQuickAddList(List<MetadataObject> items)
         {
             if (items.Count == 0)
@@ -312,7 +281,7 @@ namespace MetadataUtilities.ViewModels
 
         public void AddQuickAddItems(FieldType type)
         {
-            List<MetadataObject> items = GetItemsFromAddDialog(type);
+            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
 
             if (items.Count == 0)
             {
@@ -535,51 +504,6 @@ namespace MetadataUtilities.ViewModels
             {
                 Cursor.Current = Cursors.Default;
             }
-        }
-
-        private List<MetadataObject> GetItemsFromAddDialog(FieldType type)
-        {
-            MetadataObjects items = new MetadataObjects(Settings);
-
-            items.LoadMetadata(false, type);
-
-            string label;
-
-            switch (type)
-            {
-                case FieldType.AgeRating:
-                    label = ResourceProvider.GetString("LOCAgeRatingsLabel");
-                    break;
-
-                case FieldType.Category:
-                    label = ResourceProvider.GetString("LOCCategoriesLabel");
-                    break;
-
-                case FieldType.Feature:
-                    label = ResourceProvider.GetString("LOCFeaturesLabel");
-                    break;
-
-                case FieldType.Genre:
-                    label = ResourceProvider.GetString("LOCGenresLabel");
-                    break;
-
-                case FieldType.Series:
-                    label = ResourceProvider.GetString("LOCSeriesLabel");
-                    break;
-
-                case FieldType.Tag:
-                    label = ResourceProvider.GetString("LOCTagsLabel");
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-
-            Window window = SelectMetadataViewModel.GetWindow(_plugin, items, label);
-
-            return (window?.ShowDialog() ?? false)
-                ? items.Where(x => x.Selected).ToList()
-                : new List<MetadataObject>();
         }
     }
 }

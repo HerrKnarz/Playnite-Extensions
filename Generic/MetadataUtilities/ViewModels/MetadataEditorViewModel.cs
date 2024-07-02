@@ -675,7 +675,7 @@ namespace MetadataUtilities.ViewModels
 
                 if (response == MessageBoxResult.Yes)
                 {
-                    Plugin.Settings.AddItemsToList(unwantedItems, _plugin.Settings.Settings.UnwantedItems);
+                    Plugin.Settings.Settings.UnwantedItems.AddItems(unwantedItems);
                 }
 
                 UpdateGroupDisplay(CompleteMetadata.ToList());
