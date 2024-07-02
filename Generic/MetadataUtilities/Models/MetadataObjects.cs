@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.ViewModels;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Concurrent;
@@ -15,16 +16,21 @@ namespace MetadataUtilities.Models
 {
     public class MetadataObjects : ObservableCollection<MetadataObject>
     {
-        private readonly Settings _settings;
-
+        /// <summary>
+        /// Only used for deserializing the settings. Needs to use the "ResetReferences" method of
+        /// the settings afterwards!
+        /// </summary>
         public MetadataObjects()
         { }
 
-        public MetadataObjects(Settings settings) => _settings = settings;
+        public MetadataObjects(Settings settings) => Settings = settings;
+
+        [DontSerialize]
+        public Settings Settings { get; set; }
 
         public void AddItems(FieldType type)
         {
-            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(type, _settings);
+            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
 
             if (items.Count == 0)
             {
@@ -43,7 +49,7 @@ namespace MetadataUtilities.Models
 
             foreach (MetadataObject item in items.Where(item => this.All(x => x.TypeAndName != item.TypeAndName)))
             {
-                Add(new MetadataObject(_settings)
+                Add(new MetadataObject(Settings)
                 {
                     Name = item.Name,
                     Type = item.Type
@@ -55,13 +61,13 @@ namespace MetadataUtilities.Models
 
         public MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
         {
-            MetadataObject newItem = new MetadataObject(_settings)
+            MetadataObject newItem = new MetadataObject(Settings)
             {
                 Type = type,
                 Prefix = prefix
             };
 
-            Window window = AddNewObjectViewModel.GetWindow(_settings, newItem, enableTypeSelection);
+            Window window = AddNewObjectViewModel.GetWindow(Settings, newItem, enableTypeSelection);
 
             if (window == null)
             {
@@ -124,7 +130,7 @@ namespace MetadataUtilities.Models
                     }
 
                     temporaryList.AddRange(ageRatings.Select(ageRating
-                        => new MetadataObject(_settings)
+                        => new MetadataObject(Settings)
                         {
                             Id = ageRating.Id,
                             Name = ageRating.Name,
@@ -132,7 +138,7 @@ namespace MetadataUtilities.Models
                         }));
 
                     temporaryList.AddRange(categories.Select(category
-                        => new MetadataObject(_settings)
+                        => new MetadataObject(Settings)
                         {
                             Id = category.Id,
                             Name = category.Name,
@@ -140,7 +146,7 @@ namespace MetadataUtilities.Models
                         }));
 
                     temporaryList.AddRange(features.Select(feature
-                        => new MetadataObject(_settings)
+                        => new MetadataObject(Settings)
                         {
                             Id = feature.Id,
                             Name = feature.Name,
@@ -148,7 +154,7 @@ namespace MetadataUtilities.Models
                         }));
 
                     temporaryList.AddRange(genres.Select(genre
-                        => new MetadataObject(_settings)
+                        => new MetadataObject(Settings)
                         {
                             Id = genre.Id,
                             Name = genre.Name,
@@ -156,7 +162,7 @@ namespace MetadataUtilities.Models
                         }));
 
                     temporaryList.AddRange(seriesList.Select(series
-                        => new MetadataObject(_settings)
+                        => new MetadataObject(Settings)
                         {
                             Id = series.Id,
                             Name = series.Name,
@@ -164,14 +170,14 @@ namespace MetadataUtilities.Models
                         }));
 
                     temporaryList.AddRange(tags.Select(tag
-                        => new MetadataObject(_settings)
+                        => new MetadataObject(Settings)
                         {
                             Id = tag.Id,
                             Name = tag.Name,
                             Type = FieldType.Tag
                         }));
 
-                    UpdateGameCounts(temporaryList, _settings.IgnoreHiddenGamesInGameCount);
+                    UpdateGameCounts(temporaryList, Settings.IgnoreHiddenGamesInGameCount);
                 }
                 catch (Exception ex)
                 {
@@ -205,7 +211,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.AgeRating)
                     {
                         temporaryList.AddRange(API.Instance.Database.AgeRatings.Select(ageRating
-                            => new MetadataObject(_settings)
+                            => new MetadataObject(Settings)
                             {
                                 Id = ageRating.Id,
                                 Name = ageRating.Name,
@@ -216,7 +222,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Category)
                     {
                         temporaryList.AddRange(API.Instance.Database.Categories.Select(category
-                            => new MetadataObject(_settings)
+                            => new MetadataObject(Settings)
                             {
                                 Id = category.Id,
                                 Name = category.Name,
@@ -227,7 +233,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Feature)
                     {
                         temporaryList.AddRange(API.Instance.Database.Features.Select(feature
-                            => new MetadataObject(_settings)
+                            => new MetadataObject(Settings)
                             {
                                 Id = feature.Id,
                                 Name = feature.Name,
@@ -238,7 +244,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Genre)
                     {
                         temporaryList.AddRange(API.Instance.Database.Genres.Select(genre
-                            => new MetadataObject(_settings)
+                            => new MetadataObject(Settings)
                             {
                                 Id = genre.Id,
                                 Name = genre.Name,
@@ -249,7 +255,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Series)
                     {
                         temporaryList.AddRange(API.Instance.Database.Series.Select(series
-                            => new MetadataObject(_settings)
+                            => new MetadataObject(Settings)
                             {
                                 Id = series.Id,
                                 Name = series.Name,
@@ -260,7 +266,7 @@ namespace MetadataUtilities.Models
                     if (type == null || type == FieldType.Tag)
                     {
                         temporaryList.AddRange(API.Instance.Database.Tags.Select(tag
-                            => new MetadataObject(_settings)
+                            => new MetadataObject(Settings)
                             {
                                 Id = tag.Id,
                                 Name = tag.Name,
@@ -270,7 +276,7 @@ namespace MetadataUtilities.Models
 
                     if (showGameNumber)
                     {
-                        UpdateGameCounts(temporaryList, _settings.IgnoreHiddenGamesInGameCount);
+                        UpdateGameCounts(temporaryList, Settings.IgnoreHiddenGamesInGameCount);
                     }
                 }
                 catch (Exception ex)

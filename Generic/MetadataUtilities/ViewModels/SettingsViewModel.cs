@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -34,6 +33,8 @@ namespace MetadataUtilities.ViewModels
             Settings savedSettings = plugin.LoadPluginSettings<Settings>();
 
             Settings = savedSettings ?? new Settings();
+
+            Settings.ResetReferences();
 
             MergeRuleViewSource = new CollectionViewSource();
 

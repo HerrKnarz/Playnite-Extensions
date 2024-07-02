@@ -266,5 +266,22 @@ namespace MetadataUtilities.Models
             get => _writeDebugLog;
             set => SetValue(ref _writeDebugLog, value);
         }
+
+        /// <summary>
+        /// Resets the settings in the MetadataObjects classes, if these were created using
+        /// deserializing from JSON.
+        /// </summary>
+        public void ResetReferences()
+        {
+            UnusedItemsWhiteList.Settings = this;
+            UnwantedItems.Settings = this;
+            DefaultCategories.Settings = this;
+            DefaultTags.Settings = this;
+
+            foreach (MergeRule rule in MergeRules)
+            {
+                rule.SourceObjects.Settings = this;
+            }
+        }
     }
 }
