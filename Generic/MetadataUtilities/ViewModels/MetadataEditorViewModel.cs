@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
@@ -151,7 +152,7 @@ namespace MetadataUtilities.ViewModels
 
                 CompleteMetadata.Add(newItem);
 
-                MetadataObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+                UpdateGroupDisplay(CompleteMetadata.ToList());
 
                 CalculateItemCount();
 
@@ -247,7 +248,7 @@ namespace MetadataUtilities.ViewModels
 
                 CompleteMetadata.AddMissing(viewModel.NewObjects);
 
-                MetadataObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+                UpdateGroupDisplay(CompleteMetadata.ToList());
 
                 CalculateItemCount();
             }
@@ -482,7 +483,7 @@ namespace MetadataUtilities.ViewModels
                     Cursor.Current = Cursors.WaitCursor;
                     try
                     {
-                        MetadataObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+                        UpdateGroupDisplay(CompleteMetadata.ToList());
                         MetadataViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("CleanedUpName"));
                         ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                         MetadataViewSource.View.Filter = Filter;
@@ -544,7 +545,7 @@ namespace MetadataUtilities.ViewModels
                     }
                 }
 
-                MetadataObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+                UpdateGroupDisplay(CompleteMetadata.ToList());
 
                 CalculateItemCount();
 
@@ -690,7 +691,7 @@ namespace MetadataUtilities.ViewModels
                     Plugin.Settings.AddItemsToList(unwantedItems, _plugin.Settings.Settings.UnwantedItems);
                 }
 
-                MetadataObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+                UpdateGroupDisplay(CompleteMetadata.ToList());
 
                 CalculateItemCount();
             }
@@ -708,7 +709,7 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                List<MetadataObject> removedItems = MetadataObjects.RemoveUnusedMetadata(_plugin.Settings.Settings);
+                List<MetadataObject> removedItems = MetadataFunctions.RemoveUnusedMetadata(_plugin.Settings.Settings);
 
                 if (removedItems.Count == 0)
                 {
@@ -725,7 +726,7 @@ namespace MetadataUtilities.ViewModels
                     CompleteMetadata.Remove(itemToRemove);
                 }
 
-                MetadataObjects.UpdateGroupDisplay(CompleteMetadata.ToList());
+                UpdateGroupDisplay(CompleteMetadata.ToList());
             }
             finally
             {
@@ -781,6 +782,18 @@ namespace MetadataUtilities.ViewModels
 
         public void EndEdit()
         { }
+
+        private static void UpdateGroupDisplay(List<MetadataObject> itemList)
+        {
+            Log.Debug("=== UpdateGroupDisplay: Start ===");
+            DateTime ts = DateTime.Now;
+
+            ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+
+            Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
+
+            Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+        }
 
         private void CurrentChanged(object sender, EventArgs e) => LoadRelatedGames();
 

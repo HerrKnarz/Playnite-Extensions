@@ -305,7 +305,7 @@ namespace MetadataUtilities
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                MetadataObjects.RemoveUnusedMetadata(Settings.Settings, true);
+                MetadataFunctions.RemoveUnusedMetadata(Settings.Settings, true);
             }
             finally
             {
@@ -332,7 +332,7 @@ namespace MetadataUtilities
 
             try
             {
-                MetadataObjects.RemoveUnusedMetadata(Settings.Settings);
+                MetadataFunctions.RemoveUnusedMetadata(Settings.Settings);
             }
             finally
             {

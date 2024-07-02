@@ -70,6 +70,7 @@
     <Compile Include="Actions\RemoveUnwantedAction.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="MetadataFunctions.cs" />
     <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\MergeRule.cs" />
     <Compile Include="Models\MergeRules.cs" />
