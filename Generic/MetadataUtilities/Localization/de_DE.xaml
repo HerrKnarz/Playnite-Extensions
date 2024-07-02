@@ -60,7 +60,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Entferne unerwünschte Metadaten-Elemente...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Existierende Elemente hinzufügen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Füge Elemente, die du im Metadaten-Editor entfernst, ohne Nachfrage immer zur unerwünschten Liste hinzu.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Neues Element hinzufügen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Manuelle Zusammenführungen immer als Zusammenführungsregeln speichern.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Spalten im Spiele-Grid des Metadaten-Editors</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Eigener Menüpfad</sys:String>
