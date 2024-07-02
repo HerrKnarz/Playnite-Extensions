@@ -22,7 +22,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Редактор Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Змінити тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Тільки вибране</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Metadata Editor for selected games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Редактор Метаданих для вибраних ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Кількість ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Групувати елементи зі збігами</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorHideUnused">Сховати невикористані елементи</sys:String>
@@ -32,6 +32,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Ціль Правила</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Встановити як ціль</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Статистика</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_AgeRating">Віковий рейтинг</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Category">Категорія</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Feature">Особливість</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_FieldType_Genre">Жанр</sys:String>
@@ -59,7 +60,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Прибирання небажаних елементів метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Додати наявні елементи</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Завжди додавати елементи які ви прибираєте в Редакторі Метаданих до списку небажаного не питаючи.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Додати елемент</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Завжди зберігати ручні об'єднання як правила об'єднання.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Стовпці в ігровій сітці Редактора Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Користувацький шлях меню</sys:String>
@@ -71,7 +71,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ігнорувати приховані ігри при прибиранні невикористаних метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Автоматично виконувати правила об'єднання при оновленні метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Об’єднати Ролі</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsMetadataToRemove">Метадані для прибирання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Прибирати невикористані метадані під час запуску</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Прибирати небажані елементи при оновленні метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Автоматично перейменовувати теги/категорії за замовчуванням, коли перейменований відповідний елемент.</sys:String>
@@ -80,13 +79,15 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Після встановлення значення для кількох ігор одночасно показувати діалогове вікно з результатами</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Показувати кнопку Редактора Метаданих у верхній панелі (потрібен перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Помістити підменю під елементом меню Metadata Utilities</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabAutoRemoval">Авто вилучення</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">За замовчуванням</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Загальне</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Префікси</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Швидке додавання</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Прибрати невикористані</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Прибрати небажані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Перемкнути</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Білий список (Ці елементи не будуть прибрані навіть якщо не використовуються)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Значення для об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Записувати повідомлення журналу налагодження (використовуйте тільки якщо підозрюєте помилки!)</sys:String>
 </ResourceDictionary>
