@@ -60,7 +60,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Прибирання небажаних елементів метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Додати наявні елементи</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Завжди додавати елементи які ви прибираєте в Редакторі Метаданих до списку небажаного не питаючи.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Додати елемент</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Завжди зберігати ручні об'єднання як правила об'єднання.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Стовпці в ігровій сітці Редактора Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Користувацький шлях меню</sys:String>
