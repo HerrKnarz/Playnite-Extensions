@@ -284,6 +284,14 @@ namespace MetadataUtilities.Models
             Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
+        public void RemoveItems(IEnumerable<MetadataObject> items)
+        {
+            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+            {
+                Remove(item);
+            }
+        }
+
         private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames)
         {
             Log.Debug("=== UpdateGameCounts: Start ===");

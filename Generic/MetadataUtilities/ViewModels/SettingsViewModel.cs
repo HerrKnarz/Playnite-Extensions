@@ -302,13 +302,7 @@ namespace MetadataUtilities.ViewModels
 
         public void EndEdit() => _plugin.SavePluginSettings(Settings);
 
-        public void RemoveFromList(IList<object> items, ObservableCollection<MetadataObject> list)
-        {
-            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
-            {
-                list.Remove(item);
-            }
-        }
+        public void RemoveFromList(IList<object> items, MetadataObjects list) => list.RemoveItems(items.ToList().Cast<MetadataObject>());
 
         public bool VerifySettings(out List<string> errors)
         {
