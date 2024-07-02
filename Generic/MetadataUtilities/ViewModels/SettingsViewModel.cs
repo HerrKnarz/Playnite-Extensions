@@ -332,7 +332,7 @@ namespace MetadataUtilities.ViewModels
                 Prefix = prefix
             };
 
-            Window window = AddNewObjectViewModel.GetWindow(_plugin, newItem, enableTypeSelection);
+            Window window = AddNewObjectViewModel.GetWindow(_plugin.Settings.Settings, newItem, enableTypeSelection);
 
             if (window == null)
             {

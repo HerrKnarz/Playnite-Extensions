@@ -12,17 +12,17 @@ namespace MetadataUtilities.ViewModels
 {
     public class AddNewObjectViewModel : ObservableObject
     {
+        private readonly Settings _settings;
         private bool _enableTypeSelection = true;
         private MetadataObject _newObject;
-        private MetadataUtilities _plugin;
 
-        public AddNewObjectViewModel(MetadataUtilities plugin, MetadataObject newObject, bool enableTypeSelection = true)
+        public AddNewObjectViewModel(Settings settings, MetadataObject newObject, bool enableTypeSelection = true)
         {
-            Plugin = plugin;
+            _settings = settings;
             NewObject = newObject;
             EnableTypeSelection = enableTypeSelection;
             Prefixes.Add(string.Empty);
-            Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
+            Prefixes.AddMissing(settings.Prefixes);
         }
 
         public bool EnableTypeSelection
@@ -43,21 +43,15 @@ namespace MetadataUtilities.ViewModels
             win.Close();
         }, win => win != null);
 
-        public MetadataUtilities Plugin
-        {
-            get => _plugin;
-            set => SetValue(ref _plugin, value);
-        }
-
         public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
 
-        public Visibility PrefixVisibility => _plugin.Settings.Settings.Prefixes?.Any() ?? false ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility PrefixVisibility => _settings.Prefixes?.Any() ?? false ? Visibility.Visible : Visibility.Collapsed;
 
-        public static Window GetWindow(MetadataUtilities plugin, MetadataObject newObject, bool enableTypeSelection = true)
+        public static Window GetWindow(Settings settings, MetadataObject newObject, bool enableTypeSelection = true)
         {
             try
             {
-                AddNewObjectViewModel viewModel = new AddNewObjectViewModel(plugin, newObject, enableTypeSelection);
+                AddNewObjectViewModel viewModel = new AddNewObjectViewModel(settings, newObject, enableTypeSelection);
 
                 AddNewObjectView newObjectViewView = new AddNewObjectView();
 

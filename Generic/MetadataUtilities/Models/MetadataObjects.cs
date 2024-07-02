@@ -1,6 +1,8 @@
 ﻿using KNARZhelper;
+using MetadataUtilities.ViewModels;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -16,6 +18,41 @@ namespace MetadataUtilities.Models
         private readonly Settings _settings;
 
         public MetadataObjects(Settings settings) => _settings = settings;
+
+        public MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
+        {
+            MetadataObject newItem = new MetadataObject(_settings)
+            {
+                Type = type,
+                Prefix = prefix
+            };
+
+            Window window = AddNewObjectViewModel.GetWindow(_settings, newItem, enableTypeSelection);
+
+            if (window == null)
+            {
+                return null;
+            }
+
+            if (!(window.ShowDialog() ?? false))
+            {
+                return null;
+            }
+
+            if (this.Any(x => x.TypeAndName == newItem.TypeAndName))
+            {
+                return null;
+            }
+
+            if (addToDb)
+            {
+                newItem.Id = DatabaseObjectHelper.AddDbObject(newItem.Type, newItem.Name);
+            }
+
+            Add(newItem);
+
+            return newItem;
+        }
 
         public void LoadGameMetadata(List<Game> games)
         {
@@ -211,7 +248,7 @@ namespace MetadataUtilities.Models
             Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
-        private static void UpdateGameCounts(List<MetadataObject> itemList, bool ignoreHiddenGames)
+        private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames)
         {
             Log.Debug("=== UpdateGameCounts: Start ===");
             DateTime ts = DateTime.Now;

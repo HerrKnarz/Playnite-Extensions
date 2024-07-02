@@ -87,29 +87,20 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                MetadataObject newItem = new MetadataObject(_plugin.Settings.Settings);
+                FieldType type = FieldType.Tag;
+                string prefix = string.Empty;
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
                     MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
-                    newItem.Type = templateItem.Type;
-                    newItem.Prefix = templateItem.Prefix;
+                    type = templateItem.Type;
+                    prefix = templateItem.Prefix;
                 }
 
-                Window window = AddNewObjectViewModel.GetWindow(Plugin, newItem);
+                MetadataObject newItem = CompleteMetadata.AddNewItem(type, prefix);
 
-                if (window == null)
-                {
-                    return;
-                }
-
-                if (!(window.ShowDialog() ?? false))
-                {
-                    return;
-                }
-
-                if (CompleteMetadata.Any(x => x.Type == newItem.Type && x.Name == newItem.Name))
+                if (newItem == null)
                 {
                     return;
                 }
@@ -117,8 +108,6 @@ namespace MetadataUtilities.ViewModels
                 Cursor.Current = Cursors.WaitCursor;
 
                 newItem.Selected = true;
-                newItem.Name = newItem.Name;
-                CompleteMetadata.Add(newItem);
 
                 MetadataViewSource.View.Filter = Filter;
                 MetadataViewSource.View.MoveCurrentTo(newItem);
