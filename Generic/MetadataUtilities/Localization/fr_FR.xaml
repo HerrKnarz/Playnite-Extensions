@@ -60,7 +60,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Suppression des éléments de métadonnées indésirables...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Ajouter des éléments existants</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Toujours ajouter des éléments que vous supprimez dans l'éditeur de métadonnées à la liste indésirable sans demander.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddValue">Ajouter un nouvel élément</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Toujours enregistrer les fusions manuelles comme règles de fusion.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Colonnes dans la grille l'éditeur de métadonnées des jeux</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Chemin de menu personnalisé</sys:String>
