@@ -12,15 +12,23 @@ namespace MetadataUtilities.ViewModels
 {
     public class AddNewObjectViewModel : ObservableObject
     {
+        private bool _enableTypeSelection = true;
         private MetadataObject _newObject;
         private MetadataUtilities _plugin;
 
-        public AddNewObjectViewModel(MetadataUtilities plugin, MetadataObject newObject)
+        public AddNewObjectViewModel(MetadataUtilities plugin, MetadataObject newObject, bool enableTypeSelection = true)
         {
             Plugin = plugin;
             NewObject = newObject;
+            EnableTypeSelection = enableTypeSelection;
             Prefixes.Add(string.Empty);
             Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
+        }
+
+        public bool EnableTypeSelection
+        {
+            get => _enableTypeSelection;
+            set => SetValue(ref _enableTypeSelection, value);
         }
 
         public MetadataObject NewObject
@@ -45,11 +53,11 @@ namespace MetadataUtilities.ViewModels
 
         public Visibility PrefixVisibility => _plugin.Settings.Settings.Prefixes?.Any() ?? false ? Visibility.Visible : Visibility.Collapsed;
 
-        public static Window GetWindow(MetadataUtilities plugin, MetadataObject newObject)
+        public static Window GetWindow(MetadataUtilities plugin, MetadataObject newObject, bool enableTypeSelection = true)
         {
             try
             {
-                AddNewObjectViewModel viewModel = new AddNewObjectViewModel(plugin, newObject);
+                AddNewObjectViewModel viewModel = new AddNewObjectViewModel(plugin, newObject, enableTypeSelection);
 
                 AddNewObjectView newObjectViewView = new AddNewObjectView();
 

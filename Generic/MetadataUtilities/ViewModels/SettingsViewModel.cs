@@ -56,84 +56,44 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand AddNewDefaultCategoryCommand
             => new RelayCommand(() =>
             {
-                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
-
-                if (!res.Result)
+                if (AddNewItem(Settings.DefaultCategories, FieldType.Category, "", false) != null)
                 {
-                    return;
+                    Settings.DefaultCategories =
+                        new ObservableCollection<MetadataObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
                 }
-
-                if (Settings.DefaultCategories.Any(x => x.Name == res.SelectedString))
-                {
-                    return;
-                }
-
-                Settings.DefaultCategories.Add(new MetadataObject(_settings)
-                {
-                    Name = res.SelectedString,
-                    Type = FieldType.Category
-                });
-
-                Settings.DefaultCategories = new ObservableCollection<MetadataObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
             });
 
         public RelayCommand AddNewDefaultTagCommand
             => new RelayCommand(() =>
             {
-                StringSelectionDialogResult res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsAddValue"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
-
-                if (!res.Result)
+                if (AddNewItem(Settings.DefaultTags, FieldType.Tag, "", false) != null)
                 {
-                    return;
+                    Settings.DefaultTags =
+                        new ObservableCollection<MetadataObject>(Settings.DefaultTags.OrderBy(x => x.Name));
                 }
-
-                if (Settings.DefaultTags.Any(x => x.Name == res.SelectedString))
-                {
-                    return;
-                }
-
-                Settings.DefaultTags.Add(new MetadataObject(_settings)
-                {
-                    Name = res.SelectedString,
-                    Type = FieldType.Tag
-                });
-
-                Settings.DefaultTags = new ObservableCollection<MetadataObject>(Settings.DefaultTags.OrderBy(x => x.Name));
             });
 
         public RelayCommand AddNewMergeRuleCommand => new RelayCommand(() => EditMergeRule());
 
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
-            MetadataObject newItem = new MetadataObject(_settings);
+            FieldType type = FieldType.Tag;
+            string prefix = string.Empty;
 
             if (SourceObjectsViewSource.View?.CurrentItem != null)
             {
                 MetadataObject templateItem = (MetadataObject)SourceObjectsViewSource.View.CurrentItem;
 
-                newItem.Type = templateItem.Type;
-                newItem.Prefix = templateItem.Prefix;
+                type = templateItem.Type;
+                prefix = templateItem.Prefix;
             }
 
-            Window window = AddNewObjectViewModel.GetWindow(_plugin, newItem);
+            MetadataObject newItem = AddNewItem(((MergeRule)rule).SourceObjects, type, prefix);
 
-            if (window == null)
+            if (newItem != null)
             {
-                return;
+                SourceObjectsViewSource.View?.MoveCurrentTo(newItem);
             }
-
-            if (!(window.ShowDialog() ?? false))
-            {
-                return;
-            }
-
-            if (((MergeRule)rule).SourceObjects.Any(x => x.Name == newItem.Name && x.Type == newItem.Type))
-            {
-                return;
-            }
-
-            ((MergeRule)rule).SourceObjects.Add(newItem);
-            SourceObjectsViewSource.View?.MoveCurrentTo(newItem);
         }, rule => rule != null);
 
         public RelayCommand AddPrefixCommand
@@ -362,6 +322,36 @@ namespace MetadataUtilities.ViewModels
             }
 
             Settings.QuickAddObjects = new ObservableCollection<QuickAddObject>(Settings.QuickAddObjects.OrderBy(x => x.TypeAndName));
+        }
+
+        public MetadataObject AddNewItem(ObservableCollection<MetadataObject> list, FieldType type, string prefix = "", bool enableTypeSelection = true)
+        {
+            MetadataObject newItem = new MetadataObject(_settings)
+            {
+                Type = type,
+                Prefix = prefix
+            };
+
+            Window window = AddNewObjectViewModel.GetWindow(_plugin, newItem, enableTypeSelection);
+
+            if (window == null)
+            {
+                return null;
+            }
+
+            if (!(window.ShowDialog() ?? false))
+            {
+                return null;
+            }
+
+            if (list.Any(x => x.TypeAndName == newItem.TypeAndName))
+            {
+                return null;
+            }
+
+            list.Add(newItem);
+
+            return newItem;
         }
 
         public void AddQuickAddItems(FieldType type)
