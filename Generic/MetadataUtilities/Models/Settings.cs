@@ -8,8 +8,8 @@ namespace MetadataUtilities.Models
     {
         private bool _addRemovedToUnwanted;
         private bool _alwaysSaveManualMergeRules;
-        private ObservableCollection<MetadataObject> _defaultCategories = new ObservableCollection<MetadataObject>();
-        private ObservableCollection<MetadataObject> _defaultTags = new ObservableCollection<MetadataObject>();
+        private MetadataObjects _defaultCategories;
+        private MetadataObjects _defaultTags;
         private int _editorWindowHeight = 600;
         private int _editorWindowWidth = 1200;
         private bool _filterAgeRatings = true;
@@ -39,9 +39,17 @@ namespace MetadataUtilities.Models
         private bool _renameMergeRules = true;
         private bool _setDefaultTagsOnlyIfEmpty = true;
         private bool _showTopPanelButton = true;
-        private ObservableCollection<MetadataObject> _unusedItemsWhiteList = new ObservableCollection<MetadataObject>();
-        private ObservableCollection<MetadataObject> _unwantedItems = new ObservableCollection<MetadataObject>();
+        private MetadataObjects _unusedItemsWhiteList;
+        private MetadataObjects _unwantedItems;
         private bool _writeDebugLog;
+
+        public Settings()
+        {
+            _defaultCategories = new MetadataObjects(this);
+            _defaultTags = new MetadataObjects(this);
+            _unusedItemsWhiteList = new MetadataObjects(this);
+            _unwantedItems = new MetadataObjects(this);
+        }
 
         public bool AddRemovedToUnwanted
         {
@@ -55,13 +63,13 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _alwaysSaveManualMergeRules, value);
         }
 
-        public ObservableCollection<MetadataObject> DefaultCategories
+        public MetadataObjects DefaultCategories
         {
             get => _defaultCategories;
             set => SetValue(ref _defaultCategories, value);
         }
 
-        public ObservableCollection<MetadataObject> DefaultTags
+        public MetadataObjects DefaultTags
         {
             get => _defaultTags;
             set => SetValue(ref _defaultTags, value);
@@ -241,13 +249,13 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _showTopPanelButton, value);
         }
 
-        public ObservableCollection<MetadataObject> UnusedItemsWhiteList
+        public MetadataObjects UnusedItemsWhiteList
         {
             get => _unusedItemsWhiteList;
             set => SetValue(ref _unusedItemsWhiteList, value);
         }
 
-        public ObservableCollection<MetadataObject> UnwantedItems
+        public MetadataObjects UnwantedItems
         {
             get => _unwantedItems;
             set => SetValue(ref _unwantedItems, value);

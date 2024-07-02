@@ -10,11 +10,14 @@ namespace MetadataUtilities.Models
 {
     public class MergeRule : MetadataObject
     {
-        private ObservableCollection<MetadataObject> _sourceObjects = new ObservableCollection<MetadataObject>();
+        private MetadataObjects _sourceObjects;
 
-        public MergeRule(Settings settings) : base(settings) { }
+        public MergeRule(Settings settings) : base(settings)
+        {
+            _sourceObjects = new MetadataObjects(settings);
+        }
 
-        public ObservableCollection<MetadataObject> SourceObjects
+        public MetadataObjects SourceObjects
         {
             get => _sourceObjects;
             set

@@ -2,7 +2,6 @@
 using MetadataUtilities.ViewModels;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -16,6 +15,9 @@ namespace MetadataUtilities.Models
     public class MetadataObjects : ObservableCollection<MetadataObject>
     {
         private readonly Settings _settings;
+
+        public MetadataObjects()
+        { }
 
         public MetadataObjects(Settings settings) => _settings = settings;
 
@@ -50,6 +52,8 @@ namespace MetadataUtilities.Models
             }
 
             Add(newItem);
+
+            this.Sort(x => x.TypeAndName);
 
             return newItem;
         }

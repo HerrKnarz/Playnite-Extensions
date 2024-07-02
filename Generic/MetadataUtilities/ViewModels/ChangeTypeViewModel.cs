@@ -53,7 +53,7 @@ namespace MetadataUtilities.ViewModels
                     {
                         Type = NewType,
                         Name = item.Name,
-                        SourceObjects = new ObservableCollection<MetadataObject>
+                        SourceObjects = new MetadataObjects(_plugin.Settings.Settings)
                         {
                             new MetadataObject(_plugin.Settings.Settings)
                             {

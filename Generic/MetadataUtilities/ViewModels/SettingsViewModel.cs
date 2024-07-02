@@ -54,24 +54,10 @@ namespace MetadataUtilities.ViewModels
             new RelayCommand(() => AddItems(FieldType.Tag, Settings.DefaultTags));
 
         public RelayCommand AddNewDefaultCategoryCommand
-            => new RelayCommand(() =>
-            {
-                if (AddNewItem(Settings.DefaultCategories, FieldType.Category, "", false) != null)
-                {
-                    Settings.DefaultCategories =
-                        new ObservableCollection<MetadataObject>(Settings.DefaultCategories.OrderBy(x => x.Name));
-                }
-            });
+            => new RelayCommand(() => Settings.DefaultCategories.AddNewItem(FieldType.Category, "", false));
 
         public RelayCommand AddNewDefaultTagCommand
-            => new RelayCommand(() =>
-            {
-                if (AddNewItem(Settings.DefaultTags, FieldType.Tag, "", false) != null)
-                {
-                    Settings.DefaultTags =
-                        new ObservableCollection<MetadataObject>(Settings.DefaultTags.OrderBy(x => x.Name));
-                }
-            });
+            => new RelayCommand(() => Settings.DefaultTags.AddNewItem(FieldType.Tag, "", false));
 
         public RelayCommand AddNewMergeRuleCommand => new RelayCommand(() => EditMergeRule());
 
@@ -88,7 +74,7 @@ namespace MetadataUtilities.ViewModels
                 prefix = templateItem.Prefix;
             }
 
-            MetadataObject newItem = AddNewItem(((MergeRule)rule).SourceObjects, type, prefix);
+            MetadataObject newItem = ((MergeRule)rule).SourceObjects.AddNewItem(type, prefix);
 
             if (newItem != null)
             {
@@ -322,36 +308,6 @@ namespace MetadataUtilities.ViewModels
             }
 
             Settings.QuickAddObjects = new ObservableCollection<QuickAddObject>(Settings.QuickAddObjects.OrderBy(x => x.TypeAndName));
-        }
-
-        public MetadataObject AddNewItem(ObservableCollection<MetadataObject> list, FieldType type, string prefix = "", bool enableTypeSelection = true)
-        {
-            MetadataObject newItem = new MetadataObject(_settings)
-            {
-                Type = type,
-                Prefix = prefix
-            };
-
-            Window window = AddNewObjectViewModel.GetWindow(_plugin.Settings.Settings, newItem, enableTypeSelection);
-
-            if (window == null)
-            {
-                return null;
-            }
-
-            if (!(window.ShowDialog() ?? false))
-            {
-                return null;
-            }
-
-            if (list.Any(x => x.TypeAndName == newItem.TypeAndName))
-            {
-                return null;
-            }
-
-            list.Add(newItem);
-
-            return newItem;
         }
 
         public void AddQuickAddItems(FieldType type)

@@ -8,7 +8,7 @@ using KNARZhelper;
 
 namespace MetadataUtilities
 {
-    public class MetadataFunctions
+    public static class MetadataFunctions
     {
         public static List<MetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
         {
