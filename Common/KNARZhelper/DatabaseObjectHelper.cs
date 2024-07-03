@@ -16,12 +16,12 @@ namespace KNARZhelper
 
     public enum FieldType
     {
-        AgeRating,
-        Category,
-        Feature,
-        Genre,
-        Series,
-        Tag
+        AgeRating = 5,
+        Category = 0,
+        Feature = 1,
+        Genre = 2,
+        Series = 3,
+        Tag = 4
     }
 
     public static class DatabaseObjectHelper
