@@ -20,10 +20,10 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
-    <DockPanel Margin="10" FocusManager.FocusedElement="{Binding ElementName=txtName}">
+    <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=txtName}">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
             <Label Content="{DynamicResource LOCMetadataUtilitiesDialogSelectNewType}" />
-            <ComboBox SelectedItem="{Binding NewType}" ItemsSource="{Binding Source={StaticResource FieldTypeValues}}" Margin="10,0,0,0" Width="200">
+            <ComboBox SelectedItem="{Binding NewType}" ItemsSource="{Binding Source={StaticResource FieldTypeValues}}" Margin="10,0,0,0" Width="250">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource FieldTypeConverter}}" />
@@ -31,13 +31,14 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
-            <Button Content="{DynamicResource LOCOKLabel}"
+        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding SaveAsRule}" Content="{DynamicResource LOCMetadataUtilitiesDialogSaveAsRule}"
+                  Margin="0,10,0,0" />
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Center">
+            <Button Content="{DynamicResource LOCOKLabel}" Style="{StaticResource BottomButton}" 
                     Command="{Binding OkCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-            <Button Content="{DynamicResource LOCCancelLabel}" Margin="10,0,0,0"
+            <Button Content="{DynamicResource LOCCancelLabel}" Style="{StaticResource BottomButton}" 
                     Command="{Binding CancelCommand}" IsCancel="True" />
-            <CheckBox IsChecked="{Binding SaveAsRule}" Content="{DynamicResource LOCMetadataUtilitiesDialogSaveAsRule}" Margin="10,0,0,0" />
         </StackPanel>
     </DockPanel>
 </UserControl>

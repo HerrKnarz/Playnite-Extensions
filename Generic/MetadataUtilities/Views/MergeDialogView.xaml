@@ -8,7 +8,7 @@
              d:DataContext="{d:DesignInstance Type=viewModels:MergeDialogViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <DockPanel Margin="10" FocusManager.FocusedElement="{Binding ElementName=CB}">
+    <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=CB}">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
             <Label Content="{DynamicResource LOCMetadataUtilitiesDialogMergeAs}" />
             <ComboBox Name="CB" Margin="10,0,0,0" ItemsSource="{Binding MetadataObjects}" SelectedItem="{Binding MergeTarget}" Width="300">
@@ -21,13 +21,13 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
-            <Button Content="{DynamicResource LOCOKLabel}"
+        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding SaveAsRule}" Content="{DynamicResource LOCMetadataUtilitiesDialogSaveAsRule}" Margin="0,10,0,0" />
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Center">
+            <Button Content="{DynamicResource LOCOKLabel}" Style="{StaticResource BottomButton}" 
                     Command="{Binding OkCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-            <Button Content="{DynamicResource LOCCancelLabel}" Margin="10,0,0,0"
+            <Button Content="{DynamicResource LOCCancelLabel}" Style="{StaticResource BottomButton}" 
                     Command="{Binding CancelCommand}" IsCancel="True" />
-            <CheckBox IsChecked="{Binding SaveAsRule}" Content="{DynamicResource LOCMetadataUtilitiesDialogSaveAsRule}" Margin="10,0,0,0" />
         </StackPanel>
     </DockPanel>
 </UserControl>
