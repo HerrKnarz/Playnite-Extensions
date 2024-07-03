@@ -75,9 +75,9 @@ Extension to manage metadata for the games in the playnite library. It can do th
 - Automatically [remove unused](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#removing-unused-metadata) categories, features, genres, series and tags on start up (deactivated by default).
 - Automatically [remove unwanted](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#removing-unwanted-metadata) features, genres, series and tags after metadata updates.
 - Add context menu entries to [quickly add, remove or toggle](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Quick-Add) categories, features, genres, series and tags in games to the game context menu. You can configure which will show up in the menu and how via the addon settings. Per default none are shown.
+- Regex support for filtering in all search boxes of the addon.
 
 ### Planned features
-- Regex support for filtering in Metadata Editor.
 - Add window to quickly edit categories, features, genres, series and tags for a game, that is easier to use for this use case than the standard game detail editor.
 - Option to setup "metadata sets" that then can be quickly assigned to a game with one click (for example setting feature "Controller support" together with the tag "TV gaming".
 - Add option to change specific metadata if certain conditions are met in a game. The idea isn't fully fleshed out yet...
