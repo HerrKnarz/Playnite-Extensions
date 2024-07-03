@@ -1,5 +1,19 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 0.9.2
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-07-03
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-07-03/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_0_9_2.pext
+    Changelog:
+      - Added support for age ratings
+      - Added support for regular expressions in the search fields in the metadata editor, merge rule editor and select metadata dialog.
+      - Added "add games" function to the metadata editor to quickly add games to the selected metadata item. The game search can be filtered by filter preset and uses the same fuzzy search logic as playnite itself.
+      - Added whitelist for items not to be removed when removing unused items.
+      - Added "add new item" button to the "remove unwanted" list to add items that aren't in the database.
+      - remodeled the dialog windows of the addon a bit to fit the playnite style a bit more.
+      - lots of code optimizations.
+      - fixed a bug that caused all items to be added to a list, when the select metadata dialog was closed without having items selected.
+      - updated localizations.
   - Version: 0.8
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-03-17
