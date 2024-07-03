@@ -134,6 +134,9 @@ namespace MetadataUtilities.Models
         public string TypeAndName => $"{Type.GetEnumDisplayName()}: {Name}";
 
         [DontSerialize]
+        public string TypeAsString => Type.GetEnumDisplayName();
+
+        [DontSerialize]
         public string TypeLabel => Type.GetEnumDisplayName();
 
         public void CheckGroup(List<MetadataObject> metadataList)

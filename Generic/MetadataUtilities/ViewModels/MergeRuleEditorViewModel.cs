@@ -49,9 +49,11 @@ namespace MetadataUtilities.ViewModels
 
                 MetadataViewSource = new CollectionViewSource
                 {
+                    // ReSharper disable once ExpressionIsAlwaysNull
                     Source = _completeMetadata
                 };
 
+                // ReSharper disable once PossibleNullReferenceException
                 Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                 ts = DateTime.Now;
 

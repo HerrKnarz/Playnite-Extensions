@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -80,7 +79,7 @@ namespace MetadataUtilities.ViewModels
 
                 using (MetadataViewSource.DeferRefresh())
                 {
-                    MetadataViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+                    MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAsString", ListSortDirection.Ascending));
                     MetadataViewSource.SortDescriptions.Add(new SortDescription("Prefix", ListSortDirection.Ascending));
                     MetadataViewSource.SortDescriptions.Add(new SortDescription("EditName", ListSortDirection.Ascending));
                     MetadataViewSource.IsLiveSortingRequested = true;

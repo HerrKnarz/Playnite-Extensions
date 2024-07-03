@@ -38,13 +38,13 @@ namespace MetadataUtilities.ViewModels
 
             MergeRuleViewSource = new CollectionViewSource();
 
-            MergeRuleViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+            MergeRuleViewSource.SortDescriptions.Add(new SortDescription("TypeAsString", ListSortDirection.Ascending));
             MergeRuleViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             MergeRuleViewSource.IsLiveSortingRequested = true;
 
             SourceObjectsViewSource = new CollectionViewSource();
 
-            SourceObjectsViewSource.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Ascending));
+            SourceObjectsViewSource.SortDescriptions.Add(new SortDescription("TypeAsString", ListSortDirection.Ascending));
             SourceObjectsViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             SourceObjectsViewSource.IsLiveSortingRequested = true;
         }
