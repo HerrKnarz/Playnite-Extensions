@@ -66,19 +66,19 @@ To see which websites are already supported or planned to be added see the [wiki
 
 Extension to manage metadata for the games in the playnite library. It can do the following:
 
-- Quickly filter and edit categories, features, genres, series and tags in new [Metadata Editor](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Metadata-Editor).
-- Merge together similar categories, features, genres, series and tags without being constrained to only one type (you can easily merge categories and tags together for example).
+- Quickly filter and edit age ratings, categories, features, genres, series and tags in new [Metadata Editor](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Metadata-Editor).
+- Merge together similar age ratings, categories, features, genres, series and tags without being constrained to only one type (you can easily merge categories and tags together for example).
 - Automatically execute [merge rules](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Merge-Rules) after metadata changes or manually.
-- Simply change the type of categories, features, genres, series and tags.
+- Simply change the type of age ratings, categories, features, genres, series and tags.
 - Separate metadata items by [prefixes](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#prefixes) defined by you, that then can be filtered or easily added to new items.
 - Set [default categories and/or tags](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#adding-default-categoriestags) that will automatically be added to new games on import.
-- Automatically [remove unused](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#removing-unused-metadata) categories, features, genres, series and tags on start up (deactivated by default).
-- Automatically [remove unwanted](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#removing-unwanted-metadata) features, genres, series and tags after metadata updates.
-- Add context menu entries to [quickly add, remove or toggle](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Quick-Add) categories, features, genres, series and tags in games to the game context menu. You can configure which will show up in the menu and how via the addon settings. Per default none are shown.
+- Automatically [remove unused](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#removing-unused-metadata) age ratings, categories, features, genres, series and tags on start up (deactivated by default).
+- Automatically [remove unwanted](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#removing-unwanted-metadata) age ratings, features, genres, series and tags after metadata updates.
+- Add context menu entries to [quickly add, remove or toggle](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Quick-Add) age ratings, categories, features, genres, series and tags in games to the game context menu. You can configure which will show up in the menu and how via the addon settings. Per default none are shown.
 - Regex support for filtering in all search boxes of the addon.
 
 ### Planned features
-- Add window to quickly edit categories, features, genres, series and tags for a game, that is easier to use for this use case than the standard game detail editor.
+- Add window to quickly edit age ratings, categories, features, genres, series and tags for a game, that is easier to use for this use case than the standard game detail editor.
 - Option to setup "metadata sets" that then can be quickly assigned to a game with one click (for example setting feature "Controller support" together with the tag "TV gaming".
 - Add option to change specific metadata if certain conditions are met in a game. The idea isn't fully fleshed out yet...
 
