@@ -7,7 +7,7 @@
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Название страницы ответа</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">равен?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Проверка ссылок</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filter by link name:</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Фильтр по названию ссылки:</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Игра</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">Ссылка</sys:String>
@@ -71,7 +71,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">Автоматически добавлять ссылки в новые игры</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">Ключ API</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Используя закладку, вы можете добавить активный сайт в ваш браузер непосредственно к выбранным играм в Playnite. Чтобы найти подходящее имя ссылки, вы можете определить шаблоны для URL и названия ссылки здесь. Шаблоны могут содержать widcards. Знак * может быть нулевым или более символов, значение ? должно быть ровно одним символом.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">Browser search URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">URL поиска в браузере</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Добавить</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Добавить значения по умолчанию</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Отмена</sys:String>
@@ -86,10 +86,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Настройка шаблонов имен ссылок (Для ссылок буфера обмена будет проверяться только шаблон url, чтобы найти имя, так как у нас нет имени для начала.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Настроить сайты</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Here you can add your own links for websites with urls, that contain either the game name, rom name, steam ID or GOG ID and have no variable parts. In the Game URL field you can use the placeholders {GameName}, {RomName}, {SteamId} and {GogId} for that. The following checkboxes define, how the game name will be modified to fit the url scheme and how to check for link validity. You can also add a Browser search url that then can be opened in a browser to search for the game. This field only supports the {GameName} placeholder. For further information on custom link profiles click the questionmark button.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">Remove special chars</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens">Remove hyphens</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces">Remove whitespaces</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveDiacritics">Remove diacritics</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">Удалить специальные символы</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens">Удалить дефисы</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces">Удалить пробелы</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveDiacritics">Удалить диакритические знаки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveEditionSuffix">Remove edition suffix</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksWhitespacesToHyphens">Whitespaces to hyphens</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksUnderscoresToWhitespaces">Underscores to whitespaces</sys:String>
