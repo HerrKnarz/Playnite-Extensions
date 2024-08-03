@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCCompanyCompanionName">Company Companion</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionName">Компаньон компании</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Очистка названий компаний.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Найти совпадающие компании</sys:String>
