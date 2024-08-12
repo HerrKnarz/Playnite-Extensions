@@ -12,7 +12,7 @@ namespace MetadataUtilities.Actions
         private static readonly object _mutex = new object();
         private static QuickAddAction _instance;
         private ActionModifierTypes _action = ActionModifierTypes.Add;
-        private FieldType _type = FieldType.Category;
+        private SettableFieldType _type = SettableFieldType.Category;
 
         private QuickAddAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
 
@@ -47,7 +47,7 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            MetadataObject metaDataItem = (MetadataObject)item;
+            SettableMetadataObject metaDataItem = (SettableMetadataObject)item;
 
             if (metaDataItem == null)
             {
@@ -67,7 +67,7 @@ namespace MetadataUtilities.Actions
                     break;
 
                 case ActionModifierTypes.Toggle:
-                    mustUpdate = DatabaseObjectHelper.DbObjectInGame(game, metaDataItem.Type, metaDataItem.Id) ?
+                    mustUpdate = DatabaseObjectHelper.DbObjectInGame(game, (FieldType)metaDataItem.Type, metaDataItem.Id) ?
                         DatabaseObjectHelper.RemoveObjectFromGame(game, metaDataItem.Type, new List<Guid>() { metaDataItem.Id }) :
                         DatabaseObjectHelper.AddDbObjectToGame(game, metaDataItem.Type, metaDataItem.Id);
                     break;
@@ -89,7 +89,7 @@ namespace MetadataUtilities.Actions
         {
             _action = actionModifier;
 
-            MetadataObject metaDataItem = (MetadataObject)item;
+            SettableMetadataObject metaDataItem = (SettableMetadataObject)item;
 
             if (metaDataItem == null)
             {
@@ -100,7 +100,7 @@ namespace MetadataUtilities.Actions
 
             if (metaDataItem.Id == Guid.Empty)
             {
-                metaDataItem.Id = DatabaseObjectHelper.GetDbObjectId(metaDataItem.Name, metaDataItem.Type);
+                metaDataItem.Id = DatabaseObjectHelper.GetDbObjectId(metaDataItem.Name, (FieldType)metaDataItem.Type);
             }
 
             return true;

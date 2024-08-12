@@ -47,11 +47,11 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool mustUpdate = DatabaseObjectHelper.AddDbObjectToGame(game, FieldType.Category, _categoryIds);
+            bool mustUpdate = DatabaseObjectHelper.AddDbObjectToGame(game, SettableFieldType.Category, _categoryIds);
 
             if (!Settings.SetDefaultTagsOnlyIfEmpty || (game.TagIds?.Count != 0))
             {
-                mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, FieldType.Tag, _tagIds);
+                mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, SettableFieldType.Tag, _tagIds);
             }
 
             if (mustUpdate)
@@ -66,15 +66,15 @@ namespace MetadataUtilities.Actions
         {
             _categoryIds.Clear();
 
-            foreach (MetadataObject category in Settings.DefaultCategories)
+            foreach (SettableMetadataObject category in Settings.DefaultCategories)
             {
-                _categoryIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Category, category.Name));
+                _categoryIds.Add(DatabaseObjectHelper.AddDbObject(SettableFieldType.Category, category.Name));
             }
 
             _tagIds.Clear();
-            foreach (MetadataObject tag in Settings.DefaultTags)
+            foreach (SettableMetadataObject tag in Settings.DefaultTags)
             {
-                _tagIds.Add(DatabaseObjectHelper.AddDbObject(FieldType.Tag, tag.Name));
+                _tagIds.Add(DatabaseObjectHelper.AddDbObject(SettableFieldType.Tag, tag.Name));
             }
 
             return _categoryIds.Count != 0 || _tagIds.Count != 0;

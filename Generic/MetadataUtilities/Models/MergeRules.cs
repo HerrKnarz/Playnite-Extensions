@@ -25,7 +25,7 @@ namespace MetadataUtilities.Models
                 return;
             }
 
-            foreach (MetadataObject obj in rule.SourceObjects)
+            foreach (SettableMetadataObject obj in rule.SourceObjects)
             {
                 if (!dest.SourceObjects.Any(x => x.Name == obj.Name && x.Type == obj.Type))
                 {
@@ -34,7 +34,7 @@ namespace MetadataUtilities.Models
             }
         }
 
-        public bool FindAndRenameRule(FieldType fieldType, string name, string newName)
+        public bool FindAndRenameRule(SettableFieldType fieldType, string name, string newName)
         {
             MergeRule rule = this.FirstOrDefault(x => x.Name == name && x.Type == fieldType);
 

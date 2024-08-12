@@ -17,7 +17,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class SearchGameViewModel : ObservableObject, IEditableObject
     {
-        private readonly MetadataObject _metadataObject;
+        private readonly SettableMetadataObject _metadataObject;
         private FilterPreset _currentPreset;
         private ObservableCollection<FilterPreset> _filterPresets;
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
@@ -25,7 +25,7 @@ namespace MetadataUtilities.ViewModels
         private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
 
-        public SearchGameViewModel(MetadataUtilities plugin, MetadataObject metadataObject)
+        public SearchGameViewModel(MetadataUtilities plugin, SettableMetadataObject metadataObject)
         {
             Plugin = plugin;
             _metadataObject = metadataObject;

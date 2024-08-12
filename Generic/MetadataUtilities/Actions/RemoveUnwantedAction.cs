@@ -52,12 +52,12 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool mustUpdate = DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.AgeRating, _ageRatingIds);
-            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.Category, _categoryIds);
-            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.Feature, _featureIds);
-            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.Genre, _genreIds);
-            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.Series, _seriesIds);
-            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, FieldType.Tag, _tagIds);
+            bool mustUpdate = DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.AgeRating, _ageRatingIds);
+            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.Category, _categoryIds);
+            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.Feature, _featureIds);
+            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.Genre, _genreIds);
+            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.Series, _seriesIds);
+            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.Tag, _tagIds);
 
             if (mustUpdate)
             {
@@ -69,7 +69,7 @@ namespace MetadataUtilities.Actions
 
         public override void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
         {
-            foreach (MetadataObject metaDataItem in Settings.UnwantedItems)
+            foreach (SettableMetadataObject metaDataItem in Settings.UnwantedItems)
             {
                 if (!DatabaseObjectHelper.DbObjectInUse(metaDataItem.Type, metaDataItem.Id))
                 {
@@ -92,33 +92,33 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            foreach (MetadataObject metaDataItem in Settings.UnwantedItems)
+            foreach (SettableMetadataObject metaDataItem in Settings.UnwantedItems)
             {
-                metaDataItem.Id = DatabaseObjectHelper.GetDbObjectId(metaDataItem.Name, metaDataItem.Type);
+                metaDataItem.Id = DatabaseObjectHelper.GetDbObjectId(metaDataItem.Name, (FieldType)metaDataItem.Type);
 
                 switch (metaDataItem.Type)
                 {
-                    case FieldType.AgeRating:
+                    case SettableFieldType.AgeRating:
                         _ageRatingIds.Add(metaDataItem.Id);
                         break;
 
-                    case FieldType.Category:
+                    case SettableFieldType.Category:
                         _categoryIds.Add(metaDataItem.Id);
                         break;
 
-                    case FieldType.Feature:
+                    case SettableFieldType.Feature:
                         _featureIds.Add(metaDataItem.Id);
                         break;
 
-                    case FieldType.Genre:
+                    case SettableFieldType.Genre:
                         _genreIds.Add(metaDataItem.Id);
                         break;
 
-                    case FieldType.Series:
+                    case SettableFieldType.Series:
                         _seriesIds.Add(metaDataItem.Id);
                         break;
 
-                    case FieldType.Tag:
+                    case SettableFieldType.Tag:
                         _tagIds.Add(metaDataItem.Id);
                         break;
 

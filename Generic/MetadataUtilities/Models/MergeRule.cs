@@ -3,12 +3,11 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace MetadataUtilities.Models
 {
-    public class MergeRule : MetadataObject
+    public class MergeRule : SettableMetadataObject
     {
         private MetadataObjects _sourceObjects;
 
@@ -28,9 +27,9 @@ namespace MetadataUtilities.Models
         {
             Id = DatabaseObjectHelper.AddDbObject(Type, Name);
 
-            foreach (MetadataObject item in SourceObjects)
+            foreach (SettableMetadataObject item in SourceObjects)
             {
-                item.Id = DatabaseObjectHelper.GetDbObjectId(item.Name, item.Type);
+                item.Id = DatabaseObjectHelper.GetDbObjectId(item.Name, (FieldType)item.Type);
             }
 
             return true;
@@ -44,7 +43,7 @@ namespace MetadataUtilities.Models
 
             try
             {
-                foreach (MetadataObject item in SourceObjects)
+                foreach (SettableMetadataObject item in SourceObjects)
                 {
                     if (item.Id == Id)
                     {

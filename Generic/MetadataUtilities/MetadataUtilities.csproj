@@ -72,9 +72,13 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MetadataFunctions.cs" />
     <Compile Include="MetadataUtilities.cs" />
+    <Compile Include="Models\Action.cs" />
+    <Compile Include="Models\Condition.cs" />
+    <Compile Include="Models\ConditionalAction.cs" />
     <Compile Include="Models\MergeRule.cs" />
     <Compile Include="Models\MergeRules.cs" />
     <Compile Include="Models\MetadataObject.cs" />
+    <Compile Include="Models\SettableMetadataObject.cs" />
     <Compile Include="Models\MetadataObjects.cs" />
     <Compile Include="Models\MyGame.cs" />
     <Compile Include="Models\QuickAddObject.cs" />

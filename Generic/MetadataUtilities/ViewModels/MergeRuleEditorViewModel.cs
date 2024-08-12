@@ -14,7 +14,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class MergeRuleEditorViewModel : ObservableObject
     {
-        private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
+        private readonly HashSet<SettableFieldType> _filterTypes = new HashSet<SettableFieldType>();
         private MetadataObjects _completeMetadata;
         private bool _filterAgeRatings;
         private bool _filterCategories;
@@ -27,10 +27,10 @@ namespace MetadataUtilities.ViewModels
         private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
         private string _ruleName = string.Empty;
-        private FieldType _ruleType = FieldType.Category;
+        private SettableFieldType _ruleType = SettableFieldType.Category;
         private string _searchTerm = string.Empty;
 
-        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataObjects objects, ICollection<FieldType> filteredTypes)
+        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataObjects objects, ICollection<SettableFieldType> filteredTypes)
         {
             Cursor.Current = Cursors.WaitCursor;
             try
@@ -59,12 +59,12 @@ namespace MetadataUtilities.ViewModels
 
                 using (MetadataViewSource.DeferRefresh())
                 {
-                    FilterAgeRatings = filteredTypes.Contains(FieldType.AgeRating) || !filteredTypes.Any();
-                    FilterCategories = filteredTypes.Contains(FieldType.Category) || !filteredTypes.Any();
-                    FilterFeatures = filteredTypes.Contains(FieldType.Feature) || !filteredTypes.Any();
-                    FilterGenres = filteredTypes.Contains(FieldType.Genre) || !filteredTypes.Any();
-                    FilterSeries = filteredTypes.Contains(FieldType.Series) || !filteredTypes.Any();
-                    FilterTags = filteredTypes.Contains(FieldType.Tag) || !filteredTypes.Any();
+                    FilterAgeRatings = filteredTypes.Contains(SettableFieldType.AgeRating) || !filteredTypes.Any();
+                    FilterCategories = filteredTypes.Contains(SettableFieldType.Category) || !filteredTypes.Any();
+                    FilterFeatures = filteredTypes.Contains(SettableFieldType.Feature) || !filteredTypes.Any();
+                    FilterGenres = filteredTypes.Contains(SettableFieldType.Genre) || !filteredTypes.Any();
+                    FilterSeries = filteredTypes.Contains(SettableFieldType.Series) || !filteredTypes.Any();
+                    FilterTags = filteredTypes.Contains(SettableFieldType.Tag) || !filteredTypes.Any();
 
                     MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAndName", ListSortDirection.Ascending));
                     MetadataViewSource.IsLiveSortingRequested = true;
@@ -89,18 +89,18 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                FieldType type = FieldType.Tag;
+                SettableFieldType type = SettableFieldType.Tag;
                 string prefix = string.Empty;
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
-                    MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+                    SettableMetadataObject templateItem = (SettableMetadataObject)MetadataViewSource.View.CurrentItem;
 
                     type = templateItem.Type;
                     prefix = templateItem.Prefix;
                 }
 
-                MetadataObject newItem = CompleteMetadata.AddNewItem(type, prefix);
+                SettableMetadataObject newItem = CompleteMetadata.AddNewItem(type, prefix);
 
                 if (newItem == null)
                 {
@@ -139,11 +139,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterAgeRatings)
                 {
-                    _filterTypes.Add(FieldType.AgeRating);
+                    _filterTypes.Add(SettableFieldType.AgeRating);
                 }
                 else
                 {
-                    _filterTypes.Remove(FieldType.AgeRating);
+                    _filterTypes.Remove(SettableFieldType.AgeRating);
                 }
 
                 MetadataViewSource.View.Filter = Filter;
@@ -159,11 +159,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterCategories)
                 {
-                    _filterTypes.Add(FieldType.Category);
+                    _filterTypes.Add(SettableFieldType.Category);
                 }
                 else
                 {
-                    _filterTypes.Remove(FieldType.Category);
+                    _filterTypes.Remove(SettableFieldType.Category);
                 }
 
                 MetadataViewSource.View.Filter = Filter;
@@ -179,11 +179,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterFeatures)
                 {
-                    _filterTypes.Add(FieldType.Feature);
+                    _filterTypes.Add(SettableFieldType.Feature);
                 }
                 else
                 {
-                    _filterTypes.Remove(FieldType.Feature);
+                    _filterTypes.Remove(SettableFieldType.Feature);
                 }
 
                 MetadataViewSource.View.Filter = Filter;
@@ -199,11 +199,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterGenres)
                 {
-                    _filterTypes.Add(FieldType.Genre);
+                    _filterTypes.Add(SettableFieldType.Genre);
                 }
                 else
                 {
-                    _filterTypes.Remove(FieldType.Genre);
+                    _filterTypes.Remove(SettableFieldType.Genre);
                 }
 
                 MetadataViewSource.View.Filter = Filter;
@@ -240,11 +240,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterSeries)
                 {
-                    _filterTypes.Add(FieldType.Series);
+                    _filterTypes.Add(SettableFieldType.Series);
                 }
                 else
                 {
-                    _filterTypes.Remove(FieldType.Series);
+                    _filterTypes.Remove(SettableFieldType.Series);
                 }
 
                 MetadataViewSource.View.Filter = Filter;
@@ -260,11 +260,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterTags)
                 {
-                    _filterTypes.Add(FieldType.Tag);
+                    _filterTypes.Add(SettableFieldType.Tag);
                 }
                 else
                 {
-                    _filterTypes.Remove(FieldType.Tag);
+                    _filterTypes.Remove(SettableFieldType.Tag);
                 }
 
                 MetadataViewSource.View.Filter = Filter;
@@ -295,7 +295,7 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _ruleName, value);
         }
 
-        public FieldType RuleType
+        public SettableFieldType RuleType
         {
             get => _ruleType;
             set => SetValue(ref _ruleType, value);
@@ -331,12 +331,12 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<object> SetAsTargetCommand => new RelayCommand<object>(item =>
         {
-            RuleType = ((MetadataObject)item).Type;
-            RuleName = ((MetadataObject)item).Name;
+            RuleType = ((SettableMetadataObject)item).Type;
+            RuleName = ((SettableMetadataObject)item).Name;
         });
 
         private bool Filter(object item)
-            => item is MetadataObject metadataObject && metadataObject.Name.RegExIsMatch(SearchTerm) &&
+            => item is SettableMetadataObject metadataObject && metadataObject.Name.RegExIsMatch(SearchTerm) &&
                _filterTypes.Contains(metadataObject.Type) && (!FilterSelected || metadataObject.Selected) &&
                (_filterPrefix == string.Empty || metadataObject.Prefix.Equals(_filterPrefix));
     }

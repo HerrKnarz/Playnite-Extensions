@@ -14,9 +14,9 @@ namespace MetadataUtilities.ViewModels
     {
         private readonly Settings _settings;
         private bool _enableTypeSelection = true;
-        private MetadataObject _newObject;
+        private SettableMetadataObject _newObject;
 
-        public AddNewObjectViewModel(Settings settings, MetadataObject newObject, bool enableTypeSelection = true)
+        public AddNewObjectViewModel(Settings settings, SettableMetadataObject newObject, bool enableTypeSelection = true)
         {
             _settings = settings;
             NewObject = newObject;
@@ -31,7 +31,7 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _enableTypeSelection, value);
         }
 
-        public MetadataObject NewObject
+        public SettableMetadataObject NewObject
         {
             get => _newObject;
             set => SetValue(ref _newObject, value);
@@ -47,7 +47,7 @@ namespace MetadataUtilities.ViewModels
 
         public Visibility PrefixVisibility => _settings.Prefixes?.Any() ?? false ? Visibility.Visible : Visibility.Collapsed;
 
-        public static Window GetWindow(Settings settings, MetadataObject newObject, bool enableTypeSelection = true)
+        public static Window GetWindow(Settings settings, SettableMetadataObject newObject, bool enableTypeSelection = true)
         {
             try
             {

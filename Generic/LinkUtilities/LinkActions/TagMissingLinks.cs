@@ -11,29 +11,31 @@ using System.Linq;
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    ///     Class to add tags to games for missing links based on patterns.
+    /// Class to add tags to games for missing links based on patterns.
     /// </summary>
     internal class TagMissingLinks : LinkAction
     {
-        private static TagMissingLinks _instance;
         private static readonly object _mutex = new object();
-        private TagMissingLinks() { }
-        public override string ProgressMessage => "LOCLinkUtilitiesProgressTagMissingLinks";
-        public override string ResultMessage => "LOCLinkUtilitiesDialogTaggedMissingLinksMessage";
-        public bool TagMissingLinksAfterChange { get; set; } = false;
-        public bool TagMissingLibraryLinks { get; set; } = false;
+        private static TagMissingLinks _instance;
+
+        private TagMissingLinks()
+        { }
 
         /// <summary>
-        ///     List of patterns to check for missing links
+        /// List of patterns to check for missing links
         /// </summary>
         public LinkNamePatterns MissingLinkPatterns { get; set; }
 
+        public string MissingLinkPrefix { get; set; } = ResourceProvider.GetString("LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue");
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressTagMissingLinks";
+        public override string ResultMessage => "LOCLinkUtilitiesDialogTaggedMissingLinksMessage";
+        public bool TagMissingLibraryLinks { get; set; } = false;
+        public bool TagMissingLinksAfterChange { get; set; } = false;
+
         /// <summary>
-        ///     Cache for the tags so they don't have to be retrieved from the database every time.
+        /// Cache for the tags so they don't have to be retrieved from the database every time.
         /// </summary>
         public Dictionary<string, Tag> TagsCache { get; set; } = new Dictionary<string, Tag>();
-
-        public string MissingLinkPrefix { get; set; } = ResourceProvider.GetString("LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue");
 
         public static TagMissingLinks Instance()
         {
@@ -53,8 +55,23 @@ namespace LinkUtilities.LinkActions
             return _instance;
         }
 
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+                    => base.Execute(game, actionModifier, isBulkAction) &&
+                       Tag(game);
+
+        private static bool CheckLibraryLink(Game game, string guid, string urlPattern)
+        {
+            LinkNamePattern pattern = new LinkNamePattern
+            {
+                PartialMatch = true,
+                UrlPattern = urlPattern
+            };
+
+            return game.PluginId == Guid.Parse(guid) && !(game.Links?.Any(x => pattern.LinkMatch(x.Name, x.Url)) ?? false);
+        }
+
         /// <summary>
-        ///     Retrieves a tag by its name and creates it, of none is found.
+        /// Retrieves a tag by its name and creates it, of none is found.
         /// </summary>
         /// <param name="key">Name of the tag</param>
         /// <returns>The found or created tag</returns>
@@ -80,17 +97,6 @@ namespace LinkUtilities.LinkActions
             return tag;
         }
 
-        private static bool CheckLibraryLink(Game game, string guid, string urlPattern)
-        {
-            LinkNamePattern pattern = new LinkNamePattern
-            {
-                PartialMatch = true,
-                UrlPattern = urlPattern
-            };
-
-            return game.PluginId == Guid.Parse(guid) && !(game.Links?.Any(x => pattern.LinkMatch(x.Name, x.Url)) ?? false);
-        }
-
         private bool Tag(Game game)
         {
             bool mustUpdate = false;
@@ -108,7 +114,7 @@ namespace LinkUtilities.LinkActions
 
                 if (isMissing)
                 {
-                    mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, FieldType.Tag, tag.Id);
+                    mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, SettableFieldType.Tag, tag.Id);
                 }
                 else
                 {
@@ -129,10 +135,9 @@ namespace LinkUtilities.LinkActions
 
                 Tag libraryTag = GetTag("Library");
 
-
                 if (libraryTagMissing)
                 {
-                    mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, FieldType.Tag, libraryTag.Id);
+                    mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, SettableFieldType.Tag, libraryTag.Id);
                 }
                 else
                 {
@@ -150,9 +155,5 @@ namespace LinkUtilities.LinkActions
 
             return mustUpdate;
         }
-
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => base.Execute(game, actionModifier, isBulkAction) &&
-               Tag(game);
     }
 }

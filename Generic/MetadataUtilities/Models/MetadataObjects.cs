@@ -14,7 +14,7 @@ using System.Windows.Documents;
 
 namespace MetadataUtilities.Models
 {
-    public class MetadataObjects : ObservableCollection<MetadataObject>
+    public class MetadataObjects : ObservableCollection<SettableMetadataObject>
     {
         /// <summary>
         /// Only used for deserializing the settings. Needs to use the "ResetReferences" method of
@@ -28,9 +28,9 @@ namespace MetadataUtilities.Models
         [DontSerialize]
         public Settings Settings { get; set; }
 
-        public void AddItems(FieldType type)
+        public void AddItems(SettableFieldType type)
         {
-            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
+            List<SettableMetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
 
             if (items.Count == 0)
             {
@@ -40,16 +40,16 @@ namespace MetadataUtilities.Models
             AddItems(items);
         }
 
-        public void AddItems(List<MetadataObject> items)
+        public void AddItems(List<SettableMetadataObject> items)
         {
             if (items.Count == 0)
             {
                 return;
             }
 
-            foreach (MetadataObject item in items.Where(item => this.All(x => x.TypeAndName != item.TypeAndName)))
+            foreach (SettableMetadataObject item in items.Where(item => this.All(x => x.TypeAndName != item.TypeAndName)))
             {
-                Add(new MetadataObject(Settings)
+                Add(new SettableMetadataObject(Settings)
                 {
                     Name = item.Name,
                     Type = item.Type
@@ -59,9 +59,9 @@ namespace MetadataUtilities.Models
             this.Sort(x => x.TypeAndName);
         }
 
-        public MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
+        public SettableMetadataObject AddNewItem(SettableFieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
         {
-            MetadataObject newItem = new MetadataObject(Settings)
+            SettableMetadataObject newItem = new SettableMetadataObject(Settings)
             {
                 Type = type,
                 Prefix = prefix
@@ -98,7 +98,7 @@ namespace MetadataUtilities.Models
 
         public void LoadGameMetadata(List<Game> games)
         {
-            List<MetadataObject> temporaryList = new List<MetadataObject>();
+            List<SettableMetadataObject> temporaryList = new List<SettableMetadataObject>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCLoadingLabel"),
@@ -130,51 +130,51 @@ namespace MetadataUtilities.Models
                     }
 
                     temporaryList.AddRange(ageRatings.Select(ageRating
-                        => new MetadataObject(Settings)
+                        => new SettableMetadataObject(Settings)
                         {
                             Id = ageRating.Id,
                             Name = ageRating.Name,
-                            Type = FieldType.AgeRating
+                            Type = SettableFieldType.AgeRating
                         }));
 
                     temporaryList.AddRange(categories.Select(category
-                        => new MetadataObject(Settings)
+                        => new SettableMetadataObject(Settings)
                         {
                             Id = category.Id,
                             Name = category.Name,
-                            Type = FieldType.Category
+                            Type = SettableFieldType.Category
                         }));
 
                     temporaryList.AddRange(features.Select(feature
-                        => new MetadataObject(Settings)
+                        => new SettableMetadataObject(Settings)
                         {
                             Id = feature.Id,
                             Name = feature.Name,
-                            Type = FieldType.Feature
+                            Type = SettableFieldType.Feature
                         }));
 
                     temporaryList.AddRange(genres.Select(genre
-                        => new MetadataObject(Settings)
+                        => new SettableMetadataObject(Settings)
                         {
                             Id = genre.Id,
                             Name = genre.Name,
-                            Type = FieldType.Genre
+                            Type = SettableFieldType.Genre
                         }));
 
                     temporaryList.AddRange(seriesList.Select(series
-                        => new MetadataObject(Settings)
+                        => new SettableMetadataObject(Settings)
                         {
                             Id = series.Id,
                             Name = series.Name,
-                            Type = FieldType.Series
+                            Type = SettableFieldType.Series
                         }));
 
                     temporaryList.AddRange(tags.Select(tag
-                        => new MetadataObject(Settings)
+                        => new SettableMetadataObject(Settings)
                         {
                             Id = tag.Id,
                             Name = tag.Name,
-                            Type = FieldType.Tag
+                            Type = SettableFieldType.Tag
                         }));
 
                     UpdateGameCounts(temporaryList, Settings.IgnoreHiddenGamesInGameCount);
@@ -189,12 +189,12 @@ namespace MetadataUtilities.Models
             this.AddMissing(temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
         }
 
-        public void LoadMetadata(bool showGameNumber = true, FieldType? type = null)
+        public void LoadMetadata(bool showGameNumber = true, SettableFieldType? type = null)
         {
             Log.Debug("=== LoadMetadata: Start ===");
             DateTime ts = DateTime.Now;
 
-            List<MetadataObject> temporaryList = new List<MetadataObject>();
+            List<SettableMetadataObject> temporaryList = new List<SettableMetadataObject>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCLoadingLabel"),
@@ -208,69 +208,69 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
-                    if (type == null || type == FieldType.AgeRating)
+                    if (type == null || type == SettableFieldType.AgeRating)
                     {
                         temporaryList.AddRange(API.Instance.Database.AgeRatings.Select(ageRating
-                            => new MetadataObject(Settings)
+                            => new SettableMetadataObject(Settings)
                             {
                                 Id = ageRating.Id,
                                 Name = ageRating.Name,
-                                Type = FieldType.AgeRating
+                                Type = SettableFieldType.AgeRating
                             }));
                     }
 
-                    if (type == null || type == FieldType.Category)
+                    if (type == null || type == SettableFieldType.Category)
                     {
                         temporaryList.AddRange(API.Instance.Database.Categories.Select(category
-                            => new MetadataObject(Settings)
+                            => new SettableMetadataObject(Settings)
                             {
                                 Id = category.Id,
                                 Name = category.Name,
-                                Type = FieldType.Category
+                                Type = SettableFieldType.Category
                             }));
                     }
 
-                    if (type == null || type == FieldType.Feature)
+                    if (type == null || type == SettableFieldType.Feature)
                     {
                         temporaryList.AddRange(API.Instance.Database.Features.Select(feature
-                            => new MetadataObject(Settings)
+                            => new SettableMetadataObject(Settings)
                             {
                                 Id = feature.Id,
                                 Name = feature.Name,
-                                Type = FieldType.Feature
+                                Type = SettableFieldType.Feature
                             }));
                     }
 
-                    if (type == null || type == FieldType.Genre)
+                    if (type == null || type == SettableFieldType.Genre)
                     {
                         temporaryList.AddRange(API.Instance.Database.Genres.Select(genre
-                            => new MetadataObject(Settings)
+                            => new SettableMetadataObject(Settings)
                             {
                                 Id = genre.Id,
                                 Name = genre.Name,
-                                Type = FieldType.Genre
+                                Type = SettableFieldType.Genre
                             }));
                     }
 
-                    if (type == null || type == FieldType.Series)
+                    if (type == null || type == SettableFieldType.Series)
                     {
                         temporaryList.AddRange(API.Instance.Database.Series.Select(series
-                            => new MetadataObject(Settings)
+                            => new SettableMetadataObject(Settings)
                             {
                                 Id = series.Id,
                                 Name = series.Name,
-                                Type = FieldType.Series
+                                Type = SettableFieldType.Series
                             }));
                     }
 
-                    if (type == null || type == FieldType.Tag)
+                    if (type == null || type == SettableFieldType.Tag)
                     {
                         temporaryList.AddRange(API.Instance.Database.Tags.Select(tag
-                            => new MetadataObject(Settings)
+                            => new SettableMetadataObject(Settings)
                             {
                                 Id = tag.Id,
                                 Name = tag.Name,
-                                Type = FieldType.Tag
+                                Type = SettableFieldType.Tag
                             }));
                     }
 
@@ -290,15 +290,15 @@ namespace MetadataUtilities.Models
             Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
-        public void RemoveItems(IEnumerable<MetadataObject> items)
+        public void RemoveItems(IEnumerable<SettableMetadataObject> items)
         {
-            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+            foreach (SettableMetadataObject item in items.ToList().Cast<SettableMetadataObject>())
             {
                 Remove(item);
             }
         }
 
-        private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames)
+        private static void UpdateGameCounts(IEnumerable<SettableMetadataObject> itemList, bool ignoreHiddenGames)
         {
             Log.Debug("=== UpdateGameCounts: Start ===");
             DateTime ts = DateTime.Now;

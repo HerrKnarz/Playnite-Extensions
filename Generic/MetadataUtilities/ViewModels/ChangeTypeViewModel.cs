@@ -14,7 +14,7 @@ namespace MetadataUtilities.ViewModels
 
         private MetadataObjects _newObjects;
 
-        private FieldType _newType = FieldType.Category;
+        private SettableFieldType _newType = SettableFieldType.Category;
         private MetadataUtilities _plugin;
         private bool _saveAsRule;
 
@@ -31,7 +31,7 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _newObjects, value);
         }
 
-        public FieldType NewType
+        public SettableFieldType NewType
         {
             get => _newType;
             set => SetValue(ref _newType, value);
@@ -42,7 +42,7 @@ namespace MetadataUtilities.ViewModels
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                foreach (MetadataObject item in _metadataObjects)
+                foreach (SettableMetadataObject item in _metadataObjects)
                 {
                     if (item.Type == NewType)
                     {
@@ -55,7 +55,7 @@ namespace MetadataUtilities.ViewModels
                         Name = item.Name,
                         SourceObjects = new MetadataObjects(_plugin.Settings.Settings)
                         {
-                            new MetadataObject(_plugin.Settings.Settings)
+                            new SettableMetadataObject(_plugin.Settings.Settings)
                             {
                                 Type = item.Type,
                                 Name = item.Name,
@@ -66,7 +66,7 @@ namespace MetadataUtilities.ViewModels
 
                     rule.Merge();
 
-                    NewObjects.Add(new MetadataObject(_plugin.Settings.Settings)
+                    NewObjects.Add(new SettableMetadataObject(_plugin.Settings.Settings)
                     {
                         Type = NewType,
                         Name = item.Name,

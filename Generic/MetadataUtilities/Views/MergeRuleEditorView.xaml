@@ -21,7 +21,7 @@
                             ObjectType="{x:Type sys:Enum}"
                             x:Key="FieldTypeValues">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="helper:FieldType" />
+                <x:Type TypeName="helper:SettableFieldType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>

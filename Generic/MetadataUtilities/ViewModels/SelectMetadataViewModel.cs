@@ -78,7 +78,7 @@ namespace MetadataUtilities.ViewModels
         }
 
         private bool Filter(object item) =>
-            item is MetadataObject metadataListObject &&
+            item is SettableMetadataObject metadataListObject &&
             metadataListObject.Name.RegExIsMatch(SearchTerm) &&
             (!FilterSelected || metadataListObject.Selected);
     }
