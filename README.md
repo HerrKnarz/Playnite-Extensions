@@ -13,92 +13,31 @@ If you want to use my extensions, I strongly recommend to install them via the a
 
 If you have more ideas for these extensions, feel free to suggest them by opening an issue!
 
+Further information and documentation for my addons can be found [on my website](https://knarzwerk.de/en/playnite-extensions/)
+
 ## Wikipedia Metadata
 
-Extension to get metadata from wikipedia. The following fields are supported:
+Extension to get metadata from wikipedia. It can fetch name, cover, genres, developer, publisher, features, tags, links, series, platform critic score and description.
 
-- Name
-- Release Date
-- Genres
-- Developers
-- Publishers
-- Features
-- Tags (arcade system, engine, director, producer, designer, programmer, artist, writer, composer) Each can be toggled!
-- Links
-- Series
-- Platform
-- Cover image
-- Critic Score (Metacritic and GameRankings as fallback)
-- Description (with option to leave out certain sections)
-
-### Planned features
-- Maybe add wikipedia categories as optional tags (metadata addons can't directly fill the categories field).
-
-## Link Utilities
-
-Extension to manage links for the games in the playnite library. It can do the following:
-
-- Sort links by name or custom sort order.
-- Remove unwanted links (e.g. social media links added by IGDB).
-- Remove duplicate links.
-- Rename links (e.g. shorten wikipedia to wiki).
-- Add links to several websites directly by trying to find a valid link using the game name.
-- limited option for [custom link profiles](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Custom-link-profiles) to add your own websites to the add or browser search function.
-- Add library links: add links to the game page of its library
-- Add tags to games to keep track of missing links to specific websites.
-
-All of these functions can be triggered manually for the selected games via game or playnite menu or configured to be triggered automatically after the metadata of a game changes.
-
-- Search for a game on several websites to add links via search dialog
-- Open a search for a game in your web browser on supported websites.
-- Add link to active website in your browser via [bookmarklet](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet). Works with any website.
-- [Check if links are still working](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Check-links), with option to filter results, remove links or replace URLs in the result dialog.
-
-To see which websites are already supported or planned to be added see the [wiki](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Supported-websites-for-add-&-search-function)!
-
-### Planned features
-- add links to more websites.
-- blacklist games from adding "missing link" tags for specific websites.
-- add support for quick search to add links or search for games with specific links
-- option to remove links to manually added url mask from selected games 
+[-> Info, help and documentation](https://knarzwerk.de/en/playnite-extensions/wikipedia-metadata/)
 
 ## Metadata Utilities
 
-Extension to manage metadata for the games in the playnite library. It can do the following:
+Extension to manage metadata for the games in the playnite library. It adds a new metadata editor to easily edit them, find and merge similar metadata across types, remove unwanted metadata and much more. Age ratings, categories, features, genres, series and tags are supported.
 
-- Quickly filter and edit age ratings, categories, features, genres, series and tags in new [Metadata Editor](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Metadata-Editor).
-- Merge together similar age ratings, categories, features, genres, series and tags without being constrained to only one type (you can easily merge categories and tags together for example).
-- Automatically execute [merge rules](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Merge-Rules) after metadata changes or manually.
-- Simply change the type of age ratings, categories, features, genres, series and tags.
-- Separate metadata items by [prefixes](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#prefixes) defined by you, that then can be filtered or easily added to new items.
-- Set [default categories and/or tags](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#adding-default-categoriestags) that will automatically be added to new games on import.
-- Automatically [remove unused](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#removing-unused-metadata) age ratings, categories, features, genres, series and tags on start up (deactivated by default).
-- Automatically [remove unwanted](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#removing-unwanted-metadata) age ratings, features, genres, series and tags after metadata updates.
-- Add context menu entries to [quickly add, remove or toggle](https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Quick-Add) age ratings, categories, features, genres, series and tags in games to the game context menu. You can configure which will show up in the menu and how via the addon settings. Per default none are shown.
-- Regex support for filtering in all search boxes of the addon.
+[-> Info, help and documentation](https://knarzwerk.de/en/playnite-extensions/metadata-utilities/)
 
-### Planned features
-- Add window to quickly edit age ratings, categories, features, genres, series and tags for a game, that is easier to use for this use case than the standard game detail editor.
-- Option to setup "metadata sets" that then can be quickly assigned to a game with one click (for example setting feature "Controller support" together with the tag "TV gaming".
-- Add option to change specific metadata if certain conditions are met in a game. The idea isn't fully fleshed out yet...
+## Link Utilities
 
-The addon is overlapping with the Library Management extension to some degree, because I wasn't really happy with how some of its features (merging mostly) work. Metadata Utilities doesn't and won't completely replace Library Management, so you can use both together. I'd just recommend to restrict your usage of merging and similar functions that automatically change mnetadata in the background to one of both addons.
+Extension to manage links for the games in the playnite library. With it you can automatically add links to several supported websites, sort, rename and remove unwanted links among many other useful features.
+
+[-> Info, help and documentation](https://knarzwerk.de/en/playnite-extensions/link-utilities/)
 
 ## Company Companion
 
-Extension to manage game companies (see Developer and Publisher fields in Playnite). It can do the following:
+Extension to manage game companies (see Developer and Publisher fields in Playnite). It can assist you in finding and merging similar companies and remove business entity descriptions like Ltd. or Co.
 
-- Merge duplicate companies
-- Remove Business entity descriptions like Ltd. or Co.
-- Find and merge similar named companies by removing special characters and generic strings like "Interactive", "Games", "Studios"
-
-### Planned features
-- optional fuzzy search to find similar companies
-- option to filter only publishers or developers, to manage then separately.
-- ignore list to keep specific companies from being merged with similar ones.
-- option to save merge groups to automatically merge them again, when games were added or updated.
-- option to find and manually split comma separated companies.
-- maybe add additional information to companies like descriptions and links (via own dialog window).
+[-> Info, help and documentation](https://knarzwerk.de/en/playnite-extensions/company-companion/)
 
 ## Quick Add (deprecated)
 
