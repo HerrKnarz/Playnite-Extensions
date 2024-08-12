@@ -394,7 +394,7 @@ namespace MetadataUtilities
                                 foreach (Game game in games)
                                 {
                                     activateGlobalProgress.Text =
-                                        $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(action.ProgressMessage)}{Environment.NewLine}{game.Name}";
+                                        $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}{Environment.NewLine}{action.ProgressMessage}{Environment.NewLine}{game.Name}";
 
                                     if (activateGlobalProgress.CancelToken.IsCancellationRequested)
                                     {
