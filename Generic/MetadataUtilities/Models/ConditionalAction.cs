@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using Playnite.SDK;
+using Playnite.SDK.Models;
 
 namespace MetadataUtilities.Models
 {
@@ -16,10 +20,11 @@ namespace MetadataUtilities.Models
     {
         private readonly Settings _settings;
         private ObservableCollection<Action> _actions = new ObservableCollection<Action>();
-        private bool _canBeExecutedManually = false;
+        private bool _canBeExecutedManually;
         private ObservableCollection<Condition> _conditions = new ObservableCollection<Condition>();
-        private bool _ignoreConditionOnManual = false;
+        private bool _ignoreConditionOnManual;
         private string _name = string.Empty;
+        private int _sortNo = 0;
         private LogicType _type = LogicType.And;
 
         public ConditionalAction(Settings settings) => _settings = settings;
@@ -54,6 +59,12 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _name, value);
         }
 
+        public int SortNo
+        {
+            get => _sortNo;
+            set => SetValue(ref _sortNo, value);
+        }
+
         public LogicType Type
         {
             get => _type;
@@ -66,6 +77,46 @@ namespace MetadataUtilities.Models
                     _canBeExecutedManually = true;
                 }
             }
+        }
+
+        public bool CheckAndExecute(Game game, bool isManual = false) =>
+            ((isManual && IgnoreConditionOnManual) || CheckConditions(game)) && Execute(game);
+
+        public bool CheckConditions(Game game)
+        {
+            switch (Type)
+            {
+                case LogicType.And:
+                    return Conditions.All(x => x.IsTrue(game));
+
+                case LogicType.Or:
+                    return Conditions.Any(x => x.IsTrue(game));
+
+                case LogicType.Nand:
+                    return !Conditions.All(x => x.IsTrue(game));
+
+                case LogicType.Nor:
+                    return !Conditions.Any(x => x.IsTrue(game));
+
+                case LogicType.Manual:
+                    return CanBeExecutedManually;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private bool Execute(Game game)
+        {
+            bool mustUpdate = Actions.OrderBy(x => x.ActionType == ActionType.ClearField ? 1 : 2)
+                .Aggregate(false, (current, action) => current | action.Execute(game));
+
+            if (mustUpdate)
+            {
+                API.Instance.Database.Games.Update(game);
+            }
+
+            return mustUpdate;
         }
     }
 }

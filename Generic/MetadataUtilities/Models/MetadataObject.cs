@@ -7,20 +7,20 @@ namespace MetadataUtilities.Models
 {
     public class MetadataObject : DatabaseObject
     {
-        protected readonly Settings settings;
+        private protected readonly Settings _settings;
         private int _gameCount;
-        protected string name = string.Empty;
-        protected FieldType type;
+        private protected string _name = string.Empty;
+        private protected FieldType _type;
 
-        public MetadataObject(Settings settings) => this.settings = settings;
+        public MetadataObject(Settings settings) => this._settings = settings;
 
         [DontSerialize]
         public new Guid Id { get; set; }
 
         public FieldType Type
         {
-            get => type;
-            set => SetValue(ref type, value);
+            get => _type;
+            set => SetValue(ref _type, value);
         }
 
         [DontSerialize]
@@ -32,19 +32,19 @@ namespace MetadataUtilities.Models
 
         public new string Name
         {
-            get => name;
-            set => SetValue(ref name, value);
+            get => _name;
+            set => SetValue(ref _name, value);
         }
 
         [DontSerialize]
-        public string TypeAndName => $"{type.GetEnumDisplayName()}: {Name}";
+        public string TypeAndName => $"{_type.GetEnumDisplayName()}: {Name}";
 
         [DontSerialize]
-        public string TypeAsString => type.GetEnumDisplayName();
+        public string TypeAsString => _type.GetEnumDisplayName();
 
         [DontSerialize]
-        public string TypeLabel => type.GetEnumDisplayName();
+        public string TypeLabel => _type.GetEnumDisplayName();
 
-        public void GetGameCount() => GameCount = DatabaseObjectHelper.GetGameCount((FieldType)type, Id, settings.IgnoreHiddenGamesInGameCount);
+        public void GetGameCount() => GameCount = DatabaseObjectHelper.GetGameCount(_type, Id, _settings.IgnoreHiddenGamesInGameCount);
     }
 }

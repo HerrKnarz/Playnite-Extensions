@@ -63,12 +63,12 @@ namespace MetadataUtilities.Actions
                     break;
 
                 case ActionModifierTypes.Remove:
-                    mustUpdate = DatabaseObjectHelper.RemoveObjectFromGame(game, metaDataItem.Type, new List<Guid>() { metaDataItem.Id });
+                    mustUpdate = DatabaseObjectHelper.RemoveObjectFromGame(game, metaDataItem.Type, metaDataItem.Id);
                     break;
 
                 case ActionModifierTypes.Toggle:
                     mustUpdate = DatabaseObjectHelper.DbObjectInGame(game, (FieldType)metaDataItem.Type, metaDataItem.Id) ?
-                        DatabaseObjectHelper.RemoveObjectFromGame(game, metaDataItem.Type, new List<Guid>() { metaDataItem.Id }) :
+                        DatabaseObjectHelper.RemoveObjectFromGame(game, metaDataItem.Type, metaDataItem.Id) :
                         DatabaseObjectHelper.AddDbObjectToGame(game, metaDataItem.Type, metaDataItem.Id);
                     break;
 

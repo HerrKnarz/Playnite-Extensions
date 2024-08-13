@@ -248,6 +248,79 @@ namespace KNARZhelper
             }
         }
 
+        public static void EmptyFieldInGame(Game game, SettableFieldType type)
+        {
+            switch (type)
+            {
+                case SettableFieldType.AgeRating:
+
+                    API.Instance.MainView.UIDispatcher.Invoke(() => game.AgeRatingIds?.Clear());
+                    return;
+
+                case SettableFieldType.Category:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => game.CategoryIds?.Clear());
+                    return;
+
+                case SettableFieldType.Feature:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => game.FeatureIds?.Clear());
+                    return;
+
+                case SettableFieldType.Genre:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => game.GenreIds?.Clear());
+                    return;
+
+                case SettableFieldType.Series:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => game.SeriesIds?.Clear());
+                    return;
+
+                case SettableFieldType.Tag:
+                    API.Instance.MainView.UIDispatcher.Invoke(() => game.TagIds?.Clear());
+                    return;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        public static bool FieldInGameIsEmpty(Game game, FieldType type)
+        {
+            switch (type)
+            {
+                case FieldType.AgeRating:
+                    return !game.AgeRatingIds?.Any() ?? true;
+
+                case FieldType.Category:
+                    return !game.CategoryIds?.Any() ?? true;
+
+                case FieldType.Feature:
+                    return !game.FeatureIds?.Any() ?? true;
+
+                case FieldType.Developer:
+                    return !game.DeveloperIds?.Any() ?? true;
+
+                case FieldType.Genre:
+                    return !game.GenreIds?.Any() ?? true;
+
+                case FieldType.Platform:
+                    return !game.PlatformIds?.Any() ?? true;
+
+                case FieldType.Publisher:
+                    return !game.PublisherIds?.Any() ?? true;
+
+                case FieldType.Series:
+                    return !game.SeriesIds?.Any() ?? true;
+
+                case FieldType.Source:
+                    return game.Source == null;
+
+                case FieldType.Tag:
+                    return !game.TagIds?.Any() ?? true;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
         public static Guid GetDbObjectId(string name, FieldType type)
         {
             DatabaseObject item;
@@ -452,6 +525,33 @@ namespace KNARZhelper
 
                 case SettableFieldType.Tag:
                     return ids.Aggregate(false, (current, id) => current | API.Instance.MainView.UIDispatcher.Invoke(() => game.TagIds?.Remove(id) ?? false));
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        public static bool RemoveObjectFromGame(Game game, SettableFieldType type, Guid id)
+        {
+            switch (type)
+            {
+                case SettableFieldType.AgeRating:
+                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.AgeRatingIds?.Remove(id) ?? false);
+
+                case SettableFieldType.Category:
+                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.CategoryIds?.Remove(id) ?? false);
+
+                case SettableFieldType.Feature:
+                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.FeatureIds?.Remove(id) ?? false);
+
+                case SettableFieldType.Genre:
+                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.GenreIds?.Remove(id) ?? false);
+
+                case SettableFieldType.Series:
+                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.SeriesIds?.Remove(id) ?? false);
+
+                case SettableFieldType.Tag:
+                    return API.Instance.MainView.UIDispatcher.Invoke(() => game.TagIds?.Remove(id) ?? false);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

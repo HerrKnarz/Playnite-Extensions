@@ -40,7 +40,7 @@ namespace MetadataUtilities.Models
                 if (_editName != value && UpdateItem(Name, Prefix + value))
                 {
                     SetValue(ref _editName, value);
-                    name = Prefix + value;
+                    _name = Prefix + value;
                     CleanedUpName = EditName.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
                 }
 
@@ -50,7 +50,7 @@ namespace MetadataUtilities.Models
 
         public new string Name
         {
-            get => name;
+            get => _name;
             set
             {
                 if (value == null)
@@ -58,7 +58,7 @@ namespace MetadataUtilities.Models
                     value = string.Empty;
                 }
 
-                SetValue(ref name, value);
+                SetValue(ref _name, value);
 
                 _prefix = GetPrefix();
 
@@ -93,7 +93,7 @@ namespace MetadataUtilities.Models
                 }
 
                 SetValue(ref _prefix, value);
-                name = value + EditName;
+                _name = value + EditName;
             }
         }
 
@@ -113,8 +113,8 @@ namespace MetadataUtilities.Models
 
         public new SettableFieldType Type
         {
-            get => (SettableFieldType)type;
-            set => SetValue(ref type, (FieldType)value);
+            get => (SettableFieldType)_type;
+            set => SetValue(ref _type, (FieldType)value);
         }
 
         public void CheckGroup(List<SettableMetadataObject> metadataList)
@@ -122,12 +122,12 @@ namespace MetadataUtilities.Models
 
         public string GetPrefix()
         {
-            if (settings?.Prefixes == null)
+            if (_settings?.Prefixes == null)
             {
                 return string.Empty;
             }
 
-            foreach (string prefix in settings.Prefixes)
+            foreach (string prefix in _settings.Prefixes)
             {
                 if (Name?.StartsWith(prefix) ?? false)
                 {
