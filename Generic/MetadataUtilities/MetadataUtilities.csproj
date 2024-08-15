@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="Actions\AddDefaultsAction.cs" />
     <Compile Include="Actions\BaseAction.cs" />
+    <Compile Include="Actions\ExecuteConditionalActionsAction.cs" />
     <Compile Include="Actions\IBaseAction.cs" />
     <Compile Include="Actions\QuickAddAction.cs" />
     <Compile Include="Actions\RemoveUnwantedAction.cs" />
@@ -84,9 +85,13 @@
     <Compile Include="Models\QuickAddObject.cs" />
     <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
     <Compile Include="ViewModels\ChangeTypeViewModel.cs" />
+    <Compile Include="ViewModels\ConditionalActionEditorViewModel.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\MergeRuleEditorViewModel.cs" />
     <Compile Include="ViewModels\SearchGameViewModel.cs" />
+    <Compile Include="Views\ConditionalActionEditorView.xaml.cs">
+      <DependentUpon>ConditionalActionEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SearchGameView.xaml.cs">
       <DependentUpon>SearchGameView.xaml</DependentUpon>
     </Compile>
@@ -128,6 +133,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="Views\ConditionalActionEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SearchGameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

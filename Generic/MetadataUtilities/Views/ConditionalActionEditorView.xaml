@@ -1,0 +1,197 @@
+﻿<UserControl x:Class="MetadataUtilities.Views.ConditionalActionEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:metadataUtilities="clr-namespace:MetadataUtilities"
+             d:DataContext="{d:DesignInstance Type=viewModels:ConditionalActionEditorViewModel}"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
+             xmlns:models="clr-namespace:MetadataUtilities.Models"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <metadataUtilities:LogicTypeConverter x:Key="LogicTypeConverter" />
+        <ObjectDataProvider MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}"
+                            x:Key="LogicTypeValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="models:LogicType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ContextMenu x:Key="ConditionsMenu">
+            <MenuItem Header="{DynamicResource LOCAgeRatingsLabel}"
+                      Command="{Binding AddConditionAgeRatingsCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCCategoriesLabel}"
+                      Command="{Binding AddConditionCategoriesCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCDevelopersLabel}"
+                      Command="{Binding AddConditionDevelopersCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCFeaturesLabel}"
+                      Command="{Binding AddConditionFeaturesCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCGenresLabel}"
+                      Command="{Binding AddConditionGenresCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCPlatformsTitle}"
+                      Command="{Binding AddConditionPlatformsCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCPublishersLabel}"
+                      Command="{Binding AddConditionPublishersCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCSeriesLabel}"
+                      Command="{Binding AddConditionSeriesCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCSourcesLabel}"
+                      Command="{Binding AddConditionSourcesCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCTagsLabel}"
+                      Command="{Binding AddConditionTagsCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="ActionsMenu">
+            <MenuItem Header="{DynamicResource LOCAgeRatingsLabel}"
+                      Command="{Binding AddActionAgeRatingsCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCCategoriesLabel}"
+                      Command="{Binding AddActionCategoriesCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCFeaturesLabel}"
+                      Command="{Binding AddActionFeaturesCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCGenresLabel}"
+                      Command="{Binding AddActionGenresCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCSeriesLabel}"
+                      Command="{Binding AddActionSeriesCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCTagsLabel}"
+                      Command="{Binding AddActionTagsCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+        </ContextMenu>
+    </UserControl.Resources>
+    <DockPanel FocusManager.FocusedElement="{Binding ElementName=NameEdit}">
+        <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,10,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <Button Content="{DynamicResource LOCSaveLabel}" Command="{Binding SaveCommand}" Style="{StaticResource BottomButton}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" IsDefault="True" />
+                <Button Content="{DynamicResource LOCCancelLabel}" Style="{StaticResource BottomButton}" IsCancel="True" />
+            </StackPanel>
+        </Border>
+
+        <Grid DockPanel.Dock="Top" Margin="10,10, 10, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Column="0" Grid.Row="0" Margin="0, 0, 10, 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Content="{DynamicResource LOCNameLabel}" Margin="0, 0, 10, 10" />
+                <TextBox Grid.Column="1" Grid.Row="0" Name="NameEdit" Margin="0,0, 0, 10"
+                         Text="{Binding ConditionalAction.Name, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Grid.Column="0" Grid.Row="1" Content="{DynamicResource LOCTypeLabel}" Margin="0, 0, 10, 10" />
+                <ComboBox Grid.Column="1" Grid.Row="1" SelectedItem="{Binding ConditionalAction.Type}"
+                          ItemsSource="{Binding Source={StaticResource LogicTypeValues}}"
+                          Margin="0, 0, 0, 10">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource LogicTypeConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Label Grid.Column="0" Grid.Row="2" Content="{DynamicResource LOCMetadataUtilitiesSettingsPosition}" Margin="0, 0, 10, 10" />
+                <TextBox Grid.Column="1" Grid.Row="2" Margin="0, 0, 0, 10"
+                         Text="{Binding ConditionalAction.SortNo, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="0" Margin="10, 0, 0, 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <CheckBox Grid.Row="0"  IsChecked="{Binding ConditionalAction.Enabled}" Margin="0, 0, 0, 10">
+                    <TextBlock Text="{DynamicResource LOCEnabledTitle}" TextWrapping="Wrap" />
+                </CheckBox>
+                <CheckBox Grid.Row="1" IsChecked="{Binding ConditionalAction.CanBeExecutedManually}" Margin="0, 0, 0, 10">
+                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsCanBeExecutedManually}" TextWrapping="Wrap" />
+                </CheckBox>
+                <CheckBox Grid.Row="2" IsChecked="{Binding ConditionalAction.IgnoreConditionOnManual}" Margin="0, 0, 0, 10">
+                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual}" TextWrapping="Wrap" />
+                </CheckBox>
+            </Grid>
+
+            <GroupBox Grid.Column="0" Grid.Row="1" Header="{DynamicResource LOCMetadataUtilitiesSettingsConditions}"
+                      Padding="10, 10, 10, 0" Margin="0,0,10,0">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" LastChildFill="False" Margin="0,10,0,0">
+                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_Contains}" Margin="0,0,10,10"
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenu}" Tag="0" Click="b_Click" />
+                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_DoesNotContain}" Margin="0,0,10,10"
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenu}" Tag="1" Click="b_Click" />
+                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsEmpty}" Margin="0,0,10,10"
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenu}" Tag="2" Click="b_Click" />
+                        <Button Content="&#xec53;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}"
+                                ToolTip="{DynamicResource LOCRemoveTitle}" Margin="0,0,0,10"
+                                Command="{Binding RemoveConditionCommand}"
+                                CommandParameter="{Binding SelectedItems, ElementName=LbConditions}" />
+                    </DockPanel>
+
+                    <ListBox DockPanel.Dock="Top" Name="LbConditions" ItemsSource="{Binding ConditionalAction.Conditions}"
+                         SelectionMode="Extended">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ToString}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Grid.Row="1" Header="{DynamicResource LOCActionsLabel}"
+                      Padding="10, 10, 10, 0" Margin="10,0,0,0">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" LastChildFill="False" Margin="0,10,0,0">
+                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_AddObject}" Margin="0,0,10,10"
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenu}" Tag="0" Click="b_Click" />
+                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_RemoveObject}" Margin="0,0,10,10"
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenu}" Tag="1" Click="b_Click" />
+                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_ClearField}" Margin="0,0,10,10"
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenu}" Tag="2" Click="b_Click" />
+                        <Button Content="&#xec53;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}"
+                                ToolTip="{DynamicResource LOCRemoveTitle}" Margin="0,0,0,10"
+                                Command="{Binding RemoveActionCommand}"
+                                CommandParameter="{Binding SelectedItems, ElementName=LbActions}" />
+                    </DockPanel>
+
+                    <ListBox DockPanel.Dock="Top" Name="LbActions" ItemsSource="{Binding ConditionalAction.Actions}"
+                             SelectionMode="Extended">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ToString}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
+</UserControl>

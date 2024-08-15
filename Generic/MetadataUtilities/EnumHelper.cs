@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using MetadataUtilities.Models;
 using Playnite.SDK;
 using System;
 using System.Globalization;
@@ -15,6 +16,13 @@ namespace MetadataUtilities
     public class FieldTypeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => ((SettableFieldType)value).GetEnumDisplayName();
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
+    }
+
+    public class LogicTypeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => ((LogicType)value).GetEnumDisplayName();
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotSupportedException();
     }

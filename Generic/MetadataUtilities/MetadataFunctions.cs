@@ -3,6 +3,7 @@ using Playnite.SDK;
 using System.Collections.Generic;
 using System.Windows;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using KNARZhelper;
 using MetadataUtilities.ViewModels;
@@ -11,37 +12,51 @@ namespace MetadataUtilities
 {
     public static class MetadataFunctions
     {
-        public static List<SettableMetadataObject> GetItemsFromAddDialog(SettableFieldType type, Settings settings)
+        public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, Settings settings)
         {
-            MetadataObjects items = new MetadataObjects(settings);
-
-            items.LoadMetadata(false, type);
+            ObservableCollection<MetadataObject> items = LoadMetadata(type, settings);
 
             string label;
 
             switch (type)
             {
-                case SettableFieldType.AgeRating:
+                case FieldType.AgeRating:
                     label = ResourceProvider.GetString("LOCAgeRatingsLabel");
                     break;
 
-                case SettableFieldType.Category:
+                case FieldType.Category:
                     label = ResourceProvider.GetString("LOCCategoriesLabel");
                     break;
 
-                case SettableFieldType.Feature:
+                case FieldType.Developer:
+                    label = ResourceProvider.GetString("LOCDevelopersLabel");
+                    break;
+
+                case FieldType.Feature:
                     label = ResourceProvider.GetString("LOCFeaturesLabel");
                     break;
 
-                case SettableFieldType.Genre:
+                case FieldType.Genre:
                     label = ResourceProvider.GetString("LOCGenresLabel");
                     break;
 
-                case SettableFieldType.Series:
+                case FieldType.Platform:
+                    label = ResourceProvider.GetString("LOCPlatformsTitle");
+                    break;
+
+                case FieldType.Publisher:
+                    label = ResourceProvider.GetString("LOCPublishersLabel");
+                    break;
+
+                case FieldType.Series:
                     label = ResourceProvider.GetString("LOCSeriesLabel");
                     break;
 
-                case SettableFieldType.Tag:
+                case FieldType.Source:
+                    label = ResourceProvider.GetString("LOCSourcesLabel");
+                    break;
+
+                case FieldType.Tag:
                     label = ResourceProvider.GetString("LOCTagsLabel");
                     break;
 
@@ -53,7 +68,138 @@ namespace MetadataUtilities
 
             return (window?.ShowDialog() ?? false)
                 ? items.Where(x => x.Selected).ToList()
-                : new List<SettableMetadataObject>();
+                : new List<MetadataObject>();
+        }
+
+        public static ObservableCollection<MetadataObject> LoadMetadata(FieldType type, Settings settings)
+        {
+            List<MetadataObject> temporaryList = new List<MetadataObject>();
+
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                ResourceProvider.GetString("LOCLoadingLabel"),
+                false
+            )
+            {
+                IsIndeterminate = true
+            };
+
+            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            {
+                try
+                {
+                    switch (type)
+                    {
+                        case FieldType.AgeRating:
+                            temporaryList.AddRange(API.Instance.Database.AgeRatings.Select(ageRating
+                                => new MetadataObject(settings)
+                                {
+                                    Id = ageRating.Id,
+                                    Name = ageRating.Name,
+                                    Type = FieldType.AgeRating
+                                }));
+                            break;
+
+                        case FieldType.Category:
+                            temporaryList.AddRange(API.Instance.Database.Categories.Select(category
+                                => new MetadataObject(settings)
+                                {
+                                    Id = category.Id,
+                                    Name = category.Name,
+                                    Type = FieldType.Category
+                                }));
+                            break;
+
+                        case FieldType.Developer:
+                            temporaryList.AddRange(API.Instance.Database.Companies.Select(company
+                                => new MetadataObject(settings)
+                                {
+                                    Id = company.Id,
+                                    Name = company.Name,
+                                    Type = FieldType.Developer
+                                }));
+                            break;
+
+                        case FieldType.Feature:
+                            temporaryList.AddRange(API.Instance.Database.Features.Select(feature
+                                => new MetadataObject(settings)
+                                {
+                                    Id = feature.Id,
+                                    Name = feature.Name,
+                                    Type = FieldType.Feature
+                                }));
+                            break;
+
+                        case FieldType.Genre:
+                            temporaryList.AddRange(API.Instance.Database.Genres.Select(genre
+                                => new MetadataObject(settings)
+                                {
+                                    Id = genre.Id,
+                                    Name = genre.Name,
+                                    Type = FieldType.Genre
+                                }));
+                            break;
+
+                        case FieldType.Platform:
+                            temporaryList.AddRange(API.Instance.Database.Platforms.Select(platform
+                                => new MetadataObject(settings)
+                                {
+                                    Id = platform.Id,
+                                    Name = platform.Name,
+                                    Type = FieldType.Developer
+                                }));
+                            break;
+
+                        case FieldType.Publisher:
+                            temporaryList.AddRange(API.Instance.Database.Companies.Select(company
+                                => new MetadataObject(settings)
+                                {
+                                    Id = company.Id,
+                                    Name = company.Name,
+                                    Type = FieldType.Publisher
+                                }));
+                            break;
+
+                        case FieldType.Series:
+                            temporaryList.AddRange(API.Instance.Database.Series.Select(series
+                                => new MetadataObject(settings)
+                                {
+                                    Id = series.Id,
+                                    Name = series.Name,
+                                    Type = FieldType.Series
+                                }));
+                            break;
+
+                        case FieldType.Source:
+                            temporaryList.AddRange(API.Instance.Database.Sources.Select(source
+                                => new MetadataObject(settings)
+                                {
+                                    Id = source.Id,
+                                    Name = source.Name,
+                                    Type = FieldType.Source
+                                }));
+                            break;
+
+                        case FieldType.Tag:
+                            temporaryList.AddRange(API.Instance.Database.Tags.Select(tag
+                                => new MetadataObject(settings)
+                                {
+                                    Id = tag.Id,
+                                    Name = tag.Name,
+                                    Type = FieldType.Tag
+                                }));
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            }, globalProgressOptions);
+
+            return temporaryList.OrderBy(x => x.TypeAndName).ToObservable();
         }
 
         public static List<SettableMetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)

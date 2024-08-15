@@ -97,6 +97,7 @@ namespace MetadataUtilities
         {
             string menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
             string mergeSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsMergeRules");
+            string conditionalSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsTabConditionalActions");
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
             List<Game> games = args.Games.Distinct().ToList();
 
@@ -137,6 +138,14 @@ namespace MetadataUtilities
                 Description = rule.TypeAndName,
                 MenuSection = $"{menuSection}|{mergeSection}",
                 Action = a => MergeItems(games, rule)
+            }));
+
+            menuItems.AddRange(Settings.Settings.ConditionalActions.OrderBy(x => x.Name).Select(action => new GameMenuItem
+            {
+                Description = action.Name,
+                MenuSection = $"{menuSection}|{conditionalSection}",
+                Action = a => DoForAll(games, ExecuteConditionalActionsAction.Instance(this), true,
+                    ActionModifierTypes.IsManual, action)
             }));
 
             List<GameMenuItem> quickAddItems = new List<GameMenuItem>();

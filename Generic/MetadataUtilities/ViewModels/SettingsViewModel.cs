@@ -12,6 +12,8 @@ using MetadataUtilities.Models;
 using MetadataUtilities.Views;
 using Playnite.SDK;
 using Playnite.SDK.Data;
+using Action = MetadataUtilities.Models.Action;
+using Condition = MetadataUtilities.Models.Condition;
 
 namespace MetadataUtilities.ViewModels
 {
@@ -48,6 +50,26 @@ namespace MetadataUtilities.ViewModels
             SourceObjectsViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             SourceObjectsViewSource.IsLiveSortingRequested = true;
         }
+
+        public RelayCommand AddConActionCommand => new RelayCommand(() =>
+        {
+            ConditionalAction conditionalAction = new ConditionalAction(Settings);
+
+            Window window = ConditionalActionEditorViewModel.GetWindow(Settings, conditionalAction);
+
+            if (window == null)
+            {
+                return;
+            }
+
+            if (!(window.ShowDialog() ?? false))
+            {
+                return;
+            }
+
+            Settings.ConditionalActions.Add(conditionalAction);
+            Settings.ConditionalActions = Settings.ConditionalActions.OrderBy(x => x.Name).ToObservable();
+        });
 
         public RelayCommand AddExistingDefaultCategoriesCommand =>
             new RelayCommand(() => Settings.DefaultCategories.AddItems(SettableFieldType.Category));
@@ -156,6 +178,60 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand AddUnwantedTagsCommand
             => new RelayCommand(() => Settings.UnwantedItems.AddItems(SettableFieldType.Tag));
 
+        public RelayCommand<object> EditConActionCommand => new RelayCommand<object>(conAction =>
+        {
+            if (conAction == null)
+                return;
+
+            ConditionalAction conditionalActionToEdit = new ConditionalAction(Settings);
+            ConditionalAction conditionalActionOriginal = (ConditionalAction)conAction;
+
+            conditionalActionToEdit.Name = conditionalActionOriginal.Name;
+            conditionalActionToEdit.Type = conditionalActionOriginal.Type;
+            conditionalActionToEdit.CanBeExecutedManually = conditionalActionOriginal.CanBeExecutedManually;
+            conditionalActionToEdit.IgnoreConditionOnManual = conditionalActionOriginal.IgnoreConditionOnManual;
+            conditionalActionToEdit.Enabled = conditionalActionOriginal.Enabled;
+            conditionalActionToEdit.SortNo = conditionalActionOriginal.SortNo;
+
+            foreach (Condition condition in conditionalActionOriginal.Conditions)
+            {
+                conditionalActionToEdit.Conditions.Add(new Condition(_settings)
+                {
+                    Name = condition.Name,
+                    Type = condition.Type,
+                    Comparator = condition.Comparator
+                });
+            }
+
+            foreach (Action action in conditionalActionOriginal.Actions)
+            {
+                conditionalActionToEdit.Actions.Add(new Action(_settings)
+                {
+                    Name = action.Name,
+                    Type = action.Type,
+                    ActionType = action.ActionType
+                });
+            }
+
+            Window window = ConditionalActionEditorViewModel.GetWindow(Settings, conditionalActionToEdit);
+
+            if (window == null)
+            {
+                return;
+            }
+
+            if (!(window.ShowDialog() ?? false))
+            {
+                return;
+            }
+
+            Settings.ConditionalActions.Remove(conditionalActionOriginal);
+            Settings.ConditionalActions.Add(conditionalActionToEdit);
+
+            Settings.ConditionalActions =
+                Settings.ConditionalActions.OrderBy(x => x.SortNo).ThenBy(x => x.Name).ToObservable();
+        }, conAction => conAction != null);
+
         public RelayCommand<object> EditMergeRuleCommand
             => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
 
@@ -189,6 +265,14 @@ namespace MetadataUtilities.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public RelayCommand<IList<object>> RemoveConActionCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (ConditionalAction conAction in items.ToList().Cast<ConditionalAction>())
+            {
+                Settings.ConditionalActions.Remove(conAction);
+            }
+        }, items => items?.Count != 0);
 
         public RelayCommand<IList<object>> RemoveDefaultCategoryCommand =>
             new RelayCommand<IList<object>>(items => RemoveFromList(items, Settings.DefaultCategories),
@@ -266,19 +350,20 @@ namespace MetadataUtilities.ViewModels
 
         private Settings EditingClone { get; set; }
 
-        public void AddItemsToQuickAddList(List<SettableMetadataObject> items)
+        public void AddItemsToQuickAddList(List<MetadataObject> items)
         {
             if (items.Count == 0)
             {
                 return;
             }
 
-            foreach (SettableMetadataObject item in items.Where(item => Settings.QuickAddObjects.All(x => x.TypeAndName != item.TypeAndName)))
+            foreach (MetadataObject item in items.Where(item => Settings.QuickAddObjects.All(x => x.TypeAndName != item.TypeAndName)))
             {
+                //Todo: Check if type is settable!
                 Settings.QuickAddObjects.Add(new QuickAddObject(_settings)
                 {
                     Name = item.Name,
-                    Type = item.Type
+                    Type = (SettableFieldType)item.Type
                 });
             }
 
@@ -287,7 +372,7 @@ namespace MetadataUtilities.ViewModels
 
         public void AddQuickAddItems(SettableFieldType type)
         {
-            List<SettableMetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
+            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog((FieldType)type, Settings);
 
             if (items.Count == 0)
             {

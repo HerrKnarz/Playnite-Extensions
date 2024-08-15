@@ -12,7 +12,6 @@ namespace MetadataUtilities.Models
         private string _cleanedUpName;
         private string _editName;
         private string _prefix = string.Empty;
-        private bool _selected;
         private bool _showGrouped;
 
         public SettableMetadataObject(Settings settings) : base(settings)
@@ -95,13 +94,6 @@ namespace MetadataUtilities.Models
                 SetValue(ref _prefix, value);
                 _name = value + EditName;
             }
-        }
-
-        [DontSerialize]
-        public bool Selected
-        {
-            get => _selected;
-            set => SetValue(ref _selected, value);
         }
 
         [DontSerialize]

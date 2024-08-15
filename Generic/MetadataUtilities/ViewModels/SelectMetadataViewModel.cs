@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
@@ -16,7 +17,7 @@ namespace MetadataUtilities.ViewModels
         private bool _filterSelected;
         private string _searchTerm = string.Empty;
 
-        public SelectMetadataViewModel(MetadataObjects items)
+        public SelectMetadataViewModel(ObservableCollection<MetadataObject> items)
         {
             FilteredMetadata = CollectionViewSource.GetDefaultView(items);
             FilteredMetadata.Filter = Filter;
@@ -54,7 +55,7 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public static Window GetWindow(MetadataObjects items, string windowTitle)
+        public static Window GetWindow(ObservableCollection<MetadataObject> items, string windowTitle)
         {
             try
             {
@@ -78,7 +79,7 @@ namespace MetadataUtilities.ViewModels
         }
 
         private bool Filter(object item) =>
-            item is SettableMetadataObject metadataListObject &&
+            item is MetadataObject metadataListObject &&
             metadataListObject.Name.RegExIsMatch(SearchTerm) &&
             (!FilterSelected || metadataListObject.Selected);
     }

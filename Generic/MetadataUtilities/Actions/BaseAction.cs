@@ -7,7 +7,8 @@ namespace MetadataUtilities.Actions
         None,
         Add,
         Remove,
-        Toggle
+        Toggle,
+        IsManual
     }
 
     public abstract class BaseAction : IBaseAction

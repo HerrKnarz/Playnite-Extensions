@@ -2,26 +2,19 @@
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
+using System.Linq;
 
 namespace MetadataUtilities.Models
 {
     public class MetadataObject : DatabaseObject
     {
-        private protected readonly Settings _settings;
+        internal readonly Settings _settings;
+        internal string _name = string.Empty;
+        internal FieldType _type;
         private int _gameCount;
-        private protected string _name = string.Empty;
-        private protected FieldType _type;
+        private bool _selected;
 
         public MetadataObject(Settings settings) => this._settings = settings;
-
-        [DontSerialize]
-        public new Guid Id { get; set; }
-
-        public FieldType Type
-        {
-            get => _type;
-            set => SetValue(ref _type, value);
-        }
 
         [DontSerialize]
         public int GameCount
@@ -30,6 +23,9 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _gameCount, value);
         }
 
+        [DontSerialize]
+        public new Guid Id { get; set; }
+
         public new string Name
         {
             get => _name;
@@ -37,7 +33,20 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
-        public string TypeAndName => $"{_type.GetEnumDisplayName()}: {Name}";
+        public bool Selected
+        {
+            get => _selected;
+            set => SetValue(ref _selected, value);
+        }
+
+        public FieldType Type
+        {
+            get => _type;
+            set => SetValue(ref _type, value);
+        }
+
+        [DontSerialize]
+        public string TypeAndName => Name.Any() ? $"{_type.GetEnumDisplayName()}: {Name}" : _type.GetEnumDisplayName();
 
         [DontSerialize]
         public string TypeAsString => _type.GetEnumDisplayName();

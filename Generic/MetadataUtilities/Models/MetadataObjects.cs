@@ -10,7 +10,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace MetadataUtilities.Models
 {
@@ -30,7 +29,7 @@ namespace MetadataUtilities.Models
 
         public void AddItems(SettableFieldType type)
         {
-            List<SettableMetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
+            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog((FieldType)type, Settings);
 
             if (items.Count == 0)
             {
@@ -53,6 +52,26 @@ namespace MetadataUtilities.Models
                 {
                     Name = item.Name,
                     Type = item.Type
+                });
+            }
+
+            this.Sort(x => x.TypeAndName);
+        }
+
+        public void AddItems(List<MetadataObject> items)
+        {
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            foreach (MetadataObject item in items.Where(item => this.All(x => x.TypeAndName != item.TypeAndName)))
+            {
+                //Todo: Check if type is settable!
+                Add(new SettableMetadataObject(Settings)
+                {
+                    Name = item.Name,
+                    Type = (SettableFieldType)item.Type
                 });
             }
 

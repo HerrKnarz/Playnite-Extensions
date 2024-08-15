@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using KNARZhelper;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 
 namespace MetadataUtilities.Models
@@ -11,6 +10,19 @@ namespace MetadataUtilities.Models
         AddObject,
         RemoveObject,
         ClearField
+    }
+
+    public static class ActionHelper
+    {
+        public static ActionType ToActionType(this string str)
+        {
+            if (int.TryParse(str, out int intValue) && intValue >= 0 && intValue <= 2)
+            {
+                return (ActionType)intValue;
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(str), str, null);
+        }
     }
 
     public class Action : SettableMetadataObject
@@ -34,6 +46,9 @@ namespace MetadataUtilities.Models
                 }
             }
         }
+
+        [DontSerialize]
+        public new string ToString => $"{ActionType.GetEnumDisplayName()} {TypeAndName}";
 
         public bool Execute(Game game)
         {

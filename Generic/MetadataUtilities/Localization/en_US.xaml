@@ -5,11 +5,15 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">Do you want to add the item(s) to unwanted list?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">A {0} with that name already exists.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Change metadata type</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Conditional action editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Conditional actions changed {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Merge as</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Merged metadata in {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Another rule for that target already exists. Do you want to replace it (yes), merge them (no) or cancel the operation?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoActionsSet">You need to set up at least one action.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">You need to select at least one source item to merge into the target.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">You need to enter a name.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">You need to add a Name for the rule target.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">No unused metadata items found.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">item added to {0} games</sys:String>
@@ -32,12 +36,31 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Rule target</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Set as target</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Statistics</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesEnum_AgeRating">Age Rating</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Category">Category</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Developer">Developer</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Feature">Feature</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Genre">Genre</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Platform">Platform</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Publisher">Publisher</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Series">Series</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Source">Source</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Tag">Tag</sys:String>
+
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_And">All conditions are true</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Or">Any condition is true</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Nand">Any condition is false</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">All conditions are false</sys:String>
+
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">contains</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">doesn't contain</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">is empty</sys:String>
+
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">add</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">remove</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">clear field</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Add default categories/tags</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Open Metadata Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Merge metadata</sys:String>
@@ -51,6 +74,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removed the following unused metadata items:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefix</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adding defaults...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Executing conditional actions...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Merging metadata...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Adding {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddRemove">Removing {0}</sys:String>
@@ -61,16 +85,21 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Add existing items</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Always add items you remove in the Metadata Editor to the unwanted list without asking.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Always save manual merges as merge rules.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Can be executed manually</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Columns in the Metadata Editor game grid</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Conditions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Custom menu path</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Default categories for new game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Default custom menu path</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Default tags for new game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Edit</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignore conditions when executing manually</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignore hidden games in game count</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignore hidden games when removing unused metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Automatically execute merge rules on metadata update</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Merge rules</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Position</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Remove unused metadata on start up</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Remove unwanted items on metadata update</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Automatically rename default tags/categories when the corresponding original item is renamed.</sys:String>
@@ -79,6 +108,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Show result dialog after setting a value for more than one game</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Show Metadata Editor button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Put the sub menus under the Metadata Utilities menu entry</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Conditional actions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Defaults</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">General</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Merging</sys:String>

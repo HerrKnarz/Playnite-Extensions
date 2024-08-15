@@ -8,6 +8,7 @@ namespace MetadataUtilities.Models
     {
         private bool _addRemovedToUnwanted;
         private bool _alwaysSaveManualMergeRules;
+        private ObservableCollection<ConditionalAction> _conditionalActions = new ObservableCollection<ConditionalAction>();
         private MetadataObjects _defaultCategories;
         private MetadataObjects _defaultTags;
         private int _editorWindowHeight = 600;
@@ -61,6 +62,12 @@ namespace MetadataUtilities.Models
         {
             get => _alwaysSaveManualMergeRules;
             set => SetValue(ref _alwaysSaveManualMergeRules, value);
+        }
+
+        public ObservableCollection<ConditionalAction> ConditionalActions
+        {
+            get => _conditionalActions;
+            set => SetValue(ref _conditionalActions, value);
         }
 
         public MetadataObjects DefaultCategories

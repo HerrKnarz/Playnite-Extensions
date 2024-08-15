@@ -2,7 +2,6 @@
 using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using System.Collections.Generic;
 using System;
 
 namespace MetadataUtilities.Actions
