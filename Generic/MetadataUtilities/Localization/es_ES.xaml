@@ -12,6 +12,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Otra regla para ese objetivo ya existe. ¿Quieres reemplazarlo (sí), fusionarlos (no) o cancelar la operación?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Necesitas tener al menos dos elementos seleccionados para fusionar.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoActionsSet">You need to set up at least one action.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoConditionsSet">Do you really want to save an enabled conditional action without conditions? It will then be executed for every game in your library, when its metadata is updated.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">Necesitas seleccionar al menos un elemento fuente para fusionar con el objetivo.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">You need to enter a name.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Necesita añadir un nombre para el objetivo de la regla.</sys:String>
