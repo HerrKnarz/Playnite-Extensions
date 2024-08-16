@@ -91,6 +91,8 @@ namespace MetadataUtilities
             }
 
             MergeItems(games);
+
+            DoForAll(games, ExecuteConditionalActionsAction.Instance(this));
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)

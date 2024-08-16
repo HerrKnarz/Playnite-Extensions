@@ -2,6 +2,7 @@
 using MetadataUtilities.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Caching;
 using System.Windows;
 using KNARZhelper;
 using MetadataUtilities.Views;
@@ -104,6 +105,14 @@ namespace MetadataUtilities.ViewModels
             {
                 API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoActionsSet"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
+            }
+
+            if (ConditionalAction.Enabled && !ConditionalAction.Conditions.Any())
+            {
+                if (API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoConditionsSet"), string.Empty, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                {
+                    return;
+                }
             }
 
             win.DialogResult = true;

@@ -237,15 +237,15 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand HelpMergingCommand
             => new RelayCommand(()
-                => Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Merge-Rules")));
+                => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/merge-rules/")));
 
         public RelayCommand HelpPrefixesCommand
             => new RelayCommand(()
-                => Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Other-functionality#prefixes")));
+                => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/other-functionality/#prefixes")));
 
         public RelayCommand HelpQuickAddCommand
             => new RelayCommand(()
-                => Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Metadata-Utilities:-Quick-Add")));
+                => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/quick-add/")));
 
         public RelayCommand<object> MergeItemsCommand
                     => new RelayCommand<object>(rule => _plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);

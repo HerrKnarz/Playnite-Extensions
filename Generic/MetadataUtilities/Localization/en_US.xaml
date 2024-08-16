@@ -12,6 +12,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Another rule for that target already exists. Do you want to replace it (yes), merge them (no) or cancel the operation?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoActionsSet">You need to set up at least one action.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoConditionsSet">Do you really want to save an enabled conditional action without conditions? It will then be executed for every game in your library, when its metadata is updated.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">You need to select at least one source item to merge into the target.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">You need to enter a name.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">You need to add a Name for the rule target.</sys:String>
