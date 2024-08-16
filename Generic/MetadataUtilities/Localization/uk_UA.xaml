@@ -12,6 +12,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Вже існує Інше правило для цієї цілі. Бажаєте замінити його (так), об'єднати їх (ні) або скасувати операцію?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">Треба мати принаймні два вибраних елементів для об'єднання.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoActionsSet">Ви повинні налаштувати принаймні одну дію.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoConditionsSet">Do you really want to save an enabled conditional action without conditions? It will then be executed for every game in your library, when its metadata is updated.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">Треба вибрати принаймні один елемент, щоб об'єднати його у ціль.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">Введіть назву.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Треба додати назву для цілі правила.</sys:String>
@@ -93,13 +94,13 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Стандартний шлях меню</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Теги за замовчуванням для нової гри</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Змінити</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignore conditions when executing manually</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ігнорувати умови</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ігнорувати умови при виконанні вручну</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ігнорувати приховані ігри в при підрахунку</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ігнорувати приховані ігри при прибиранні невикористаних метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Автоматично виконувати правила об'єднання при оновленні метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Об’єднати Ролі</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Position</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Розташування</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Прибирати невикористані метадані під час запуску</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Прибирати небажані елементи при оновленні метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Автоматично перейменовувати теги/категорії за замовчуванням, коли перейменований відповідний елемент.</sys:String>
@@ -108,7 +109,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Після встановлення значення для кількох ігор одночасно показувати діалогове вікно з результатами</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Показувати кнопку Редактора Метаданих у верхній панелі (потрібен перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Помістити підменю під елементом меню Metadata Utilities</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Conditional actions</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Умовні дії</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">За замовчуванням</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Загальне</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Об'єднання</sys:String>
