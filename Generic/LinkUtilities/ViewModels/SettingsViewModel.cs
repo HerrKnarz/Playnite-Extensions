@@ -43,7 +43,6 @@ namespace LinkUtilities
                 };
             }
 
-
             if (Settings.CustomLinkProfiles is null)
             {
                 Settings.CustomLinkProfiles = new ObservableCollection<CustomLinkProfile>();
@@ -99,16 +98,40 @@ namespace LinkUtilities
             }
         }
 
-        public CustomLinkProfile SelectedItem
-        {
-            get => _selectedItem;
-            set
+        public RelayCommand AddCustomLinkProfileCommand => new RelayCommand(() => Settings.CustomLinkProfiles.Add(new CustomLinkProfile()));
+
+        public RelayCommand AddDefaultLinkNamePatternsCommand => new RelayCommand(() => Settings.LinkNamePatterns.AddDefaultPatterns(PatternTypes.LinkNamePattern));
+
+        public RelayCommand AddDefaultMissingLinkPatternsCommand => new RelayCommand(() => Settings.MissingLinkPatterns.AddDefaultPatterns(PatternTypes.MissingLinkPatterns));
+
+        public RelayCommand AddDefaultRemovePatternsCommand => new RelayCommand(() => Settings.RemovePatterns.AddDefaultPatterns(PatternTypes.RemovePattern));
+
+        public RelayCommand AddDefaultRenamePatternsCommand => new RelayCommand(() => Settings.RenamePatterns.AddDefaultPatterns(PatternTypes.RenamePattern));
+
+        public RelayCommand AddLinkNamePatternCommand => new RelayCommand(() => Settings.LinkNamePatterns.Add(new LinkNamePattern()));
+
+        public RelayCommand AddMissingLinkPatternCommand => new RelayCommand(() => Settings.MissingLinkPatterns.Add(new LinkNamePattern()));
+
+        public RelayCommand AddRemovePatternCommand => new RelayCommand(() => Settings.RemovePatterns.Add(new LinkNamePattern()));
+
+        public RelayCommand AddRenamePatternCommand => new RelayCommand(() => Settings.RenamePatterns.Add(new LinkNamePattern()));
+
+        public RelayCommand AddSortItemCommand
+            => new RelayCommand(() =>
             {
-                _selectedItem = value;
-                ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty;
-                OnPropertyChanged();
-            }
-        }
+                int position = 1;
+
+                if (Settings.SortOrder.Any())
+                {
+                    position = Settings.SortOrder.Max(x => x.Position) + 1;
+                }
+
+                Settings.SortOrder.Add(new SortItem
+                {
+                    LinkName = "",
+                    Position = position
+                });
+            });
 
         public string ExampleName
         {
@@ -131,7 +154,72 @@ namespace LinkUtilities
             }
         }
 
-        private LinkUtilitiesSettings EditingClone { get; set; }
+        public RelayCommand HelpBookmarkletCommand => new RelayCommand(() =>
+            Process.Start(new ProcessStartInfo(
+                "https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet")));
+
+        public RelayCommand HelpCustomLinkProfileCommand => new RelayCommand(() =>
+            Process.Start(new ProcessStartInfo(
+                "https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Custom-link-profiles")));
+
+        public RelayCommand<IList<object>> RemoveCustomLinkProfileCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (CustomLinkProfile item in items.ToList().Cast<CustomLinkProfile>())
+            {
+                Settings.CustomLinkProfiles.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveLinkNamePatternsCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (LinkNamePattern linkPattern in items.ToList().Cast<LinkNamePattern>())
+            {
+                Settings.LinkNamePatterns.Remove(linkPattern);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveMissingLinkPatternsCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (LinkNamePattern missingLinkPattern in items.ToList().Cast<LinkNamePattern>())
+            {
+                Settings.MissingLinkPatterns.Remove(missingLinkPattern);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveRemovePatternsCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (LinkNamePattern removePattern in items.ToList().Cast<LinkNamePattern>())
+            {
+                Settings.RemovePatterns.Remove(removePattern);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveRenamePatternsCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (LinkNamePattern renamePattern in items.ToList().Cast<LinkNamePattern>())
+            {
+                Settings.RenamePatterns.Remove(renamePattern);
+            }
+        }, items => items?.Any() ?? false);
+
+        public RelayCommand<IList<object>> RemoveSortItemsCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (SortItem item in items.ToList().Cast<SortItem>())
+            {
+                Settings.SortOrder.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
+        public CustomLinkProfile SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty;
+                OnPropertyChanged();
+            }
+        }
 
         public LinkUtilitiesSettings Settings
         {
@@ -143,124 +231,17 @@ namespace LinkUtilities
             }
         }
 
-        public RelayCommand AddCustomLinkProfileCommand
-            => new RelayCommand(() =>
-            {
-                Settings.CustomLinkProfiles.Add(new CustomLinkProfile());
-            });
-
-        public RelayCommand<IList<object>> RemoveCustomLinkProfileCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (CustomLinkProfile item in items.ToList().Cast<CustomLinkProfile>())
-            {
-                Settings.CustomLinkProfiles.Remove(item);
-            }
-        }, items => items?.Any() ?? false);
-
+        public RelayCommand SortBookmarkletItemsCommand => new RelayCommand(() => Settings.LinkNamePatterns.SortPatterns());
         public RelayCommand SortCustomLinkProfileCommand => new RelayCommand(SortCustomLinkProfiles);
-
-        public RelayCommand HelpCustomLinkProfileCommand
-            => new RelayCommand(() =>
-            {
-                Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Custom-link-profiles"));
-            });
-
-        public RelayCommand HelpBookmarkletCommand
-            => new RelayCommand(() =>
-            {
-                Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet"));
-            });
-
-
-        public RelayCommand TestCustomLinkProfileCommand
-            => new RelayCommand(() =>
-            {
-                ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty;
-            });
-
-
-        public RelayCommand AddSortItemCommand
-            => new RelayCommand(() =>
-            {
-                int position = 1;
-
-                if (Settings.SortOrder.Any())
-                {
-                    position = Settings.SortOrder.Max(x => x.Position) + 1;
-                }
-
-                Settings.SortOrder.Add(new SortItem
-                {
-                    LinkName = "",
-                    Position = position
-                });
-            });
-
-        public RelayCommand<IList<object>> RemoveSortItemsCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (SortItem item in items.ToList().Cast<SortItem>())
-            {
-                Settings.SortOrder.Remove(item);
-            }
-        }, items => items?.Any() ?? false);
-
+        public RelayCommand SortMissingLinkItemsCommand => new RelayCommand(() => Settings.MissingLinkPatterns.SortPatterns());
+        public RelayCommand SortRemoveItemsCommand => new RelayCommand(() => Settings.RemovePatterns.SortPatterns());
+        public RelayCommand SortRenameItemsCommand => new RelayCommand(() => Settings.RenamePatterns.SortPatterns());
         public RelayCommand SortSortItemsCommand => new RelayCommand(SortSortItems);
 
-        public RelayCommand SortBookmarkletItemsCommand => new RelayCommand(() => Settings.LinkNamePatterns.SortPatterns());
+        public RelayCommand TestCustomLinkProfileCommand => new RelayCommand(() =>
+            ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty);
 
-        public RelayCommand SortRemoveItemsCommand => new RelayCommand(() => Settings.RemovePatterns.SortPatterns());
-
-        public RelayCommand SortRenameItemsCommand => new RelayCommand(() => Settings.RenamePatterns.SortPatterns());
-
-        public RelayCommand SortMissingLinkItemsCommand => new RelayCommand(() => Settings.MissingLinkPatterns.SortPatterns());
-
-        public RelayCommand AddLinkNamePatternCommand => new RelayCommand(() => Settings.LinkNamePatterns.Add(new LinkNamePattern()));
-
-        public RelayCommand AddDefaultLinkNamePatternsCommand => new RelayCommand(() => Settings.LinkNamePatterns.AddDefaultPatterns(PatternTypes.LinkNamePattern));
-
-        public RelayCommand<IList<object>> RemoveLinkNamePatternsCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (LinkNamePattern linkPattern in items.ToList().Cast<LinkNamePattern>())
-            {
-                Settings.LinkNamePatterns.Remove(linkPattern);
-            }
-        }, items => items?.Any() ?? false);
-
-        public RelayCommand AddRemovePatternCommand => new RelayCommand(() => Settings.RemovePatterns.Add(new LinkNamePattern()));
-
-        public RelayCommand AddDefaultRemovePatternsCommand => new RelayCommand(() => Settings.RemovePatterns.AddDefaultPatterns(PatternTypes.RemovePattern));
-
-        public RelayCommand<IList<object>> RemoveRemovePatternsCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (LinkNamePattern removePattern in items.ToList().Cast<LinkNamePattern>())
-            {
-                Settings.RemovePatterns.Remove(removePattern);
-            }
-        }, items => items?.Any() ?? false);
-
-        public RelayCommand AddRenamePatternCommand => new RelayCommand(() => Settings.RenamePatterns.Add(new LinkNamePattern()));
-
-        public RelayCommand AddDefaultRenamePatternsCommand => new RelayCommand(() => Settings.RenamePatterns.AddDefaultPatterns(PatternTypes.RenamePattern));
-
-        public RelayCommand<IList<object>> RemoveRenamePatternsCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (LinkNamePattern renamePattern in items.ToList().Cast<LinkNamePattern>())
-            {
-                Settings.RenamePatterns.Remove(renamePattern);
-            }
-        }, items => items?.Any() ?? false);
-
-        public RelayCommand AddMissingLinkPatternCommand => new RelayCommand(() => Settings.MissingLinkPatterns.Add(new LinkNamePattern()));
-
-        public RelayCommand AddDefaultMissingLinkPatternsCommand => new RelayCommand(() => Settings.MissingLinkPatterns.AddDefaultPatterns(PatternTypes.MissingLinkPatterns));
-
-        public RelayCommand<IList<object>> RemoveMissingLinkPatternsCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (LinkNamePattern missingLinkPattern in items.ToList().Cast<LinkNamePattern>())
-            {
-                Settings.MissingLinkPatterns.Remove(missingLinkPattern);
-            }
-        }, items => items?.Any() ?? false);
+        private LinkUtilitiesSettings EditingClone { get; set; }
 
         public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
 
@@ -300,7 +281,6 @@ namespace LinkUtilities
             Settings.UseCustomSortOrder = EditingClone.UseCustomSortOrder;
             Settings.UseSteamAppLinks = EditingClone.UseSteamAppLinks;
             Settings.ChangeSteamLinksAfterChange = EditingClone.ChangeSteamLinksAfterChange;
-
 
             foreach (LinkSourceSetting originalItem in Settings.LinkSettings)
             {
@@ -350,21 +330,6 @@ namespace LinkUtilities
 
             errors.Add(ResourceProvider.GetString("LOCLinkUtilitiesErrorDuplicates"));
             return false;
-        }
-
-        private void SortCustomLinkProfiles()
-        {
-            Settings.CustomLinkProfiles = new ObservableCollection<CustomLinkProfile>(Settings.CustomLinkProfiles
-                .OrderBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
-                .ToList());
-        }
-
-        private void SortSortItems()
-        {
-            Settings.SortOrder = new ObservableCollection<SortItem>(Settings.SortOrder
-                .OrderBy(x => x.Position)
-                .ThenBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
-                .ToList());
         }
 
         public void WriteSettingsToLinkActions()
@@ -431,6 +396,21 @@ namespace LinkUtilities
             steamLibLink.NameNewsLink = Settings.NameSteamNewsLink;
             steamLibLink.NameStorePageLink = Settings.NameSteamStorePageLink;
             steamLibLink.NameWorkshopLink = Settings.NameSteamWorkshopLink;
+        }
+
+        private void SortCustomLinkProfiles()
+        {
+            Settings.CustomLinkProfiles = new ObservableCollection<CustomLinkProfile>(Settings.CustomLinkProfiles
+                .OrderBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
+                .ToList());
+        }
+
+        private void SortSortItems()
+        {
+            Settings.SortOrder = new ObservableCollection<SortItem>(Settings.SortOrder
+                .OrderBy(x => x.Position)
+                .ThenBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
+                .ToList());
         }
     }
 }
