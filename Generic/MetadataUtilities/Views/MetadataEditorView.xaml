@@ -100,6 +100,15 @@
                           Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
                           SelectionMode="Extended" EnableRowVirtualization="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                           PreparingCellForEdit="DataGrid_PreparingCellForEdit" RowHeaderWidth="0">
+                    <DataGrid.InputBindings>
+                        <KeyBinding Key="Insert" Command="{Binding AddNewCommand}" />
+                        <KeyBinding Gesture="CTRL+M" Command="{Binding MergeItemsCommand}"
+                                    CommandParameter="{Binding SelectedItems, ElementName=MetadataGrid}" />
+                        <KeyBinding Gesture="CTRL+T" Command="{Binding ChangeTypeCommand}"
+                                    CommandParameter="{Binding SelectedItems, ElementName=MetadataGrid}" />
+                        <KeyBinding Key="DEL" Command="{Binding RemoveItemsCommand}"
+                                    CommandParameter="{Binding SelectedItems, ElementName=MetadataGrid}" />
+                    </DataGrid.InputBindings>
                     <DataGrid.GroupStyle>
                         <GroupStyle>
                             <GroupStyle.ContainerStyle>
@@ -193,6 +202,11 @@
                 <DataGrid Name="GamesGrid" ItemsSource="{Binding GamesViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top"
                           Margin="0,10,0,0" CanUserAddRows="False" IsReadOnly="True" HeadersVisibility="Column" ColumnWidth="*"
                           CanUserSortColumns="True" EnableRowVirtualization="True" SelectionMode="Extended">
+                    <DataGrid.InputBindings>
+                        <KeyBinding Key="Insert" Command="{Binding AddNewGameCommand}" />
+                        <KeyBinding Key="DEL" Command="{Binding RemoveGamesCommand}"
+                                    CommandParameter="{Binding SelectedItems, ElementName=GamesGrid}" />
+                    </DataGrid.InputBindings>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource LOCGameNameTitle}" Binding="{Binding Game.Name}" MinWidth="100"
                                             SortMemberPath="RealSortingName" />
