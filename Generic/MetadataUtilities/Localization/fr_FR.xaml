@@ -24,6 +24,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Suppression des éléments de métadonnée indésirable dans {0} jeux !</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Enregistrer en tant que règle de fusion</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Sélectionner un nouveau type</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Set user score in {0} games!</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Éditeur de métadonnées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Changer le type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Uniquement la sélection</sys:String>
@@ -70,10 +72,12 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddToggle">Inverser {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Supprimer les métadonnées inutilisées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Supprimer les métadonnées indésirables</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Fusionner l'éditeur de règles</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Utilitaires des métadonnées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Suppression des éléments de métadonnées inutilisés suivants :</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Préfixe</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Ajout des valeurs par défaut...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Executing conditional actions...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Fusion des métadonnées...</sys:String>
@@ -83,6 +87,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingItems">Suppression des éléments de métadonnées...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Suppression des éléments de métadonnées inutilisés...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Suppression des éléments de métadonnées indésirables...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Setting user score...</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Ajouter des éléments existants</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Toujours ajouter des éléments que vous supprimez dans l'éditeur de métadonnées à la liste indésirable sans demander.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Toujours enregistrer les fusions manuelles comme règles de fusion.</sys:String>
