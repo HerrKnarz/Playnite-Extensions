@@ -52,7 +52,6 @@
                       Command="{Binding AddConditionTagsCommand}"
                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
         </ContextMenu>
-
         <ContextMenu x:Key="ActionsMenu">
             <MenuItem Header="{DynamicResource LOCAgeRatingsLabel}"
                       Command="{Binding AddActionAgeRatingsCommand}"
@@ -74,7 +73,12 @@
                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
         </ContextMenu>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Gesture="CTRL+S" Command="{Binding SaveCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+    </UserControl.InputBindings>
     <DockPanel FocusManager.FocusedElement="{Binding ElementName=NameEdit}">
+        <Border DockPanel.Dock="Top" BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,0,0,0" />
         <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,10,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <Button Content="{DynamicResource LOCSaveLabel}" Command="{Binding SaveCommand}" Style="{StaticResource BottomButton}"
@@ -157,6 +161,10 @@
 
                     <ListBox DockPanel.Dock="Top" Name="LbConditions" ItemsSource="{Binding ConditionalAction.Conditions}"
                          SelectionMode="Extended">
+                        <ListBox.InputBindings>
+                            <KeyBinding Key="DEL" Command="{Binding RemoveConditionCommand}"
+                                        CommandParameter="{Binding SelectedItems, ElementName=LbConditions}" />
+                        </ListBox.InputBindings>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ToString}" />
@@ -184,6 +192,10 @@
 
                     <ListBox DockPanel.Dock="Top" Name="LbActions" ItemsSource="{Binding ConditionalAction.Actions}"
                              SelectionMode="Extended">
+                        <ListBox.InputBindings>
+                            <KeyBinding Key="DEL" Command="{Binding RemoveActionCommand}"
+                                        CommandParameter="{Binding SelectedItems, ElementName=LbActions}" />
+                        </ListBox.InputBindings>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ToString}" />
