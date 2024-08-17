@@ -16,6 +16,7 @@
         </Style>
     </UserControl.Resources>
     <DockPanel FocusManager.FocusedElement="{Binding ElementName=SearchBox}">
+        <Border DockPanel.Dock="Top" BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,0,0,0" />
         <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,10,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <Button Content="{DynamicResource LOCCloseLabel}" Command="{Binding CloseCommand}"

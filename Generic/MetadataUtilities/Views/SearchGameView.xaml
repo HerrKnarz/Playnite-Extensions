@@ -22,7 +22,7 @@
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                     IsDefault="True" Style="{StaticResource BottomButton}" />
         </StackPanel>
-        <Grid DockPanel.Dock="Top" Margin="0,10,0,0">
+        <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
