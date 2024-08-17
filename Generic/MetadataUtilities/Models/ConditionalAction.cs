@@ -83,10 +83,7 @@ namespace MetadataUtilities.Models
         public LogicType Type
         {
             get => _type;
-            set
-            {
-                SetValue(ref _type, value);
-            }
+            set => SetValue(ref _type, value);
         }
 
         [DontSerialize]

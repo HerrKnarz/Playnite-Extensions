@@ -103,6 +103,28 @@ namespace MetadataUtilities
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
             List<Game> games = args.Games.Distinct().ToList();
 
+            GameMenuItem item = new GameMenuItem
+            {
+                Description = "",
+                MenuSection = ResourceProvider.GetString("LOCUserScore"),
+                Action = a =>
+                    DoForAll(games, SetUserScoreAction.Instance(this), true, ActionModifierTypes.None, 0)
+            };
+            menuItems.Add(item);
+
+            for (int i = 1; i <= 10; i++)
+            {
+                int rating = i * 10;
+                GameMenuItem menuItem = new GameMenuItem
+                {
+                    Description = new string('\u2605', i),
+                    MenuSection = ResourceProvider.GetString("LOCUserScore"),
+                    Action = a =>
+                        DoForAll(games, SetUserScoreAction.Instance(this), true, ActionModifierTypes.None, rating)
+                };
+                menuItems.Add(menuItem);
+            }
+
             menuItems.AddRange(new List<GameMenuItem>
             {
                 new GameMenuItem

@@ -69,6 +69,7 @@
     <Compile Include="Actions\IBaseAction.cs" />
     <Compile Include="Actions\QuickAddAction.cs" />
     <Compile Include="Actions\RemoveUnwantedAction.cs" />
+    <Compile Include="Actions\SetUserScoreAction.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MetadataFunctions.cs" />
