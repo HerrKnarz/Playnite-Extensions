@@ -24,6 +24,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Removido itens de metadados indesejados dos jogos {0}!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Salvar como regra de mesclagem</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Selecionar novo tipo</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Set user score in {0} games!</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Editor de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Alterar tipo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Somente selecionado</sys:String>
@@ -70,10 +72,12 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddToggle">Alternar {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Remover metadados não utilizados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Remover metadados indesejados</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Editor de Regras de Mesclagem</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Utilitários de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removido os seguintes itens de metadados não utilizados:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefixo</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Adicionando padrões...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Executing conditional actions...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Mesclando metadados...</sys:String>
@@ -83,6 +87,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingItems">Removendo itens de metadados...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Remover metadados não utilizados...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Removendo itens de metadados indesejados...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Setting user score...</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Adicionar item existente</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Sempre adicione itens que você remover no Editor de Metadados à lista indesejada sem perguntar.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Sempre salvar mesclagens manuais como regras de mesclagem.</sys:String>
