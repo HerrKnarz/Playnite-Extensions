@@ -54,9 +54,12 @@
                         <CheckBox IsChecked="{Binding FilterTags}" Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0" />
                         <Border BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,10,0,0">
                             <StackPanel Orientation="Vertical">
-                                <CheckBox IsChecked="{Binding FilterHideUnused}" Content="{DynamicResource LOCMetadataUtilitiesEditorHideUnused}" Margin="0,10,0,0" />
-                                <CheckBox IsChecked="{Binding GroupMatches}" Content="{DynamicResource LOCMetadataUtilitiesEditorGroupMatches}"
-                                          Margin="0,10,0,0" />
+                                <CheckBox IsChecked="{Binding FilterHideUnused}" Margin="0,10,0,0">
+                                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesEditorHideUnused}" TextWrapping="Wrap" />
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding GroupMatches}" Margin="0,10,0,0">
+                                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesEditorGroupMatches}" TextWrapping="Wrap" />
+                                </CheckBox>
                             </StackPanel>
                         </Border>
                     </StackPanel>
