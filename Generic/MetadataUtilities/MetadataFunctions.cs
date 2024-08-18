@@ -1,13 +1,13 @@
-﻿using MetadataUtilities.Models;
+﻿using KNARZhelper;
+using KNARZhelper.Enum;
+using MetadataUtilities.Models;
+using MetadataUtilities.ViewModels;
 using Playnite.SDK;
-using System.Collections.Generic;
-using System.Windows;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using KNARZhelper;
-using KNARZhelper.Enum;
-using MetadataUtilities.ViewModels;
+using System.Windows;
 
 namespace MetadataUtilities
 {

@@ -1,6 +1,7 @@
-﻿using System;
-using MetadataUtilities.Models;
+﻿using MetadataUtilities.Models;
 using Playnite.SDK;
+using Playnite.SDK.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,7 +9,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
-using Playnite.SDK.Models;
 
 namespace MetadataUtilities.ViewModels
 {

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using KNARZhelper.Enum;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Models
 {

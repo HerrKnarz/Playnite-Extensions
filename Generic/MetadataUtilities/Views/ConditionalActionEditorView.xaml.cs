@@ -1,7 +1,7 @@
-﻿using System;
+﻿using KNARZhelper;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using KNARZhelper;
 
 namespace MetadataUtilities.Views
 {

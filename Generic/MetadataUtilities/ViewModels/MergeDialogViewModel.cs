@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using MetadataUtilities.Models;
+using Playnite.SDK;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using MetadataUtilities.Models;
-using Playnite.SDK;
 
 namespace MetadataUtilities.ViewModels
 {

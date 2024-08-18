@@ -1,7 +1,9 @@
 ﻿using KNARZhelper;
+using KNARZhelper.Enum;
 using MetadataUtilities.Actions;
-using MetadataUtilities.Views;
 using MetadataUtilities.Models;
+using MetadataUtilities.ViewModels;
+using MetadataUtilities.Views;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
@@ -13,8 +15,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
-using KNARZhelper.Enum;
-using MetadataUtilities.ViewModels;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace MetadataUtilities
