@@ -20,7 +20,6 @@ namespace MetadataUtilities.Models
 
     public class ConditionalAction : ObservableObject
     {
-        private readonly Settings _settings;
         private ObservableCollection<Action> _actions = new ObservableCollection<Action>();
         private bool _canBeExecutedManually;
         private ObservableCollection<Condition> _conditions = new ObservableCollection<Condition>();
@@ -29,8 +28,6 @@ namespace MetadataUtilities.Models
         private string _name = string.Empty;
         private int _sortNo;
         private LogicType _type = LogicType.And;
-
-        public ConditionalAction(Settings settings) => _settings = settings;
 
         public ObservableCollection<Action> Actions
         {

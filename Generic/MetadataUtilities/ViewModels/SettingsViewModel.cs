@@ -53,7 +53,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand AddConActionCommand => new RelayCommand(() =>
         {
-            ConditionalAction conditionalAction = new ConditionalAction(Settings);
+            ConditionalAction conditionalAction = new ConditionalAction();
 
             Window window = ConditionalActionEditorViewModel.GetWindow(Settings, conditionalAction);
 
@@ -183,7 +183,7 @@ namespace MetadataUtilities.ViewModels
             if (conAction == null)
                 return;
 
-            ConditionalAction conditionalActionToEdit = new ConditionalAction(Settings);
+            ConditionalAction conditionalActionToEdit = new ConditionalAction();
             ConditionalAction conditionalActionOriginal = (ConditionalAction)conAction;
 
             conditionalActionToEdit.Name = conditionalActionOriginal.Name;
