@@ -48,6 +48,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseObjectHelper.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseType.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeDeveloper.cs" />
+    <Compile Include="DatabaseObjectTypes\TypePlatform.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeAgeRating.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeCategory.cs" />
+    <Compile Include="DatabaseObjectTypes\IDatabaseObjectType.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeFeature.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeGenre.cs" />
+    <Compile Include="DatabaseObjectTypes\TypePublisher.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeSeries.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeSource.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeTag.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MiscHelper.cs" />
@@ -61,5 +73,6 @@
       <Version>6.11.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
