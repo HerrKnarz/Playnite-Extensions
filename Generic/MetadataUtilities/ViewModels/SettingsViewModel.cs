@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
 using KNARZhelper;
+using KNARZhelper.Enum;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
 using Playnite.SDK;
@@ -72,33 +73,33 @@ namespace MetadataUtilities.ViewModels
         });
 
         public RelayCommand AddExistingDefaultCategoriesCommand =>
-            new RelayCommand(() => Settings.DefaultCategories.AddItems(SettableFieldType.Category));
+            new RelayCommand(() => Settings.DefaultCategories.AddItems(FieldType.Category));
 
         public RelayCommand AddExistingDefaultTagsCommand =>
-            new RelayCommand(() => Settings.DefaultTags.AddItems(SettableFieldType.Tag));
+            new RelayCommand(() => Settings.DefaultTags.AddItems(FieldType.Tag));
 
         public RelayCommand AddNewDefaultCategoryCommand
-            => new RelayCommand(() => Settings.DefaultCategories.AddNewItem(SettableFieldType.Category, "", false));
+            => new RelayCommand(() => Settings.DefaultCategories.AddNewItem(FieldType.Category, "", false));
 
         public RelayCommand AddNewDefaultTagCommand
-            => new RelayCommand(() => Settings.DefaultTags.AddNewItem(SettableFieldType.Tag, "", false));
+            => new RelayCommand(() => Settings.DefaultTags.AddNewItem(FieldType.Tag, "", false));
 
         public RelayCommand AddNewMergeRuleCommand => new RelayCommand(() => EditMergeRule());
 
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
-            SettableFieldType type = SettableFieldType.Tag;
+            FieldType type = FieldType.Tag;
             string prefix = string.Empty;
 
             if (SourceObjectsViewSource.View?.CurrentItem != null)
             {
-                SettableMetadataObject templateItem = (SettableMetadataObject)SourceObjectsViewSource.View.CurrentItem;
+                MetadataObject templateItem = (MetadataObject)SourceObjectsViewSource.View.CurrentItem;
 
                 type = templateItem.Type;
                 prefix = templateItem.Prefix;
             }
 
-            SettableMetadataObject newItem = ((MergeRule)rule).SourceObjects.AddNewItem(type, prefix);
+            MetadataObject newItem = ((MergeRule)rule).SourceObjects.AddNewItem(type, prefix);
 
             if (newItem != null)
             {
@@ -106,9 +107,9 @@ namespace MetadataUtilities.ViewModels
             }
         }, rule => rule != null);
 
-        public RelayCommand AddNewUnusedCommand => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddNewItem(SettableFieldType.Tag));
+        public RelayCommand AddNewUnusedCommand => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddNewItem(FieldType.Tag));
 
-        public RelayCommand AddNewUnwantedCommand => new RelayCommand(() => Settings.UnwantedItems.AddNewItem(SettableFieldType.Tag));
+        public RelayCommand AddNewUnwantedCommand => new RelayCommand(() => Settings.UnwantedItems.AddNewItem(FieldType.Tag));
 
         public RelayCommand AddPrefixCommand
             => new RelayCommand(() =>
@@ -125,58 +126,58 @@ namespace MetadataUtilities.ViewModels
             });
 
         public RelayCommand AddQuickAddAgeRatingsCommand
-            => new RelayCommand(() => AddQuickAddItems(SettableFieldType.AgeRating));
+            => new RelayCommand(() => AddQuickAddItems(FieldType.AgeRating));
 
         public RelayCommand AddQuickAddCategoriesCommand
-            => new RelayCommand(() => AddQuickAddItems(SettableFieldType.Category));
+            => new RelayCommand(() => AddQuickAddItems(FieldType.Category));
 
         public RelayCommand AddQuickAddFeaturesCommand
-            => new RelayCommand(() => AddQuickAddItems(SettableFieldType.Feature));
+            => new RelayCommand(() => AddQuickAddItems(FieldType.Feature));
 
         public RelayCommand AddQuickAddGenresCommand
-            => new RelayCommand(() => AddQuickAddItems(SettableFieldType.Genre));
+            => new RelayCommand(() => AddQuickAddItems(FieldType.Genre));
 
         public RelayCommand AddQuickAddSeriesCommand
-            => new RelayCommand(() => AddQuickAddItems(SettableFieldType.Series));
+            => new RelayCommand(() => AddQuickAddItems(FieldType.Series));
 
         public RelayCommand AddQuickAddTagsCommand
-            => new RelayCommand(() => AddQuickAddItems(SettableFieldType.Tag));
+            => new RelayCommand(() => AddQuickAddItems(FieldType.Tag));
 
         public RelayCommand AddUnusedAgeRatingsCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(SettableFieldType.AgeRating));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.AgeRating));
 
         public RelayCommand AddUnusedCategoriesCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(SettableFieldType.Category));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Category));
 
         public RelayCommand AddUnusedFeaturesCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(SettableFieldType.Feature));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Feature));
 
         public RelayCommand AddUnusedGenresCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(SettableFieldType.Genre));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Genre));
 
         public RelayCommand AddUnusedSeriesCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(SettableFieldType.Series));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Series));
 
         public RelayCommand AddUnusedTagsCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(SettableFieldType.Tag));
+            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Tag));
 
         public RelayCommand AddUnwantedAgeRatingsCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(SettableFieldType.AgeRating));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.AgeRating));
 
         public RelayCommand AddUnwantedCategoriesCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(SettableFieldType.Category));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Category));
 
         public RelayCommand AddUnwantedFeaturesCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(SettableFieldType.Feature));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Feature));
 
         public RelayCommand AddUnwantedGenresCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(SettableFieldType.Genre));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Genre));
 
         public RelayCommand AddUnwantedSeriesCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(SettableFieldType.Series));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Series));
 
         public RelayCommand AddUnwantedTagsCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(SettableFieldType.Tag));
+            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Tag));
 
         public RelayCommand<object> EditConActionCommand => new RelayCommand<object>(conAction =>
         {
@@ -359,20 +360,19 @@ namespace MetadataUtilities.ViewModels
 
             foreach (MetadataObject item in items.Where(item => Settings.QuickAddObjects.All(x => x.TypeAndName != item.TypeAndName)))
             {
-                //Todo: Check if type is settable!
                 Settings.QuickAddObjects.Add(new QuickAddObject(_settings)
                 {
                     Name = item.Name,
-                    Type = (SettableFieldType)item.Type
+                    Type = item.Type
                 });
             }
 
             Settings.QuickAddObjects = new ObservableCollection<QuickAddObject>(Settings.QuickAddObjects.OrderBy(x => x.TypeAndName));
         }
 
-        public void AddQuickAddItems(SettableFieldType type)
+        public void AddQuickAddItems(FieldType type)
         {
-            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog((FieldType)type, Settings);
+            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
 
             if (items.Count == 0)
             {
@@ -393,7 +393,7 @@ namespace MetadataUtilities.ViewModels
 
         public void EndEdit() => _plugin.SavePluginSettings(Settings);
 
-        public void RemoveFromList(IList<object> items, MetadataObjects list) => list.RemoveItems(items.ToList().Cast<SettableMetadataObject>());
+        public void RemoveFromList(IList<object> items, MetadataObjects list) => list.RemoveItems(items.ToList().Cast<MetadataObject>());
 
         public bool VerifySettings(out List<string> errors)
         {
@@ -415,9 +415,9 @@ namespace MetadataUtilities.ViewModels
                     ruleToEdit.Type = rule.Type;
                     ruleToEdit.Name = rule.Name;
 
-                    foreach (SettableMetadataObject sourceItem in rule.SourceObjects)
+                    foreach (MetadataObject sourceItem in rule.SourceObjects)
                     {
-                        ruleToEdit.SourceObjects.Add(new SettableMetadataObject(_settings)
+                        ruleToEdit.SourceObjects.Add(new MetadataObject(_settings)
                         {
                             Name = sourceItem.Name,
                             Type = sourceItem.Type,
@@ -437,9 +437,9 @@ namespace MetadataUtilities.ViewModels
                     MetadataObjects temp = new MetadataObjects(Settings);
                     temp.LoadMetadata();
 
-                    foreach (SettableMetadataObject item in ruleToEdit.SourceObjects)
+                    foreach (MetadataObject item in ruleToEdit.SourceObjects)
                     {
-                        SettableMetadataObject foundItem = temp.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+                        MetadataObject foundItem = temp.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
 
                         if (foundItem != null)
                         {
@@ -456,36 +456,36 @@ namespace MetadataUtilities.ViewModels
                     metadataObjects.AddMissing(temp.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
                 }
 
-                HashSet<SettableFieldType> filteredTypes = new HashSet<SettableFieldType>();
+                HashSet<FieldType> filteredTypes = new HashSet<FieldType>();
 
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == SettableFieldType.AgeRating))
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.AgeRating))
                 {
-                    filteredTypes.Add(SettableFieldType.AgeRating);
+                    filteredTypes.Add(FieldType.AgeRating);
                 }
 
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == SettableFieldType.Category))
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Category))
                 {
-                    filteredTypes.Add(SettableFieldType.Category);
+                    filteredTypes.Add(FieldType.Category);
                 }
 
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == SettableFieldType.Feature))
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Feature))
                 {
-                    filteredTypes.Add(SettableFieldType.Feature);
+                    filteredTypes.Add(FieldType.Feature);
                 }
 
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == SettableFieldType.Genre))
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Genre))
                 {
-                    filteredTypes.Add(SettableFieldType.Genre);
+                    filteredTypes.Add(FieldType.Genre);
                 }
 
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == SettableFieldType.Series))
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Series))
                 {
-                    filteredTypes.Add(SettableFieldType.Series);
+                    filteredTypes.Add(FieldType.Series);
                 }
 
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == SettableFieldType.Tag))
+                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Tag))
                 {
-                    filteredTypes.Add(SettableFieldType.Tag);
+                    filteredTypes.Add(FieldType.Tag);
                 }
 
                 MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(_plugin, metadataObjects, filteredTypes)
@@ -512,9 +512,9 @@ namespace MetadataUtilities.ViewModels
                 ruleToEdit.Type = viewModel.RuleType;
                 ruleToEdit.SourceObjects.Clear();
 
-                foreach (SettableMetadataObject item in metadataObjects.Where(x => x.Selected).ToList())
+                foreach (MetadataObject item in metadataObjects.Where(x => x.Selected).ToList())
                 {
-                    ruleToEdit.SourceObjects.Add(new SettableMetadataObject(_settings)
+                    ruleToEdit.SourceObjects.Add(new MetadataObject(_settings)
                     {
                         Id = item.Id,
                         Name = item.Name,
@@ -533,7 +533,7 @@ namespace MetadataUtilities.ViewModels
                 }
 
                 // Case 2: The rule was renamed or is new and another one for that target already
-                // exists => We ask if merge, replace or cancel.
+                // exists => We ask if we should merge, replace or cancel.
                 if (Settings.MergeRules.Any(x => x.Name == ruleToEdit.Name && x.Type == ruleToEdit.Type))
                 {
                     Cursor.Current = Cursors.Default;

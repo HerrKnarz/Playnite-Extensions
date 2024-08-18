@@ -1,5 +1,4 @@
 ﻿using System;
-using KNARZhelper;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 
@@ -14,15 +13,10 @@ namespace MetadataUtilities.Models
 
     public static class ConditionHelper
     {
-        public static ComparatorType ToComparatorType(this string str)
-        {
-            if (int.TryParse(str, out int intValue) && intValue >= 0 && intValue <= 2)
-            {
-                return (ComparatorType)intValue;
-            }
-
-            throw new ArgumentOutOfRangeException(nameof(str), str, null);
-        }
+        public static ComparatorType ToComparatorType(this string str) =>
+            int.TryParse(str, out int intValue) && intValue >= 0 && intValue <= 2
+                ? (ComparatorType)intValue
+                : throw new ArgumentOutOfRangeException(nameof(str), str, null);
     }
 
     public class Condition : MetadataObject
@@ -47,13 +41,13 @@ namespace MetadataUtilities.Models
             switch (Comparator)
             {
                 case ComparatorType.Contains:
-                    return DatabaseObjectHelper.DbObjectInGame(game, Type, Id);
+                    return ExistsInGame(game);
 
                 case ComparatorType.DoesNotContain:
-                    return !DatabaseObjectHelper.DbObjectInGame(game, Type, Id);
+                    return !ExistsInGame(game);
 
                 case ComparatorType.IsEmpty:
-                    return DatabaseObjectHelper.FieldInGameIsEmpty(game, Type);
+                    return TypeManager.FieldInGameIsEmpty(game);
 
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -1,10 +1,11 @@
-﻿using KNARZhelper;
-using MetadataUtilities.Models;
+﻿using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using KNARZhelper.DatabaseObjectTypes;
+using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Actions
 {
@@ -52,12 +53,12 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool mustUpdate = DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.AgeRating, _ageRatingIds);
-            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.Category, _categoryIds);
-            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.Feature, _featureIds);
-            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.Genre, _genreIds);
-            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.Series, _seriesIds);
-            mustUpdate |= DatabaseObjectHelper.RemoveObjectFromGame(game, SettableFieldType.Tag, _tagIds);
+            bool mustUpdate = new TypeAgeRating().RemoveObjectFromGame(game, _ageRatingIds);
+            mustUpdate |= new TypeCategory().RemoveObjectFromGame(game, _categoryIds);
+            mustUpdate |= new TypeFeature().RemoveObjectFromGame(game, _featureIds);
+            mustUpdate |= new TypeGenre().RemoveObjectFromGame(game, _genreIds);
+            mustUpdate |= new TypeSeries().RemoveObjectFromGame(game, _seriesIds);
+            mustUpdate |= new TypeTag().RemoveObjectFromGame(game, _tagIds);
 
             if (mustUpdate)
             {
@@ -69,11 +70,11 @@ namespace MetadataUtilities.Actions
 
         public override void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
         {
-            foreach (SettableMetadataObject metaDataItem in Settings.UnwantedItems)
+            foreach (MetadataObject metaDataItem in Settings.UnwantedItems)
             {
-                if (!DatabaseObjectHelper.DbObjectInUse(metaDataItem.Type, metaDataItem.Id))
+                if (!metaDataItem.IsUsed())
                 {
-                    DatabaseObjectHelper.RemoveDbObject(metaDataItem.Type, metaDataItem.Id);
+                    metaDataItem.RemoveFromDb();
                 }
             }
         }
@@ -92,36 +93,38 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            foreach (SettableMetadataObject metaDataItem in Settings.UnwantedItems)
+            foreach (MetadataObject metaDataItem in Settings.UnwantedItems)
             {
-                metaDataItem.Id = DatabaseObjectHelper.GetDbObjectId(metaDataItem.Name, (FieldType)metaDataItem.Type);
-
                 switch (metaDataItem.Type)
                 {
-                    case SettableFieldType.AgeRating:
+                    case FieldType.AgeRating:
                         _ageRatingIds.Add(metaDataItem.Id);
                         break;
 
-                    case SettableFieldType.Category:
+                    case FieldType.Category:
                         _categoryIds.Add(metaDataItem.Id);
                         break;
 
-                    case SettableFieldType.Feature:
+                    case FieldType.Feature:
                         _featureIds.Add(metaDataItem.Id);
                         break;
 
-                    case SettableFieldType.Genre:
+                    case FieldType.Genre:
                         _genreIds.Add(metaDataItem.Id);
                         break;
 
-                    case SettableFieldType.Series:
+                    case FieldType.Series:
                         _seriesIds.Add(metaDataItem.Id);
                         break;
 
-                    case SettableFieldType.Tag:
+                    case FieldType.Tag:
                         _tagIds.Add(metaDataItem.Id);
                         break;
 
+                    case FieldType.Developer:
+                    case FieldType.Platform:
+                    case FieldType.Publisher:
+                    case FieldType.Source:
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

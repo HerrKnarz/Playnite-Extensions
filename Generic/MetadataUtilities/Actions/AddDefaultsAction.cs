@@ -1,9 +1,9 @@
-﻿using KNARZhelper;
-using MetadataUtilities.Models;
+﻿using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using KNARZhelper.DatabaseObjectTypes;
 
 namespace MetadataUtilities.Actions
 {
@@ -12,7 +12,9 @@ namespace MetadataUtilities.Actions
         private static readonly object _mutex = new object();
         private static AddDefaultsAction _instance;
         private readonly List<Guid> _categoryIds = new List<Guid>();
+        private readonly TypeCategory _categoryType = new TypeCategory();
         private readonly List<Guid> _tagIds = new List<Guid>();
+        private readonly TypeTag _tagType = new TypeTag();
 
         private AddDefaultsAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
 
@@ -47,11 +49,11 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool mustUpdate = DatabaseObjectHelper.AddDbObjectToGame(game, SettableFieldType.Category, _categoryIds);
+            bool mustUpdate = _categoryType.AddDbObjectToGame(game, _categoryIds);
 
             if (!Settings.SetDefaultTagsOnlyIfEmpty || (game.TagIds?.Count != 0))
             {
-                mustUpdate |= DatabaseObjectHelper.AddDbObjectToGame(game, SettableFieldType.Tag, _tagIds);
+                mustUpdate |= _tagType.AddDbObjectToGame(game, _tagIds);
             }
 
             if (mustUpdate)
@@ -65,16 +67,15 @@ namespace MetadataUtilities.Actions
         public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
         {
             _categoryIds.Clear();
-
-            foreach (SettableMetadataObject category in Settings.DefaultCategories)
+            foreach (MetadataObject category in Settings.DefaultCategories)
             {
-                _categoryIds.Add(DatabaseObjectHelper.AddDbObject(SettableFieldType.Category, category.Name));
+                _categoryIds.Add(category.AddToDb());
             }
 
             _tagIds.Clear();
-            foreach (SettableMetadataObject tag in Settings.DefaultTags)
+            foreach (MetadataObject tag in Settings.DefaultTags)
             {
-                _tagIds.Add(DatabaseObjectHelper.AddDbObject(SettableFieldType.Tag, tag.Name));
+                _tagIds.Add(tag.AddToDb());
             }
 
             return _categoryIds.Count != 0 || _tagIds.Count != 0;

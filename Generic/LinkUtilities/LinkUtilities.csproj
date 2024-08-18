@@ -55,6 +55,12 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectHelper.cs">
       <Link>Shared\DatabaseObjectHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\Enum\DbInteractionResult.cs">
+      <Link>Shared\DbInteractionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\Enum\FieldType.cs">
+      <Link>Shared\FieldType.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>

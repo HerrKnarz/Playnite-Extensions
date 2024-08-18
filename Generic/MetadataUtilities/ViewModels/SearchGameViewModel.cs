@@ -8,16 +8,13 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
-using KNARZhelper;
 using Playnite.SDK.Models;
 
 namespace MetadataUtilities.ViewModels
-
-//TODO: Add combobox with filter presets
 {
     public class SearchGameViewModel : ObservableObject, IEditableObject
     {
-        private readonly SettableMetadataObject _metadataObject;
+        private readonly MetadataObject _metadataObject;
         private FilterPreset _currentPreset;
         private ObservableCollection<FilterPreset> _filterPresets;
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
@@ -25,7 +22,7 @@ namespace MetadataUtilities.ViewModels
         private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
 
-        public SearchGameViewModel(MetadataUtilities plugin, SettableMetadataObject metadataObject)
+        public SearchGameViewModel(MetadataUtilities plugin, MetadataObject metadataObject)
         {
             Plugin = plugin;
             _metadataObject = metadataObject;
@@ -60,7 +57,7 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                foreach (Game game in games.Where(game => DatabaseObjectHelper.AddDbObjectToGame(game, _metadataObject.Type, _metadataObject.Id)))
+                foreach (Game game in games.Where(game => _metadataObject.AddToGame(game)))
                 {
                     API.Instance.MainView.UIDispatcher.Invoke(delegate
                     {

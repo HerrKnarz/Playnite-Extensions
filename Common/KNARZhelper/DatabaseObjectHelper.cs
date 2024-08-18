@@ -3,31 +3,10 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using KNARZhelper.Enum;
 
 namespace KNARZhelper
 {
-    public enum DbInteractionResult
-    {
-        Updated,
-        Created,
-        IsDuplicate,
-        Error
-    }
-
-    public enum FieldType
-    {
-        AgeRating = 5,
-        Category = 0,
-        Developer = 6,
-        Feature = 1,
-        Genre = 2,
-        Platform = 7,
-        Publisher = 8,
-        Series = 3,
-        Source = 9,
-        Tag = 4,
-    }
-
     public enum SettableFieldType
     {
         AgeRating = FieldType.AgeRating,
@@ -38,7 +17,7 @@ namespace KNARZhelper
         Tag = FieldType.Tag,
     }
 
-    public static class DatabaseObjectHelper
+    internal static class DatabaseObjectHelper
     {
         public static Guid AddDbObject(SettableFieldType type, string name)
         {

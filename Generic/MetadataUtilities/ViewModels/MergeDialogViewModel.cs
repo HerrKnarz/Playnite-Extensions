@@ -8,7 +8,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class MergeDialogViewModel : ObservableObject
     {
-        private SettableMetadataObject _mergeTarget;
+        private MetadataObject _mergeTarget;
         private MetadataObjects _metadataObjects;
         private MetadataUtilities _plugin;
         private bool _saveAsRule;
@@ -19,7 +19,7 @@ namespace MetadataUtilities.ViewModels
             MetadataObjects = items;
         }
 
-        public SettableMetadataObject MergeTarget
+        public MetadataObject MergeTarget
         {
             get => _mergeTarget;
             set => SetValue(ref _mergeTarget, value);

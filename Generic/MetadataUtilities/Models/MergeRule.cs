@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace MetadataUtilities.Models
 {
-    public class MergeRule : SettableMetadataObject
+    public class MergeRule : MetadataObject
     {
         private MetadataObjects _sourceObjects;
 
@@ -23,29 +23,17 @@ namespace MetadataUtilities.Models
             }
         }
 
-        public bool GetIds()
-        {
-            Id = DatabaseObjectHelper.AddDbObject(Type, Name);
-
-            foreach (SettableMetadataObject item in SourceObjects)
-            {
-                item.Id = DatabaseObjectHelper.GetDbObjectId(item.Name, (FieldType)item.Type);
-            }
-
-            return true;
-        }
-
         public IEnumerable<Guid> Merge(List<Game> games = null)
         {
             List<Guid> result = new List<Guid>();
 
-            GetIds();
+            AddToDb();
 
             try
             {
-                foreach (SettableMetadataObject item in SourceObjects)
+                foreach (MetadataObject item in SourceObjects)
                 {
-                    if (item.Id == Id)
+                    if (item.Id == Id || item.Id == default)
                     {
                         continue;
                     }
@@ -55,7 +43,7 @@ namespace MetadataUtilities.Models
                         games = API.Instance.Database.Games.ToList();
                     }
 
-                    result.AddMissing(DatabaseObjectHelper.ReplaceDbObject(games, item.Type, item.Id, Type, Id));
+                    result.AddMissing(item.ReplaceInDb(games, Type, Id));
                 }
             }
             catch (Exception ex)

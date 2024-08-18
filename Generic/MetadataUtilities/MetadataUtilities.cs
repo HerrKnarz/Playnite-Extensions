@@ -13,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
+using KNARZhelper.Enum;
 using MetadataUtilities.ViewModels;
 using UserControl = System.Windows.Controls.UserControl;
 
@@ -484,11 +485,6 @@ namespace MetadataUtilities
             {
                 int checkedCount;
 
-                if (dbObject.Id == Guid.Empty)
-                {
-                    dbObject.Id = DatabaseObjectHelper.GetDbObjectId(dbObject.Name, (FieldType)dbObject.Type);
-                }
-
                 string customMenu = dbObject.CustomPath?.Trim().Length > 0
                     ? dbObject.CustomPath.Replace("{type}", dbObject.Type.ToString()).Replace("{action}", action.ToString())
                     : Settings.Settings.QuickAddCustomPath?.Trim().Length > 0
@@ -497,30 +493,34 @@ namespace MetadataUtilities
 
                 switch (dbObject.Type)
                 {
-                    case SettableFieldType.AgeRating:
+                    case FieldType.AgeRating:
                         checkedCount = games.Count(x => x.AgeRatingIds?.Contains(dbObject.Id) ?? false);
                         break;
 
-                    case SettableFieldType.Category:
+                    case FieldType.Category:
                         checkedCount = games.Count(x => x.CategoryIds?.Contains(dbObject.Id) ?? false);
                         break;
 
-                    case SettableFieldType.Feature:
+                    case FieldType.Feature:
                         checkedCount = games.Count(x => x.FeatureIds?.Contains(dbObject.Id) ?? false);
                         break;
 
-                    case SettableFieldType.Genre:
+                    case FieldType.Genre:
                         checkedCount = games.Count(x => x.GenreIds?.Contains(dbObject.Id) ?? false);
                         break;
 
-                    case SettableFieldType.Series:
+                    case FieldType.Series:
                         checkedCount = games.Count(x => x.SeriesIds?.Contains(dbObject.Id) ?? false);
                         break;
 
-                    case SettableFieldType.Tag:
+                    case FieldType.Tag:
                         checkedCount = games.Count(x => x.TagIds?.Contains(dbObject.Id) ?? false);
                         break;
 
+                    case FieldType.Developer:
+                    case FieldType.Platform:
+                    case FieldType.Publisher:
+                    case FieldType.Source:
                     default:
                         throw new ArgumentOutOfRangeException(nameof(dbObject.Type), dbObject.Type, null);
                 }
@@ -549,7 +549,7 @@ namespace MetadataUtilities
                 .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
                 .ToList().Aggregate(false,
                     (current, item)
-                        => current | Settings.Settings.MergeRules.FindAndRenameRule(SettableFieldType.AgeRating,
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.AgeRating,
                             item.OldData.Name, item.NewData.Name)))
             {
                 SavePluginSettings(Settings.Settings);
@@ -579,7 +579,7 @@ namespace MetadataUtilities
             {
                 foreach (ItemUpdateEvent<Category> item in items)
                 {
-                    SettableMetadataObject tag = Settings.Settings.DefaultCategories?.FirstOrDefault(x => x.Name == item.OldData.Name);
+                    MetadataObject tag = Settings.Settings.DefaultCategories?.FirstOrDefault(x => x.Name == item.OldData.Name);
 
                     if (tag == null)
                     {
@@ -596,7 +596,7 @@ namespace MetadataUtilities
                 mustSave = items.Aggregate(mustSave,
                     (current, item)
                         => current |
-                           Settings.Settings.MergeRules.FindAndRenameRule(SettableFieldType.Category, item.OldData.Name,
+                           Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Category, item.OldData.Name,
                                item.NewData.Name));
             }
 
@@ -617,7 +617,7 @@ namespace MetadataUtilities
                 .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
                 .ToList().Aggregate(false,
                     (current, item)
-                        => current | Settings.Settings.MergeRules.FindAndRenameRule(SettableFieldType.Feature,
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Feature,
                             item.OldData.Name, item.NewData.Name)))
             {
                 SavePluginSettings(Settings.Settings);
@@ -635,7 +635,7 @@ namespace MetadataUtilities
                 .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
                 .ToList().Aggregate(false,
                     (current, item)
-                        => current | Settings.Settings.MergeRules.FindAndRenameRule(SettableFieldType.Genre,
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Genre,
                             item.OldData.Name, item.NewData.Name)))
             {
                 SavePluginSettings(Settings.Settings);
@@ -653,7 +653,7 @@ namespace MetadataUtilities
                 .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
                 .ToList().Aggregate(false,
                     (current, item)
-                        => current | Settings.Settings.MergeRules.FindAndRenameRule(SettableFieldType.Series,
+                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Series,
                             item.OldData.Name, item.NewData.Name)))
             {
                 SavePluginSettings(Settings.Settings);
@@ -683,7 +683,7 @@ namespace MetadataUtilities
             {
                 foreach (ItemUpdateEvent<Tag> item in items)
                 {
-                    SettableMetadataObject tag = Settings.Settings.DefaultTags?.FirstOrDefault(x => x.Name == item.OldData.Name);
+                    MetadataObject tag = Settings.Settings.DefaultTags?.FirstOrDefault(x => x.Name == item.OldData.Name);
 
                     if (tag == null)
                     {
@@ -700,7 +700,7 @@ namespace MetadataUtilities
                 mustSave = items.Aggregate(mustSave,
                     (current, item)
                         => current |
-                           Settings.Settings.MergeRules.FindAndRenameRule(SettableFieldType.Tag, item.OldData.Name,
+                           Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Tag, item.OldData.Name,
                                item.NewData.Name));
             }
 

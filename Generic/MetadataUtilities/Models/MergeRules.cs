@@ -1,7 +1,7 @@
-﻿using KNARZhelper;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Models
 {
@@ -22,7 +22,7 @@ namespace MetadataUtilities.Models
             }
             else
             {
-                foreach (SettableMetadataObject obj in rule.SourceObjects)
+                foreach (MetadataObject obj in rule.SourceObjects)
                 {
                     if (!dest.SourceObjects.Any(x => x.Name == obj.Name && x.Type == obj.Type))
                     {
@@ -46,7 +46,7 @@ namespace MetadataUtilities.Models
                          dest != rule && rule.SourceObjects.Any(source =>
                              dest.Name == source.Name && dest.Type == source.Type)).ToList())
             {
-                foreach (SettableMetadataObject obj in child.SourceObjects)
+                foreach (MetadataObject obj in child.SourceObjects)
                 {
                     if (!rule.SourceObjects.Any(x => x.Name == obj.Name && x.Type == obj.Type))
                     {
@@ -63,7 +63,7 @@ namespace MetadataUtilities.Models
             }
         }
 
-        public bool FindAndRenameRule(SettableFieldType fieldType, string name, string newName)
+        public bool FindAndRenameRule(FieldType fieldType, string name, string newName)
         {
             MergeRule rule = this.FirstOrDefault(x => x.Name == name && x.Type == fieldType);
 

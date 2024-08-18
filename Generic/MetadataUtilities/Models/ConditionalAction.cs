@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Documents;
-using KNARZhelper;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
@@ -113,21 +111,6 @@ namespace MetadataUtilities.Models
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-
-        public bool GetIds()
-        {
-            foreach (Condition item in Conditions)
-            {
-                item.Id = DatabaseObjectHelper.GetDbObjectId(item.Name, item.Type);
-            }
-
-            foreach (Action item in Actions)
-            {
-                item.Id = DatabaseObjectHelper.GetDbObjectId(item.Name, (FieldType)item.Type);
-            }
-
-            return true;
         }
 
         private bool Execute(Game game)

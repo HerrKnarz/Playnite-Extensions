@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
 using KNARZhelper;
+using KNARZhelper.Enum;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
 using Playnite.SDK;
@@ -17,7 +18,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class MetadataEditorViewModel : ObservableObject, IEditableObject
     {
-        private readonly HashSet<SettableFieldType> _filterTypes = new HashSet<SettableFieldType>();
+        private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
         private readonly bool _showRelatedGames;
         private int _ageRatingCount;
         private int _categoryCount;
@@ -38,7 +39,7 @@ namespace MetadataUtilities.ViewModels
         private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
-        private List<SettableMetadataObject> _selectedItems = new List<SettableMetadataObject>();
+        private List<MetadataObject> _selectedItems = new List<MetadataObject>();
         private int _seriesCount;
         private int _tagCount;
 
@@ -118,18 +119,18 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                SettableFieldType type = SettableFieldType.Tag;
+                FieldType type = FieldType.Tag;
                 string prefix = string.Empty;
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
-                    SettableMetadataObject templateItem = (SettableMetadataObject)MetadataViewSource.View.CurrentItem;
+                    MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
                     type = templateItem.Type;
                     prefix = templateItem.Prefix;
                 }
 
-                SettableMetadataObject newItem = CompleteMetadata.AddNewItem(type, prefix, true, true);
+                MetadataObject newItem = CompleteMetadata.AddNewItem(type, prefix, true, true);
 
                 if (newItem == null)
                 {
@@ -157,7 +158,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand AddNewGameCommand => new RelayCommand(() =>
         {
-            SettableMetadataObject currentItem = (SettableMetadataObject)_metadataViewSource.View.CurrentItem;
+            MetadataObject currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
 
             SearchGameViewModel viewModel = new SearchGameViewModel(Plugin, currentItem);
 
@@ -198,7 +199,7 @@ namespace MetadataUtilities.ViewModels
 
                 MetadataObjects changeItems = new MetadataObjects(Plugin.Settings.Settings);
 
-                changeItems.AddMissing(items.ToList().Cast<SettableMetadataObject>());
+                changeItems.AddMissing(items.ToList().Cast<MetadataObject>());
 
                 ChangeTypeViewModel viewModel = new ChangeTypeViewModel(Plugin, changeItems);
 
@@ -215,9 +216,9 @@ namespace MetadataUtilities.ViewModels
 
                 Cursor.Current = Cursors.WaitCursor;
 
-                foreach (SettableMetadataObject itemToRemove in changeItems)
+                foreach (MetadataObject itemToRemove in changeItems)
                 {
-                    if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.Name, itemToRemove.Type))
+                    if (!itemToRemove.ExistsInDb())
                     {
                         CompleteMetadata.Remove(itemToRemove);
                     }
@@ -227,7 +228,7 @@ namespace MetadataUtilities.ViewModels
                     }
                 }
 
-                foreach (SettableMetadataObject itemToAdd in viewModel.NewObjects)
+                foreach (MetadataObject itemToAdd in viewModel.NewObjects)
                 {
                     itemToAdd.GetGameCount();
                 }
@@ -286,11 +287,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterAgeRatings)
                 {
-                    _filterTypes.Add(SettableFieldType.AgeRating);
+                    _filterTypes.Add(FieldType.AgeRating);
                 }
                 else
                 {
-                    _filterTypes.Remove(SettableFieldType.AgeRating);
+                    _filterTypes.Remove(FieldType.AgeRating);
                 }
 
                 ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
@@ -307,11 +308,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterCategories)
                 {
-                    _filterTypes.Add(SettableFieldType.Category);
+                    _filterTypes.Add(FieldType.Category);
                 }
                 else
                 {
-                    _filterTypes.Remove(SettableFieldType.Category);
+                    _filterTypes.Remove(FieldType.Category);
                 }
 
                 ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
@@ -328,11 +329,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterFeatures)
                 {
-                    _filterTypes.Add(SettableFieldType.Feature);
+                    _filterTypes.Add(FieldType.Feature);
                 }
                 else
                 {
-                    _filterTypes.Remove(SettableFieldType.Feature);
+                    _filterTypes.Remove(FieldType.Feature);
                 }
 
                 ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
@@ -349,11 +350,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterGenres)
                 {
-                    _filterTypes.Add(SettableFieldType.Genre);
+                    _filterTypes.Add(FieldType.Genre);
                 }
                 else
                 {
-                    _filterTypes.Remove(SettableFieldType.Genre);
+                    _filterTypes.Remove(FieldType.Genre);
                 }
 
                 ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
@@ -394,11 +395,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterSeries)
                 {
-                    _filterTypes.Add(SettableFieldType.Series);
+                    _filterTypes.Add(FieldType.Series);
                 }
                 else
                 {
-                    _filterTypes.Remove(SettableFieldType.Series);
+                    _filterTypes.Remove(FieldType.Series);
                 }
 
                 ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
@@ -415,11 +416,11 @@ namespace MetadataUtilities.ViewModels
 
                 if (_filterTags)
                 {
-                    _filterTypes.Add(SettableFieldType.Tag);
+                    _filterTypes.Add(FieldType.Tag);
                 }
                 else
                 {
-                    _filterTypes.Remove(SettableFieldType.Tag);
+                    _filterTypes.Remove(FieldType.Tag);
                 }
 
                 ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
@@ -502,7 +503,7 @@ namespace MetadataUtilities.ViewModels
 
                 MetadataObjects mergeItems = new MetadataObjects(Plugin.Settings.Settings);
 
-                mergeItems.AddMissing(items.ToList().Cast<SettableMetadataObject>());
+                mergeItems.AddMissing(items.ToList().Cast<MetadataObject>());
 
                 MergeDialogViewModel viewModel = new MergeDialogViewModel(Plugin, mergeItems);
 
@@ -519,9 +520,9 @@ namespace MetadataUtilities.ViewModels
 
                 Cursor.Current = Cursors.WaitCursor;
 
-                foreach (SettableMetadataObject itemToRemove in mergeItems)
+                foreach (MetadataObject itemToRemove in mergeItems)
                 {
-                    if (!DatabaseObjectHelper.DbObjectExists(itemToRemove.Name, itemToRemove.Type))
+                    if (!itemToRemove.ExistsInDb())
                     {
                         CompleteMetadata.Remove(itemToRemove);
                     }
@@ -573,7 +574,7 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                SettableMetadataObject selectedItem = (SettableMetadataObject)MetadataViewSource.View.CurrentItem;
+                MetadataObject selectedItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
                 if (selectedItem == null)
                 {
@@ -587,7 +588,7 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                List<Guid> gamesAffected = DatabaseObjectHelper.ReplaceDbObject(games, selectedItem.Type, selectedItem.Id, null, null, false).ToList();
+                List<Guid> gamesAffected = selectedItem.ReplaceInDb(games, null, null, false).ToList();
 
                 if (gamesAffected.Count == 0)
                 {
@@ -649,9 +650,9 @@ namespace MetadataUtilities.ViewModels
                         {
                             activateGlobalProgress.ProgressMaxValue = items.Count;
 
-                            foreach (SettableMetadataObject item in items.Cast<SettableMetadataObject>())
+                            foreach (MetadataObject item in items.Cast<MetadataObject>())
                             {
-                                DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id);
+                                item.RemoveFromDb();
 
                                 activateGlobalProgress.CurrentProgressValue++;
                             }
@@ -663,9 +664,9 @@ namespace MetadataUtilities.ViewModels
                     }, globalProgressOptions);
                 }
 
-                List<SettableMetadataObject> unwantedItems = new List<SettableMetadataObject>();
+                List<MetadataObject> unwantedItems = new List<MetadataObject>();
 
-                foreach (SettableMetadataObject item in items.ToList().Cast<SettableMetadataObject>())
+                foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
                 {
                     unwantedItems.Add(item);
 
@@ -695,19 +696,19 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                List<SettableMetadataObject> removedItems = MetadataFunctions.RemoveUnusedMetadata(_plugin.Settings.Settings);
+                List<MetadataObject> removedItems = MetadataFunctions.RemoveUnusedMetadata(_plugin.Settings.Settings);
 
                 if (removedItems.Count == 0)
                 {
                     return;
                 }
 
-                List<SettableMetadataObject> itemsToRemove = CompleteMetadata
+                List<MetadataObject> itemsToRemove = CompleteMetadata
                     .Where(x => removedItems.Any(y => x.Type == y.Type && x.Name == y.Name)).ToList();
 
                 CalculateItemCount();
 
-                foreach (SettableMetadataObject itemToRemove in itemsToRemove)
+                foreach (MetadataObject itemToRemove in itemsToRemove)
                 {
                     CompleteMetadata.Remove(itemToRemove);
                 }
@@ -732,7 +733,7 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public List<SettableMetadataObject> SelectedItems
+        public List<MetadataObject> SelectedItems
         {
             get => _selectedItems;
             set => SetValue(ref _selectedItems, value);
@@ -769,7 +770,7 @@ namespace MetadataUtilities.ViewModels
         public void EndEdit()
         { }
 
-        private static void UpdateGroupDisplay(List<SettableMetadataObject> itemList)
+        private static void UpdateGroupDisplay(List<MetadataObject> itemList)
         {
             Log.Debug("=== UpdateGroupDisplay: Start ===");
             DateTime ts = DateTime.Now;
@@ -784,7 +785,7 @@ namespace MetadataUtilities.ViewModels
         private void CurrentChanged(object sender, EventArgs e) => LoadRelatedGames();
 
         private bool Filter(object item) =>
-            item is SettableMetadataObject metadataObject &&
+            item is MetadataObject metadataObject &&
             (!GroupMatches || metadataObject.ShowGrouped) &&
             metadataObject.Name.RegExIsMatch(SearchTerm) &&
             _filterTypes.Contains(metadataObject.Type) &&
@@ -800,7 +801,7 @@ namespace MetadataUtilities.ViewModels
 
             Games.Clear();
 
-            SettableMetadataObject currentItem = (SettableMetadataObject)_metadataViewSource.View.CurrentItem;
+            MetadataObject currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
 
             if (currentItem == null)
             {
@@ -813,12 +814,12 @@ namespace MetadataUtilities.ViewModels
             {
                 foreach (Game game in API.Instance.Database.Games.Where(g =>
                     !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
-                        (currentItem.Type == SettableFieldType.AgeRating && (g.AgeRatingIds?.Contains(currentItem.Id) ?? false)) ||
-                        (currentItem.Type == SettableFieldType.Category && (g.CategoryIds?.Contains(currentItem.Id) ?? false)) ||
-                        (currentItem.Type == SettableFieldType.Feature && (g.FeatureIds?.Contains(currentItem.Id) ?? false)) ||
-                        (currentItem.Type == SettableFieldType.Genre && (g.GenreIds?.Contains(currentItem.Id) ?? false)) ||
-                        (currentItem.Type == SettableFieldType.Series && (g.SeriesIds?.Contains(currentItem.Id) ?? false)) ||
-                        (currentItem.Type == SettableFieldType.Tag && (g.TagIds?.Contains(currentItem.Id) ?? false)))
+                        (currentItem.Type == FieldType.AgeRating && (g.AgeRatingIds?.Contains(currentItem.Id) ?? false)) ||
+                        (currentItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currentItem.Id) ?? false)) ||
+                        (currentItem.Type == FieldType.Feature && (g.FeatureIds?.Contains(currentItem.Id) ?? false)) ||
+                        (currentItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currentItem.Id) ?? false)) ||
+                        (currentItem.Type == FieldType.Series && (g.SeriesIds?.Contains(currentItem.Id) ?? false)) ||
+                        (currentItem.Type == FieldType.Tag && (g.TagIds?.Contains(currentItem.Id) ?? false)))
                 ).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName).ToList())
                 {
                     Games.Add(new MyGame

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using KNARZhelper.Enum;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 
@@ -39,17 +40,12 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool NameExists(string name, Guid id) =>
             API.Instance.Database.Platforms?.Any(x => x.Name == name && x.Id != id) ?? false;
 
-        public override bool RemoveDbObject(Guid id, bool checkIfUsed = true)
-        {
+        public override bool RemoveDbObject(Guid id, bool checkIfUsed = true) =>
             // If we need to check first, we can simply call the replace method, that removes the
             // item itself, if no item is entered to replace the old one.
-            if (checkIfUsed)
-            {
-                return ReplaceDbObject(API.Instance.Database.Games.ToList(), id)?.Count() > 0;
-            }
-
-            return API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Platforms.Remove(id));
-        }
+            checkIfUsed
+                ? ReplaceDbObject(API.Instance.Database.Games.ToList(), id)?.Count() > 0
+                : API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Platforms.Remove(id));
 
         public override bool RemoveObjectFromGame(Game game, List<Guid> ids) => ids.Count != 0 && ids.Aggregate(false, (current, id) =>
                 current | API.Instance.MainView.UIDispatcher.Invoke(() => game.PlatformIds?.Remove(id) ?? false));

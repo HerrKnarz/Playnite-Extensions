@@ -6,7 +6,7 @@
              xmlns:metadataUtilities="clr-namespace:MetadataUtilities"
              d:DataContext="{d:DesignInstance Type=viewModels:MergeRuleEditorViewModel}"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:helper="clr-namespace:KNARZhelper"
+             xmlns:helper="clr-namespace:KNARZhelper.Enum"
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -21,7 +21,7 @@
                             ObjectType="{x:Type sys:Enum}"
                             x:Key="FieldTypeValues">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="helper:SettableFieldType" />
+                <x:Type TypeName="helper:FieldType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>

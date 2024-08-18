@@ -36,6 +36,7 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "easier to understand")]
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
@@ -50,20 +51,6 @@ namespace MetadataUtilities.Actions
 
             return Settings.ConditionalActions.Where(x => x.Enabled).Aggregate(false,
                 (current, conditionalAction) => current | conditionalAction.CheckAndExecute(game, actionModifier == ActionModifierTypes.IsManual));
-        }
-
-        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
-        {
-            if (item != null)
-            {
-                return ((ConditionalAction)item).GetIds();
-            }
-
-            foreach (ConditionalAction conditionalAction in Settings.ConditionalActions.Where(x => x.Enabled))
-            {
-                conditionalAction.GetIds();
-            }
-            return true;
         }
     }
 }

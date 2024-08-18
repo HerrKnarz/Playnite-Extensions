@@ -2,9 +2,9 @@
 using MetadataUtilities.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Caching;
 using System.Windows;
 using KNARZhelper;
+using KNARZhelper.Enum;
 using MetadataUtilities.Views;
 using Playnite.SDK;
 using Action = MetadataUtilities.Models.Action;
@@ -24,22 +24,22 @@ namespace MetadataUtilities.ViewModels
         }
 
         public RelayCommand<string> AddActionAgeRatingsCommand => new RelayCommand<string>(type =>
-            AddActions(SettableFieldType.AgeRating, type.ToActionType()));
+            AddActions(FieldType.AgeRating, type.ToActionType()));
 
         public RelayCommand<string> AddActionCategoriesCommand => new RelayCommand<string>(type =>
-            AddActions(SettableFieldType.Category, type.ToActionType()));
+            AddActions(FieldType.Category, type.ToActionType()));
 
         public RelayCommand<string> AddActionFeaturesCommand => new RelayCommand<string>(type =>
-            AddActions(SettableFieldType.Feature, type.ToActionType()));
+            AddActions(FieldType.Feature, type.ToActionType()));
 
         public RelayCommand<string> AddActionGenresCommand => new RelayCommand<string>(type =>
-            AddActions(SettableFieldType.Genre, type.ToActionType()));
+            AddActions(FieldType.Genre, type.ToActionType()));
 
         public RelayCommand<string> AddActionSeriesCommand => new RelayCommand<string>(type =>
-            AddActions(SettableFieldType.Series, type.ToActionType()));
+            AddActions(FieldType.Series, type.ToActionType()));
 
         public RelayCommand<string> AddActionTagsCommand => new RelayCommand<string>(type =>
-            AddActions(SettableFieldType.Tag, type.ToActionType()));
+            AddActions(FieldType.Tag, type.ToActionType()));
 
         public RelayCommand<string> AddConditionAgeRatingsCommand => new RelayCommand<string>(type =>
             AddConditions(FieldType.AgeRating, type.ToComparatorType()));
@@ -141,7 +141,7 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public void AddActions(SettableFieldType fieldType, ActionType actionType)
+        public void AddActions(FieldType fieldType, ActionType actionType)
         {
             if (actionType == ActionType.ClearField)
             {
@@ -158,7 +158,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog((FieldType)fieldType, _settings);
+            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
 
             if (items.Count == 0)
             {
@@ -170,7 +170,7 @@ namespace MetadataUtilities.ViewModels
                 ConditionalAction.Actions.Add(new Action(_settings)
                 {
                     Name = item.Name,
-                    Type = (SettableFieldType)item.Type,
+                    Type = item.Type,
                     ActionType = actionType
                 });
             }

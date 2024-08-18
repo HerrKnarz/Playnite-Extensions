@@ -1,5 +1,4 @@
 ﻿using System;
-using KNARZhelper;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 
@@ -14,18 +13,13 @@ namespace MetadataUtilities.Models
 
     public static class ActionHelper
     {
-        public static ActionType ToActionType(this string str)
-        {
-            if (int.TryParse(str, out int intValue) && intValue >= 0 && intValue <= 2)
-            {
-                return (ActionType)intValue;
-            }
-
-            throw new ArgumentOutOfRangeException(nameof(str), str, null);
-        }
+        public static ActionType ToActionType(this string str) =>
+            int.TryParse(str, out int intValue) && intValue >= 0 && intValue <= 2
+                ? (ActionType)intValue
+                : throw new ArgumentOutOfRangeException(nameof(str), str, null);
     }
 
-    public class Action : SettableMetadataObject
+    public class Action : MetadataObject
     {
         private ActionType _actionType = ActionType.AddObject;
 
@@ -55,13 +49,13 @@ namespace MetadataUtilities.Models
             switch (ActionType)
             {
                 case ActionType.AddObject:
-                    return DatabaseObjectHelper.AddDbObjectToGame(game, Type, Name);
+                    return AddToGame(game);
 
                 case ActionType.RemoveObject:
-                    return DatabaseObjectHelper.RemoveObjectFromGame(game, Type, Id);
+                    return RemoveFromGame(game);
 
                 case ActionType.ClearField:
-                    DatabaseObjectHelper.EmptyFieldInGame(game, Type);
+                    TypeManager.EmptyFieldInGame(game);
                     return true;
 
                 default:

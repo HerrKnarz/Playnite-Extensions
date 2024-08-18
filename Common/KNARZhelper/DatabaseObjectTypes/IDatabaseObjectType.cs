@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using KNARZhelper.Enum;
 using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes

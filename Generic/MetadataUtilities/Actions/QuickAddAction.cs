@@ -1,8 +1,8 @@
-﻿using KNARZhelper;
-using MetadataUtilities.Models;
+﻿using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
+using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Actions
 {
@@ -11,7 +11,7 @@ namespace MetadataUtilities.Actions
         private static readonly object _mutex = new object();
         private static QuickAddAction _instance;
         private ActionModifierTypes _action = ActionModifierTypes.Add;
-        private SettableFieldType _type = SettableFieldType.Category;
+        private FieldType _type = FieldType.Category;
 
         private QuickAddAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
 
@@ -46,7 +46,7 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            SettableMetadataObject metaDataItem = (SettableMetadataObject)item;
+            MetadataObject metaDataItem = (MetadataObject)item;
 
             if (metaDataItem == null)
             {
@@ -58,17 +58,17 @@ namespace MetadataUtilities.Actions
             switch (actionModifier)
             {
                 case ActionModifierTypes.Add:
-                    mustUpdate = DatabaseObjectHelper.AddDbObjectToGame(game, metaDataItem.Type, metaDataItem.Id);
+                    mustUpdate = metaDataItem.AddToGame(game);
                     break;
 
                 case ActionModifierTypes.Remove:
-                    mustUpdate = DatabaseObjectHelper.RemoveObjectFromGame(game, metaDataItem.Type, metaDataItem.Id);
+                    mustUpdate = metaDataItem.RemoveFromGame(game);
                     break;
 
                 case ActionModifierTypes.Toggle:
-                    mustUpdate = DatabaseObjectHelper.DbObjectInGame(game, (FieldType)metaDataItem.Type, metaDataItem.Id) ?
-                        DatabaseObjectHelper.RemoveObjectFromGame(game, metaDataItem.Type, metaDataItem.Id) :
-                        DatabaseObjectHelper.AddDbObjectToGame(game, metaDataItem.Type, metaDataItem.Id);
+                    mustUpdate = metaDataItem.ExistsInGame(game) ?
+                        metaDataItem.RemoveFromGame(game) :
+                        metaDataItem.AddToGame(game);
                     break;
 
                 case ActionModifierTypes.None:
@@ -88,7 +88,7 @@ namespace MetadataUtilities.Actions
         {
             _action = actionModifier;
 
-            SettableMetadataObject metaDataItem = (SettableMetadataObject)item;
+            MetadataObject metaDataItem = (MetadataObject)item;
 
             if (metaDataItem == null)
             {
@@ -96,11 +96,6 @@ namespace MetadataUtilities.Actions
             }
 
             _type = metaDataItem.Type;
-
-            if (metaDataItem.Id == Guid.Empty)
-            {
-                metaDataItem.Id = DatabaseObjectHelper.GetDbObjectId(metaDataItem.Name, (FieldType)metaDataItem.Type);
-            }
 
             return true;
         }

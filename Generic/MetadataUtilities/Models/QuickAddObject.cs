@@ -1,6 +1,6 @@
 ﻿namespace MetadataUtilities.Models
 {
-    public class QuickAddObject : SettableMetadataObject
+    public class QuickAddObject : MetadataObject
     {
         public QuickAddObject(Settings settings) : base(settings)
         {

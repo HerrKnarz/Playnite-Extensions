@@ -60,6 +60,8 @@
     <Compile Include="DatabaseObjectTypes\TypeSeries.cs" />
     <Compile Include="DatabaseObjectTypes\TypeSource.cs" />
     <Compile Include="DatabaseObjectTypes\TypeTag.cs" />
+    <Compile Include="Enum\DbInteractionResult.cs" />
+    <Compile Include="Enum\FieldType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MiscHelper.cs" />

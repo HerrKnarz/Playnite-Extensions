@@ -6,6 +6,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using KNARZhelper;
+using KNARZhelper.Enum;
 using MetadataUtilities.ViewModels;
 
 namespace MetadataUtilities
@@ -70,6 +71,8 @@ namespace MetadataUtilities
                 ? items.Where(x => x.Selected).ToList()
                 : new List<MetadataObject>();
         }
+
+        //TODO: See, if some things can be deleted and replaced with MetadataObjects class or put into Type classes
 
         public static ObservableCollection<MetadataObject> LoadMetadata(FieldType type, Settings settings)
         {
@@ -202,9 +205,9 @@ namespace MetadataUtilities
             return temporaryList.OrderBy(x => x.TypeAndName).ToObservable();
         }
 
-        public static List<SettableMetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
+        public static List<MetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
         {
-            List<SettableMetadataObject> temporaryList = new List<SettableMetadataObject>();
+            List<MetadataObject> temporaryList = new List<MetadataObject>();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
@@ -223,11 +226,11 @@ namespace MetadataUtilities
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.AgeRatingIds?.Contains(x.Id) ?? false)))
                         .Select(ageRating
-                            => new SettableMetadataObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = ageRating.Id,
                                 Name = ageRating.Name,
-                                Type = SettableFieldType.AgeRating
+                                Type = FieldType.AgeRating
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Categories
@@ -235,11 +238,11 @@ namespace MetadataUtilities
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.CategoryIds?.Contains(x.Id) ?? false)))
                         .Select(category
-                            => new SettableMetadataObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = category.Id,
                                 Name = category.Name,
-                                Type = SettableFieldType.Category
+                                Type = FieldType.Category
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Features
@@ -247,11 +250,11 @@ namespace MetadataUtilities
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.FeatureIds?.Contains(x.Id) ?? false)))
                         .Select(feature
-                            => new SettableMetadataObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = feature.Id,
                                 Name = feature.Name,
-                                Type = SettableFieldType.Feature
+                                Type = FieldType.Feature
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Genres
@@ -259,11 +262,11 @@ namespace MetadataUtilities
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.GenreIds?.Contains(x.Id) ?? false)))
                         .Select(genre
-                            => new SettableMetadataObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = genre.Id,
                                 Name = genre.Name,
-                                Type = SettableFieldType.Genre
+                                Type = FieldType.Genre
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Series
@@ -271,11 +274,11 @@ namespace MetadataUtilities
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.SeriesIds?.Contains(x.Id) ?? false)))
                         .Select(series
-                            => new SettableMetadataObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = series.Id,
                                 Name = series.Name,
-                                Type = SettableFieldType.Series
+                                Type = FieldType.Series
                             }));
 
                     temporaryList.AddRange(API.Instance.Database.Tags
@@ -283,11 +286,11 @@ namespace MetadataUtilities
                             => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
                                (g.TagIds?.Contains(x.Id) ?? false)))
                         .Select(tag
-                            => new SettableMetadataObject(settings)
+                            => new MetadataObject(settings)
                             {
                                 Id = tag.Id,
                                 Name = tag.Name,
-                                Type = SettableFieldType.Tag
+                                Type = FieldType.Tag
                             }));
 
                     if (temporaryList.Any() && (settings.UnusedItemsWhiteList?.Any() ?? false))
@@ -296,9 +299,9 @@ namespace MetadataUtilities
                             settings.UnusedItemsWhiteList.All(y => y.TypeAndName != x.TypeAndName)).ToList();
                     }
 
-                    foreach (SettableMetadataObject item in temporaryList)
+                    foreach (MetadataObject item in temporaryList)
                     {
-                        DatabaseObjectHelper.RemoveDbObject(item.Type, item.Id, settings.IgnoreHiddenGamesInRemoveUnused);
+                        item.RemoveFromDb(settings.IgnoreHiddenGamesInRemoveUnused);
                     }
                 }
                 catch (Exception ex)
