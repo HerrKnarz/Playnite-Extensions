@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Models
 {
@@ -46,8 +47,8 @@ namespace MetadataUtilities.Models
 
         public Settings()
         {
-            _defaultCategories = new MetadataObjects(this);
-            _defaultTags = new MetadataObjects(this);
+            _defaultCategories = new MetadataObjects(this, FieldType.Category);
+            _defaultTags = new MetadataObjects(this, FieldType.Tag);
             _unusedItemsWhiteList = new MetadataObjects(this);
             _unwantedItems = new MetadataObjects(this);
         }

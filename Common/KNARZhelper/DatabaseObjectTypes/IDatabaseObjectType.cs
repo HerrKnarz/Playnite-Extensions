@@ -13,6 +13,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         bool CanBeModified { get; }
         bool CanBeSetInGame { get; }
         bool IsList { get; }
+        string Label { get; }
         FieldType Type { get; }
 
         Guid AddDbObject(string name);
@@ -36,6 +37,10 @@ namespace KNARZhelper.DatabaseObjectTypes
         Guid GetDbObjectId(string name);
 
         int GetGameCount(Guid id, bool ignoreHidden = false);
+
+        List<DatabaseObject> LoadAllMetadata();
+
+        List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames);
 
         bool NameExists(string name, Guid id);
 

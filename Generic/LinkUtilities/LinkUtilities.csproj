@@ -55,6 +55,42 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectHelper.cs">
       <Link>Shared\DatabaseObjectHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseType.cs">
+      <Link>Shared\BaseType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IDatabaseObjectType.cs">
+      <Link>Shared\IDatabaseObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeAgeRating.cs">
+      <Link>Shared\TypeAgeRating.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCategory.cs">
+      <Link>Shared\TypeCategory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeDeveloper.cs">
+      <Link>Shared\TypeDeveloper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeFeature.cs">
+      <Link>Shared\TypeFeature.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeGenre.cs">
+      <Link>Shared\TypeGenre.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePlatform.cs">
+      <Link>Shared\TypePlatform.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePublisher.cs">
+      <Link>Shared\TypePublisher.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeSeries.cs">
+      <Link>Shared\TypeSeries.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeSource.cs">
+      <Link>Shared\TypeSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeTag.cs">
+      <Link>Shared\TypeTag.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Enum\DbInteractionResult.cs">
       <Link>Shared\DbInteractionResult.cs</Link>
     </Compile>

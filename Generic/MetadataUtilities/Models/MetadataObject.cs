@@ -147,51 +147,7 @@ namespace MetadataUtilities.Models
             {
                 SetValue(ref _type, value);
 
-                switch (value)
-                {
-                    case FieldType.AgeRating:
-                        TypeManager = new TypeAgeRating();
-                        break;
-
-                    case FieldType.Category:
-                        TypeManager = new TypeCategory();
-                        break;
-
-                    case FieldType.Developer:
-                        TypeManager = new TypeDeveloper();
-                        break;
-
-                    case FieldType.Feature:
-                        TypeManager = new TypeFeature();
-                        break;
-
-                    case FieldType.Genre:
-                        TypeManager = new TypeGenre();
-                        break;
-
-                    case FieldType.Platform:
-                        TypeManager = new TypePlatform();
-                        break;
-
-                    case FieldType.Publisher:
-                        TypeManager = new TypePublisher();
-                        break;
-
-                    case FieldType.Series:
-                        TypeManager = new TypeSeries();
-                        break;
-
-                    case FieldType.Source:
-                        TypeManager = new TypeSource();
-                        break;
-
-                    case FieldType.Tag:
-                        TypeManager = new TypeTag();
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(value), value, null);
-                }
+                TypeManager = value.GetTypeManager();
             }
         }
 

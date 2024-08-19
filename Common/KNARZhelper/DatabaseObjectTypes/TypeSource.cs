@@ -11,6 +11,8 @@ namespace KNARZhelper.DatabaseObjectTypes
     {
         public override bool IsList => false;
 
+        public override string Label => ResourceProvider.GetString("LOCSourcesLabel");
+
         public override FieldType Type => FieldType.Source;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Sources.Add(name).Id;
@@ -42,6 +44,14 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override int GetGameCount(Guid id, bool ignoreHidden = false) =>
             API.Instance.Database.Games.Count(g => !(ignoreHidden && g.Hidden) && (g.SourceId == id));
+
+        public override List<DatabaseObject> LoadAllMetadata() => API.Instance.Database.Sources
+            .Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList();
+
+        public override List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) => API.Instance.Database
+            .Sources.Where(x => !API.Instance.Database.Games.Any(g =>
+                !(ignoreHiddenGames && g.Hidden) && (g.SourceId == x.Id)))
+            .Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();
 
         public override bool NameExists(string name, Guid id) =>
             API.Instance.Database.Sources?.Any(x => x.Name == name && x.Id != id) ?? false;

@@ -11,11 +11,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using KNARZhelper.DatabaseObjectTypes;
 
 namespace MetadataUtilities.Models
 {
     public class MetadataObjects : ObservableCollection<MetadataObject>
     {
+        private readonly IDatabaseObjectType _typeManager;
+
         /// <summary>
         /// Only used for deserializing the settings. Needs to use the "ResetReferences" method of
         /// the settings afterward!
@@ -23,7 +26,11 @@ namespace MetadataUtilities.Models
         public MetadataObjects()
         { }
 
-        public MetadataObjects(Settings settings) => Settings = settings;
+        public MetadataObjects(Settings settings, FieldType? type = null)
+        {
+            Settings = settings;
+            _typeManager = type?.GetTypeManager();
+        }
 
         [DontSerialize]
         public Settings Settings { get; set; }
@@ -189,12 +196,38 @@ namespace MetadataUtilities.Models
             this.AddMissing(temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
         }
 
-        public void LoadMetadata(bool showGameNumber = true, FieldType? type = null)
+        public void LoadMetadata(bool showGameNumber = true, bool onlyMergeAble = true)
         {
             Log.Debug("=== LoadMetadata: Start ===");
             DateTime ts = DateTime.Now;
 
             List<MetadataObject> temporaryList = new List<MetadataObject>();
+            List<IDatabaseObjectType> types;
+
+            if (_typeManager != null)
+            {
+                types = new List<IDatabaseObjectType> { _typeManager };
+            }
+            else
+            {
+                types = new List<IDatabaseObjectType>
+                {
+                    new TypeAgeRating(),
+                    new TypeCategory(),
+                    new TypeFeature(),
+                    new TypeGenre(),
+                    new TypeSeries(),
+                    new TypeTag()
+                };
+
+                if (!onlyMergeAble)
+                {
+                    types.Add(new TypeDeveloper());
+                    types.Add(new TypePlatform());
+                    types.Add(new TypePublisher());
+                    types.Add(new TypeSource());
+                }
+            }
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCLoadingLabel"),
@@ -208,75 +241,19 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
-                    if (type == null || type == FieldType.AgeRating)
+                    foreach (IDatabaseObjectType typeManager in types)
                     {
-                        temporaryList.AddRange(API.Instance.Database.AgeRatings.Select(ageRating
-                            => new MetadataObject(Settings)
-                            {
-                                Id = ageRating.Id,
-                                Name = ageRating.Name,
-                                Type = FieldType.AgeRating
-                            }));
-                    }
-
-                    if (type == null || type == FieldType.Category)
-                    {
-                        temporaryList.AddRange(API.Instance.Database.Categories.Select(category
-                            => new MetadataObject(Settings)
-                            {
-                                Id = category.Id,
-                                Name = category.Name,
-                                Type = FieldType.Category
-                            }));
-                    }
-
-                    if (type == null || type == FieldType.Feature)
-                    {
-                        temporaryList.AddRange(API.Instance.Database.Features.Select(feature
-                            => new MetadataObject(Settings)
-                            {
-                                Id = feature.Id,
-                                Name = feature.Name,
-                                Type = FieldType.Feature
-                            }));
-                    }
-
-                    if (type == null || type == FieldType.Genre)
-                    {
-                        temporaryList.AddRange(API.Instance.Database.Genres.Select(genre
-                            => new MetadataObject(Settings)
-                            {
-                                Id = genre.Id,
-                                Name = genre.Name,
-                                Type = FieldType.Genre
-                            }));
-                    }
-
-                    if (type == null || type == FieldType.Series)
-                    {
-                        temporaryList.AddRange(API.Instance.Database.Series.Select(series
-                            => new MetadataObject(Settings)
-                            {
-                                Id = series.Id,
-                                Name = series.Name,
-                                Type = FieldType.Series
-                            }));
-                    }
-
-                    if (type == null || type == FieldType.Tag)
-                    {
-                        temporaryList.AddRange(API.Instance.Database.Tags.Select(tag
-                            => new MetadataObject(Settings)
-                            {
-                                Id = tag.Id,
-                                Name = tag.Name,
-                                Type = FieldType.Tag
-                            }));
+                        temporaryList.AddRange(typeManager.LoadAllMetadata().Select(x => new MetadataObject(Settings)
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                            Type = typeManager.Type
+                        }));
                     }
 
                     if (showGameNumber)
                     {
-                        UpdateGameCounts(temporaryList, Settings.IgnoreHiddenGamesInGameCount);
+                        UpdateGameCounts(temporaryList, Settings.IgnoreHiddenGamesInGameCount, _typeManager, onlyMergeAble);
                     }
                 }
                 catch (Exception ex)
@@ -298,28 +275,40 @@ namespace MetadataUtilities.Models
             }
         }
 
-        private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames)
+        private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames, IDatabaseObjectType typeManager = null, bool onlyMergeable = true)
         {
             Log.Debug("=== UpdateGameCounts: Start ===");
             DateTime ts = DateTime.Now;
 
-            ConcurrentQueue<Guid> items = new ConcurrentQueue<Guid>();
-
             ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+
+            if (typeManager != null)
+            {
+                Parallel.ForEach(itemList, opts, item => item.GetGameCount());
+
+                return;
+            }
+
+            ConcurrentQueue<Guid> items = new ConcurrentQueue<Guid>();
 
             Parallel.ForEach(API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden)), opts, game =>
             {
                 game.AgeRatingIds?.ForEach(o => items.Enqueue(o));
-
                 game.CategoryIds?.ForEach(o => items.Enqueue(o));
-
                 game.FeatureIds?.ForEach(o => items.Enqueue(o));
-
                 game.GenreIds?.ForEach(o => items.Enqueue(o));
-
                 game.SeriesIds?.ForEach(o => items.Enqueue(o));
-
                 game.TagIds?.ForEach(o => items.Enqueue(o));
+
+                if (onlyMergeable)
+                {
+                    return;
+                }
+
+                game.DeveloperIds?.ForEach(o => items.Enqueue(o));
+                game.PlatformIds?.ForEach(o => items.Enqueue(o));
+                game.PublisherIds?.ForEach(o => items.Enqueue(o));
+                items.Enqueue(game.SourceId);
             });
 
             List<IGrouping<Guid, Guid>> li = items.GroupBy(i => i).ToList();

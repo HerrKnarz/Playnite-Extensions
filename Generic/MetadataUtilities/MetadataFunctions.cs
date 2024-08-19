@@ -5,9 +5,9 @@ using MetadataUtilities.ViewModels;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using KNARZhelper.DatabaseObjectTypes;
 
 namespace MetadataUtilities
 {
@@ -15,55 +15,11 @@ namespace MetadataUtilities
     {
         public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, Settings settings)
         {
-            ObservableCollection<MetadataObject> items = LoadMetadata(type, settings);
+            string label = type.GetTypeManager().Label;
 
-            string label;
+            MetadataObjects items = new MetadataObjects(settings, type);
 
-            switch (type)
-            {
-                case FieldType.AgeRating:
-                    label = ResourceProvider.GetString("LOCAgeRatingsLabel");
-                    break;
-
-                case FieldType.Category:
-                    label = ResourceProvider.GetString("LOCCategoriesLabel");
-                    break;
-
-                case FieldType.Developer:
-                    label = ResourceProvider.GetString("LOCDevelopersLabel");
-                    break;
-
-                case FieldType.Feature:
-                    label = ResourceProvider.GetString("LOCFeaturesLabel");
-                    break;
-
-                case FieldType.Genre:
-                    label = ResourceProvider.GetString("LOCGenresLabel");
-                    break;
-
-                case FieldType.Platform:
-                    label = ResourceProvider.GetString("LOCPlatformsTitle");
-                    break;
-
-                case FieldType.Publisher:
-                    label = ResourceProvider.GetString("LOCPublishersLabel");
-                    break;
-
-                case FieldType.Series:
-                    label = ResourceProvider.GetString("LOCSeriesLabel");
-                    break;
-
-                case FieldType.Source:
-                    label = ResourceProvider.GetString("LOCSourcesLabel");
-                    break;
-
-                case FieldType.Tag:
-                    label = ResourceProvider.GetString("LOCTagsLabel");
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+            items.LoadMetadata(false);
 
             Window window = SelectMetadataViewModel.GetWindow(items, label);
 
@@ -72,142 +28,20 @@ namespace MetadataUtilities
                 : new List<MetadataObject>();
         }
 
-        //TODO: See, if some things can be deleted and replaced with MetadataObjects class or put into Type classes
-
-        public static ObservableCollection<MetadataObject> LoadMetadata(FieldType type, Settings settings)
-        {
-            List<MetadataObject> temporaryList = new List<MetadataObject>();
-
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                ResourceProvider.GetString("LOCLoadingLabel"),
-                false
-            )
-            {
-                IsIndeterminate = true
-            };
-
-            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-            {
-                try
-                {
-                    switch (type)
-                    {
-                        case FieldType.AgeRating:
-                            temporaryList.AddRange(API.Instance.Database.AgeRatings.Select(ageRating
-                                => new MetadataObject(settings)
-                                {
-                                    Id = ageRating.Id,
-                                    Name = ageRating.Name,
-                                    Type = FieldType.AgeRating
-                                }));
-                            break;
-
-                        case FieldType.Category:
-                            temporaryList.AddRange(API.Instance.Database.Categories.Select(category
-                                => new MetadataObject(settings)
-                                {
-                                    Id = category.Id,
-                                    Name = category.Name,
-                                    Type = FieldType.Category
-                                }));
-                            break;
-
-                        case FieldType.Developer:
-                            temporaryList.AddRange(API.Instance.Database.Companies.Select(company
-                                => new MetadataObject(settings)
-                                {
-                                    Id = company.Id,
-                                    Name = company.Name,
-                                    Type = FieldType.Developer
-                                }));
-                            break;
-
-                        case FieldType.Feature:
-                            temporaryList.AddRange(API.Instance.Database.Features.Select(feature
-                                => new MetadataObject(settings)
-                                {
-                                    Id = feature.Id,
-                                    Name = feature.Name,
-                                    Type = FieldType.Feature
-                                }));
-                            break;
-
-                        case FieldType.Genre:
-                            temporaryList.AddRange(API.Instance.Database.Genres.Select(genre
-                                => new MetadataObject(settings)
-                                {
-                                    Id = genre.Id,
-                                    Name = genre.Name,
-                                    Type = FieldType.Genre
-                                }));
-                            break;
-
-                        case FieldType.Platform:
-                            temporaryList.AddRange(API.Instance.Database.Platforms.Select(platform
-                                => new MetadataObject(settings)
-                                {
-                                    Id = platform.Id,
-                                    Name = platform.Name,
-                                    Type = FieldType.Developer
-                                }));
-                            break;
-
-                        case FieldType.Publisher:
-                            temporaryList.AddRange(API.Instance.Database.Companies.Select(company
-                                => new MetadataObject(settings)
-                                {
-                                    Id = company.Id,
-                                    Name = company.Name,
-                                    Type = FieldType.Publisher
-                                }));
-                            break;
-
-                        case FieldType.Series:
-                            temporaryList.AddRange(API.Instance.Database.Series.Select(series
-                                => new MetadataObject(settings)
-                                {
-                                    Id = series.Id,
-                                    Name = series.Name,
-                                    Type = FieldType.Series
-                                }));
-                            break;
-
-                        case FieldType.Source:
-                            temporaryList.AddRange(API.Instance.Database.Sources.Select(source
-                                => new MetadataObject(settings)
-                                {
-                                    Id = source.Id,
-                                    Name = source.Name,
-                                    Type = FieldType.Source
-                                }));
-                            break;
-
-                        case FieldType.Tag:
-                            temporaryList.AddRange(API.Instance.Database.Tags.Select(tag
-                                => new MetadataObject(settings)
-                                {
-                                    Id = tag.Id,
-                                    Name = tag.Name,
-                                    Type = FieldType.Tag
-                                }));
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(type), type, null);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                }
-            }, globalProgressOptions);
-
-            return temporaryList.OrderBy(x => x.TypeAndName).ToObservable();
-        }
-
         public static List<MetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
         {
             List<MetadataObject> temporaryList = new List<MetadataObject>();
+
+            //TODO: Add other types, once it is configurable, what the user wants to remove
+            List<IDatabaseObjectType> types = new List<IDatabaseObjectType>
+            {
+                new TypeAgeRating(),
+                new TypeCategory(),
+                new TypeFeature(),
+                new TypeGenre(),
+                new TypeSeries(),
+                new TypeTag()
+            };
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
@@ -221,77 +55,16 @@ namespace MetadataUtilities
             {
                 try
                 {
-                    temporaryList.AddRange(API.Instance.Database.AgeRatings
-                        .Where(x => !API.Instance.Database.Games.Any(g
-                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.AgeRatingIds?.Contains(x.Id) ?? false)))
-                        .Select(ageRating
+                    foreach (IDatabaseObjectType type in types)
+                    {
+                        temporaryList.AddRange(type.LoadUnusedMetadata(settings.IgnoreHiddenGamesInRemoveUnused).Select(x
                             => new MetadataObject(settings)
                             {
-                                Id = ageRating.Id,
-                                Name = ageRating.Name,
-                                Type = FieldType.AgeRating
+                                Id = x.Id,
+                                Name = x.Name,
+                                Type = type.Type
                             }));
-
-                    temporaryList.AddRange(API.Instance.Database.Categories
-                        .Where(x => !API.Instance.Database.Games.Any(g
-                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.CategoryIds?.Contains(x.Id) ?? false)))
-                        .Select(category
-                            => new MetadataObject(settings)
-                            {
-                                Id = category.Id,
-                                Name = category.Name,
-                                Type = FieldType.Category
-                            }));
-
-                    temporaryList.AddRange(API.Instance.Database.Features
-                        .Where(x => !API.Instance.Database.Games.Any(g
-                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.FeatureIds?.Contains(x.Id) ?? false)))
-                        .Select(feature
-                            => new MetadataObject(settings)
-                            {
-                                Id = feature.Id,
-                                Name = feature.Name,
-                                Type = FieldType.Feature
-                            }));
-
-                    temporaryList.AddRange(API.Instance.Database.Genres
-                        .Where(x => !API.Instance.Database.Games.Any(g
-                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.GenreIds?.Contains(x.Id) ?? false)))
-                        .Select(genre
-                            => new MetadataObject(settings)
-                            {
-                                Id = genre.Id,
-                                Name = genre.Name,
-                                Type = FieldType.Genre
-                            }));
-
-                    temporaryList.AddRange(API.Instance.Database.Series
-                        .Where(x => !API.Instance.Database.Games.Any(g
-                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.SeriesIds?.Contains(x.Id) ?? false)))
-                        .Select(series
-                            => new MetadataObject(settings)
-                            {
-                                Id = series.Id,
-                                Name = series.Name,
-                                Type = FieldType.Series
-                            }));
-
-                    temporaryList.AddRange(API.Instance.Database.Tags
-                        .Where(x => !API.Instance.Database.Games.Any(g
-                            => !(settings.IgnoreHiddenGamesInRemoveUnused && g.Hidden) &&
-                               (g.TagIds?.Contains(x.Id) ?? false)))
-                        .Select(tag
-                            => new MetadataObject(settings)
-                            {
-                                Id = tag.Id,
-                                Name = tag.Name,
-                                Type = FieldType.Tag
-                            }));
+                    }
 
                     if (temporaryList.Any() && (settings.UnusedItemsWhiteList?.Any() ?? false))
                     {

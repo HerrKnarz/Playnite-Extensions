@@ -14,6 +14,9 @@ namespace KNARZhelper.DatabaseObjectTypes
         public virtual bool CanBeSetInGame => true;
 
         public abstract bool IsList { get; }
+
+        public abstract string Label { get; }
+
         public abstract FieldType Type { get; }
 
         public virtual Guid AddDbObject(string name) => Guid.Empty;
@@ -37,6 +40,10 @@ namespace KNARZhelper.DatabaseObjectTypes
         public abstract Guid GetDbObjectId(string name);
 
         public abstract int GetGameCount(Guid id, bool ignoreHidden = false);
+
+        public virtual List<DatabaseObject> LoadAllMetadata() => new List<DatabaseObject>();
+
+        public virtual List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) => new List<DatabaseObject>();
 
         public abstract bool NameExists(string name, Guid id);
 
