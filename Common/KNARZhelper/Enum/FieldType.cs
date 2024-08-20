@@ -7,6 +7,7 @@ namespace KNARZhelper.Enum
     {
         AgeRating = 5,
         Category = 0,
+        CompletionStatus = 10,
         Developer = 6,
         Feature = 1,
         Genre = 2,
@@ -28,6 +29,9 @@ namespace KNARZhelper.Enum
 
                 case FieldType.Category:
                     return new TypeCategory();
+
+                case FieldType.CompletionStatus:
+                    return new TypeCompletionStatus();
 
                 case FieldType.Developer:
                     return new TypeDeveloper();

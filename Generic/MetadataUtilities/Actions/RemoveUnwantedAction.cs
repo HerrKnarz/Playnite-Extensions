@@ -121,6 +121,7 @@ namespace MetadataUtilities.Actions
                         _tagIds.Add(metaDataItem.Id);
                         break;
 
+                    case FieldType.CompletionStatus:
                     case FieldType.Developer:
                     case FieldType.Platform:
                     case FieldType.Publisher:

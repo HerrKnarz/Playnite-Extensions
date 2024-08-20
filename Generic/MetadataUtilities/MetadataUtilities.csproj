@@ -60,6 +60,9 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCategory.cs">
       <Link>Shared\TypeCategory.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCompletionStatus.cs">
+      <Link>Shared\TypeCompletionStatus.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeDeveloper.cs">
       <Link>Shared\TypeDeveloper.cs</Link>
     </Compile>

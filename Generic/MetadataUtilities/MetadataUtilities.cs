@@ -517,6 +517,7 @@ namespace MetadataUtilities
                         checkedCount = games.Count(x => x.TagIds?.Contains(dbObject.Id) ?? false);
                         break;
 
+                    case FieldType.CompletionStatus:
                     case FieldType.Developer:
                     case FieldType.Platform:
                     case FieldType.Publisher:

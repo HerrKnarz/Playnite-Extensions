@@ -24,6 +24,9 @@
             <MenuItem Header="{DynamicResource LOCAgeRatingsLabel}"
                       Command="{Binding AddConditionAgeRatingsCommand}"
                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCCompletionStatus}"
+                      Command="{Binding AddConditionCompletionStatusCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
             <MenuItem Header="{DynamicResource LOCCategoriesLabel}"
                       Command="{Binding AddConditionCategoriesCommand}"
                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />

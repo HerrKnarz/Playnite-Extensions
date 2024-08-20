@@ -47,8 +47,11 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand<string> AddConditionCategoriesCommand => new RelayCommand<string>(type =>
             AddConditions(FieldType.Category, type.ToComparatorType()));
 
+        public RelayCommand<string> AddConditionCompletionStatusCommand => new RelayCommand<string>(type =>
+            AddConditions(FieldType.CompletionStatus, type.ToComparatorType()));
+
         public RelayCommand<string> AddConditionDevelopersCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.Developer, type.ToComparatorType()));
+                    AddConditions(FieldType.Developer, type.ToComparatorType()));
 
         public RelayCommand<string> AddConditionFeaturesCommand => new RelayCommand<string>(type =>
             AddConditions(FieldType.Feature, type.ToComparatorType()));

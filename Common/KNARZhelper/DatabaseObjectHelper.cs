@@ -17,6 +17,7 @@ namespace KNARZhelper
         Tag = FieldType.Tag,
     }
 
+    // TODO: Replace the unit with the Type classes!
     internal static class DatabaseObjectHelper
     {
         public static Guid AddDbObject(SettableFieldType type, string name)

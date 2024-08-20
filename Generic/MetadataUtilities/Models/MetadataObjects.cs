@@ -222,6 +222,7 @@ namespace MetadataUtilities.Models
 
                 if (!onlyMergeAble)
                 {
+                    types.Add(new TypeCompletionStatus());
                     types.Add(new TypeDeveloper());
                     types.Add(new TypePlatform());
                     types.Add(new TypePublisher());
@@ -305,6 +306,7 @@ namespace MetadataUtilities.Models
                     return;
                 }
 
+                items.Enqueue(game.CompletionStatusId);
                 game.DeveloperIds?.ForEach(o => items.Enqueue(o));
                 game.PlatformIds?.ForEach(o => items.Enqueue(o));
                 game.PublisherIds?.ForEach(o => items.Enqueue(o));
