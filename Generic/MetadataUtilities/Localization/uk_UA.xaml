@@ -115,6 +115,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Автоматично перейменовувати ціль правила злиття коли перейменований відповідний елемент.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Встановлювати тільки коли теги не були додані при імпорті метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Після встановлення значення для кількох ігор одночасно показувати діалогове вікно з результатами</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Show Settings button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Показувати кнопку Редактора Метаданих у верхній панелі (потрібен перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Помістити підменю під елементом меню Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Умовні дії</sys:String>
