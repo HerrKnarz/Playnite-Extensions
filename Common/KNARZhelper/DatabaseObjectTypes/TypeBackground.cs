@@ -10,13 +10,13 @@ namespace KNARZhelper.DatabaseObjectTypes
     {
         public override bool CanBeAdded => false;
         public override bool CanBeDeleted => false;
-        public override bool CanBeEmptyInGame => false;
+        public override bool CanBeEmptyInGame => true;
         public override bool CanBeModified => false;
         public override bool CanBeSetInGame => false;
         public override bool IsList => false;
         public override string Label => ResourceProvider.GetString("LOCGameBackgroundTitle");
         public override FieldType Type => FieldType.Background;
-        public override ItemValueType ValueType => ItemValueType.None;
+        public override ItemValueType ValueType => ItemValueType.Media;
 
         public override bool DbObjectExists(string name) => false;
 

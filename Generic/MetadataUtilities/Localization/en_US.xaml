@@ -41,11 +41,14 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Statistics</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_AgeRating">Age Rating</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Background">Background Image</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Category">Category</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_CompletionStatus">Completion Status</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Cover">Cover Image</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Developer">Developer</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Feature">Feature</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Genre">Genre</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Icon">Icon</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Library">Library</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Platform">Platform</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Publisher">Publisher</sys:String>
