@@ -49,6 +49,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Library">Library</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Platform">Platform</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Publisher">Publisher</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Region">Region</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Series">Series</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Source">Source</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Tag">Tag</sys:String>
