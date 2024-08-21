@@ -30,7 +30,6 @@ namespace MetadataUtilities.Views
                 return;
 
             contextMenu.DataContext = ((Button)sender).DataContext;
-            contextMenu.PlacementTarget = ((Button)sender);
             contextMenu.IsOpen = true;
         }
     }

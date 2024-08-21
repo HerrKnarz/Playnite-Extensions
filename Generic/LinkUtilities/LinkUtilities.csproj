@@ -64,11 +64,17 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeAgeRating.cs">
       <Link>Shared\TypeAgeRating.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeBackground.cs">
+      <Link>Shared\TypeBackground.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCategory.cs">
       <Link>Shared\TypeCategory.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCompletionStatus.cs">
       <Link>Shared\TypeCompletionStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCover.cs">
+      <Link>Shared\TypeCover.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeDeveloper.cs">
       <Link>Shared\TypeDeveloper.cs</Link>
@@ -78,6 +84,9 @@
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeGenre.cs">
       <Link>Shared\TypeGenre.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeIcon.cs">
+      <Link>Shared\TypeIcon.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeLibrary.cs">
       <Link>Shared\TypeLibrary.cs</Link>
@@ -105,6 +114,9 @@
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Enum\FieldType.cs">
       <Link>Shared\FieldType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\Enum\ItemValueType.cs">
+      <Link>Shared\ItemValueType.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>

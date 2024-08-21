@@ -15,6 +15,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         bool IsList { get; }
         string Label { get; }
         FieldType Type { get; }
+        ItemValueType ValueType { get; }
 
         Guid AddDbObject(string name);
 

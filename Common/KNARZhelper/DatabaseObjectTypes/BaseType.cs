@@ -12,12 +12,10 @@ namespace KNARZhelper.DatabaseObjectTypes
         public virtual bool CanBeEmptyInGame => true;
         public virtual bool CanBeModified => true;
         public virtual bool CanBeSetInGame => true;
-
         public abstract bool IsList { get; }
-
         public abstract string Label { get; }
-
         public abstract FieldType Type { get; }
+        public virtual ItemValueType ValueType => ItemValueType.ItemList;
 
         public virtual Guid AddDbObject(string name) => Guid.Empty;
 

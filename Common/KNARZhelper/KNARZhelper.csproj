@@ -49,8 +49,11 @@
   <ItemGroup>
     <Compile Include="DatabaseObjectHelper.cs" />
     <Compile Include="DatabaseObjectTypes\BaseType.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeBackground.cs" />
     <Compile Include="DatabaseObjectTypes\TypeCompletionStatus.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeCover.cs" />
     <Compile Include="DatabaseObjectTypes\TypeDeveloper.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeIcon.cs" />
     <Compile Include="DatabaseObjectTypes\TypeLibrary.cs" />
     <Compile Include="DatabaseObjectTypes\TypePlatform.cs" />
     <Compile Include="DatabaseObjectTypes\TypeAgeRating.cs" />
@@ -65,6 +68,7 @@
     <Compile Include="DatabaseObjectTypes\TypeTag.cs" />
     <Compile Include="Enum\DbInteractionResult.cs" />
     <Compile Include="Enum\FieldType.cs" />
+    <Compile Include="Enum\ItemValueType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MiscHelper.cs" />

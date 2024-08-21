@@ -5,8 +5,10 @@ using MetadataUtilities.Views;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using KNARZhelper.DatabaseObjectTypes;
 using Action = MetadataUtilities.Models.Action;
 using Condition = MetadataUtilities.Models.Condition;
 
@@ -14,6 +16,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class ConditionalActionEditorViewModel : ObservableObject
     {
+        private readonly List<IDatabaseObjectType> _fieldTypes = FieldTypeHelper.GetAllTypes();
         private readonly Settings _settings;
         private ConditionalAction _conditionalAction;
 
@@ -21,70 +24,109 @@ namespace MetadataUtilities.ViewModels
         {
             _settings = settings;
             _conditionalAction = conditionalAction;
+
+            ContextMenuActionsAdd.AddMissing(_fieldTypes.Where(x => x.CanBeSetInGame)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.Label,
+                        Action = AddActionAddCommand,
+                        FieldType = x.Type
+                    }
+                ));
+
+            ContextMenuActionsRemove.AddMissing(_fieldTypes.Where(x => x.CanBeSetInGame && x.CanBeEmptyInGame)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.Label,
+                        Action = AddActionRemoveCommand,
+                        FieldType = x.Type
+                    }
+                ));
+
+            ContextMenuActionsClear.AddMissing(_fieldTypes.Where(x => x.CanBeSetInGame && x.CanBeEmptyInGame)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.Label,
+                        Action = AddActionClearCommand,
+                        FieldType = x.Type
+                    }
+                ));
+
+            ContextMenuConditionsContains.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.Label,
+                        Action = AddConditionContainsCommand,
+                        FieldType = x.Type
+                    }
+                ));
+
+            ContextMenuConditionsContainsNot.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.Label,
+                        Action = AddConditionContainsNotCommand,
+                        FieldType = x.Type
+                    }
+                ));
+
+            ContextMenuConditionsEmpty.AddMissing(_fieldTypes.Where(x => x.CanBeEmptyInGame)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.Label,
+                        Action = AddConditionIsEmptyCommand,
+                        FieldType = x.Type
+                    }
+                ));
         }
 
-        public RelayCommand<string> AddActionAgeRatingsCommand => new RelayCommand<string>(type =>
-            AddActions(FieldType.AgeRating, type.ToActionType()));
+        public RelayCommand<FieldType> AddActionAddCommand => new RelayCommand<FieldType>(type =>
+            AddActions(type, ActionType.AddObject));
 
-        public RelayCommand<string> AddActionCategoriesCommand => new RelayCommand<string>(type =>
-            AddActions(FieldType.Category, type.ToActionType()));
+        public RelayCommand<FieldType> AddActionClearCommand => new RelayCommand<FieldType>(type =>
+            AddActions(type, ActionType.ClearField));
 
-        public RelayCommand<string> AddActionFeaturesCommand => new RelayCommand<string>(type =>
-            AddActions(FieldType.Feature, type.ToActionType()));
+        public RelayCommand<FieldType> AddActionRemoveCommand => new RelayCommand<FieldType>(type =>
+                    AddActions(type, ActionType.RemoveObject));
 
-        public RelayCommand<string> AddActionGenresCommand => new RelayCommand<string>(type =>
-            AddActions(FieldType.Genre, type.ToActionType()));
+        public RelayCommand<FieldType> AddConditionContainsCommand => new RelayCommand<FieldType>(type =>
+            AddConditions(type, ComparatorType.Contains));
 
-        public RelayCommand<string> AddActionSeriesCommand => new RelayCommand<string>(type =>
-            AddActions(FieldType.Series, type.ToActionType()));
+        public RelayCommand<FieldType> AddConditionContainsNotCommand => new RelayCommand<FieldType>(type =>
+            AddConditions(type, ComparatorType.DoesNotContain));
 
-        public RelayCommand<string> AddActionTagsCommand => new RelayCommand<string>(type =>
-            AddActions(FieldType.Tag, type.ToActionType()));
-
-        public RelayCommand<string> AddConditionAgeRatingsCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.AgeRating, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionCategoriesCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.Category, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionCompletionStatusCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.CompletionStatus, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionDevelopersCommand => new RelayCommand<string>(type =>
-                    AddConditions(FieldType.Developer, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionFeaturesCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.Feature, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionGenresCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.Genre, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionLibrariesCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.Library, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionPlatformsCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.Platform, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionPublishersCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.Publisher, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionRegionsCommand => new RelayCommand<string>(type =>
-                    AddConditions(FieldType.Region, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionSeriesCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.Series, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionSourcesCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.Source, type.ToComparatorType()));
-
-        public RelayCommand<string> AddConditionTagsCommand => new RelayCommand<string>(type =>
-            AddConditions(FieldType.Tag, type.ToComparatorType()));
+        public RelayCommand<FieldType> AddConditionIsEmptyCommand => new RelayCommand<FieldType>(type =>
+            AddConditions(type, ComparatorType.IsEmpty));
 
         public ConditionalAction ConditionalAction
         {
             get => _conditionalAction;
             set => SetValue(ref _conditionalAction, value);
         }
+
+        public ObservableCollection<FieldTypeContextAction> ContextMenuActionsAdd { get; set; } =
+            new ObservableCollection<FieldTypeContextAction>();
+
+        public ObservableCollection<FieldTypeContextAction> ContextMenuActionsClear { get; set; } =
+            new ObservableCollection<FieldTypeContextAction>();
+
+        public ObservableCollection<FieldTypeContextAction> ContextMenuActionsRemove { get; set; } =
+                    new ObservableCollection<FieldTypeContextAction>();
+
+        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsContains { get; set; } =
+            new ObservableCollection<FieldTypeContextAction>();
+
+        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsContainsNot { get; set; } =
+            new ObservableCollection<FieldTypeContextAction>();
+
+        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsEmpty { get; set; } =
+            new ObservableCollection<FieldTypeContextAction>();
 
         public RelayCommand<IList<object>> RemoveActionCommand => new RelayCommand<IList<object>>(items =>
         {

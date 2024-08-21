@@ -20,66 +20,61 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
-        <ContextMenu x:Key="ConditionsMenu">
-            <MenuItem Header="{DynamicResource LOCAgeRatingsLabel}"
-                      Command="{Binding AddConditionAgeRatingsCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCCompletionStatuses}"
-                      Command="{Binding AddConditionCompletionStatusCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCCategoriesLabel}"
-                      Command="{Binding AddConditionCategoriesCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCDevelopersLabel}"
-                      Command="{Binding AddConditionDevelopersCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCFeaturesLabel}"
-                      Command="{Binding AddConditionFeaturesCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCGenresLabel}"
-                      Command="{Binding AddConditionGenresCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCLibraries}"
-                      Command="{Binding AddConditionLibrariesCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCPlatformsTitle}"
-                      Command="{Binding AddConditionPlatformsCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCPublishersLabel}"
-                      Command="{Binding AddConditionPublishersCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCRegionsLabel}"
-                      Command="{Binding AddConditionRegionsCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCSeriesLabel}"
-                      Command="{Binding AddConditionSeriesCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCSourcesLabel}"
-                      Command="{Binding AddConditionSourcesCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCTagsLabel}"
-                      Command="{Binding AddConditionTagsCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+        <ContextMenu x:Key="ConditionsMenuContains" ItemsSource="{Binding ContextMenuConditionsContains}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding Action }" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
         </ContextMenu>
-        <ContextMenu x:Key="ActionsMenu">
-            <MenuItem Header="{DynamicResource LOCAgeRatingsLabel}"
-                      Command="{Binding AddActionAgeRatingsCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCCategoriesLabel}"
-                      Command="{Binding AddActionCategoriesCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCFeaturesLabel}"
-                      Command="{Binding AddActionFeaturesCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCGenresLabel}"
-                      Command="{Binding AddActionGenresCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCSeriesLabel}"
-                      Command="{Binding AddActionSeriesCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCTagsLabel}"
-                      Command="{Binding AddActionTagsCommand}"
-                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+
+        <ContextMenu x:Key="ConditionsMenuContainNot" ItemsSource="{Binding ContextMenuConditionsContainsNot}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding Action }" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
+        </ContextMenu>
+
+        <ContextMenu x:Key="ConditionsMenuIsEmpty" ItemsSource="{Binding ContextMenuConditionsEmpty}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding Action }" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
+        </ContextMenu>
+        <ContextMenu x:Key="ActionsMenuAdd" ItemsSource="{Binding ContextMenuActionsAdd}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding Action }" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
+        </ContextMenu>
+        <ContextMenu x:Key="ActionsMenuRemove" ItemsSource="{Binding ContextMenuActionsRemove}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding Action }" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
+        </ContextMenu>
+        <ContextMenu x:Key="ActionsMenuClear" ItemsSource="{Binding ContextMenuActionsClear}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding Action }" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
         </ContextMenu>
     </UserControl.Resources>
     <UserControl.InputBindings>
@@ -156,12 +151,13 @@
                       Padding="10, 10, 10, 0" Margin="0,0,10,0">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" LastChildFill="False" Margin="0,10,0,0">
+
                         <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_Contains}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenu}" Tag="0" Click="b_Click" />
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuContains}" Click="b_Click" />
                         <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_DoesNotContain}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenu}" Tag="1" Click="b_Click" />
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuContainNot}" Click="b_Click" />
                         <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsEmpty}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenu}" Tag="2" Click="b_Click" />
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsEmpty}" Click="b_Click" />
                         <Button Content="&#xec53;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}"
                                 ToolTip="{DynamicResource LOCRemoveTitle}" Margin="0,0,0,10"
                                 Command="{Binding RemoveConditionCommand}"
@@ -188,11 +184,11 @@
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" LastChildFill="False" Margin="0,10,0,0">
                         <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_AddObject}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenu}" Tag="0" Click="b_Click" />
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuAdd}" Click="b_Click" />
                         <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_RemoveObject}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenu}" Tag="1" Click="b_Click" />
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuRemove}" Click="b_Click" />
                         <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_ClearField}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenu}" Tag="2" Click="b_Click" />
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuClear}" Click="b_Click" />
                         <Button Content="&#xec53;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}"
                                 ToolTip="{DynamicResource LOCRemoveTitle}" Margin="0,0,0,10"
                                 Command="{Binding RemoveActionCommand}"
