@@ -46,6 +46,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Developer">Developer</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Feature">Feature</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Genre">Genre</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Library">Library</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Platform">Platform</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Publisher">Publisher</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Series">Series</sys:String>
