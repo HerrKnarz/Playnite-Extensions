@@ -51,6 +51,7 @@
     <Compile Include="DatabaseObjectTypes\BaseType.cs" />
     <Compile Include="DatabaseObjectTypes\TypeCompletionStatus.cs" />
     <Compile Include="DatabaseObjectTypes\TypeDeveloper.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeLibrary.cs" />
     <Compile Include="DatabaseObjectTypes\TypePlatform.cs" />
     <Compile Include="DatabaseObjectTypes\TypeAgeRating.cs" />
     <Compile Include="DatabaseObjectTypes\TypeCategory.cs" />

@@ -24,7 +24,7 @@
             <MenuItem Header="{DynamicResource LOCAgeRatingsLabel}"
                       Command="{Binding AddConditionAgeRatingsCommand}"
                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
-            <MenuItem Header="{DynamicResource LOCCompletionStatus}"
+            <MenuItem Header="{DynamicResource LOCCompletionStatuses}"
                       Command="{Binding AddConditionCompletionStatusCommand}"
                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
             <MenuItem Header="{DynamicResource LOCCategoriesLabel}"
@@ -38,6 +38,9 @@
                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
             <MenuItem Header="{DynamicResource LOCGenresLabel}"
                       Command="{Binding AddConditionGenresCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCLibraries}"
+                      Command="{Binding AddConditionLibrariesCommand}"
                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
             <MenuItem Header="{DynamicResource LOCPlatformsTitle}"
                       Command="{Binding AddConditionPlatformsCommand}"

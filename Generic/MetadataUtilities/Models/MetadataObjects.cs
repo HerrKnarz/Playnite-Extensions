@@ -224,6 +224,7 @@ namespace MetadataUtilities.Models
                 {
                     types.Add(new TypeCompletionStatus());
                     types.Add(new TypeDeveloper());
+                    types.Add(new TypeLibrary());
                     types.Add(new TypePlatform());
                     types.Add(new TypePublisher());
                     types.Add(new TypeSource());
@@ -307,6 +308,7 @@ namespace MetadataUtilities.Models
                 }
 
                 items.Enqueue(game.CompletionStatusId);
+                items.Enqueue(game.PluginId);
                 game.DeveloperIds?.ForEach(o => items.Enqueue(o));
                 game.PlatformIds?.ForEach(o => items.Enqueue(o));
                 game.PublisherIds?.ForEach(o => items.Enqueue(o));

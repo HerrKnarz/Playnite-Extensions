@@ -11,6 +11,7 @@ namespace KNARZhelper.Enum
         Developer = 6,
         Feature = 1,
         Genre = 2,
+        Library = 11,
         Platform = 7,
         Publisher = 8,
         Series = 3,
@@ -41,6 +42,9 @@ namespace KNARZhelper.Enum
 
                 case FieldType.Genre:
                     return new TypeGenre();
+
+                case FieldType.Library:
+                    return new TypeLibrary();
 
                 case FieldType.Platform:
                     return new TypePlatform();

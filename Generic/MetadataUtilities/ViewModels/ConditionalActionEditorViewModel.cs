@@ -59,6 +59,9 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand<string> AddConditionGenresCommand => new RelayCommand<string>(type =>
             AddConditions(FieldType.Genre, type.ToComparatorType()));
 
+        public RelayCommand<string> AddConditionLibrariesCommand => new RelayCommand<string>(type =>
+            AddConditions(FieldType.Library, type.ToComparatorType()));
+
         public RelayCommand<string> AddConditionPlatformsCommand => new RelayCommand<string>(type =>
             AddConditions(FieldType.Platform, type.ToComparatorType()));
 

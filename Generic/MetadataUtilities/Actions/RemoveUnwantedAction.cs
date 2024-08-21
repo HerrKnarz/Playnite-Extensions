@@ -123,6 +123,7 @@ namespace MetadataUtilities.Actions
 
                     case FieldType.CompletionStatus:
                     case FieldType.Developer:
+                    case FieldType.Library:
                     case FieldType.Platform:
                     case FieldType.Publisher:
                     case FieldType.Source:
