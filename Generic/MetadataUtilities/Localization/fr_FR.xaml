@@ -115,6 +115,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Renommer automatiquement la cible de la règle de fusion lorsque l'élément original correspondant est renommé.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Définir uniquement quand aucune étiquette n'a été ajoutée à l'importation des métadonnées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Montrer la boîte de dialogue après avoir changé la valeur pour plus d'un jeu</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Show Settings button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Afficher le bouton de l'éditeur de métadonnées dans le panneau supérieur (nécessite un redémarrage)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Mettre les sous-menus sous l'entrée de menu utilitaires des métadonnées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Conditional actions</sys:String>
