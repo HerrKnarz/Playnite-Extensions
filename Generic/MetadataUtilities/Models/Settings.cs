@@ -41,6 +41,7 @@ namespace MetadataUtilities.Models
         private bool _renameMergeRules = true;
         private bool _setDefaultTagsOnlyIfEmpty = true;
         private bool _showTopPanelButton = true;
+        private bool _showTopPanelSettingsButton = false;
         private MetadataObjects _unusedItemsWhiteList;
         private MetadataObjects _unwantedItems;
         private bool _writeDebugLog;
@@ -255,6 +256,12 @@ namespace MetadataUtilities.Models
         {
             get => _showTopPanelButton;
             set => SetValue(ref _showTopPanelButton, value);
+        }
+
+        public bool ShowTopPanelSettingsButton
+        {
+            get => _showTopPanelSettingsButton;
+            set => SetValue(ref _showTopPanelSettingsButton, value);
         }
 
         public MetadataObjects UnusedItemsWhiteList

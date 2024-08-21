@@ -24,6 +24,29 @@ namespace KNARZhelper
         public static DateTime EndOfMonth(this DateTime date)
                     => date.StartOfMonth().AddMonths(1).AddDays(-1);
 
+        public static T FindParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            while (true)
+            {
+                //get parent item
+                DependencyObject parentObject = VisualTreeHelper.GetParent(child);
+
+                switch (parentObject)
+                {
+                    //we've reached the end of the tree
+                    case null:
+                        return null;
+                    //check if the parent matches the type we're looking for
+                    case T parent:
+                        return parent;
+
+                    default:
+                        child = parentObject;
+                        break;
+                }
+            }
+        }
+
         public static int RemoveAll<T>(
                     this ObservableCollection<T> coll, Func<T, bool> condition)
         {

@@ -10,7 +10,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeLibrary : BaseType
     {
-        private List<DatabaseObject> _libraries = new List<DatabaseObject>();
+        private readonly List<DatabaseObject> _libraries = new List<DatabaseObject>();
 
         public TypeLibrary()
         {

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
+using System.Windows.Media;
 using Action = MetadataUtilities.Models.Action;
 using Condition = MetadataUtilities.Models.Condition;
 
@@ -51,6 +52,23 @@ namespace MetadataUtilities.ViewModels
             SourceObjectsViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             SourceObjectsViewSource.IsLiveSortingRequested = true;
         }
+
+        public static RelayCommand<object> RestartRequired => new RelayCommand<object>((sender) =>
+                {
+                    try
+                    {
+                        Window winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
+
+                        if (winParent.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
+                        {
+                            ((dynamic)winParent.DataContext).IsRestartRequired = true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                });
 
         public RelayCommand AddConActionCommand => new RelayCommand(() =>
         {

@@ -15,7 +15,13 @@
                 <DockPanel Margin="10" LastChildFill="False">
                     <StackPanel DockPanel.Dock="Top">
                         <CheckBox IsChecked="{Binding Settings.ShowTopPanelButton}" Margin="0,0,0,0"
-                                  Content="{DynamicResource LOCMetadataUtilitiesSettingsShowTopPanelButton}" />
+                                  Content="{DynamicResource LOCMetadataUtilitiesSettingsShowTopPanelButton}"
+                                  Command="{Binding RestartRequired}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
+                        <CheckBox IsChecked="{Binding Settings.ShowTopPanelSettingsButton}" Margin="0,10,0,0"
+                                  Content="{DynamicResource LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton}"
+                                  Command="{Binding RestartRequired}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
                         <CheckBox IsChecked="{Binding Settings.IgnoreHiddenGamesInGameCount}" Margin="0,10,0,0"
                               Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount}" />
                         <CheckBox IsChecked="{Binding Settings.WriteDebugLog}" Margin="0,10,0,0"

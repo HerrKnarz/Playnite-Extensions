@@ -10,7 +10,9 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -244,22 +246,33 @@ namespace MetadataUtilities
 
         public override IEnumerable<TopPanelItem> GetTopPanelItems()
         {
-            if (!Settings.Settings.ShowTopPanelButton)
+            if (Settings.Settings.ShowTopPanelButton)
+            {
+                yield return new TopPanelItem
+                {
+                    Icon = new TextBlock
+                    {
+                        Text = char.ConvertFromUtf32(0xf005),
+                        FontSize = 20,
+                        FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
+                    },
+                    Visible = true,
+                    Title = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
+                    Activated = ShowEditor
+                };
+            }
+
+            if (!Settings.Settings.ShowTopPanelSettingsButton)
             {
                 yield break;
             }
 
             yield return new TopPanelItem
             {
-                Icon = new TextBlock
-                {
-                    Text = char.ConvertFromUtf32(0xf005),
-                    FontSize = 20,
-                    FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
-                },
+                Icon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "icon.png"),
                 Visible = true,
-                Title = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
-                Activated = ShowEditor
+                Title = $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}: {ResourceProvider.GetString("LOCMenuPlayniteSettingsTitle")} ",
+                Activated = ShowSettings
             };
         }
 
@@ -756,5 +769,7 @@ namespace MetadataUtilities
                 Cursor.Current = Cursors.Default;
             }
         }
+
+        private void ShowSettings() => OpenSettingsView();
     }
 }
