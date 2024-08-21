@@ -535,6 +535,7 @@ namespace MetadataUtilities
                     case FieldType.Library:
                     case FieldType.Platform:
                     case FieldType.Publisher:
+                    case FieldType.Region:
                     case FieldType.Source:
                     default:
                         throw new ArgumentOutOfRangeException(nameof(dbObject.Type), dbObject.Type, null);

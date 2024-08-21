@@ -88,6 +88,9 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePublisher.cs">
       <Link>Shared\TypePublisher.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeRegion.cs">
+      <Link>Shared\TypeRegion.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeSeries.cs">
       <Link>Shared\TypeSeries.cs</Link>
     </Compile>

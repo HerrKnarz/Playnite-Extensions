@@ -59,6 +59,7 @@
     <Compile Include="DatabaseObjectTypes\TypeFeature.cs" />
     <Compile Include="DatabaseObjectTypes\TypeGenre.cs" />
     <Compile Include="DatabaseObjectTypes\TypePublisher.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeRegion.cs" />
     <Compile Include="DatabaseObjectTypes\TypeSeries.cs" />
     <Compile Include="DatabaseObjectTypes\TypeSource.cs" />
     <Compile Include="DatabaseObjectTypes\TypeTag.cs" />

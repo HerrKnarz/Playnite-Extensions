@@ -48,6 +48,9 @@
             <MenuItem Header="{DynamicResource LOCPublishersLabel}"
                       Command="{Binding AddConditionPublishersCommand}"
                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+            <MenuItem Header="{DynamicResource LOCRegionsLabel}"
+                      Command="{Binding AddConditionRegionsCommand}"
+                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
             <MenuItem Header="{DynamicResource LOCSeriesLabel}"
                       Command="{Binding AddConditionSeriesCommand}"
                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />

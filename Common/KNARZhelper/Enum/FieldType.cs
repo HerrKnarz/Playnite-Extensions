@@ -14,6 +14,7 @@ namespace KNARZhelper.Enum
         Library = 11,
         Platform = 7,
         Publisher = 8,
+        Region = 12,
         Series = 3,
         Source = 9,
         Tag = 4,
@@ -51,6 +52,9 @@ namespace KNARZhelper.Enum
 
                 case FieldType.Publisher:
                     return new TypePublisher();
+
+                case FieldType.Region:
+                    return new TypeRegion();
 
                 case FieldType.Series:
                     return new TypeSeries();

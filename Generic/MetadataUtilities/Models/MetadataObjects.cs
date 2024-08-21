@@ -227,6 +227,7 @@ namespace MetadataUtilities.Models
                     types.Add(new TypeLibrary());
                     types.Add(new TypePlatform());
                     types.Add(new TypePublisher());
+                    types.Add(new TypeRegion());
                     types.Add(new TypeSource());
                 }
             }
@@ -312,6 +313,7 @@ namespace MetadataUtilities.Models
                 game.DeveloperIds?.ForEach(o => items.Enqueue(o));
                 game.PlatformIds?.ForEach(o => items.Enqueue(o));
                 game.PublisherIds?.ForEach(o => items.Enqueue(o));
+                game.RegionIds?.ForEach(o => items.Enqueue(o));
                 items.Enqueue(game.SourceId);
             });
 
