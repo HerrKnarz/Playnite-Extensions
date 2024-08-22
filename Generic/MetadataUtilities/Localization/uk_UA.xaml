@@ -58,6 +58,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Tag">Тег</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_And">Всі умови вірні</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Two">At least two conditions are true</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Or">Будь-яка умова вірна</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nand">Будь-яка умова не вірна</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">Всі умови не вірні</sys:String>
