@@ -40,9 +40,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Встановити як ціль</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Статистика</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_And">Всі умови вірні</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_Two">At least two conditions are true</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_Or">Будь-яка умова вірна</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_And">Всі умови істині</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Two">Щонайменше дві умови істині</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Or">Будь-яка умова істина</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nand">Будь-яка умова не вірна</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">Всі умови не вірні</sys:String>
 
@@ -103,7 +103,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Автоматично перейменовувати ціль правила злиття коли перейменований відповідний елемент.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Встановлювати тільки коли теги не були додані при імпорті метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Після встановлення значення для кількох ігор одночасно показувати діалогове вікно з результатами</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Show Settings button in top panel (requires restart)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Показувати кнопку Налаштування у верхній панелі (потрібен перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Показувати кнопку Редактора Метаданих у верхній панелі (потрібен перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Помістити підменю під елементом меню Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Умовні дії</sys:String>
