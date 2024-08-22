@@ -53,7 +53,7 @@ namespace KNARZhelper.DatabaseObjectTypes
             // item itself, if no item is entered to replace the old one.
             checkIfUsed
                 ? ReplaceDbObject(API.Instance.Database.Games.ToList(), id)?.Count() > 0
-                : API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Regions.Remove(id));
+                : API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.Regions?.Remove(id) ?? false);
 
         public override bool RemoveObjectFromGame(Game game, List<Guid> ids) => ids.Count != 0 && ids.Aggregate(false, (current, id) =>
                 current | API.Instance.MainView.UIDispatcher.Invoke(() => game.RegionIds?.Remove(id) ?? false));

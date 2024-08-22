@@ -297,6 +297,8 @@ namespace MetadataUtilities.Models
             {
                 rule.SourceObjects.Settings = this;
             }
+
+            //TODO: add settings to conditions, too!
         }
     }
 }

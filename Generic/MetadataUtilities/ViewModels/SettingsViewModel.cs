@@ -407,7 +407,11 @@ namespace MetadataUtilities.ViewModels
             EditingClone = Serialization.GetClone(Settings);
         }
 
-        public void CancelEdit() => Settings = EditingClone;
+        public void CancelEdit()
+        {
+            Settings = EditingClone;
+            Settings.ResetReferences();
+        }
 
         public void EndEdit() => _plugin.SavePluginSettings(Settings);
 
