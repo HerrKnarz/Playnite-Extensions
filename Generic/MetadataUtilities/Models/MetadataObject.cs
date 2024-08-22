@@ -201,12 +201,31 @@ namespace MetadataUtilities.Models
 
         public bool NameExists() => TypeManager.NameExists(Name, Id);
 
-        public bool RemoveFromDb(bool checkIfUsed = true) => TypeManager.RemoveDbObject(Id, checkIfUsed);
+        public bool RemoveFromDb(bool checkIfUsed = true)
+        {
+            if (!TypeManager.RemoveDbObject(Id, checkIfUsed))
+            {
+                return false;
+            }
+
+            Id = default;
+            return true;
+        }
 
         public bool RemoveFromGame(Game game) => TypeManager.RemoveObjectFromGame(game, Id);
 
         public IEnumerable<Guid> ReplaceInDb(List<Game> games, FieldType? newType = null, Guid? newId = null,
-            bool removeAfter = true) => TypeManager.ReplaceDbObject(games, Id, newType, newId, removeAfter);
+            bool removeAfter = true)
+        {
+            IEnumerable<Guid> gameIds = TypeManager.ReplaceDbObject(games, Id, newType, newId, removeAfter);
+
+            if (removeAfter)
+            {
+                Id = default;
+            }
+
+            return gameIds;
+        }
 
         public bool UpdateItem(string newName)
         {
