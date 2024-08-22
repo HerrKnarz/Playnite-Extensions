@@ -13,7 +13,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
-using System.Windows.Media;
 using Action = MetadataUtilities.Models.Action;
 using Condition = MetadataUtilities.Models.Condition;
 

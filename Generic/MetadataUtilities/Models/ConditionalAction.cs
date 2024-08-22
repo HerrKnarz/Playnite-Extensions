@@ -10,10 +10,11 @@ namespace MetadataUtilities.Models
 {
     public enum LogicType
     {
-        And,
-        Or,
-        Nand,
-        Nor
+        And = 0,
+        Two = 4,
+        Or = 1,
+        Nand = 2,
+        Nor = 3,
     }
 
     public class ConditionalAction : ObservableObject
@@ -107,6 +108,9 @@ namespace MetadataUtilities.Models
 
                 case LogicType.Nor:
                     return !Conditions.Any(x => x.IsTrue(game));
+
+                case LogicType.Two:
+                    return Conditions.Count(x => x.IsTrue(game)) > 1;
 
                 default:
                     throw new ArgumentOutOfRangeException();

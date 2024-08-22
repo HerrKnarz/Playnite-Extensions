@@ -58,6 +58,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Tag">Tag</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_And">All conditions are true</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Two">At least two conditions are true</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Or">Any condition is true</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nand">Any condition is false</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">All conditions are false</sys:String>
