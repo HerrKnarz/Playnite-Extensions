@@ -49,9 +49,13 @@
   <ItemGroup>
     <Compile Include="DatabaseObjectHelper.cs" />
     <Compile Include="DatabaseObjectTypes\BaseType.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeCriticScore.cs" />
     <Compile Include="DatabaseObjectTypes\TypeBackground.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeCommunityScore.cs" />
     <Compile Include="DatabaseObjectTypes\TypeCompletionStatus.cs" />
     <Compile Include="DatabaseObjectTypes\TypeCover.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeDateAdded.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeDescription.cs" />
     <Compile Include="DatabaseObjectTypes\TypeDeveloper.cs" />
     <Compile Include="DatabaseObjectTypes\TypeIcon.cs" />
     <Compile Include="DatabaseObjectTypes\TypeLibrary.cs" />
@@ -63,9 +67,11 @@
     <Compile Include="DatabaseObjectTypes\TypeGenre.cs" />
     <Compile Include="DatabaseObjectTypes\TypePublisher.cs" />
     <Compile Include="DatabaseObjectTypes\TypeRegion.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeReleaseDate.cs" />
     <Compile Include="DatabaseObjectTypes\TypeSeries.cs" />
     <Compile Include="DatabaseObjectTypes\TypeSource.cs" />
     <Compile Include="DatabaseObjectTypes\TypeTag.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeUserScore.cs" />
     <Compile Include="Enum\DbInteractionResult.cs" />
     <Compile Include="Enum\FieldType.cs" />
     <Compile Include="Enum\ItemValueType.cs" />

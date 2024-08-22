@@ -70,11 +70,23 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCategory.cs">
       <Link>Shared\TypeCategory.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCommunityScore.cs">
+      <Link>Shared\TypeCommunityScore.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCompletionStatus.cs">
       <Link>Shared\TypeCompletionStatus.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCover.cs">
       <Link>Shared\TypeCover.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCriticScore.cs">
+      <Link>Shared\TypeCriticScore.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeDateAdded.cs">
+      <Link>Shared\TypeDateAdded.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeDescription.cs">
+      <Link>Shared\TypeDescription.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeDeveloper.cs">
       <Link>Shared\TypeDeveloper.cs</Link>
@@ -100,6 +112,9 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeRegion.cs">
       <Link>Shared\TypeRegion.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeReleaseDate.cs">
+      <Link>Shared\TypeReleaseDate.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeSeries.cs">
       <Link>Shared\TypeSeries.cs</Link>
     </Compile>
@@ -108,6 +123,9 @@
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeTag.cs">
       <Link>Shared\TypeTag.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeUserScore.cs">
+      <Link>Shared\TypeUserScore.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Enum\DbInteractionResult.cs">
       <Link>Shared\DbInteractionResult.cs</Link>

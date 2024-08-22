@@ -10,7 +10,11 @@ namespace KNARZhelper.Enum
         Background = 13,
         Category = 0,
         CompletionStatus = 10,
+        CommunityScore = 16,
         Cover = 15,
+        CriticScore = 17,
+        DateAdded = 20,
+        Description = 21,
         Developer = 6,
         Feature = 1,
         Genre = 2,
@@ -19,9 +23,11 @@ namespace KNARZhelper.Enum
         Platform = 7,
         Publisher = 8,
         Region = 12,
+        ReleaseDate = 19,
         Series = 3,
         Source = 9,
         Tag = 4,
+        UserScore = 18,
     }
 
     public static class FieldTypeHelper
@@ -33,7 +39,11 @@ namespace KNARZhelper.Enum
                 new TypeBackground(),
                 new TypeCategory(),
                 new TypeCompletionStatus(),
+                new TypeCommunityScore(),
                 new TypeCover(),
+                new TypeCriticScore(),
+                new TypeDateAdded(),
+                new TypeDescription(),
                 new TypeDeveloper(),
                 new TypeFeature(),
                 new TypeGenre(),
@@ -42,9 +52,11 @@ namespace KNARZhelper.Enum
                 new TypePlatform(),
                 new TypePublisher(),
                 new TypeRegion(),
+                new TypeReleaseDate(),
                 new TypeSeries(),
                 new TypeSource(),
-                new TypeTag()
+                new TypeTag(),
+                new TypeUserScore(),
             };
 
         public static IDatabaseObjectType GetTypeManager(this FieldType e)
@@ -63,8 +75,20 @@ namespace KNARZhelper.Enum
                 case FieldType.CompletionStatus:
                     return new TypeCompletionStatus();
 
+                case FieldType.CommunityScore:
+                    return new TypeCommunityScore();
+
                 case FieldType.Cover:
                     return new TypeCover();
+
+                case FieldType.CriticScore:
+                    return new TypeCriticScore();
+
+                case FieldType.DateAdded:
+                    return new TypeDateAdded();
+
+                case FieldType.Description:
+                    return new TypeDescription();
 
                 case FieldType.Developer:
                     return new TypeDeveloper();
@@ -90,6 +114,9 @@ namespace KNARZhelper.Enum
                 case FieldType.Region:
                     return new TypeRegion();
 
+                case FieldType.ReleaseDate:
+                    return new TypeReleaseDate();
+
                 case FieldType.Series:
                     return new TypeSeries();
 
@@ -98,6 +125,9 @@ namespace KNARZhelper.Enum
 
                 case FieldType.Tag:
                     return new TypeTag();
+
+                case FieldType.UserScore:
+                    return new TypeUserScore();
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(e), e, null);

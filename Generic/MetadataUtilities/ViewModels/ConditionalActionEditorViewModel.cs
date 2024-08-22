@@ -25,7 +25,9 @@ namespace MetadataUtilities.ViewModels
             _settings = settings;
             _conditionalAction = conditionalAction;
 
-            ContextMenuActionsAdd.AddMissing(_fieldTypes.Where(x => x.CanBeSetInGame)
+            //TODO: remove checks on Value Type once the contains buttons support adding other values that items!
+
+            ContextMenuActionsAdd.AddMissing(_fieldTypes.Where(x => x.CanBeSetInGame && x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -35,7 +37,7 @@ namespace MetadataUtilities.ViewModels
                     }
                 ));
 
-            ContextMenuActionsRemove.AddMissing(_fieldTypes.Where(x => x.CanBeSetInGame && x.CanBeEmptyInGame)
+            ContextMenuActionsRemove.AddMissing(_fieldTypes.Where(x => x.CanBeSetInGame && x.CanBeEmptyInGame && x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -55,7 +57,7 @@ namespace MetadataUtilities.ViewModels
                     }
                 ));
 
-            ContextMenuConditionsContains.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList)
+            ContextMenuConditionsContains.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList && x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -65,7 +67,7 @@ namespace MetadataUtilities.ViewModels
                     }
                 ));
 
-            ContextMenuConditionsContainsNot.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList)
+            ContextMenuConditionsContainsNot.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList && x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
