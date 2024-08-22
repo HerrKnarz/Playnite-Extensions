@@ -16,7 +16,7 @@ namespace MetadataUtilities
     public class FieldTypeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
-            value != null ? ((FieldType)value).GetEnumDisplayName() : default(object);
+            value != null ? ((FieldType)value).GetTypeManager().LabelSingular : default(object);
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
             throw new NotSupportedException();

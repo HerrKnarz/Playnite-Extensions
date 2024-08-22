@@ -24,6 +24,8 @@ namespace MetadataUtilities.ViewModels
             _newObjects = new MetadataObjects(plugin.Settings.Settings);
         }
 
+        public Dictionary<FieldType, string> FieldValuePairs => FieldTypeHelper.ItemListFieldValues();
+
         public MetadataObjects NewObjects
         {
             get => _newObjects;

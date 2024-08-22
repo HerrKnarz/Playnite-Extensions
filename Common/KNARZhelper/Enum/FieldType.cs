@@ -1,6 +1,9 @@
 ﻿using KNARZhelper.DatabaseObjectTypes;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
 
 namespace KNARZhelper.Enum
 {
@@ -35,28 +38,28 @@ namespace KNARZhelper.Enum
         public static List<IDatabaseObjectType> GetAllTypes() =>
             new List<IDatabaseObjectType>()
             {
-                new TypeAgeRating(),
-                new TypeBackground(),
-                new TypeCategory(),
-                new TypeCompletionStatus(),
-                new TypeCommunityScore(),
-                new TypeCover(),
-                new TypeCriticScore(),
-                new TypeDateAdded(),
-                new TypeDescription(),
-                new TypeDeveloper(),
-                new TypeFeature(),
-                new TypeGenre(),
-                new TypeIcon(),
-                new TypeLibrary(),
-                new TypePlatform(),
-                new TypePublisher(),
-                new TypeRegion(),
-                new TypeReleaseDate(),
-                new TypeSeries(),
-                new TypeSource(),
-                new TypeTag(),
-                new TypeUserScore(),
+                        new TypeAgeRating(),
+                        new TypeBackground(),
+                        new TypeCategory(),
+                        new TypeCompletionStatus(),
+                        new TypeCommunityScore(),
+                        new TypeCover(),
+                        new TypeCriticScore(),
+                        new TypeDateAdded(),
+                        new TypeDescription(),
+                        new TypeDeveloper(),
+                        new TypeFeature(),
+                        new TypeGenre(),
+                        new TypeIcon(),
+                        new TypeLibrary(),
+                        new TypePlatform(),
+                        new TypePublisher(),
+                        new TypeRegion(),
+                        new TypeReleaseDate(),
+                        new TypeSeries(),
+                        new TypeSource(),
+                        new TypeTag(),
+                        new TypeUserScore(),
             };
 
         public static IDatabaseObjectType GetTypeManager(this FieldType e)
@@ -133,5 +136,9 @@ namespace KNARZhelper.Enum
                     throw new ArgumentOutOfRangeException(nameof(e), e, null);
             }
         }
+
+        public static Dictionary<FieldType, string> ItemListFieldValues() => GetAllTypes()
+            .Where(x => x.ValueType == ItemValueType.ItemList && x.CanBeSetInGame && x.IsList && x.CanBeModified)
+            .ToDictionary(type => type.Type, type => type.LabelSingular);
     }
 }

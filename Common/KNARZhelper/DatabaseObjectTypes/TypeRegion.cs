@@ -9,6 +9,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeRegion : BaseType
     {
+        public override bool CanBeModified => false;
         public override bool IsList => true;
         public override string LabelPlural => ResourceProvider.GetString("LOCRegionsLabel");
         public override string LabelSingular => ResourceProvider.GetString("LOCRegionLabel");

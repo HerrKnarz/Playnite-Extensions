@@ -9,6 +9,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypePlatform : BaseType
     {
+        public override bool CanBeModified => false;
         public override bool IsList => true;
         public override string LabelPlural => ResourceProvider.GetString("LOCPlatformsTitle");
         public override string LabelSingular => ResourceProvider.GetString("LOCPlatformTitle");

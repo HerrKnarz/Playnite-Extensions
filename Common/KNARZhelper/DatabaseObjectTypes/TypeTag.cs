@@ -9,8 +9,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeTag : BaseType
     {
-        public override bool CanBeEmptyInGame => true;
-        public override bool CanBeModified => false;
         public override bool IsList => true;
         public override string LabelPlural => ResourceProvider.GetString("LOCTagsLabel");
         public override string LabelSingular => ResourceProvider.GetString("LOCTagLabel");

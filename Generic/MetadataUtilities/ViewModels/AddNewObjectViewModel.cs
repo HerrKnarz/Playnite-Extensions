@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using KNARZhelper.Enum;
 
 namespace MetadataUtilities.ViewModels
 {
@@ -30,6 +31,8 @@ namespace MetadataUtilities.ViewModels
             get => _enableTypeSelection;
             set => SetValue(ref _enableTypeSelection, value);
         }
+
+        public Dictionary<FieldType, string> FieldValuePairs => FieldTypeHelper.ItemListFieldValues();
 
         public MetadataObject NewObject
         {

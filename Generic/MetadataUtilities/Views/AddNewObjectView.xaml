@@ -10,26 +10,12 @@
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <metadataUtilities:FieldTypeConverter x:Key="FieldTypeConverter" />
-        <ObjectDataProvider MethodName="GetValues"
-                            ObjectType="{x:Type sys:Enum}"
-                            x:Key="FieldTypeValues">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="helper:FieldType" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </UserControl.Resources>
     <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=TxtName}">
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left">
-            <ComboBox SelectedItem="{Binding NewObject.Type}" ItemsSource="{Binding Source={StaticResource FieldTypeValues}}"
-                      Width="100" IsEnabled="{Binding EnableTypeSelection}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource FieldTypeConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <ComboBox SelectedValue="{Binding NewObject.Type}"
+                      ItemsSource="{Binding FieldValuePairs}"
+                      SelectedValuePath="Key" DisplayMemberPath="Value"
+                      Width="100" IsEnabled="{Binding EnableTypeSelection}" />
             <ComboBox SelectedItem="{Binding NewObject.Prefix}" ItemsSource="{Binding Prefixes}"
                       Margin="10,0,0,0" Width="100" Visibility="{Binding PrefixVisibility}" />
             <TextBox Name="TxtName" Margin="10,0,0,0" Width="300" AcceptsReturn="False"
