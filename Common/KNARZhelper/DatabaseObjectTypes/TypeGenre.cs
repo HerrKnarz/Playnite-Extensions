@@ -10,9 +10,8 @@ namespace KNARZhelper.DatabaseObjectTypes
     public class TypeGenre : BaseType
     {
         public override bool IsList => true;
-
-        public override string Label => ResourceProvider.GetString("LOCGenresLabel");
-
+        public override string LabelPlural => ResourceProvider.GetString("LOCGenresLabel");
+        public override string LabelSingular => ResourceProvider.GetString("LOCGenreLabel");
         public override FieldType Type => FieldType.Genre;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Genres.Add(name).Id;

@@ -152,13 +152,10 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
-        public string TypeAndName => Name.Any() ? $"{_type.GetEnumDisplayName()}: {Name}" : _type.GetEnumDisplayName();
+        public string TypeAndName => Name.Any() ? $"{TypeLabel}: {Name}" : TypeLabel;
 
         [DontSerialize]
-        public string TypeAsString => _type.GetEnumDisplayName();
-
-        [DontSerialize]
-        public string TypeLabel => _type.GetEnumDisplayName();
+        public string TypeLabel => TypeManager.LabelSingular;
 
         [DontSerialize]
         public IDatabaseObjectType TypeManager
@@ -224,7 +221,7 @@ namespace MetadataUtilities.Models
             if (res == DbInteractionResult.IsDuplicate)
             {
                 API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
-                    Type.GetEnumDisplayName()));
+                    TypeLabel));
             }
 
             return res == DbInteractionResult.Updated;

@@ -34,7 +34,7 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
-        public new string ToString => $"{TypeAsString} {Comparator.GetEnumDisplayName()} {Name}";
+        public new string ToString => $"{TypeLabel} {Comparator.GetEnumDisplayName()} {Name}";
 
         public bool IsTrue(Game game)
         {

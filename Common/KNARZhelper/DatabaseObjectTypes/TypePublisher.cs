@@ -16,11 +16,9 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeDeleted => false;
 
         public override bool CanBeModified => false;
-
         public override bool IsList => true;
-
-        public override string Label => ResourceProvider.GetString("LOCPublishersLabel");
-
+        public override string LabelPlural => ResourceProvider.GetString("LOCPublishersLabel");
+        public override string LabelSingular => ResourceProvider.GetString("LOCPublisherLabel");
         public override FieldType Type => FieldType.Publisher;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Companies.Add(name).Id;

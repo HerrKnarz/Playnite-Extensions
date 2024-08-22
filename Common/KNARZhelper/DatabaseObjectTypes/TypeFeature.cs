@@ -10,9 +10,8 @@ namespace KNARZhelper.DatabaseObjectTypes
     public class TypeFeature : BaseType
     {
         public override bool IsList => true;
-
-        public override string Label => ResourceProvider.GetString("LOCFeaturesLabel");
-
+        public override string LabelPlural => ResourceProvider.GetString("LOCFeaturesLabel");
+        public override string LabelSingular => ResourceProvider.GetString("LOCFeatureLabel");
         public override FieldType Type => FieldType.Feature;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Features.Add(name).Id;

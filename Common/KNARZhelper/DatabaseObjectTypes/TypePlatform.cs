@@ -10,9 +10,8 @@ namespace KNARZhelper.DatabaseObjectTypes
     public class TypePlatform : BaseType
     {
         public override bool IsList => true;
-
-        public override string Label => ResourceProvider.GetString("LOCPlatformsTitle");
-
+        public override string LabelPlural => ResourceProvider.GetString("LOCPlatformsTitle");
+        public override string LabelSingular => ResourceProvider.GetString("LOCPlatformTitle");
         public override FieldType Type => FieldType.Platform;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Platforms.Add(name).Id;

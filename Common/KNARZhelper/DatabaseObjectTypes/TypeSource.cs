@@ -10,8 +10,8 @@ namespace KNARZhelper.DatabaseObjectTypes
     public class TypeSource : BaseType
     {
         public override bool IsList => false;
-
-        public override string Label => ResourceProvider.GetString("LOCSourcesLabel");
+        public override string LabelPlural => ResourceProvider.GetString("LOCSourcesLabel");
+        public override string LabelSingular => ResourceProvider.GetString("LOCSourceLabel");
 
         public override FieldType Type => FieldType.Source;
 

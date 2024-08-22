@@ -15,7 +15,7 @@ namespace MetadataUtilities
     {
         public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, Settings settings)
         {
-            string label = type.GetTypeManager().Label;
+            string label = type.GetTypeManager().LabelPlural;
 
             MetadataObjects items = new MetadataObjects(settings, type);
 

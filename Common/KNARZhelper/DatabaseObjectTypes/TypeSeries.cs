@@ -11,7 +11,7 @@ namespace KNARZhelper.DatabaseObjectTypes
     {
         public override bool IsList => true;
 
-        public override string Label => ResourceProvider.GetString("LOCSeriesLabel");
+        public override string LabelSingular => ResourceProvider.GetString("LOCSeriesLabel");
 
         public override FieldType Type => FieldType.Series;
 

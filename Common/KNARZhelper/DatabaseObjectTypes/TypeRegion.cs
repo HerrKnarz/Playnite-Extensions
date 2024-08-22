@@ -10,7 +10,8 @@ namespace KNARZhelper.DatabaseObjectTypes
     public class TypeRegion : BaseType
     {
         public override bool IsList => true;
-        public override string Label => ResourceProvider.GetString("LOCRegionsLabel");
+        public override string LabelPlural => ResourceProvider.GetString("LOCRegionsLabel");
+        public override string LabelSingular => ResourceProvider.GetString("LOCRegionLabel");
         public override FieldType Type => FieldType.Region;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Regions.Add(name).Id;

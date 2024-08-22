@@ -12,9 +12,8 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeEmptyInGame => true;
         public override bool CanBeModified => false;
         public override bool IsList => true;
-
-        public override string Label => ResourceProvider.GetString("LOCTagsLabel");
-
+        public override string LabelPlural => ResourceProvider.GetString("LOCTagsLabel");
+        public override string LabelSingular => ResourceProvider.GetString("LOCTagLabel");
         public override FieldType Type => FieldType.Tag;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Tags.Add(name).Id;

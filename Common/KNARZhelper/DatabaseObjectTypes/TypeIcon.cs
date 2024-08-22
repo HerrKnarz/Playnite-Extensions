@@ -14,7 +14,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeModified => false;
         public override bool CanBeSetInGame => false;
         public override bool IsList => false;
-        public override string Label => ResourceProvider.GetString("LOCGameIconTitle");
+        public override string LabelSingular => ResourceProvider.GetString("LOCGameIconTitle");
         public override FieldType Type => FieldType.Icon;
         public override ItemValueType ValueType => ItemValueType.Media;
 

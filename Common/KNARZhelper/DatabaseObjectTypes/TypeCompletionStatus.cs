@@ -10,7 +10,8 @@ namespace KNARZhelper.DatabaseObjectTypes
     public class TypeCompletionStatus : BaseType
     {
         public override bool IsList => false;
-        public override string Label => ResourceProvider.GetString("LOCCompletionStatuses");
+        public override string LabelPlural => ResourceProvider.GetString("LOCCompletionStatuses");
+        public override string LabelSingular => ResourceProvider.GetString("LOCCompletionStatus");
         public override FieldType Type => FieldType.CompletionStatus;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.CompletionStatuses.Add(name).Id;

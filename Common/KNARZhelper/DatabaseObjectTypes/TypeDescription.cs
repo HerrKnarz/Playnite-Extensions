@@ -14,7 +14,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeModified => false;
         public override bool CanBeSetInGame => true;
         public override bool IsList => false;
-        public override string Label => ResourceProvider.GetString("LOCGameDescriptionTitle");
+        public override string LabelSingular => ResourceProvider.GetString("LOCGameDescriptionTitle");
         public override FieldType Type => FieldType.Description;
         public override ItemValueType ValueType => ItemValueType.String;
 

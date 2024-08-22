@@ -27,8 +27,8 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeModified => false;
         public override bool CanBeSetInGame => false;
         public override bool IsList => false;
-        public override string Label => ResourceProvider.GetString("LOCLibrary");
-
+        public override string LabelPlural => ResourceProvider.GetString("LOCLibraries");
+        public override string LabelSingular => ResourceProvider.GetString("LOCLibrary");
         public override FieldType Type => FieldType.Library;
 
         public override bool DbObjectExists(string name) => _libraries?.Any(x => x.Name == name) ?? false;

@@ -10,9 +10,8 @@ namespace KNARZhelper.DatabaseObjectTypes
     public class TypeCategory : BaseType
     {
         public override bool IsList => true;
-
-        public override string Label => ResourceProvider.GetString("LOCCategoriesLabel");
-
+        public override string LabelPlural => ResourceProvider.GetString("LOCCategoriesLabel");
+        public override string LabelSingular => ResourceProvider.GetString("LOCCategoryLabel");
         public override FieldType Type => FieldType.Category;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Categories.Add(name).Id;

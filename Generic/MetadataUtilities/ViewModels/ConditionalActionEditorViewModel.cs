@@ -31,7 +31,7 @@ namespace MetadataUtilities.ViewModels
                 .Select(x =>
                     new FieldTypeContextAction
                     {
-                        Name = x.Label,
+                        Name = x.LabelSingular,
                         Action = AddActionAddCommand,
                         FieldType = x.Type
                     }
@@ -41,7 +41,7 @@ namespace MetadataUtilities.ViewModels
                 .Select(x =>
                     new FieldTypeContextAction
                     {
-                        Name = x.Label,
+                        Name = x.LabelSingular,
                         Action = AddActionRemoveCommand,
                         FieldType = x.Type
                     }
@@ -51,7 +51,7 @@ namespace MetadataUtilities.ViewModels
                 .Select(x =>
                     new FieldTypeContextAction
                     {
-                        Name = x.Label,
+                        Name = x.LabelSingular,
                         Action = AddActionClearCommand,
                         FieldType = x.Type
                     }
@@ -61,7 +61,7 @@ namespace MetadataUtilities.ViewModels
                 .Select(x =>
                     new FieldTypeContextAction
                     {
-                        Name = x.Label,
+                        Name = x.LabelSingular,
                         Action = AddConditionContainsCommand,
                         FieldType = x.Type
                     }
@@ -71,7 +71,7 @@ namespace MetadataUtilities.ViewModels
                 .Select(x =>
                     new FieldTypeContextAction
                     {
-                        Name = x.Label,
+                        Name = x.LabelSingular,
                         Action = AddConditionContainsNotCommand,
                         FieldType = x.Type
                     }
@@ -81,7 +81,7 @@ namespace MetadataUtilities.ViewModels
                 .Select(x =>
                     new FieldTypeContextAction
                     {
-                        Name = x.Label,
+                        Name = x.LabelSingular,
                         Action = AddConditionIsEmptyCommand,
                         FieldType = x.Type
                     }

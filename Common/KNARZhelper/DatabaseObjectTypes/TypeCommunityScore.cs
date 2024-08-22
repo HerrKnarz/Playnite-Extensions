@@ -13,7 +13,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeModified => false;
         public override bool CanBeSetInGame => true;
         public override bool IsList => false;
-        public override string Label => ResourceProvider.GetString("LOCCommunityScore");
+        public override string LabelSingular => ResourceProvider.GetString("LOCCommunityScore");
         public override FieldType Type => FieldType.CommunityScore;
         public override ItemValueType ValueType => ItemValueType.Integer;
 

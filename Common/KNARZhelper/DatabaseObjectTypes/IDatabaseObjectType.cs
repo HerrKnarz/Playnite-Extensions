@@ -13,7 +13,8 @@ namespace KNARZhelper.DatabaseObjectTypes
         bool CanBeModified { get; }
         bool CanBeSetInGame { get; }
         bool IsList { get; }
-        string Label { get; }
+        string LabelPlural { get; }
+        string LabelSingular { get; }
         FieldType Type { get; }
         ItemValueType ValueType { get; }
 

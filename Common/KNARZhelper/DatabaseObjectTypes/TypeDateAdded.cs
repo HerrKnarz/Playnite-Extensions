@@ -13,7 +13,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeModified => false;
         public override bool CanBeSetInGame => false;
         public override bool IsList => false;
-        public override string Label => ResourceProvider.GetString("LOCDateAddedLabel");
+        public override string LabelSingular => ResourceProvider.GetString("LOCDateAddedLabel");
         public override FieldType Type => FieldType.DateAdded;
         public override ItemValueType ValueType => ItemValueType.Date;
 
