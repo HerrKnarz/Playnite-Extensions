@@ -49,6 +49,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">contains</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">doesn't contain</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">is empty</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">is not empty</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">add</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">remove</sys:String>
