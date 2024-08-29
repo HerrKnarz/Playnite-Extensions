@@ -49,6 +49,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">містить</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">не містить</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">пусто</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">is not empty</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">додати</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">прибрати</sys:String>
