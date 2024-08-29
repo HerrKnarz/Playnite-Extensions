@@ -31,6 +31,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectExists(string name) => API.Instance.Database.Companies?.Any(x => x.Name == name) ?? false;
 
+        public override bool DbObjectExists(Guid id) => API.Instance.Database.Companies?.Any(x => x.Id == id) ?? false;
+
         public override bool DbObjectInGame(Game game, Guid id) => game.PublisherIds?.Contains(id) ?? false;
 
         public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => x.PublisherIds?.Contains(id) ?? false);

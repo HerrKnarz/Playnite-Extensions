@@ -93,8 +93,14 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeIcon.cs">
       <Link>Shared\TypeIcon.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeLastPlayed.cs">
+      <Link>Shared\TypeLastPlayed.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeLibrary.cs">
       <Link>Shared\TypeLibrary.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeNotes.cs">
+      <Link>Shared\TypeNotes.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePlatform.cs">
       <Link>Shared\TypePlatform.cs</Link>

@@ -28,6 +28,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract bool DbObjectExists(string name);
 
+        public virtual bool DbObjectExists(Guid id) => false;
+
         public abstract bool DbObjectInGame(Game game, Guid id);
 
         public abstract bool DbObjectInUse(Guid id);

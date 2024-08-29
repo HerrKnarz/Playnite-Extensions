@@ -30,6 +30,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectExists(string name) => API.Instance.Database.CompletionStatuses?.Any(x => x.Name == name) ?? false;
 
+        public override bool DbObjectExists(Guid id) => API.Instance.Database.CompletionStatuses?.Any(x => x.Id == id) ?? false;
+
         public override bool DbObjectInGame(Game game, Guid id) => game.CompletionStatusId == id;
 
         public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => x.CompletionStatusId == id);
@@ -58,9 +60,9 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool RemoveDbObject(Guid id, bool checkIfUsed = true) =>
             // If we need to check first, we can simply call the replace method, that removes the
             // item itself, if no item is entered to replace the old one.
-            checkIfUsed
+            DbObjectExists(id) && (checkIfUsed
                 ? ReplaceDbObject(API.Instance.Database.Games.ToList(), id)?.Count() > 0
-                : API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.CompletionStatuses?.Remove(id) ?? false);
+                : API.Instance.MainView.UIDispatcher.Invoke(() => API.Instance.Database.CompletionStatuses?.Remove(id) ?? false));
 
         public override bool RemoveObjectFromGame(Game game, List<Guid> ids)
         {

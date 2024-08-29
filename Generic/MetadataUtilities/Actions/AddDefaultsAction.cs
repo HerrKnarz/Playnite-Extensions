@@ -64,6 +64,13 @@ namespace MetadataUtilities.Actions
             return mustUpdate;
         }
 
+        public override void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null,
+            bool isBulkAction = true)
+        {
+            _categoryIds.Clear();
+            _tagIds.Clear();
+        }
+
         public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
         {
             _categoryIds.Clear();

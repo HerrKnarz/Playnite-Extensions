@@ -22,7 +22,9 @@ namespace KNARZhelper.Enum
         Feature = 1,
         Genre = 2,
         Icon = 14,
+        LastPlayed = 23,
         Library = 11,
+        Notes = 22,
         Platform = 7,
         Publisher = 8,
         Region = 12,
@@ -51,7 +53,9 @@ namespace KNARZhelper.Enum
                         new TypeFeature(),
                         new TypeGenre(),
                         new TypeIcon(),
+                        new TypeLastPlayed(),
                         new TypeLibrary(),
+                        new TypeNotes(),
                         new TypePlatform(),
                         new TypePublisher(),
                         new TypeRegion(),
@@ -105,8 +109,14 @@ namespace KNARZhelper.Enum
                 case FieldType.Icon:
                     return new TypeIcon();
 
+                case FieldType.LastPlayed:
+                    return new TypeLastPlayed();
+
                 case FieldType.Library:
                     return new TypeLibrary();
+
+                case FieldType.Notes:
+                    return new TypeNotes();
 
                 case FieldType.Platform:
                     return new TypePlatform();

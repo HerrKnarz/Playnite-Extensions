@@ -77,16 +77,13 @@ namespace MetadataUtilities.Actions
                     metaDataItem.RemoveFromDb();
                 }
             }
+
+            ClearLists();
         }
 
         public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
         {
-            _ageRatingIds.Clear();
-            _categoryIds.Clear();
-            _featureIds.Clear();
-            _genreIds.Clear();
-            _seriesIds.Clear();
-            _tagIds.Clear();
+            ClearLists();
 
             if (!Settings.UnwantedItems.Any())
             {
@@ -122,21 +119,38 @@ namespace MetadataUtilities.Actions
                         break;
 
                     case FieldType.Background:
+                    case FieldType.CommunityScore:
                     case FieldType.CompletionStatus:
                     case FieldType.Cover:
+                    case FieldType.CriticScore:
+                    case FieldType.DateAdded:
+                    case FieldType.Description:
                     case FieldType.Developer:
                     case FieldType.Icon:
                     case FieldType.Library:
+                    case FieldType.Notes:
                     case FieldType.Platform:
                     case FieldType.Publisher:
                     case FieldType.Region:
+                    case FieldType.ReleaseDate:
                     case FieldType.Source:
+                    case FieldType.UserScore:
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
             }
 
             return true;
+        }
+
+        private void ClearLists()
+        {
+            _ageRatingIds.Clear();
+            _categoryIds.Clear();
+            _featureIds.Clear();
+            _genreIds.Clear();
+            _seriesIds.Clear();
+            _tagIds.Clear();
         }
     }
 }
