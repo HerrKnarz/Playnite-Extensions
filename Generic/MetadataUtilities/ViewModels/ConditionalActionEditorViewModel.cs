@@ -154,13 +154,13 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            if (!ConditionalAction.Actions.Any())
+            if (ConditionalAction.Actions.Count == 0)
             {
                 API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoActionsSet"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            if (ConditionalAction.Enabled && !ConditionalAction.Conditions.Any())
+            if (ConditionalAction.Enabled && ConditionalAction.Conditions.Count == 0)
             {
                 if (API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoConditionsSet"), string.Empty, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                 {

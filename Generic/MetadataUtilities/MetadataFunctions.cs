@@ -66,7 +66,7 @@ namespace MetadataUtilities
                             }));
                     }
 
-                    if (temporaryList.Any() && (settings.UnusedItemsWhiteList?.Any() ?? false))
+                    if (temporaryList.Count > 0 && (settings.UnusedItemsWhiteList?.Count ?? 0) > 0)
                     {
                         temporaryList = temporaryList.Where(x =>
                             settings.UnusedItemsWhiteList.All(y => y.TypeAndName != x.TypeAndName)).ToList();

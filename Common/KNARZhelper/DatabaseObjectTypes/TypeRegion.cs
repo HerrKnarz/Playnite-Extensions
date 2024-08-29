@@ -33,7 +33,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.RegionIds?.Clear());
 
-        public override bool FieldInGameIsEmpty(Game game) => !game.RegionIds?.Any() ?? true;
+        public override bool FieldInGameIsEmpty(Game game) => (game.RegionIds?.Count ?? 0) == 0;
 
         public override Guid GetDbObjectId(string name) =>
             API.Instance.Database.Regions?.FirstOrDefault(x => x.Name == name)?.Id ?? Guid.Empty;

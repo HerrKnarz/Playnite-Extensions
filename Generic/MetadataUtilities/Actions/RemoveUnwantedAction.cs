@@ -85,7 +85,7 @@ namespace MetadataUtilities.Actions
         {
             ClearLists();
 
-            if (!Settings.UnwantedItems.Any())
+            if (Settings.UnwantedItems.Count == 0)
             {
                 return false;
             }
@@ -127,6 +127,7 @@ namespace MetadataUtilities.Actions
                     case FieldType.Description:
                     case FieldType.Developer:
                     case FieldType.Icon:
+                    case FieldType.LastPlayed:
                     case FieldType.Library:
                     case FieldType.Notes:
                     case FieldType.Platform:

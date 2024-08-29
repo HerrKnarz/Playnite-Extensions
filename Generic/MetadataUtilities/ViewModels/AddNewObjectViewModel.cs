@@ -48,7 +48,7 @@ namespace MetadataUtilities.ViewModels
 
         public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
 
-        public Visibility PrefixVisibility => _settings.Prefixes?.Any() ?? false ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility PrefixVisibility => _settings.Prefixes.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
         public static Window GetWindow(Settings settings, MetadataObject newObject, bool enableTypeSelection = true)
         {

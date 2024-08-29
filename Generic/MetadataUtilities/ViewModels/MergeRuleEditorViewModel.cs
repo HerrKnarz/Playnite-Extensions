@@ -60,12 +60,12 @@ namespace MetadataUtilities.ViewModels
 
                 using (MetadataViewSource.DeferRefresh())
                 {
-                    FilterAgeRatings = filteredTypes.Contains(FieldType.AgeRating) || !filteredTypes.Any();
-                    FilterCategories = filteredTypes.Contains(FieldType.Category) || !filteredTypes.Any();
-                    FilterFeatures = filteredTypes.Contains(FieldType.Feature) || !filteredTypes.Any();
-                    FilterGenres = filteredTypes.Contains(FieldType.Genre) || !filteredTypes.Any();
-                    FilterSeries = filteredTypes.Contains(FieldType.Series) || !filteredTypes.Any();
-                    FilterTags = filteredTypes.Contains(FieldType.Tag) || !filteredTypes.Any();
+                    FilterAgeRatings = filteredTypes.Contains(FieldType.AgeRating) || filteredTypes.Count == 0;
+                    FilterCategories = filteredTypes.Contains(FieldType.Category) || filteredTypes.Count == 0;
+                    FilterFeatures = filteredTypes.Contains(FieldType.Feature) || filteredTypes.Count == 0;
+                    FilterGenres = filteredTypes.Contains(FieldType.Genre) || filteredTypes.Count == 0;
+                    FilterSeries = filteredTypes.Contains(FieldType.Series) || filteredTypes.Count == 0;
+                    FilterTags = filteredTypes.Contains(FieldType.Tag) || filteredTypes.Count == 0;
 
                     MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAndName", ListSortDirection.Ascending));
                     MetadataViewSource.IsLiveSortingRequested = true;
@@ -286,7 +286,7 @@ namespace MetadataUtilities.ViewModels
 
         public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
 
-        public Visibility PrefixVisibility => _plugin.Settings.Settings.Prefixes?.Any() ?? false
+        public Visibility PrefixVisibility => (_plugin.Settings.Settings.Prefixes?.Count ?? 0) > 0
             ? Visibility.Visible
             : Visibility.Collapsed;
 

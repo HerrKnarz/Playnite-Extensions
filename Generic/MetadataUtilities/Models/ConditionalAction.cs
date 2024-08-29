@@ -90,7 +90,7 @@ namespace MetadataUtilities.Models
 
         public bool CheckConditions(Game game)
         {
-            if (!Conditions.Any())
+            if (Conditions.Count == 0)
             {
                 return true;
             }

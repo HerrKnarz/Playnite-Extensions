@@ -563,7 +563,7 @@ namespace MetadataUtilities.ViewModels
 
         public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
 
-        public Visibility PrefixVisibility => _plugin.Settings.Settings.Prefixes?.Any() ?? false
+        public Visibility PrefixVisibility => (_plugin.Settings.Settings.Prefixes?.Count ?? 0) > 0
             ? Visibility.Visible
             : Visibility.Collapsed;
 
