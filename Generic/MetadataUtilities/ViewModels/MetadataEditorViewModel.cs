@@ -80,7 +80,7 @@ namespace MetadataUtilities.ViewModels
 
                 using (MetadataViewSource.DeferRefresh())
                 {
-                    MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAsString", ListSortDirection.Ascending));
+                    MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeLabel", ListSortDirection.Ascending));
                     MetadataViewSource.SortDescriptions.Add(new SortDescription("Prefix", ListSortDirection.Ascending));
                     MetadataViewSource.SortDescriptions.Add(new SortDescription("EditName", ListSortDirection.Ascending));
                     MetadataViewSource.IsLiveSortingRequested = true;
