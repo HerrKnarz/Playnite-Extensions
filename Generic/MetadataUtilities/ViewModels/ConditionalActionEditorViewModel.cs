@@ -86,6 +86,16 @@ namespace MetadataUtilities.ViewModels
                         FieldType = x.Type
                     }
                 ));
+
+            ContextMenuConditionsNotEmpty.AddMissing(_fieldTypes.Where(x => x.CanBeEmptyInGame)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.LabelSingular,
+                        Action = AddConditionIsNotEmptyCommand,
+                        FieldType = x.Type
+                    }
+                ));
         }
 
         public RelayCommand<FieldType> AddActionAddCommand => new RelayCommand<FieldType>(type =>
@@ -105,6 +115,9 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<FieldType> AddConditionIsEmptyCommand => new RelayCommand<FieldType>(type =>
             AddConditions(type, ComparatorType.IsEmpty));
+
+        public RelayCommand<FieldType> AddConditionIsNotEmptyCommand => new RelayCommand<FieldType>(type =>
+            AddConditions(type, ComparatorType.IsNotEmpty));
 
         public ConditionalAction ConditionalAction
         {
@@ -128,6 +141,9 @@ namespace MetadataUtilities.ViewModels
             new ObservableCollection<FieldTypeContextAction>();
 
         public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsEmpty { get; set; } =
+            new ObservableCollection<FieldTypeContextAction>();
+
+        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsNotEmpty { get; set; } =
             new ObservableCollection<FieldTypeContextAction>();
 
         public RelayCommand<IList<object>> RemoveActionCommand => new RelayCommand<IList<object>>(items =>
@@ -233,7 +249,7 @@ namespace MetadataUtilities.ViewModels
 
         public void AddConditions(FieldType fieldType, ComparatorType comparatorType)
         {
-            if (comparatorType == ComparatorType.IsEmpty)
+            if (comparatorType == ComparatorType.IsEmpty || comparatorType == ComparatorType.IsNotEmpty)
             {
                 if (!ConditionalAction.Conditions.Any(x => x.Comparator == comparatorType && x.Type == fieldType))
                 {

@@ -8,7 +8,8 @@ namespace MetadataUtilities.Models
     {
         Contains,
         DoesNotContain,
-        IsEmpty
+        IsEmpty,
+        IsNotEmpty
     }
 
     public static class ConditionHelper
@@ -48,6 +49,9 @@ namespace MetadataUtilities.Models
 
                 case ComparatorType.IsEmpty:
                     return TypeManager.FieldInGameIsEmpty(game);
+
+                case ComparatorType.IsNotEmpty:
+                    return !TypeManager.FieldInGameIsEmpty(game);
 
                 default:
                     throw new ArgumentOutOfRangeException();
