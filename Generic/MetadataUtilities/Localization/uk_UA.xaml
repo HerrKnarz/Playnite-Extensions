@@ -24,7 +24,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Прибрано небажані метадані з {0} ігор!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Зберегти як правило об’єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Оберіть новий тип</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Set user score in {0} games!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Встановлено рахунок користувача в {0} іграх!</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Редактор Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Змінити тип</sys:String>
@@ -49,7 +49,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">містить</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">не містить</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">пусто</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">is not empty</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">не порожньо</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">додати</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">прибрати</sys:String>
@@ -78,7 +78,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingItems">Прибирання елементів метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Прибирання невикористаних елементів метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Прибирання небажаних елементів метаданих...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Setting user score...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Встановлення рахунку користувача...</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Додати наявні елементи</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Завжди додавати елементи які ви прибираєте в Редакторі Метаданих до списку небажаного не питаючи.</sys:String>
