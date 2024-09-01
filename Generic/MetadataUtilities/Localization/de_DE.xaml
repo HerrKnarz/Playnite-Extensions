@@ -6,6 +6,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">{0} mit diesem Namen existiert bereits.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Metadatentyp ändern</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Conditional action editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Please enter a value</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Conditional actions changed {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Zusammenführen als</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Metadaten in {0} Spielen zusammengeführt!</sys:String>
@@ -50,6 +51,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">doesn't contain</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">is empty</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">is not empty</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsBiggerThan">is bigger than</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsSmallerThan">is smaller than</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">add</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">remove</sys:String>
