@@ -27,7 +27,8 @@ namespace MetadataUtilities.ViewModels
 
             //TODO: remove checks on Value Type once the contains buttons support adding other values that items!
 
-            ContextMenuActionsAdd.AddMissing(_fieldTypes.Where(x => x.CanBeSetInGame && x.ValueType == ItemValueType.ItemList)
+            ContextMenuActionsAdd.AddMissing(_fieldTypes
+                .Where(x => x.CanBeSetInGame && x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -37,7 +38,8 @@ namespace MetadataUtilities.ViewModels
                     }
                 ));
 
-            ContextMenuActionsRemove.AddMissing(_fieldTypes.Where(x => x.CanBeSetInGame && x.CanBeEmptyInGame && x.ValueType == ItemValueType.ItemList)
+            ContextMenuActionsRemove.AddMissing(_fieldTypes
+                .Where(x => x.CanBeSetInGame && x.CanBeEmptyInGame && x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -57,7 +59,7 @@ namespace MetadataUtilities.ViewModels
                     }
                 ));
 
-            ContextMenuConditionsContains.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList && x.ValueType == ItemValueType.ItemList)
+            ContextMenuConditionsContains.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -67,7 +69,7 @@ namespace MetadataUtilities.ViewModels
                     }
                 ));
 
-            ContextMenuConditionsContainsNot.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList && x.ValueType == ItemValueType.ItemList)
+            ContextMenuConditionsContainsNot.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -96,6 +98,28 @@ namespace MetadataUtilities.ViewModels
                         FieldType = x.Type
                     }
                 ));
+
+            ContextMenuConditionsBiggerThan.AddMissing(_fieldTypes
+                .Where(x => x.ValueType == ItemValueType.Date || x.ValueType == ItemValueType.Integer)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.LabelSingular,
+                        Action = AddConditionIsBiggerThanCommand,
+                        FieldType = x.Type
+                    }
+                ));
+
+            ContextMenuConditionsSmallerThan.AddMissing(_fieldTypes
+                .Where(x => x.ValueType == ItemValueType.Date || x.ValueType == ItemValueType.Integer)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.LabelSingular,
+                        Action = AddConditionIsSmallerThanCommand,
+                        FieldType = x.Type
+                    }
+                ));
         }
 
         public RelayCommand<FieldType> AddActionAddCommand => new RelayCommand<FieldType>(type =>
@@ -105,7 +129,7 @@ namespace MetadataUtilities.ViewModels
             AddActions(type, ActionType.ClearField));
 
         public RelayCommand<FieldType> AddActionRemoveCommand => new RelayCommand<FieldType>(type =>
-                    AddActions(type, ActionType.RemoveObject));
+            AddActions(type, ActionType.RemoveObject));
 
         public RelayCommand<FieldType> AddConditionContainsCommand => new RelayCommand<FieldType>(type =>
             AddConditions(type, ComparatorType.Contains));
@@ -113,11 +137,17 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand<FieldType> AddConditionContainsNotCommand => new RelayCommand<FieldType>(type =>
             AddConditions(type, ComparatorType.DoesNotContain));
 
+        public RelayCommand<FieldType> AddConditionIsBiggerThanCommand => new RelayCommand<FieldType>(type =>
+            AddConditions(type, ComparatorType.IsBiggerThan));
+
         public RelayCommand<FieldType> AddConditionIsEmptyCommand => new RelayCommand<FieldType>(type =>
             AddConditions(type, ComparatorType.IsEmpty));
 
         public RelayCommand<FieldType> AddConditionIsNotEmptyCommand => new RelayCommand<FieldType>(type =>
             AddConditions(type, ComparatorType.IsNotEmpty));
+
+        public RelayCommand<FieldType> AddConditionIsSmallerThanCommand => new RelayCommand<FieldType>(type =>
+            AddConditions(type, ComparatorType.IsSmallerThan));
 
         public ConditionalAction ConditionalAction
         {
@@ -132,7 +162,10 @@ namespace MetadataUtilities.ViewModels
             new ObservableCollection<FieldTypeContextAction>();
 
         public ObservableCollection<FieldTypeContextAction> ContextMenuActionsRemove { get; set; } =
-                    new ObservableCollection<FieldTypeContextAction>();
+            new ObservableCollection<FieldTypeContextAction>();
+
+        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsBiggerThan { get; set; } =
+            new ObservableCollection<FieldTypeContextAction>();
 
         public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsContains { get; set; } =
             new ObservableCollection<FieldTypeContextAction>();
@@ -144,6 +177,9 @@ namespace MetadataUtilities.ViewModels
             new ObservableCollection<FieldTypeContextAction>();
 
         public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsNotEmpty { get; set; } =
+            new ObservableCollection<FieldTypeContextAction>();
+
+        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsSmallerThan { get; set; } =
             new ObservableCollection<FieldTypeContextAction>();
 
         public RelayCommand<IList<object>> RemoveActionCommand => new RelayCommand<IList<object>>(items =>
@@ -166,19 +202,23 @@ namespace MetadataUtilities.ViewModels
         {
             if (ConditionalAction.Name == null || ConditionalAction.Name?.Length == 0)
             {
-                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoNameSet"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoNameSet"),
+                    string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
             if (ConditionalAction.Actions.Count == 0)
             {
-                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoActionsSet"), string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoActionsSet"),
+                    string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
             if (ConditionalAction.Enabled && ConditionalAction.Conditions.Count == 0)
             {
-                if (API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoConditionsSet"), string.Empty, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                if (API.Instance.Dialogs.ShowMessage(
+                        ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoConditionsSet"), string.Empty,
+                        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                 {
                     return;
                 }
@@ -192,11 +232,13 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                ConditionalActionEditorViewModel viewModel = new ConditionalActionEditorViewModel(settings, conditionalAction);
+                ConditionalActionEditorViewModel viewModel =
+                    new ConditionalActionEditorViewModel(settings, conditionalAction);
 
                 ConditionalActionEditorView conditionalActionEditorView = new ConditionalActionEditorView();
 
-                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCMetadataUtilitiesDialogConditionalActionEditor"), 800, 500);
+                Window window = WindowHelper.CreateSizedWindow(
+                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogConditionalActionEditor"), 800, 500);
                 window.Content = conditionalActionEditorView;
                 window.DataContext = viewModel;
 
@@ -234,7 +276,9 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            foreach (MetadataObject item in items.Where(item => ConditionalAction.Actions.All(x => x.TypeAndName != item.TypeAndName || x.ActionType != actionType)))
+            foreach (MetadataObject item in items.Where(item =>
+                         ConditionalAction.Actions.All(x =>
+                             x.TypeAndName != item.TypeAndName || x.ActionType != actionType)))
             {
                 ConditionalAction.Actions.Add(new Action(_settings)
                 {
@@ -249,19 +293,86 @@ namespace MetadataUtilities.ViewModels
 
         public void AddConditions(FieldType fieldType, ComparatorType comparatorType)
         {
-            if (comparatorType == ComparatorType.IsEmpty || comparatorType == ComparatorType.IsNotEmpty)
+            switch (comparatorType)
             {
-                if (!ConditionalAction.Conditions.Any(x => x.Comparator == comparatorType && x.Type == fieldType))
+                case ComparatorType.IsEmpty:
+                case ComparatorType.IsNotEmpty:
                 {
-                    ConditionalAction.Conditions.Add(new Condition(_settings)
+                    if (!ConditionalAction.Conditions.Any(x => x.Comparator == comparatorType && x.Type == fieldType))
                     {
-                        Name = string.Empty,
-                        Type = fieldType,
-                        Comparator = comparatorType
-                    });
-                }
+                        ConditionalAction.Conditions.Add(new Condition(_settings)
+                        {
+                            Name = string.Empty,
+                            Type = fieldType,
+                            Comparator = comparatorType
+                        });
+                    }
 
-                return;
+                    return;
+                }
+                case ComparatorType.IsBiggerThan:
+                case ComparatorType.IsSmallerThan:
+                {
+                    if (fieldType.GetTypeManager().ValueType == ItemValueType.Integer)
+                    {
+                        int intValue = 0;
+
+                        if (!SelectIntViewModel.ShowDialog(ref intValue))
+                        {
+                            return;
+                        }
+
+                        if (!ConditionalAction.Conditions.Any(
+                                x => x.Comparator == comparatorType &&
+                                     x.Type == fieldType && x.IntValue == intValue))
+                        {
+                            ConditionalAction.Conditions.Add(new Condition(_settings)
+                            {
+                                Name = string.Empty,
+                                IntValue = intValue,
+                                Type = fieldType,
+                                Comparator = comparatorType
+                            });
+                        }
+
+                        return;
+                    }
+
+                    if (fieldType.GetTypeManager().ValueType != ItemValueType.Date)
+                    {
+                        return;
+                    }
+
+                    DateTime dateValue = DateTime.Today;
+
+                    if (!SelectDateViewModel.ShowDialog(ref dateValue))
+                    {
+                        return;
+                    }
+
+                    if (!ConditionalAction.Conditions.Any(
+                            x => x.Comparator == comparatorType &&
+                                 x.Type == fieldType && x.DateValue == dateValue))
+                    {
+                        ConditionalAction.Conditions.Add(new Condition(_settings)
+                        {
+                            Name = string.Empty,
+                            DateValue = dateValue,
+                            Type = fieldType,
+                            Comparator = comparatorType
+                        });
+                    }
+
+                    return;
+                }
+                case ComparatorType.Contains:
+                    break;
+
+                case ComparatorType.DoesNotContain:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(comparatorType), comparatorType, null);
             }
 
             List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
@@ -271,7 +382,9 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            foreach (MetadataObject item in items.Where(item => ConditionalAction.Conditions.All(x => x.TypeAndName != item.TypeAndName || x.Comparator != comparatorType)))
+            foreach (MetadataObject item in items.Where(item =>
+                         ConditionalAction.Conditions.All(x =>
+                             x.TypeAndName != item.TypeAndName || x.Comparator != comparatorType)))
             {
                 ConditionalAction.Conditions.Add(new Condition(_settings)
                 {

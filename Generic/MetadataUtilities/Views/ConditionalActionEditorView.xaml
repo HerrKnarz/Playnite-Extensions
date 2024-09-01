@@ -59,6 +59,26 @@
             </ContextMenu.ItemContainerStyle>
         </ContextMenu>
 
+        <ContextMenu x:Key="ConditionsMenuIsBiggerThan" ItemsSource="{Binding ContextMenuConditionsBiggerThan}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding Action }" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
+        </ContextMenu>
+
+        <ContextMenu x:Key="ConditionsMenuIsSmallerThan" ItemsSource="{Binding ContextMenuConditionsSmallerThan}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding Action }" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
+        </ContextMenu>
+
         <ContextMenu x:Key="ActionsMenuAdd" ItemsSource="{Binding ContextMenuActionsAdd}">
             <ContextMenu.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
@@ -160,23 +180,26 @@
             <GroupBox Grid.Column="0" Grid.Row="1" Header="{DynamicResource LOCMetadataUtilitiesSettingsConditions}"
                       Padding="10, 10, 10, 0" Margin="0,0,10,0">
                 <DockPanel>
-                    <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" LastChildFill="False" Margin="0,0,0,0">
-                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsNotEmpty}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsNotEmpty}" Click="b_Click" />
+                    <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="0,10,0,0">
                         <Button Content="&#xec53;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}"
                                 ToolTip="{DynamicResource LOCRemoveTitle}" Margin="0,0,0,10"
                                 Command="{Binding RemoveConditionCommand}"
                                 CommandParameter="{Binding SelectedItems, ElementName=LbConditions}" />
+                        <WrapPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_Contains}" Margin="0,0,10,10"
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuContains}" Click="b_Click" />
+                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_DoesNotContain}" Margin="0,0,10,10"
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuContainNot}" Click="b_Click" />
+                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsEmpty}" Margin="0,0,10,10"
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsEmpty}" Click="b_Click" />
+                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsNotEmpty}" Margin="0,0,10,10"
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsNotEmpty}" Click="b_Click" />
+                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsBiggerThan}" Margin="0,0,10,10"
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsBiggerThan}" Click="b_Click" />
+                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsSmallerThan}" Margin="0,0,10,10"
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsSmallerThan}" Click="b_Click" />
+                        </WrapPanel>
                     </DockPanel>
-                    <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" LastChildFill="False" Margin="0,10,0,0">
-                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_Contains}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuContains}" Click="b_Click" />
-                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_DoesNotContain}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuContainNot}" Click="b_Click" />
-                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsEmpty}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsEmpty}" Click="b_Click" />
-                    </DockPanel>
-
                     <ListBox DockPanel.Dock="Top" Name="LbConditions" ItemsSource="{Binding ConditionalAction.Conditions}"
                          SelectionMode="Extended">
                         <ListBox.InputBindings>
@@ -195,19 +218,20 @@
             <GroupBox Grid.Column="1" Grid.Row="1" Header="{DynamicResource LOCActionsLabel}"
                       Padding="10, 10, 10, 0" Margin="10,0,0,0">
                 <DockPanel>
-                    <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" LastChildFill="False" Margin="0,10,0,0">
-                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_AddObject}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuAdd}" Click="b_Click" />
-                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_RemoveObject}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuRemove}" Click="b_Click" />
-                        <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_ClearField}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuClear}" Click="b_Click" />
+                    <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="0,10,0,0">
                         <Button Content="&#xec53;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}"
                                 ToolTip="{DynamicResource LOCRemoveTitle}" Margin="0,0,0,10"
                                 Command="{Binding RemoveActionCommand}"
                                 CommandParameter="{Binding SelectedItems, ElementName=LbActions}" />
+                        <WrapPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_AddObject}" Margin="0,0,10,10"
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuAdd}" Click="b_Click" />
+                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_RemoveObject}" Margin="0,0,10,10"
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuRemove}" Click="b_Click" />
+                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_ClearField}" Margin="0,0,10,10"
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuClear}" Click="b_Click" />
+                        </WrapPanel>
                     </DockPanel>
-
                     <ListBox DockPanel.Dock="Top" Name="LbActions" ItemsSource="{Binding ConditionalAction.Actions}"
                              SelectionMode="Extended">
                         <ListBox.InputBindings>

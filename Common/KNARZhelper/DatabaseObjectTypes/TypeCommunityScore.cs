@@ -3,6 +3,8 @@ using KNARZhelper.Enum;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 
+// ReSharper disable ConditionIsAlwaysTrueOrFalse
+
 namespace KNARZhelper.DatabaseObjectTypes
 {
     internal class TypeCommunityScore : BaseType
@@ -30,6 +32,12 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override Guid GetDbObjectId(string name) => default;
 
         public override int GetGameCount(Guid id, bool ignoreHidden = false) => 0;
+
+        public override bool IsBiggerThan<T>(Game game, T value) =>
+            (value != null || value is int) && game.CommunityScore > (value as int?);
+
+        public override bool IsSmallerThan<T>(Game game, T value) =>
+            (value != null || value is int) && game.CommunityScore < (value as int?);
 
         public override bool NameExists(string name, Guid id) => false;
     }

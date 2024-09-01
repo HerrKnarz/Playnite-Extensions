@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="MetadataUtilities.Views.SelectDateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             d:DataContext="{d:DesignInstance Type=viewModels:SelectIntViewModel}"
+             xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="250" d:DesignWidth="400">
+    <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=DateValue}">
+        <DockPanel DockPanel.Dock="Top">
+            <DatePicker Name="DateValue" SelectedDate="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+        </DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,15,0,0" HorizontalAlignment="Center">
+            <Button Content="{DynamicResource LOCOKLabel}" IsDefault="True"
+                    Style="{StaticResource BottomButton}" Command="{Binding OkCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            <Button Content="{DynamicResource LOCCancelLabel}" IsCancel="True"
+                    Style="{StaticResource BottomButton}" />
+        </StackPanel>
+    </DockPanel>
+</UserControl>

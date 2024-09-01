@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
+using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Models
 {
@@ -9,7 +10,9 @@ namespace MetadataUtilities.Models
         Contains,
         DoesNotContain,
         IsEmpty,
-        IsNotEmpty
+        IsNotEmpty,
+        IsBiggerThan,
+        IsSmallerThan
     }
 
     public static class ConditionHelper
@@ -24,6 +27,9 @@ namespace MetadataUtilities.Models
     {
         private ComparatorType _comparator = ComparatorType.Contains;
 
+        private DateTime? _dateValue;
+        private int? _intValue;
+
         public Condition(Settings settings) : base(settings)
         {
         }
@@ -34,8 +40,40 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _comparator, value);
         }
 
+        public DateTime? DateValue
+        {
+            get => _dateValue;
+            set => SetValue(ref _dateValue, value);
+        }
+
+        public int? IntValue
+        {
+            get => _intValue;
+            set => SetValue(ref _intValue, value);
+        }
+
         [DontSerialize]
-        public new string ToString => $"{TypeLabel} {Comparator.GetEnumDisplayName()} {Name}";
+        public new string ToString
+        {
+            get
+            {
+                switch (TypeManager.ValueType)
+                {
+                    case ItemValueType.Integer:
+                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {IntValue}";
+
+                    case ItemValueType.Date:
+                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {DateValue?.ToString("yyyy-MM-dd")}";
+
+                    case ItemValueType.ItemList:
+                    case ItemValueType.Media:
+                    case ItemValueType.None:
+                    case ItemValueType.String:
+                    default:
+                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {Name}";
+                }
+            }
+        }
 
         public bool IsTrue(Game game)
         {
@@ -52,6 +90,12 @@ namespace MetadataUtilities.Models
 
                 case ComparatorType.IsNotEmpty:
                     return !TypeManager.FieldInGameIsEmpty(game);
+
+                case ComparatorType.IsBiggerThan:
+                    return TypeManager.ValueType == ItemValueType.Integer ? TypeManager.IsBiggerThan(game, IntValue) : TypeManager.IsBiggerThan(game, DateValue);
+
+                case ComparatorType.IsSmallerThan:
+                    return TypeManager.ValueType == ItemValueType.Integer ? TypeManager.IsSmallerThan(game, IntValue) : TypeManager.IsSmallerThan(game, DateValue);
 
                 default:
                     throw new ArgumentOutOfRangeException();

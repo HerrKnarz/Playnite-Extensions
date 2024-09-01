@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,6 +12,8 @@ namespace KNARZhelper
 {
     public static class MiscHelper
     {
+        private static readonly Regex _regexNumbers = new Regex("[^0-9.-]+");
+
         public static void AddTextIcoFontResource(string key, string text)
         {
             Application.Current.Resources.Add(key, new TextBlock
@@ -47,8 +50,10 @@ namespace KNARZhelper
             }
         }
 
+        public static bool IsOnlyNumbers(string text) => !_regexNumbers.IsMatch(text);
+
         public static int RemoveAll<T>(
-                    this ObservableCollection<T> coll, Func<T, bool> condition)
+                            this ObservableCollection<T> coll, Func<T, bool> condition)
         {
             System.Collections.Generic.List<T> itemsToRemove = coll.Where(condition).ToList();
 

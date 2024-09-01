@@ -42,6 +42,10 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract int GetGameCount(Guid id, bool ignoreHidden = false);
 
+        public virtual bool IsBiggerThan<T>(Game game, T value) => false;
+
+        public virtual bool IsSmallerThan<T>(Game game, T value) => false;
+
         public virtual List<DatabaseObject> LoadAllMetadata() => new List<DatabaseObject>();
 
         public virtual List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) => new List<DatabaseObject>();
