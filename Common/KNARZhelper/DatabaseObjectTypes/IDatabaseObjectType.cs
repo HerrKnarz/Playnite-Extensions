@@ -48,6 +48,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         List<DatabaseObject> LoadAllMetadata();
 
+        List<DatabaseObject> LoadGameMetadata(Game game);
+
         List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames);
 
         bool NameExists(string name, Guid id);

@@ -50,6 +50,9 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override List<DatabaseObject> LoadAllMetadata() => API.Instance.Database.Sources
             .Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList();
 
+        public override List<DatabaseObject> LoadGameMetadata(Game game) =>
+            new List<DatabaseObject> { new DatabaseObject() { Name = game.Source.Name, Id = game.Source.Id } };
+
         public override List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) => API.Instance.Database
             .Sources.Where(x => !API.Instance.Database.Games.Any(g =>
                 !(ignoreHiddenGames && g.Hidden) && (g.SourceId == x.Id)))

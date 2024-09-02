@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using KNARZhelper.DatabaseObjectTypes;
+using System.Runtime.InteropServices;
 
 namespace MetadataUtilities.Models
 {
@@ -119,70 +120,23 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
-                    List<AgeRating> ageRatings = new List<AgeRating>();
-                    List<Category> categories = new List<Category>();
-                    List<GameFeature> features = new List<GameFeature>();
-                    List<Genre> genres = new List<Genre>();
-                    List<Series> seriesList = new List<Series>();
-                    List<Tag> tags = new List<Tag>();
+                    List<IDatabaseObjectType> types = new List<IDatabaseObjectType>();
+
+                    types.AddRange(FieldTypeHelper.ItemListFieldValues().Keys.Select(x => x.GetTypeManager()));
 
                     foreach (Game game in games)
                     {
-                        ageRatings.AddMissing(game.AgeRatings);
-                        categories.AddMissing(game.Categories);
-                        features.AddMissing(game.Features);
-                        genres.AddMissing(game.Genres);
-                        seriesList.AddMissing(game.Series);
-                        tags.AddMissing(game.Tags);
+                        foreach (IDatabaseObjectType type in types)
+                        {
+                            temporaryList.AddMissing(type.LoadGameMetadata(game).Select(x =>
+                                new MetadataObject(Settings)
+                                {
+                                    Id = x.Id,
+                                    Name = x.Name,
+                                    Type = type.Type
+                                }));
+                        }
                     }
-
-                    temporaryList.AddRange(ageRatings.Select(ageRating
-                        => new MetadataObject(Settings)
-                        {
-                            Id = ageRating.Id,
-                            Name = ageRating.Name,
-                            Type = FieldType.AgeRating
-                        }));
-
-                    temporaryList.AddRange(categories.Select(category
-                        => new MetadataObject(Settings)
-                        {
-                            Id = category.Id,
-                            Name = category.Name,
-                            Type = FieldType.Category
-                        }));
-
-                    temporaryList.AddRange(features.Select(feature
-                        => new MetadataObject(Settings)
-                        {
-                            Id = feature.Id,
-                            Name = feature.Name,
-                            Type = FieldType.Feature
-                        }));
-
-                    temporaryList.AddRange(genres.Select(genre
-                        => new MetadataObject(Settings)
-                        {
-                            Id = genre.Id,
-                            Name = genre.Name,
-                            Type = FieldType.Genre
-                        }));
-
-                    temporaryList.AddRange(seriesList.Select(series
-                        => new MetadataObject(Settings)
-                        {
-                            Id = series.Id,
-                            Name = series.Name,
-                            Type = FieldType.Series
-                        }));
-
-                    temporaryList.AddRange(tags.Select(tag
-                        => new MetadataObject(Settings)
-                        {
-                            Id = tag.Id,
-                            Name = tag.Name,
-                            Type = FieldType.Tag
-                        }));
 
                     UpdateGameCounts(temporaryList, Settings.IgnoreHiddenGamesInGameCount);
                 }

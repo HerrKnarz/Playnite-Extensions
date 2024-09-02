@@ -53,6 +53,22 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override List<DatabaseObject> LoadAllMetadata() => _libraries;
 
+        public override List<DatabaseObject> LoadGameMetadata(Game game)
+        {
+            DatabaseObject library = _libraries.FirstOrDefault(x => x.Id == game.PluginId);
+
+            return library == null
+                ? new List<DatabaseObject>()
+                : new List<DatabaseObject>
+                {
+                    new DatabaseObject()
+                    {
+                        Name = library.Name,
+                        Id = library.Id
+                    }
+                };
+        }
+
         public override List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) => _libraries.Where(x =>
             !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.PluginId == x.Id))).ToList();
 

@@ -1,9 +1,7 @@
 ﻿using KNARZhelper.DatabaseObjectTypes;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
 
 namespace KNARZhelper.Enum
 {

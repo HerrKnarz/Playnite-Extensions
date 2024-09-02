@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Controls.Primitives;
 using KNARZhelper.Enum;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -48,6 +49,9 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override List<DatabaseObject> LoadAllMetadata() => API.Instance.Database.CompletionStatuses
             .Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList();
+
+        public override List<DatabaseObject> LoadGameMetadata(Game game) =>
+            new List<DatabaseObject> { new DatabaseObject() { Name = game.CompletionStatus.Name, Id = game.CompletionStatus.Id } };
 
         public override List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) => API.Instance.Database
             .CompletionStatuses.Where(x => !API.Instance.Database.Games.Any(g =>
