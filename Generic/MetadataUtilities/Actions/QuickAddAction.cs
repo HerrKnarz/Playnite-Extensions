@@ -72,6 +72,7 @@ namespace MetadataUtilities.Actions
                     break;
 
                 case ActionModifierTypes.None:
+                case ActionModifierTypes.IsManual:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
             }

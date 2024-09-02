@@ -13,14 +13,22 @@ namespace MetadataUtilities.Actions
     {
         private static readonly object _mutex = new object();
         private static RemoveUnwantedAction _instance;
-        private readonly List<Guid> _ageRatingIds = new List<Guid>();
-        private readonly List<Guid> _categoryIds = new List<Guid>();
-        private readonly List<Guid> _featureIds = new List<Guid>();
-        private readonly List<Guid> _genreIds = new List<Guid>();
-        private readonly List<Guid> _seriesIds = new List<Guid>();
-        private readonly List<Guid> _tagIds = new List<Guid>();
 
-        private RemoveUnwantedAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
+        private readonly Dictionary<FieldType, ItemList> _types = new Dictionary<FieldType, ItemList>();
+
+        private RemoveUnwantedAction(MetadataUtilities plugin)
+        {
+            Settings = plugin.Settings.Settings;
+
+            foreach (FieldType type in FieldTypeHelper.ItemListFieldValues().Keys)
+            {
+                _types.Add(type, new ItemList
+                {
+                    ObjectType = type.GetTypeManager(),
+                    Items = new List<Guid>()
+                });
+            }
+        }
 
         public override string ProgressMessage => ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnwantedMessage");
 
@@ -53,12 +61,8 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool mustUpdate = new TypeAgeRating().RemoveObjectFromGame(game, _ageRatingIds);
-            mustUpdate |= new TypeCategory().RemoveObjectFromGame(game, _categoryIds);
-            mustUpdate |= new TypeFeature().RemoveObjectFromGame(game, _featureIds);
-            mustUpdate |= new TypeGenre().RemoveObjectFromGame(game, _genreIds);
-            mustUpdate |= new TypeSeries().RemoveObjectFromGame(game, _seriesIds);
-            mustUpdate |= new TypeTag().RemoveObjectFromGame(game, _tagIds);
+            bool mustUpdate = _types.Values.Aggregate(false, (current, type) =>
+                current | type.ObjectType.RemoveObjectFromGame(game, type.Items));
 
             if (mustUpdate)
             {
@@ -92,52 +96,9 @@ namespace MetadataUtilities.Actions
 
             foreach (MetadataObject metaDataItem in Settings.UnwantedItems)
             {
-                switch (metaDataItem.Type)
+                if (_types.TryGetValue(metaDataItem.Type, out ItemList type))
                 {
-                    case FieldType.AgeRating:
-                        _ageRatingIds.Add(metaDataItem.Id);
-                        break;
-
-                    case FieldType.Category:
-                        _categoryIds.Add(metaDataItem.Id);
-                        break;
-
-                    case FieldType.Feature:
-                        _featureIds.Add(metaDataItem.Id);
-                        break;
-
-                    case FieldType.Genre:
-                        _genreIds.Add(metaDataItem.Id);
-                        break;
-
-                    case FieldType.Series:
-                        _seriesIds.Add(metaDataItem.Id);
-                        break;
-
-                    case FieldType.Tag:
-                        _tagIds.Add(metaDataItem.Id);
-                        break;
-
-                    case FieldType.Background:
-                    case FieldType.CommunityScore:
-                    case FieldType.CompletionStatus:
-                    case FieldType.Cover:
-                    case FieldType.CriticScore:
-                    case FieldType.DateAdded:
-                    case FieldType.Description:
-                    case FieldType.Developer:
-                    case FieldType.Icon:
-                    case FieldType.LastPlayed:
-                    case FieldType.Library:
-                    case FieldType.Notes:
-                    case FieldType.Platform:
-                    case FieldType.Publisher:
-                    case FieldType.Region:
-                    case FieldType.ReleaseDate:
-                    case FieldType.Source:
-                    case FieldType.UserScore:
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    type.Items.Add(metaDataItem.Id);
                 }
             }
 
@@ -146,12 +107,10 @@ namespace MetadataUtilities.Actions
 
         private void ClearLists()
         {
-            _ageRatingIds.Clear();
-            _categoryIds.Clear();
-            _featureIds.Clear();
-            _genreIds.Clear();
-            _seriesIds.Clear();
-            _tagIds.Clear();
+            foreach (KeyValuePair<FieldType, ItemList> type in _types)
+            {
+                type.Value.Items.Clear();
+            }
         }
     }
 }
