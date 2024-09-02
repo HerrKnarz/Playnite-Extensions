@@ -12,7 +12,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using KNARZhelper.DatabaseObjectTypes;
-using System.Runtime.InteropServices;
 
 namespace MetadataUtilities.Models
 {
@@ -156,34 +155,20 @@ namespace MetadataUtilities.Models
             DateTime ts = DateTime.Now;
 
             List<MetadataObject> temporaryList = new List<MetadataObject>();
-            List<IDatabaseObjectType> types;
+
+            List<IDatabaseObjectType> types = new List<IDatabaseObjectType>();
 
             if (_typeManager != null)
             {
-                types = new List<IDatabaseObjectType> { _typeManager };
+                types.Add(_typeManager);
+            }
+            else if (onlyMergeAble)
+            {
+                types.AddRange(FieldTypeHelper.ItemListFieldValues().Keys.Select(x => x.GetTypeManager()));
             }
             else
             {
-                types = new List<IDatabaseObjectType>
-                {
-                    new TypeAgeRating(),
-                    new TypeCategory(),
-                    new TypeFeature(),
-                    new TypeGenre(),
-                    new TypeSeries(),
-                    new TypeTag()
-                };
-
-                if (!onlyMergeAble)
-                {
-                    types.Add(new TypeCompletionStatus());
-                    types.Add(new TypeDeveloper());
-                    types.Add(new TypeLibrary());
-                    types.Add(new TypePlatform());
-                    types.Add(new TypePublisher());
-                    types.Add(new TypeRegion());
-                    types.Add(new TypeSource());
-                }
+                types.AddRange(FieldTypeHelper.GetAllTypes());
             }
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
@@ -232,10 +217,25 @@ namespace MetadataUtilities.Models
             }
         }
 
-        private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames, IDatabaseObjectType typeManager = null, bool onlyMergeable = true)
+        private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames, IDatabaseObjectType typeManager = null, bool onlyMergeAble = true)
         {
             Log.Debug("=== UpdateGameCounts: Start ===");
             DateTime ts = DateTime.Now;
+
+            List<IDatabaseObjectType> types = new List<IDatabaseObjectType>();
+
+            if (typeManager != null)
+            {
+                types.Add(typeManager);
+            }
+            else if (onlyMergeAble)
+            {
+                types.AddRange(FieldTypeHelper.ItemListFieldValues().Keys.Select(x => x.GetTypeManager()));
+            }
+            else
+            {
+                types.AddRange(FieldTypeHelper.GetAllTypes());
+            }
 
             ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
 
@@ -250,25 +250,10 @@ namespace MetadataUtilities.Models
 
             Parallel.ForEach(API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden)), opts, game =>
             {
-                game.AgeRatingIds?.ForEach(o => items.Enqueue(o));
-                game.CategoryIds?.ForEach(o => items.Enqueue(o));
-                game.FeatureIds?.ForEach(o => items.Enqueue(o));
-                game.GenreIds?.ForEach(o => items.Enqueue(o));
-                game.SeriesIds?.ForEach(o => items.Enqueue(o));
-                game.TagIds?.ForEach(o => items.Enqueue(o));
-
-                if (onlyMergeable)
+                foreach (IDatabaseObjectType type in types)
                 {
-                    return;
+                    type.LoadGameMetadata(game).ForEach(o => items.Enqueue(o.Id));
                 }
-
-                items.Enqueue(game.CompletionStatusId);
-                items.Enqueue(game.PluginId);
-                game.DeveloperIds?.ForEach(o => items.Enqueue(o));
-                game.PlatformIds?.ForEach(o => items.Enqueue(o));
-                game.PublisherIds?.ForEach(o => items.Enqueue(o));
-                game.RegionIds?.ForEach(o => items.Enqueue(o));
-                items.Enqueue(game.SourceId);
             });
 
             List<IGrouping<Guid, Guid>> li = items.GroupBy(i => i).ToList();
