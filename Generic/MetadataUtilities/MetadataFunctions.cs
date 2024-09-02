@@ -32,16 +32,7 @@ namespace MetadataUtilities
         {
             List<MetadataObject> temporaryList = new List<MetadataObject>();
 
-            //TODO: Add other types, once it is configurable, what the user wants to remove
-            List<IDatabaseObjectType> types = new List<IDatabaseObjectType>
-            {
-                new TypeAgeRating(),
-                new TypeCategory(),
-                new TypeFeature(),
-                new TypeGenre(),
-                new TypeSeries(),
-                new TypeTag()
-            };
+            List<IDatabaseObjectType> types = FieldTypeHelper.ItemListFieldValues().Keys.Select(x => x.GetTypeManager()).ToList();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
