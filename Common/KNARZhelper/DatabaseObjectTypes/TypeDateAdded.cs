@@ -19,28 +19,12 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override FieldType Type => FieldType.DateAdded;
         public override ItemValueType ValueType => ItemValueType.Date;
 
-        public override bool DbObjectExists(string name) => false;
-
-        public override bool DbObjectInGame(Game game, Guid id) => false;
-
-        public override bool DbObjectInUse(Guid id) => false;
-
-        public override void EmptyFieldInGame(Game game)
-        {
-        }
-
         public override bool FieldInGameIsEmpty(Game game) => !game.Added.HasValue;
-
-        public override Guid GetDbObjectId(string name) => default;
-
-        public override int GetGameCount(Guid id, bool ignoreHidden = false) => 0;
 
         public override bool IsBiggerThan<T>(Game game, T value) =>
             (value != null || value is DateTime) && game.Added > (value as DateTime?);
 
         public override bool IsSmallerThan<T>(Game game, T value) =>
             (value != null || value is DateTime) && game.Added < (value as DateTime?);
-
-        public override bool NameExists(string name, Guid id) => false;
     }
 }

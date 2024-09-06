@@ -18,20 +18,8 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override FieldType Type => FieldType.Notes;
         public override ItemValueType ValueType => ItemValueType.String;
 
-        public override bool DbObjectExists(string name) => false;
-
-        public override bool DbObjectInGame(Game game, Guid id) => false;
-
-        public override bool DbObjectInUse(Guid id) => false;
-
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.Notes = default);
 
         public override bool FieldInGameIsEmpty(Game game) => !game.Notes.Trim().Any();
-
-        public override Guid GetDbObjectId(string name) => default;
-
-        public override int GetGameCount(Guid id, bool ignoreHidden = false) => 0;
-
-        public override bool NameExists(string name, Guid id) => false;
     }
 }

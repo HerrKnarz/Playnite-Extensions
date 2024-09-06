@@ -161,6 +161,7 @@
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\Condition.cs" />
     <Compile Include="Models\ConditionalAction.cs" />
+    <Compile Include="Models\FilterType.cs" />
     <Compile Include="Models\ItemList.cs" />
     <Compile Include="Models\MergeRule.cs" />
     <Compile Include="Models\MergeRules.cs" />

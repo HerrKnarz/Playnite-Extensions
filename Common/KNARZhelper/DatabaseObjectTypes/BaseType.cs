@@ -26,21 +26,24 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public bool AddDbObjectToGame(Game game, string name) => AddDbObjectToGame(game, AddDbObject(name));
 
-        public abstract bool DbObjectExists(string name);
+        public virtual bool DbObjectExists(string name) => false;
 
         public virtual bool DbObjectExists(Guid id) => false;
 
-        public abstract bool DbObjectInGame(Game game, Guid id);
+        public virtual bool DbObjectInGame(Game game, Guid id) => false;
 
-        public abstract bool DbObjectInUse(Guid id);
+        public virtual bool DbObjectInUse(Guid id) => false;
 
-        public abstract void EmptyFieldInGame(Game game);
+        public virtual void EmptyFieldInGame(Game game)
+        { }
 
         public abstract bool FieldInGameIsEmpty(Game game);
 
-        public abstract Guid GetDbObjectId(string name);
+        public virtual Guid GetDbObjectId(string name) => default;
 
-        public abstract int GetGameCount(Guid id, bool ignoreHidden = false);
+        public virtual int GetGameCount(Guid id, bool ignoreHidden = false) => 0;
+
+        public virtual List<Game> GetGames(Guid id, bool ignoreHidden = false) => new List<Game>();
 
         public virtual bool IsBiggerThan<T>(Game game, T value) => false;
 
@@ -52,7 +55,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public virtual List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) => new List<DatabaseObject>();
 
-        public abstract bool NameExists(string name, Guid id);
+        public virtual bool NameExists(string name, Guid id) => false;
 
         public virtual bool RemoveDbObject(Guid id, bool checkIfUsed = true) => false;
 

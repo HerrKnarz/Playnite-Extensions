@@ -32,15 +32,25 @@ namespace MetadataUtilities.ViewModels
         private string _filterPrefix = string.Empty;
         private bool _filterSeries = true;
         private bool _filterTags = true;
+
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
+
         private CollectionViewSource _gamesViewSource;
+
         private int _genreCount;
+
         private bool _groupMatches;
+
         private CollectionViewSource _metadataViewSource;
+
         private MetadataUtilities _plugin;
+
         private string _searchTerm = string.Empty;
+
         private List<MetadataObject> _selectedItems = new List<MetadataObject>();
+
         private int _seriesCount;
+
         private int _tagCount;
 
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
@@ -56,6 +66,9 @@ namespace MetadataUtilities.ViewModels
 
                 Prefixes.Add(string.Empty);
                 Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
+
+                //TODO: Via ItemsControl als Comboboxen einbinden. https://stackoverflow.com/questions/11095189/adding-controls-dynamically-in-wpf-mvvm
+                FilterTypes = plugin.Settings.Settings.FilterTypes;
 
                 CalculateItemCount();
 
@@ -427,6 +440,8 @@ namespace MetadataUtilities.ViewModels
                 MetadataViewSource.View.Filter = Filter;
             }
         }
+
+        public ObservableCollection<FilterType> FilterTypes { get; set; }
 
         public Visibility GameGridCompletionStatusVisibility => _plugin.Settings.Settings.GameGridShowCompletionStatus
             ? Visibility.Visible
@@ -812,15 +827,7 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                foreach (Game game in API.Instance.Database.Games.Where(g =>
-                    !(Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount && g.Hidden) && (
-                        (currentItem.Type == FieldType.AgeRating && (g.AgeRatingIds?.Contains(currentItem.Id) ?? false)) ||
-                        (currentItem.Type == FieldType.Category && (g.CategoryIds?.Contains(currentItem.Id) ?? false)) ||
-                        (currentItem.Type == FieldType.Feature && (g.FeatureIds?.Contains(currentItem.Id) ?? false)) ||
-                        (currentItem.Type == FieldType.Genre && (g.GenreIds?.Contains(currentItem.Id) ?? false)) ||
-                        (currentItem.Type == FieldType.Series && (g.SeriesIds?.Contains(currentItem.Id) ?? false)) ||
-                        (currentItem.Type == FieldType.Tag && (g.TagIds?.Contains(currentItem.Id) ?? false)))
-                ).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName).ToList())
+                foreach (Game game in currentItem.GetGames().OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName))
                 {
                     Games.Add(new MyGame
                     {

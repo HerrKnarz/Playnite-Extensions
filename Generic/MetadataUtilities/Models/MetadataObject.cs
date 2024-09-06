@@ -7,6 +7,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Playnite.SDK.Plugins;
 
 namespace MetadataUtilities.Models
 {
@@ -178,6 +179,8 @@ namespace MetadataUtilities.Models
         public bool ExistsInGame(Game game) => TypeManager.DbObjectInGame(game, Id);
 
         public void GetGameCount() => GameCount = TypeManager.GetGameCount(Id, _settings.IgnoreHiddenGamesInGameCount);
+
+        public List<Game> GetGames() => TypeManager.GetGames(Id, _settings.IgnoreHiddenGamesInGameCount);
 
         public string GetPrefix()
         {

@@ -1,5 +1,4 @@
 ﻿using Playnite.SDK;
-using System;
 using KNARZhelper.Enum;
 using Playnite.SDK.Models;
 
@@ -19,26 +18,14 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override FieldType Type => FieldType.CriticScore;
         public override ItemValueType ValueType => ItemValueType.Integer;
 
-        public override bool DbObjectExists(string name) => false;
-
-        public override bool DbObjectInGame(Game game, Guid id) => false;
-
-        public override bool DbObjectInUse(Guid id) => false;
-
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.CriticScore = default);
 
         public override bool FieldInGameIsEmpty(Game game) => !game.CriticScore.HasValue;
-
-        public override Guid GetDbObjectId(string name) => default;
-
-        public override int GetGameCount(Guid id, bool ignoreHidden = false) => 0;
 
         public override bool IsBiggerThan<T>(Game game, T value) =>
             (value != null || value is int) && game.CriticScore > (value as int?);
 
         public override bool IsSmallerThan<T>(Game game, T value) =>
             (value != null || value is int) && game.CriticScore < (value as int?);
-
-        public override bool NameExists(string name, Guid id) => false;
     }
 }

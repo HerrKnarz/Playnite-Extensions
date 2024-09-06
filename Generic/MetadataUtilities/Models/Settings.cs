@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Models
@@ -20,6 +21,7 @@ namespace MetadataUtilities.Models
         private bool _filterGenres = true;
         private bool _filterSeries = true;
         private bool _filterTags = true;
+        private ObservableCollection<FilterType> _filterTypes = new ObservableCollection<FilterType>();
         private bool _gameGridShowCompletionStatus = true;
         private bool _gameGridShowPlatform = true;
         private bool _gameGridShowReleaseYear = true;
@@ -130,6 +132,12 @@ namespace MetadataUtilities.Models
         {
             get => _filterTags;
             set => SetValue(ref _filterTags, value);
+        }
+
+        public ObservableCollection<FilterType> FilterTypes
+        {
+            get => _filterTypes;
+            set => SetValue(ref _filterTypes, value);
         }
 
         public bool GameGridShowCompletionStatus
@@ -296,6 +304,16 @@ namespace MetadataUtilities.Models
             foreach (MergeRule rule in MergeRules)
             {
                 rule.SourceObjects.Settings = this;
+            }
+
+            foreach (FieldType item in FieldTypeHelper.ItemListFieldValues().Keys
+                         .Where(item => _filterTypes.All(x => x.Type != item)))
+            {
+                _filterTypes.Add(new FilterType()
+                {
+                    Type = item,
+                    Selected = true,
+                });
             }
         }
     }

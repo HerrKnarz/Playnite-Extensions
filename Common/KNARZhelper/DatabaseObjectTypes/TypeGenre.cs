@@ -40,6 +40,9 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override int GetGameCount(Guid id, bool ignoreHidden = false) =>
             API.Instance.Database.Games.Count(g => !(ignoreHidden && g.Hidden) && (g.GenreIds?.Contains(id) ?? false));
 
+        public override List<Game> GetGames(Guid id, bool ignoreHidden = false) =>
+            API.Instance.Database.Games.Where(g => !(ignoreHidden && g.Hidden) && (g.GenreIds?.Contains(id) ?? false)).ToList();
+
         public override List<DatabaseObject> LoadAllMetadata() => API.Instance.Database.Genres
             .Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList();
 
