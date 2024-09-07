@@ -128,6 +128,8 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _completeMetadata, value);
         }
 
+        public Dictionary<FieldType, string> FieldValuePairs => FieldTypeHelper.ItemListFieldValues();
+
         public string FilterPrefix
         {
             get => _filterPrefix;
