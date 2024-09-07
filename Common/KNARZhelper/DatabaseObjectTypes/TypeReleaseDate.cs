@@ -19,6 +19,9 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override FieldType Type => FieldType.ReleaseDate;
         public override ItemValueType ValueType => ItemValueType.Date;
 
+        public override bool AddValueToGame<T>(Game game, T value) =>
+            API.Instance.MainView.UIDispatcher.Invoke(() => (game.ReleaseDate = new ReleaseDate((value as DateTime?) ?? default)) != null);
+
         public override void EmptyFieldInGame(Game game) =>
             API.Instance.MainView.UIDispatcher.Invoke(() => game.ReleaseDate = default);
 

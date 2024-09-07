@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
+using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Models
 {
@@ -22,6 +23,8 @@ namespace MetadataUtilities.Models
     public class Action : MetadataObject
     {
         private ActionType _actionType = ActionType.AddObject;
+        private DateTime _dateValue;
+        private int _intValue;
 
         public Action(Settings settings) : base(settings)
         {
@@ -41,16 +44,61 @@ namespace MetadataUtilities.Models
             }
         }
 
+        public DateTime DateValue
+        {
+            get => _dateValue;
+            set => SetValue(ref _dateValue, value);
+        }
+
+        public int IntValue
+        {
+            get => _intValue;
+            set => SetValue(ref _intValue, value);
+        }
+
         [DontSerialize]
-        public new string ToString => $"{ActionType.GetEnumDisplayName()} {TypeAndName}";
+        public new string ToString
+        {
+            get
+            {
+                switch (TypeManager.ValueType)
+                {
+                    case ItemValueType.Integer:
+                        return $"{ActionType.GetEnumDisplayName()} {TypeLabel} {IntValue}";
+
+                    case ItemValueType.Date:
+                        return $"{ActionType.GetEnumDisplayName()} {TypeLabel} {DateValue:yyyy-MM-dd}";
+
+                    case ItemValueType.ItemList:
+                    case ItemValueType.Media:
+                    case ItemValueType.None:
+                    case ItemValueType.String:
+                    default:
+                        return $"{ActionType.GetEnumDisplayName()} {TypeAndName}";
+                }
+            }
+        }
 
         public bool Execute(Game game)
         {
             switch (ActionType)
             {
                 case ActionType.AddObject:
-                    return AddToGame(game);
+                    switch (TypeManager.ValueType)
+                    {
+                        case ItemValueType.Integer:
+                            return TypeManager.AddValueToGame(game, IntValue);
 
+                        case ItemValueType.Date:
+                            return TypeManager.AddValueToGame(game, DateValue);
+
+                        case ItemValueType.ItemList:
+                        case ItemValueType.Media:
+                        case ItemValueType.None:
+                        case ItemValueType.String:
+                        default:
+                            return AddToGame(game);
+                    }
                 case ActionType.RemoveObject:
                     return RemoveFromGame(game);
 

@@ -1,5 +1,4 @@
 ﻿using Playnite.SDK;
-using System;
 using KNARZhelper.Enum;
 using Playnite.SDK.Models;
 
@@ -18,6 +17,9 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override string LabelSingular => ResourceProvider.GetString("LOCUserScore");
         public override FieldType Type => FieldType.UserScore;
         public override ItemValueType ValueType => ItemValueType.Integer;
+
+        public override bool AddValueToGame<T>(Game game, T value) =>
+            API.Instance.MainView.UIDispatcher.Invoke(() => (game.UserScore = (value as int?) ?? default) != null);
 
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.UserScore = default);
 

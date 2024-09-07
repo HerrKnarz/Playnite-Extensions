@@ -27,6 +27,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public bool AddDbObjectToGame(Game game, string name) => AddDbObjectToGame(game, AddDbObject(name));
 
+        public virtual bool AddValueToGame<T>(Game game, T value) => false;
+
         public virtual bool DbObjectExists(string name) => false;
 
         public virtual bool DbObjectExists(Guid id) => false;

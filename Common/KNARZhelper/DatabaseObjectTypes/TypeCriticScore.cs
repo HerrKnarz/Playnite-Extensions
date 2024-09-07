@@ -18,6 +18,9 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override FieldType Type => FieldType.CriticScore;
         public override ItemValueType ValueType => ItemValueType.Integer;
 
+        public override bool AddValueToGame<T>(Game game, T value) =>
+            API.Instance.MainView.UIDispatcher.Invoke(() => (game.CriticScore = (value as int?) ?? default) != null);
+
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.CriticScore = default);
 
         public override bool FieldInGameIsEmpty(Game game) => !game.CriticScore.HasValue;

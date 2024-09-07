@@ -28,7 +28,7 @@ namespace MetadataUtilities.ViewModels
             //TODO: remove checks on Value Type once the contains buttons support adding other values that items!
 
             ContextMenuActionsAdd.AddMissing(_fieldTypes
-                .Where(x => x.CanBeSetInGame && x.ValueType == ItemValueType.ItemList)
+                .Where(x => x.CanBeSetInGame && (x.ValueType == ItemValueType.ItemList || x.ValueType == ItemValueType.Date || x.ValueType == ItemValueType.Integer))
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -269,26 +269,84 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
-
-            if (items.Count == 0)
+            switch (fieldType.GetTypeManager().ValueType)
             {
-                return;
+                case ItemValueType.ItemList:
+                    List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
+
+                    if (items.Count == 0)
+                    {
+                        return;
+                    }
+
+                    foreach (MetadataObject item in items.Where(item =>
+                                 ConditionalAction.Actions.All(x =>
+                                     x.TypeAndName != item.TypeAndName || x.ActionType != actionType)))
+                    {
+                        ConditionalAction.Actions.Add(new Action(_settings)
+                        {
+                            Name = item.Name,
+                            Type = item.Type,
+                            ActionType = actionType
+                        });
+                    }
+
+                    break;
+
+                case ItemValueType.Integer:
+                    int intValue = 0;
+
+                    if (!SelectIntViewModel.ShowDialog(ref intValue))
+                    {
+                        return;
+                    }
+
+                    if (!ConditionalAction.Actions.Any(
+                            x => x.ActionType == actionType &&
+                                 x.Type == fieldType && x.IntValue == intValue))
+                    {
+                        ConditionalAction.Actions.Add(new Action(_settings)
+                        {
+                            Name = string.Empty,
+                            IntValue = intValue,
+                            Type = fieldType,
+                            ActionType = actionType
+                        });
+                    }
+
+                    break;
+
+                case ItemValueType.Date:
+                    DateTime dateValue = DateTime.Today;
+
+                    if (!SelectDateViewModel.ShowDialog(ref dateValue))
+                    {
+                        return;
+                    }
+
+                    if (!ConditionalAction.Actions.Any(
+                            x => x.ActionType == actionType &&
+                                 x.Type == fieldType && x.DateValue == dateValue))
+                    {
+                        ConditionalAction.Actions.Add(new Action(_settings)
+                        {
+                            Name = string.Empty,
+                            DateValue = dateValue,
+                            Type = fieldType,
+                            ActionType = actionType
+                        });
+                    }
+
+                    break;
+
+                case ItemValueType.Media:
+                case ItemValueType.None:
+                case ItemValueType.String:
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
-            foreach (MetadataObject item in items.Where(item =>
-                         ConditionalAction.Actions.All(x =>
-                             x.TypeAndName != item.TypeAndName || x.ActionType != actionType)))
-            {
-                ConditionalAction.Actions.Add(new Action(_settings)
-                {
-                    Name = item.Name,
-                    Type = item.Type,
-                    ActionType = actionType
-                });
-            }
-
-            ConditionalAction.Conditions = ConditionalAction.Conditions.OrderBy(x => x.ToString).ToObservable();
+            ConditionalAction.Actions = ConditionalAction.Actions.OrderBy(x => x.ToString).ToObservable();
         }
 
         public void AddConditions(FieldType fieldType, ComparatorType comparatorType)
