@@ -17,9 +17,12 @@ namespace KNARZhelper.Enum
         DateAdded = 20,
         Description = 21,
         Developer = 6,
+        Favorite = 24,
         Feature = 1,
         Genre = 2,
+        Hidden = 25,
         Icon = 14,
+        IsInstalled = 26,
         LastPlayed = 23,
         Library = 11,
         Notes = 22,
@@ -48,9 +51,12 @@ namespace KNARZhelper.Enum
                         new TypeDateAdded(),
                         new TypeDescription(),
                         new TypeDeveloper(),
+                        new TypeFavorite(),
                         new TypeFeature(),
                         new TypeGenre(),
+                        new TypeHidden(),
                         new TypeIcon(),
+                        new TypeIsInstalled(),
                         new TypeLastPlayed(),
                         new TypeLibrary(),
                         new TypeNotes(),
@@ -98,14 +104,23 @@ namespace KNARZhelper.Enum
                 case FieldType.Developer:
                     return new TypeDeveloper();
 
+                case FieldType.Favorite:
+                    return new TypeFavorite();
+
                 case FieldType.Feature:
                     return new TypeFeature();
 
                 case FieldType.Genre:
                     return new TypeGenre();
 
+                case FieldType.Hidden:
+                    return new TypeHidden();
+
                 case FieldType.Icon:
                     return new TypeIcon();
+
+                case FieldType.IsInstalled:
+                    return new TypeIsInstalled();
 
                 case FieldType.LastPlayed:
                     return new TypeLastPlayed();

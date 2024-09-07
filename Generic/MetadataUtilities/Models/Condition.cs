@@ -59,6 +59,9 @@ namespace MetadataUtilities.Models
             {
                 switch (TypeManager.ValueType)
                 {
+                    case ItemValueType.Boolean:
+                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()}";
+
                     case ItemValueType.Integer:
                         return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {IntValue}";
 

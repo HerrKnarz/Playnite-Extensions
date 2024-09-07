@@ -63,6 +63,9 @@ namespace MetadataUtilities.Models
             {
                 switch (TypeManager.ValueType)
                 {
+                    case ItemValueType.Boolean:
+                        return $"{ActionType.GetEnumDisplayName()} {TypeLabel}";
+
                     case ItemValueType.Integer:
                         return $"{ActionType.GetEnumDisplayName()} {TypeLabel} {IntValue}";
 
@@ -92,6 +95,7 @@ namespace MetadataUtilities.Models
                         case ItemValueType.Date:
                             return TypeManager.AddValueToGame(game, DateValue);
 
+                        case ItemValueType.Boolean:
                         case ItemValueType.ItemList:
                         case ItemValueType.Media:
                         case ItemValueType.None:

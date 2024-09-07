@@ -9,7 +9,12 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeRegion : BaseType
     {
+        public override bool CanBeAdded => false;
+        public override bool CanBeClearedInGame => true;
+        public override bool CanBeDeleted => false;
+        public override bool CanBeEmptyInGame => true;
         public override bool CanBeModified => false;
+        public override bool CanBeSetInGame => true;
         public override int Count => API.Instance.Database.Regions?.Count ?? 0;
         public override bool IsList => true;
         public override string LabelPlural => ResourceProvider.GetString("LOCRegionsLabel");
@@ -19,10 +24,10 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override Guid AddDbObject(string name) => API.Instance.Database.Regions.Add(name).Id;
 
         public override bool AddDbObjectToGame(Game game, List<Guid> idList) => API.Instance.MainView.UIDispatcher.Invoke(() =>
-            game.RegionIds ?? (game.RegionIds = new List<Guid>())).AddMissing(idList);
+            (game.RegionIds ?? (game.RegionIds = new List<Guid>())).AddMissing(idList));
 
         public override bool AddDbObjectToGame(Game game, Guid id) => API.Instance.MainView.UIDispatcher.Invoke(() =>
-            game.RegionIds ?? (game.RegionIds = new List<Guid>())).AddMissing(id);
+            (game.RegionIds ?? (game.RegionIds = new List<Guid>())).AddMissing(id));
 
         public override bool DbObjectExists(string name) => API.Instance.Database.Regions?.Any(x => x.Name == name) ?? false;
 

@@ -10,6 +10,7 @@ namespace KNARZhelper.DatabaseObjectTypes
     internal class TypeReleaseDate : BaseType
     {
         public override bool CanBeAdded => false;
+        public override bool CanBeClearedInGame => true;
         public override bool CanBeDeleted => false;
         public override bool CanBeEmptyInGame => true;
         public override bool CanBeModified => false;

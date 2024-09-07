@@ -7,11 +7,12 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public abstract class BaseType : IDatabaseObjectType
     {
-        public virtual bool CanBeAdded => true;
-        public virtual bool CanBeDeleted => true;
-        public virtual bool CanBeEmptyInGame => true;
-        public virtual bool CanBeModified => true;
-        public virtual bool CanBeSetInGame => true;
+        public abstract bool CanBeAdded { get; }
+        public abstract bool CanBeClearedInGame { get; }
+        public abstract bool CanBeDeleted { get; }
+        public abstract bool CanBeEmptyInGame { get; }
+        public abstract bool CanBeModified { get; }
+        public abstract bool CanBeSetInGame { get; }
         public virtual int Count => 1;
         public abstract bool IsList { get; }
         public virtual string LabelPlural => LabelSingular;

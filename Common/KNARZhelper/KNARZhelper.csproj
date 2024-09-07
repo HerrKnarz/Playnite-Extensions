@@ -57,7 +57,10 @@
     <Compile Include="DatabaseObjectTypes\TypeDateAdded.cs" />
     <Compile Include="DatabaseObjectTypes\TypeDescription.cs" />
     <Compile Include="DatabaseObjectTypes\TypeDeveloper.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeFavorite.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeHidden.cs" />
     <Compile Include="DatabaseObjectTypes\TypeIcon.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeIsInstalled.cs" />
     <Compile Include="DatabaseObjectTypes\TypeLastPlayed.cs" />
     <Compile Include="DatabaseObjectTypes\TypeLibrary.cs" />
     <Compile Include="DatabaseObjectTypes\TypeNotes.cs" />

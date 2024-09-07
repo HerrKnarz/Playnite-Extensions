@@ -9,7 +9,12 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypePlatform : BaseType
     {
+        public override bool CanBeAdded => false;
+        public override bool CanBeClearedInGame => true;
+        public override bool CanBeDeleted => false;
+        public override bool CanBeEmptyInGame => true;
         public override bool CanBeModified => false;
+        public override bool CanBeSetInGame => true;
         public override int Count => API.Instance.Database.Platforms?.Count ?? 0;
         public override bool IsList => true;
         public override string LabelPlural => ResourceProvider.GetString("LOCPlatformsTitle");
@@ -19,10 +24,10 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override Guid AddDbObject(string name) => API.Instance.Database.Platforms.Add(name).Id;
 
         public override bool AddDbObjectToGame(Game game, List<Guid> idList) => API.Instance.MainView.UIDispatcher.Invoke(() =>
-            game.PlatformIds ?? (game.PlatformIds = new List<Guid>())).AddMissing(idList);
+            (game.PlatformIds ?? (game.PlatformIds = new List<Guid>())).AddMissing(idList));
 
         public override bool AddDbObjectToGame(Game game, Guid id) => API.Instance.MainView.UIDispatcher.Invoke(() =>
-            game.PlatformIds ?? (game.PlatformIds = new List<Guid>())).AddMissing(id);
+            (game.PlatformIds ?? (game.PlatformIds = new List<Guid>())).AddMissing(id));
 
         public override bool DbObjectExists(string name) => API.Instance.Database.Platforms?.Any(x => x.Name == name) ?? false;
 

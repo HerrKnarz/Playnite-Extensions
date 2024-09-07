@@ -9,6 +9,12 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeSeries : BaseType
     {
+        public override bool CanBeAdded => true;
+        public override bool CanBeClearedInGame => true;
+        public override bool CanBeDeleted => true;
+        public override bool CanBeEmptyInGame => true;
+        public override bool CanBeModified => true;
+        public override bool CanBeSetInGame => true;
         public override int Count => API.Instance.Database.Series?.Count ?? 0;
         public override bool IsList => true;
         public override string LabelSingular => ResourceProvider.GetString("LOCSeriesLabel");
@@ -17,10 +23,10 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override Guid AddDbObject(string name) => API.Instance.Database.Series.Add(name).Id;
 
         public override bool AddDbObjectToGame(Game game, List<Guid> idList) => API.Instance.MainView.UIDispatcher.Invoke(() =>
-            game.SeriesIds ?? (game.SeriesIds = new List<Guid>())).AddMissing(idList);
+            (game.SeriesIds ?? (game.SeriesIds = new List<Guid>())).AddMissing(idList));
 
         public override bool AddDbObjectToGame(Game game, Guid id) => API.Instance.MainView.UIDispatcher.Invoke(() =>
-            game.SeriesIds ?? (game.SeriesIds = new List<Guid>())).AddMissing(id);
+            (game.SeriesIds ?? (game.SeriesIds = new List<Guid>())).AddMissing(id));
 
         public override bool DbObjectExists(string name) => API.Instance.Database.Series?.Any(x => x.Name == name) ?? false;
 

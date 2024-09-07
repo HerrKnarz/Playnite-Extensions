@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using KNARZhelper.Enum;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -9,6 +8,7 @@ namespace KNARZhelper.DatabaseObjectTypes
     public class TypeBackground : BaseType
     {
         public override bool CanBeAdded => false;
+        public override bool CanBeClearedInGame => false;
         public override bool CanBeDeleted => false;
         public override bool CanBeEmptyInGame => true;
         public override bool CanBeModified => false;

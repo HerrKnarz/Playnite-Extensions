@@ -91,14 +91,23 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeDeveloper.cs">
       <Link>Shared\TypeDeveloper.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeFavorite.cs">
+      <Link>Shared\TypeFavorite.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeFeature.cs">
       <Link>Shared\TypeFeature.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeGenre.cs">
       <Link>Shared\TypeGenre.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeHidden.cs">
+      <Link>Shared\TypeHidden.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeIcon.cs">
       <Link>Shared\TypeIcon.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeIsInstalled.cs">
+      <Link>Shared\TypeIsInstalled.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeLastPlayed.cs">
       <Link>Shared\TypeLastPlayed.cs</Link>

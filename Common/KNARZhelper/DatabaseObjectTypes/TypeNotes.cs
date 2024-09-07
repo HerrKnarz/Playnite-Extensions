@@ -9,10 +9,11 @@ namespace KNARZhelper.DatabaseObjectTypes
     internal class TypeNotes : BaseType
     {
         public override bool CanBeAdded => false;
+        public override bool CanBeClearedInGame => true;
         public override bool CanBeDeleted => false;
         public override bool CanBeEmptyInGame => true;
         public override bool CanBeModified => false;
-        public override bool CanBeSetInGame => true;
+        public override bool CanBeSetInGame => false;
         public override bool IsList => false;
         public override string LabelSingular => ResourceProvider.GetString("LOCNotesLabel");
         public override FieldType Type => FieldType.Notes;

@@ -22,6 +22,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         }
 
         public override bool CanBeAdded => false;
+        public override bool CanBeClearedInGame => false;
         public override bool CanBeDeleted => false;
         public override bool CanBeEmptyInGame => false;
         public override bool CanBeModified => false;

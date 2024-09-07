@@ -8,6 +8,7 @@ namespace KNARZhelper.DatabaseObjectTypes
     public interface IDatabaseObjectType
     {
         bool CanBeAdded { get; }
+        bool CanBeClearedInGame { get; }
         bool CanBeDeleted { get; }
         bool CanBeEmptyInGame { get; }
         bool CanBeModified { get; }

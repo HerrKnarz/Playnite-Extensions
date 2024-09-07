@@ -25,10 +25,8 @@ namespace MetadataUtilities.ViewModels
             _settings = settings;
             _conditionalAction = conditionalAction;
 
-            //TODO: remove checks on Value Type once the contains buttons support adding other values that items!
-
             ContextMenuActionsAdd.AddMissing(_fieldTypes
-                .Where(x => x.CanBeSetInGame && (x.ValueType == ItemValueType.ItemList || x.ValueType == ItemValueType.Date || x.ValueType == ItemValueType.Integer))
+                .Where(x => x.CanBeSetInGame)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -39,7 +37,7 @@ namespace MetadataUtilities.ViewModels
                 ));
 
             ContextMenuActionsRemove.AddMissing(_fieldTypes
-                .Where(x => x.CanBeSetInGame && x.CanBeEmptyInGame && x.ValueType == ItemValueType.ItemList)
+                .Where(x => x.CanBeSetInGame && x.CanBeClearedInGame && x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -49,7 +47,7 @@ namespace MetadataUtilities.ViewModels
                     }
                 ));
 
-            ContextMenuActionsClear.AddMissing(_fieldTypes.Where(x => x.CanBeSetInGame && x.CanBeEmptyInGame)
+            ContextMenuActionsClear.AddMissing(_fieldTypes.Where(x => x.CanBeClearedInGame)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -287,6 +285,21 @@ namespace MetadataUtilities.ViewModels
                         {
                             Name = item.Name,
                             Type = item.Type,
+                            ActionType = actionType
+                        });
+                    }
+
+                    break;
+
+                case ItemValueType.Boolean:
+                    if (!ConditionalAction.Actions.Any(
+                            x => x.ActionType == actionType &&
+                                 x.Type == fieldType))
+                    {
+                        ConditionalAction.Actions.Add(new Action(_settings)
+                        {
+                            Name = string.Empty,
+                            Type = fieldType,
                             ActionType = actionType
                         });
                     }

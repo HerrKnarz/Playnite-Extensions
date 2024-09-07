@@ -13,6 +13,7 @@ namespace KNARZhelper.Enum
         Integer,
         String,
         Date,
-        Media
+        Media,
+        Boolean
     }
 }

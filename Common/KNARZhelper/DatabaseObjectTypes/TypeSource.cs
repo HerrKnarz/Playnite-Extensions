@@ -9,6 +9,12 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeSource : BaseType
     {
+        public override bool CanBeAdded => true;
+        public override bool CanBeClearedInGame => true;
+        public override bool CanBeDeleted => true;
+        public override bool CanBeEmptyInGame => true;
+        public override bool CanBeModified => true;
+        public override bool CanBeSetInGame => true;
         public override int Count => API.Instance.Database.Sources?.Count ?? 0;
         public override bool IsList => false;
         public override string LabelPlural => ResourceProvider.GetString("LOCSourcesLabel");

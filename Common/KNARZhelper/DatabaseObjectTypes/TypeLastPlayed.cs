@@ -10,6 +10,7 @@ namespace KNARZhelper.DatabaseObjectTypes
     public class TypeLastPlayed : BaseType
     {
         public override bool CanBeAdded => false;
+        public override bool CanBeClearedInGame => false;
         public override bool CanBeDeleted => false;
         public override bool CanBeEmptyInGame => true;
         public override bool CanBeModified => false;
