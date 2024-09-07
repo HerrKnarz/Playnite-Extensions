@@ -9,7 +9,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeCategory : BaseType
     {
-        public override int Count => API.Instance.Database.Categories.Count;
+        public override int Count => API.Instance.Database.Categories?.Count ?? 0;
         public override bool IsList => true;
         public override string LabelPlural => ResourceProvider.GetString("LOCCategoriesLabel");
         public override string LabelSingular => ResourceProvider.GetString("LOCCategoryLabel");

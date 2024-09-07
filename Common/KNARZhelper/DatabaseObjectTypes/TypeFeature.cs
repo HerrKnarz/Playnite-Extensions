@@ -9,7 +9,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeFeature : BaseType
     {
-        public override int Count => API.Instance.Database.Features.Count;
+        public override int Count => API.Instance.Database.Features?.Count ?? 0;
         public override bool IsList => true;
         public override string LabelPlural => ResourceProvider.GetString("LOCFeaturesLabel");
         public override string LabelSingular => ResourceProvider.GetString("LOCFeatureLabel");

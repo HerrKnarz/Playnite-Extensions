@@ -9,7 +9,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeSource : BaseType
     {
-        public override int Count => API.Instance.Database.Sources.Count;
+        public override int Count => API.Instance.Database.Sources?.Count ?? 0;
         public override bool IsList => false;
         public override string LabelPlural => ResourceProvider.GetString("LOCSourcesLabel");
         public override string LabelSingular => ResourceProvider.GetString("LOCSourceLabel");

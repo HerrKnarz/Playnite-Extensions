@@ -10,7 +10,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeCompletionStatus : BaseType
     {
-        public override int Count => API.Instance.Database.CompletionStatuses.Count;
+        public override int Count => API.Instance.Database.CompletionStatuses?.Count ?? 0;
         public override bool IsList => false;
         public override string LabelPlural => ResourceProvider.GetString("LOCCompletionStatuses");
         public override string LabelSingular => ResourceProvider.GetString("LOCCompletionStatus");

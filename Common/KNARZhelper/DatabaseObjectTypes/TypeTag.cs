@@ -9,7 +9,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeTag : BaseType
     {
-        public override int Count => API.Instance.Database.Tags.Count;
+        public override int Count => API.Instance.Database.Tags?.Count ?? 0;
         public override bool IsList => true;
         public override string LabelPlural => ResourceProvider.GetString("LOCTagsLabel");
         public override string LabelSingular => ResourceProvider.GetString("LOCTagLabel");

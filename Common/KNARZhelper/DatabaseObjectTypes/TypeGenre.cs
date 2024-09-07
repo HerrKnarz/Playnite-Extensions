@@ -9,7 +9,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeGenre : BaseType
     {
-        public override int Count => API.Instance.Database.Genres.Count;
+        public override int Count => API.Instance.Database.Genres?.Count ?? 0;
         public override bool IsList => true;
         public override string LabelPlural => ResourceProvider.GetString("LOCGenresLabel");
         public override string LabelSingular => ResourceProvider.GetString("LOCGenreLabel");

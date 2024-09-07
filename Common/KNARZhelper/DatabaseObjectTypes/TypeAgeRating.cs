@@ -9,7 +9,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeAgeRating : BaseType
     {
-        public override int Count => API.Instance.Database.AgeRatings.Count;
+        public override int Count => API.Instance.Database.AgeRatings?.Count ?? 0;
 
         public override bool IsList => true;
 
