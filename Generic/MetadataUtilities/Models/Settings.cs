@@ -15,12 +15,6 @@ namespace MetadataUtilities.Models
         private MetadataObjects _defaultTags;
         private int _editorWindowHeight = 600;
         private int _editorWindowWidth = 1200;
-        private bool _filterAgeRatings = true;
-        private bool _filterCategories = true;
-        private bool _filterFeatures = true;
-        private bool _filterGenres = true;
-        private bool _filterSeries = true;
-        private bool _filterTags = true;
         private ObservableCollection<FilterType> _filterTypes = new ObservableCollection<FilterType>();
         private bool _gameGridShowCompletionStatus = true;
         private bool _gameGridShowPlatform = true;
@@ -43,7 +37,7 @@ namespace MetadataUtilities.Models
         private bool _renameMergeRules = true;
         private bool _setDefaultTagsOnlyIfEmpty = true;
         private bool _showTopPanelButton = true;
-        private bool _showTopPanelSettingsButton = false;
+        private bool _showTopPanelSettingsButton;
         private MetadataObjects _unusedItemsWhiteList;
         private MetadataObjects _unwantedItems;
         private bool _writeDebugLog;
@@ -96,42 +90,6 @@ namespace MetadataUtilities.Models
         {
             get => _editorWindowWidth;
             set => SetValue(ref _editorWindowWidth, value);
-        }
-
-        public bool FilterAgeRatings
-        {
-            get => _filterAgeRatings;
-            set => SetValue(ref _filterAgeRatings, value);
-        }
-
-        public bool FilterCategories
-        {
-            get => _filterCategories;
-            set => SetValue(ref _filterCategories, value);
-        }
-
-        public bool FilterFeatures
-        {
-            get => _filterFeatures;
-            set => SetValue(ref _filterFeatures, value);
-        }
-
-        public bool FilterGenres
-        {
-            get => _filterGenres;
-            set => SetValue(ref _filterGenres, value);
-        }
-
-        public bool FilterSeries
-        {
-            get => _filterSeries;
-            set => SetValue(ref _filterSeries, value);
-        }
-
-        public bool FilterTags
-        {
-            get => _filterTags;
-            set => SetValue(ref _filterTags, value);
         }
 
         public ObservableCollection<FilterType> FilterTypes

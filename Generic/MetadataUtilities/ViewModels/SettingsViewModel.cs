@@ -20,6 +20,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class SettingsViewModel : ObservableObject, ISettings
     {
+        private readonly Dictionary<FieldType, string> _fieldTypes = FieldTypeHelper.ItemListFieldValues();
         private readonly MetadataUtilities _plugin;
         private MergeRules _mergeRules;
         private CollectionViewSource _mergeRuleViewSource;
@@ -38,6 +39,15 @@ namespace MetadataUtilities.ViewModels
             Settings = savedSettings ?? new Settings();
 
             Settings.ResetReferences();
+
+            FieldTypeButtons.AddMissing(_fieldTypes
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.Value,
+                        FieldType = x.Key
+                    }
+                ));
 
             MergeRuleViewSource = new CollectionViewSource();
 
@@ -142,59 +152,14 @@ namespace MetadataUtilities.ViewModels
                 Settings.Prefixes = new ObservableCollection<string>(Settings.Prefixes.OrderBy(x => x));
             });
 
-        public RelayCommand AddQuickAddAgeRatingsCommand
-            => new RelayCommand(() => AddQuickAddItems(FieldType.AgeRating));
+        public RelayCommand<FieldType> AddQuickAddCommand
+            => new RelayCommand<FieldType>(AddQuickAddItems);
 
-        public RelayCommand AddQuickAddCategoriesCommand
-            => new RelayCommand(() => AddQuickAddItems(FieldType.Category));
+        public RelayCommand<FieldType> AddUnusedCommand
+            => new RelayCommand<FieldType>(type => Settings.UnusedItemsWhiteList.AddItems(type));
 
-        public RelayCommand AddQuickAddFeaturesCommand
-            => new RelayCommand(() => AddQuickAddItems(FieldType.Feature));
-
-        public RelayCommand AddQuickAddGenresCommand
-            => new RelayCommand(() => AddQuickAddItems(FieldType.Genre));
-
-        public RelayCommand AddQuickAddSeriesCommand
-            => new RelayCommand(() => AddQuickAddItems(FieldType.Series));
-
-        public RelayCommand AddQuickAddTagsCommand
-            => new RelayCommand(() => AddQuickAddItems(FieldType.Tag));
-
-        public RelayCommand AddUnusedAgeRatingsCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.AgeRating));
-
-        public RelayCommand AddUnusedCategoriesCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Category));
-
-        public RelayCommand AddUnusedFeaturesCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Feature));
-
-        public RelayCommand AddUnusedGenresCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Genre));
-
-        public RelayCommand AddUnusedSeriesCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Series));
-
-        public RelayCommand AddUnusedTagsCommand
-            => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddItems(FieldType.Tag));
-
-        public RelayCommand AddUnwantedAgeRatingsCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.AgeRating));
-
-        public RelayCommand AddUnwantedCategoriesCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Category));
-
-        public RelayCommand AddUnwantedFeaturesCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Feature));
-
-        public RelayCommand AddUnwantedGenresCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Genre));
-
-        public RelayCommand AddUnwantedSeriesCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Series));
-
-        public RelayCommand AddUnwantedTagsCommand
-            => new RelayCommand(() => Settings.UnwantedItems.AddItems(FieldType.Tag));
+        public RelayCommand<FieldType> AddUnwantedCommand
+            => new RelayCommand<FieldType>(type => Settings.UnwantedItems.AddItems(type));
 
         public RelayCommand<object> EditConActionCommand => new RelayCommand<object>(conAction =>
         {
@@ -252,6 +217,9 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<object> EditMergeRuleCommand
             => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
+
+        public ObservableCollection<FieldTypeContextAction> FieldTypeButtons { get; set; } =
+                                                                                                                                                                                                                                                                            new ObservableCollection<FieldTypeContextAction>();
 
         public RelayCommand HelpMergingCommand
             => new RelayCommand(()

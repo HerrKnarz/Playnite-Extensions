@@ -278,19 +278,16 @@
                         </ListBox>
                         <StackPanel Grid.Column="1" Margin="10,0,0,0">
                             <Button Content="{DynamicResource LOCAddNewItem}"
-                                    Command="{Binding AddNewUnusedCommand}" />
-                            <Button Content="{DynamicResource LOCAgeRatingsLabel}" Margin="0,20,0,0"
-                                    Command="{Binding AddUnusedAgeRatingsCommand}" />
-                            <Button Content="{DynamicResource LOCCategoriesLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddUnusedCategoriesCommand}" />
-                            <Button Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddUnusedFeaturesCommand}" />
-                            <Button Content="{DynamicResource LOCGenresLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddUnusedGenresCommand}" />
-                            <Button Content="{DynamicResource LOCSeriesLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddUnusedSeriesCommand}" />
-                            <Button Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddUnusedTagsCommand}" />
+                                    Command="{Binding AddNewUnusedCommand}" Margin="0,0,0,10" />
+                            <ItemsControl ItemsSource="{Binding FieldTypeButtons}">
+                                <ItemsControl.Resources>
+                                    <DataTemplate DataType="{x:Type viewModels:FieldTypeContextAction}">
+                                        <Button Content="{Binding Name}" Margin="0,10,0,0"
+                                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.AddUnusedCommand}"
+                                                CommandParameter="{Binding FieldType}" />
+                                    </DataTemplate>
+                                </ItemsControl.Resources>
+                            </ItemsControl>
                             <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,20,0,0"
                                 Command="{Binding RemoveUnusedFromListCommand}"
                                 CommandParameter="{Binding SelectedItems, ElementName=LbUnusedWhiteList}" />
@@ -323,19 +320,16 @@
                     </ListBox>
                     <StackPanel Grid.Column="1" Margin="10,0,0,0">
                         <Button Content="{DynamicResource LOCAddNewItem}"
-                                Command="{Binding AddNewUnwantedCommand}" />
-                        <Button Content="{DynamicResource LOCAgeRatingsLabel}" Margin="0,20,0,0"
-                                Command="{Binding AddUnwantedAgeRatingsCommand}" />
-                        <Button Content="{DynamicResource LOCCategoriesLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddUnwantedCategoriesCommand}" />
-                        <Button Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddUnwantedFeaturesCommand}" />
-                        <Button Content="{DynamicResource LOCGenresLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddUnwantedGenresCommand}" />
-                        <Button Content="{DynamicResource LOCSeriesLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddUnwantedSeriesCommand}" />
-                        <Button Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddUnwantedTagsCommand}" />
+                                Command="{Binding AddNewUnwantedCommand}" Margin="0,0,0,10" />
+                        <ItemsControl ItemsSource="{Binding FieldTypeButtons}">
+                            <ItemsControl.Resources>
+                                <DataTemplate DataType="{x:Type viewModels:FieldTypeContextAction}">
+                                    <Button Content="{Binding Name}" Margin="0,10,0,0"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.AddUnwantedCommand}"
+                                            CommandParameter="{Binding FieldType}" />
+                                </DataTemplate>
+                            </ItemsControl.Resources>
+                        </ItemsControl>
                         <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,20,0,0"
                                 Command="{Binding RemoveUnwantedFromListCommand}"
                                 CommandParameter="{Binding SelectedItems, ElementName=LbItemsToRemove}" />
@@ -427,19 +421,16 @@
                         </ListView.View>
                     </ListView>
                     <StackPanel Grid.Column="1" Margin="10,10,0,0">
-                        <Button Content="{DynamicResource LOCAgeRatingsLabel}" Margin="0,0,0,0"
-                                Command="{Binding AddQuickAddAgeRatingsCommand}" />
-                        <Button Content="{DynamicResource LOCCategoriesLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddQuickAddCategoriesCommand}" />
-                        <Button Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddQuickAddFeaturesCommand}" />
-                        <Button Content="{DynamicResource LOCGenresLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddQuickAddGenresCommand}" />
-                        <Button Content="{DynamicResource LOCSeriesLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddQuickAddSeriesCommand}" />
-                        <Button Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0"
-                                Command="{Binding AddQuickAddTagsCommand}" />
-                        <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,20,0,0"
+                        <ItemsControl ItemsSource="{Binding FieldTypeButtons}">
+                            <ItemsControl.Resources>
+                                <DataTemplate DataType="{x:Type viewModels:FieldTypeContextAction}">
+                                    <Button Content="{Binding Name}" Margin="0,0,0,10"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.AddQuickAddCommand}"
+                                            CommandParameter="{Binding FieldType}" />
+                                </DataTemplate>
+                            </ItemsControl.Resources>
+                        </ItemsControl>
+                        <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
                                 Command="{Binding RemoveQuickAddFromListCommand}"
                                 CommandParameter="{Binding SelectedItems, ElementName=LvQuickAdd}" />
                     </StackPanel>
