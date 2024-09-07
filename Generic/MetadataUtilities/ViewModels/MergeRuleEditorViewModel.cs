@@ -15,23 +15,17 @@ namespace MetadataUtilities.ViewModels
 {
     public class MergeRuleEditorViewModel : ObservableObject
     {
-        private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
         private MetadataObjects _completeMetadata;
-        private bool _filterAgeRatings;
-        private bool _filterCategories;
-        private bool _filterFeatures;
-        private bool _filterGenres;
         private string _filterPrefix = string.Empty;
         private bool _filterSelected;
-        private bool _filterSeries;
-        private bool _filterTags;
+        private ObservableCollection<FilterType> _filterTypes;
         private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
         private string _ruleName = string.Empty;
         private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
 
-        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataObjects objects, ICollection<FieldType> filteredTypes)
+        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
         {
             Cursor.Current = Cursors.WaitCursor;
             try
@@ -60,12 +54,15 @@ namespace MetadataUtilities.ViewModels
 
                 using (MetadataViewSource.DeferRefresh())
                 {
-                    FilterAgeRatings = filteredTypes.Contains(FieldType.AgeRating) || filteredTypes.Count == 0;
-                    FilterCategories = filteredTypes.Contains(FieldType.Category) || filteredTypes.Count == 0;
-                    FilterFeatures = filteredTypes.Contains(FieldType.Feature) || filteredTypes.Count == 0;
-                    FilterGenres = filteredTypes.Contains(FieldType.Genre) || filteredTypes.Count == 0;
-                    FilterSeries = filteredTypes.Contains(FieldType.Series) || filteredTypes.Count == 0;
-                    FilterTags = filteredTypes.Contains(FieldType.Tag) || filteredTypes.Count == 0;
+                    _filterTypes = plugin.Settings.Settings.FilterTypes
+                        .Select(x => new FilterType() { Type = x.Type }).ToObservable();
+
+                    foreach (FilterType filterType in FilterTypes)
+                    {
+                        filterType.PropertyChanged += (x, y) => MetadataViewSource.View.Filter = Filter;
+
+                        filterType.Selected = CompleteMetadata.Any(x => x.Selected && x.Type == filterType.Type);
+                    }
 
                     MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeAndName", ListSortDirection.Ascending));
                     MetadataViewSource.IsLiveSortingRequested = true;
@@ -131,86 +128,6 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _completeMetadata, value);
         }
 
-        public bool FilterAgeRatings
-        {
-            get => _filterAgeRatings;
-            set
-            {
-                SetValue(ref _filterAgeRatings, value);
-
-                if (_filterAgeRatings)
-                {
-                    _filterTypes.Add(FieldType.AgeRating);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.AgeRating);
-                }
-
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
-        public bool FilterCategories
-        {
-            get => _filterCategories;
-            set
-            {
-                SetValue(ref _filterCategories, value);
-
-                if (_filterCategories)
-                {
-                    _filterTypes.Add(FieldType.Category);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.Category);
-                }
-
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
-        public bool FilterFeatures
-        {
-            get => _filterFeatures;
-            set
-            {
-                SetValue(ref _filterFeatures, value);
-
-                if (_filterFeatures)
-                {
-                    _filterTypes.Add(FieldType.Feature);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.Feature);
-                }
-
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
-        public bool FilterGenres
-        {
-            get => _filterGenres;
-            set
-            {
-                SetValue(ref _filterGenres, value);
-
-                if (_filterGenres)
-                {
-                    _filterTypes.Add(FieldType.Genre);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.Genre);
-                }
-
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
         public string FilterPrefix
         {
             get => _filterPrefix;
@@ -232,44 +149,10 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public bool FilterSeries
+        public ObservableCollection<FilterType> FilterTypes
         {
-            get => _filterSeries;
-            set
-            {
-                SetValue(ref _filterSeries, value);
-
-                if (_filterSeries)
-                {
-                    _filterTypes.Add(FieldType.Series);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.Series);
-                }
-
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
-        public bool FilterTags
-        {
-            get => _filterTags;
-            set
-            {
-                SetValue(ref _filterTags, value);
-
-                if (_filterTags)
-                {
-                    _filterTypes.Add(FieldType.Tag);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.Tag);
-                }
-
-                MetadataViewSource.View.Filter = Filter;
-            }
+            get => _filterTypes;
+            set => SetValue(ref _filterTypes, value);
         }
 
         public CollectionViewSource MetadataViewSource
@@ -338,7 +221,8 @@ namespace MetadataUtilities.ViewModels
 
         private bool Filter(object item)
             => item is MetadataObject metadataObject && metadataObject.Name.RegExIsMatch(SearchTerm) &&
-               _filterTypes.Contains(metadataObject.Type) && (!FilterSelected || metadataObject.Selected) &&
+               FilterTypes.Any(x => x.Selected && x.Type == metadataObject.Type) &&
+               (!FilterSelected || metadataObject.Selected) &&
                (_filterPrefix == string.Empty || metadataObject.Prefix.Equals(_filterPrefix));
     }
 }

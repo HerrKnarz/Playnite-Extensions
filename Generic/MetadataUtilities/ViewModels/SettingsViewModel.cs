@@ -477,39 +477,7 @@ namespace MetadataUtilities.ViewModels
                     metadataObjects.AddMissing(temp.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
                 }
 
-                HashSet<FieldType> filteredTypes = new HashSet<FieldType>();
-
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.AgeRating))
-                {
-                    filteredTypes.Add(FieldType.AgeRating);
-                }
-
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Category))
-                {
-                    filteredTypes.Add(FieldType.Category);
-                }
-
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Feature))
-                {
-                    filteredTypes.Add(FieldType.Feature);
-                }
-
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Genre))
-                {
-                    filteredTypes.Add(FieldType.Genre);
-                }
-
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Series))
-                {
-                    filteredTypes.Add(FieldType.Series);
-                }
-
-                if (ruleToEdit.SourceObjects.Any(x => x.Type == FieldType.Tag))
-                {
-                    filteredTypes.Add(FieldType.Tag);
-                }
-
-                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(_plugin, metadataObjects, filteredTypes)
+                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(_plugin, metadataObjects)
                 {
                     RuleName = ruleToEdit.Name,
                     RuleType = ruleToEdit.Type

@@ -25,7 +25,7 @@ namespace MetadataUtilities.ViewModels
         private MetadataObjects _completeMetadata;
         private bool _filterHideUnused;
         private string _filterPrefix = string.Empty;
-        private ObservableCollection<FilterType> _filterTypes = new ObservableCollection<FilterType>();
+        private ObservableCollection<FilterType> _filterTypes;
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
         private CollectionViewSource _gamesViewSource;
         private bool _groupMatches;
