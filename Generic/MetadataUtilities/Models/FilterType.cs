@@ -1,5 +1,7 @@
 ﻿using KNARZhelper.Enum;
+using Playnite.SDK.Data;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace MetadataUtilities.Models
 {
@@ -7,6 +9,9 @@ namespace MetadataUtilities.Models
     {
         private FieldType _fieldType;
         private bool _selected = true;
+
+        [DontSerialize]
+        public string Label => Type.GetTypeManager().LabelPlural;
 
         public bool Selected
         {

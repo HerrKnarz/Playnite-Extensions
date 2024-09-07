@@ -18,20 +18,13 @@ namespace MetadataUtilities.ViewModels
 {
     public class MetadataEditorViewModel : ObservableObject, IEditableObject
     {
-        private readonly HashSet<FieldType> _filterTypes = new HashSet<FieldType>();
         private readonly bool _showRelatedGames;
         private int _ageRatingCount;
         private int _categoryCount;
         private MetadataObjects _completeMetadata;
         private int _featureCount;
-        private bool _filterAgeRatings = true;
-        private bool _filterCategories = true;
-        private bool _filterFeatures = true;
-        private bool _filterGenres = true;
         private bool _filterHideUnused;
         private string _filterPrefix = string.Empty;
-        private bool _filterSeries = true;
-        private bool _filterTags = true;
 
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
 
@@ -67,9 +60,6 @@ namespace MetadataUtilities.ViewModels
                 Prefixes.Add(string.Empty);
                 Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
 
-                //TODO: Via ItemsControl als Comboboxen einbinden. https://stackoverflow.com/questions/11095189/adding-controls-dynamically-in-wpf-mvvm
-                FilterTypes = plugin.Settings.Settings.FilterTypes;
-
                 CalculateItemCount();
 
                 GamesViewSource = new CollectionViewSource
@@ -101,12 +91,19 @@ namespace MetadataUtilities.ViewModels
                     Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                     ts = DateTime.Now;
 
-                    FilterAgeRatings = Plugin.Settings.Settings.FilterAgeRatings;
-                    FilterCategories = Plugin.Settings.Settings.FilterCategories;
-                    FilterFeatures = Plugin.Settings.Settings.FilterFeatures;
-                    FilterGenres = Plugin.Settings.Settings.FilterGenres;
-                    FilterSeries = Plugin.Settings.Settings.FilterSeries;
-                    FilterTags = Plugin.Settings.Settings.FilterTags;
+                    // We copy the settings, so we won't overwrite them when closing the window
+                    // without using the close command
+                    FilterTypes = plugin.Settings.Settings.FilterTypes
+                        .Select(x => new FilterType() { Selected = x.Selected, Type = x.Type }).ToObservable();
+
+                    foreach (FilterType filterType in FilterTypes)
+                    {
+                        filterType.PropertyChanged += (x, y) =>
+                        {
+                            ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
+                            MetadataViewSource.View.Filter = Filter;
+                        };
+                    }
 
                     MetadataViewSource.View.CurrentChanged += CurrentChanged;
                 }
@@ -265,12 +262,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
         {
-            Plugin.Settings.Settings.FilterAgeRatings = FilterAgeRatings;
-            Plugin.Settings.Settings.FilterCategories = FilterCategories;
-            Plugin.Settings.Settings.FilterFeatures = FilterFeatures;
-            Plugin.Settings.Settings.FilterGenres = FilterGenres;
-            Plugin.Settings.Settings.FilterSeries = FilterSeries;
-            Plugin.Settings.Settings.FilterTags = FilterTags;
+            Plugin.Settings.Settings.FilterTypes = FilterTypes;
             Plugin.Settings.Settings.EditorWindowHeight = Convert.ToInt32(win.Height);
             Plugin.Settings.Settings.EditorWindowWidth = Convert.ToInt32(win.Width);
             Plugin.SavePluginSettings(Plugin.Settings.Settings);
@@ -285,94 +277,11 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _completeMetadata, value);
         }
 
+        //TODO: Add the count property to the field types, add those to the filter types and then use an itemcontrol for the statistics, too!
         public int FeatureCount
         {
             get => _featureCount;
             set => SetValue(ref _featureCount, value);
-        }
-
-        public bool FilterAgeRatings
-        {
-            get => _filterAgeRatings;
-            set
-            {
-                SetValue(ref _filterAgeRatings, value);
-
-                if (_filterAgeRatings)
-                {
-                    _filterTypes.Add(FieldType.AgeRating);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.AgeRating);
-                }
-
-                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
-        public bool FilterCategories
-        {
-            get => _filterCategories;
-            set
-            {
-                SetValue(ref _filterCategories, value);
-
-                if (_filterCategories)
-                {
-                    _filterTypes.Add(FieldType.Category);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.Category);
-                }
-
-                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
-        public bool FilterFeatures
-        {
-            get => _filterFeatures;
-            set
-            {
-                SetValue(ref _filterFeatures, value);
-
-                if (_filterFeatures)
-                {
-                    _filterTypes.Add(FieldType.Feature);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.Feature);
-                }
-
-                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
-        public bool FilterGenres
-        {
-            get => _filterGenres;
-            set
-            {
-                SetValue(ref _filterGenres, value);
-
-                if (_filterGenres)
-                {
-                    _filterTypes.Add(FieldType.Genre);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.Genre);
-                }
-
-                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
-                MetadataViewSource.View.Filter = Filter;
-            }
         }
 
         public bool FilterHideUnused
@@ -393,48 +302,6 @@ namespace MetadataUtilities.ViewModels
             set
             {
                 SetValue(ref _filterPrefix, value);
-
-                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
-        public bool FilterSeries
-        {
-            get => _filterSeries;
-            set
-            {
-                SetValue(ref _filterSeries, value);
-
-                if (_filterSeries)
-                {
-                    _filterTypes.Add(FieldType.Series);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.Series);
-                }
-
-                ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
-                MetadataViewSource.View.Filter = Filter;
-            }
-        }
-
-        public bool FilterTags
-        {
-            get => _filterTags;
-            set
-            {
-                SetValue(ref _filterTags, value);
-
-                if (_filterTags)
-                {
-                    _filterTypes.Add(FieldType.Tag);
-                }
-                else
-                {
-                    _filterTypes.Remove(FieldType.Tag);
-                }
 
                 ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                 MetadataViewSource.View.Filter = Filter;
@@ -803,7 +670,7 @@ namespace MetadataUtilities.ViewModels
             item is MetadataObject metadataObject &&
             (!GroupMatches || metadataObject.ShowGrouped) &&
             metadataObject.Name.RegExIsMatch(SearchTerm) &&
-            _filterTypes.Contains(metadataObject.Type) &&
+            FilterTypes.Any(x => x.Selected && x.Type == metadataObject.Type) &&
             (_filterPrefix == string.Empty || metadataObject.Prefix.Equals(_filterPrefix)) &&
             (!_filterHideUnused || metadataObject.GameCount > 0);
 
