@@ -14,37 +14,25 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
 
+// ReSharper disable ExpressionIsAlwaysNull
+// ReSharper disable PossibleNullReferenceException
+
 namespace MetadataUtilities.ViewModels
 {
     public class MetadataEditorViewModel : ObservableObject, IEditableObject
     {
         private readonly bool _showRelatedGames;
-        private int _ageRatingCount;
-        private int _categoryCount;
         private MetadataObjects _completeMetadata;
-        private int _featureCount;
         private bool _filterHideUnused;
         private string _filterPrefix = string.Empty;
-
+        private ObservableCollection<FilterType> _filterTypes = new ObservableCollection<FilterType>();
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
-
         private CollectionViewSource _gamesViewSource;
-
-        private int _genreCount;
-
         private bool _groupMatches;
-
         private CollectionViewSource _metadataViewSource;
-
         private MetadataUtilities _plugin;
-
         private string _searchTerm = string.Empty;
-
         private List<MetadataObject> _selectedItems = new List<MetadataObject>();
-
-        private int _seriesCount;
-
-        private int _tagCount;
 
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
         {
@@ -61,7 +49,6 @@ namespace MetadataUtilities.ViewModels
                 Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
 
                 CalculateItemCount();
-
                 GamesViewSource = new CollectionViewSource
                 {
                     Source = _games
@@ -93,7 +80,7 @@ namespace MetadataUtilities.ViewModels
 
                     // We copy the settings, so we won't overwrite them when closing the window
                     // without using the close command
-                    FilterTypes = plugin.Settings.Settings.FilterTypes
+                    _filterTypes = plugin.Settings.Settings.FilterTypes
                         .Select(x => new FilterType() { Selected = x.Selected, Type = x.Type }).ToObservable();
 
                     foreach (FilterType filterType in FilterTypes)
@@ -103,6 +90,8 @@ namespace MetadataUtilities.ViewModels
                             ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                             MetadataViewSource.View.Filter = Filter;
                         };
+
+                        filterType.UpdateCount();
                     }
 
                     MetadataViewSource.View.CurrentChanged += CurrentChanged;
@@ -152,7 +141,6 @@ namespace MetadataUtilities.ViewModels
                 UpdateGroupDisplay(CompleteMetadata.ToList());
 
                 CalculateItemCount();
-
                 MetadataViewSource.View.Filter = Filter;
                 MetadataViewSource.View.MoveCurrentTo(newItem);
             }
@@ -183,18 +171,6 @@ namespace MetadataUtilities.ViewModels
             LoadRelatedGames();
             currentItem.GetGameCount();
         });
-
-        public int AgeRatingCount
-        {
-            get => _ageRatingCount;
-            set => SetValue(ref _ageRatingCount, value);
-        }
-
-        public int CategoryCount
-        {
-            get => _categoryCount;
-            set => SetValue(ref _categoryCount, value);
-        }
 
         public RelayCommand<IList<object>> ChangeTypeCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -246,7 +222,6 @@ namespace MetadataUtilities.ViewModels
                 CompleteMetadata.AddMissing(viewModel.NewObjects);
 
                 UpdateGroupDisplay(CompleteMetadata.ToList());
-
                 CalculateItemCount();
             }
             catch (Exception exception)
@@ -277,13 +252,6 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _completeMetadata, value);
         }
 
-        //TODO: Add the count property to the field types, add those to the filter types and then use an itemcontrol for the statistics, too!
-        public int FeatureCount
-        {
-            get => _featureCount;
-            set => SetValue(ref _featureCount, value);
-        }
-
         public bool FilterHideUnused
         {
             get => _filterHideUnused;
@@ -308,7 +276,11 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public ObservableCollection<FilterType> FilterTypes { get; set; }
+        public ObservableCollection<FilterType> FilterTypes
+        {
+            get => _filterTypes;
+            set => SetValue(ref _filterTypes, value);
+        }
 
         public Visibility GameGridCompletionStatusVisibility => _plugin.Settings.Settings.GameGridShowCompletionStatus
             ? Visibility.Visible
@@ -332,12 +304,6 @@ namespace MetadataUtilities.ViewModels
         {
             get => _gamesViewSource;
             set => SetValue(ref _gamesViewSource, value);
-        }
-
-        public int GenreCount
-        {
-            get => _genreCount;
-            set => SetValue(ref _genreCount, value);
         }
 
         public bool GroupMatches
@@ -417,7 +383,6 @@ namespace MetadataUtilities.ViewModels
                 UpdateGroupDisplay(CompleteMetadata.ToList());
 
                 CalculateItemCount();
-
                 LoadRelatedGames();
             }
             catch (Exception exception)
@@ -561,7 +526,6 @@ namespace MetadataUtilities.ViewModels
                 }
 
                 UpdateGroupDisplay(CompleteMetadata.ToList());
-
                 CalculateItemCount();
             }
             finally
@@ -589,7 +553,6 @@ namespace MetadataUtilities.ViewModels
                     .Where(x => removedItems.Any(y => x.Type == y.Type && x.Name == y.Name)).ToList();
 
                 CalculateItemCount();
-
                 foreach (MetadataObject itemToRemove in itemsToRemove)
                 {
                     CompleteMetadata.Remove(itemToRemove);
@@ -621,29 +584,20 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _selectedItems, value);
         }
 
-        public int SeriesCount
-        {
-            get => _seriesCount;
-            set => SetValue(ref _seriesCount, value);
-        }
-
-        public int TagCount
-        {
-            get => _tagCount;
-            set => SetValue(ref _tagCount, value);
-        }
-
         public void BeginEdit()
         { }
 
         public void CalculateItemCount()
         {
-            AgeRatingCount = API.Instance.Database.AgeRatings?.Count ?? 0;
-            CategoryCount = API.Instance.Database.Categories?.Count ?? 0;
-            FeatureCount = API.Instance.Database.Features?.Count ?? 0;
-            GenreCount = API.Instance.Database.Genres?.Count ?? 0;
-            SeriesCount = API.Instance.Database.Series?.Count ?? 0;
-            TagCount = API.Instance.Database.Tags?.Count ?? 0;
+            if (FilterTypes == null)
+            {
+                return;
+            }
+
+            foreach (FilterType type in FilterTypes)
+            {
+                type.UpdateCount();
+            }
         }
 
         public void CancelEdit()

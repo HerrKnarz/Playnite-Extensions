@@ -12,6 +12,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         bool CanBeEmptyInGame { get; }
         bool CanBeModified { get; }
         bool CanBeSetInGame { get; }
+        int Count { get; }
         bool IsList { get; }
         string LabelPlural { get; }
         string LabelSingular { get; }

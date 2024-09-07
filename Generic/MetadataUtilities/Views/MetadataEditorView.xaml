@@ -72,27 +72,30 @@
 
                 <GroupBox DockPanel.Dock="Top" Header="{DynamicResource LOCMetadataUtilitiesEditorStatistics}" Padding="10"
                           HorizontalAlignment="Stretch" Margin="0,10,0,0">
-                    <StackPanel Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Stretch">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
+
                             <StackPanel>
-                                <Label Content="{DynamicResource LOCAgeRatingsLabel}" />
-                                <Label Content="{DynamicResource LOCCategoriesLabel}" Margin="0,10,0,0" />
-                                <Label Content="{DynamicResource LOCFeaturesLabel}" Margin="0,10,0,0" />
-                                <Label Content="{DynamicResource LOCGenresLabel}" Margin="0,10,0,0" />
-                                <Label Content="{DynamicResource LOCSeriesLabel}" Margin="0,10,0,0" />
-                                <Label Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0" />
+                                <ItemsControl ItemsSource="{Binding FilterTypes}">
+                                    <ItemsControl.Resources>
+                                        <DataTemplate DataType="{x:Type local:FilterType}">
+                                            <Label Content="{Binding Label}" Margin="0,5,0,5" />
+                                        </DataTemplate>
+                                    </ItemsControl.Resources>
+                                </ItemsControl>
                             </StackPanel>
                             <StackPanel  Grid.Column="1" HorizontalAlignment="Stretch">
-                                <Label Content="{Binding AgeRatingCount}" HorizontalAlignment="Right" />
-                                <Label Content="{Binding CategoryCount}" HorizontalAlignment="Right" Margin="0,10,0,0" />
-                                <Label Content="{Binding FeatureCount}" HorizontalAlignment="Right" Margin="0,10,0,0" />
-                                <Label Content="{Binding GenreCount}" HorizontalAlignment="Right" Margin="0,10,0,0" />
-                                <Label Content="{Binding SeriesCount}" HorizontalAlignment="Right" Margin="0,10,0,0" />
-                                <Label Content="{Binding TagCount}" HorizontalAlignment="Right" Margin="0,10,0,0" />
+                                <ItemsControl ItemsSource="{Binding FilterTypes}">
+                                    <ItemsControl.Resources>
+                                        <DataTemplate DataType="{x:Type local:FilterType}">
+                                            <Label Content="{Binding Count}" HorizontalAlignment="Right" Margin="0,5,0,5" />
+                                        </DataTemplate>
+                                    </ItemsControl.Resources>
+                                </ItemsControl>
                             </StackPanel>
                         </Grid>
                     </StackPanel>

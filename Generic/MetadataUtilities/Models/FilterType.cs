@@ -1,14 +1,26 @@
 ﻿using KNARZhelper.Enum;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace MetadataUtilities.Models
 {
     public class FilterType : ObservableObject
     {
+        private int _count;
         private FieldType _fieldType;
         private bool _selected = true;
+
+        public FilterType()
+        {
+            UpdateCount();
+        }
+
+        [DontSerialize]
+        public int Count
+        {
+            get => _count;
+            set => SetValue(ref _count, value);
+        }
 
         [DontSerialize]
         public string Label => Type.GetTypeManager().LabelPlural;
@@ -24,5 +36,7 @@ namespace MetadataUtilities.Models
             get => _fieldType;
             set => SetValue(ref _fieldType, value);
         }
+
+        public void UpdateCount() => Count = Type.GetTypeManager().Count;
     }
 }

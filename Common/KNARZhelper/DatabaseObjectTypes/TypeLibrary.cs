@@ -26,6 +26,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeEmptyInGame => false;
         public override bool CanBeModified => false;
         public override bool CanBeSetInGame => false;
+        public override int Count => _libraries.Count;
         public override bool IsList => false;
         public override string LabelPlural => ResourceProvider.GetString("LOCLibraries");
         public override string LabelSingular => ResourceProvider.GetString("LOCLibrary");

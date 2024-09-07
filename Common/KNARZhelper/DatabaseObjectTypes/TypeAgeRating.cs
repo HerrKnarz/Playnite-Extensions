@@ -9,6 +9,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeAgeRating : BaseType
     {
+        public override int Count => API.Instance.Database.AgeRatings.Count;
+
         public override bool IsList => true;
 
         public override string LabelPlural => ResourceProvider.GetString("LOCAgeRatingsLabel");

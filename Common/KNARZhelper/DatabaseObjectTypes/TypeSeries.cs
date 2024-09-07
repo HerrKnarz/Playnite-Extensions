@@ -9,10 +9,9 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeSeries : BaseType
     {
+        public override int Count => API.Instance.Database.Series.Count;
         public override bool IsList => true;
-
         public override string LabelSingular => ResourceProvider.GetString("LOCSeriesLabel");
-
         public override FieldType Type => FieldType.Series;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Series.Add(name).Id;

@@ -12,6 +12,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public virtual bool CanBeEmptyInGame => true;
         public virtual bool CanBeModified => true;
         public virtual bool CanBeSetInGame => true;
+        public virtual int Count => 1;
         public abstract bool IsList { get; }
         public virtual string LabelPlural => LabelSingular;
         public abstract string LabelSingular { get; }

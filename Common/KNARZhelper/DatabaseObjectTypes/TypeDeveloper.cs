@@ -15,6 +15,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeDeleted => false;
 
         public override bool CanBeModified => false;
+        public override int Count => API.Instance.Database.Companies.Count;
         public override bool IsList => true;
         public override string LabelPlural => ResourceProvider.GetString("LOCDevelopersLabel");
         public override string LabelSingular => ResourceProvider.GetString("LOCDeveloperLabel");
