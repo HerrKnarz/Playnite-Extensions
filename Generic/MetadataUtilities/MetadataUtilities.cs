@@ -63,7 +63,7 @@ namespace MetadataUtilities
 
         public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
         {
-            if (!Settings.Settings.MergeMetadataOnMetadataUpdate || IsUpdating)
+            if (IsUpdating)
             {
                 return;
             }
@@ -91,12 +91,18 @@ namespace MetadataUtilities
                  (item.OldData.TagIds == null ||
                   !new HashSet<Guid>(item.OldData.TagIds).SetEquals(item.NewData.TagIds)))).Select(item => item.NewData).ToList();
 
-            if (Settings.Settings.RemoveUnwantedOnMetadataUpdate)
+            if (games.Count > 0)
             {
-                DoForAll(games, RemoveUnwantedAction.Instance(this));
-            }
+                if (Settings.Settings.RemoveUnwantedOnMetadataUpdate)
+                {
+                    DoForAll(games, RemoveUnwantedAction.Instance(this));
+                }
 
-            MergeItems(games);
+                if (Settings.Settings.MergeMetadataOnMetadataUpdate)
+                {
+                    MergeItems(games);
+                }
+            }
 
             // Execute conditional actions for all games, since those take nearly every possible
             // field into account
@@ -341,7 +347,6 @@ namespace MetadataUtilities
                 return;
             }
 
-            Cursor.Current = Cursors.Default;
             PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergedMetadataMessage"), gamesAffected.Distinct().Count()));
         }
 
@@ -488,25 +493,23 @@ namespace MetadataUtilities
                 return menuItems;
             }
 
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (QuickAddObject dbObject in dbObjects
-                .Where(x => (action == ActionModifierTypes.Add && x.Add) ||
-                            (action == ActionModifierTypes.Remove && x.Remove) ||
-                            (action == ActionModifierTypes.Toggle && x.Toggle)))
+                         .Where(x => (action == ActionModifierTypes.Add && x.Add) ||
+                                     (action == ActionModifierTypes.Remove && x.Remove) ||
+                                     (action == ActionModifierTypes.Toggle && x.Toggle)))
             {
-                int checkedCount;
-
                 string customMenu = dbObject.CustomPath?.Trim().Length > 0
                     ? dbObject.CustomPath.Replace("{type}", dbObject.Type.ToString()).Replace("{action}", action.ToString())
                     : Settings.Settings.QuickAddCustomPath?.Trim().Length > 0
                         ? Settings.Settings.QuickAddCustomPath.Replace("{type}", dbObject.Type.ToString()).Replace("{action}", action.ToString())
                         : string.Format(ResourceProvider.GetString($"LOCMetadataUtilitiesMenuQuickAdd{action}"), ResourceProvider.GetString($"LOC{dbObject.Type}Label"));
 
-                checkedCount = dbObject.Type.GetTypeManager().GetGameCount(games, dbObject.Id);
+                int checkedCount = dbObject.Type.GetTypeManager().GetGameCount(games, dbObject.Id);
 
                 menuItems.Add(new GameMenuItem
                 {
-                    Icon = checkedCount == games.Count ? "muAllCheckedIcon" :
-                        checkedCount > 0 ? "muSomeCheckedIcon" : "",
+                    Icon = checkedCount == games.Count ? "muAllCheckedIcon" : checkedCount > 0 ? "muSomeCheckedIcon" : "",
                     Description = dbObject.Name,
                     MenuSection = baseMenu + customMenu,
                     Action = a => DoForAll(games, QuickAddAction.Instance(this), true, action, dbObject)
