@@ -38,6 +38,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => x.CompletionStatusId == id);
 
+        public override bool DbObjectInUse(List<Game> games, Guid id) => games.Any(x => x.CompletionStatusId == id);
+
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.CompletionStatusId = default);
 
         public override bool FieldInGameIsEmpty(Game game) => game.CompletionStatusId == default;
@@ -47,6 +49,9 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override int GetGameCount(Guid id, bool ignoreHidden = false) =>
             API.Instance.Database.Games.Count(g => !(ignoreHidden && g.Hidden) && (g.CompletionStatusId == id));
+
+        public override int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false) =>
+            games.Count(g => !(ignoreHidden && g.Hidden) && (g.CompletionStatusId == id));
 
         public override List<Game> GetGames(Guid id, bool ignoreHidden = false) =>
             API.Instance.Database.Games.Where(g => !(ignoreHidden && g.Hidden) && (g.CompletionStatusId == id)).ToList();

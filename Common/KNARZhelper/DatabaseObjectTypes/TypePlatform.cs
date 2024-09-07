@@ -32,6 +32,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => x.PlatformIds?.Contains(id) ?? false);
 
+        public override bool DbObjectInUse(List<Game> games, Guid id) => games.Any(x => x.PlatformIds?.Contains(id) ?? false);
+
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.PlatformIds?.Clear());
 
         public override bool FieldInGameIsEmpty(Game game) => (game.PlatformIds?.Count ?? 0) == 0;
@@ -41,6 +43,9 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override int GetGameCount(Guid id, bool ignoreHidden = false) =>
             API.Instance.Database.Games.Count(g => !(ignoreHidden && g.Hidden) && (g.PlatformIds?.Contains(id) ?? false));
+
+        public override int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false) =>
+            games.Count(g => !(ignoreHidden && g.Hidden) && (g.PlatformIds?.Contains(id) ?? false));
 
         public override List<Game> GetGames(Guid id, bool ignoreHidden = false) =>
             API.Instance.Database.Games.Where(g => !(ignoreHidden && g.Hidden) && (g.PlatformIds?.Contains(id) ?? false)).ToList();

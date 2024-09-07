@@ -72,6 +72,9 @@ namespace MetadataUtilities
             // from the ones before.
             List<Game> games = args.UpdatedItems.Where(item =>
                 item.OldData == null ||
+                (item.NewData.AgeRatingIds != null &&
+                 (item.OldData.AgeRatingIds == null ||
+                  !new HashSet<Guid>(item.OldData.AgeRatingIds).SetEquals(item.NewData.AgeRatingIds))) ||
                 (item.NewData.CategoryIds != null &&
                  (item.OldData.CategoryIds == null ||
                   !new HashSet<Guid>(item.OldData.CategoryIds).SetEquals(item.NewData.CategoryIds))) ||
@@ -95,7 +98,9 @@ namespace MetadataUtilities
 
             MergeItems(games);
 
-            DoForAll(games, ExecuteConditionalActionsAction.Instance(this));
+            // Execute conditional actions for all games, since those take nearly every possible
+            // field into account
+            DoForAll(args.UpdatedItems.Select(item => item.NewData).ToList(), ExecuteConditionalActionsAction.Instance(this));
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -349,15 +354,7 @@ namespace MetadataUtilities
                 return;
             }
 
-            Cursor.Current = Cursors.WaitCursor;
-            try
-            {
-                MetadataFunctions.RemoveUnusedMetadata(Settings.Settings, true);
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
-            }
+            RemoveUnused();
         }
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
@@ -504,45 +501,7 @@ namespace MetadataUtilities
                         ? Settings.Settings.QuickAddCustomPath.Replace("{type}", dbObject.Type.ToString()).Replace("{action}", action.ToString())
                         : string.Format(ResourceProvider.GetString($"LOCMetadataUtilitiesMenuQuickAdd{action}"), ResourceProvider.GetString($"LOC{dbObject.Type}Label"));
 
-                switch (dbObject.Type)
-                {
-                    case FieldType.AgeRating:
-                        checkedCount = games.Count(x => x.AgeRatingIds?.Contains(dbObject.Id) ?? false);
-                        break;
-
-                    case FieldType.Category:
-                        checkedCount = games.Count(x => x.CategoryIds?.Contains(dbObject.Id) ?? false);
-                        break;
-
-                    case FieldType.Feature:
-                        checkedCount = games.Count(x => x.FeatureIds?.Contains(dbObject.Id) ?? false);
-                        break;
-
-                    case FieldType.Genre:
-                        checkedCount = games.Count(x => x.GenreIds?.Contains(dbObject.Id) ?? false);
-                        break;
-
-                    case FieldType.Series:
-                        checkedCount = games.Count(x => x.SeriesIds?.Contains(dbObject.Id) ?? false);
-                        break;
-
-                    case FieldType.Tag:
-                        checkedCount = games.Count(x => x.TagIds?.Contains(dbObject.Id) ?? false);
-                        break;
-
-                    case FieldType.Background:
-                    case FieldType.CompletionStatus:
-                    case FieldType.Cover:
-                    case FieldType.Developer:
-                    case FieldType.Icon:
-                    case FieldType.Library:
-                    case FieldType.Platform:
-                    case FieldType.Publisher:
-                    case FieldType.Region:
-                    case FieldType.Source:
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(dbObject.Type), dbObject.Type, null);
-                }
+                checkedCount = dbObject.Type.GetTypeManager().GetGameCount(games, dbObject.Id);
 
                 menuItems.Add(new GameMenuItem
                 {

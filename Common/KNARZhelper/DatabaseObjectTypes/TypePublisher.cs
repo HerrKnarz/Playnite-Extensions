@@ -38,12 +38,17 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => x.PublisherIds?.Contains(id) ?? false);
 
+        public override bool DbObjectInUse(List<Game> games, Guid id) => games.Any(x => x.PublisherIds?.Contains(id) ?? false);
+
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.PublisherIds?.Clear());
 
         public override bool FieldInGameIsEmpty(Game game) => (game.PublisherIds?.Count ?? 0) == 0;
 
         public override Guid GetDbObjectId(string name) =>
             API.Instance.Database.Companies?.FirstOrDefault(x => x.Name == name)?.Id ?? Guid.Empty;
+
+        public override int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false) =>
+            games.Count(g => !(ignoreHidden && g.Hidden) && (g.PublisherIds?.Contains(id) ?? false));
 
         public override int GetGameCount(Guid id, bool ignoreHidden = false) =>
             API.Instance.Database.Games.Count(g => !(ignoreHidden && g.Hidden) && (g.PublisherIds?.Contains(id) ?? false));

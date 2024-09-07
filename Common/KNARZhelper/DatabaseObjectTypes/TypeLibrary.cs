@@ -48,6 +48,9 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override int GetGameCount(Guid id, bool ignoreHidden = false) =>
             API.Instance.Database.Games.Count(g => !(ignoreHidden && g.Hidden) && (g.PluginId == id));
 
+        public override int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false) =>
+            games.Count(g => !(ignoreHidden && g.Hidden) && (g.PluginId == id));
+
         public override List<Game> GetGames(Guid id, bool ignoreHidden = false) =>
             API.Instance.Database.Games.Where(g => !(ignoreHidden && g.Hidden) && (g.PluginId == id)).ToList();
 

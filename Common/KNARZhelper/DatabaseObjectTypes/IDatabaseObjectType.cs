@@ -35,6 +35,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         bool DbObjectInUse(Guid id);
 
+        bool DbObjectInUse(List<Game> games, Guid id);
+
         void EmptyFieldInGame(Game game);
 
         bool FieldInGameIsEmpty(Game game);
@@ -42,6 +44,8 @@ namespace KNARZhelper.DatabaseObjectTypes
         Guid GetDbObjectId(string name);
 
         int GetGameCount(Guid id, bool ignoreHidden = false);
+
+        int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false);
 
         List<Game> GetGames(Guid id, bool ignoreHidden = false);
 
