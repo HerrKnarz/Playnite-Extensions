@@ -34,6 +34,7 @@ namespace KNARZhelper.Enum
         Series = 3,
         Source = 9,
         Tag = 4,
+        TimePlayed = 28,
         UserScore = 18,
     }
 
@@ -69,6 +70,7 @@ namespace KNARZhelper.Enum
                         new TypeSeries(),
                         new TypeSource(),
                         new TypeTag(),
+                        new TypeTimePlayed(),
                         new TypeUserScore(),
             };
 
@@ -156,6 +158,9 @@ namespace KNARZhelper.Enum
 
                 case FieldType.Tag:
                     return new TypeTag();
+
+                case FieldType.TimePlayed:
+                    return new TypeTimePlayed();
 
                 case FieldType.UserScore:
                     return new TypeUserScore();

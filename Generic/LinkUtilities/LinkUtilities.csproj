@@ -122,7 +122,7 @@
       <Link>Shared\TypePlatform.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePlayCount.cs">
-      <Link>Localization\TypePlayCount.cs</Link>
+      <Link>Shared\TypePlayCount.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePublisher.cs">
       <Link>Shared\TypePublisher.cs</Link>
@@ -141,6 +141,9 @@
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeTag.cs">
       <Link>Shared\TypeTag.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeTimePlayed.cs">
+      <Link>Shared\TypeTimePlayed.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeUserScore.cs">
       <Link>Shared\TypeUserScore.cs</Link>

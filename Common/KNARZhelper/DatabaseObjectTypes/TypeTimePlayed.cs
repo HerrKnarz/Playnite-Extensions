@@ -6,7 +6,7 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public class TypePlayCount : BaseType
+    public class TypeTimePlayed : BaseType
     {
         public override bool CanBeAdded => false;
         public override bool CanBeClearedInGame => false;
@@ -15,22 +15,22 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeModified => false;
         public override bool CanBeSetInGame => true;
         public override bool IsList => false;
-        public override string LabelSingular => ResourceProvider.GetString("LOCPlayCountLabel");
-        public override FieldType Type => FieldType.PlayCount;
+        public override string LabelSingular => ResourceProvider.GetString("LOCTimePlayed");
+        public override FieldType Type => FieldType.TimePlayed;
         public override ItemValueType ValueType => ItemValueType.Integer;
 
         public override bool AddValueToGame<T>(Game game, T value) =>
             API.Instance.MainView.UIDispatcher.Invoke(() =>
             {
-                game.PlayCount = (ulong)((value as int?) ?? 0);
+                game.Playtime = (ulong)((value as int?) ?? 0);
 
                 return true;
             });
 
         public override bool IsBiggerThan<T>(Game game, T value) =>
-            (value != null || value is int) && game.PlayCount > (ulong)((value as int?) ?? 0);
+            (value != null || value is int) && game.Playtime > (ulong)((value as int?) ?? 0);
 
         public override bool IsSmallerThan<T>(Game game, T value) =>
-            (value != null || value is int) && game.PlayCount < (ulong)((value as int?) ?? 0);
+            (value != null || value is int) && game.Playtime < (ulong)((value as int?) ?? 0);
     }
 }
