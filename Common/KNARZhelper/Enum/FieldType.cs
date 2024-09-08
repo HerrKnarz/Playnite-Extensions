@@ -23,6 +23,7 @@ namespace KNARZhelper.Enum
         Hdr = 29,
         Hidden = 25,
         Icon = 14,
+        InstallSize = 31,
         IsInstalled = 26,
         LastPlayed = 23,
         Library = 11,
@@ -61,6 +62,7 @@ namespace KNARZhelper.Enum
                         new TypeHdr(),
                         new TypeHidden(),
                         new TypeIcon(),
+                        new TypeInstallSize(),
                         new TypeIsInstalled(),
                         new TypeLastPlayed(),
                         new TypeLibrary(),
@@ -129,6 +131,9 @@ namespace KNARZhelper.Enum
 
                 case FieldType.Icon:
                     return new TypeIcon();
+
+                case FieldType.InstallSize:
+                    return new TypeInstallSize();
 
                 case FieldType.IsInstalled:
                     return new TypeIsInstalled();

@@ -102,6 +102,9 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeIcon.cs">
       <Link>Shared\TypeIcon.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeInstallSize.cs">
+      <Link>Shared\TypeInstallSize.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeIsInstalled.cs">
       <Link>Shared\TypeIsInstalled.cs</Link>
     </Compile>

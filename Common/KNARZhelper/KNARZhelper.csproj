@@ -61,6 +61,7 @@
     <Compile Include="DatabaseObjectTypes\TypeHdr.cs" />
     <Compile Include="DatabaseObjectTypes\TypeHidden.cs" />
     <Compile Include="DatabaseObjectTypes\TypeIcon.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeInstallSize.cs" />
     <Compile Include="DatabaseObjectTypes\TypeIsInstalled.cs" />
     <Compile Include="DatabaseObjectTypes\TypeLastPlayed.cs" />
     <Compile Include="DatabaseObjectTypes\TypeLibrary.cs" />
