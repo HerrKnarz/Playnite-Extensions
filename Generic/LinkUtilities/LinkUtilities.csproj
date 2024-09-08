@@ -121,6 +121,9 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeNotes.cs">
       <Link>Shared\TypeNotes.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeOverrideInstallState.cs">
+      <Link>Shared\TypeOverrideInstallState.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePlatform.cs">
       <Link>Shared\TypePlatform.cs</Link>
     </Compile>

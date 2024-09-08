@@ -65,6 +65,7 @@
     <Compile Include="DatabaseObjectTypes\TypeLastPlayed.cs" />
     <Compile Include="DatabaseObjectTypes\TypeLibrary.cs" />
     <Compile Include="DatabaseObjectTypes\TypeNotes.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeOverrideInstallState.cs" />
     <Compile Include="DatabaseObjectTypes\TypePlatform.cs" />
     <Compile Include="DatabaseObjectTypes\TypeAgeRating.cs" />
     <Compile Include="DatabaseObjectTypes\TypeCategory.cs" />

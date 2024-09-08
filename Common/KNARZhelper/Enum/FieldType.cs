@@ -30,6 +30,7 @@ namespace KNARZhelper.Enum
         Platform = 7,
         PlayCount = 27,
         Publisher = 8,
+        OverrideInstallState = 30,
         Region = 12,
         ReleaseDate = 19,
         Series = 3,
@@ -64,6 +65,7 @@ namespace KNARZhelper.Enum
                         new TypeLastPlayed(),
                         new TypeLibrary(),
                         new TypeNotes(),
+                        new TypeOverrideInstallState(),
                         new TypePlatform(),
                         new TypePlayCount(),
                         new TypePublisher(),
@@ -139,6 +141,9 @@ namespace KNARZhelper.Enum
 
                 case FieldType.Notes:
                     return new TypeNotes();
+
+                case FieldType.OverrideInstallState:
+                    return new TypeOverrideInstallState();
 
                 case FieldType.Platform:
                     return new TypePlatform();
