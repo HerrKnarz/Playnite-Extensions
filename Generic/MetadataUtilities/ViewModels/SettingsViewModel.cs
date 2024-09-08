@@ -182,7 +182,9 @@ namespace MetadataUtilities.ViewModels
                 {
                     Name = condition.Name,
                     Type = condition.Type,
-                    Comparator = condition.Comparator
+                    Comparator = condition.Comparator,
+                    DateValue = condition.DateValue,
+                    IntValue = condition.IntValue
                 });
             }
 
@@ -192,7 +194,9 @@ namespace MetadataUtilities.ViewModels
                 {
                     Name = action.Name,
                     Type = action.Type,
-                    ActionType = action.ActionType
+                    ActionType = action.ActionType,
+                    DateValue = action.DateValue,
+                    IntValue = action.IntValue
                 });
             }
 
