@@ -49,9 +49,20 @@
                 <DataGridTextColumn Header="{DynamicResource LOCCompletionStatus}" Binding="{Binding Game.CompletionStatus.Name}"
                                 MinWidth="100" Width="SizeToCells"
                                 Visibility="{Binding DataContext.GameGridCompletionStatusVisibility, Source={x:Reference DummyElement}}" />
+                <DataGridCheckBoxColumn Header="{DynamicResource LOCGameHiddenTitle}"
+                                        Binding="{Binding Game.Hidden}" Width="SizeToCells"
+                                        Visibility="{Binding DataContext.GameGridHiddenVisibility, Source={x:Reference DummyElement}}">
+                    <DataGridCheckBoxColumn.ElementStyle>
+                        <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="0, 0, -15, 0" />
+                        </Style>
+                    </DataGridCheckBoxColumn.ElementStyle>
+                </DataGridCheckBoxColumn>
                 <DataGridTextColumn Header="{DynamicResource LOCPlatformsTitle}" Binding="{Binding Platforms}"
-                                MinWidth="100" Width="200"
-                                Visibility="{Binding DataContext.GameGridPlatformVisibility, Source={x:Reference DummyElement}}" />
+                                    MinWidth="100" Width="200"
+                                    Visibility="{Binding DataContext.GameGridPlatformVisibility, Source={x:Reference DummyElement}}" />
                 <DataGridTextColumn Header="{DynamicResource LOCGameReleaseYearTitle}" Binding="{Binding Game.ReleaseYear}"
                                 Width="SizeToHeader" ElementStyle="{StaticResource RightCell}" MinWidth="50"
                                 Visibility="{Binding DataContext.GameGridReleaseVisibility, Source={x:Reference DummyElement}}" />

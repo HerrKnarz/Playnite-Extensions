@@ -286,8 +286,12 @@ namespace MetadataUtilities.ViewModels
             ? Visibility.Visible
             : Visibility.Collapsed;
 
-        public Visibility GameGridPlatformVisibility => _plugin.Settings.Settings.GameGridShowPlatform
+        public Visibility GameGridHiddenVisibility => _plugin.Settings.Settings.GameGridShowHidden
             ? Visibility.Visible
+            : Visibility.Collapsed;
+
+        public Visibility GameGridPlatformVisibility => _plugin.Settings.Settings.GameGridShowPlatform
+                    ? Visibility.Visible
             : Visibility.Collapsed;
 
         public Visibility GameGridReleaseVisibility => _plugin.Settings.Settings.GameGridShowReleaseYear

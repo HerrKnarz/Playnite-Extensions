@@ -17,6 +17,7 @@ namespace MetadataUtilities.Models
         private int _editorWindowWidth = 1200;
         private ObservableCollection<FilterType> _filterTypes = new ObservableCollection<FilterType>();
         private bool _gameGridShowCompletionStatus = true;
+        private bool _gameGridShowHidden = false;
         private bool _gameGridShowPlatform = true;
         private bool _gameGridShowReleaseYear = true;
         private int _gameSearchWindowHeight = 700;
@@ -102,6 +103,12 @@ namespace MetadataUtilities.Models
         {
             get => _gameGridShowCompletionStatus;
             set => SetValue(ref _gameGridShowCompletionStatus, value);
+        }
+
+        public bool GameGridShowHidden
+        {
+            get => _gameGridShowHidden;
+            set => SetValue(ref _gameGridShowHidden, value);
         }
 
         public bool GameGridShowPlatform

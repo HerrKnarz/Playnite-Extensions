@@ -31,8 +31,10 @@
                             <StackPanel>
                                 <CheckBox IsChecked="{Binding Settings.GameGridShowCompletionStatus}" Margin="0,0,0,0"
                                           Content="{DynamicResource LOCCompletionStatus}" />
+                                <CheckBox IsChecked="{Binding Settings.GameGridShowHidden}" Margin="0,10,0,0"
+                                          Content="{DynamicResource LOCGameHiddenTitle}" />
                                 <CheckBox IsChecked="{Binding Settings.GameGridShowPlatform}" Margin="0,10,0,0"
-                                      Content="{DynamicResource LOCPlatformsTitle}" />
+                                          Content="{DynamicResource LOCPlatformsTitle}" />
                                 <CheckBox IsChecked="{Binding Settings.GameGridShowReleaseYear}" Margin="0,10,0,0"
                                       Content="{DynamicResource LOCGameReleaseYearTitle}" />
                             </StackPanel>
