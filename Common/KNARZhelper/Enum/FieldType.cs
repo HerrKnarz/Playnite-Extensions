@@ -20,6 +20,7 @@ namespace KNARZhelper.Enum
         Favorite = 24,
         Feature = 1,
         Genre = 2,
+        Hdr = 29,
         Hidden = 25,
         Icon = 14,
         IsInstalled = 26,
@@ -56,6 +57,7 @@ namespace KNARZhelper.Enum
                         new TypeFavorite(),
                         new TypeFeature(),
                         new TypeGenre(),
+                        new TypeHdr(),
                         new TypeHidden(),
                         new TypeIcon(),
                         new TypeIsInstalled(),
@@ -116,6 +118,9 @@ namespace KNARZhelper.Enum
 
                 case FieldType.Genre:
                     return new TypeGenre();
+
+                case FieldType.Hdr:
+                    return new TypeHdr();
 
                 case FieldType.Hidden:
                     return new TypeHidden();

@@ -93,6 +93,9 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeGenre.cs">
       <Link>Shared\TypeGenre.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeHdr.cs">
+      <Link>Shared\TypeHdr.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeHidden.cs">
       <Link>Shared\TypeHidden.cs</Link>
     </Compile>
