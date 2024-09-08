@@ -43,7 +43,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public virtual void EmptyFieldInGame(Game game)
         { }
 
-        public abstract bool FieldInGameIsEmpty(Game game);
+        public virtual bool FieldInGameIsEmpty(Game game) => false;
 
         public virtual Guid GetDbObjectId(string name) => default;
 

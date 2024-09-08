@@ -27,6 +27,7 @@ namespace KNARZhelper.Enum
         Library = 11,
         Notes = 22,
         Platform = 7,
+        PlayCount = 27,
         Publisher = 8,
         Region = 12,
         ReleaseDate = 19,
@@ -61,6 +62,7 @@ namespace KNARZhelper.Enum
                         new TypeLibrary(),
                         new TypeNotes(),
                         new TypePlatform(),
+                        new TypePlayCount(),
                         new TypePublisher(),
                         new TypeRegion(),
                         new TypeReleaseDate(),
@@ -133,6 +135,9 @@ namespace KNARZhelper.Enum
 
                 case FieldType.Platform:
                     return new TypePlatform();
+
+                case FieldType.PlayCount:
+                    return new TypePlayCount();
 
                 case FieldType.Publisher:
                     return new TypePublisher();

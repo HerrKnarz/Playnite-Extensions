@@ -70,6 +70,7 @@
     <Compile Include="DatabaseObjectTypes\IDatabaseObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\TypeFeature.cs" />
     <Compile Include="DatabaseObjectTypes\TypeGenre.cs" />
+    <Compile Include="DatabaseObjectTypes\TypePlayCount.cs" />
     <Compile Include="DatabaseObjectTypes\TypePublisher.cs" />
     <Compile Include="DatabaseObjectTypes\TypeRegion.cs" />
     <Compile Include="DatabaseObjectTypes\TypeReleaseDate.cs" />

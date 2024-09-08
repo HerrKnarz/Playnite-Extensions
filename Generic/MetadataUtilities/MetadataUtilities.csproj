@@ -114,6 +114,9 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePlatform.cs">
       <Link>Shared\TypePlatform.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePlayCount.cs">
+      <Link>Localization\TypePlayCount.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePublisher.cs">
       <Link>Shared\TypePublisher.cs</Link>
     </Compile>
