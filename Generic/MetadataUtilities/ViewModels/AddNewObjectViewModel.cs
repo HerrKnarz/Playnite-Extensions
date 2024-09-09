@@ -49,7 +49,7 @@ namespace MetadataUtilities.ViewModels
 
         public Visibility PrefixVisibility => _settings.Prefixes.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
-        public static Window GetWindow(Settings settings, MetadataObject newObject, bool enableTypeSelection = true)
+        public static Window GetWindow(Settings settings, MetadataObject newObject, bool enableTypeSelection = true, string caption = "")
         {
             try
             {
@@ -57,7 +57,12 @@ namespace MetadataUtilities.ViewModels
 
                 AddNewObjectView newObjectViewView = new AddNewObjectView();
 
-                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddNewObject"));
+                if (caption == string.Empty)
+                {
+                    caption = ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddNewObject");
+                }
+
+                Window window = WindowHelper.CreateFixedDialog(caption);
                 window.Content = newObjectViewView;
                 window.DataContext = viewModel;
 

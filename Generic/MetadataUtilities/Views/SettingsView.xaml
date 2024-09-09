@@ -439,7 +439,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="200" Header="{DynamicResource LOCMetadataUtilitiesSettingsCustomPath}">
+                            <GridViewColumn Width="300" Header="{DynamicResource LOCMetadataUtilitiesSettingsCustomPath}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding CustomPath, UpdateSourceTrigger=PropertyChanged}"

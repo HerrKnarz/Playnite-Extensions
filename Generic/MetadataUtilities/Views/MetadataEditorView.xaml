@@ -196,6 +196,9 @@
                 <Button Content="{DynamicResource LOCMetadataUtilitiesEditorMerge}" Margin="0,0,10,10"
                         Command="{Binding MergeItemsCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=MetadataGrid}" />
+                <Button Content="{DynamicResource LOCMetadataUtilitiesEditorMergeRename}" Margin="0,0,10,10"
+                        Command="{Binding MergeRenameCommand}"
+                        CommandParameter="{Binding SelectedItems, ElementName=MetadataGrid}" />
                 <Button Content="{DynamicResource LOCMetadataUtilitiesEditorChangeType}" Margin="0,0,10,10"
                         Command="{Binding ChangeTypeCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=MetadataGrid}" />

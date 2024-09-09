@@ -400,6 +400,74 @@ namespace MetadataUtilities.ViewModels
             }
         }, items => items?.Count > 1);
 
+        public RelayCommand<IList<object>> MergeRenameCommand => new RelayCommand<IList<object>>(items =>
+        {
+            if (items == null || items.Count > 1 || MetadataViewSource.View.CurrentItem == null)
+            {
+                return;
+            }
+
+            try
+            {
+                // We prepare the original item, save the old values and create a new one to edit.
+                MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+
+                MetadataObject oldItem = new MetadataObject(Plugin.Settings.Settings)
+                {
+                    Type = templateItem.Type,
+                    Name = templateItem.Name
+                };
+
+                MetadataObject newItem = new MetadataObject(Plugin.Settings.Settings)
+                {
+                    Type = templateItem.Type,
+                    Name = templateItem.Name
+                };
+
+                // Using the Add New dialog we rename the item
+                Window window = AddNewObjectViewModel.GetWindow(Plugin.Settings.Settings, newItem, false,
+                    ResourceProvider.GetString("LOCMetadataUtilitiesEditorMergeRename"));
+
+                // return if the dialog was canceled or the name remained the same.
+                if (window == null || !(window.ShowDialog() ?? false) || oldItem.Name == newItem.Name)
+                {
+                    return;
+                }
+
+                // Now we try to actually rename the item in the data grid and return, if that
+                // wasn't successful. An error message already was displayed in that case.
+                templateItem.EditName = newItem.EditName;
+
+                if (templateItem.Name == oldItem.Name)
+                {
+                    return;
+                }
+
+                // Finally we create a new merge rule and add it to the list.
+                MergeRule newRule = new MergeRule(Plugin.Settings.Settings)
+                {
+                    Name = newItem.Name,
+                    Type = newItem.Type,
+                    SourceObjects = new MetadataObjects(Plugin.Settings.Settings) { oldItem }
+                };
+
+                Plugin.Settings.Settings.MergeRules.AddRule(newRule);
+                Plugin.SavePluginSettings(_plugin.Settings.Settings);
+
+                Cursor.Current = Cursors.WaitCursor;
+
+                UpdateGroupDisplay(CompleteMetadata.ToList());
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing rename dialog", true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }, items => items?.Count == 1);
+
         public CollectionViewSource MetadataViewSource
         {
             get => _metadataViewSource;
