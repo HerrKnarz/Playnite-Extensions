@@ -35,6 +35,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Agrupar elementos coincidentes</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorHideUnused">Ocultar elementos no usados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Fusionar</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorMergeRename">Merge rename</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Juegos relacionados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Eliminar los no usados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Objetivo de regla</sys:String>
