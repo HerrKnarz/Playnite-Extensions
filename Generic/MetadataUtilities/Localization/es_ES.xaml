@@ -103,8 +103,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Position</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Eliminar metadatos no usados al iniciar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Eliminar elementos no deseados al actualizar metadatos</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameConditionalActions">Automatically rename items in conditional actions when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Renombrar automáticamente las etiquetas/categorías por defecto cuando el artículo original correspondiente sea renombrado.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Renombrar automáticamente el objetivo de la regla de fusión cuando se cambia el nombre del elemento original correspondiente.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Automatically rename quick add items when the corresponding original item is renamed.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Automatically rename whitelist items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Establecer sólo cuando no se añadieron etiquetas en la importación de metadatos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Mostrar diálogo de resultados después de establecer un valor para más de un juego</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Show Settings button in top panel (requires restart)</sys:String>
