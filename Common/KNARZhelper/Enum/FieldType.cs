@@ -43,22 +43,22 @@ namespace KNARZhelper.Enum
 
     public static class FieldTypeHelper
     {
-        public static List<IDatabaseObjectType> GetAllTypes() =>
+        public static List<IDatabaseObjectType> GetAllTypes(bool adoptEvents = false) =>
             new List<IDatabaseObjectType>()
             {
-                        new TypeAgeRating(),
+                        new TypeAgeRating(adoptEvents),
                         new TypeBackground(),
-                        new TypeCategory(),
-                        new TypeCompletionStatus(),
+                        new TypeCategory(adoptEvents),
+                        new TypeCompletionStatus(adoptEvents),
                         new TypeCommunityScore(),
                         new TypeCover(),
                         new TypeCriticScore(),
                         new TypeDateAdded(),
                         new TypeDescription(),
-                        new TypeDeveloper(),
+                        new TypeDeveloper(adoptEvents),
                         new TypeFavorite(),
-                        new TypeFeature(),
-                        new TypeGenre(),
+                        new TypeFeature(adoptEvents),
+                        new TypeGenre(adoptEvents),
                         new TypeHdr(),
                         new TypeHidden(),
                         new TypeIcon(),
@@ -68,14 +68,14 @@ namespace KNARZhelper.Enum
                         new TypeLibrary(),
                         new TypeNotes(),
                         new TypeOverrideInstallState(),
-                        new TypePlatform(),
+                        new TypePlatform(adoptEvents),
                         new TypePlayCount(),
-                        new TypePublisher(),
-                        new TypeRegion(),
+                        new TypePublisher(adoptEvents),
+                        new TypeRegion(adoptEvents),
                         new TypeReleaseDate(),
-                        new TypeSeries(),
-                        new TypeSource(),
-                        new TypeTag(),
+                        new TypeSeries(adoptEvents),
+                        new TypeSource(adoptEvents),
+                        new TypeTag(adoptEvents),
                         new TypeTimePlayed(),
                         new TypeUserScore(),
             };

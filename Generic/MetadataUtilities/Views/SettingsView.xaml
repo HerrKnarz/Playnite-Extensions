@@ -45,7 +45,7 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabMerging}">
             <DockPanel Margin="10">
-                <Grid DockPanel.Dock="Top" Margin="0,10,0,0">
+                <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -127,6 +127,17 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabConditionalActions}">
             <DockPanel Margin="10">
+                <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox IsChecked="{Binding Settings.RenameConditionalActions}" VerticalAlignment="Top">
+                        <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameConditionalActions}" TextWrapping="Wrap" />
+                    </CheckBox>
+                    <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
+                            Command="{Binding HelpConActionCommand}" Margin="10,0,0,0" ToolTip="{DynamicResource LOCMenuHelpTitle}" />
+                </Grid>
                 <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
                     <Button Content="&#xec3e;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
                             Command="{Binding AddConActionCommand}" />
@@ -136,10 +147,8 @@
                     <Button Content="&#xec53;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
                             Command="{Binding RemoveConActionCommand}"
                             CommandParameter="{Binding SelectedItems, ElementName=LvConAction}" />
-                    <Button Content="&#xEFCA;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMenuHelpTitle}"
-                            Command="{Binding HelpConActionCommand}" Margin="10,0,0,0" />
                 </DockPanel>
-                <ListView Name="LvConAction" SelectionMode="Extended" DockPanel.Dock="Top"
+                <ListView Name="LvConAction" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0, 10, 0, 0"
                           ItemsSource="{Binding Settings.ConditionalActions}" VerticalContentAlignment="Stretch">
                     <ListView.View>
                         <GridView>
@@ -262,6 +271,9 @@
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.IgnoreHiddenGamesInRemoveUnused}" Margin="0,10,0,0">
                     <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}" TextWrapping="Wrap" />
                 </CheckBox>
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameWhiteList}" Margin="0,10,0,0">
+                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameWhitelist}" TextWrapping="Wrap" />
+                </CheckBox>
                 <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsUnusedWhiteList}" Margin="0,10,0,0" DockPanel.Dock="Top"
                           Padding="10">
                     <Grid>
@@ -300,7 +312,7 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabRemoveUnwanted}">
             <DockPanel Margin="10">
-                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RemoveUnwantedOnMetadataUpdate}" Margin="0,0,0,0">
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RemoveUnwantedOnMetadataUpdate}">
                     <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate}" TextWrapping="Wrap" />
                 </CheckBox>
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.AddRemovedToUnwanted}" Margin="0,10,0,0">
@@ -356,17 +368,21 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabQuickAdd}">
             <DockPanel Margin="10">
-
-                <Grid DockPanel.Dock="Top" Margin="0,10,0,0">
+                <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <DockPanel>
-                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.QuickAddSingleMenuEntry}"
-                                  Content="{DynamicResource LOCMetadataUtilitiesSettingsSingleMenuEntry}" Margin="0,0,0,0" />
-                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.QuickAddShowDialog}"
-                                  Content="{DynamicResource LOCMetadataUtilitiesSettingsShowDialog}" Margin="0,10,0,0" />
+                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.QuickAddSingleMenuEntry}" Margin="0,0,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsSingleMenuEntry}" TextWrapping="Wrap" />
+                        </CheckBox>
+                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.QuickAddShowDialog}" Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsShowDialog}" TextWrapping="Wrap" />
+                        </CheckBox>
+                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameQuickAdd}" Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameQuickAdd}" TextWrapping="Wrap" />
+                        </CheckBox>
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,10,0,0" HorizontalAlignment="Left">
                             <Label Content="{DynamicResource LOCMetadataUtilitiesSettingsDefaultCustomPath}" />
                             <TextBox Text="{Binding Settings.QuickAddCustomPath}" Width="200" Margin="10,0,0,0" />

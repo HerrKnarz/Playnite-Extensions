@@ -9,16 +9,38 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypePlatform : BaseType
     {
+        public TypePlatform(bool adoptEvents = false)
+        {
+            if (!adoptEvents)
+            {
+                return;
+            }
+
+            API.Instance.Database.Platforms.ItemUpdated += ItemUpdated;
+        }
+
+        public override event RenameObjectEventHandler RenameObject;
+
         public override bool CanBeAdded => false;
+
         public override bool CanBeClearedInGame => true;
+
         public override bool CanBeDeleted => false;
+
         public override bool CanBeEmptyInGame => true;
+
         public override bool CanBeModified => false;
+
         public override bool CanBeSetInGame => true;
+
         public override int Count => API.Instance.Database.Platforms?.Count ?? 0;
+
         public override bool IsList => true;
+
         public override string LabelPlural => ResourceProvider.GetString("LOCPlatformsTitle");
+
         public override string LabelSingular => ResourceProvider.GetString("LOCPlatformTitle");
+
         public override FieldType Type => FieldType.Platform;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Platforms.Add(name).Id;
@@ -130,6 +152,19 @@ namespace KNARZhelper.DatabaseObjectTypes
             {
                 API.Instance.Database.Platforms.Update(item);
             });
+        }
+
+        private void ItemUpdated(object sender, ItemUpdatedEventArgs<Platform> args)
+        {
+            if (RenameObject == null)
+            {
+                return;
+            }
+
+            foreach (ItemUpdateEvent<Platform> item in args.UpdatedItems.Where(item => item.OldData != null && item.OldData.Name != item.NewData.Name))
+            {
+                RenameObject?.Invoke(this, item.OldData.Name, item.NewData.Name);
+            }
         }
     }
 }

@@ -9,16 +9,38 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeTag : BaseType
     {
+        public TypeTag(bool adoptEvents = false)
+        {
+            if (!adoptEvents)
+            {
+                return;
+            }
+
+            API.Instance.Database.Tags.ItemUpdated += ItemUpdated;
+        }
+
+        public override event RenameObjectEventHandler RenameObject;
+
         public override bool CanBeAdded => true;
+
         public override bool CanBeClearedInGame => true;
+
         public override bool CanBeDeleted => true;
+
         public override bool CanBeEmptyInGame => true;
+
         public override bool CanBeModified => true;
+
         public override bool CanBeSetInGame => true;
+
         public override int Count => API.Instance.Database.Tags?.Count ?? 0;
+
         public override bool IsList => true;
+
         public override string LabelPlural => ResourceProvider.GetString("LOCTagsLabel");
+
         public override string LabelSingular => ResourceProvider.GetString("LOCTagLabel");
+
         public override FieldType Type => FieldType.Tag;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Tags.Add(name).Id;
@@ -130,6 +152,19 @@ namespace KNARZhelper.DatabaseObjectTypes
             {
                 API.Instance.Database.Tags.Update(item);
             });
+        }
+
+        private void ItemUpdated(object sender, ItemUpdatedEventArgs<Tag> args)
+        {
+            if (RenameObject == null)
+            {
+                return;
+            }
+
+            foreach (ItemUpdateEvent<Tag> item in args.UpdatedItems.Where(item => item.OldData != null && item.OldData.Name != item.NewData.Name))
+            {
+                RenameObject?.Invoke(this, item.OldData.Name, item.NewData.Name);
+            }
         }
     }
 }

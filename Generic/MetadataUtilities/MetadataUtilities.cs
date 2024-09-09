@@ -17,12 +17,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
+using KNARZhelper.DatabaseObjectTypes;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace MetadataUtilities
 {
     public class MetadataUtilities : GenericPlugin
     {
+        private readonly List<IDatabaseObjectType> _fieldTypes = FieldTypeHelper.GetAllTypes(true);
+
         public MetadataUtilities(IPlayniteAPI api) : base(api)
         {
             Settings = new SettingsViewModel(this);
@@ -33,13 +36,12 @@ namespace MetadataUtilities
 
             IsUpdating = false;
 
+            foreach (IDatabaseObjectType type in _fieldTypes)
+            {
+                type.RenameObject += OnRenameObject;
+            }
+
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
-            api.Database.AgeRatings.ItemUpdated += ItemUpdatedAgeRatings;
-            api.Database.Categories.ItemUpdated += ItemUpdatedCategories;
-            api.Database.Features.ItemUpdated += ItemUpdatedFeatures;
-            api.Database.Genres.ItemUpdated += ItemUpdatedGenres;
-            api.Database.Series.ItemUpdated += ItemUpdatedSeries;
-            api.Database.Tags.ItemUpdated += ItemUpdatedTags;
 
             Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
             {
@@ -58,7 +60,9 @@ namespace MetadataUtilities
         }
 
         public override Guid Id { get; } = Guid.Parse("485ab5f0-bfb1-4c17-93cc-20d8338673be");
+
         public SettingsViewModel Settings { get; }
+
         internal bool IsUpdating { get; set; }
 
         public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
@@ -95,18 +99,18 @@ namespace MetadataUtilities
             {
                 if (Settings.Settings.RemoveUnwantedOnMetadataUpdate)
                 {
-                    DoForAll(games, RemoveUnwantedAction.Instance(this));
+                    MetadataFunctions.DoForAll(this, games, RemoveUnwantedAction.Instance(this));
                 }
 
                 if (Settings.Settings.MergeMetadataOnMetadataUpdate)
                 {
-                    MergeItems(games);
+                    MetadataFunctions.MergeItems(this, games);
                 }
             }
 
             // Execute conditional actions for all games, since those take nearly every possible
             // field into account
-            DoForAll(args.UpdatedItems.Select(item => item.NewData).ToList(), ExecuteConditionalActionsAction.Instance(this));
+            MetadataFunctions.DoForAll(this, args.UpdatedItems.Select(item => item.NewData).ToList(), ExecuteConditionalActionsAction.Instance(this));
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -122,7 +126,7 @@ namespace MetadataUtilities
                 Description = "",
                 MenuSection = ResourceProvider.GetString("LOCUserScore"),
                 Action = a =>
-                    DoForAll(games, SetUserScoreAction.Instance(this), true, ActionModifierTypes.None, 0)
+                    MetadataFunctions.DoForAll(this, games, SetUserScoreAction.Instance(this), true, ActionModifierTypes.None, 0)
             };
             menuItems.Add(item);
 
@@ -134,7 +138,7 @@ namespace MetadataUtilities
                     Description = new string('\u2605', i),
                     MenuSection = ResourceProvider.GetString("LOCUserScore"),
                     Action = a =>
-                        DoForAll(games, SetUserScoreAction.Instance(this), true, ActionModifierTypes.None, rating)
+                        MetadataFunctions.DoForAll(this, games, SetUserScoreAction.Instance(this), true, ActionModifierTypes.None, rating)
                 };
                 menuItems.Add(menuItem);
             }
@@ -153,21 +157,21 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuAddDefaults"),
                     MenuSection = menuSection,
                     Icon = "muTagIcon",
-                    Action = a => DoForAll(games, AddDefaultsAction.Instance(this), true)
+                    Action = a => MetadataFunctions.DoForAll(this, games, AddDefaultsAction.Instance(this), true)
                 },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnwanted"),
                     MenuSection = menuSection,
                     Icon = "muRemoveIcon",
-                    Action = a => DoForAll(games, RemoveUnwantedAction.Instance(this), true)
+                    Action = a => MetadataFunctions.DoForAll(this, games, RemoveUnwantedAction.Instance(this), true)
                 },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuMergeMetadata"),
                     MenuSection = menuSection,
                     Icon = "muMergeIcon",
-                    Action = a => MergeItems(games, null, true)
+                    Action = a => MetadataFunctions.MergeItems(this, games, null, true)
                 }
             });
 
@@ -175,14 +179,14 @@ namespace MetadataUtilities
             {
                 Description = rule.TypeAndName,
                 MenuSection = $"{menuSection}|{mergeSection}",
-                Action = a => MergeItems(games, rule)
+                Action = a => MetadataFunctions.MergeItems(this, games, rule)
             }));
 
             menuItems.AddRange(Settings.Settings.ConditionalActions.OrderBy(x => x.Name).Select(action => new GameMenuItem
             {
                 Description = action.Name,
                 MenuSection = $"{menuSection}|{conditionalSection}",
-                Action = a => DoForAll(games, ExecuteConditionalActionsAction.Instance(this), true,
+                Action = a => MetadataFunctions.DoForAll(this, games, ExecuteConditionalActionsAction.Instance(this), true,
                     ActionModifierTypes.IsManual, action)
             }));
 
@@ -287,69 +291,6 @@ namespace MetadataUtilities
             };
         }
 
-        public void MergeItems(List<Game> games, MergeRule rule) => MergeItems(games, new List<MergeRule> { rule }, true);
-
-        public void MergeItems(List<Game> games = null, List<MergeRule> rules = null, bool showDialog = false)
-        {
-            List<Guid> gamesAffected = new List<Guid>();
-
-            IsUpdating = true;
-            Cursor.Current = Cursors.WaitCursor;
-            try
-            {
-                using (API.Instance.Database.BufferedUpdate())
-                {
-                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                        ResourceProvider.GetString("LOCMetadataUtilitiesProgressMergingItems"),
-                        false
-                    )
-                    {
-                        IsIndeterminate = true
-                    };
-
-                    API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                    {
-                        try
-                        {
-                            if (games == null)
-                            {
-                                games = new List<Game>();
-                                games.AddRange(API.Instance.Database.Games);
-                            }
-
-                            if (rules == null)
-                            {
-                                rules = new List<MergeRule>();
-                                rules.AddRange(Settings.Settings.MergeRules);
-                            }
-
-                            foreach (MergeRule rule in rules)
-                            {
-                                gamesAffected.AddMissing(rule.Merge(games));
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error(ex);
-                        }
-                    }, globalProgressOptions);
-                }
-            }
-            finally
-            {
-                IsUpdating = false;
-                Cursor.Current = Cursors.Default;
-            }
-
-            // Shows a dialog with the number of games actually affected.
-            if (!showDialog || games?.Count == 1)
-            {
-                return;
-            }
-
-            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergedMetadataMessage"), gamesAffected.Distinct().Count()));
-        }
-
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             base.OnApplicationStarted(args);
@@ -367,7 +308,7 @@ namespace MetadataUtilities
             List<Game> games = PlayniteApi.Database.Games
                 .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
 
-            DoForAll(games, AddDefaultsAction.Instance(this));
+            MetadataFunctions.DoForAll(this, games, AddDefaultsAction.Instance(this));
 
             Settings.Settings.LastAutoLibUpdate = DateTime.Now;
 
@@ -387,100 +328,6 @@ namespace MetadataUtilities
             {
                 Cursor.Current = Cursors.Default;
                 IsUpdating = false;
-            }
-        }
-
-        /// <summary>
-        /// Executes a specific action for all games in a list. Shows a progress bar and result
-        /// dialog and uses buffered update mode if the list contains more than one game.
-        /// </summary>
-        /// <param name="games">List of games to be processed</param>
-        /// <param name="action">Instance of the action to be executed</param>
-        /// <param name="showDialog">If true a dialog will be shown after completion</param>
-        /// <param name="actionModifier">
-        /// specifies the type of action to execute, if more than one is possible.
-        /// </param>
-        /// <param name="item">item to process. The type is determined by the action type modifier.</param>
-        internal void DoForAll(List<Game> games, IBaseAction action, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null)
-        {
-            IsUpdating = true;
-
-            Cursor.Current = Cursors.WaitCursor;
-            try
-            {
-                if (games.Count == 1)
-                {
-                    action.Execute(games.First(), actionModifier, item, false);
-                    action.FollowUp(actionModifier, item, false);
-                }
-                // if we have more than one game in the list, we want to start buffered mode and
-                // show a progress bar.
-                else if (games.Count > 1)
-                {
-                    int gamesAffected = 0;
-
-                    using (PlayniteApi.Database.BufferedUpdate())
-                    {
-                        if (!action.Prepare(actionModifier, item))
-                        {
-                            return;
-                        }
-
-                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                            $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")} - {action.ProgressMessage}",
-                            true
-                        )
-                        {
-                            IsIndeterminate = false
-                        };
-
-                        PlayniteApi.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                        {
-                            try
-                            {
-                                activateGlobalProgress.ProgressMaxValue = games.Count;
-
-                                foreach (Game game in games)
-                                {
-                                    activateGlobalProgress.Text =
-                                        $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}{Environment.NewLine}{action.ProgressMessage}{Environment.NewLine}{game.Name}";
-
-                                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                                    {
-                                        break;
-                                    }
-
-                                    if (action.Execute(game, actionModifier, item))
-                                    {
-                                        gamesAffected++;
-                                    }
-
-                                    activateGlobalProgress.CurrentProgressValue++;
-                                }
-
-                                action.FollowUp(actionModifier, item);
-                            }
-                            catch (Exception ex)
-                            {
-                                Log.Error(ex);
-                            }
-                        }, globalProgressOptions);
-                    }
-
-                    // Shows a dialog with the number of games actually affected.
-                    if (!showDialog)
-                    {
-                        return;
-                    }
-
-                    Cursor.Current = Cursors.Default;
-                    PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(action.ResultMessage), gamesAffected));
-                }
-            }
-            finally
-            {
-                IsUpdating = false;
-                Cursor.Current = Cursors.Default;
             }
         }
 
@@ -512,184 +359,14 @@ namespace MetadataUtilities
                     Icon = checkedCount == games.Count ? "muAllCheckedIcon" : checkedCount > 0 ? "muSomeCheckedIcon" : "",
                     Description = dbObject.Name,
                     MenuSection = baseMenu + customMenu,
-                    Action = a => DoForAll(games, QuickAddAction.Instance(this), true, action, dbObject)
+                    Action = a => MetadataFunctions.DoForAll(this, games, QuickAddAction.Instance(this), true, action, dbObject)
                 });
             }
 
             return menuItems;
         }
 
-        private void ItemUpdatedAgeRatings(object sender, ItemUpdatedEventArgs<AgeRating> args)
-        {
-            if (!Settings.Settings.RenameMergeRules)
-            {
-                return;
-            }
-
-            if (args.UpdatedItems
-                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
-                .ToList().Aggregate(false,
-                    (current, item)
-                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.AgeRating,
-                            item.OldData.Name, item.NewData.Name)))
-            {
-                SavePluginSettings(Settings.Settings);
-            }
-        }
-
-        private void ItemUpdatedCategories(object sender, ItemUpdatedEventArgs<Category> args)
-        {
-            if (!Settings.Settings.RenameDefaults && !Settings.Settings.RenameMergeRules)
-            {
-                return;
-            }
-
-            List<ItemUpdateEvent<Category>> items = args.UpdatedItems
-                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name) &&
-                               !string.IsNullOrEmpty(item.NewData.Name))
-                .ToList();
-
-            if (items.Count == 0)
-            {
-                return;
-            }
-
-            bool mustSave = false;
-
-            if (Settings.Settings.RenameDefaults)
-            {
-                foreach (ItemUpdateEvent<Category> item in items)
-                {
-                    MetadataObject tag = Settings.Settings.DefaultCategories?.FirstOrDefault(x => x.Name == item.OldData.Name);
-
-                    if (tag == null)
-                    {
-                        continue;
-                    }
-
-                    tag.Name = item.NewData.Name;
-                    mustSave = true;
-                }
-            }
-
-            if (Settings.Settings.RenameMergeRules)
-            {
-                mustSave = items.Aggregate(mustSave,
-                    (current, item)
-                        => current |
-                           Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Category, item.OldData.Name,
-                               item.NewData.Name));
-            }
-
-            if (mustSave)
-            {
-                SavePluginSettings(Settings.Settings);
-            }
-        }
-
-        private void ItemUpdatedFeatures(object sender, ItemUpdatedEventArgs<GameFeature> args)
-        {
-            if (!Settings.Settings.RenameMergeRules)
-            {
-                return;
-            }
-
-            if (args.UpdatedItems
-                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
-                .ToList().Aggregate(false,
-                    (current, item)
-                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Feature,
-                            item.OldData.Name, item.NewData.Name)))
-            {
-                SavePluginSettings(Settings.Settings);
-            }
-        }
-
-        private void ItemUpdatedGenres(object sender, ItemUpdatedEventArgs<Genre> args)
-        {
-            if (!Settings.Settings.RenameMergeRules)
-            {
-                return;
-            }
-
-            if (args.UpdatedItems
-                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
-                .ToList().Aggregate(false,
-                    (current, item)
-                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Genre,
-                            item.OldData.Name, item.NewData.Name)))
-            {
-                SavePluginSettings(Settings.Settings);
-            }
-        }
-
-        private void ItemUpdatedSeries(object sender, ItemUpdatedEventArgs<Series> args)
-        {
-            if (!Settings.Settings.RenameMergeRules)
-            {
-                return;
-            }
-
-            if (args.UpdatedItems
-                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name))
-                .ToList().Aggregate(false,
-                    (current, item)
-                        => current | Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Series,
-                            item.OldData.Name, item.NewData.Name)))
-            {
-                SavePluginSettings(Settings.Settings);
-            }
-        }
-
-        private void ItemUpdatedTags(object sender, ItemUpdatedEventArgs<Tag> args)
-        {
-            if (!Settings.Settings.RenameDefaults && !Settings.Settings.RenameMergeRules)
-            {
-                return;
-            }
-
-            List<ItemUpdateEvent<Tag>> items = args.UpdatedItems
-                .Where(item => item.OldData.Name != item.NewData.Name && !string.IsNullOrEmpty(item.OldData.Name) &&
-                               !string.IsNullOrEmpty(item.NewData.Name))
-                .ToList();
-
-            if (items.Count == 0)
-            {
-                return;
-            }
-
-            bool mustSave = false;
-
-            if (Settings.Settings.RenameDefaults)
-            {
-                foreach (ItemUpdateEvent<Tag> item in items)
-                {
-                    MetadataObject tag = Settings.Settings.DefaultTags?.FirstOrDefault(x => x.Name == item.OldData.Name);
-
-                    if (tag == null)
-                    {
-                        continue;
-                    }
-
-                    tag.Name = item.NewData.Name;
-                    mustSave = true;
-                }
-            }
-
-            if (Settings.Settings.RenameMergeRules)
-            {
-                mustSave = items.Aggregate(mustSave,
-                    (current, item)
-                        => current |
-                           Settings.Settings.MergeRules.FindAndRenameRule(FieldType.Tag, item.OldData.Name,
-                               item.NewData.Name));
-            }
-
-            if (mustSave)
-            {
-                SavePluginSettings(Settings.Settings);
-            }
-        }
+        private void OnRenameObject(object sender, string oldName, string newName) => MetadataFunctions.RenameObject(this, (IDatabaseObjectType)sender, oldName, newName);
 
         private void ShowEditor() => ShowEditor(null);
 

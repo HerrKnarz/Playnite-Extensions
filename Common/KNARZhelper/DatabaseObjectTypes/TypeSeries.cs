@@ -9,15 +9,36 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeSeries : BaseType
     {
+        public TypeSeries(bool adoptEvents = false)
+        {
+            if (!adoptEvents)
+            {
+                return;
+            }
+
+            API.Instance.Database.Series.ItemUpdated += ItemUpdated;
+        }
+
+        public override event RenameObjectEventHandler RenameObject;
+
         public override bool CanBeAdded => true;
+
         public override bool CanBeClearedInGame => true;
+
         public override bool CanBeDeleted => true;
+
         public override bool CanBeEmptyInGame => true;
+
         public override bool CanBeModified => true;
+
         public override bool CanBeSetInGame => true;
+
         public override int Count => API.Instance.Database.Series?.Count ?? 0;
+
         public override bool IsList => true;
+
         public override string LabelSingular => ResourceProvider.GetString("LOCSeriesLabel");
+
         public override FieldType Type => FieldType.Series;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Series.Add(name).Id;
@@ -129,6 +150,19 @@ namespace KNARZhelper.DatabaseObjectTypes
             {
                 API.Instance.Database.Series.Update(item);
             });
+        }
+
+        private void ItemUpdated(object sender, ItemUpdatedEventArgs<Series> args)
+        {
+            if (RenameObject == null)
+            {
+                return;
+            }
+
+            foreach (ItemUpdateEvent<Series> item in args.UpdatedItems.Where(item => item.OldData != null && item.OldData.Name != item.NewData.Name))
+            {
+                RenameObject?.Invoke(this, item.OldData.Name, item.NewData.Name);
+            }
         }
     }
 }

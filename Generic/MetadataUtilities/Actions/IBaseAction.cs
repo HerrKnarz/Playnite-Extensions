@@ -2,7 +2,7 @@
 
 namespace MetadataUtilities.Actions
 {
-    internal interface IBaseAction
+    public interface IBaseAction
     {
         /// <summary>
         /// Resource for the localized text in the progress bar

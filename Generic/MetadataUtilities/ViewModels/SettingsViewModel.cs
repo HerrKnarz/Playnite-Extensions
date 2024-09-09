@@ -225,6 +225,10 @@ namespace MetadataUtilities.ViewModels
         public ObservableCollection<FieldTypeContextAction> FieldTypeButtons { get; set; } =
                                                                                                                                                                                                                                                                             new ObservableCollection<FieldTypeContextAction>();
 
+        public RelayCommand HelpConActionCommand
+            => new RelayCommand(()
+                => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/conditional-actions/")));
+
         public RelayCommand HelpMergingCommand
             => new RelayCommand(()
                 => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/merge-rules/")));

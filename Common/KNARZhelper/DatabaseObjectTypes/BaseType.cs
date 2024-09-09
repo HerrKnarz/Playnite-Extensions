@@ -1,4 +1,5 @@
 ﻿using KNARZhelper.Enum;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,12 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public abstract class BaseType : IDatabaseObjectType
     {
+        public virtual event RenameObjectEventHandler RenameObject
+        {
+            add { }
+            remove { }
+        }
+
         public abstract bool CanBeAdded { get; }
         public abstract bool CanBeClearedInGame { get; }
         public abstract bool CanBeDeleted { get; }

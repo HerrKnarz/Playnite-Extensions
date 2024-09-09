@@ -17,7 +17,7 @@ namespace MetadataUtilities.Models
         private int _editorWindowWidth = 1200;
         private ObservableCollection<FilterType> _filterTypes = new ObservableCollection<FilterType>();
         private bool _gameGridShowCompletionStatus = true;
-        private bool _gameGridShowHidden = false;
+        private bool _gameGridShowHidden;
         private bool _gameGridShowPlatform = true;
         private bool _gameGridShowReleaseYear = true;
         private int _gameSearchWindowHeight = 700;
@@ -34,8 +34,11 @@ namespace MetadataUtilities.Models
         private bool _quickAddSingleMenuEntry;
         private bool _removeUnusedOnStartup;
         private bool _removeUnwantedOnMetadataUpdate = true;
+        private bool _renameConditionalActions = true;
         private bool _renameDefaults = true;
         private bool _renameMergeRules = true;
+        private bool _renameQuickAdd = true;
+        private bool _renameWhitelist = true;
         private bool _setDefaultTagsOnlyIfEmpty = true;
         private bool _showTopPanelButton = true;
         private bool _showTopPanelSettingsButton;
@@ -207,6 +210,12 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _removeUnwantedOnMetadataUpdate, value);
         }
 
+        public bool RenameConditionalActions
+        {
+            get => _renameConditionalActions;
+            set => SetValue(ref _renameConditionalActions, value);
+        }
+
         public bool RenameDefaults
         {
             get => _renameDefaults;
@@ -217,6 +226,18 @@ namespace MetadataUtilities.Models
         {
             get => _renameMergeRules;
             set => SetValue(ref _renameMergeRules, value);
+        }
+
+        public bool RenameQuickAdd
+        {
+            get => _renameQuickAdd;
+            set => SetValue(ref _renameQuickAdd, value);
+        }
+
+        public bool RenameWhiteList
+        {
+            get => _renameWhitelist;
+            set => SetValue(ref _renameWhitelist, value);
         }
 
         public bool SetDefaultTagsOnlyIfEmpty

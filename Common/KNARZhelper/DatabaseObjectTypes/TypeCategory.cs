@@ -9,6 +9,18 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeCategory : BaseType
     {
+        public TypeCategory(bool adoptEvents = false)
+        {
+            if (!adoptEvents)
+            {
+                return;
+            }
+
+            API.Instance.Database.Categories.ItemUpdated += ItemUpdated;
+        }
+
+        public override event RenameObjectEventHandler RenameObject;
+
         public override bool CanBeAdded => true;
         public override bool CanBeClearedInGame => true;
         public override bool CanBeDeleted => true;
@@ -130,6 +142,19 @@ namespace KNARZhelper.DatabaseObjectTypes
             {
                 API.Instance.Database.Categories.Update(item);
             });
+        }
+
+        private void ItemUpdated(object sender, ItemUpdatedEventArgs<Category> args)
+        {
+            if (RenameObject == null)
+            {
+                return;
+            }
+
+            foreach (ItemUpdateEvent<Category> item in args.UpdatedItems.Where(item => item.OldData != null && item.OldData.Name != item.NewData.Name))
+            {
+                RenameObject?.Invoke(this, item.OldData.Name, item.NewData.Name);
+            }
         }
     }
 }

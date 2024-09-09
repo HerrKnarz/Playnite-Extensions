@@ -9,16 +9,38 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeRegion : BaseType
     {
+        public TypeRegion(bool adoptEvents = false)
+        {
+            if (!adoptEvents)
+            {
+                return;
+            }
+
+            API.Instance.Database.Regions.ItemUpdated += ItemUpdated;
+        }
+
+        public override event RenameObjectEventHandler RenameObject;
+
         public override bool CanBeAdded => false;
+
         public override bool CanBeClearedInGame => true;
+
         public override bool CanBeDeleted => false;
+
         public override bool CanBeEmptyInGame => true;
+
         public override bool CanBeModified => false;
+
         public override bool CanBeSetInGame => true;
+
         public override int Count => API.Instance.Database.Regions?.Count ?? 0;
+
         public override bool IsList => true;
+
         public override string LabelPlural => ResourceProvider.GetString("LOCRegionsLabel");
+
         public override string LabelSingular => ResourceProvider.GetString("LOCRegionLabel");
+
         public override FieldType Type => FieldType.Region;
 
         public override Guid AddDbObject(string name) => API.Instance.Database.Regions.Add(name).Id;
@@ -130,6 +152,19 @@ namespace KNARZhelper.DatabaseObjectTypes
             {
                 API.Instance.Database.Regions.Update(item);
             });
+        }
+
+        private void ItemUpdated(object sender, ItemUpdatedEventArgs<Region> args)
+        {
+            if (RenameObject == null)
+            {
+                return;
+            }
+
+            foreach (ItemUpdateEvent<Region> item in args.UpdatedItems.Where(item => item.OldData != null && item.OldData.Name != item.NewData.Name))
+            {
+                RenameObject?.Invoke(this, item.OldData.Name, item.NewData.Name);
+            }
         }
     }
 }

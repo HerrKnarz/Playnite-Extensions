@@ -5,8 +5,12 @@ using System.Collections.Generic;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
+    public delegate void RenameObjectEventHandler(object sender, string oldName, string newName);
+
     public interface IDatabaseObjectType
     {
+        event RenameObjectEventHandler RenameObject;
+
         bool CanBeAdded { get; }
         bool CanBeClearedInGame { get; }
         bool CanBeDeleted { get; }

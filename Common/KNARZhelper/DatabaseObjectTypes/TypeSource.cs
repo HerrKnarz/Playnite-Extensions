@@ -9,15 +9,36 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeSource : BaseType
     {
+        public TypeSource(bool adoptEvents = false)
+        {
+            if (!adoptEvents)
+            {
+                return;
+            }
+
+            API.Instance.Database.Sources.ItemUpdated += ItemUpdated;
+        }
+
+        public override event RenameObjectEventHandler RenameObject;
+
         public override bool CanBeAdded => true;
+
         public override bool CanBeClearedInGame => true;
+
         public override bool CanBeDeleted => true;
+
         public override bool CanBeEmptyInGame => true;
+
         public override bool CanBeModified => true;
+
         public override bool CanBeSetInGame => true;
+
         public override int Count => API.Instance.Database.Sources?.Count ?? 0;
+
         public override bool IsList => false;
+
         public override string LabelPlural => ResourceProvider.GetString("LOCSourcesLabel");
+
         public override string LabelSingular => ResourceProvider.GetString("LOCSourceLabel");
 
         public override FieldType Type => FieldType.Source;
@@ -152,6 +173,19 @@ namespace KNARZhelper.DatabaseObjectTypes
             {
                 API.Instance.Database.Sources.Update(item);
             });
+        }
+
+        private void ItemUpdated(object sender, ItemUpdatedEventArgs<GameSource> args)
+        {
+            if (RenameObject == null)
+            {
+                return;
+            }
+
+            foreach (ItemUpdateEvent<GameSource> item in args.UpdatedItems.Where(item => item.OldData != null && item.OldData.Name != item.NewData.Name))
+            {
+                RenameObject?.Invoke(this, item.OldData.Name, item.NewData.Name);
+            }
         }
     }
 }
