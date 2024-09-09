@@ -35,6 +35,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Групувати елементи зі збігами</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorHideUnused">Сховати невикористані елементи</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Об'єднати</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorMergeRename">Merge rename</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Пов'язані ігри</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Прибрати невикористані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Ціль Правила</sys:String>
