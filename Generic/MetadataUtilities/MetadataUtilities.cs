@@ -322,7 +322,7 @@ namespace MetadataUtilities
 
             try
             {
-                MetadataFunctions.RemoveUnusedMetadata(Settings.Settings);
+                MetadataFunctions.RemoveUnusedMetadata(Settings.Settings, true);
             }
             finally
             {
