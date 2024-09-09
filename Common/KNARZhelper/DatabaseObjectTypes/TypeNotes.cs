@@ -13,6 +13,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeDeleted => false;
         public override bool CanBeEmptyInGame => true;
         public override bool CanBeModified => false;
+        public override bool CanBeSetByMetadataAddOn => false;
         public override bool CanBeSetInGame => false;
         public override bool IsList => false;
         public override string LabelSingular => ResourceProvider.GetString("LOCNotesLabel");

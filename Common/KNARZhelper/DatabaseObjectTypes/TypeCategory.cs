@@ -26,6 +26,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeDeleted => true;
         public override bool CanBeEmptyInGame => true;
         public override bool CanBeModified => true;
+        public override bool CanBeSetByMetadataAddOn => false;
         public override bool CanBeSetInGame => true;
         public override int Count => API.Instance.Database.Categories?.Count ?? 0;
         public override bool IsList => true;

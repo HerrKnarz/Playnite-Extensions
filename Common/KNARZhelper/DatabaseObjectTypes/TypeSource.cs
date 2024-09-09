@@ -31,6 +31,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool CanBeModified => true;
 
+        public override bool CanBeSetByMetadataAddOn => false;
+
         public override bool CanBeSetInGame => true;
 
         public override int Count => API.Instance.Database.Sources?.Count ?? 0;

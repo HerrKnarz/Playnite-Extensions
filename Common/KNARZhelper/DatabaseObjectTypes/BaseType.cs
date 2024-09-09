@@ -19,6 +19,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public abstract bool CanBeDeleted { get; }
         public abstract bool CanBeEmptyInGame { get; }
         public abstract bool CanBeModified { get; }
+        public virtual bool CanBeSetByMetadataAddOn => true;
         public abstract bool CanBeSetInGame { get; }
         public virtual int Count => 1;
         public abstract bool IsList { get; }

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
+using KNARZhelper.DatabaseObjectTypes;
 using Action = MetadataUtilities.Models.Action;
 using Condition = MetadataUtilities.Models.Condition;
 
@@ -20,6 +21,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class SettingsViewModel : ObservableObject, ISettings
     {
+        private readonly List<IDatabaseObjectType> _allFieldTypes = FieldTypeHelper.GetAllTypes();
         private readonly Dictionary<FieldType, string> _fieldTypes = FieldTypeHelper.ItemListFieldValues();
         private readonly MetadataUtilities _plugin;
         private MergeRules _mergeRules;
@@ -46,6 +48,24 @@ namespace MetadataUtilities.ViewModels
                     {
                         Name = x.Value,
                         FieldType = x.Key
+                    }
+                ));
+
+            FieldTypeButtonsExtended.AddMissing(_allFieldTypes.Where(x => x.CanBeSetInGame && x.CanBeClearedInGame && x.ValueType == ItemValueType.ItemList)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.LabelSingular,
+                        FieldType = x.Type
+                    }
+                ));
+
+            FieldTypeButtonsUnwanted.AddMissing(_allFieldTypes.Where(x => x.CanBeSetInGame && x.CanBeClearedInGame && x.CanBeSetByMetadataAddOn && x.ValueType == ItemValueType.ItemList)
+                .Select(x =>
+                    new FieldTypeContextAction
+                    {
+                        Name = x.LabelSingular,
+                        FieldType = x.Type
                     }
                 ));
 
@@ -223,7 +243,13 @@ namespace MetadataUtilities.ViewModels
             => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
 
         public ObservableCollection<FieldTypeContextAction> FieldTypeButtons { get; set; } =
-                                                                                                                                                                                                                                                                            new ObservableCollection<FieldTypeContextAction>();
+            new ObservableCollection<FieldTypeContextAction>();
+
+        public ObservableCollection<FieldTypeContextAction> FieldTypeButtonsExtended { get; set; } =
+            new ObservableCollection<FieldTypeContextAction>();
+
+        public ObservableCollection<FieldTypeContextAction> FieldTypeButtonsUnwanted { get; set; } =
+            new ObservableCollection<FieldTypeContextAction>();
 
         public RelayCommand HelpConActionCommand
             => new RelayCommand(()
@@ -242,7 +268,7 @@ namespace MetadataUtilities.ViewModels
                 => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/quick-add/")));
 
         public RelayCommand<object> MergeItemsCommand
-                    => new RelayCommand<object>(rule => _plugin.MergeItems(null, (MergeRule)rule), rule => rule != null);
+                    => new RelayCommand<object>(rule => MetadataFunctions.MergeItems(_plugin, null, (MergeRule)rule), rule => rule != null);
 
         public MergeRules MergeRules
         {

@@ -335,7 +335,7 @@
                     <StackPanel Grid.Column="1" Margin="10,0,0,0">
                         <Button Content="{DynamicResource LOCAddNewItem}"
                                 Command="{Binding AddNewUnwantedCommand}" Margin="0,0,0,10" />
-                        <ItemsControl ItemsSource="{Binding FieldTypeButtons}">
+                        <ItemsControl ItemsSource="{Binding FieldTypeButtonsUnwanted}">
                             <ItemsControl.Resources>
                                 <DataTemplate DataType="{x:Type viewModels:FieldTypeContextAction}">
                                     <Button Content="{Binding Name}" Margin="0,10,0,0"
@@ -439,7 +439,7 @@
                         </ListView.View>
                     </ListView>
                     <StackPanel Grid.Column="1" Margin="10,10,0,0">
-                        <ItemsControl ItemsSource="{Binding FieldTypeButtons}">
+                        <ItemsControl ItemsSource="{Binding FieldTypeButtonsExtended}">
                             <ItemsControl.Resources>
                                 <DataTemplate DataType="{x:Type viewModels:FieldTypeContextAction}">
                                     <Button Content="{Binding Name}" Margin="0,0,0,10"
