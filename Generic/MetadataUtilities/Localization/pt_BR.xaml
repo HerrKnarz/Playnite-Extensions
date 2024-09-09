@@ -103,8 +103,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Position</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Remover metadados não utilizados na inicialização</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Remover itens indesejados na atualização de metadados</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameConditionalActions">Automatically rename items in conditional actions when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Renomear automaticamente marcadores/categorias padrão quando o item original correspondente for renomeado.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Renomear automaticamente o alvo da regra de mesclagem quando o item original correspondente for renomeado.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Automatically rename quick add items when the corresponding original item is renamed.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Automatically rename whitelist items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Definir apenas quando nenhum marcador foi adicionado na importação de metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Mostrar a caixa de resultados após definir um valor para mais de um jogo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Show Settings button in top panel (requires restart)</sys:String>
