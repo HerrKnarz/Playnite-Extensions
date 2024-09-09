@@ -8,6 +8,26 @@
              d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ContextMenu x:Key="QuickAddContextMenu" ItemsSource="{Binding FieldTypeButtonsExtended}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddQuickAddCommand}" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
+        </ContextMenu>
+        <ContextMenu x:Key="UnwantedContextMenu" ItemsSource="{Binding FieldTypeButtonsUnwanted}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddUnwantedCommand}" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
+        </ContextMenu>
+    </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabGeneral}">
@@ -312,43 +332,32 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabRemoveUnwanted}">
             <DockPanel Margin="10">
+                <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
+                    <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
+                            Margin="0,0,10,0" Command="{Binding AddNewUnwantedCommand}"
+                            DockPanel.Dock="Left" />
+                    <Button Content="&#xec3e; &#xEF75;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
+                            Margin="0,0,10,0" ContextMenu="{StaticResource UnwantedContextMenu}" Click="b_Click"
+                            DockPanel.Dock="Left" />
+                    <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
+                            Margin="0,0,0,0" Command="{Binding RemoveUnwantedFromListCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=LbItemsToRemove}" DockPanel.Dock="Left" />
+                </DockPanel>
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RemoveUnwantedOnMetadataUpdate}">
                     <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate}" TextWrapping="Wrap" />
                 </CheckBox>
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.AddRemovedToUnwanted}" Margin="0,10,0,0">
                     <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsAddRemovedToUnwanted}" TextWrapping="Wrap" />
                 </CheckBox>
-
-                <Grid Margin="0,10,0,0" DockPanel.Dock="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="200" />
-                    </Grid.ColumnDefinitions>
-                    <ListBox Name="LbItemsToRemove" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                                 ItemsSource="{Binding Settings.UnwantedItems}" VerticalAlignment="Stretch" SelectionMode="Extended">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding TypeAndName}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                        <Button Content="{DynamicResource LOCAddNewItem}"
-                                Command="{Binding AddNewUnwantedCommand}" Margin="0,0,0,10" />
-                        <ItemsControl ItemsSource="{Binding FieldTypeButtonsUnwanted}">
-                            <ItemsControl.Resources>
-                                <DataTemplate DataType="{x:Type viewModels:FieldTypeContextAction}">
-                                    <Button Content="{Binding Name}" Margin="0,10,0,0"
-                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.AddUnwantedCommand}"
-                                            CommandParameter="{Binding FieldType}" />
-                                </DataTemplate>
-                            </ItemsControl.Resources>
-                        </ItemsControl>
-                        <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,20,0,0"
-                                Command="{Binding RemoveUnwantedFromListCommand}"
-                                CommandParameter="{Binding SelectedItems, ElementName=LbItemsToRemove}" />
-                    </StackPanel>
-                </Grid>
+                <ListBox Name="LbItemsToRemove" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                         Margin="0,10,0,0" DockPanel.Dock="Top" VerticalAlignment="Stretch" SelectionMode="Extended"
+                         ItemsSource="{Binding Settings.UnwantedItems}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TypeAndName}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </DockPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabPrefixes}">
@@ -368,6 +377,14 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabQuickAdd}">
             <DockPanel Margin="10">
+                <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
+                    <Button Content="&#xec3e; &#xEF75;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
+                            Margin="0,0,10,0" ContextMenu="{StaticResource QuickAddContextMenu}" Click="b_Click"
+                            DockPanel.Dock="Left" />
+                    <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
+                            Margin="0,0,0,0" Command="{Binding RemoveQuickAddFromListCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=LvQuickAdd}" DockPanel.Dock="Left" />
+                </DockPanel>
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -391,68 +408,48 @@
                     <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
                             Command="{Binding HelpQuickAddCommand}" Margin="10,0,0,0" ToolTip="{DynamicResource LOCMenuHelpTitle}" />
                 </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="150" />
-                    </Grid.ColumnDefinitions>
-                    <ListView Grid.Column="0" Name="LvQuickAdd" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0"
-                              ItemsSource="{Binding Settings.QuickAddObjects}" HorizontalContentAlignment="Stretch"
-                              VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCNameLabel}"
+                <ListView Name="LvQuickAdd" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0"
+                          ItemsSource="{Binding Settings.QuickAddObjects}" HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCNameLabel}"
                                                 DisplayMemberBinding="{Binding TypeAndName}" />
-                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCAddTitle}">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCAddTitle}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                       HorizontalAlignment="Center" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCRemoveLabel}">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCRemoveLabel}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                       HorizontalAlignment="Center" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsToggle}">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsToggle}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
                                                       HorizontalAlignment="Center" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="200" Header="{DynamicResource LOCMetadataUtilitiesSettingsCustomPath}">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBox Text="{Binding CustomPath, UpdateSourceTrigger=PropertyChanged}"
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="200" Header="{DynamicResource LOCMetadataUtilitiesSettingsCustomPath}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding CustomPath, UpdateSourceTrigger=PropertyChanged}"
                                                      VerticalAlignment="Center" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <StackPanel Grid.Column="1" Margin="10,10,0,0">
-                        <ItemsControl ItemsSource="{Binding FieldTypeButtonsExtended}">
-                            <ItemsControl.Resources>
-                                <DataTemplate DataType="{x:Type viewModels:FieldTypeContextAction}">
-                                    <Button Content="{Binding Name}" Margin="0,0,0,10"
-                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.AddQuickAddCommand}"
-                                            CommandParameter="{Binding FieldType}" />
-                                </DataTemplate>
-                            </ItemsControl.Resources>
-                        </ItemsControl>
-                        <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,10,0,0"
-                                Command="{Binding RemoveQuickAddFromListCommand}"
-                                CommandParameter="{Binding SelectedItems, ElementName=LvQuickAdd}" />
-                    </StackPanel>
-                </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </DockPanel>
         </TabItem>
     </TabControl>
