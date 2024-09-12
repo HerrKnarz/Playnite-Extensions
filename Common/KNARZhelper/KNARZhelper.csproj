@@ -48,6 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseObjectHelper.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseCompanyType.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseListType.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseObjectType.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseSingleObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseType.cs" />
     <Compile Include="DatabaseObjectTypes\TypeCriticScore.cs" />
     <Compile Include="DatabaseObjectTypes\TypeBackground.cs" />

@@ -55,6 +55,18 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectHelper.cs">
       <Link>Shared\DatabaseObjectHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseCompanyType.cs">
+      <Link>Shared\BaseCompanyType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseListType.cs">
+      <Link>Shared\BaseListType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseObjectType.cs">
+      <Link>Shared\BaseObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseSingleObjectType.cs">
+      <Link>Shared\BaseSingleObjectType.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseType.cs">
       <Link>Shared\BaseType.cs</Link>
     </Compile>
