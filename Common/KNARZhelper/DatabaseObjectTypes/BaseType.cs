@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public abstract class BaseType : IDatabaseObjectType
+    public abstract class BaseType : IEditableObjectType, IClearAbleType, IValueType, INumberType
     {
         public virtual event RenameObjectEventHandler RenameObject
         {

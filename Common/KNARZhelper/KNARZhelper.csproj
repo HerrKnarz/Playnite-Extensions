@@ -49,7 +49,9 @@
   <ItemGroup>
     <Compile Include="DatabaseObjectHelper.cs" />
     <Compile Include="DatabaseObjectTypes\BaseCompanyType.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseIntegerType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseListType.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseMediaType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseSingleObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseStringType.cs" />
@@ -81,7 +83,6 @@
     <Compile Include="DatabaseObjectTypes\TypePlatform.cs" />
     <Compile Include="DatabaseObjectTypes\TypeAgeRating.cs" />
     <Compile Include="DatabaseObjectTypes\TypeCategory.cs" />
-    <Compile Include="DatabaseObjectTypes\IDatabaseObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\TypeFeature.cs" />
     <Compile Include="DatabaseObjectTypes\TypeGenre.cs" />
     <Compile Include="DatabaseObjectTypes\TypePlayCount.cs" />
