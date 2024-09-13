@@ -16,7 +16,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class ConditionalActionEditorViewModel : ObservableObject
     {
-        private readonly List<IFieldType> _fieldTypes = FieldTypeHelper.GetAllTypes();
+        private readonly List<IMetadataFieldType> _fieldTypes = FieldTypeHelper.GetAllTypes();
         private readonly Settings _settings;
         private ConditionalAction _conditionalAction;
 

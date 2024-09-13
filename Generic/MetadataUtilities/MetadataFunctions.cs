@@ -252,7 +252,7 @@ namespace MetadataUtilities
             return temporaryList;
         }
 
-        public static void RenameObject(MetadataUtilities plugin, IFieldType type, string oldName, string newName)
+        public static void RenameObject(MetadataUtilities plugin, IMetadataFieldType type, string oldName, string newName)
         {
             bool mustSave = false;
 

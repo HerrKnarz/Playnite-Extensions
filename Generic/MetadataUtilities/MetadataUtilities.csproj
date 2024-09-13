@@ -72,8 +72,8 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IEditableObjectType.cs">
       <Link>Shared\IEditableObjectType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IFieldType.cs">
-      <Link>Shared\IFieldType.cs</Link>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IMetadataFieldType.cs">
+      <Link>Shared\IMetadataFieldType.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\INumberType.cs">
       <Link>Shared\INumberType.cs</Link>

@@ -43,9 +43,9 @@ namespace KNARZhelper.Enum
 
     public static class FieldTypeHelper
     {
-        public static IEnumerable<T> GetAllTypes<T>(bool adoptEvents = false) where T : IFieldType
+        public static IEnumerable<T> GetAllTypes<T>(bool adoptEvents = false) where T : IMetadataFieldType
         {
-            foreach (IFieldType type in GetAllTypes(adoptEvents))
+            foreach (IMetadataFieldType type in GetAllTypes(adoptEvents))
             {
                 if (type is T specificType)
                 {
@@ -54,8 +54,8 @@ namespace KNARZhelper.Enum
             }
         }
 
-        public static List<IFieldType> GetAllTypes(bool adoptEvents = false) =>
-            new List<IFieldType>()
+        public static List<IMetadataFieldType> GetAllTypes(bool adoptEvents = false) =>
+            new List<IMetadataFieldType>()
             {
                         new TypeAgeRating(adoptEvents),
                         new TypeBackground(),
@@ -94,7 +94,7 @@ namespace KNARZhelper.Enum
         public static IEnumerable<IEditableObjectType> GetItemListTypes() => GetAllTypes<IEditableObjectType>()
             .Where(x => x.ValueType == ItemValueType.ItemList && x.CanBeSetInGame && x.IsList && x.CanBeModified);
 
-        public static IFieldType GetTypeManager(this FieldType e)
+        public static IMetadataFieldType GetTypeManager(this FieldType e)
         {
             switch (e)
             {

@@ -21,7 +21,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class SettingsViewModel : ObservableObject, ISettings
     {
-        private readonly List<IFieldType> _allFieldTypes = FieldTypeHelper.GetAllTypes();
+        private readonly List<IMetadataFieldType> _allFieldTypes = FieldTypeHelper.GetAllTypes();
         private readonly Dictionary<FieldType, string> _fieldTypes = FieldTypeHelper.ItemListFieldValues();
         private readonly MetadataUtilities _plugin;
         private MergeRules _mergeRules;

@@ -1,6 +1,6 @@
 ﻿namespace KNARZhelper.DatabaseObjectTypes
 {
-    public interface IDatabaseObjectType : IFieldType, IObjectType, IEditableObjectType, IClearAbleType, IValueType, INumberType
+    public interface IDatabaseObjectType : IMetadataFieldType, IObjectType, IEditableObjectType, IClearAbleType, IValueType, INumberType
     {
     }
 }

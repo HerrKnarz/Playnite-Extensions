@@ -56,7 +56,7 @@
     <Compile Include="DatabaseObjectTypes\BaseType.cs" />
     <Compile Include="DatabaseObjectTypes\IClearAbleType.cs" />
     <Compile Include="DatabaseObjectTypes\IEditableObjectType.cs" />
-    <Compile Include="DatabaseObjectTypes\IFieldType.cs" />
+    <Compile Include="DatabaseObjectTypes\IMetadataFieldType.cs" />
     <Compile Include="DatabaseObjectTypes\INumberType.cs" />
     <Compile Include="DatabaseObjectTypes\IObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\IValueType.cs" />

@@ -22,7 +22,7 @@ namespace MetadataUtilities.Models
         private bool _selected;
         private bool _showGrouped;
         private FieldType _type;
-        private IFieldType _typeManager;
+        private IMetadataFieldType _typeManager;
 
         public MetadataObject(Settings settings) => _settings = settings;
 
@@ -158,7 +158,7 @@ namespace MetadataUtilities.Models
         public string TypeLabel => TypeManager.LabelSingular;
 
         [DontSerialize]
-        public IFieldType TypeManager
+        public IMetadataFieldType TypeManager
         { get => _typeManager; set => SetValue(ref _typeManager, value); }
 
         public Guid AddToDb()

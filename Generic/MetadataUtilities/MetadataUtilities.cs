@@ -371,7 +371,7 @@ namespace MetadataUtilities
             return menuItems;
         }
 
-        private void OnRenameObject(object sender, string oldName, string newName) => MetadataFunctions.RenameObject(this, (IFieldType)sender, oldName, newName);
+        private void OnRenameObject(object sender, string oldName, string newName) => MetadataFunctions.RenameObject(this, (IMetadataFieldType)sender, oldName, newName);
 
         private void ShowEditor() => ShowEditor(null);
 

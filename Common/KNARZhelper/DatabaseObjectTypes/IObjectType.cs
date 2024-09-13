@@ -4,7 +4,7 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public interface IObjectType : IFieldType
+    public interface IObjectType : IMetadataFieldType
     {
         int Count { get; }
         bool IsList { get; }
