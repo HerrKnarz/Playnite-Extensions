@@ -70,8 +70,26 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseType.cs">
       <Link>Shared\BaseType.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IClearAbleType.cs">
+      <Link>Shared\IClearAbleType.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IDatabaseObjectType.cs">
       <Link>Shared\IDatabaseObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IEditableObjectType.cs">
+      <Link>Shared\IEditableObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IFieldType.cs">
+      <Link>Shared\IFieldType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\INumberType.cs">
+      <Link>Shared\INumberType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IObjectType.cs">
+      <Link>Shared\IObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IValueType.cs">
+      <Link>Shared\IValueType.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeAgeRating.cs">
       <Link>Shared\TypeAgeRating.cs</Link>

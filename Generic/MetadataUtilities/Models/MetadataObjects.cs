@@ -17,7 +17,7 @@ namespace MetadataUtilities.Models
 {
     public class MetadataObjects : ObservableCollection<MetadataObject>
     {
-        private readonly IDatabaseObjectType _typeManager;
+        private readonly IObjectType _typeManager;
 
         /// <summary>
         /// Only used for deserializing the settings. Needs to use the "ResetReferences" method of
@@ -29,7 +29,11 @@ namespace MetadataUtilities.Models
         public MetadataObjects(Settings settings, FieldType? type = null)
         {
             Settings = settings;
-            _typeManager = type?.GetTypeManager();
+
+            if (type?.GetTypeManager() is IObjectType objectType)
+            {
+                _typeManager = objectType;
+            }
         }
 
         [DontSerialize]
@@ -119,13 +123,11 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
-                    List<IDatabaseObjectType> types = new List<IDatabaseObjectType>();
-
-                    types.AddRange(FieldTypeHelper.ItemListFieldValues().Keys.Select(x => x.GetTypeManager()));
+                    List<IEditableObjectType> types = FieldTypeHelper.GetItemListTypes().ToList();
 
                     foreach (Game game in games)
                     {
-                        foreach (IDatabaseObjectType type in types)
+                        foreach (IEditableObjectType type in types)
                         {
                             temporaryList.AddMissing(type.LoadGameMetadata(game).Select(x =>
                                 new MetadataObject(Settings)
@@ -156,7 +158,7 @@ namespace MetadataUtilities.Models
 
             List<MetadataObject> temporaryList = new List<MetadataObject>();
 
-            List<IDatabaseObjectType> types = new List<IDatabaseObjectType>();
+            List<IObjectType> types = new List<IObjectType>();
 
             if (_typeManager != null)
             {
@@ -164,11 +166,11 @@ namespace MetadataUtilities.Models
             }
             else if (onlyMergeAble)
             {
-                types.AddRange(FieldTypeHelper.ItemListFieldValues().Keys.Select(x => x.GetTypeManager()));
+                types.AddRange(FieldTypeHelper.GetItemListTypes());
             }
             else
             {
-                types.AddRange(FieldTypeHelper.GetAllTypes());
+                types.AddRange(FieldTypeHelper.GetAllTypes<IObjectType>());
             }
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
@@ -183,7 +185,7 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
-                    foreach (IDatabaseObjectType typeManager in types)
+                    foreach (IObjectType typeManager in types)
                     {
                         temporaryList.AddRange(typeManager.LoadAllMetadata().Select(x => new MetadataObject(Settings)
                         {
@@ -217,12 +219,12 @@ namespace MetadataUtilities.Models
             }
         }
 
-        private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames, IDatabaseObjectType typeManager = null, bool onlyMergeAble = true)
+        private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames, IObjectType typeManager = null, bool onlyMergeAble = true)
         {
             Log.Debug("=== UpdateGameCounts: Start ===");
             DateTime ts = DateTime.Now;
 
-            List<IDatabaseObjectType> types = new List<IDatabaseObjectType>();
+            List<IObjectType> types = new List<IObjectType>();
 
             if (typeManager != null)
             {
@@ -230,11 +232,11 @@ namespace MetadataUtilities.Models
             }
             else if (onlyMergeAble)
             {
-                types.AddRange(FieldTypeHelper.ItemListFieldValues().Keys.Select(x => x.GetTypeManager()));
+                types.AddRange(FieldTypeHelper.GetItemListTypes());
             }
             else
             {
-                types.AddRange(FieldTypeHelper.GetAllTypes());
+                types.AddRange(FieldTypeHelper.GetAllTypes<IObjectType>());
             }
 
             ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
@@ -250,7 +252,7 @@ namespace MetadataUtilities.Models
 
             Parallel.ForEach(API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden)), opts, game =>
             {
-                foreach (IDatabaseObjectType type in types)
+                foreach (IObjectType type in types)
                 {
                     type.LoadGameMetadata(game).ForEach(o => items.Enqueue(o.Id));
                 }

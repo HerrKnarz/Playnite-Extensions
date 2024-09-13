@@ -24,7 +24,7 @@ namespace MetadataUtilities
 {
     public class MetadataUtilities : GenericPlugin
     {
-        private readonly List<IDatabaseObjectType> _fieldTypes = FieldTypeHelper.GetAllTypes(true);
+        private readonly List<IEditableObjectType> _fieldTypes = FieldTypeHelper.GetAllTypes<IEditableObjectType>(true).ToList();
 
         public MetadataUtilities(IPlayniteAPI api) : base(api)
         {
@@ -36,7 +36,7 @@ namespace MetadataUtilities
 
             IsUpdating = false;
 
-            foreach (IDatabaseObjectType type in _fieldTypes)
+            foreach (IEditableObjectType type in _fieldTypes)
             {
                 type.RenameObject += OnRenameObject;
             }
@@ -352,7 +352,12 @@ namespace MetadataUtilities
                         ? Settings.Settings.QuickAddCustomPath.Replace("{type}", dbObject.Type.ToString()).Replace("{action}", action.ToString())
                         : string.Format(ResourceProvider.GetString($"LOCMetadataUtilitiesMenuQuickAdd{action}"), ResourceProvider.GetString($"LOC{dbObject.Type}Label"));
 
-                int checkedCount = dbObject.Type.GetTypeManager().GetGameCount(games, dbObject.Id);
+                int checkedCount = 0;
+
+                if (dbObject.Type.GetTypeManager() is IObjectType type)
+                {
+                    checkedCount = type.GetGameCount(games, dbObject.Id);
+                }
 
                 menuItems.Add(new GameMenuItem
                 {
@@ -366,7 +371,7 @@ namespace MetadataUtilities
             return menuItems;
         }
 
-        private void OnRenameObject(object sender, string oldName, string newName) => MetadataFunctions.RenameObject(this, (IDatabaseObjectType)sender, oldName, newName);
+        private void OnRenameObject(object sender, string oldName, string newName) => MetadataFunctions.RenameObject(this, (IFieldType)sender, oldName, newName);
 
         private void ShowEditor() => ShowEditor(null);
 

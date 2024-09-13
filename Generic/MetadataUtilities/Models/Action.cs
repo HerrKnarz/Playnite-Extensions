@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
+using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Models
@@ -90,10 +91,10 @@ namespace MetadataUtilities.Models
                     switch (TypeManager.ValueType)
                     {
                         case ItemValueType.Integer:
-                            return TypeManager.AddValueToGame(game, IntValue);
+                            return TypeManager is IValueType intType && intType.AddValueToGame(game, IntValue);
 
                         case ItemValueType.Date:
-                            return TypeManager.AddValueToGame(game, DateValue);
+                            return TypeManager is IValueType dateType && dateType.AddValueToGame(game, DateValue);
 
                         case ItemValueType.Boolean:
                         case ItemValueType.ItemList:
@@ -107,7 +108,11 @@ namespace MetadataUtilities.Models
                     return RemoveFromGame(game);
 
                 case ActionType.ClearField:
-                    TypeManager.EmptyFieldInGame(game);
+                    if (TypeManager is IClearAbleType type)
+                    {
+                        type.EmptyFieldInGame(game);
+                    }
+
                     return true;
 
                 default:

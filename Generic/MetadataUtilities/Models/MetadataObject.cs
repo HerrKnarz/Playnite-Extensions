@@ -7,7 +7,6 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Playnite.SDK.Plugins;
 
 namespace MetadataUtilities.Models
 {
@@ -23,7 +22,7 @@ namespace MetadataUtilities.Models
         private bool _selected;
         private bool _showGrouped;
         private FieldType _type;
-        private IDatabaseObjectType _typeManager;
+        private IFieldType _typeManager;
 
         public MetadataObject(Settings settings) => _settings = settings;
 
@@ -68,9 +67,9 @@ namespace MetadataUtilities.Models
         {
             get
             {
-                if (_id == default)
+                if (_id == default && TypeManager is IObjectType type)
                 {
-                    _id = TypeManager.GetDbObjectId(Name);
+                    _id = type.GetDbObjectId(Name);
                 }
 
                 return _id;
@@ -159,28 +158,40 @@ namespace MetadataUtilities.Models
         public string TypeLabel => TypeManager.LabelSingular;
 
         [DontSerialize]
-        public IDatabaseObjectType TypeManager
+        public IFieldType TypeManager
         { get => _typeManager; set => SetValue(ref _typeManager, value); }
 
         public Guid AddToDb()
         {
-            Id = TypeManager.AddDbObject(Name);
+            if (TypeManager is IEditableObjectType type)
+            {
+                Id = type.AddDbObject(Name);
+            }
 
             return Id;
         }
 
-        public bool AddToGame(Game game) => TypeManager.AddDbObjectToGame(game, Id);
+        public bool AddToGame(Game game) => TypeManager is IEditableObjectType type && type.AddDbObjectToGame(game, Id);
 
         public void CheckGroup(List<MetadataObject> metadataList)
             => ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && !x.Equals(this));
 
-        public bool ExistsInDb() => TypeManager.DbObjectExists(Name);
+        public bool ExistsInDb() => TypeManager is IObjectType type && type.DbObjectExists(Name);
 
-        public bool ExistsInGame(Game game) => TypeManager.DbObjectInGame(game, Id);
+        public bool ExistsInGame(Game game) => TypeManager is IObjectType type && type.DbObjectInGame(game, Id);
 
-        public void GetGameCount() => GameCount = TypeManager.GetGameCount(Id, _settings.IgnoreHiddenGamesInGameCount);
+        public void GetGameCount()
+        {
+            if (TypeManager is IObjectType type)
+            {
+                GameCount = type.GetGameCount(Id, _settings.IgnoreHiddenGamesInGameCount);
+            }
+        }
 
-        public List<Game> GetGames() => TypeManager.GetGames(Id, _settings.IgnoreHiddenGamesInGameCount);
+        public List<Game> GetGames() =>
+            TypeManager is IObjectType type
+                ? type.GetGames(Id, _settings.IgnoreHiddenGamesInGameCount)
+                : new List<Game>();
 
         public string GetPrefix()
         {
@@ -200,13 +211,18 @@ namespace MetadataUtilities.Models
             return string.Empty;
         }
 
-        public bool IsUsed() => TypeManager.DbObjectInUse(Id);
+        public bool IsUsed() => TypeManager is IObjectType type && type.DbObjectInUse(Id);
 
-        public bool NameExists() => TypeManager.NameExists(Name, Id);
+        public bool NameExists() => TypeManager is IObjectType type && type.NameExists(Name, Id);
 
         public bool RemoveFromDb(bool checkIfUsed = true)
         {
-            if (!TypeManager.RemoveDbObject(Id, checkIfUsed))
+            if (!(TypeManager is IEditableObjectType type))
+            {
+                return false;
+            }
+
+            if (!type.RemoveDbObject(Id, checkIfUsed))
             {
                 return false;
             }
@@ -215,12 +231,17 @@ namespace MetadataUtilities.Models
             return true;
         }
 
-        public bool RemoveFromGame(Game game) => TypeManager.RemoveObjectFromGame(game, Id);
+        public bool RemoveFromGame(Game game) => TypeManager is IEditableObjectType type && type.RemoveObjectFromGame(game, Id);
 
         public IEnumerable<Guid> ReplaceInDb(List<Game> games, FieldType? newType = null, Guid? newId = null,
             bool removeAfter = true)
         {
-            IEnumerable<Guid> gameIds = TypeManager.ReplaceDbObject(games, Id, newType, newId, removeAfter);
+            IEnumerable<Guid> gameIds = new List<Guid>();
+
+            if (TypeManager is IEditableObjectType type)
+            {
+                gameIds = type.ReplaceDbObject(games, Id, newType, newId, removeAfter);
+            }
 
             if (removeAfter)
             {
@@ -250,6 +271,8 @@ namespace MetadataUtilities.Models
         }
 
         public DbInteractionResult UpdateName(string newName) =>
-                    TypeManager.UpdateName(Id, Name, newName);
+            TypeManager is IEditableObjectType type
+                ? type.UpdateName(Id, Name, newName)
+                : DbInteractionResult.Error;
     }
 }

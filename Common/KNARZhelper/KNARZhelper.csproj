@@ -52,7 +52,14 @@
     <Compile Include="DatabaseObjectTypes\BaseListType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseSingleObjectType.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseStringType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseType.cs" />
+    <Compile Include="DatabaseObjectTypes\IClearAbleType.cs" />
+    <Compile Include="DatabaseObjectTypes\IEditableObjectType.cs" />
+    <Compile Include="DatabaseObjectTypes\IFieldType.cs" />
+    <Compile Include="DatabaseObjectTypes\INumberType.cs" />
+    <Compile Include="DatabaseObjectTypes\IObjectType.cs" />
+    <Compile Include="DatabaseObjectTypes\IValueType.cs" />
     <Compile Include="DatabaseObjectTypes\TypeCriticScore.cs" />
     <Compile Include="DatabaseObjectTypes\TypeBackground.cs" />
     <Compile Include="DatabaseObjectTypes\TypeCommunityScore.cs" />

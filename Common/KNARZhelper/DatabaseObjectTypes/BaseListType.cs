@@ -21,8 +21,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => GameGuids(x).Contains(id));
 
-        public override bool DbObjectInUse(List<Game> games, Guid id) => games.Any(x => GameGuids(x).Contains(id));
-
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => GameGuids(game, true).Clear());
 
         public override bool FieldInGameIsEmpty(Game game) => GameGuids(game).Count == 0;

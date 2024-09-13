@@ -5,6 +5,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using KNARZhelper.DatabaseObjectTypes;
 
 namespace MetadataUtilities.Actions
 {
@@ -19,11 +20,11 @@ namespace MetadataUtilities.Actions
         {
             Settings = plugin.Settings.Settings;
 
-            foreach (FieldType type in FieldTypeHelper.ItemListFieldValues().Keys)
+            foreach (IEditableObjectType type in FieldTypeHelper.GetItemListTypes())
             {
-                _types.Add(type, new ItemList
+                _types.Add(type.Type, new ItemList
                 {
-                    ObjectType = type.GetTypeManager(),
+                    ObjectType = type,
                     Items = new List<Guid>()
                 });
             }

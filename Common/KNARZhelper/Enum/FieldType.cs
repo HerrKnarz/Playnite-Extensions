@@ -43,8 +43,19 @@ namespace KNARZhelper.Enum
 
     public static class FieldTypeHelper
     {
-        public static List<IDatabaseObjectType> GetAllTypes(bool adoptEvents = false) =>
-            new List<IDatabaseObjectType>()
+        public static IEnumerable<T> GetAllTypes<T>(bool adoptEvents = false) where T : IFieldType
+        {
+            foreach (IFieldType type in GetAllTypes(adoptEvents))
+            {
+                if (type is T specificType)
+                {
+                    yield return specificType;
+                }
+            }
+        }
+
+        public static List<IFieldType> GetAllTypes(bool adoptEvents = false) =>
+            new List<IFieldType>()
             {
                         new TypeAgeRating(adoptEvents),
                         new TypeBackground(),
@@ -80,7 +91,10 @@ namespace KNARZhelper.Enum
                         new TypeUserScore(),
             };
 
-        public static IDatabaseObjectType GetTypeManager(this FieldType e)
+        public static IEnumerable<IEditableObjectType> GetItemListTypes() => GetAllTypes<IEditableObjectType>()
+            .Where(x => x.ValueType == ItemValueType.ItemList && x.CanBeSetInGame && x.IsList && x.CanBeModified);
+
+        public static IFieldType GetTypeManager(this FieldType e)
         {
             switch (e)
             {
@@ -185,8 +199,7 @@ namespace KNARZhelper.Enum
             }
         }
 
-        public static Dictionary<FieldType, string> ItemListFieldValues() => GetAllTypes()
-            .Where(x => x.ValueType == ItemValueType.ItemList && x.CanBeSetInGame && x.IsList && x.CanBeModified)
+        public static Dictionary<FieldType, string> ItemListFieldValues() => GetItemListTypes()
             .ToDictionary(type => type.Type, type => type.LabelSingular);
     }
 }

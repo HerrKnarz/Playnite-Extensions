@@ -34,8 +34,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => x.OverrideInstallState);
 
-        public override bool DbObjectInUse(List<Game> games, Guid id) => games.Any(x => x.OverrideInstallState);
-
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.OverrideInstallState = false);
 
         public override bool FieldInGameIsEmpty(Game game) => !game.OverrideInstallState;

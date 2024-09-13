@@ -36,8 +36,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => x.Favorite);
 
-        public override bool DbObjectInUse(List<Game> games, Guid id) => games.Any(x => x.Favorite);
-
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.Favorite = false);
 
         public override bool FieldInGameIsEmpty(Game game) => !game.Favorite;

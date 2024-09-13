@@ -183,7 +183,7 @@ namespace MetadataUtilities
         {
             List<MetadataObject> temporaryList = new List<MetadataObject>();
 
-            List<IDatabaseObjectType> types = FieldTypeHelper.ItemListFieldValues().Keys.Select(x => x.GetTypeManager()).ToList();
+            List<IEditableObjectType> types = FieldTypeHelper.GetItemListTypes().ToList();
 
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
@@ -197,7 +197,7 @@ namespace MetadataUtilities
             {
                 try
                 {
-                    foreach (IDatabaseObjectType type in types)
+                    foreach (IEditableObjectType type in types)
                     {
                         temporaryList.AddRange(type.LoadUnusedMetadata(settings.IgnoreHiddenGamesInRemoveUnused).Select(x
                             => new MetadataObject(settings)
@@ -252,7 +252,7 @@ namespace MetadataUtilities
             return temporaryList;
         }
 
-        public static void RenameObject(MetadataUtilities plugin, IDatabaseObjectType type, string oldName, string newName)
+        public static void RenameObject(MetadataUtilities plugin, IFieldType type, string oldName, string newName)
         {
             bool mustSave = false;
 

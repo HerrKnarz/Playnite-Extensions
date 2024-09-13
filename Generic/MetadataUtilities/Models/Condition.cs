@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
+using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Models
@@ -89,16 +90,20 @@ namespace MetadataUtilities.Models
                     return !ExistsInGame(game);
 
                 case ComparatorType.IsEmpty:
-                    return TypeManager.FieldInGameIsEmpty(game);
+                    return TypeManager is IClearAbleType emptyType && emptyType.FieldInGameIsEmpty(game);
 
                 case ComparatorType.IsNotEmpty:
-                    return !TypeManager.FieldInGameIsEmpty(game);
+                    return TypeManager is IClearAbleType notEmptyType && !notEmptyType.FieldInGameIsEmpty(game);
 
                 case ComparatorType.IsBiggerThan:
-                    return TypeManager.ValueType == ItemValueType.Integer ? TypeManager.IsBiggerThan(game, IntValue) : TypeManager.IsBiggerThan(game, DateValue);
+                    return TypeManager is INumberType biggerType && (TypeManager.ValueType == ItemValueType.Integer
+                        ? biggerType.IsBiggerThan(game, IntValue)
+                        : biggerType.IsBiggerThan(game, DateValue));
 
                 case ComparatorType.IsSmallerThan:
-                    return TypeManager.ValueType == ItemValueType.Integer ? TypeManager.IsSmallerThan(game, IntValue) : TypeManager.IsSmallerThan(game, DateValue);
+                    return TypeManager is INumberType smallerType && (TypeManager.ValueType == ItemValueType.Integer
+                        ? smallerType.IsSmallerThan(game, IntValue)
+                        : smallerType.IsSmallerThan(game, DateValue));
 
                 default:
                     throw new ArgumentOutOfRangeException();

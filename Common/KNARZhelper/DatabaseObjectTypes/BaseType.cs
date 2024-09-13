@@ -34,8 +34,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public virtual bool AddDbObjectToGame(Game game, Guid id) => false;
 
-        public bool AddDbObjectToGame(Game game, string name) => AddDbObjectToGame(game, AddDbObject(name));
-
         public virtual bool AddValueToGame<T>(Game game, T value) => false;
 
         public virtual bool DbObjectExists(string name) => false;
@@ -45,8 +43,6 @@ namespace KNARZhelper.DatabaseObjectTypes
         public virtual bool DbObjectInGame(Game game, Guid id) => false;
 
         public virtual bool DbObjectInUse(Guid id) => false;
-
-        public virtual bool DbObjectInUse(List<Game> games, Guid id) => false;
 
         public virtual void EmptyFieldInGame(Game game)
         { }

@@ -1,6 +1,7 @@
 ﻿using KNARZhelper.Enum;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
+using KNARZhelper.DatabaseObjectTypes;
 
 namespace MetadataUtilities.Models
 {
@@ -37,6 +38,6 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _fieldType, value);
         }
 
-        public void UpdateCount() => Count = Type.GetTypeManager().Count;
+        public void UpdateCount() => Count = Type.GetTypeManager() is IObjectType type ? type.Count : 0;
     }
 }
