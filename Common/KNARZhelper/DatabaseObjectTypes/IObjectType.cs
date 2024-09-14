@@ -4,7 +4,7 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public interface IObjectType : IMetadataFieldType
+    public interface IObjectType : IMetadataFieldType, IGameInfoType
     {
         int Count { get; }
         bool IsList { get; }
@@ -18,12 +18,6 @@ namespace KNARZhelper.DatabaseObjectTypes
         bool DbObjectInUse(Guid id);
 
         Guid GetDbObjectId(string name);
-
-        int GetGameCount(Guid id, bool ignoreHidden = false);
-
-        int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false);
-
-        List<Game> GetGames(Guid id, bool ignoreHidden = false);
 
         List<DatabaseObject> LoadAllMetadata();
 

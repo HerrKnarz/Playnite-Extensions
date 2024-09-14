@@ -97,6 +97,8 @@ namespace MetadataUtilities.Models
                             return TypeManager is IValueType dateType && dateType.AddValueToGame(game, DateValue);
 
                         case ItemValueType.Boolean:
+                            return TypeManager is IValueType boolType && boolType.AddValueToGame(game, true);
+
                         case ItemValueType.ItemList:
                         case ItemValueType.Media:
                         case ItemValueType.None:

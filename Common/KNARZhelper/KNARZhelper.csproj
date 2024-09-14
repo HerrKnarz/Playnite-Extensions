@@ -48,7 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseObjectHelper.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseBooleanType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseCompanyType.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseDateType.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseEditableDateType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseIntegerType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseListType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseMediaType.cs" />
@@ -58,6 +61,7 @@
     <Compile Include="DatabaseObjectTypes\BaseType.cs" />
     <Compile Include="DatabaseObjectTypes\IClearAbleType.cs" />
     <Compile Include="DatabaseObjectTypes\IEditableObjectType.cs" />
+    <Compile Include="DatabaseObjectTypes\IGameInfoType.cs" />
     <Compile Include="DatabaseObjectTypes\IMetadataFieldType.cs" />
     <Compile Include="DatabaseObjectTypes\INumberType.cs" />
     <Compile Include="DatabaseObjectTypes\IObjectType.cs" />

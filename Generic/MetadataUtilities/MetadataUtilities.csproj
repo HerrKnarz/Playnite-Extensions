@@ -48,8 +48,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseBooleanType.cs">
+      <Link>Shared\BaseBooleanType.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseCompanyType.cs">
       <Link>Shared\BaseCompanyType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseDateType.cs">
+      <Link>Shared\BaseDateType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseEditableDateType.cs">
+      <Link>Shared\BaseEditableDateType.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseIntegerType.cs">
       <Link>Shared\BaseIntegerType.cs</Link>
@@ -77,6 +86,9 @@
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IEditableObjectType.cs">
       <Link>Shared\IEditableObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IGameInfoType.cs">
+      <Link>Shared\IGameInfoType.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IMetadataFieldType.cs">
       <Link>Shared\IMetadataFieldType.cs</Link>
