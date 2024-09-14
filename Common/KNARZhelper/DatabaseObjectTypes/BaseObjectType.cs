@@ -7,30 +7,97 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public abstract class BaseObjectType : BaseType
+    public abstract class BaseObjectType : IEditableObjectType, IClearAbleType
     {
-        public override bool CanBeAdded => true;
+        public virtual event RenameObjectEventHandler RenameObject
+        {
+            add { }
+            remove { }
+        }
 
-        public override bool CanBeClearedInGame => true;
+        public virtual bool CanBeAdded => true;
 
-        public override bool CanBeDeleted => true;
+        public bool CanBeClearedInGame => true;
 
-        public override bool CanBeEmptyInGame => true;
+        public virtual bool CanBeDeleted => true;
 
-        public override bool CanBeModified => true;
+        public bool CanBeEmptyInGame => true;
 
-        public override bool CanBeSetByMetadataAddOn => true;
+        public virtual bool CanBeModified => true;
 
-        public override bool CanBeSetInGame => true;
+        public virtual bool CanBeSetByMetadataAddOn => true;
 
-        public abstract override bool IsList { get; }
+        public bool CanBeSetInGame => true;
 
-        public abstract override string LabelSingular { get; }
+        public abstract int Count { get; }
 
-        public abstract override FieldType Type { get; }
+        public abstract bool IsList { get; }
 
-        public override int GetGameCount(Guid id, bool ignoreHidden = false) =>
+        public abstract string LabelPlural { get; }
+
+        public abstract string LabelSingular { get; }
+
+        public abstract FieldType Type { get; }
+
+        public ItemValueType ValueType => ItemValueType.ItemList;
+
+        public abstract Guid AddDbObject(string name);
+
+        public abstract bool AddDbObjectToGame(Game game, List<Guid> idList);
+
+        public abstract bool AddDbObjectToGame(Game game, Guid id);
+
+        public abstract bool DbObjectExists(string name);
+
+        public abstract bool DbObjectExists(Guid id);
+
+        public abstract bool DbObjectInGame(Game game, Guid id);
+
+        public abstract bool DbObjectInUse(Guid id);
+
+        public abstract void EmptyFieldInGame(Game game);
+
+        public abstract bool FieldInGameIsEmpty(Game game);
+
+        public abstract Guid GetDbObjectId(string name);
+
+        public int GetGameCount(Guid id, bool ignoreHidden = false) =>
             GetGameCount(API.Instance.Database.Games.ToList(), id, ignoreHidden);
+
+        public abstract int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false);
+
+        public abstract List<Game> GetGames(Guid id, bool ignoreHidden = false);
+
+        public abstract List<DatabaseObject> LoadAllMetadata();
+
+        public abstract List<DatabaseObject> LoadGameMetadata(Game game);
+
+        public abstract List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames);
+
+        public abstract bool NameExists(string name, Guid id);
+
+        public abstract bool RemoveDbObject(Guid id, bool checkIfUsed = true);
+
+        public abstract bool RemoveObjectFromGame(Game game, List<Guid> ids);
+
+        public abstract bool RemoveObjectFromGame(Game game, Guid id);
+
+        public abstract IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id,
+            FieldType? newType = null, Guid? newId = null, bool removeAfter = true);
+
+        public abstract void UpdateDbObject(Guid id, string name);
+
+        public DbInteractionResult UpdateName(Guid id, string oldName, string newName)
+        {
+            if (oldName != null && oldName != newName && NameExists(newName, id))
+            {
+                return DbInteractionResult.IsDuplicate;
+            }
+
+            UpdateDbObject(id, newName);
+
+            return DbInteractionResult.Updated;
+        }
 
         internal Guid AddDbObject<T>(string name, IItemCollection<T> collection) where T : DatabaseObject => collection.Add(name).Id;
 

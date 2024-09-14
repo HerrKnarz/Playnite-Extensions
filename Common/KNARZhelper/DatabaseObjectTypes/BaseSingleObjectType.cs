@@ -23,6 +23,8 @@ namespace KNARZhelper.DatabaseObjectTypes
             return true;
         }
 
+        public override bool AddDbObjectToGame(Game game, List<Guid> idList) => false;
+
         public override bool DbObjectInGame(Game game, Guid id) => GetValue(game) == id;
 
         public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => GetValue(x) == id);

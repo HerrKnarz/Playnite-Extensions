@@ -42,6 +42,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectExists(string name) => DbObjectExists(name, _collection);
 
+        public override bool DbObjectExists(Guid id) => DbObjectExists(id, _collection);
+
         public override Guid GetDbObjectId(string name) => GetDbObjectId(name, _collection);
 
         public override List<DatabaseObject> LoadAllMetadata() => LoadAllMetadata(_collection);

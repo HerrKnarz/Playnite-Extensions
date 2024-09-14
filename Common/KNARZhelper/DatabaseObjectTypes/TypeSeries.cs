@@ -25,6 +25,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override int Count => _collection?.Count ?? 0;
 
+        public override string LabelPlural => LabelSingular;
+
         public override string LabelSingular => ResourceProvider.GetString("LOCSeriesLabel");
 
         public override FieldType Type => FieldType.Series;
