@@ -4,6 +4,7 @@ using Playnite.SDK;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
+using KNARZhelper;
 
 namespace MetadataUtilities.ViewModels
 {

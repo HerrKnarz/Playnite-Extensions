@@ -97,6 +97,7 @@
     <Compile Include="Enum\DbInteractionResult.cs" />
     <Compile Include="Enum\FieldType.cs" />
     <Compile Include="Enum\ItemValueType.cs" />
+    <Compile Include="FieldTypeHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MiscHelper.cs" />

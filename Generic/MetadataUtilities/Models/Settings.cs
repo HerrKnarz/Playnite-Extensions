@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using KNARZhelper;
 using KNARZhelper.Enum;
 
 namespace MetadataUtilities.Models

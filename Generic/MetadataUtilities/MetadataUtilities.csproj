@@ -195,6 +195,9 @@
     <Compile Include="..\..\Common\KNARZhelper\Enum\ItemValueType.cs">
       <Link>Shared\ItemValueType.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\FieldTypeHelper.cs">
+      <Link>Shared\FieldTypeHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>

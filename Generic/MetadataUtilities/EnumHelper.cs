@@ -4,6 +4,7 @@ using Playnite.SDK;
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using KNARZhelper;
 
 namespace MetadataUtilities
 {

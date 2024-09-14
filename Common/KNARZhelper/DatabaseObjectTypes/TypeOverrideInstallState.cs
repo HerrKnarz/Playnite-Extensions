@@ -20,7 +20,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override string LabelSingular => ResourceProvider.GetString("LOCOverrideInstallState");
 
-        public override FieldType Type => FieldType.Hdr;
+        public override FieldType Type => FieldType.OverrideInstallState;
 
         public override ItemValueType ValueType => ItemValueType.Boolean;
 
