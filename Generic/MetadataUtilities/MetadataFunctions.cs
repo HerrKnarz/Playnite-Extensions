@@ -157,7 +157,11 @@ namespace MetadataUtilities
 
                             foreach (MergeRule rule in rules)
                             {
-                                gamesAffected.AddMissing(rule.Merge(games, itemsToRemove));
+                                gamesAffected.AddMissing(rule.Merge(games, false));
+
+                                itemsToRemove.AddRange(rule.SourceObjects.Where(x =>
+                                    x.Id != rule.Id && x.Id != default && !itemsToRemove.Any(i =>
+                                        i.Type == x.Type && i.Name == x.Name)));
                             }
 
                             if (itemsToRemove.Count <= 0)

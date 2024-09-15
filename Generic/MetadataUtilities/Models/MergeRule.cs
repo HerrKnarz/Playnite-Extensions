@@ -24,7 +24,7 @@ namespace MetadataUtilities.Models
             }
         }
 
-        public IEnumerable<Guid> Merge(List<Game> games = null, List<MetadataObject> itemsToRemove = null)
+        public IEnumerable<Guid> Merge(List<Game> games = null, bool removeAfter = true)
         {
             List<Guid> result = new List<Guid>();
 
@@ -44,17 +44,7 @@ namespace MetadataUtilities.Models
                         games = API.Instance.Database.Games.ToList();
                     }
 
-                    result.AddMissing(item.ReplaceInDb(games, Type, Id, itemsToRemove == null));
-
-                    if (itemsToRemove == null)
-                    {
-                        continue;
-                    }
-
-                    if (!itemsToRemove.Any(x => x.Type == item.Type && x.Name == item.Name))
-                    {
-                        itemsToRemove.Add(item);
-                    }
+                    result.AddMissing(item.ReplaceInDb(games, Type, Id, removeAfter));
                 }
             }
             catch (Exception ex)
