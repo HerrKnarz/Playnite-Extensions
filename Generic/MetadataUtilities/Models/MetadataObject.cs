@@ -12,7 +12,6 @@ namespace MetadataUtilities.Models
 {
     public class MetadataObject : DatabaseObject
     {
-        private readonly Settings _settings;
         private string _cleanedUpName;
         private string _editName;
         private int _gameCount;
@@ -24,7 +23,7 @@ namespace MetadataUtilities.Models
         private FieldType _type;
         private IMetadataFieldType _typeManager;
 
-        public MetadataObject(Settings settings) => _settings = settings;
+        public MetadataObject(Settings settings) => Settings = settings;
 
         [DontSerialize]
         public string CleanedUpName
@@ -134,6 +133,9 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
+        public Settings Settings { get; }
+
+        [DontSerialize]
         public bool ShowGrouped
         {
             get => _showGrouped;
@@ -184,23 +186,23 @@ namespace MetadataUtilities.Models
         {
             if (TypeManager is IObjectType type)
             {
-                GameCount = type.GetGameCount(Id, _settings.IgnoreHiddenGamesInGameCount);
+                GameCount = type.GetGameCount(Id, Settings.IgnoreHiddenGamesInGameCount);
             }
         }
 
         public List<Game> GetGames() =>
             TypeManager is IObjectType type
-                ? type.GetGames(Id, _settings.IgnoreHiddenGamesInGameCount)
+                ? type.GetGames(Id, Settings.IgnoreHiddenGamesInGameCount)
                 : new List<Game>();
 
         public string GetPrefix()
         {
-            if (_settings?.Prefixes == null)
+            if (Settings?.Prefixes == null)
             {
                 return string.Empty;
             }
 
-            foreach (string prefix in _settings.Prefixes)
+            foreach (string prefix in Settings.Prefixes)
             {
                 if (Name?.StartsWith(prefix) ?? false)
                 {

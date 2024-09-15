@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Playnite.SDK.Data;
 
 namespace KNARZhelper
 {
@@ -24,8 +25,10 @@ namespace KNARZhelper
             });
         }
 
+        public static T DeepClone<T>(this T self) where T : class => Serialization.GetClone(self);
+
         public static DateTime EndOfMonth(this DateTime date)
-                    => date.StartOfMonth().AddMonths(1).AddDays(-1);
+                            => date.StartOfMonth().AddMonths(1).AddDays(-1);
 
         public static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {

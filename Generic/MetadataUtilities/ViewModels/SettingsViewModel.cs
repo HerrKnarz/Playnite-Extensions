@@ -14,8 +14,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
 using KNARZhelper.DatabaseObjectTypes;
-using Action = MetadataUtilities.Models.Action;
-using Condition = MetadataUtilities.Models.Condition;
 
 namespace MetadataUtilities.ViewModels
 {
@@ -186,39 +184,8 @@ namespace MetadataUtilities.ViewModels
             if (conAction == null)
                 return;
 
-            ConditionalAction conditionalActionToEdit = new ConditionalAction();
             ConditionalAction conditionalActionOriginal = (ConditionalAction)conAction;
-
-            conditionalActionToEdit.Name = conditionalActionOriginal.Name;
-            conditionalActionToEdit.Type = conditionalActionOriginal.Type;
-            conditionalActionToEdit.CanBeExecutedManually = conditionalActionOriginal.CanBeExecutedManually;
-            conditionalActionToEdit.IgnoreConditionOnManual = conditionalActionOriginal.IgnoreConditionOnManual;
-            conditionalActionToEdit.Enabled = conditionalActionOriginal.Enabled;
-            conditionalActionToEdit.SortNo = conditionalActionOriginal.SortNo;
-
-            foreach (Condition condition in conditionalActionOriginal.Conditions)
-            {
-                conditionalActionToEdit.Conditions.Add(new Condition(_settings)
-                {
-                    Name = condition.Name,
-                    Type = condition.Type,
-                    Comparator = condition.Comparator,
-                    DateValue = condition.DateValue,
-                    IntValue = condition.IntValue
-                });
-            }
-
-            foreach (Action action in conditionalActionOriginal.Actions)
-            {
-                conditionalActionToEdit.Actions.Add(new Action(_settings)
-                {
-                    Name = action.Name,
-                    Type = action.Type,
-                    ActionType = action.ActionType,
-                    DateValue = action.DateValue,
-                    IntValue = action.IntValue
-                });
-            }
+            ConditionalAction conditionalActionToEdit = conditionalActionOriginal.DeepClone();
 
             Window window = ConditionalActionEditorViewModel.GetWindow(Settings, conditionalActionToEdit);
 
@@ -235,8 +202,7 @@ namespace MetadataUtilities.ViewModels
             Settings.ConditionalActions.Remove(conditionalActionOriginal);
             Settings.ConditionalActions.Add(conditionalActionToEdit);
 
-            Settings.ConditionalActions =
-                Settings.ConditionalActions.OrderBy(x => x.SortNo).ThenBy(x => x.Name).ToObservable();
+            Settings.ConditionalActions = Settings.ConditionalActions.OrderBy(x => x.Name).ToObservable();
         }, conAction => conAction != null);
 
         public RelayCommand<object> EditMergeRuleCommand
