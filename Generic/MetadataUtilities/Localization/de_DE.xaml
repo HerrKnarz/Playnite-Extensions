@@ -21,6 +21,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">Element zu {0} Spielen hinzugefügt</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">Element aus {0} Spielen entfernt</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">Element in {1} Spielen umgeschaltet</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">The entered string can be a regular expression.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">{0} aus {1} Spielen entfernt!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Unerwünschte Metadaten aus {0} Spielen entfernt!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Als Zusammenführungsregel speichern</sys:String>
