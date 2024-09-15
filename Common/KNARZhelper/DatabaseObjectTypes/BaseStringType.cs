@@ -3,7 +3,7 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public abstract class BaseStringType : IMetadataFieldType, IClearAbleType
+    public abstract class BaseStringType : IMetadataFieldType, IValueType, IClearAbleType
     {
         public bool CanBeAdded => false;
         public bool CanBeClearedInGame => true;
@@ -18,8 +18,14 @@ namespace KNARZhelper.DatabaseObjectTypes
         public abstract FieldType Type { get; }
         public ItemValueType ValueType => ItemValueType.String;
 
+        public bool AddValueToGame<T>(Game game, T value) => false;
+
         public abstract void EmptyFieldInGame(Game game);
 
         public abstract bool FieldInGameIsEmpty(Game game);
+
+        public bool GameContainsValue<T>(Game game, T value) => value is string stringValue && GameContainsValue(game, stringValue);
+
+        public abstract bool GameContainsValue(Game game, string value);
     }
 }

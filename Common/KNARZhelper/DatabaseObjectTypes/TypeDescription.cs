@@ -13,5 +13,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.Description = default);
 
         public override bool FieldInGameIsEmpty(Game game) => !game.Description.Trim().Any();
+
+        public override bool GameContainsValue(Game game, string value) => game.Description.RegExIsMatch(value);
     }
 }
