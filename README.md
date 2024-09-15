@@ -4,9 +4,6 @@
 [![Crowdin](https://badges.crowdin.net/playnite-extension-linkutiliti/localized.svg)](https://crowdin.com/project/playnite-extension-linkutiliti)
 [![License](https://img.shields.io/github/license/HerrKnarz/Playnite-Extensions?style=flat)](https://github.com/HerrKnarz/Playnite-Extensions/blob/master/LICENSE.txt)
 [![Ko-fi Badge](https://img.shields.io/badge/Tip%20on%20Ko--fi-F16061)](https://ko-fi.com/herrknarz)
-[![Static Badge](https://img.shields.io/badge/Trello?style=flat&logo=trello&logoColor=%23ffffff&labelColor=%23ffffff&color=%230052CC)](https://trello.com/w/userworkspace53961303)
-![Static Badge](https://img.shields.io/badge/Trello?style=flat&logo=trello&logoColor=%23ffffff&logoSize=30&label=Trello&labelColor=%23ffffff&color=%230052CC&link=https%3A%2F%2Ftrello.com%2Fw%2Fuserworkspace53961303)
-
 
 # Playnite Extensions
 
@@ -16,7 +13,7 @@ If you want to use my extensions, I strongly recommend to install them via the a
 
 If you have more ideas for these extensions, feel free to suggest them by opening an issue!
 
-Further information and documentation for my addons can be found [on my website](https://knarzwerk.de/en/playnite-extensions/)
+Further information and documentation for my addons can be found [on my website](https://knarzwerk.de/en/playnite-extensions/). You can also follow the progress of the development on [Trello](https://trello.com/w/userworkspace53961303).
 
 ## Wikipedia Metadata
 
