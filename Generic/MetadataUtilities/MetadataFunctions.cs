@@ -153,9 +153,21 @@ namespace MetadataUtilities
                                 rules.AddRange(plugin.Settings.Settings.MergeRules);
                             }
 
+                            List<MetadataObject> itemsToRemove = new List<MetadataObject>();
+
                             foreach (MergeRule rule in rules)
                             {
-                                gamesAffected.AddMissing(rule.Merge(games));
+                                gamesAffected.AddMissing(rule.Merge(games, itemsToRemove));
+                            }
+
+                            if (itemsToRemove.Count <= 0)
+                            {
+                                return;
+                            }
+
+                            foreach (MetadataObject item in itemsToRemove)
+                            {
+                                item.ReplaceInDb(games);
                             }
                         }
                         catch (Exception ex)

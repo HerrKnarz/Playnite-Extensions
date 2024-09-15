@@ -4,6 +4,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace MetadataUtilities.Models
 {
@@ -23,7 +24,7 @@ namespace MetadataUtilities.Models
             }
         }
 
-        public IEnumerable<Guid> Merge(List<Game> games = null)
+        public IEnumerable<Guid> Merge(List<Game> games = null, List<MetadataObject> itemsToRemove = null)
         {
             List<Guid> result = new List<Guid>();
 
@@ -43,7 +44,17 @@ namespace MetadataUtilities.Models
                         games = API.Instance.Database.Games.ToList();
                     }
 
-                    result.AddMissing(item.ReplaceInDb(games, Type, Id));
+                    result.AddMissing(item.ReplaceInDb(games, Type, Id, itemsToRemove == null));
+
+                    if (itemsToRemove == null)
+                    {
+                        continue;
+                    }
+
+                    if (!itemsToRemove.Any(x => x.Type == item.Type && x.Name == item.Name))
+                    {
+                        itemsToRemove.Add(item);
+                    }
                 }
             }
             catch (Exception ex)
