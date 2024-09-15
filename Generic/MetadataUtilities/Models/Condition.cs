@@ -54,21 +54,17 @@ namespace MetadataUtilities.Models
                         return $"{TypeLabel} {Comparator.GetEnumDisplayName()}";
 
                     case ItemValueType.Integer:
-                        return Comparator == ComparatorType.IsEmpty || Comparator == ComparatorType.IsNotEmpty
-                            ? $"{TypeLabel} {Comparator.GetEnumDisplayName()}"
-                            : $"{TypeLabel} {Comparator.GetEnumDisplayName()} {IntValue}";
+                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {IntValue}";
 
                     case ItemValueType.Date:
-                        return Comparator == ComparatorType.IsEmpty || Comparator == ComparatorType.IsNotEmpty
-                            ? $"{TypeLabel} {Comparator.GetEnumDisplayName()}"
-                            : $"{TypeLabel} {Comparator.GetEnumDisplayName()} {DateValue?.ToString("yyyy-MM-dd")}";
+                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {DateValue?.ToString("yyyy-MM-dd")}";
+
+                    case ItemValueType.String:
+                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {StringValue}";
 
                     case ItemValueType.ItemList:
                     case ItemValueType.Media:
                     case ItemValueType.None:
-                    case ItemValueType.String:
-                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {StringValue}";
-
                     default:
                         return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {Name}";
                 }
