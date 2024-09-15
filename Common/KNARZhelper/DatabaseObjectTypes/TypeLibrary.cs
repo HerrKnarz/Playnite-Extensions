@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using KNARZhelper.Enum;
+﻿using KNARZhelper.Enum;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {

@@ -1,9 +1,9 @@
-﻿using Playnite.SDK.Data;
-using Playnite.SDK.Models;
-using System;
-using KNARZhelper.DatabaseObjectTypes;
+﻿using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 using MetadataUtilities.Enums;
+using Playnite.SDK.Data;
+using Playnite.SDK.Models;
+using System;
 
 namespace MetadataUtilities.Models
 {

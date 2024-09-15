@@ -1,10 +1,10 @@
-﻿using KNARZhelper.Enum;
+﻿using KNARZhelper;
+using KNARZhelper.Enum;
 using MetadataUtilities.Models;
 using Playnite.SDK;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
-using KNARZhelper;
 
 namespace MetadataUtilities.ViewModels
 {

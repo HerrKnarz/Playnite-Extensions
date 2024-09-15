@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 using MetadataUtilities.ViewModels;
 using Playnite.SDK;
@@ -11,7 +12,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using KNARZhelper.DatabaseObjectTypes;
 
 namespace MetadataUtilities.Models
 {

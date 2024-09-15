@@ -1,6 +1,6 @@
-﻿using System;
+﻿using KNARZhelper.DatabaseObjectTypes;
+using System;
 using System.Collections.Generic;
-using KNARZhelper.DatabaseObjectTypes;
 
 namespace MetadataUtilities.Models
 {

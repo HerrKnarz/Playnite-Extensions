@@ -1,18 +1,18 @@
 ﻿using KNARZhelper;
+using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
+using MetadataUtilities.Actions;
+using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using MetadataUtilities.ViewModels;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
-using KNARZhelper.DatabaseObjectTypes;
 using Action = MetadataUtilities.Models.Action;
-using MetadataUtilities.Actions;
-using MetadataUtilities.Enums;
-using Playnite.SDK.Models;
 
 namespace MetadataUtilities
 {

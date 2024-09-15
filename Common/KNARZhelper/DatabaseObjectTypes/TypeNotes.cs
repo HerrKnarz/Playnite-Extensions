@@ -1,7 +1,7 @@
-﻿using Playnite.SDK;
-using System.Linq;
-using KNARZhelper.Enum;
+﻿using KNARZhelper.Enum;
+using Playnite.SDK;
 using Playnite.SDK.Models;
+using System.Linq;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {

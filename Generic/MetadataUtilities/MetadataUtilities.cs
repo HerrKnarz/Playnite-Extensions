@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
-using KNARZhelper.Enum;
+using KNARZhelper.DatabaseObjectTypes;
 using MetadataUtilities.Actions;
+using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using MetadataUtilities.ViewModels;
 using MetadataUtilities.Views;
@@ -17,8 +18,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
-using KNARZhelper.DatabaseObjectTypes;
-using MetadataUtilities.Enums;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace MetadataUtilities

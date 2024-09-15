@@ -1,11 +1,10 @@
-﻿using KNARZhelper.Enum;
-using MetadataUtilities.Models;
+﻿using KNARZhelper;
+using KNARZhelper.Enum;
+using MetadataUtilities.Enums;
 using Playnite.SDK;
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using KNARZhelper;
-using MetadataUtilities.Enums;
 
 namespace MetadataUtilities
 {

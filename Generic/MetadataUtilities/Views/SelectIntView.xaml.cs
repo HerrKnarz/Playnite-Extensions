@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using KNARZhelper;
+using System.Windows;
 using System.Windows.Input;
-using KNARZhelper;
 
 namespace MetadataUtilities.Views
 {

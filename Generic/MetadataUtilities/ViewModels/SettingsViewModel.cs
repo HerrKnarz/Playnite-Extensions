@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
@@ -13,7 +14,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
-using KNARZhelper.DatabaseObjectTypes;
 
 namespace MetadataUtilities.ViewModels
 {

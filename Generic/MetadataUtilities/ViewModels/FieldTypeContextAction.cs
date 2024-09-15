@@ -1,5 +1,5 @@
-﻿using System.Windows.Input;
-using KNARZhelper.Enum;
+﻿using KNARZhelper.Enum;
+using System.Windows.Input;
 
 namespace MetadataUtilities.ViewModels
 {

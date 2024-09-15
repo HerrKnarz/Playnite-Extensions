@@ -1,9 +1,9 @@
 ﻿using KNARZhelper.Enum;
+using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
-using MetadataUtilities.Enums;
 
 namespace MetadataUtilities.Actions
 {

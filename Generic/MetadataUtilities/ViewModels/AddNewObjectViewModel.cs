@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.Enum;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
 using Playnite.SDK;
@@ -6,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
-using KNARZhelper.Enum;
 
 namespace MetadataUtilities.ViewModels
 {

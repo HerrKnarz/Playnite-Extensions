@@ -1,10 +1,10 @@
 ﻿using KNARZhelper.DatabaseObjectTypes;
+using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using MetadataUtilities.Enums;
 
 namespace MetadataUtilities.Actions
 {

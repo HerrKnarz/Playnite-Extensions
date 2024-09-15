@@ -1,5 +1,5 @@
-﻿using Playnite.SDK;
-using KNARZhelper.Enum;
+﻿using KNARZhelper.Enum;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes

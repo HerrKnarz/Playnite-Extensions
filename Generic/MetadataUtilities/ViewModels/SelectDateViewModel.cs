@@ -1,9 +1,9 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using MetadataUtilities.Views;
+using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using KNARZhelper;
-using MetadataUtilities.Views;
 
 namespace MetadataUtilities.ViewModels
 {

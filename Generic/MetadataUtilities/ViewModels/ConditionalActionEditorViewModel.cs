@@ -1,5 +1,7 @@
 ﻿using KNARZhelper;
+using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
+using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
 using Playnite.SDK;
@@ -8,8 +10,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using KNARZhelper.DatabaseObjectTypes;
-using MetadataUtilities.Enums;
 using Action = MetadataUtilities.Models.Action;
 using Condition = MetadataUtilities.Models.Condition;
 

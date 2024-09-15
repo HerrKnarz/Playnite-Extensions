@@ -1,8 +1,8 @@
-﻿using MetadataUtilities.Models;
+﻿using MetadataUtilities.Enums;
+using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Linq;
-using MetadataUtilities.Enums;
 
 namespace MetadataUtilities.Actions
 {

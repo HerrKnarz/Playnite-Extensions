@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace MetadataUtilities.Views
+﻿namespace MetadataUtilities.Views
 {
     /// <summary>
     /// Interaction logic for SelectDateView.xaml

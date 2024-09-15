@@ -1,5 +1,5 @@
-﻿using System;
-using Playnite.SDK.Models;
+﻿using Playnite.SDK.Models;
+using System;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
