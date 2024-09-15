@@ -13,6 +13,7 @@ namespace MetadataUtilities.Models
 
         private DateTime? _dateValue;
         private int? _intValue;
+        private string _stringValue;
 
         public Condition(Settings settings) : base(settings)
         {
@@ -36,6 +37,12 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _intValue, value);
         }
 
+        public string StringValue
+        {
+            get => _stringValue;
+            set => SetValue(ref _stringValue, value);
+        }
+
         [DontSerialize]
         public new string ToString
         {
@@ -47,15 +54,21 @@ namespace MetadataUtilities.Models
                         return $"{TypeLabel} {Comparator.GetEnumDisplayName()}";
 
                     case ItemValueType.Integer:
-                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {IntValue}";
+                        return Comparator == ComparatorType.IsEmpty || Comparator == ComparatorType.IsNotEmpty
+                            ? $"{TypeLabel} {Comparator.GetEnumDisplayName()}"
+                            : $"{TypeLabel} {Comparator.GetEnumDisplayName()} {IntValue}";
 
                     case ItemValueType.Date:
-                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {DateValue?.ToString("yyyy-MM-dd")}";
+                        return Comparator == ComparatorType.IsEmpty || Comparator == ComparatorType.IsNotEmpty
+                            ? $"{TypeLabel} {Comparator.GetEnumDisplayName()}"
+                            : $"{TypeLabel} {Comparator.GetEnumDisplayName()} {DateValue?.ToString("yyyy-MM-dd")}";
 
                     case ItemValueType.ItemList:
                     case ItemValueType.Media:
                     case ItemValueType.None:
                     case ItemValueType.String:
+                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {StringValue}";
+
                     default:
                         return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {Name}";
                 }
@@ -67,10 +80,62 @@ namespace MetadataUtilities.Models
             switch (Comparator)
             {
                 case ComparatorType.Contains:
-                    return ExistsInGame(game);
+                    if (!(TypeManager is IValueType containsType))
+                    {
+                        return false;
+                    }
+
+                    switch (TypeManager.ValueType)
+                    {
+                        case ItemValueType.Boolean:
+                            return containsType.GameContainsValue(game, true);
+
+                        case ItemValueType.ItemList:
+                            return ExistsInGame(game);
+
+                        case ItemValueType.Integer:
+                            return containsType.GameContainsValue(game, IntValue);
+
+                        case ItemValueType.String:
+                            return containsType.GameContainsValue(game, StringValue);
+
+                        case ItemValueType.Date:
+                            return containsType.GameContainsValue(game, DateValue);
+
+                        case ItemValueType.Media:
+                        case ItemValueType.None:
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
 
                 case ComparatorType.DoesNotContain:
-                    return !ExistsInGame(game);
+                    if (!(TypeManager is IValueType notContainsType))
+                    {
+                        return false;
+                    }
+
+                    switch (TypeManager.ValueType)
+                    {
+                        case ItemValueType.Boolean:
+                            return !notContainsType.GameContainsValue(game, true);
+
+                        case ItemValueType.ItemList:
+                            return !ExistsInGame(game);
+
+                        case ItemValueType.Integer:
+                            return !notContainsType.GameContainsValue(game, IntValue);
+
+                        case ItemValueType.String:
+                            return !notContainsType.GameContainsValue(game, StringValue);
+
+                        case ItemValueType.Date:
+                            return !notContainsType.GameContainsValue(game, DateValue);
+
+                        case ItemValueType.Media:
+                        case ItemValueType.None:
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
 
                 case ComparatorType.IsEmpty:
                     return TypeManager is IClearAbleType emptyType && emptyType.FieldInGameIsEmpty(game);

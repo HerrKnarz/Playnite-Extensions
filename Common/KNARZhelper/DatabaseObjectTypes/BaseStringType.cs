@@ -6,7 +6,7 @@ namespace KNARZhelper.DatabaseObjectTypes
     public abstract class BaseStringType : IMetadataFieldType, IValueType, IClearAbleType
     {
         public bool CanBeAdded => false;
-        public bool CanBeClearedInGame => true;
+        public virtual bool CanBeClearedInGame => true;
         public bool CanBeDeleted => false;
         public bool CanBeEmptyInGame => true;
         public bool CanBeModified => false;

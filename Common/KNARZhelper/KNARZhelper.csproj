@@ -81,6 +81,7 @@
     <Compile Include="DatabaseObjectTypes\TypeIsInstalled.cs" />
     <Compile Include="DatabaseObjectTypes\TypeLastPlayed.cs" />
     <Compile Include="DatabaseObjectTypes\TypeLibrary.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeName.cs" />
     <Compile Include="DatabaseObjectTypes\TypeNotes.cs" />
     <Compile Include="DatabaseObjectTypes\TypeOverrideInstallState.cs" />
     <Compile Include="DatabaseObjectTypes\TypePlatform.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="DatabaseObjectTypes\TypeRegion.cs" />
     <Compile Include="DatabaseObjectTypes\TypeReleaseDate.cs" />
     <Compile Include="DatabaseObjectTypes\TypeSeries.cs" />
+    <Compile Include="DatabaseObjectTypes\TypeSortingName.cs" />
     <Compile Include="DatabaseObjectTypes\TypeSource.cs" />
     <Compile Include="DatabaseObjectTypes\TypeTag.cs" />
     <Compile Include="DatabaseObjectTypes\TypeTimePlayed.cs" />

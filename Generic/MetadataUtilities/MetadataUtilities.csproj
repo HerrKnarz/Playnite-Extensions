@@ -159,6 +159,9 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeLibrary.cs">
       <Link>Shared\TypeLibrary.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeName.cs">
+      <Link>Shared\TypeName.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeNotes.cs">
       <Link>Shared\TypeNotes.cs</Link>
     </Compile>
@@ -182,6 +185,9 @@
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeSeries.cs">
       <Link>Shared\TypeSeries.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeSortingName.cs">
+      <Link>Shared\TypeSortingName.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeSource.cs">
       <Link>Shared\TypeSource.cs</Link>

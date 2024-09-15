@@ -42,6 +42,7 @@ namespace KNARZhelper
                         new TypeIsInstalled(),
                         new TypeLastPlayed(),
                         new TypeLibrary(),
+                        new TypeName(),
                         new TypeNotes(),
                         new TypeOverrideInstallState(),
                         new TypePlatform(adoptEvents),
@@ -51,6 +52,7 @@ namespace KNARZhelper
                         new TypeReleaseDate(),
                         new TypeSeries(adoptEvents),
                         new TypeSource(adoptEvents),
+                        new TypeSortingName(),
                         new TypeTag(adoptEvents),
                         new TypeTimePlayed(),
                         new TypeUserScore(),
@@ -123,6 +125,9 @@ namespace KNARZhelper
                 case FieldType.Library:
                     return new TypeLibrary();
 
+                case FieldType.Name:
+                    return new TypeName();
+
                 case FieldType.Notes:
                     return new TypeNotes();
 
@@ -146,6 +151,9 @@ namespace KNARZhelper
 
                 case FieldType.Series:
                     return new TypeSeries();
+
+                case FieldType.SortingName:
+                    return new TypeSortingName();
 
                 case FieldType.Source:
                     return new TypeSource();

@@ -58,7 +58,9 @@ namespace MetadataUtilities.ViewModels
                     }
                 ));
 
-            ContextMenuConditionsContains.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList)
+            ContextMenuConditionsContains.AddMissing(_fieldTypes
+                .Where(x => x.ValueType == ItemValueType.ItemList || x.ValueType == ItemValueType.String ||
+                            x.ValueType == ItemValueType.Integer || x.ValueType == ItemValueType.Date)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -68,7 +70,9 @@ namespace MetadataUtilities.ViewModels
                     }
                 ));
 
-            ContextMenuConditionsContainsNot.AddMissing(_fieldTypes.Where(x => x.ValueType == ItemValueType.ItemList)
+            ContextMenuConditionsContainsNot.AddMissing(_fieldTypes
+                .Where(x => x.ValueType == ItemValueType.ItemList || x.ValueType == ItemValueType.String ||
+                            x.ValueType == ItemValueType.Integer || x.ValueType == ItemValueType.Date)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -387,25 +391,7 @@ namespace MetadataUtilities.ViewModels
                 {
                     if (fieldType.GetTypeManager().ValueType == ItemValueType.Integer)
                     {
-                        int intValue = 0;
-
-                        if (!SelectIntViewModel.ShowDialog(ref intValue))
-                        {
-                            return;
-                        }
-
-                        if (!ConditionalAction.Conditions.Any(
-                                x => x.Comparator == comparatorType &&
-                                     x.Type == fieldType && x.IntValue == intValue))
-                        {
-                            ConditionalAction.Conditions.Add(new Condition(_settings)
-                            {
-                                Name = string.Empty,
-                                IntValue = intValue,
-                                Type = fieldType,
-                                Comparator = comparatorType
-                            });
-                        }
+                        CreateIntCondition(fieldType, comparatorType);
 
                         return;
                     }
@@ -415,25 +401,7 @@ namespace MetadataUtilities.ViewModels
                         return;
                     }
 
-                    DateTime dateValue = DateTime.Today;
-
-                    if (!SelectDateViewModel.ShowDialog(ref dateValue))
-                    {
-                        return;
-                    }
-
-                    if (!ConditionalAction.Conditions.Any(
-                            x => x.Comparator == comparatorType &&
-                                 x.Type == fieldType && x.DateValue == dateValue))
-                    {
-                        ConditionalAction.Conditions.Add(new Condition(_settings)
-                        {
-                            Name = string.Empty,
-                            DateValue = dateValue,
-                            Type = fieldType,
-                            Comparator = comparatorType
-                        });
-                    }
+                    CreateDateCondition(fieldType, comparatorType);
 
                     return;
                 }
@@ -445,6 +413,27 @@ namespace MetadataUtilities.ViewModels
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(comparatorType), comparatorType, null);
+            }
+
+            if (fieldType.GetTypeManager().ValueType == ItemValueType.Integer)
+            {
+                CreateIntCondition(fieldType, comparatorType);
+
+                return;
+            }
+
+            if (fieldType.GetTypeManager().ValueType == ItemValueType.Date)
+            {
+                CreateDateCondition(fieldType, comparatorType);
+
+                return;
+            }
+
+            if (fieldType.GetTypeManager().ValueType == ItemValueType.String)
+            {
+                CreateStringCondition(fieldType, comparatorType);
+
+                return;
             }
 
             List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
@@ -467,6 +456,77 @@ namespace MetadataUtilities.ViewModels
             }
 
             ConditionalAction.Conditions = ConditionalAction.Conditions.OrderBy(x => x.ToString).ToObservable();
+        }
+
+        private void CreateDateCondition(FieldType fieldType, ComparatorType comparatorType)
+        {
+            DateTime dateValue = DateTime.Today;
+
+            if (!SelectDateViewModel.ShowDialog(ref dateValue))
+            {
+                return;
+            }
+
+            if (!ConditionalAction.Conditions.Any(
+                    x => x.Comparator == comparatorType &&
+                         x.Type == fieldType && x.DateValue == dateValue))
+            {
+                ConditionalAction.Conditions.Add(new Condition(_settings)
+                {
+                    Name = string.Empty,
+                    DateValue = dateValue,
+                    Type = fieldType,
+                    Comparator = comparatorType
+                });
+            }
+        }
+
+        private void CreateIntCondition(FieldType fieldType, ComparatorType comparatorType)
+        {
+            int intValue = 0;
+
+            if (!SelectIntViewModel.ShowDialog(ref intValue))
+            {
+                return;
+            }
+
+            if (!ConditionalAction.Conditions.Any(
+                    x => x.Comparator == comparatorType &&
+                         x.Type == fieldType && x.IntValue == intValue))
+            {
+                ConditionalAction.Conditions.Add(new Condition(_settings)
+                {
+                    Name = string.Empty,
+                    IntValue = intValue,
+                    Type = fieldType,
+                    Comparator = comparatorType
+                });
+            }
+        }
+
+        private void CreateStringCondition(FieldType fieldType, ComparatorType comparatorType)
+        {
+            StringSelectionDialogResult dialogResult = API.Instance.Dialogs.SelectString(
+                ResourceProvider.GetString("LOCMetadataUtilitiesDialogRegExNotice"),
+                ResourceProvider.GetString("LOCMetadataUtilitiesDialogEnterValue"), default);
+
+            if (!dialogResult.Result)
+            {
+                return;
+            }
+
+            if (!ConditionalAction.Conditions.Any(
+                    x => x.Comparator == comparatorType &&
+                         x.Type == fieldType && x.StringValue == dialogResult.SelectedString))
+            {
+                ConditionalAction.Conditions.Add(new Condition(_settings)
+                {
+                    Name = string.Empty,
+                    StringValue = dialogResult.SelectedString,
+                    Type = fieldType,
+                    Comparator = comparatorType
+                });
+            }
         }
     }
 }
