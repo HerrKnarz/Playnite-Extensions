@@ -4,7 +4,7 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    internal class TypeCommunityScore : BaseIntegerType
+    public class TypeCommunityScore : BaseIntegerType
     {
         public override string LabelSingular => ResourceProvider.GetString("LOCCommunityScore");
         public override FieldType Type => FieldType.CommunityScore;
@@ -16,8 +16,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool FieldInGameIsEmpty(Game game) => !game.CommunityScore.HasValue;
 
-        public override bool IsBiggerThan(Game game, int value) => game.CommunityScore > value;
-
-        public override bool IsSmallerThan(Game game, int value) => game.CommunityScore < value;
+        public override ulong? GetValue(Game game) => (ulong?)game.CommunityScore;
     }
 }

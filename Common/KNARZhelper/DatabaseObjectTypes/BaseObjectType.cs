@@ -57,6 +57,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract bool FieldInGameIsEmpty(Game game);
 
+        public bool GameContainsValue<T>(Game game, T value) => value is Guid id && DbObjectInGame(game, id);
+
         public abstract Guid GetDbObjectId(string name);
 
         public int GetGameCount(Guid id, bool ignoreHidden = false) =>

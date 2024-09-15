@@ -180,7 +180,7 @@ namespace MetadataUtilities.Models
 
         public bool ExistsInDb() => TypeManager is IObjectType type && type.DbObjectExists(Name);
 
-        public bool ExistsInGame(Game game) => TypeManager is IObjectType type && type.DbObjectInGame(game, Id);
+        public bool ExistsInGame(Game game) => TypeManager is IValueType type && type.GameContainsValue(game, Id);
 
         public void GetGameCount()
         {

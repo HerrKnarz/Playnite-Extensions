@@ -4,7 +4,7 @@ using System;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public abstract class BaseDateType : IMetadataFieldType, INumberType
+    public abstract class BaseDateType : IMetadataFieldType, IValueType, INumberType
     {
         public bool CanBeAdded => false;
         public virtual bool CanBeClearedInGame => false;
@@ -18,14 +18,16 @@ namespace KNARZhelper.DatabaseObjectTypes
         public abstract FieldType Type { get; }
         public ItemValueType ValueType => ItemValueType.Date;
 
+        public abstract bool AddValueToGame<T>(Game game, T value);
+
         public abstract bool FieldInGameIsEmpty(Game game);
 
-        public bool IsBiggerThan<T>(Game game, T value) => value is DateTime && IsBiggerThan(game, value);
+        public bool GameContainsValue<T>(Game game, T value) => value is DateTime dateValue && GetValue(game) == dateValue;
 
-        public abstract bool IsBiggerThan(Game game, DateTime? value);
+        public abstract DateTime? GetValue(Game game);
 
-        public bool IsSmallerThan<T>(Game game, T value) => value is DateTime && IsSmallerThan(game, value);
+        public bool IsBiggerThan<T>(Game game, T value) => value is DateTime dateValue && GetValue(game) > dateValue;
 
-        public abstract bool IsSmallerThan(Game game, DateTime? value);
+        public bool IsSmallerThan<T>(Game game, T value) => value is DateTime dateValue && GetValue(game) < dateValue;
     }
 }

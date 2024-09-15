@@ -3,8 +3,6 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 
-// ReSharper disable ConditionIsAlwaysTrueOrFalse
-
 namespace KNARZhelper.DatabaseObjectTypes
 {
     internal class TypeReleaseDate : BaseEditableDateType
@@ -13,15 +11,18 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override FieldType Type => FieldType.ReleaseDate;
 
         public override bool AddValueToGame(Game game, DateTime? value) =>
-            API.Instance.MainView.UIDispatcher.Invoke(() => (game.ReleaseDate = new ReleaseDate(value ?? default)) != null);
+            API.Instance.MainView.UIDispatcher.Invoke(() =>
+            {
+                game.ReleaseDate = new ReleaseDate(value ?? default);
+
+                return true;
+            });
 
         public override void EmptyFieldInGame(Game game) =>
             API.Instance.MainView.UIDispatcher.Invoke(() => game.ReleaseDate = default);
 
         public override bool FieldInGameIsEmpty(Game game) => !game.ReleaseDate.HasValue;
 
-        public override bool IsBiggerThan(Game game, DateTime? value) => game.ReleaseDate?.Date > value;
-
-        public override bool IsSmallerThan(Game game, DateTime? value) => game.ReleaseDate?.Date < value;
+        public override DateTime? GetValue(Game game) => game.ReleaseDate?.Date;
     }
 }

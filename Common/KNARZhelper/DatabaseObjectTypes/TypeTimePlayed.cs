@@ -26,8 +26,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool FieldInGameIsEmpty(Game game) => false;
 
-        public override bool IsBiggerThan(Game game, int value) => game.Playtime > (ulong)value;
-
-        public override bool IsSmallerThan(Game game, int value) => game.Playtime < (ulong)value;
+        public override ulong? GetValue(Game game) => game.Playtime;
     }
 }

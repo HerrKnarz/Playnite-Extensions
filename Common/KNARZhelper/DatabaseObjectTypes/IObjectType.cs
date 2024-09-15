@@ -13,8 +13,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         bool DbObjectExists(Guid id);
 
-        bool DbObjectInGame(Game game, Guid id);
-
         bool DbObjectInUse(Guid id);
 
         Guid GetDbObjectId(string name);

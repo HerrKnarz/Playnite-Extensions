@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public class TypeLibrary : IObjectType
+    public class TypeLibrary : IObjectType, IValueType
     {
         private readonly List<DatabaseObject> _libraries = new List<DatabaseObject>();
 
@@ -35,13 +35,15 @@ namespace KNARZhelper.DatabaseObjectTypes
         public FieldType Type => FieldType.Library;
         public ItemValueType ValueType => ItemValueType.ItemList;
 
+        public bool AddValueToGame<T>(Game game, T value) => false;
+
         public bool DbObjectExists(string name) => _libraries?.Any(x => x.Name == name) ?? false;
 
         public bool DbObjectExists(Guid id) => _libraries?.Any(x => x.Id == id) ?? false;
 
-        public bool DbObjectInGame(Game game, Guid id) => game.PluginId == id;
-
         public bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => x.PluginId == id);
+
+        public bool GameContainsValue<T>(Game game, T value) => value is Guid id && game.PluginId == id;
 
         public Guid GetDbObjectId(string name) =>
             _libraries?.FirstOrDefault(x => x.Name == name)?.Id ?? default;

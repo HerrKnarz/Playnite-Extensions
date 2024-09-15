@@ -27,12 +27,12 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract bool FieldInGameIsEmpty(Game game);
 
-        public bool IsBiggerThan<T>(Game game, T value) => (value != null || value is int) && IsBiggerThan(game, value);
+        public bool GameContainsValue<T>(Game game, T value) => value is int intValue && GetValue(game) == (ulong)intValue;
 
-        public abstract bool IsBiggerThan(Game game, int value);
+        public abstract ulong? GetValue(Game game);
 
-        public bool IsSmallerThan<T>(Game game, T value) => (value != null || value is int) && IsSmallerThan(game, value);
+        public bool IsBiggerThan<T>(Game game, T value) => value is int intValue && GetValue(game) > (ulong)intValue;
 
-        public abstract bool IsSmallerThan(Game game, int value);
+        public bool IsSmallerThan<T>(Game game, T value) => value is int intValue && GetValue(game) < (ulong)intValue;
     }
 }

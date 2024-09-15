@@ -29,6 +29,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public bool FieldInGameIsEmpty(Game game) => !GetValue(game);
 
+        public bool GameContainsValue<T>(Game game, T value) => GetValue(game) == (value as bool?);
+
         public int GetGameCount(Guid id, bool ignoreHidden = false) =>
             API.Instance.Database.Games.Count(g => !(ignoreHidden && g.Hidden) && GetValue(g));
 
