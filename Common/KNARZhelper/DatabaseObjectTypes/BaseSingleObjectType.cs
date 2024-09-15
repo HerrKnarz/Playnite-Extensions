@@ -70,6 +70,12 @@ namespace KNARZhelper.DatabaseObjectTypes
                 yield break;
             }
 
+            IEditableObjectType newTypeManager =
+                newType != null && newType != Type &&
+                newType.Value.GetTypeManager() is IEditableObjectType editableObjectType
+                    ? editableObjectType
+                    : this;
+
             foreach (Game game in games.Where(g => GetValue(g) == id))
             {
                 if (!RemoveObjectFromGame(game, id))
@@ -79,7 +85,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
                 if (newType != null && newId != null)
                 {
-                    AddDbObjectToGame(game, (Guid)newId);
+                    newTypeManager.AddDbObjectToGame(game, (Guid)newId);
                 }
 
                 API.Instance.MainView.UIDispatcher.Invoke(delegate
