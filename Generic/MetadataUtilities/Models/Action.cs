@@ -3,24 +3,10 @@ using Playnite.SDK.Models;
 using System;
 using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
+using MetadataUtilities.Enums;
 
 namespace MetadataUtilities.Models
 {
-    public enum ActionType
-    {
-        AddObject,
-        RemoveObject,
-        ClearField
-    }
-
-    public static class ActionHelper
-    {
-        public static ActionType ToActionType(this string str) =>
-            int.TryParse(str, out int intValue) && intValue >= 0 && intValue <= 2
-                ? (ActionType)intValue
-                : throw new ArgumentOutOfRangeException(nameof(str), str, null);
-    }
-
     public class Action : MetadataObject
     {
         private ActionType _actionType = ActionType.AddObject;

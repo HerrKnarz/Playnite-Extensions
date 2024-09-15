@@ -5,18 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using MetadataUtilities.Enums;
 
 namespace MetadataUtilities.Models
 {
-    public enum LogicType
-    {
-        And = 0,
-        Two = 4,
-        Or = 1,
-        Nand = 2,
-        Nor = 3,
-    }
-
     public class ConditionalAction : ObservableObject
     {
         private ObservableCollection<Action> _actions = new ObservableCollection<Action>();

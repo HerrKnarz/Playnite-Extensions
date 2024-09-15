@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Models;
+﻿using MetadataUtilities.Enums;
+using Playnite.SDK.Models;
 
 namespace MetadataUtilities.Actions
 {
@@ -29,7 +30,7 @@ namespace MetadataUtilities.Actions
         /// be executed here!
         /// </param>
         /// <returns>true, if the action was successful</returns>
-        bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true);
+        bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true);
 
         /// <summary>
         /// Executes follow-up steps after the execute method was run. Should be executed after a
@@ -44,7 +45,7 @@ namespace MetadataUtilities.Actions
         /// things differently if only one game is processed.
         /// </param>
         /// <returns>true, if the action was successful</returns>
-        void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true);
+        void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true);
 
         /// <summary>
         /// Prepares the action before performing the execute method. Should be executed before a
@@ -59,6 +60,6 @@ namespace MetadataUtilities.Actions
         /// things differently if only one game is processed.
         /// </param>
         /// <returns>true, if the action was successful</returns>
-        bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true);
+        bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true);
     }
 }

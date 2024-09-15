@@ -1,4 +1,5 @@
-﻿using MetadataUtilities.Models;
+﻿using MetadataUtilities.Enums;
+using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 
@@ -35,7 +36,7 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {

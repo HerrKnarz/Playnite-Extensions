@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KNARZhelper;
 using KNARZhelper.DatabaseObjectTypes;
+using MetadataUtilities.Enums;
 
 namespace MetadataUtilities.Actions
 {
@@ -55,7 +56,7 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
@@ -73,7 +74,7 @@ namespace MetadataUtilities.Actions
             return mustUpdate;
         }
 
-        public override void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
+        public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             foreach (MetadataObject metaDataItem in Settings.UnwantedItems)
             {
@@ -86,7 +87,7 @@ namespace MetadataUtilities.Actions
             ClearLists();
         }
 
-        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
+        public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             ClearLists();
 

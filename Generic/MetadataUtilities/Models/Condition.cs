@@ -3,27 +3,10 @@ using Playnite.SDK.Models;
 using System;
 using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
+using MetadataUtilities.Enums;
 
 namespace MetadataUtilities.Models
 {
-    public enum ComparatorType
-    {
-        Contains,
-        DoesNotContain,
-        IsEmpty,
-        IsNotEmpty,
-        IsBiggerThan,
-        IsSmallerThan
-    }
-
-    public static class ConditionHelper
-    {
-        public static ComparatorType ToComparatorType(this string str) =>
-            int.TryParse(str, out int intValue) && intValue >= 0 && intValue <= 2
-                ? (ComparatorType)intValue
-                : throw new ArgumentOutOfRangeException(nameof(str), str, null);
-    }
-
     public class Condition : MetadataObject
     {
         private ComparatorType _comparator = ComparatorType.Contains;

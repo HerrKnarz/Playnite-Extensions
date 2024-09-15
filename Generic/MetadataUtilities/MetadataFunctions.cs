@@ -11,13 +11,14 @@ using System.Windows.Forms;
 using KNARZhelper.DatabaseObjectTypes;
 using Action = MetadataUtilities.Models.Action;
 using MetadataUtilities.Actions;
+using MetadataUtilities.Enums;
 using Playnite.SDK.Models;
 
 namespace MetadataUtilities
 {
     public static class MetadataFunctions
     {
-        public static void DoForAll(MetadataUtilities plugin, List<Game> games, IBaseAction action, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null)
+        public static void DoForAll(MetadataUtilities plugin, List<Game> games, IBaseAction action, bool showDialog = false, ActionModifierType actionModifier = ActionModifierType.None, object item = null)
         {
             plugin.IsUpdating = true;
 

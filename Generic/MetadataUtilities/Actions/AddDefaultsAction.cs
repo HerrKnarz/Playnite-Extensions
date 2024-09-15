@@ -4,6 +4,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using MetadataUtilities.Enums;
 
 namespace MetadataUtilities.Actions
 {
@@ -42,7 +43,7 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
@@ -64,14 +65,14 @@ namespace MetadataUtilities.Actions
             return mustUpdate;
         }
 
-        public override void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null,
+        public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null,
             bool isBulkAction = true)
         {
             _categoryIds.Clear();
             _tagIds.Clear();
         }
 
-        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
+        public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             _categoryIds.Clear();
             foreach (MetadataObject category in Settings.DefaultCategories)

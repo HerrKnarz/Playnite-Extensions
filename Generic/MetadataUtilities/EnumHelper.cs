@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 using KNARZhelper;
+using MetadataUtilities.Enums;
 
 namespace MetadataUtilities
 {

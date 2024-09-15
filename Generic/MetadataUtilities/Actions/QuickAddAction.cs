@@ -3,6 +3,7 @@ using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
+using MetadataUtilities.Enums;
 
 namespace MetadataUtilities.Actions
 {
@@ -10,7 +11,7 @@ namespace MetadataUtilities.Actions
     {
         private static readonly object _mutex = new object();
         private static QuickAddAction _instance;
-        private ActionModifierTypes _action = ActionModifierTypes.Add;
+        private ActionModifierType _action = ActionModifierType.Add;
         private FieldType _type = FieldType.Category;
 
         private QuickAddAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
@@ -39,7 +40,7 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
@@ -57,22 +58,22 @@ namespace MetadataUtilities.Actions
 
             switch (actionModifier)
             {
-                case ActionModifierTypes.Add:
+                case ActionModifierType.Add:
                     mustUpdate = metaDataItem.AddToGame(game);
                     break;
 
-                case ActionModifierTypes.Remove:
+                case ActionModifierType.Remove:
                     mustUpdate = metaDataItem.RemoveFromGame(game);
                     break;
 
-                case ActionModifierTypes.Toggle:
+                case ActionModifierType.Toggle:
                     mustUpdate = metaDataItem.ExistsInGame(game) ?
                         metaDataItem.RemoveFromGame(game) :
                         metaDataItem.AddToGame(game);
                     break;
 
-                case ActionModifierTypes.None:
-                case ActionModifierTypes.IsManual:
+                case ActionModifierType.None:
+                case ActionModifierType.IsManual:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
             }
@@ -85,7 +86,7 @@ namespace MetadataUtilities.Actions
             return mustUpdate;
         }
 
-        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, object item = null, bool isBulkAction = true)
+        public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             _action = actionModifier;
 

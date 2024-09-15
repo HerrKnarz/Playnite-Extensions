@@ -219,6 +219,7 @@
     <Compile Include="..\..\Common\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
+    <Compile Include="Enums\ActionModifierType.cs" />
     <Compile Include="Actions\AddDefaultsAction.cs" />
     <Compile Include="Actions\BaseAction.cs" />
     <Compile Include="Actions\ExecuteConditionalActionsAction.cs" />
@@ -231,10 +232,13 @@
     <Compile Include="MetadataFunctions.cs" />
     <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\Action.cs" />
+    <Compile Include="Enums\ActionType.cs" />
+    <Compile Include="Enums\ComparatorType.cs" />
     <Compile Include="Models\Condition.cs" />
     <Compile Include="Models\ConditionalAction.cs" />
     <Compile Include="Models\FilterType.cs" />
     <Compile Include="Models\ItemList.cs" />
+    <Compile Include="Enums\LogicType.cs" />
     <Compile Include="Models\MergeRule.cs" />
     <Compile Include="Models\MergeRules.cs" />
     <Compile Include="Models\MetadataObject.cs" />

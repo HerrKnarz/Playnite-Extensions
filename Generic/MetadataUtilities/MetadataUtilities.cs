@@ -18,6 +18,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using KNARZhelper.DatabaseObjectTypes;
+using MetadataUtilities.Enums;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace MetadataUtilities
@@ -126,7 +127,7 @@ namespace MetadataUtilities
                 Description = "",
                 MenuSection = ResourceProvider.GetString("LOCUserScore"),
                 Action = a =>
-                    MetadataFunctions.DoForAll(this, games, SetUserScoreAction.Instance(this), true, ActionModifierTypes.None, 0)
+                    MetadataFunctions.DoForAll(this, games, SetUserScoreAction.Instance(this), true, ActionModifierType.None, 0)
             };
             menuItems.Add(item);
 
@@ -138,7 +139,7 @@ namespace MetadataUtilities
                     Description = new string('\u2605', i),
                     MenuSection = ResourceProvider.GetString("LOCUserScore"),
                     Action = a =>
-                        MetadataFunctions.DoForAll(this, games, SetUserScoreAction.Instance(this), true, ActionModifierTypes.None, rating)
+                        MetadataFunctions.DoForAll(this, games, SetUserScoreAction.Instance(this), true, ActionModifierType.None, rating)
                 };
                 menuItems.Add(menuItem);
             }
@@ -187,7 +188,7 @@ namespace MetadataUtilities
                 Description = action.Name,
                 MenuSection = $"{menuSection}|{conditionalSection}",
                 Action = a => MetadataFunctions.DoForAll(this, games, ExecuteConditionalActionsAction.Instance(this), true,
-                    ActionModifierTypes.IsManual, action)
+                    ActionModifierType.IsManual, action)
             }));
 
             List<GameMenuItem> quickAddItems = new List<GameMenuItem>();
@@ -202,8 +203,8 @@ namespace MetadataUtilities
             }
 
             quickAddItems.AddRange(CreateMenuItems(baseMenu, games, Settings.Settings.QuickAddObjects));
-            quickAddItems.AddRange(CreateMenuItems(baseMenu, games, Settings.Settings.QuickAddObjects, ActionModifierTypes.Remove));
-            quickAddItems.AddRange(CreateMenuItems(baseMenu, games, Settings.Settings.QuickAddObjects, ActionModifierTypes.Toggle));
+            quickAddItems.AddRange(CreateMenuItems(baseMenu, games, Settings.Settings.QuickAddObjects, ActionModifierType.Remove));
+            quickAddItems.AddRange(CreateMenuItems(baseMenu, games, Settings.Settings.QuickAddObjects, ActionModifierType.Toggle));
 
             if (quickAddItems.Count == 0)
             {
@@ -331,7 +332,7 @@ namespace MetadataUtilities
             }
         }
 
-        private IEnumerable<GameMenuItem> CreateMenuItems(string baseMenu, List<Game> games, IReadOnlyCollection<QuickAddObject> dbObjects, ActionModifierTypes action = ActionModifierTypes.Add)
+        private IEnumerable<GameMenuItem> CreateMenuItems(string baseMenu, List<Game> games, IReadOnlyCollection<QuickAddObject> dbObjects, ActionModifierType action = ActionModifierType.Add)
         {
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
 
@@ -342,9 +343,9 @@ namespace MetadataUtilities
 
             // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (QuickAddObject dbObject in dbObjects
-                         .Where(x => (action == ActionModifierTypes.Add && x.Add) ||
-                                     (action == ActionModifierTypes.Remove && x.Remove) ||
-                                     (action == ActionModifierTypes.Toggle && x.Toggle)))
+                         .Where(x => (action == ActionModifierType.Add && x.Add) ||
+                                     (action == ActionModifierType.Remove && x.Remove) ||
+                                     (action == ActionModifierType.Toggle && x.Toggle)))
             {
                 string customMenu = dbObject.CustomPath?.Trim().Length > 0
                     ? dbObject.CustomPath.Replace("{type}", dbObject.Type.ToString()).Replace("{action}", action.ToString())
