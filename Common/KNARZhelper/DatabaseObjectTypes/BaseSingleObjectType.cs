@@ -11,19 +11,24 @@ namespace KNARZhelper.DatabaseObjectTypes
     {
         public override bool IsList => false;
 
-        public override bool AddDbObjectToGame(Game game, Guid id)
+        public override bool AddValueToGame<T>(Game game, T value)
         {
-            if (GetValue(game) == id)
+            switch (value)
             {
-                return false;
+                case Guid id:
+                    if (GetValue(game) == id)
+                    {
+                        return false;
+                    }
+
+                    API.Instance.MainView.UIDispatcher.Invoke(() => SetValue(game, id));
+
+                    return true;
+
+                default:
+                    return false;
             }
-
-            API.Instance.MainView.UIDispatcher.Invoke(() => SetValue(game, id));
-
-            return true;
         }
-
-        public override bool AddDbObjectToGame(Game game, List<Guid> idList) => false;
 
         public override bool DbObjectInGame(Game game, Guid id) => GetValue(game) == id;
 
@@ -85,7 +90,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
                 if (newType != null && newId != null)
                 {
-                    newTypeManager.AddDbObjectToGame(game, (Guid)newId);
+                    newTypeManager.AddValueToGame(game, (Guid)newId);
                 }
 
                 API.Instance.MainView.UIDispatcher.Invoke(delegate

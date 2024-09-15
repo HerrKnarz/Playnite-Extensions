@@ -50,11 +50,11 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool mustUpdate = _categoryType.AddDbObjectToGame(game, _categoryIds);
+            bool mustUpdate = _categoryType.AddValueToGame(game, _categoryIds);
 
             if (!Settings.SetDefaultTagsOnlyIfEmpty || (game.TagIds?.Count != 0))
             {
-                mustUpdate |= _tagType.AddDbObjectToGame(game, _tagIds);
+                mustUpdate |= _tagType.AddValueToGame(game, _tagIds);
             }
 
             if (mustUpdate)

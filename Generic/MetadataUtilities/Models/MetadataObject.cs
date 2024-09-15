@@ -173,7 +173,7 @@ namespace MetadataUtilities.Models
             return Id;
         }
 
-        public bool AddToGame(Game game) => TypeManager is IEditableObjectType type && type.AddDbObjectToGame(game, Id);
+        public bool AddToGame(Game game) => TypeManager is IEditableObjectType type && type.AddValueToGame(game, Id);
 
         public void CheckGroup(List<MetadataObject> metadataList)
             => ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && !x.Equals(this));

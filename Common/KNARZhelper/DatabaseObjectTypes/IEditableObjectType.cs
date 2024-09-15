@@ -7,15 +7,11 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public delegate void RenameObjectEventHandler(object sender, string oldName, string newName);
 
-    public interface IEditableObjectType : IObjectType
+    public interface IEditableObjectType : IObjectType, IValueType
     {
         event RenameObjectEventHandler RenameObject;
 
         Guid AddDbObject(string name);
-
-        bool AddDbObjectToGame(Game game, List<Guid> idList);
-
-        bool AddDbObjectToGame(Game game, Guid id);
 
         bool RemoveDbObject(Guid id, bool checkIfUsed = true);
 

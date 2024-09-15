@@ -43,9 +43,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract Guid AddDbObject(string name);
 
-        public abstract bool AddDbObjectToGame(Game game, List<Guid> idList);
-
-        public abstract bool AddDbObjectToGame(Game game, Guid id);
+        public abstract bool AddValueToGame<T>(Game game, T value);
 
         public abstract bool DbObjectExists(string name);
 
