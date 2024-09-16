@@ -4,7 +4,6 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace MetadataUtilities.Models
 {
@@ -45,6 +44,32 @@ namespace MetadataUtilities.Models
                     }
 
                     result.AddMissing(item.ReplaceInDb(games, Type, Id, removeAfter));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+
+            return result;
+        }
+
+        public bool Merge(Game game, bool needToAdd = false)
+        {
+            if (needToAdd)
+            {
+                AddToDb();
+            }
+
+            bool result = false;
+
+            try
+            {
+                result = SourceObjects.Where(item => item.Id != Id && item.Id != default).Aggregate(false, (current, item) => current | item.RemoveFromGame(game));
+
+                if (result)
+                {
+                    AddToGame(game);
                 }
             }
             catch (Exception ex)

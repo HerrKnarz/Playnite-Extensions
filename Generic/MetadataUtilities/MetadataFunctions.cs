@@ -18,7 +18,8 @@ namespace MetadataUtilities
 {
     public static class MetadataFunctions
     {
-        public static void DoForAll(MetadataUtilities plugin, List<Game> games, IBaseAction action, bool showDialog = false, ActionModifierType actionModifier = ActionModifierType.None, object item = null)
+        public static void DoForAll(MetadataUtilities plugin, List<MyGame> games, IBaseAction action,
+            bool showDialog = false, ActionModifierType actionModifier = ActionModifierType.None, object item = null)
         {
             plugin.IsUpdating = true;
 
@@ -57,10 +58,10 @@ namespace MetadataUtilities
                             {
                                 activateGlobalProgress.ProgressMaxValue = games.Count;
 
-                                foreach (Game game in games)
+                                foreach (MyGame game in games)
                                 {
                                     activateGlobalProgress.Text =
-                                        $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}{Environment.NewLine}{action.ProgressMessage}{Environment.NewLine}{game.Name}";
+                                        $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}{Environment.NewLine}{action.ProgressMessage}{Environment.NewLine}{game.Game.Name}";
 
                                     if (activateGlobalProgress.CancelToken.IsCancellationRequested)
                                     {

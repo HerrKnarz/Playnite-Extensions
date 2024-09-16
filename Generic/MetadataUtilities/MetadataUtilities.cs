@@ -18,6 +18,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
+using MergeAction = MetadataUtilities.Actions.MergeAction;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace MetadataUtilities
@@ -97,20 +98,36 @@ namespace MetadataUtilities
 
             if (games.Count > 0)
             {
+                List<MyGame> myGames = games.Select(x => new MyGame()
+                {
+                    Game = x,
+                    ExecuteConditionalActions = true,
+                    ExecuteMergeRules = true,
+                    ExecuteRemoveUnwanted = true
+                }).ToList();
+
                 if (Settings.Settings.RemoveUnwantedOnMetadataUpdate)
                 {
-                    MetadataFunctions.DoForAll(this, games, RemoveUnwantedAction.Instance(this));
+                    MetadataFunctions.DoForAll(this, myGames, RemoveUnwantedAction.Instance(this));
                 }
 
                 if (Settings.Settings.MergeMetadataOnMetadataUpdate)
                 {
-                    MetadataFunctions.MergeItems(this, games);
+                    MetadataFunctions.DoForAll(this, myGames, MergeAction.Instance(this));
                 }
             }
 
+            List<MyGame> condGames = args.UpdatedItems.Select(x => new MyGame()
+            {
+                Game = x.NewData,
+                ExecuteConditionalActions = true,
+                ExecuteMergeRules = false,
+                ExecuteRemoveUnwanted = false
+            }).ToList();
+
             // Execute conditional actions for all games, since those take nearly every possible
             // field into account
-            MetadataFunctions.DoForAll(this, args.UpdatedItems.Select(item => item.NewData).ToList(), ExecuteConditionalActionsAction.Instance(this));
+            MetadataFunctions.DoForAll(this, condGames, ExecuteConditionalActionsAction.Instance(this));
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -120,13 +137,14 @@ namespace MetadataUtilities
             string conditionalSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsTabConditionalActions");
             List<GameMenuItem> menuItems = new List<GameMenuItem>();
             List<Game> games = args.Games.Distinct().ToList();
+            List<MyGame> myGames = games.Select(x => new MyGame() { Game = x }).ToList();
 
             GameMenuItem item = new GameMenuItem
             {
                 Description = "",
                 MenuSection = ResourceProvider.GetString("LOCUserScore"),
                 Action = a =>
-                    MetadataFunctions.DoForAll(this, games, SetUserScoreAction.Instance(this), true, ActionModifierType.None, 0)
+                    MetadataFunctions.DoForAll(this, myGames, SetUserScoreAction.Instance(this), true, ActionModifierType.None, 0)
             };
             menuItems.Add(item);
 
@@ -138,7 +156,7 @@ namespace MetadataUtilities
                     Description = new string('\u2605', i),
                     MenuSection = ResourceProvider.GetString("LOCUserScore"),
                     Action = a =>
-                        MetadataFunctions.DoForAll(this, games, SetUserScoreAction.Instance(this), true, ActionModifierType.None, rating)
+                        MetadataFunctions.DoForAll(this, myGames, SetUserScoreAction.Instance(this), true, ActionModifierType.None, rating)
                 };
                 menuItems.Add(menuItem);
             }
@@ -157,21 +175,21 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuAddDefaults"),
                     MenuSection = menuSection,
                     Icon = "muTagIcon",
-                    Action = a => MetadataFunctions.DoForAll(this, games, AddDefaultsAction.Instance(this), true)
+                    Action = a => MetadataFunctions.DoForAll(this, myGames, AddDefaultsAction.Instance(this), true)
                 },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnwanted"),
                     MenuSection = menuSection,
                     Icon = "muRemoveIcon",
-                    Action = a => MetadataFunctions.DoForAll(this, games, RemoveUnwantedAction.Instance(this), true)
+                    Action = a => MetadataFunctions.DoForAll(this, myGames, RemoveUnwantedAction.Instance(this), true)
                 },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuMergeMetadata"),
                     MenuSection = menuSection,
                     Icon = "muMergeIcon",
-                    Action = a => MetadataFunctions.MergeItems(this, games, null, true)
+                    Action = a => MetadataFunctions.DoForAll(this, myGames, MergeAction.Instance(this), true)
                 }
             });
 
@@ -179,14 +197,15 @@ namespace MetadataUtilities
             {
                 Description = rule.TypeAndName,
                 MenuSection = $"{menuSection}|{mergeSection}",
-                Action = a => MetadataFunctions.MergeItems(this, games, rule)
+                Action = a => MetadataFunctions.DoForAll(this, myGames, MergeAction.Instance(this), true,
+                    ActionModifierType.None, rule)
             }));
 
             menuItems.AddRange(Settings.Settings.ConditionalActions.OrderBy(x => x.Name).Select(action => new GameMenuItem
             {
                 Description = action.Name,
                 MenuSection = $"{menuSection}|{conditionalSection}",
-                Action = a => MetadataFunctions.DoForAll(this, games, ExecuteConditionalActionsAction.Instance(this), true,
+                Action = a => MetadataFunctions.DoForAll(this, myGames, ExecuteConditionalActionsAction.Instance(this), true,
                     ActionModifierType.IsManual, action)
             }));
 
@@ -305,8 +324,9 @@ namespace MetadataUtilities
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
-            List<Game> games = PlayniteApi.Database.Games
-                .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
+            List<MyGame> games = PlayniteApi.Database.Games
+                .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate)
+                .Select(x => new MyGame() { Game = x }).ToList();
 
             MetadataFunctions.DoForAll(this, games, AddDefaultsAction.Instance(this));
 
@@ -340,6 +360,8 @@ namespace MetadataUtilities
                 return menuItems;
             }
 
+            List<MyGame> myGames = games.Select(x => new MyGame() { Game = x }).ToList();
+
             // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (QuickAddObject dbObject in dbObjects
                          .Where(x => (action == ActionModifierType.Add && x.Add) ||
@@ -364,7 +386,7 @@ namespace MetadataUtilities
                     Icon = checkedCount == games.Count ? "muAllCheckedIcon" : checkedCount > 0 ? "muSomeCheckedIcon" : "",
                     Description = dbObject.Name,
                     MenuSection = baseMenu + customMenu,
-                    Action = a => MetadataFunctions.DoForAll(this, games, QuickAddAction.Instance(this), true, action, dbObject)
+                    Action = a => MetadataFunctions.DoForAll(this, myGames, QuickAddAction.Instance(this), true, action, dbObject)
                 });
             }
 

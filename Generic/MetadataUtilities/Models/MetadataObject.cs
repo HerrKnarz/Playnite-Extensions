@@ -213,9 +213,15 @@ namespace MetadataUtilities.Models
             return string.Empty;
         }
 
-        public bool IsUsed() => TypeManager is IObjectType type && type.DbObjectInUse(Id);
+        public bool IsUsed(bool ignoreHiddenGames = false) => TypeManager is IObjectType type && type.DbObjectInUse(Id, ignoreHiddenGames);
 
-        public bool NameExists() => TypeManager is IObjectType type && type.NameExists(Name, Id);
+        public void RefreshId()
+        {
+            if (TypeManager is IObjectType type)
+            {
+                Id = type.GetDbObjectId(Name);
+            }
+        }
 
         public bool RemoveFromDb(bool checkIfUsed = true)
         {

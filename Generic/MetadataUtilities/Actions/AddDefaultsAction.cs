@@ -2,7 +2,6 @@
 using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 
@@ -43,23 +42,23 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
                 return false;
             }
 
-            bool mustUpdate = _categoryType.AddValueToGame(game, _categoryIds);
+            bool mustUpdate = _categoryType.AddValueToGame(game.Game, _categoryIds);
 
-            if (!Settings.SetDefaultTagsOnlyIfEmpty || (game.TagIds?.Count != 0))
+            if (!Settings.SetDefaultTagsOnlyIfEmpty || (game.Game.TagIds?.Count != 0))
             {
-                mustUpdate |= _tagType.AddValueToGame(game, _tagIds);
+                mustUpdate |= _tagType.AddValueToGame(game.Game, _tagIds);
             }
 
             if (mustUpdate)
             {
-                API.Instance.Database.Games.Update(game);
+                API.Instance.Database.Games.Update(game.Game);
             }
 
             return mustUpdate;

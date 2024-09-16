@@ -1,5 +1,5 @@
 ﻿using MetadataUtilities.Enums;
-using Playnite.SDK.Models;
+using MetadataUtilities.Models;
 
 namespace MetadataUtilities.Actions
 {
@@ -30,7 +30,7 @@ namespace MetadataUtilities.Actions
         /// be executed here!
         /// </param>
         /// <returns>true, if the action was successful</returns>
-        bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true);
+        bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true);
 
         /// <summary>
         /// Executes follow-up steps after the execute method was run. Should be executed after a

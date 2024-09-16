@@ -41,21 +41,21 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public bool DbObjectExists(Guid id) => _libraries?.Any(x => x.Id == id) ?? false;
 
-        public bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => x.PluginId == id);
+        public bool DbObjectInUse(Guid id, bool ignoreHiddenGames = false) => API.Instance.Database.Games.Any(x => !(ignoreHiddenGames && x.Hidden) && x.PluginId == id);
 
         public bool GameContainsValue<T>(Game game, T value) => value is Guid id && game.PluginId == id;
 
         public Guid GetDbObjectId(string name) =>
             _libraries?.FirstOrDefault(x => x.Name == name)?.Id ?? default;
 
-        public int GetGameCount(Guid id, bool ignoreHidden = false) =>
-            API.Instance.Database.Games.Count(g => !(ignoreHidden && g.Hidden) && (g.PluginId == id));
+        public int GetGameCount(Guid id, bool ignoreHiddenGames = false) =>
+            API.Instance.Database.Games.Count(g => !(ignoreHiddenGames && g.Hidden) && (g.PluginId == id));
 
-        public int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false) =>
-            games.Count(g => !(ignoreHidden && g.Hidden) && (g.PluginId == id));
+        public int GetGameCount(List<Game> games, Guid id, bool ignoreHiddenGames = false) =>
+            games.Count(g => !(ignoreHiddenGames && g.Hidden) && (g.PluginId == id));
 
-        public List<Game> GetGames(Guid id, bool ignoreHidden = false) =>
-            API.Instance.Database.Games.Where(g => !(ignoreHidden && g.Hidden) && (g.PluginId == id)).ToList();
+        public List<Game> GetGames(Guid id, bool ignoreHiddenGames = false) =>
+            API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden) && (g.PluginId == id)).ToList();
 
         public List<DatabaseObject> LoadAllMetadata() => _libraries;
 

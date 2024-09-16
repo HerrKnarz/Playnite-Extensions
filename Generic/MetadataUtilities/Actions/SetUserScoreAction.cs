@@ -1,7 +1,6 @@
 ﻿using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 
 namespace MetadataUtilities.Actions
 {
@@ -36,7 +35,7 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
@@ -46,8 +45,8 @@ namespace MetadataUtilities.Actions
             if (item == null)
                 return false;
 
-            game.UserScore = (int)item;
-            API.Instance.Database.Games.Update(game);
+            game.Game.UserScore = (int)item;
+            API.Instance.Database.Games.Update(game.Game);
 
             return true;
         }

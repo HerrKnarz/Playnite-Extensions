@@ -4,7 +4,6 @@ using KNARZhelper.Enum;
 using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +55,7 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
@@ -64,11 +63,11 @@ namespace MetadataUtilities.Actions
             }
 
             bool mustUpdate = _types.Values.Aggregate(false, (current, type) =>
-                current | type.ObjectType.RemoveObjectFromGame(game, type.Items));
+                current | type.ObjectType.RemoveObjectFromGame(game.Game, type.Items));
 
             if (mustUpdate)
             {
-                API.Instance.Database.Games.Update(game);
+                API.Instance.Database.Games.Update(game.Game);
             }
 
             return mustUpdate;

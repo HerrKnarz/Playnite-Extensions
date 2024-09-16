@@ -32,17 +32,18 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectInGame(Game game, Guid id) => GetValue(game) == id;
 
-        public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => GetValue(x) == id);
+        public override bool DbObjectInUse(Guid id, bool ignoreHiddenGames = false) =>
+            API.Instance.Database.Games.Any(x => !(ignoreHiddenGames && x.Hidden) && GetValue(x) == id);
 
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => SetValue(game, default));
 
         public override bool FieldInGameIsEmpty(Game game) => GetValue(game) == default;
 
-        public override int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false) =>
-            games.Count(g => !(ignoreHidden && g.Hidden) && GetValue(g) == id);
+        public override int GetGameCount(List<Game> games, Guid id, bool ignoreHiddenGames = false) =>
+            games.Count(g => !(ignoreHiddenGames && g.Hidden) && GetValue(g) == id);
 
-        public override List<Game> GetGames(Guid id, bool ignoreHidden = false) =>
-            API.Instance.Database.Games.Where(g => !(ignoreHidden && g.Hidden) && GetValue(g) == id).ToList();
+        public override List<Game> GetGames(Guid id, bool ignoreHiddenGames = false) =>
+            API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden) && GetValue(g) == id).ToList();
 
         public override bool RemoveObjectFromGame(Game game, List<Guid> ids)
         {
@@ -113,8 +114,7 @@ namespace KNARZhelper.DatabaseObjectTypes
             new List<DatabaseObject> { new DatabaseObject() { Name = item.Name, Id = item.Id } };
 
         internal List<DatabaseObject> LoadUnusedMetadata<T>(bool ignoreHiddenGames, IItemCollection<T> collection) where T : DatabaseObject =>
-            collection.Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && GetValue(g) == x.Id))
-            .Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();
+            collection.Where(x => !DbObjectInUse(x.Id, ignoreHiddenGames)).Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();
 
         internal abstract void SetValue(Game game, Guid id);
     }

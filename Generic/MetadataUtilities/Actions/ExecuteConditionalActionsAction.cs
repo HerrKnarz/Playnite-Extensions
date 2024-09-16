@@ -1,7 +1,6 @@
 ﻿using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System.Linq;
 
 namespace MetadataUtilities.Actions
@@ -38,7 +37,7 @@ namespace MetadataUtilities.Actions
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "easier to understand")]
-        public override bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
@@ -47,11 +46,11 @@ namespace MetadataUtilities.Actions
 
             if (item != null)
             {
-                return ((ConditionalAction)item).CheckAndExecute(game, actionModifier == ActionModifierType.IsManual);
+                return ((ConditionalAction)item).CheckAndExecute(game.Game, actionModifier == ActionModifierType.IsManual);
             }
 
             return Settings.ConditionalActions.Where(x => x.Enabled).Aggregate(false,
-                (current, conditionalAction) => current | conditionalAction.CheckAndExecute(game, actionModifier == ActionModifierType.IsManual));
+                (current, conditionalAction) => current | conditionalAction.CheckAndExecute(game.Game, actionModifier == ActionModifierType.IsManual));
         }
     }
 }

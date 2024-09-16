@@ -1,5 +1,5 @@
 ﻿using MetadataUtilities.Enums;
-using Playnite.SDK.Models;
+using MetadataUtilities.Models;
 
 namespace MetadataUtilities.Actions
 {
@@ -9,7 +9,7 @@ namespace MetadataUtilities.Actions
 
         public abstract string ResultMessage { get; }
 
-        public virtual bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null,
+        public virtual bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null,
             bool isBulkAction = true) => isBulkAction || Prepare(actionModifier, item, false);
 
         public virtual void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null,

@@ -30,17 +30,18 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectInGame(Game game, Guid id) => GameGuids(game).Contains(id);
 
-        public override bool DbObjectInUse(Guid id) => API.Instance.Database.Games.Any(x => GameGuids(x).Contains(id));
+        public override bool DbObjectInUse(Guid id, bool ignoreHiddenGames = false) =>
+            API.Instance.Database.Games.Any(x => !(ignoreHiddenGames && x.Hidden) && GameGuids(x).Contains(id));
 
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => GameGuids(game, true).Clear());
 
         public override bool FieldInGameIsEmpty(Game game) => GameGuids(game).Count == 0;
 
-        public override int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false) =>
-            games.Count(g => !(ignoreHidden && g.Hidden) && GameGuids(g).Contains(id));
+        public override int GetGameCount(List<Game> games, Guid id, bool ignoreHiddenGames = false) =>
+            games.Count(g => !(ignoreHiddenGames && g.Hidden) && GameGuids(g).Contains(id));
 
-        public override List<Game> GetGames(Guid id, bool ignoreHidden = false) =>
-            API.Instance.Database.Games.Where(g => !(ignoreHidden && g.Hidden) && GameGuids(g).Contains(id)).ToList();
+        public override List<Game> GetGames(Guid id, bool ignoreHiddenGames = false) =>
+            API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden) && GameGuids(g).Contains(id)).ToList();
 
         public override bool RemoveObjectFromGame(Game game, List<Guid> ids) => ids.Count != 0 && ids.Aggregate(false, (current, id) =>
             current | API.Instance.MainView.UIDispatcher.Invoke(() => GameGuids(game).Remove(id)));
@@ -93,7 +94,6 @@ namespace KNARZhelper.DatabaseObjectTypes
             items?.Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList() ?? new List<DatabaseObject>();
 
         internal List<DatabaseObject> LoadUnusedMetadata<T>(bool ignoreHiddenGames, IItemCollection<T> collection) where T : DatabaseObject =>
-            collection.Where(x => !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && GameGuids(g).Contains(x.Id)))
-            .Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();
+            collection.Where(x => !DbObjectInUse(x.Id, ignoreHiddenGames)).Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();
     }
 }

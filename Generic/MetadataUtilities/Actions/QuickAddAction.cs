@@ -2,7 +2,6 @@
 using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System;
 
 namespace MetadataUtilities.Actions
@@ -40,7 +39,7 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Execute(Game game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
@@ -59,17 +58,17 @@ namespace MetadataUtilities.Actions
             switch (actionModifier)
             {
                 case ActionModifierType.Add:
-                    mustUpdate = metaDataItem.AddToGame(game);
+                    mustUpdate = metaDataItem.AddToGame(game.Game);
                     break;
 
                 case ActionModifierType.Remove:
-                    mustUpdate = metaDataItem.RemoveFromGame(game);
+                    mustUpdate = metaDataItem.RemoveFromGame(game.Game);
                     break;
 
                 case ActionModifierType.Toggle:
-                    mustUpdate = metaDataItem.ExistsInGame(game) ?
-                        metaDataItem.RemoveFromGame(game) :
-                        metaDataItem.AddToGame(game);
+                    mustUpdate = metaDataItem.ExistsInGame(game.Game) ?
+                        metaDataItem.RemoveFromGame(game.Game) :
+                        metaDataItem.AddToGame(game.Game);
                     break;
 
                 case ActionModifierType.None:
@@ -80,7 +79,7 @@ namespace MetadataUtilities.Actions
 
             if (mustUpdate)
             {
-                API.Instance.Database.Games.Update(game);
+                API.Instance.Database.Games.Update(game.Game);
             }
 
             return mustUpdate;

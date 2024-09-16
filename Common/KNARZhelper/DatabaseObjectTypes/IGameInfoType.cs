@@ -6,10 +6,10 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public interface IGameInfoType
     {
-        int GetGameCount(Guid id, bool ignoreHidden = false);
+        int GetGameCount(Guid id, bool ignoreHiddenGames = false);
 
-        int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false);
+        int GetGameCount(List<Game> games, Guid id, bool ignoreHiddenGames = false);
 
-        List<Game> GetGames(Guid id, bool ignoreHidden = false);
+        List<Game> GetGames(Guid id, bool ignoreHiddenGames = false);
     }
 }

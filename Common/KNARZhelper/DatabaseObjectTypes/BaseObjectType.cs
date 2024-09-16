@@ -51,7 +51,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract bool DbObjectInGame(Game game, Guid id);
 
-        public abstract bool DbObjectInUse(Guid id);
+        public abstract bool DbObjectInUse(Guid id, bool ignoreHiddenGames = false);
 
         public abstract void EmptyFieldInGame(Game game);
 
@@ -61,12 +61,12 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract Guid GetDbObjectId(string name);
 
-        public int GetGameCount(Guid id, bool ignoreHidden = false) =>
-            GetGameCount(API.Instance.Database.Games.ToList(), id, ignoreHidden);
+        public int GetGameCount(Guid id, bool ignoreHiddenGames = false) =>
+            GetGameCount(API.Instance.Database.Games.ToList(), id, ignoreHiddenGames);
 
-        public abstract int GetGameCount(List<Game> games, Guid id, bool ignoreHidden = false);
+        public abstract int GetGameCount(List<Game> games, Guid id, bool ignoreHiddenGames = false);
 
-        public abstract List<Game> GetGames(Guid id, bool ignoreHidden = false);
+        public abstract List<Game> GetGames(Guid id, bool ignoreHiddenGames = false);
 
         public abstract List<DatabaseObject> LoadAllMetadata();
 
