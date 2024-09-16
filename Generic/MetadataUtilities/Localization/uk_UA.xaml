@@ -21,7 +21,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">елемент додано до {0} ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">елемент прибрано з {0} ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">елемент перемкнуто в {0} грі</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">The entered string can be a regular expression.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Введений рядок може бути регулярним виразом.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Прибрано {0} з {1} ігор!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Прибрано небажані метадані з {0} ігор!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Зберегти як правило об’єднання</sys:String>
@@ -36,7 +36,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Групувати елементи зі збігами</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorHideUnused">Сховати невикористані елементи</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Об'єднати</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorMergeRename">Merge rename</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorMergeRename">Об'єднати перейменування</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Пов'язані ігри</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Прибрати невикористані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Ціль Правила</sys:String>
@@ -105,11 +105,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Розташування</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Прибирати невикористані метадані під час запуску</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Прибирати небажані елементи при оновленні метаданих</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameConditionalActions">Automatically rename items in conditional actions when the corresponding original item is renamed.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameConditionalActions">Автоматично перейменовувати елементи в умовних діях, коли перейменовано відповідний вихідний елемент.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Автоматично перейменовувати теги/категорії за замовчуванням, коли перейменований відповідний елемент.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Автоматично перейменовувати ціль правила злиття коли перейменований відповідний елемент.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Automatically rename quick add items when the corresponding original item is renamed.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Automatically rename whitelist items when the corresponding original item is renamed.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Автоматично перейменовувати елементи швидкого додавання під час перейменування відповідного оригінального елемента.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Автоматично перейменовувати елементи білого списку, коли перейменовано відповідний вихідний елемент.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Встановлювати тільки коли теги не були додані при імпорті метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Після встановлення значення для кількох ігор одночасно показувати діалогове вікно з результатами</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Показувати кнопку Налаштування у верхній панелі (потрібен перезапуск)</sys:String>
