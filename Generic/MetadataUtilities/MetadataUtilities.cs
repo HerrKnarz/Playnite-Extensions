@@ -73,9 +73,9 @@ namespace MetadataUtilities
                 return;
             }
 
-            // Only run for games, that have values in one of the supported fields and those differ
-            // from the ones before.
-            List<Game> games = args.UpdatedItems.Where(item =>
+            // some actions only run for games, that have values in one of the supported fields and
+            // those differ from the ones before.
+            HashSet<Guid> games = args.UpdatedItems.Where(item =>
                 item.OldData == null ||
                 (item.NewData.AgeRatingIds != null &&
                  (item.OldData.AgeRatingIds == null ||
@@ -94,40 +94,18 @@ namespace MetadataUtilities
                   !new HashSet<Guid>(item.OldData.SeriesIds).SetEquals(item.NewData.SeriesIds))) ||
                 (item.NewData.TagIds != null &&
                  (item.OldData.TagIds == null ||
-                  !new HashSet<Guid>(item.OldData.TagIds).SetEquals(item.NewData.TagIds)))).Select(item => item.NewData).ToList();
+                  !new HashSet<Guid>(item.OldData.TagIds).SetEquals(item.NewData.TagIds))))
+                .Select(item => item.NewData.Id).Distinct().ToHashSet();
 
-            if (games.Count > 0)
-            {
-                List<MyGame> myGames = games.Select(x => new MyGame()
-                {
-                    Game = x,
-                    ExecuteConditionalActions = true,
-                    ExecuteMergeRules = true,
-                    ExecuteRemoveUnwanted = true
-                }).ToList();
-
-                if (Settings.Settings.RemoveUnwantedOnMetadataUpdate)
-                {
-                    MetadataFunctions.DoForAll(this, myGames, RemoveUnwantedAction.Instance(this));
-                }
-
-                if (Settings.Settings.MergeMetadataOnMetadataUpdate)
-                {
-                    MetadataFunctions.DoForAll(this, myGames, MergeAction.Instance(this));
-                }
-            }
-
-            List<MyGame> condGames = args.UpdatedItems.Select(x => new MyGame()
+            List<MyGame> myGames = args.UpdatedItems.Select(x => new MyGame()
             {
                 Game = x.NewData,
                 ExecuteConditionalActions = true,
-                ExecuteMergeRules = false,
-                ExecuteRemoveUnwanted = false
+                ExecuteMergeRules = games.Contains(x.NewData.Id),
+                ExecuteRemoveUnwanted = games.Contains(x.NewData.Id)
             }).ToList();
 
-            // Execute conditional actions for all games, since those take nearly every possible
-            // field into account
-            MetadataFunctions.DoForAll(this, condGames, ExecuteConditionalActionsAction.Instance(this));
+            MetadataFunctions.DoForAll(this, myGames, AfterMetadataUpdateAction.Instance(Settings.Settings), false, ActionModifierType.IsCombi);
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -144,7 +122,7 @@ namespace MetadataUtilities
                 Description = "",
                 MenuSection = ResourceProvider.GetString("LOCUserScore"),
                 Action = a =>
-                    MetadataFunctions.DoForAll(this, myGames, SetUserScoreAction.Instance(this), true, ActionModifierType.None, 0)
+                    MetadataFunctions.DoForAll(this, myGames, SetUserScoreAction.Instance(Settings.Settings), true, ActionModifierType.None, 0)
             };
             menuItems.Add(item);
 
@@ -156,7 +134,7 @@ namespace MetadataUtilities
                     Description = new string('\u2605', i),
                     MenuSection = ResourceProvider.GetString("LOCUserScore"),
                     Action = a =>
-                        MetadataFunctions.DoForAll(this, myGames, SetUserScoreAction.Instance(this), true, ActionModifierType.None, rating)
+                        MetadataFunctions.DoForAll(this, myGames, SetUserScoreAction.Instance(Settings.Settings), true, ActionModifierType.None, rating)
                 };
                 menuItems.Add(menuItem);
             }
@@ -175,21 +153,21 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuAddDefaults"),
                     MenuSection = menuSection,
                     Icon = "muTagIcon",
-                    Action = a => MetadataFunctions.DoForAll(this, myGames, AddDefaultsAction.Instance(this), true)
+                    Action = a => MetadataFunctions.DoForAll(this, myGames, AddDefaultsAction.Instance(Settings.Settings), true)
                 },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnwanted"),
                     MenuSection = menuSection,
                     Icon = "muRemoveIcon",
-                    Action = a => MetadataFunctions.DoForAll(this, myGames, RemoveUnwantedAction.Instance(this), true)
+                    Action = a => MetadataFunctions.DoForAll(this, myGames, RemoveUnwantedAction.Instance(Settings.Settings), true)
                 },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuMergeMetadata"),
                     MenuSection = menuSection,
                     Icon = "muMergeIcon",
-                    Action = a => MetadataFunctions.DoForAll(this, myGames, MergeAction.Instance(this), true)
+                    Action = a => MetadataFunctions.DoForAll(this, myGames, MergeAction.Instance(Settings.Settings), true)
                 }
             });
 
@@ -197,7 +175,7 @@ namespace MetadataUtilities
             {
                 Description = rule.TypeAndName,
                 MenuSection = $"{menuSection}|{mergeSection}",
-                Action = a => MetadataFunctions.DoForAll(this, myGames, MergeAction.Instance(this), true,
+                Action = a => MetadataFunctions.DoForAll(this, myGames, MergeAction.Instance(Settings.Settings), true,
                     ActionModifierType.None, rule)
             }));
 
@@ -205,7 +183,7 @@ namespace MetadataUtilities
             {
                 Description = action.Name,
                 MenuSection = $"{menuSection}|{conditionalSection}",
-                Action = a => MetadataFunctions.DoForAll(this, myGames, ExecuteConditionalActionsAction.Instance(this), true,
+                Action = a => MetadataFunctions.DoForAll(this, myGames, ExecuteConditionalActionsAction.Instance(Settings.Settings), true,
                     ActionModifierType.IsManual, action)
             }));
 
@@ -328,7 +306,7 @@ namespace MetadataUtilities
                 .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate)
                 .Select(x => new MyGame() { Game = x }).ToList();
 
-            MetadataFunctions.DoForAll(this, games, AddDefaultsAction.Instance(this));
+            MetadataFunctions.DoForAll(this, games, AddDefaultsAction.Instance(Settings.Settings));
 
             Settings.Settings.LastAutoLibUpdate = DateTime.Now;
 
@@ -386,7 +364,7 @@ namespace MetadataUtilities
                     Icon = checkedCount == games.Count ? "muAllCheckedIcon" : checkedCount > 0 ? "muSomeCheckedIcon" : "",
                     Description = dbObject.Name,
                     MenuSection = baseMenu + customMenu,
-                    Action = a => MetadataFunctions.DoForAll(this, myGames, QuickAddAction.Instance(this), true, action, dbObject)
+                    Action = a => MetadataFunctions.DoForAll(this, myGames, QuickAddAction.Instance(Settings.Settings), true, action, dbObject)
                 });
             }
 

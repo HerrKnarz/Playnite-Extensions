@@ -6,6 +6,7 @@
         Add,
         Remove,
         Toggle,
-        IsManual
+        IsManual,
+        IsCombi
     }
 }

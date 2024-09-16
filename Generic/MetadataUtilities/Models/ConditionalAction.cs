@@ -77,8 +77,8 @@ namespace MetadataUtilities.Models
         [DontSerialize]
         public string TypeString => Type.GetEnumDisplayName();
 
-        public bool CheckAndExecute(Game game, bool isManual = false) =>
-            ((isManual && IgnoreConditionOnManual) || CheckConditions(game)) && Execute(game);
+        public bool CheckAndExecute(Game game, bool isManual = false, bool updateGame = true) =>
+            ((isManual && IgnoreConditionOnManual) || CheckConditions(game)) && Execute(game, updateGame);
 
         public bool CheckConditions(Game game)
         {
@@ -109,12 +109,12 @@ namespace MetadataUtilities.Models
             }
         }
 
-        private bool Execute(Game game)
+        private bool Execute(Game game, bool updateGame = true)
         {
             bool mustUpdate = Actions.OrderBy(x => x.ActionType == ActionType.ClearField ? 1 : 2)
                 .Aggregate(false, (current, action) => current | action.Execute(game));
 
-            if (mustUpdate)
+            if (mustUpdate && updateGame)
             {
                 API.Instance.Database.Games.Update(game);
             }

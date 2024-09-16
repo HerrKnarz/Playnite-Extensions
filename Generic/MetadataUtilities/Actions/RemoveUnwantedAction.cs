@@ -17,10 +17,8 @@ namespace MetadataUtilities.Actions
 
         private readonly Dictionary<FieldType, ItemList> _types = new Dictionary<FieldType, ItemList>();
 
-        private RemoveUnwantedAction(MetadataUtilities plugin)
+        private RemoveUnwantedAction(Settings settings) : base(settings)
         {
-            Settings = plugin.Settings.Settings;
-
             foreach (IEditableObjectType type in FieldTypeHelper.GetItemListTypes())
             {
                 _types.Add(type.Type, new ItemList
@@ -35,9 +33,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogRemovedUnwantedMessage";
 
-        public Settings Settings { get; set; }
-
-        public static RemoveUnwantedAction Instance(MetadataUtilities plugin)
+        public static RemoveUnwantedAction Instance(Settings settings)
         {
             if (_instance != null)
             {
@@ -48,7 +44,7 @@ namespace MetadataUtilities.Actions
             {
                 if (_instance == null)
                 {
-                    _instance = new RemoveUnwantedAction(plugin);
+                    _instance = new RemoveUnwantedAction(settings);
                 }
             }
 
@@ -65,7 +61,7 @@ namespace MetadataUtilities.Actions
             bool mustUpdate = _types.Values.Aggregate(false, (current, type) =>
                 current | type.ObjectType.RemoveObjectFromGame(game.Game, type.Items));
 
-            if (mustUpdate)
+            if (mustUpdate && actionModifier != ActionModifierType.IsCombi)
             {
                 API.Instance.Database.Games.Update(game.Game);
             }

@@ -14,15 +14,15 @@ namespace MetadataUtilities.Actions
 
         private readonly List<MergeRule> _rules = new List<MergeRule>();
 
-        private MergeAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
+        private MergeAction(Settings settings) : base(settings)
+        {
+        }
 
         public override string ProgressMessage => ResourceProvider.GetString("LOCMetadataUtilitiesProgressMergingItems");
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogMergedMetadataMessage";
 
-        public Settings Settings { get; set; }
-
-        public static MergeAction Instance(MetadataUtilities plugin)
+        public static MergeAction Instance(Settings settings)
         {
             if (_instance != null)
             {
@@ -33,7 +33,7 @@ namespace MetadataUtilities.Actions
             {
                 if (_instance == null)
                 {
-                    _instance = new MergeAction(plugin);
+                    _instance = new MergeAction(settings);
                 }
             }
 
@@ -51,7 +51,7 @@ namespace MetadataUtilities.Actions
                 ? singleRule.Merge(game.Game)
                 : Settings.MergeRules.Aggregate(false, (current, rule) => current | rule.Merge(game.Game));
 
-            if (result)
+            if (result && actionModifier != ActionModifierType.IsCombi)
             {
                 API.Instance.Database.Games.Update(game.Game);
             }

@@ -117,10 +117,10 @@ namespace MetadataUtilities
                 : new List<MetadataObject>();
         }
 
-        public static void MergeItems(MetadataUtilities plugin, List<Game> games, MergeRule rule) =>
-            MergeItems(plugin, games, new List<MergeRule> { rule }, true);
+        public static void MergeItems(MetadataUtilities plugin, MergeRule rule) =>
+            MergeItems(plugin, new List<MergeRule> { rule }, true);
 
-        public static void MergeItems(MetadataUtilities plugin, List<Game> games = null, List<MergeRule> rules = null, bool showDialog = false)
+        public static void MergeItems(MetadataUtilities plugin, List<MergeRule> rules = null, bool showDialog = false)
         {
             List<Guid> gamesAffected = new List<Guid>();
 
@@ -142,12 +142,6 @@ namespace MetadataUtilities
                     {
                         try
                         {
-                            if (games == null)
-                            {
-                                games = new List<Game>();
-                                games.AddRange(API.Instance.Database.Games);
-                            }
-
                             if (rules == null)
                             {
                                 rules = new List<MergeRule>();
@@ -158,7 +152,7 @@ namespace MetadataUtilities
 
                             foreach (MergeRule rule in rules)
                             {
-                                gamesAffected.AddMissing(rule.Merge(games, false));
+                                gamesAffected.AddMissing(rule.Merge(API.Instance.Database.Games.ToList(), false));
 
                                 itemsToRemove.AddRange(rule.SourceObjects.Where(x =>
                                     x.Id != rule.Id && x.Id != default && !itemsToRemove.Any(i =>
@@ -172,7 +166,7 @@ namespace MetadataUtilities
 
                             foreach (MetadataObject item in itemsToRemove)
                             {
-                                item.ReplaceInDb(games);
+                                item.RemoveFromDb();
                             }
                         }
                         catch (Exception ex)
@@ -189,7 +183,7 @@ namespace MetadataUtilities
             }
 
             // Shows a dialog with the number of games actually affected.
-            if (!showDialog || games?.Count == 1)
+            if (!showDialog)
             {
                 return;
             }

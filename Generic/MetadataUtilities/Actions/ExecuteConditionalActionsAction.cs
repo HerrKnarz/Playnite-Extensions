@@ -10,15 +10,15 @@ namespace MetadataUtilities.Actions
         private static readonly object _mutex = new object();
         private static ExecuteConditionalActionsAction _instance;
 
-        private ExecuteConditionalActionsAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
+        private ExecuteConditionalActionsAction(Settings settings) : base(settings)
+        {
+        }
 
         public override string ProgressMessage => ResourceProvider.GetString("LOCMetadataUtilitiesProgressExecutingConditionalActions");
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogExecutedConditionalActions";
 
-        public Settings Settings { get; set; }
-
-        public static ExecuteConditionalActionsAction Instance(MetadataUtilities plugin)
+        public static ExecuteConditionalActionsAction Instance(Settings settings)
         {
             if (_instance != null)
             {
@@ -29,7 +29,7 @@ namespace MetadataUtilities.Actions
             {
                 if (_instance == null)
                 {
-                    _instance = new ExecuteConditionalActionsAction(plugin);
+                    _instance = new ExecuteConditionalActionsAction(settings);
                 }
             }
 
@@ -46,11 +46,11 @@ namespace MetadataUtilities.Actions
 
             if (item != null)
             {
-                return ((ConditionalAction)item).CheckAndExecute(game.Game, actionModifier == ActionModifierType.IsManual);
+                return ((ConditionalAction)item).CheckAndExecute(game.Game, actionModifier == ActionModifierType.IsManual, actionModifier != ActionModifierType.IsCombi);
             }
 
             return Settings.ConditionalActions.Where(x => x.Enabled).Aggregate(false,
-                (current, conditionalAction) => current | conditionalAction.CheckAndExecute(game.Game, actionModifier == ActionModifierType.IsManual));
+                (current, conditionalAction) => current | conditionalAction.CheckAndExecute(game.Game, actionModifier == ActionModifierType.IsManual, actionModifier != ActionModifierType.IsCombi));
         }
     }
 }

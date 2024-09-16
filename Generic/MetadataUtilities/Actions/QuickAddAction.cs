@@ -13,15 +13,15 @@ namespace MetadataUtilities.Actions
         private ActionModifierType _action = ActionModifierType.Add;
         private FieldType _type = FieldType.Category;
 
-        private QuickAddAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
+        private QuickAddAction(Settings settings) : base(settings)
+        {
+        }
 
         public override string ProgressMessage => string.Format(ResourceProvider.GetString($"LOCMetadataUtilitiesProgressQuickAdd{_action}"), ResourceProvider.GetString($"LOC{_type}Label"));
 
         public override string ResultMessage => $"LOCMetadataUtilitiesDialogQuickAddSuccess{_action}";
 
-        public Settings Settings { get; set; }
-
-        public static QuickAddAction Instance(MetadataUtilities plugin)
+        public static QuickAddAction Instance(Settings settings)
         {
             if (_instance != null)
             {
@@ -32,7 +32,7 @@ namespace MetadataUtilities.Actions
             {
                 if (_instance == null)
                 {
-                    _instance = new QuickAddAction(plugin);
+                    _instance = new QuickAddAction(settings);
                 }
             }
 

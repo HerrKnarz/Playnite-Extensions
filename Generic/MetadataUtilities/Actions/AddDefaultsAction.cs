@@ -16,15 +16,15 @@ namespace MetadataUtilities.Actions
         private readonly List<Guid> _tagIds = new List<Guid>();
         private readonly TypeTag _tagType = new TypeTag();
 
-        private AddDefaultsAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
+        private AddDefaultsAction(Settings settings) : base(settings)
+        {
+        }
 
         public override string ProgressMessage => ResourceProvider.GetString("LOCMetadataUtilitiesProgressAddingDefaults");
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogAddedDefaultsMessage";
 
-        public Settings Settings { get; set; }
-
-        public static AddDefaultsAction Instance(MetadataUtilities plugin)
+        public static AddDefaultsAction Instance(Settings settings)
         {
             if (_instance != null)
             {
@@ -35,7 +35,7 @@ namespace MetadataUtilities.Actions
             {
                 if (_instance == null)
                 {
-                    _instance = new AddDefaultsAction(plugin);
+                    _instance = new AddDefaultsAction(settings);
                 }
             }
 

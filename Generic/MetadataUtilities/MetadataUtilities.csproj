@@ -225,6 +225,7 @@
     <Compile Include="..\..\Common\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
+    <Compile Include="Actions\AfterMetadataUpdateAction.cs" />
     <Compile Include="Actions\MergeAction.cs" />
     <Compile Include="Enums\ActionModifierType.cs" />
     <Compile Include="Actions\AddDefaultsAction.cs" />

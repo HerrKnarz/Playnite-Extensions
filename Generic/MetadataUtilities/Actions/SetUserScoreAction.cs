@@ -9,15 +9,15 @@ namespace MetadataUtilities.Actions
         private static readonly object _mutex = new object();
         private static SetUserScoreAction _instance;
 
-        private SetUserScoreAction(MetadataUtilities plugin) => Settings = plugin.Settings.Settings;
+        private SetUserScoreAction(Settings settings) : base(settings)
+        {
+        }
 
         public override string ProgressMessage => ResourceProvider.GetString("LOCMetadataUtilitiesProgressSettingUserScore");
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogSetUserScoreMessage";
 
-        public Settings Settings { get; set; }
-
-        public static SetUserScoreAction Instance(MetadataUtilities plugin)
+        public static SetUserScoreAction Instance(Settings settings)
         {
             if (_instance != null)
             {
@@ -28,7 +28,7 @@ namespace MetadataUtilities.Actions
             {
                 if (_instance == null)
                 {
-                    _instance = new SetUserScoreAction(plugin);
+                    _instance = new SetUserScoreAction(settings);
                 }
             }
 
