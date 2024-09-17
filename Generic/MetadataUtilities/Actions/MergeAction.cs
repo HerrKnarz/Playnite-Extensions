@@ -40,7 +40,8 @@ namespace MetadataUtilities.Actions
             return _instance;
         }
 
-        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None,
+            object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
@@ -49,7 +50,7 @@ namespace MetadataUtilities.Actions
 
             bool result = item is MergeRule singleRule
                 ? singleRule.Merge(game.Game)
-                : Settings.MergeRules.Aggregate(false, (current, rule) => current | rule.Merge(game.Game));
+                : _rules.Aggregate(false, (current, rule) => current | rule.Merge(game.Game));
 
             if (result && actionModifier != ActionModifierType.IsCombi)
             {

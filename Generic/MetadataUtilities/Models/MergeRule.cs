@@ -65,7 +65,8 @@ namespace MetadataUtilities.Models
 
             try
             {
-                result = SourceObjects.Where(item => item.Id != Id && item.Id != default).Aggregate(false, (current, item) => current | item.RemoveFromGame(game));
+                result = SourceObjects.Where(item => item.Id != Id && item.Id != default)
+                    .Aggregate(false, (current, item) => current | item.RemoveFromGame(game));
 
                 if (result)
                 {
