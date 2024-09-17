@@ -1,5 +1,22 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 1.0
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-09-17
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-09-17/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_1_0.pext
+    Changelog:
+      - Added Conditional Actions feature to further automate metadata in games. You can create conditions for most available metadata fields of a game and set up actions for metadata when the conditions are true.
+      - Added context menu entry to set the user score for a games in stars from 1 to 10.
+      - When adding a merge rule with an object in its source items, that already is a merge rule itself, it and its source items will be moved into the new rule.
+      - Items in the whitelist for unwanted items, quick add items and conditional actions will now optionally be renamed when the original items is renamed in Playnite.
+      - Added Merge Rename button to Metadata Editor to rename an item and add that as a merge rule.
+      - Added additional field types to Remove Unwanted and Quick Add functionality.
+      - Added column for hidden checkbox in the Metadata Editor game grid.
+      - lots of code rewrites and optimizations.
+      - optimized UI of some dialogs.
+      - added keyboard shortcuts to buttons in several dialogs. 
+      - updated localizations.
+      - Further details and help will be added to the documentation shortly!
   - Version: 0.9.2
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-07-03
