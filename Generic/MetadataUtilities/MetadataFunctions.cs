@@ -6,7 +6,6 @@ using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using MetadataUtilities.ViewModels;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
