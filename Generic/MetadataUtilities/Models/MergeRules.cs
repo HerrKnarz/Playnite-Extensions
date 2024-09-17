@@ -43,7 +43,7 @@ namespace MetadataUtilities.Models
         {
             // ReSharper disable once PossibleUnintendedReferenceComparison
             foreach (MergeRule child in this.Where(dest =>
-                         dest != rule && rule.SourceObjects.Any(source =>
+                         (dest.Name != rule.Name || dest.Type != rule.Type) && rule.SourceObjects.Any(source =>
                              dest.Name == source.Name && dest.Type == source.Type)).ToList())
             {
                 foreach (MetadataObject obj in child.SourceObjects)
