@@ -104,10 +104,11 @@
             <DockPanel Margin="0,0,10,10" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0">
                 <Label Content="{DynamicResource LOCSettingsMetadataLabel}" DockPanel.Dock="Top" Margin="0,10,0,0" />
                 <FrameworkElement x:Name="DummyElement" Visibility="Collapsed" />
-                <DataGrid Name="MetadataGrid" ItemsSource="{Binding MetadataViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top"
-                          Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
-                          SelectionMode="Extended" EnableRowVirtualization="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                          PreparingCellForEdit="DataGrid_PreparingCellForEdit" RowHeaderWidth="0">
+                <DataGrid x:Name="MetadataGrid" ItemsSource="{Binding MetadataViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top"
+                                     Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
+                                     SelectionMode="Extended" EnableRowVirtualization="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                     PreparingCellForEdit="DataGrid_PreparingCellForEdit" RowHeaderWidth="0"
+                                     SelectionChanged="DataGrid_SelectionChanged">
                     <DataGrid.InputBindings>
                         <KeyBinding Key="Insert" Command="{Binding AddNewCommand}" />
                         <KeyBinding Gesture="CTRL+M" Command="{Binding MergeItemsCommand}"

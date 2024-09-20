@@ -41,6 +41,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public bool DbObjectExists(Guid id) => _libraries?.Any(x => x.Id == id) ?? false;
 
+        public bool DbObjectInGame(Game game, Guid id) => game.PluginId == id;
+
         public bool DbObjectInUse(Guid id, bool ignoreHiddenGames = false) => API.Instance.Database.Games.Any(x => !(ignoreHiddenGames && x.Hidden) && x.PluginId == id);
 
         public bool GameContainsValue<T>(Game game, T value) => value is Guid id && game.PluginId == id;

@@ -213,6 +213,8 @@ namespace MetadataUtilities.Models
             return string.Empty;
         }
 
+        public bool IsInGame(Game game) => TypeManager is IObjectType type && type.DbObjectInGame(game, Id);
+
         public bool IsUsed(bool ignoreHiddenGames = false) => TypeManager is IObjectType type && type.DbObjectInUse(Id, ignoreHiddenGames);
 
         public void RefreshId()

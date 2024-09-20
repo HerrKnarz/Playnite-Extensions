@@ -3,7 +3,6 @@ using KNARZhelper.Enum;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,12 +31,12 @@ namespace MetadataUtilities.ViewModels
         private CollectionViewSource _metadataViewSource;
         private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
-        private List<MetadataObject> _selectedItems = new List<MetadataObject>();
+        private List<MetadataObject> _selectedItems;
 
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
         {
             Log.Debug("=== MetadataEditorViewModel: Start ===");
-            DateTime ts = DateTime.Now;
+            var ts = DateTime.Now;
 
             Cursor.Current = Cursors.WaitCursor;
             try
@@ -83,7 +82,7 @@ namespace MetadataUtilities.ViewModels
                     _filterTypes = plugin.Settings.Settings.FilterTypes
                         .Select(x => new FilterType() { Selected = x.Selected, Type = x.Type }).ToObservable();
 
-                    foreach (FilterType filterType in FilterTypes)
+                    foreach (var filterType in FilterTypes)
                     {
                         filterType.PropertyChanged += (x, y) =>
                         {
@@ -118,18 +117,18 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                FieldType type = FieldType.Tag;
-                string prefix = string.Empty;
+                var type = FieldType.Tag;
+                var prefix = string.Empty;
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
-                    MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+                    var templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
                     type = templateItem.Type;
                     prefix = templateItem.Prefix;
                 }
 
-                MetadataObject newItem = CompleteMetadata.AddNewItem(type, prefix, true, true);
+                var newItem = CompleteMetadata.AddNewItem(type, prefix, true, true);
 
                 if (newItem == null)
                 {
@@ -156,13 +155,13 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand AddNewGameCommand => new RelayCommand(() =>
         {
-            MetadataObject currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
+            var currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
 
-            SearchGameViewModel viewModel = new SearchGameViewModel(Plugin, currentItem);
+            var viewModel = new SearchGameViewModel(Plugin, currentItem);
 
-            SearchGameView searchGameView = new SearchGameView();
+            var searchGameView = new SearchGameView();
 
-            Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
+            var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
                 Plugin.Settings.Settings.GameSearchWindowWidth, Plugin.Settings.Settings.GameSearchWindowHeight);
             window.Content = searchGameView;
             window.DataContext = viewModel;
@@ -183,15 +182,15 @@ namespace MetadataUtilities.ViewModels
             {
                 Plugin.IsUpdating = true;
 
-                MetadataObjects changeItems = new MetadataObjects(Plugin.Settings.Settings);
+                var changeItems = new MetadataObjects(Plugin.Settings.Settings);
 
                 changeItems.AddMissing(items.ToList().Cast<MetadataObject>());
 
-                ChangeTypeViewModel viewModel = new ChangeTypeViewModel(Plugin, changeItems);
+                var viewModel = new ChangeTypeViewModel(Plugin, changeItems);
 
-                ChangeTypeView view = new ChangeTypeView();
+                var view = new ChangeTypeView();
 
-                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogChangeType"));
+                var window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogChangeType"));
                 window.Content = view;
                 window.DataContext = viewModel;
 
@@ -202,7 +201,7 @@ namespace MetadataUtilities.ViewModels
 
                 Cursor.Current = Cursors.WaitCursor;
 
-                foreach (MetadataObject itemToRemove in changeItems)
+                foreach (var itemToRemove in changeItems)
                 {
                     if (!itemToRemove.ExistsInDb())
                     {
@@ -214,7 +213,7 @@ namespace MetadataUtilities.ViewModels
                     }
                 }
 
-                foreach (MetadataObject itemToAdd in viewModel.NewObjects)
+                foreach (var itemToAdd in viewModel.NewObjects)
                 {
                     itemToAdd.GetGameCount();
                 }
@@ -353,15 +352,15 @@ namespace MetadataUtilities.ViewModels
             {
                 Plugin.IsUpdating = true;
 
-                MetadataObjects mergeItems = new MetadataObjects(Plugin.Settings.Settings);
+                var mergeItems = new MetadataObjects(Plugin.Settings.Settings);
 
                 mergeItems.AddMissing(items.ToList().Cast<MetadataObject>());
 
-                MergeDialogViewModel viewModel = new MergeDialogViewModel(Plugin, mergeItems);
+                var viewModel = new MergeDialogViewModel(Plugin, mergeItems);
 
-                MergeDialogView mergeView = new MergeDialogView();
+                var mergeView = new MergeDialogView();
 
-                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesEditorMerge"));
+                var window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesEditorMerge"));
                 window.Content = mergeView;
                 window.DataContext = viewModel;
 
@@ -372,7 +371,7 @@ namespace MetadataUtilities.ViewModels
 
                 Cursor.Current = Cursors.WaitCursor;
 
-                foreach (MetadataObject itemToRemove in mergeItems)
+                foreach (var itemToRemove in mergeItems)
                 {
                     if (!itemToRemove.ExistsInDb())
                     {
@@ -410,22 +409,22 @@ namespace MetadataUtilities.ViewModels
             try
             {
                 // We prepare the original item, save the old values and create a new one to edit.
-                MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+                var templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
-                MetadataObject oldItem = new MetadataObject(Plugin.Settings.Settings)
+                var oldItem = new MetadataObject(Plugin.Settings.Settings)
                 {
                     Type = templateItem.Type,
                     Name = templateItem.Name
                 };
 
-                MetadataObject newItem = new MetadataObject(Plugin.Settings.Settings)
+                var newItem = new MetadataObject(Plugin.Settings.Settings)
                 {
                     Type = templateItem.Type,
                     Name = templateItem.Name
                 };
 
                 // Using the Add New dialog we rename the item
-                Window window = AddNewObjectViewModel.GetWindow(Plugin.Settings.Settings, newItem, false,
+                var window = AddNewObjectViewModel.GetWindow(Plugin.Settings.Settings, newItem, false,
                     ResourceProvider.GetString("LOCMetadataUtilitiesEditorMergeRename"));
 
                 // return if the dialog was canceled or the name remained the same.
@@ -444,7 +443,7 @@ namespace MetadataUtilities.ViewModels
                 }
 
                 // Finally we create a new merge rule and add it to the list.
-                MergeRule newRule = new MergeRule(Plugin.Settings.Settings)
+                var newRule = new MergeRule(Plugin.Settings.Settings)
                 {
                     Name = newItem.Name,
                     Type = newItem.Type,
@@ -493,21 +492,21 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                MetadataObject selectedItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+                var selectedItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
                 if (selectedItem == null)
                 {
                     return;
                 }
 
-                List<Game> games = items.Cast<MyGame>().Select(x => x.Game).ToList();
+                var games = items.Cast<MyGame>().Select(x => x.Game).ToList();
 
                 if (games.Count == 0)
                 {
                     return;
                 }
 
-                List<Guid> gamesAffected = selectedItem.ReplaceInDb(games, null, null, false).ToList();
+                var gamesAffected = selectedItem.ReplaceInDb(games, null, null, false).ToList();
 
                 if (gamesAffected.Count == 0)
                 {
@@ -536,7 +535,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            MessageBoxResult response = MessageBoxResult.Yes;
+            var response = MessageBoxResult.Yes;
 
             if (!Plugin.Settings.Settings.AddRemovedToUnwanted)
             {
@@ -555,7 +554,7 @@ namespace MetadataUtilities.ViewModels
             {
                 using (API.Instance.Database.BufferedUpdate())
                 {
-                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                    var globalProgressOptions = new GlobalProgressOptions(
                         ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingItems"),
                         false
                     )
@@ -569,7 +568,7 @@ namespace MetadataUtilities.ViewModels
                         {
                             activateGlobalProgress.ProgressMaxValue = items.Count;
 
-                            foreach (MetadataObject item in items.Cast<MetadataObject>())
+                            foreach (var item in items.Cast<MetadataObject>())
                             {
                                 item.RemoveFromDb();
 
@@ -583,9 +582,9 @@ namespace MetadataUtilities.ViewModels
                     }, globalProgressOptions);
                 }
 
-                List<MetadataObject> unwantedItems = new List<MetadataObject>();
+                var unwantedItems = new List<MetadataObject>();
 
-                foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+                foreach (var item in items.ToList().Cast<MetadataObject>())
                 {
                     unwantedItems.Add(item);
 
@@ -614,18 +613,18 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                List<MetadataObject> removedItems = MetadataFunctions.RemoveUnusedMetadata(_plugin.Settings.Settings);
+                var removedItems = MetadataFunctions.RemoveUnusedMetadata(_plugin.Settings.Settings);
 
                 if (removedItems.Count == 0)
                 {
                     return;
                 }
 
-                List<MetadataObject> itemsToRemove = CompleteMetadata
+                var itemsToRemove = CompleteMetadata
                     .Where(x => removedItems.Any(y => x.Type == y.Type && x.Name == y.Name)).ToList();
 
                 CalculateItemCount();
-                foreach (MetadataObject itemToRemove in itemsToRemove)
+                foreach (var itemToRemove in itemsToRemove)
                 {
                     CompleteMetadata.Remove(itemToRemove);
                 }
@@ -653,7 +652,11 @@ namespace MetadataUtilities.ViewModels
         public List<MetadataObject> SelectedItems
         {
             get => _selectedItems;
-            set => SetValue(ref _selectedItems, value);
+            set
+            {
+                SetValue(ref _selectedItems, value);
+                LoadRelatedGames();
+            }
         }
 
         public void BeginEdit()
@@ -666,7 +669,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            foreach (FilterType type in FilterTypes)
+            foreach (var type in FilterTypes)
             {
                 type.UpdateCount();
             }
@@ -681,9 +684,9 @@ namespace MetadataUtilities.ViewModels
         private static void UpdateGroupDisplay(List<MetadataObject> itemList)
         {
             Log.Debug("=== UpdateGroupDisplay: Start ===");
-            DateTime ts = DateTime.Now;
+            var ts = DateTime.Now;
 
-            ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+            var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
 
             Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
 
@@ -709,9 +712,9 @@ namespace MetadataUtilities.ViewModels
 
             Games.Clear();
 
-            MetadataObject currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
+            var currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
 
-            if (currentItem == null)
+            if (SelectedItems?.Count == 0)
             {
                 return;
             }
@@ -720,13 +723,20 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                foreach (Game game in currentItem.GetGames().OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName))
+                foreach (var game in API.Instance.Database.Games.OrderBy(g =>
+                             string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName))
                 {
-                    Games.Add(new MyGame
+                    var addGame = SelectedItems?.All(item => item.IsInGame(game)) ?? false;
+
+                    if (addGame)
                     {
-                        Game = game,
-                        Platforms = string.Join(", ", game.Platforms?.Select(x => x.Name).ToList() ?? new List<string>())
-                    });
+                        Games.Add(new MyGame
+                        {
+                            Game = game,
+                            Platforms = string.Join(", ",
+                                game.Platforms?.Select(x => x.Name).ToList() ?? new List<string>())
+                        });
+                    }
                 }
             }
             finally

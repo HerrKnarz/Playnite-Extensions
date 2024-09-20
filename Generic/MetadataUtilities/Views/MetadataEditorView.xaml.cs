@@ -1,5 +1,8 @@
 ﻿using KNARZhelper;
+using MetadataUtilities.Models;
+using MetadataUtilities.ViewModels;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -29,6 +32,19 @@ namespace MetadataUtilities.Views
             if (e.EditingElement is ComboBox t)
             {
                 t.IsDropDownOpen = true;
+            }
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!(sender is DataGrid grid) || (e.OriginalSource as FrameworkElement)?.Name != "MetadataGrid")
+            {
+                return;
+            }
+
+            if (DataContext is MetadataEditorViewModel viewModel)
+            {
+                viewModel.SelectedItems = grid.SelectedItems.OfType<MetadataObject>().ToList();
             }
         }
     }
