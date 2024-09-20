@@ -148,7 +148,8 @@ namespace MetadataUtilities.Models
             }, globalProgressOptions);
 
             Clear();
-            this.AddMissing(temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
+            this.AddMissing(temporaryList.Distinct(new MetadataObjectEqualityComparer()).OrderBy(x => x.TypeLabel)
+                .ThenBy(x => x.Name));
         }
 
         public void LoadMetadata(bool showGameNumber = true, bool onlyMergeAble = true)

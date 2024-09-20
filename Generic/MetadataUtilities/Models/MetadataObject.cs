@@ -283,4 +283,11 @@ namespace MetadataUtilities.Models
                 ? type.UpdateName(Id, Name, newName)
                 : DbInteractionResult.Error;
     }
+
+    public class MetadataObjectEqualityComparer : IEqualityComparer<MetadataObject>
+    {
+        public bool Equals(MetadataObject x, MetadataObject y) => x?.TypeAndName.Equals(y?.TypeAndName) ?? false;
+
+        public int GetHashCode(MetadataObject obj) => obj.TypeAndName.GetHashCode();
+    }
 }
