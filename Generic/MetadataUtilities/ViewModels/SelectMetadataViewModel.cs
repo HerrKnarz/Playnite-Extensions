@@ -59,11 +59,11 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                SelectMetadataViewModel viewModel = new SelectMetadataViewModel(items);
+                var viewModel = new SelectMetadataViewModel(items);
 
-                SelectMetadataView selectMetadataView = new SelectMetadataView();
+                var selectMetadataView = new SelectMetadataView();
 
-                Window window = WindowHelper.CreateFixedDialog(windowTitle);
+                var window = WindowHelper.CreateFixedDialog(windowTitle);
 
                 window.Content = selectMetadataView;
                 window.DataContext = viewModel;

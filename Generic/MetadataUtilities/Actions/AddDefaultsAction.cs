@@ -49,7 +49,7 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool mustUpdate = _categoryType.AddValueToGame(game.Game, _categoryIds);
+            var mustUpdate = _categoryType.AddValueToGame(game.Game, _categoryIds);
 
             if (!Settings.SetDefaultTagsOnlyIfEmpty || (game.Game.TagIds?.Count != 0))
             {
@@ -74,13 +74,13 @@ namespace MetadataUtilities.Actions
         public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             _categoryIds.Clear();
-            foreach (MetadataObject category in Settings.DefaultCategories)
+            foreach (var category in Settings.DefaultCategories)
             {
                 _categoryIds.Add(category.AddToDb());
             }
 
             _tagIds.Clear();
-            foreach (MetadataObject tag in Settings.DefaultTags)
+            foreach (var tag in Settings.DefaultTags)
             {
                 _tagIds.Add(tag.AddToDb());
             }

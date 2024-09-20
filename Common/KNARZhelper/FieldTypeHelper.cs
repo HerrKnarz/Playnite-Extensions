@@ -10,7 +10,7 @@ namespace KNARZhelper
     {
         public static IEnumerable<T> GetAllTypes<T>(bool adoptEvents = false) where T : IMetadataFieldType
         {
-            foreach (IMetadataFieldType type in GetAllTypes(adoptEvents))
+            foreach (var type in GetAllTypes(adoptEvents))
             {
                 if (type is T specificType)
                 {

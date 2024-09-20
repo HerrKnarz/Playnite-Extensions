@@ -187,7 +187,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<IList<object>> RemoveActionCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (Action item in items.ToList().Cast<Action>())
+            foreach (var item in items.ToList().Cast<Action>())
             {
                 ConditionalAction.Actions.Remove(item);
             }
@@ -195,7 +195,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<IList<object>> RemoveConditionCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (Condition item in items.ToList().Cast<Condition>())
+            foreach (var item in items.ToList().Cast<Condition>())
             {
                 ConditionalAction.Conditions.Remove(item);
             }
@@ -235,12 +235,12 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                ConditionalActionEditorViewModel viewModel =
+                var viewModel =
                     new ConditionalActionEditorViewModel(settings, conditionalAction);
 
-                ConditionalActionEditorView conditionalActionEditorView = new ConditionalActionEditorView();
+                var conditionalActionEditorView = new ConditionalActionEditorView();
 
-                Window window = WindowHelper.CreateSizedWindow(
+                var window = WindowHelper.CreateSizedWindow(
                     ResourceProvider.GetString("LOCMetadataUtilitiesDialogConditionalActionEditor"), 800, 500);
                 window.Content = conditionalActionEditorView;
                 window.DataContext = viewModel;
@@ -275,14 +275,14 @@ namespace MetadataUtilities.ViewModels
             switch (fieldType.GetTypeManager().ValueType)
             {
                 case ItemValueType.ItemList:
-                    List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
+                    var items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
 
                     if (items.Count == 0)
                     {
                         return;
                     }
 
-                    foreach (MetadataObject item in items.Where(item =>
+                    foreach (var item in items.Where(item =>
                                  ConditionalAction.Actions.All(x =>
                                      x.TypeAndName != item.TypeAndName || x.ActionType != actionType)))
                     {
@@ -312,7 +312,7 @@ namespace MetadataUtilities.ViewModels
                     break;
 
                 case ItemValueType.Integer:
-                    int intValue = 0;
+                    var intValue = 0;
 
                     if (!SelectIntViewModel.ShowDialog(ref intValue))
                     {
@@ -335,7 +335,7 @@ namespace MetadataUtilities.ViewModels
                     break;
 
                 case ItemValueType.Date:
-                    DateTime dateValue = DateTime.Today;
+                    var dateValue = DateTime.Today;
 
                     if (!SelectDateViewModel.ShowDialog(ref dateValue))
                     {
@@ -436,14 +436,14 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
+            var items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
 
             if (items.Count == 0)
             {
                 return;
             }
 
-            foreach (MetadataObject item in items.Where(item =>
+            foreach (var item in items.Where(item =>
                          ConditionalAction.Conditions.All(x =>
                              x.TypeAndName != item.TypeAndName || x.Comparator != comparatorType)))
             {
@@ -460,7 +460,7 @@ namespace MetadataUtilities.ViewModels
 
         private void CreateDateCondition(FieldType fieldType, ComparatorType comparatorType)
         {
-            DateTime dateValue = DateTime.Today;
+            var dateValue = DateTime.Today;
 
             if (!SelectDateViewModel.ShowDialog(ref dateValue))
             {
@@ -483,7 +483,7 @@ namespace MetadataUtilities.ViewModels
 
         private void CreateIntCondition(FieldType fieldType, ComparatorType comparatorType)
         {
-            int intValue = 0;
+            var intValue = 0;
 
             if (!SelectIntViewModel.ShowDialog(ref intValue))
             {
@@ -506,7 +506,7 @@ namespace MetadataUtilities.ViewModels
 
         private void CreateStringCondition(FieldType fieldType, ComparatorType comparatorType)
         {
-            StringSelectionDialogResult dialogResult = API.Instance.Dialogs.SelectString(
+            var dialogResult = API.Instance.Dialogs.SelectString(
                 ResourceProvider.GetString("LOCMetadataUtilitiesDialogRegExNotice"),
                 ResourceProvider.GetString("LOCMetadataUtilitiesDialogEnterValue"), default);
 

@@ -42,7 +42,7 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool result = false;
+            var result = false;
 
             if (Settings.RemoveUnwantedOnMetadataUpdate && game.ExecuteRemoveUnwanted)
             {
@@ -84,7 +84,7 @@ namespace MetadataUtilities.Actions
 
         public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
-            bool result = true;
+            var result = true;
 
             if (Settings.RemoveUnwantedOnMetadataUpdate)
             {

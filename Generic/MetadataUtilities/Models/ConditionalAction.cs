@@ -111,7 +111,7 @@ namespace MetadataUtilities.Models
 
         private bool Execute(Game game, bool updateGame = true)
         {
-            bool mustUpdate = Actions.OrderBy(x => x.ActionType == ActionType.ClearField ? 1 : 2)
+            var mustUpdate = Actions.OrderBy(x => x.ActionType == ActionType.ClearField ? 1 : 2)
                 .Aggregate(false, (current, action) => current | action.Execute(game));
 
             if (mustUpdate && updateGame)

@@ -50,14 +50,14 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                List<Game> games = items.Cast<MyGame>().Select(x => x.Game).ToList();
+                var games = items.Cast<MyGame>().Select(x => x.Game).ToList();
 
                 if (games.Count == 0)
                 {
                     return;
                 }
 
-                foreach (Game game in games.Where(game => _metadataObject.AddToGame(game)))
+                foreach (var game in games.Where(game => _metadataObject.AddToGame(game)))
                 {
                     API.Instance.MainView.UIDispatcher.Invoke(delegate
                     {
@@ -184,9 +184,9 @@ namespace MetadataUtilities.ViewModels
                     };
                 }
 
-                IEnumerable<Game> games = API.Instance.Database.GetFilteredGames(filterSettings, true);
+                var games = API.Instance.Database.GetFilteredGames(filterSettings, true);
 
-                foreach (Game game in games.OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName).ToList())
+                foreach (var game in games.OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName).ToList())
                 {
                     Games.Add(new MyGame
                     {

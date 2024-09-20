@@ -25,13 +25,13 @@ namespace MetadataUtilities.Models
 
         public IEnumerable<Guid> Merge(List<Game> games = null, bool removeAfter = true)
         {
-            List<Guid> result = new List<Guid>();
+            var result = new List<Guid>();
 
             AddToDb();
 
             try
             {
-                foreach (MetadataObject item in SourceObjects)
+                foreach (var item in SourceObjects)
                 {
                     if (item.Id == Id || item.Id == default)
                     {
@@ -61,7 +61,7 @@ namespace MetadataUtilities.Models
                 AddToDb();
             }
 
-            bool result = false;
+            var result = false;
 
             try
             {

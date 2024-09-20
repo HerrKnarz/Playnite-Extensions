@@ -24,7 +24,7 @@ namespace KNARZhelper
         /// <param name="showDialog">Additionally shows the error message as a dialog if set to true.</param>
         public static void Error(Exception ex, string message = "", bool showDialog = false)
         {
-            TraceInfos traceInfos = new TraceInfos(ex);
+            var traceInfos = new TraceInfos(ex);
 
             if (string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(traceInfos.InitialCaller))
             {
@@ -91,8 +91,8 @@ namespace KNARZhelper
         /// <param name="ex">Exception to process</param>
         public TraceInfos(Exception ex)
         {
-            StackTrace trace = new StackTrace(ex, true);
-            StackFrame frame = trace.GetFrames()?.LastOrDefault();
+            var trace = new StackTrace(ex, true);
+            var frame = trace.GetFrames()?.LastOrDefault();
             InitialCaller = frame?.GetMethod()?.Name;
             CallerParams = frame?.GetMethod()?.GetParameters();
             FileName = string.IsNullOrEmpty(frame?.GetFileName()) ? "???" : frame.GetFileName();

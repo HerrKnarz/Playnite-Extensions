@@ -63,7 +63,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public List<DatabaseObject> LoadGameMetadata(Game game)
         {
-            DatabaseObject library = _libraries.FirstOrDefault(x => x.Id == game.PluginId);
+            var library = _libraries.FirstOrDefault(x => x.Id == game.PluginId);
 
             return library == null
                 ? new List<DatabaseObject>()

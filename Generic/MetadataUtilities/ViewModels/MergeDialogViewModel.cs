@@ -37,7 +37,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
-            MergeRule rule = new MergeRule(_plugin.Settings.Settings)
+            var rule = new MergeRule(_plugin.Settings.Settings)
             {
                 Name = _mergeTarget.Name,
                 Type = _mergeTarget.Type,

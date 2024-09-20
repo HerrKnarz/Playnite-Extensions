@@ -53,16 +53,16 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                AddNewObjectViewModel viewModel = new AddNewObjectViewModel(settings, newObject, enableTypeSelection);
+                var viewModel = new AddNewObjectViewModel(settings, newObject, enableTypeSelection);
 
-                AddNewObjectView newObjectViewView = new AddNewObjectView();
+                var newObjectViewView = new AddNewObjectView();
 
                 if (caption == string.Empty)
                 {
                     caption = ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddNewObject");
                 }
 
-                Window window = WindowHelper.CreateFixedDialog(caption);
+                var window = WindowHelper.CreateFixedDialog(caption);
                 window.Content = newObjectViewView;
                 window.DataContext = viewModel;
 

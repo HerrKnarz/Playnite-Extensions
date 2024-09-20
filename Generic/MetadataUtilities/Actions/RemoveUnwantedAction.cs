@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
@@ -19,7 +18,7 @@ namespace MetadataUtilities.Actions
 
         private RemoveUnwantedAction(Settings settings) : base(settings)
         {
-            foreach (IEditableObjectType type in FieldTypeHelper.GetItemListTypes())
+            foreach (var type in FieldTypeHelper.GetItemListTypes())
             {
                 _types.Add(type.Type, new ItemList
                 {
@@ -58,7 +57,7 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool mustUpdate = _types.Values.Aggregate(false, (current, type) =>
+            var mustUpdate = _types.Values.Aggregate(false, (current, type) =>
                 current | type.ObjectType.RemoveObjectFromGame(game.Game, type.Items));
 
             if (mustUpdate && actionModifier != ActionModifierType.IsCombi)
@@ -71,7 +70,7 @@ namespace MetadataUtilities.Actions
 
         public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
-            foreach (MetadataObject metaDataItem in Settings.UnwantedItems)
+            foreach (var metaDataItem in Settings.UnwantedItems)
             {
                 if (!metaDataItem.IsUsed())
                 {
@@ -91,9 +90,9 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            foreach (MetadataObject metaDataItem in Settings.UnwantedItems)
+            foreach (var metaDataItem in Settings.UnwantedItems)
             {
-                if (_types.TryGetValue(metaDataItem.Type, out ItemList type))
+                if (_types.TryGetValue(metaDataItem.Type, out var type))
                 {
                     type.Items.Add(metaDataItem.Id);
                 }
@@ -104,7 +103,7 @@ namespace MetadataUtilities.Actions
 
         private void ClearLists()
         {
-            foreach (KeyValuePair<FieldType, ItemList> type in _types)
+            foreach (var type in _types)
             {
                 type.Value.Items.Clear();
             }

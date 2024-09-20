@@ -66,7 +66,7 @@ namespace KNARZhelper.DatabaseObjectTypes
                 return;
             }
 
-            foreach (ItemUpdateEvent<GameSource> item in args.UpdatedItems.Where(item => item.OldData != null && item.OldData.Name != item.NewData.Name))
+            foreach (var item in args.UpdatedItems.Where(item => item.OldData != null && item.OldData.Name != item.NewData.Name))
             {
                 RenameObject?.Invoke(this, item.OldData.Name, item.NewData.Name);
             }

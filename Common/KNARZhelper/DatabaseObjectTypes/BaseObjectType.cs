@@ -125,7 +125,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         internal void UpdateDbObject<T>(Guid id, string name, IItemCollection<T> collection) where T : DatabaseObject
         {
-            T item = collection?.FirstOrDefault(x => x.Id == id);
+            var item = collection?.FirstOrDefault(x => x.Id == id);
 
             if (item == null)
             {

@@ -9,7 +9,7 @@ namespace MetadataUtilities.Models
     {
         public void AddRule(MergeRule rule, bool replaceSources = false)
         {
-            MergeRule dest = this.FirstOrDefault(x => x.Name == rule.Name && x.Type == rule.Type);
+            var dest = this.FirstOrDefault(x => x.Name == rule.Name && x.Type == rule.Type);
 
             if (dest == null)
             {
@@ -22,7 +22,7 @@ namespace MetadataUtilities.Models
             }
             else
             {
-                foreach (MetadataObject obj in rule.SourceObjects)
+                foreach (var obj in rule.SourceObjects)
                 {
                     if (!dest.SourceObjects.Any(x => x.Name == obj.Name && x.Type == obj.Type))
                     {
@@ -42,11 +42,11 @@ namespace MetadataUtilities.Models
         public void AssimilateRules(MergeRule rule)
         {
             // ReSharper disable once PossibleUnintendedReferenceComparison
-            foreach (MergeRule child in this.Where(dest =>
+            foreach (var child in this.Where(dest =>
                          (dest.Name != rule.Name || dest.Type != rule.Type) && rule.SourceObjects.Any(source =>
                              dest.Name == source.Name && dest.Type == source.Type)).ToList())
             {
-                foreach (MetadataObject obj in child.SourceObjects)
+                foreach (var obj in child.SourceObjects)
                 {
                     if (!rule.SourceObjects.Any(x => x.Name == obj.Name && x.Type == obj.Type))
                     {
@@ -65,7 +65,7 @@ namespace MetadataUtilities.Models
 
         public bool FindAndRenameRule(FieldType fieldType, string name, string newName)
         {
-            MergeRule rule = this.FirstOrDefault(x => x.Name == name && x.Type == fieldType);
+            var rule = this.FirstOrDefault(x => x.Name == name && x.Type == fieldType);
 
             if (rule == null)
             {

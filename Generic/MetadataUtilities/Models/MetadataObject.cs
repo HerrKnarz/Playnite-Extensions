@@ -202,7 +202,7 @@ namespace MetadataUtilities.Models
                 return string.Empty;
             }
 
-            foreach (string prefix in Settings.Prefixes)
+            foreach (var prefix in Settings.Prefixes)
             {
                 if (Name?.StartsWith(prefix) ?? false)
                 {
@@ -269,7 +269,7 @@ namespace MetadataUtilities.Models
                 return true;
             }
 
-            DbInteractionResult res = UpdateName(newName);
+            var res = UpdateName(newName);
 
             if (res == DbInteractionResult.IsDuplicate)
             {

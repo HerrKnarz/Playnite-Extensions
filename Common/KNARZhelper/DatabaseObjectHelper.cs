@@ -25,32 +25,32 @@ namespace KNARZhelper
             switch (type)
             {
                 case SettableFieldType.AgeRating:
-                    AgeRating ageRating = API.Instance.Database.AgeRatings.Add(name);
+                    var ageRating = API.Instance.Database.AgeRatings.Add(name);
 
                     return ageRating.Id;
 
                 case SettableFieldType.Category:
-                    Category category = API.Instance.Database.Categories.Add(name);
+                    var category = API.Instance.Database.Categories.Add(name);
 
                     return category.Id;
 
                 case SettableFieldType.Feature:
-                    GameFeature feature = API.Instance.Database.Features.Add(name);
+                    var feature = API.Instance.Database.Features.Add(name);
 
                     return feature.Id;
 
                 case SettableFieldType.Genre:
-                    Genre genre = API.Instance.Database.Genres.Add(name);
+                    var genre = API.Instance.Database.Genres.Add(name);
 
                     return genre.Id;
 
                 case SettableFieldType.Series:
-                    Series series = API.Instance.Database.Series.Add(name);
+                    var series = API.Instance.Database.Series.Add(name);
 
                     return series.Id;
 
                 case SettableFieldType.Tag:
-                    Tag tag = API.Instance.Database.Tags.Add(name);
+                    var tag = API.Instance.Database.Tags.Add(name);
 
                     return tag.Id;
 
@@ -548,7 +548,7 @@ namespace KNARZhelper
             switch (type)
             {
                 case SettableFieldType.AgeRating:
-                    foreach (Game game in games.Where(g => g.AgeRatingIds?.Contains(id) ?? false))
+                    foreach (var game in games.Where(g => g.AgeRatingIds?.Contains(id) ?? false))
                     {
                         if (!game.AgeRatingIds.Remove(id))
                         {
@@ -576,7 +576,7 @@ namespace KNARZhelper
                     break;
 
                 case SettableFieldType.Category:
-                    foreach (Game game in games.Where(g => g.CategoryIds?.Contains(id) ?? false))
+                    foreach (var game in games.Where(g => g.CategoryIds?.Contains(id) ?? false))
                     {
                         if (!game.CategoryIds.Remove(id))
                         {
@@ -604,7 +604,7 @@ namespace KNARZhelper
                     break;
 
                 case SettableFieldType.Feature:
-                    foreach (Game game in games.Where(g => g.FeatureIds?.Contains(id) ?? false))
+                    foreach (var game in games.Where(g => g.FeatureIds?.Contains(id) ?? false))
                     {
                         if (!game.FeatureIds.Remove(id))
                         {
@@ -632,7 +632,7 @@ namespace KNARZhelper
                     break;
 
                 case SettableFieldType.Genre:
-                    foreach (Game game in games.Where(g => g.GenreIds?.Contains(id) ?? false))
+                    foreach (var game in games.Where(g => g.GenreIds?.Contains(id) ?? false))
                     {
                         if (!game.GenreIds.Remove(id))
                         {
@@ -660,7 +660,7 @@ namespace KNARZhelper
                     break;
 
                 case SettableFieldType.Series:
-                    foreach (Game game in games.Where(g => g.SeriesIds?.Contains(id) ?? false))
+                    foreach (var game in games.Where(g => g.SeriesIds?.Contains(id) ?? false))
                     {
                         if (!game.SeriesIds.Remove(id))
                         {
@@ -688,7 +688,7 @@ namespace KNARZhelper
                     break;
 
                 case SettableFieldType.Tag:
-                    foreach (Game game in games.Where(g => g.TagIds?.Contains(id) ?? false))
+                    foreach (var game in games.Where(g => g.TagIds?.Contains(id) ?? false))
                     {
                         if (!game.TagIds.Remove(id))
                         {
@@ -725,7 +725,7 @@ namespace KNARZhelper
             switch (type)
             {
                 case SettableFieldType.AgeRating:
-                    AgeRating ageRating = API.Instance.Database.AgeRatings?.FirstOrDefault(x => x.Id == id);
+                    var ageRating = API.Instance.Database.AgeRatings?.FirstOrDefault(x => x.Id == id);
 
                     if (ageRating == null)
                     {
@@ -742,7 +742,7 @@ namespace KNARZhelper
                     return;
 
                 case SettableFieldType.Category:
-                    Category category = API.Instance.Database.Categories?.FirstOrDefault(x => x.Id == id);
+                    var category = API.Instance.Database.Categories?.FirstOrDefault(x => x.Id == id);
 
                     if (category == null)
                     {
@@ -759,7 +759,7 @@ namespace KNARZhelper
                     return;
 
                 case SettableFieldType.Feature:
-                    GameFeature feature = API.Instance.Database.Features?.FirstOrDefault(x => x.Id == id);
+                    var feature = API.Instance.Database.Features?.FirstOrDefault(x => x.Id == id);
 
                     if (feature == null)
                     {
@@ -776,7 +776,7 @@ namespace KNARZhelper
                     return;
 
                 case SettableFieldType.Genre:
-                    Genre genre = API.Instance.Database.Genres?.FirstOrDefault(x => x.Id == id);
+                    var genre = API.Instance.Database.Genres?.FirstOrDefault(x => x.Id == id);
 
                     if (genre == null)
                     {
@@ -793,7 +793,7 @@ namespace KNARZhelper
                     return;
 
                 case SettableFieldType.Series:
-                    Series series = API.Instance.Database.Series?.FirstOrDefault(x => x.Id == id);
+                    var series = API.Instance.Database.Series?.FirstOrDefault(x => x.Id == id);
 
                     if (series == null)
                     {
@@ -810,7 +810,7 @@ namespace KNARZhelper
                     return;
 
                 case SettableFieldType.Tag:
-                    Tag tag = API.Instance.Database.Tags?.FirstOrDefault(x => x.Id == id);
+                    var tag = API.Instance.Database.Tags?.FirstOrDefault(x => x.Id == id);
 
                     if (tag == null)
                     {

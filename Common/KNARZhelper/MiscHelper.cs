@@ -1,7 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -35,7 +34,7 @@ namespace KNARZhelper
             while (true)
             {
                 //get parent item
-                DependencyObject parentObject = VisualTreeHelper.GetParent(child);
+                var parentObject = VisualTreeHelper.GetParent(child);
 
                 switch (parentObject)
                 {
@@ -58,9 +57,9 @@ namespace KNARZhelper
         public static int RemoveAll<T>(
                             this ObservableCollection<T> coll, Func<T, bool> condition)
         {
-            System.Collections.Generic.List<T> itemsToRemove = coll.Where(condition).ToList();
+            var itemsToRemove = coll.Where(condition).ToList();
 
-            foreach (T itemToRemove in itemsToRemove)
+            foreach (var itemToRemove in itemsToRemove)
             {
                 coll.Remove(itemToRemove);
             }
@@ -70,9 +69,9 @@ namespace KNARZhelper
 
         public static void Sort<TSource, TKey>(this ObservableCollection<TSource> source, Func<TSource, TKey> keySelector)
         {
-            List<TSource> sortedList = source.OrderBy(keySelector).ToList();
+            var sortedList = source.OrderBy(keySelector).ToList();
             source.Clear();
-            foreach (TSource sortedItem in sortedList)
+            foreach (var sortedItem in sortedList)
             {
                 source.Add(sortedItem);
             }

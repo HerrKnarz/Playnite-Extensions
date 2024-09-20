@@ -6,13 +6,11 @@ using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using MetadataUtilities.ViewModels;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
-using Action = MetadataUtilities.Models.Action;
 
 namespace MetadataUtilities
 {
@@ -35,7 +33,7 @@ namespace MetadataUtilities
                 // show a progress bar.
                 else if (games.Count > 1)
                 {
-                    int gamesAffected = 0;
+                    var gamesAffected = 0;
 
                     using (plugin.PlayniteApi.Database.BufferedUpdate())
                     {
@@ -44,7 +42,7 @@ namespace MetadataUtilities
                             return;
                         }
 
-                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                        var globalProgressOptions = new GlobalProgressOptions(
                             $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")} - {action.ProgressMessage}",
                             true
                         )
@@ -58,7 +56,7 @@ namespace MetadataUtilities
                             {
                                 activateGlobalProgress.ProgressMaxValue = games.Count;
 
-                                foreach (MyGame game in games)
+                                foreach (var game in games)
                                 {
                                     activateGlobalProgress.Text =
                                         $"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}{Environment.NewLine}{action.ProgressMessage}{Environment.NewLine}{game.Game.Name}";
@@ -104,13 +102,13 @@ namespace MetadataUtilities
 
         public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, Settings settings)
         {
-            string label = type.GetTypeManager().LabelPlural;
+            var label = type.GetTypeManager().LabelPlural;
 
-            MetadataObjects items = new MetadataObjects(settings, type);
+            var items = new MetadataObjects(settings, type);
 
             items.LoadMetadata(false);
 
-            Window window = SelectMetadataViewModel.GetWindow(items, label);
+            var window = SelectMetadataViewModel.GetWindow(items, label);
 
             return (window?.ShowDialog() ?? false)
                 ? items.Where(x => x.Selected).ToList()
@@ -122,7 +120,7 @@ namespace MetadataUtilities
 
         public static void MergeItems(MetadataUtilities plugin, List<MergeRule> rules = null, bool showDialog = false)
         {
-            List<Guid> gamesAffected = new List<Guid>();
+            var gamesAffected = new List<Guid>();
 
             plugin.IsUpdating = true;
             Cursor.Current = Cursors.WaitCursor;
@@ -130,7 +128,7 @@ namespace MetadataUtilities
             {
                 using (API.Instance.Database.BufferedUpdate())
                 {
-                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                    var globalProgressOptions = new GlobalProgressOptions(
                         ResourceProvider.GetString("LOCMetadataUtilitiesProgressMergingItems"),
                         false
                     )
@@ -148,9 +146,9 @@ namespace MetadataUtilities
                                 rules.AddRange(plugin.Settings.Settings.MergeRules);
                             }
 
-                            List<MetadataObject> itemsToRemove = new List<MetadataObject>();
+                            var itemsToRemove = new List<MetadataObject>();
 
-                            foreach (MergeRule rule in rules)
+                            foreach (var rule in rules)
                             {
                                 gamesAffected.AddMissing(rule.Merge(API.Instance.Database.Games.ToList(), false));
 
@@ -164,7 +162,7 @@ namespace MetadataUtilities
                                 return;
                             }
 
-                            foreach (MetadataObject item in itemsToRemove)
+                            foreach (var item in itemsToRemove)
                             {
                                 item.RemoveFromDb();
                             }
@@ -193,11 +191,11 @@ namespace MetadataUtilities
 
         public static List<MetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
         {
-            List<MetadataObject> temporaryList = new List<MetadataObject>();
+            var temporaryList = new List<MetadataObject>();
 
-            List<IEditableObjectType> types = FieldTypeHelper.GetItemListTypes().ToList();
+            var types = FieldTypeHelper.GetItemListTypes().ToList();
 
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+            var globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
                 false
             )
@@ -209,7 +207,7 @@ namespace MetadataUtilities
             {
                 try
                 {
-                    foreach (IEditableObjectType type in types)
+                    foreach (var type in types)
                     {
                         temporaryList.AddRange(type.LoadUnusedMetadata(settings.IgnoreHiddenGamesInRemoveUnused).Select(x
                             => new MetadataObject(settings)
@@ -226,7 +224,7 @@ namespace MetadataUtilities
                             settings.UnusedItemsWhiteList.All(y => y.TypeAndName != x.TypeAndName)).ToList();
                     }
 
-                    foreach (MetadataObject item in temporaryList)
+                    foreach (var item in temporaryList)
                     {
                         item.RemoveFromDb(settings.IgnoreHiddenGamesInRemoveUnused);
                     }
@@ -241,7 +239,7 @@ namespace MetadataUtilities
             {
                 if (autoMode)
                 {
-                    string items = string.Join(Environment.NewLine, temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
+                    var items = string.Join(Environment.NewLine, temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
 
                     API.Instance.Notifications.Add("MetadataUtilities",
                         $"{ResourceProvider.GetString("LOCMetadataUtilitiesNotificationRemovedItems")}{Environment.NewLine}{Environment.NewLine}{items}",
@@ -249,7 +247,7 @@ namespace MetadataUtilities
                 }
                 else
                 {
-                    string items = string.Join(", ", temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
+                    var items = string.Join(", ", temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
                     API.Instance.Dialogs.ShowMessage($"{ResourceProvider.GetString("LOCMetadataUtilitiesNotificationRemovedItems")}{Environment.NewLine}{Environment.NewLine}{items}",
                         ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -266,7 +264,7 @@ namespace MetadataUtilities
 
         public static void RenameObject(MetadataUtilities plugin, IMetadataFieldType type, string oldName, string newName)
         {
-            bool mustSave = false;
+            var mustSave = false;
 
             if (oldName == newName || oldName == string.Empty)
             {
@@ -275,7 +273,7 @@ namespace MetadataUtilities
 
             if (plugin.Settings.Settings.RenameDefaults && (type.Type == FieldType.Category || type.Type == FieldType.Tag))
             {
-                MetadataObject tag = plugin.Settings.Settings.DefaultTags?.FirstOrDefault(x => x.Name == oldName);
+                var tag = plugin.Settings.Settings.DefaultTags?.FirstOrDefault(x => x.Name == oldName);
 
                 if (tag != null)
                 {
@@ -283,7 +281,7 @@ namespace MetadataUtilities
                     mustSave = true;
                 }
 
-                MetadataObject category = plugin.Settings.Settings.DefaultCategories?.FirstOrDefault(x => x.Name == oldName);
+                var category = plugin.Settings.Settings.DefaultCategories?.FirstOrDefault(x => x.Name == oldName);
 
                 if (category != null)
                 {
@@ -300,9 +298,9 @@ namespace MetadataUtilities
 
             if (plugin.Settings.Settings.RenameConditionalActions)
             {
-                foreach (ConditionalAction condAction in plugin.Settings.Settings.ConditionalActions)
+                foreach (var condAction in plugin.Settings.Settings.ConditionalActions)
                 {
-                    foreach (Models.Condition item in condAction.Conditions)
+                    foreach (var item in condAction.Conditions)
                     {
                         if (item.Type != type.Type || item.Name != oldName)
                         {
@@ -313,7 +311,7 @@ namespace MetadataUtilities
                         mustSave = true;
                     }
 
-                    foreach (Action item in condAction.Actions)
+                    foreach (var item in condAction.Actions)
                     {
                         if (item.Type != type.Type || item.Name != oldName)
                         {
@@ -328,7 +326,7 @@ namespace MetadataUtilities
 
             if (plugin.Settings.Settings.RenameQuickAdd && type.ValueType == ItemValueType.ItemList)
             {
-                foreach (QuickAddObject item in plugin.Settings.Settings.QuickAddObjects)
+                foreach (var item in plugin.Settings.Settings.QuickAddObjects)
                 {
                     if (item.Type != type.Type || item.Name != oldName)
                     {
@@ -342,7 +340,7 @@ namespace MetadataUtilities
 
             if (plugin.Settings.Settings.RenameWhiteList && type.ValueType == ItemValueType.ItemList)
             {
-                foreach (MetadataObject item in plugin.Settings.Settings.UnusedItemsWhiteList)
+                foreach (var item in plugin.Settings.Settings.UnusedItemsWhiteList)
                 {
                     if (item.Type != type.Type || item.Name != oldName)
                     {

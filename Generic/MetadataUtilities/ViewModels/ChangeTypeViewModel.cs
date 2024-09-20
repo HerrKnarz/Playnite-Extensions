@@ -44,14 +44,14 @@ namespace MetadataUtilities.ViewModels
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                foreach (MetadataObject item in _metadataObjects)
+                foreach (var item in _metadataObjects)
                 {
                     if (item.Type == NewType)
                     {
                         continue;
                     }
 
-                    MergeRule rule = new MergeRule(_plugin.Settings.Settings)
+                    var rule = new MergeRule(_plugin.Settings.Settings)
                     {
                         Type = NewType,
                         Name = item.Name,

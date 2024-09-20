@@ -31,7 +31,7 @@ namespace MetadataUtilities.ViewModels
             try
             {
                 Log.Debug("=== MetadataEditorViewModel: Start ===");
-                DateTime ts = DateTime.Now;
+                var ts = DateTime.Now;
 
                 Plugin = plugin;
                 CompleteMetadata = objects;
@@ -57,7 +57,7 @@ namespace MetadataUtilities.ViewModels
                     _filterTypes = plugin.Settings.Settings.FilterTypes
                         .Select(x => new FilterType() { Type = x.Type }).ToObservable();
 
-                    foreach (FilterType filterType in FilterTypes)
+                    foreach (var filterType in FilterTypes)
                     {
                         filterType.PropertyChanged += (x, y) => MetadataViewSource.View.Filter = Filter;
 
@@ -87,18 +87,18 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                FieldType type = FieldType.Tag;
-                string prefix = string.Empty;
+                var type = FieldType.Tag;
+                var prefix = string.Empty;
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
-                    MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+                    var templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
                     type = templateItem.Type;
                     prefix = templateItem.Prefix;
                 }
 
-                MetadataObject newItem = CompleteMetadata.AddNewItem(type, prefix);
+                var newItem = CompleteMetadata.AddNewItem(type, prefix);
 
                 if (newItem == null)
                 {

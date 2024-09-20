@@ -1,9 +1,9 @@
-﻿using MetadataUtilities.Enums;
+﻿using KNARZhelper;
+using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
 using System.Collections.Generic;
 using System.Linq;
-using KNARZhelper;
 
 namespace MetadataUtilities.Actions
 {
@@ -48,7 +48,7 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool result = item is MergeRule singleRule
+            var result = item is MergeRule singleRule
                 ? singleRule.Merge(game.Game)
                 : _rules.Aggregate(false, (current, rule) => current | rule.Merge(game.Game));
 
@@ -62,9 +62,9 @@ namespace MetadataUtilities.Actions
 
         public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
-            List<MetadataObject> itemsToRemove = new List<MetadataObject>();
+            var itemsToRemove = new List<MetadataObject>();
 
-            foreach (MergeRule rule in _rules)
+            foreach (var rule in _rules)
             {
                 itemsToRemove.AddRange(rule.SourceObjects.Where(x =>
                     x.Id != rule.Id && x.Id != default && !itemsToRemove.Any(i =>
@@ -78,7 +78,7 @@ namespace MetadataUtilities.Actions
                 return;
             }
 
-            foreach (MetadataObject itemToRemove in itemsToRemove.Where(itemToRemove => !itemToRemove.IsUsed()))
+            foreach (var itemToRemove in itemsToRemove.Where(itemToRemove => !itemToRemove.IsUsed()))
             {
                 itemToRemove.RemoveFromDb();
             }
@@ -97,9 +97,9 @@ namespace MetadataUtilities.Actions
                 _rules.AddRange(Settings.MergeRules.DeepClone().ToList());
             }
 
-            foreach (MergeRule rule in _rules)
+            foreach (var rule in _rules)
             {
-                foreach (MetadataObject sourceItem in rule.SourceObjects)
+                foreach (var sourceItem in rule.SourceObjects)
                 {
                     sourceItem.RefreshId();
                 }

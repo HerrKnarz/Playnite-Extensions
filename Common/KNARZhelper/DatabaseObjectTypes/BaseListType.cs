@@ -56,13 +56,13 @@ namespace KNARZhelper.DatabaseObjectTypes
                 yield break;
             }
 
-            IEditableObjectType newTypeManager =
+            var newTypeManager =
                 newType != null && newType != Type &&
                 newType.Value.GetTypeManager() is IEditableObjectType editableObjectType
                     ? editableObjectType
                     : this;
 
-            foreach (Game game in games.Where(g => GameGuids(g).Contains(id)))
+            foreach (var game in games.Where(g => GameGuids(g).Contains(id)))
             {
                 if (!RemoveObjectFromGame(game, id))
                 {

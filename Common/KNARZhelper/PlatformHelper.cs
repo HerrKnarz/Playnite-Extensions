@@ -7,8 +7,8 @@ using System.Text.RegularExpressions;
 namespace KNARZhelper
 {
     /// <summary>
-    /// Class to match external platform names to the existing platforms in Playnite. Shamelessly partly copied from Jeshibu:
-    /// https://github.com/Jeshibu/PlayniteExtensions/blob/590a4a10d2223b12ecc742d908707ab34841ea65/source/PlayniteExtensions.Common/PlatformUtility.cs
+    /// Class to match external platform names to the existing platforms in Playnite. Shamelessly
+    /// partly copied from Jeshibu: https://github.com/Jeshibu/PlayniteExtensions/blob/590a4a10d2223b12ecc742d908707ab34841ea65/source/PlayniteExtensions.Common/PlatformUtility.cs
     /// </summary>
     public class PlatformHelper
     {
@@ -20,11 +20,11 @@ namespace KNARZhelper
         {
             _platformSpecNameByNormalName = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
 
-            foreach (Platform platform in platforms.Where(p => p.SpecificationId != null))
+            foreach (var platform in platforms.Where(p => p.SpecificationId != null))
             {
                 _platformSpecNameByNormalName.Add(platform.Name, new[] { platform.SpecificationId });
 
-                string nameWithoutCompany = _trimCompanyName.Replace(platform.Name, string.Empty);
+                var nameWithoutCompany = _trimCompanyName.Replace(platform.Name, string.Empty);
 
                 if (!_platformSpecNameByNormalName.ContainsKey(nameWithoutCompany))
                 {
@@ -58,6 +58,39 @@ namespace KNARZhelper
             TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "Super NES", "Super Nintendo Entertainment System" }, "nintendo_super_nes");
             TryAddPlatformByName(_platformSpecNameByNormalName, new[] { "SNK Neo Geo MVS", "Neo Geo MVS", "SNK Neo Geo AES", "Neo Geo AES" }, "snk_neogeo_aes");
         }
+
+        /// <summary>
+        /// returns all platforms created in Playnite that fit the platform name
+        /// </summary>
+        /// <param name="platformName">Name of the platform</param>
+        /// <returns>List of platforms</returns>
+        public IEnumerable<MetadataProperty> GetPlatforms(string platformName) => GetPlatforms(platformName, strict: false);
+
+        /// <summary>
+        /// returns all platforms created in Playnite that fit the platform name
+        /// </summary>
+        /// <param name="platformName">Name of the platform</param>
+        /// <param name="strict">
+        /// If true, only matches will be returned. If false the function also returns all
+        /// platforms, that aren't found at all.
+        /// </param>
+        /// <returns>List of platforms</returns>
+        public IEnumerable<MetadataProperty> GetPlatforms(string platformName, bool strict)
+        {
+            if (string.IsNullOrWhiteSpace(platformName))
+            {
+                return new List<MetadataProperty>();
+            }
+
+            var sanitizedPlatformName = _trimInput.Replace(platformName, string.Empty);
+
+            return _platformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out var specIds)
+                ? specIds.Select(s => new MetadataSpecProperty(s)).ToList<MetadataProperty>()
+                : strict
+                    ? new List<MetadataProperty>()
+                    : new List<MetadataProperty> { new MetadataNameProperty(sanitizedPlatformName) };
+        }
+
         private static bool TryAddPlatformByName(IDictionary<string, string[]> dict, string platformName, params string[] platformSpecNames)
         {
             if (dict.ContainsKey(platformName))
@@ -71,35 +104,5 @@ namespace KNARZhelper
 
         private static bool TryAddPlatformByName(IDictionary<string, string[]> dict, IEnumerable<string> platformNames, params string[] platformSpecNames)
             => platformNames.Aggregate(true, (current, platformName) => current & TryAddPlatformByName(dict, platformName, platformSpecNames));
-
-        /// <summary>
-        /// returns all platforms created in Playnite that fit the platform name
-        /// </summary>
-        /// <param name="platformName">Name of the platform</param>
-        /// <returns>List of platforms</returns>
-        public IEnumerable<MetadataProperty> GetPlatforms(string platformName) => GetPlatforms(platformName, strict: false);
-
-        /// <summary>
-        /// returns all platforms created in Playnite that fit the platform name
-        /// </summary>
-        /// <param name="platformName">Name of the platform</param>
-        /// <param name="strict">If true, only matches will be returned. If false the function also returns all platforms,
-        /// that aren't found at all.</param>
-        /// <returns>List of platforms</returns>
-        public IEnumerable<MetadataProperty> GetPlatforms(string platformName, bool strict)
-        {
-            if (string.IsNullOrWhiteSpace(platformName))
-            {
-                return new List<MetadataProperty>();
-            }
-
-            string sanitizedPlatformName = _trimInput.Replace(platformName, string.Empty);
-
-            return _platformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds)
-                ? specIds.Select(s => new MetadataSpecProperty(s)).ToList<MetadataProperty>()
-                : strict
-                    ? new List<MetadataProperty>()
-                    : new List<MetadataProperty> { new MetadataNameProperty(sanitizedPlatformName) };
-        }
     }
 }

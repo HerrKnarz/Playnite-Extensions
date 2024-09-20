@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace MetadataUtilities.Models
 {
@@ -41,7 +40,7 @@ namespace MetadataUtilities.Models
 
         public void AddItems(FieldType type)
         {
-            List<MetadataObject> items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
+            var items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
 
             if (items.Count == 0)
             {
@@ -58,7 +57,7 @@ namespace MetadataUtilities.Models
                 return;
             }
 
-            foreach (MetadataObject item in items.Where(item => this.All(x => x.TypeAndName != item.TypeAndName)))
+            foreach (var item in items.Where(item => this.All(x => x.TypeAndName != item.TypeAndName)))
             {
                 Add(new MetadataObject(Settings)
                 {
@@ -72,13 +71,13 @@ namespace MetadataUtilities.Models
 
         public MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
         {
-            MetadataObject newItem = new MetadataObject(Settings)
+            var newItem = new MetadataObject(Settings)
             {
                 Type = type,
                 Prefix = prefix
             };
 
-            Window window = AddNewObjectViewModel.GetWindow(Settings, newItem, enableTypeSelection);
+            var window = AddNewObjectViewModel.GetWindow(Settings, newItem, enableTypeSelection);
 
             if (window == null)
             {
@@ -109,9 +108,9 @@ namespace MetadataUtilities.Models
 
         public void LoadGameMetadata(List<Game> games)
         {
-            List<MetadataObject> temporaryList = new List<MetadataObject>();
+            var temporaryList = new List<MetadataObject>();
 
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+            var globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCLoadingLabel"),
                 false
             )
@@ -123,11 +122,11 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
-                    List<IEditableObjectType> types = FieldTypeHelper.GetItemListTypes().ToList();
+                    var types = FieldTypeHelper.GetItemListTypes().ToList();
 
-                    foreach (Game game in games)
+                    foreach (var game in games)
                     {
-                        foreach (IEditableObjectType type in types)
+                        foreach (var type in types)
                         {
                             temporaryList.AddMissing(type.LoadGameMetadata(game).Select(x =>
                                 new MetadataObject(Settings)
@@ -155,11 +154,11 @@ namespace MetadataUtilities.Models
         public void LoadMetadata(bool showGameNumber = true, bool onlyMergeAble = true)
         {
             Log.Debug("=== LoadMetadata: Start ===");
-            DateTime ts = DateTime.Now;
+            var ts = DateTime.Now;
 
-            List<MetadataObject> temporaryList = new List<MetadataObject>();
+            var temporaryList = new List<MetadataObject>();
 
-            List<IObjectType> types = new List<IObjectType>();
+            var types = new List<IObjectType>();
 
             if (_typeManager != null)
             {
@@ -174,7 +173,7 @@ namespace MetadataUtilities.Models
                 types.AddRange(FieldTypeHelper.GetAllTypes<IObjectType>());
             }
 
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+            var globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCLoadingLabel"),
                 false
             )
@@ -186,7 +185,7 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
-                    foreach (IObjectType typeManager in types)
+                    foreach (var typeManager in types)
                     {
                         temporaryList.AddRange(typeManager.LoadAllMetadata().Select(x => new MetadataObject(Settings)
                         {
@@ -214,7 +213,7 @@ namespace MetadataUtilities.Models
 
         public void RemoveItems(IEnumerable<MetadataObject> items)
         {
-            foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+            foreach (var item in items.ToList().Cast<MetadataObject>())
             {
                 Remove(item);
             }
@@ -223,9 +222,9 @@ namespace MetadataUtilities.Models
         private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames, IObjectType typeManager = null, bool onlyMergeAble = true)
         {
             Log.Debug("=== UpdateGameCounts: Start ===");
-            DateTime ts = DateTime.Now;
+            var ts = DateTime.Now;
 
-            List<IObjectType> types = new List<IObjectType>();
+            var types = new List<IObjectType>();
 
             if (typeManager != null)
             {
@@ -240,7 +239,7 @@ namespace MetadataUtilities.Models
                 types.AddRange(FieldTypeHelper.GetAllTypes<IObjectType>());
             }
 
-            ParallelOptions opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+            var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
 
             if (typeManager != null)
             {
@@ -249,17 +248,17 @@ namespace MetadataUtilities.Models
                 return;
             }
 
-            ConcurrentQueue<Guid> items = new ConcurrentQueue<Guid>();
+            var items = new ConcurrentQueue<Guid>();
 
             Parallel.ForEach(API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden)), opts, game =>
             {
-                foreach (IObjectType type in types)
+                foreach (var type in types)
                 {
                     type.LoadGameMetadata(game).ForEach(o => items.Enqueue(o.Id));
                 }
             });
 
-            List<IGrouping<Guid, Guid>> li = items.GroupBy(i => i).ToList();
+            var li = items.GroupBy(i => i).ToList();
 
             Parallel.ForEach(itemList, opts, item => item.GameCount = li.FirstOrDefault(i => i.Key == item.Id)?.Count() ?? 0);
 

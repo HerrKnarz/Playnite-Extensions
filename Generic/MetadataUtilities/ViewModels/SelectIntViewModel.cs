@@ -21,14 +21,14 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                SelectIntViewModel viewModel = new SelectIntViewModel
+                var viewModel = new SelectIntViewModel
                 {
                     Value = value
                 };
 
-                SelectIntView view = new SelectIntView();
+                var view = new SelectIntView();
 
-                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogEnterValue"));
+                var window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogEnterValue"));
                 window.Content = view;
                 window.DataContext = viewModel;
 

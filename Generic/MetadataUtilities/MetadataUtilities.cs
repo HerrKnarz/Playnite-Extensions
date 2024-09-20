@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -37,14 +36,14 @@ namespace MetadataUtilities
 
             IsUpdating = false;
 
-            foreach (IEditableObjectType type in _fieldTypes)
+            foreach (var type in _fieldTypes)
             {
                 type.RenameObject += OnRenameObject;
             }
 
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
 
-            Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
+            var iconResourcesToAdd = new Dictionary<string, string>
             {
                 { "muEditorIcon", "\xf005" },
                 { "muMergeIcon", "\xef29" },
@@ -54,7 +53,7 @@ namespace MetadataUtilities
                 { "muSomeCheckedIcon", "\xeed7" }
             };
 
-            foreach (KeyValuePair<string, string> iconResource in iconResourcesToAdd)
+            foreach (var iconResource in iconResourcesToAdd)
             {
                 MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
             }
@@ -75,7 +74,7 @@ namespace MetadataUtilities
 
             // some actions only run for games, that have values in one of the supported fields and
             // those differ from the ones before.
-            HashSet<Guid> games = args.UpdatedItems.Where(item =>
+            var games = args.UpdatedItems.Where(item =>
                 item.OldData == null ||
                 (item.NewData.AgeRatingIds != null &&
                  (item.OldData.AgeRatingIds == null ||
@@ -97,7 +96,7 @@ namespace MetadataUtilities
                   !new HashSet<Guid>(item.OldData.TagIds).SetEquals(item.NewData.TagIds))))
                 .Select(item => item.NewData.Id).Distinct().ToHashSet();
 
-            List<MyGame> myGames = args.UpdatedItems.Select(x => new MyGame()
+            var myGames = args.UpdatedItems.Select(x => new MyGame()
             {
                 Game = x.NewData,
                 ExecuteConditionalActions = true,
@@ -110,14 +109,14 @@ namespace MetadataUtilities
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            string menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
-            string mergeSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsMergeRules");
-            string conditionalSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsTabConditionalActions");
-            List<GameMenuItem> menuItems = new List<GameMenuItem>();
-            List<Game> games = args.Games.Distinct().ToList();
-            List<MyGame> myGames = games.Select(x => new MyGame() { Game = x }).ToList();
+            var menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
+            var mergeSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsMergeRules");
+            var conditionalSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsTabConditionalActions");
+            var menuItems = new List<GameMenuItem>();
+            var games = args.Games.Distinct().ToList();
+            var myGames = games.Select(x => new MyGame() { Game = x }).ToList();
 
-            GameMenuItem item = new GameMenuItem
+            var item = new GameMenuItem
             {
                 Description = "",
                 MenuSection = ResourceProvider.GetString("LOCUserScore"),
@@ -126,10 +125,10 @@ namespace MetadataUtilities
             };
             menuItems.Add(item);
 
-            for (int i = 1; i <= 10; i++)
+            for (var i = 1; i <= 10; i++)
             {
-                int rating = i * 10;
-                GameMenuItem menuItem = new GameMenuItem
+                var rating = i * 10;
+                var menuItem = new GameMenuItem
                 {
                     Description = new string('\u2605', i),
                     MenuSection = ResourceProvider.GetString("LOCUserScore"),
@@ -187,9 +186,9 @@ namespace MetadataUtilities
                     ActionModifierType.IsManual, action)
             }));
 
-            List<GameMenuItem> quickAddItems = new List<GameMenuItem>();
+            var quickAddItems = new List<GameMenuItem>();
 
-            string baseMenu = Settings.Settings.QuickAddSingleMenuEntry
+            var baseMenu = Settings.Settings.QuickAddSingleMenuEntry
                 ? ResourceProvider.GetString("LOCMetadataUtilitiesName") + "|"
                 : "";
 
@@ -224,9 +223,9 @@ namespace MetadataUtilities
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            string menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
+            var menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
 
-            List<MainMenuItem> menuItems = new List<MainMenuItem>
+            var menuItems = new List<MainMenuItem>
             {
                 new MainMenuItem
                 {
@@ -302,7 +301,7 @@ namespace MetadataUtilities
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
-            List<MyGame> games = PlayniteApi.Database.Games
+            var games = PlayniteApi.Database.Games
                 .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate)
                 .Select(x => new MyGame() { Game = x }).ToList();
 
@@ -331,28 +330,28 @@ namespace MetadataUtilities
 
         private IEnumerable<GameMenuItem> CreateMenuItems(string baseMenu, List<Game> games, IReadOnlyCollection<QuickAddObject> dbObjects, ActionModifierType action = ActionModifierType.Add)
         {
-            List<GameMenuItem> menuItems = new List<GameMenuItem>();
+            var menuItems = new List<GameMenuItem>();
 
             if (dbObjects.Count == 0)
             {
                 return menuItems;
             }
 
-            List<MyGame> myGames = games.Select(x => new MyGame() { Game = x }).ToList();
+            var myGames = games.Select(x => new MyGame() { Game = x }).ToList();
 
             // ReSharper disable once LoopCanBeConvertedToQuery
-            foreach (QuickAddObject dbObject in dbObjects
+            foreach (var dbObject in dbObjects
                          .Where(x => (action == ActionModifierType.Add && x.Add) ||
                                      (action == ActionModifierType.Remove && x.Remove) ||
                                      (action == ActionModifierType.Toggle && x.Toggle)))
             {
-                string customMenu = dbObject.CustomPath?.Trim().Length > 0
+                var customMenu = dbObject.CustomPath?.Trim().Length > 0
                     ? dbObject.CustomPath.Replace("{type}", dbObject.Type.ToString()).Replace("{action}", action.ToString())
                     : Settings.Settings.QuickAddCustomPath?.Trim().Length > 0
                         ? Settings.Settings.QuickAddCustomPath.Replace("{type}", dbObject.Type.ToString()).Replace("{action}", action.ToString())
                         : string.Format(ResourceProvider.GetString($"LOCMetadataUtilitiesMenuQuickAdd{action}"), ResourceProvider.GetString($"LOC{dbObject.Type}Label"));
 
-                int checkedCount = 0;
+                var checkedCount = 0;
 
                 if (dbObject.Type.GetTypeManager() is IObjectType type)
                 {
@@ -378,13 +377,13 @@ namespace MetadataUtilities
         private void ShowEditor(List<Game> games)
         {
             Log.Debug("=== ShowEditor: Start ===");
-            DateTime ts = DateTime.Now;
+            var ts = DateTime.Now;
 
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                MetadataObjects metadataObjects = new MetadataObjects(Settings.Settings);
-                string windowTitle = "LOCMetadataUtilitiesEditor";
+                var metadataObjects = new MetadataObjects(Settings.Settings);
+                var windowTitle = "LOCMetadataUtilitiesEditor";
 
                 if (games != null)
                 {
@@ -396,11 +395,11 @@ namespace MetadataUtilities
                     metadataObjects.LoadMetadata();
                 }
 
-                MetadataEditorViewModel viewModel = new MetadataEditorViewModel(this, metadataObjects);
+                var viewModel = new MetadataEditorViewModel(this, metadataObjects);
 
-                MetadataEditorView editorView = new MetadataEditorView();
+                var editorView = new MetadataEditorView();
 
-                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString(windowTitle), Settings.Settings.EditorWindowWidth, Settings.Settings.EditorWindowHeight);
+                var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString(windowTitle), Settings.Settings.EditorWindowWidth, Settings.Settings.EditorWindowHeight);
                 window.Content = editorView;
                 window.DataContext = viewModel;
 

@@ -288,12 +288,12 @@ namespace MetadataUtilities.Models
             DefaultCategories.Settings = this;
             DefaultTags.Settings = this;
 
-            foreach (MergeRule rule in MergeRules)
+            foreach (var rule in MergeRules)
             {
                 rule.SourceObjects.Settings = this;
             }
 
-            foreach (FieldType item in FieldTypeHelper.ItemListFieldValues().Keys
+            foreach (var item in FieldTypeHelper.ItemListFieldValues().Keys
                          .Where(item => _filterTypes.All(x => x.Type != item)))
             {
                 _filterTypes.Add(new FilterType()

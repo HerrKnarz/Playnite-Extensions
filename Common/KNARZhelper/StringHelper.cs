@@ -62,7 +62,7 @@ namespace KNARZhelper
 
         public static bool RegExIsMatch(this string source, string regEx)
         {
-            RegexOptions regExOptions = RegexOptions.ExplicitCapture;
+            var regExOptions = RegexOptions.ExplicitCapture;
             regExOptions |= RegexOptions.IgnoreCase;
             regExOptions |= RegexOptions.Compiled;
             return Regex.IsMatch(source, regEx, regExOptions);
@@ -73,18 +73,18 @@ namespace KNARZhelper
         /// </summary>
         public static string RemoveDiacritics(this string str)
         {
-            StringBuilder stringBuilder = new StringBuilder(str.Normalize(NormalizationForm.FormD));
+            var stringBuilder = new StringBuilder(str.Normalize(NormalizationForm.FormD));
 
             // Replace certain special chars with special combinations of ASCII chars (e.g. German
             // double s)
-            foreach (KeyValuePair<string, string> keyValuePair in SpecialDiacritics)
+            foreach (var keyValuePair in SpecialDiacritics)
             {
                 stringBuilder.Replace(keyValuePair.Key, keyValuePair.Value);
             }
 
-            for (int i = 0; i < stringBuilder.Length; i++)
+            for (var i = 0; i < stringBuilder.Length; i++)
             {
-                char c = stringBuilder[i];
+                var c = stringBuilder[i];
 
                 if (CharUnicodeInfo.GetUnicodeCategory(c) == UnicodeCategory.NonSpacingMark)
                 {
@@ -102,10 +102,10 @@ namespace KNARZhelper
         /// <returns>string without the edition suffix</returns>
         public static string RemoveEditionSuffix(this string str)
         {
-            RegexOptions regExOptions = RegexOptions.ExplicitCapture;
+            var regExOptions = RegexOptions.ExplicitCapture;
             regExOptions |= RegexOptions.Compiled;
-            Regex ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", regExOptions | RegexOptions.IgnoreCase);
-            Match match = ignoredEndWordsRegex.Match(str);
+            var ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", regExOptions | RegexOptions.IgnoreCase);
+            var match = ignoredEndWordsRegex.Match(str);
 
             return match.Success ? str.Remove(match.Index).Trim() : str;
         }
@@ -118,7 +118,7 @@ namespace KNARZhelper
         /// <returns>processed string</returns>
         public static string RemoveFirst(this string source, string remove)
         {
-            int index = source.IndexOf(remove, StringComparison.OrdinalIgnoreCase);
+            var index = source.IndexOf(remove, StringComparison.OrdinalIgnoreCase);
             return (index < 0)
                 ? source
                 : source.Remove(index, remove.Length);
@@ -143,7 +143,7 @@ namespace KNARZhelper
         /// <returns>String without the unwanted substrings</returns>
         public static string RemoveTextBetween(this string str, string from, string to)
         {
-            int lengthTo = to.Length;
+            var lengthTo = to.Length;
 
             while (str.IndexOf(from, StringComparison.Ordinal) > -1)
             {

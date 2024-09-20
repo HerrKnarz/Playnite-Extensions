@@ -46,7 +46,7 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            MetadataObject metaDataItem = (MetadataObject)item;
+            var metaDataItem = (MetadataObject)item;
 
             if (metaDataItem == null)
             {
@@ -89,7 +89,7 @@ namespace MetadataUtilities.Actions
         {
             _action = actionModifier;
 
-            MetadataObject metaDataItem = (MetadataObject)item;
+            var metaDataItem = (MetadataObject)item;
 
             if (metaDataItem == null)
             {
