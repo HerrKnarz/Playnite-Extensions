@@ -14,7 +14,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class SearchGameViewModel : ObservableObject, IEditableObject
     {
-        private readonly MetadataObject _metadataObject;
+        private readonly List<MetadataObject> _metadataObjects;
         private FilterPreset _currentPreset;
         private ObservableCollection<FilterPreset> _filterPresets;
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
@@ -22,10 +22,10 @@ namespace MetadataUtilities.ViewModels
         private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
 
-        public SearchGameViewModel(MetadataUtilities plugin, MetadataObject metadataObject)
+        public SearchGameViewModel(MetadataUtilities plugin, List<MetadataObject> metadataObjects)
         {
             Plugin = plugin;
-            _metadataObject = metadataObject;
+            _metadataObjects = metadataObjects;
 
             _filterPresets = API.Instance.Database.FilterPresets.OrderBy(x => x.Name).ToObservable();
 
@@ -40,16 +40,16 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<IList<object>> AddGamesCommand => new RelayCommand<IList<object>>(items =>
         {
+            if (_metadataObjects == null || _metadataObjects.Count == 0)
+            {
+                return;
+            }
+
             Plugin.IsUpdating = true;
             Cursor.Current = Cursors.WaitCursor;
 
             try
             {
-                if (_metadataObject == null)
-                {
-                    return;
-                }
-
                 var games = items.Cast<MyGame>().Select(x => x.Game).ToList();
 
                 if (games.Count == 0)
@@ -57,8 +57,13 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                foreach (var game in games.Where(game => _metadataObject.AddToGame(game)))
+                foreach (var game in games)
                 {
+                    foreach (var item in _metadataObjects)
+                    {
+                        item.AddToGame(game);
+                    }
+
                     API.Instance.MainView.UIDispatcher.Invoke(delegate
                     {
                         API.Instance.Database.Games.Update(game);

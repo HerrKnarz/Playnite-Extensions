@@ -92,8 +92,6 @@ namespace MetadataUtilities.ViewModels
 
                         filterType.UpdateCount();
                     }
-
-                    MetadataViewSource.View.CurrentChanged += CurrentChanged;
                 }
 
                 _showRelatedGames = true;
@@ -155,9 +153,12 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand AddNewGameCommand => new RelayCommand(() =>
         {
-            var currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
+            if (SelectedItems == null)
+            {
+                return;
+            }
 
-            var viewModel = new SearchGameViewModel(Plugin, currentItem);
+            var viewModel = new SearchGameViewModel(Plugin, SelectedItems);
 
             var searchGameView = new SearchGameView();
 
@@ -168,7 +169,11 @@ namespace MetadataUtilities.ViewModels
 
             window.ShowDialog();
             LoadRelatedGames();
-            currentItem.GetGameCount();
+
+            foreach (var item in SelectedItems)
+            {
+                item.GetGameCount();
+            }
         });
 
         public RelayCommand<IList<object>> ChangeTypeCommand => new RelayCommand<IList<object>>(items =>
@@ -487,14 +492,11 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<IList<object>> RemoveGamesCommand => new RelayCommand<IList<object>>(items =>
         {
-            Plugin.IsUpdating = true;
             Cursor.Current = Cursors.WaitCursor;
 
             try
             {
-                var selectedItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
-
-                if (selectedItem == null)
+                if (SelectedItems == null || SelectedItems.Count == 0)
                 {
                     return;
                 }
@@ -506,7 +508,12 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                var gamesAffected = selectedItem.ReplaceInDb(games, null, null, false).ToList();
+                var gamesAffected = new List<Guid>();
+
+                foreach (var item in SelectedItems)
+                {
+                    gamesAffected.AddMissing(item.ReplaceInDb(games, null, null, false).ToList());
+                }
 
                 if (gamesAffected.Count == 0)
                 {
@@ -514,16 +521,14 @@ namespace MetadataUtilities.ViewModels
                 }
 
                 LoadRelatedGames();
-                selectedItem.GetGameCount();
 
-                Cursor.Current = Cursors.Default;
-                API.Instance.Dialogs.ShowMessage(string.Format(
-                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogRemovedMetadataMessage"),
-                    selectedItem.TypeAndName, gamesAffected.Distinct().Count()));
+                foreach (var item in SelectedItems)
+                {
+                    item.GetGameCount();
+                }
             }
             finally
             {
-                Plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
         }, items => items != null && items.Count > 0);
@@ -662,6 +667,12 @@ namespace MetadataUtilities.ViewModels
         public void BeginEdit()
         { }
 
+        public void CancelEdit()
+        { }
+
+        public void EndEdit()
+        { }
+
         public void CalculateItemCount()
         {
             if (FilterTypes == null)
@@ -674,26 +685,6 @@ namespace MetadataUtilities.ViewModels
                 type.UpdateCount();
             }
         }
-
-        public void CancelEdit()
-        { }
-
-        public void EndEdit()
-        { }
-
-        private static void UpdateGroupDisplay(List<MetadataObject> itemList)
-        {
-            Log.Debug("=== UpdateGroupDisplay: Start ===");
-            var ts = DateTime.Now;
-
-            var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
-
-            Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
-
-            Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-        }
-
-        private void CurrentChanged(object sender, EventArgs e) => LoadRelatedGames();
 
         private bool Filter(object item) =>
             item is MetadataObject metadataObject &&
@@ -712,8 +703,6 @@ namespace MetadataUtilities.ViewModels
 
             Games.Clear();
 
-            var currentItem = (MetadataObject)_metadataViewSource.View.CurrentItem;
-
             if (SelectedItems?.Count == 0)
             {
                 return;
@@ -723,8 +712,7 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                foreach (var game in API.Instance.Database.Games.OrderBy(g =>
-                             string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName))
+                foreach (var game in API.Instance.Database.Games.Where(g => !g.Hidden || !Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName))
                 {
                     var addGame = SelectedItems?.All(item => item.IsInGame(game)) ?? false;
 
@@ -743,6 +731,18 @@ namespace MetadataUtilities.ViewModels
             {
                 Cursor.Current = Cursors.Default;
             }
+        }
+
+        private static void UpdateGroupDisplay(List<MetadataObject> itemList)
+        {
+            Log.Debug("=== UpdateGroupDisplay: Start ===");
+            var ts = DateTime.Now;
+
+            var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+
+            Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
+
+            Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
     }
 }
