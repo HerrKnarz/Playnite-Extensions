@@ -45,7 +45,6 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            Plugin.IsUpdating = true;
             Cursor.Current = Cursors.WaitCursor;
 
             try
@@ -57,24 +56,26 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                foreach (var game in games)
-                {
-                    foreach (var item in _metadataObjects)
-                    {
-                        item.AddToGame(game);
-                    }
+                var gamesAffected = new List<Game>();
 
-                    API.Instance.MainView.UIDispatcher.Invoke(delegate
-                    {
-                        API.Instance.Database.Games.Update(game);
-                    });
+                foreach (var game in games
+                             .Select(game => new
+                             {
+                                 game,
+                                 mustUpdate =
+                                     _metadataObjects.Aggregate(false,
+                                         (current, item) => current | item.AddToGame(game))
+                             })
+                             .Where(t => t.mustUpdate)
+                             .Select(t => t.game))
+                {
+                    gamesAffected.AddMissing(game);
                 }
 
-                Cursor.Current = Cursors.Default;
+                MetadataFunctions.UpdateGames(gamesAffected);
             }
             finally
             {
-                Plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
         }, items => items != null && items.Count > 0);

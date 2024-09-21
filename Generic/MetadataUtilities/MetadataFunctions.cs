@@ -6,6 +6,7 @@ using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using MetadataUtilities.ViewModels;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -356,6 +357,42 @@ namespace MetadataUtilities
             {
                 plugin.SavePluginSettings(plugin.Settings.Settings);
             }
+        }
+
+        public static void UpdateGames<T>(List<T> games)
+        {
+            if (games == null || games.Count == 0)
+            {
+                return;
+            }
+
+            var gamesToUpdate = new List<Game>();
+
+            switch (games)
+            {
+                case List<Game> listOfGames:
+                    gamesToUpdate = listOfGames;
+                    break;
+                case List<Guid> gameIds:
+                {
+                    foreach (var gameId in gameIds)
+                    {
+                        gamesToUpdate.AddMissing(API.Instance.Database.Games[gameId]);
+                    }
+
+                    break;
+                }
+            }
+
+            if (gamesToUpdate.Count == 0)
+            {
+                return;
+            }
+
+            API.Instance.MainView.UIDispatcher.Invoke(delegate
+            {
+                API.Instance.Database.Games.Update(gamesToUpdate);
+            });
         }
     }
 }

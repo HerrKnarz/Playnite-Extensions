@@ -232,12 +232,20 @@ namespace MetadataUtilities.Models
                 return false;
             }
 
-            if (!type.RemoveDbObject(Id, checkIfUsed))
+            if (checkIfUsed)
+            {
+                var gamesAffected = type.RemoveObjectFromGames(API.Instance.Database.Games.ToList(), Id);
+
+                MetadataFunctions.UpdateGames(gamesAffected.ToList());
+            }
+
+            if (!type.RemoveDbObject(Id))
             {
                 return false;
             }
 
             Id = default;
+
             return true;
         }
 
@@ -248,12 +256,14 @@ namespace MetadataUtilities.Models
         {
             IEnumerable<Guid> gameIds = new List<Guid>();
 
-            if (TypeManager is IEditableObjectType type)
+            if (!(TypeManager is IEditableObjectType type))
             {
-                gameIds = type.ReplaceDbObject(games, Id, newType, newId, removeAfter);
+                return gameIds;
             }
 
-            if (removeAfter)
+            gameIds = type.ReplaceDbObject(games, Id, newType, newId);
+
+            if (removeAfter && type.RemoveDbObject(Id))
             {
                 Id = default;
             }

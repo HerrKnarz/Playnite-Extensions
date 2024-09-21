@@ -520,6 +520,8 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
+                MetadataFunctions.UpdateGames(gamesAffected);
+
                 LoadRelatedGames();
 
                 foreach (var item in SelectedItems)

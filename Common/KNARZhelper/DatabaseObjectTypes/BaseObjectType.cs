@@ -76,14 +76,15 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract bool NameExists(string name, Guid id);
 
-        public abstract bool RemoveDbObject(Guid id, bool checkIfUsed = true);
+        public abstract bool RemoveDbObject(Guid id);
 
         public abstract bool RemoveObjectFromGame(Game game, List<Guid> ids);
 
         public abstract bool RemoveObjectFromGame(Game game, Guid id);
 
-        public abstract IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id,
-            FieldType? newType = null, Guid? newId = null, bool removeAfter = true);
+        public abstract IEnumerable<Guid> RemoveObjectFromGames(List<Game> games, Guid id);
+
+        public abstract IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id, FieldType? newType = null, Guid? newId = null);
 
         public abstract void UpdateDbObject(Guid id, string name);
 
@@ -116,12 +117,8 @@ namespace KNARZhelper.DatabaseObjectTypes
         internal bool NameExists<T>(string name, Guid id, IItemCollection<T> collection) where T : DatabaseObject =>
             collection?.Any(x => x.Name == name && x.Id != id) ?? false;
 
-        internal bool RemoveDbObject<T>(Guid id, bool checkIfUsed, IItemCollection<T> collection) where T : DatabaseObject =>
-            // If we need to check first, we can simply call the replace method, that removes the
-            // item itself, if no item is entered to replace the old one.
-            DbObjectExists(id) && (checkIfUsed
-                ? ReplaceDbObject(API.Instance.Database.Games.ToList(), id)?.Count() > 0
-                : API.Instance.MainView.UIDispatcher.Invoke(() => collection?.Remove(id) ?? false));
+        internal bool RemoveDbObject<T>(Guid id, IItemCollection<T> collection) where T : DatabaseObject =>
+            DbObjectExists(id) && !DbObjectInUse(id) && API.Instance.MainView.UIDispatcher.Invoke(() => collection?.Remove(id) ?? false);
 
         internal void UpdateDbObject<T>(Guid id, string name, IItemCollection<T> collection) where T : DatabaseObject
         {

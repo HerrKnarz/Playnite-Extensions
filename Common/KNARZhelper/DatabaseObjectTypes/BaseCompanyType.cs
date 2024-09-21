@@ -55,7 +55,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool NameExists(string name, Guid id) => NameExists(name, id, _collection);
 
-        public override bool RemoveDbObject(Guid id, bool checkIfUsed = true) => false;
+        public override bool RemoveDbObject(Guid id) => false;
 
         public override void UpdateDbObject(Guid id, string name)
         {

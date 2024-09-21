@@ -13,14 +13,15 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         Guid AddDbObject(string name);
 
-        bool RemoveDbObject(Guid id, bool checkIfUsed = true);
+        bool RemoveDbObject(Guid id);
 
         bool RemoveObjectFromGame(Game game, List<Guid> ids);
 
         bool RemoveObjectFromGame(Game game, Guid id);
 
-        IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id,
-            FieldType? newType = null, Guid? newId = null, bool removeAfter = true);
+        IEnumerable<Guid> RemoveObjectFromGames(List<Game> games, Guid id);
+
+        IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id, FieldType? newType = null, Guid? newId = null);
 
         void UpdateDbObject(Guid id, string name);
 

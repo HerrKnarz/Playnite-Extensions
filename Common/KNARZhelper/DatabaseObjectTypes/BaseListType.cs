@@ -49,7 +49,23 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool RemoveObjectFromGame(Game game, Guid id) =>
             API.Instance.MainView.UIDispatcher.Invoke(() => GameGuids(game).Remove(id));
 
-        public override IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id, FieldType? newType = null, Guid? newId = null, bool removeAfter = true)
+        public override IEnumerable<Guid> RemoveObjectFromGames(List<Game> games, Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                yield break;
+            }
+
+            foreach (var game in games.Where(g => GameGuids(g).Contains(id)))
+            {
+                if (RemoveObjectFromGame(game, id))
+                {
+                    yield return game.Id;
+                }
+            }
+        }
+
+        public override IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id, FieldType? newType = null, Guid? newId = null)
         {
             if (id == Guid.Empty)
             {
@@ -74,17 +90,7 @@ namespace KNARZhelper.DatabaseObjectTypes
                     newTypeManager.AddValueToGame(game, (Guid)newId);
                 }
 
-                API.Instance.MainView.UIDispatcher.Invoke(delegate
-                {
-                    API.Instance.Database.Games.Update(game);
-                });
-
                 yield return game.Id;
-            }
-
-            if (removeAfter && !DbObjectInUse(id))
-            {
-                RemoveDbObject(id, false);
             }
         }
 
