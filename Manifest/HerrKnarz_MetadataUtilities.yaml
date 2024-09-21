@@ -7,7 +7,7 @@ Packages:
     Changelog:
       - If more than one item is selected in the Metadata Editor grid, the game grid now shows all games that share the selected items and adding and removing games affects all selected items.
       - Added search box to the merge rule grid in the addon settings. It has regex support and searches the names of rules and source items.
-      - Fixed multiplication of items in Metadata Editor when it's opened with multiple games selected.
+      - Fixed multiplication of items in Metadata Editor when it is opened with multiple games selected.
       - Several optimizations under the hood.
   - Version: 1.0
     RequiredApiVersion: 6.11.0
