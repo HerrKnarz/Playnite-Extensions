@@ -9,7 +9,6 @@ namespace MetadataUtilities.Actions
 {
     public class AddDefaultsAction : BaseAction
     {
-        private static readonly object _mutex = new object();
         private static AddDefaultsAction _instance;
         private readonly List<Guid> _categoryIds = new List<Guid>();
         private readonly TypeCategory _categoryType = new TypeCategory();
@@ -24,23 +23,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogAddedDefaultsMessage";
 
-        public static AddDefaultsAction Instance(Settings settings)
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
-
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new AddDefaultsAction(settings);
-                }
-            }
-
-            return _instance;
-        }
+        public static AddDefaultsAction Instance(Settings settings) => _instance ?? (_instance = new AddDefaultsAction(settings));
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
@@ -58,7 +41,7 @@ namespace MetadataUtilities.Actions
 
             if (mustUpdate)
             {
-                API.Instance.Database.Games.Update(game.Game);
+                _gamesAffected.Add(game.Game);
             }
 
             return mustUpdate;
@@ -67,12 +50,19 @@ namespace MetadataUtilities.Actions
         public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null,
             bool isBulkAction = true)
         {
+            base.FollowUp(actionModifier, item, isBulkAction);
+
             _categoryIds.Clear();
             _tagIds.Clear();
         }
 
         public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
+            if (!base.Prepare(actionModifier, item, isBulkAction))
+            {
+                return false;
+            }
+
             _categoryIds.Clear();
             foreach (var category in Settings.DefaultCategories)
             {

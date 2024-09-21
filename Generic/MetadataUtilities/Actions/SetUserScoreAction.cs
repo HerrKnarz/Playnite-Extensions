@@ -6,7 +6,6 @@ namespace MetadataUtilities.Actions
 {
     public class SetUserScoreAction : BaseAction
     {
-        private static readonly object _mutex = new object();
         private static SetUserScoreAction _instance;
 
         private SetUserScoreAction(Settings settings) : base(settings)
@@ -17,23 +16,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogSetUserScoreMessage";
 
-        public static SetUserScoreAction Instance(Settings settings)
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
-
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new SetUserScoreAction(settings);
-                }
-            }
-
-            return _instance;
-        }
+        public static SetUserScoreAction Instance(Settings settings) => _instance ?? (_instance = new SetUserScoreAction(settings));
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
@@ -46,7 +29,8 @@ namespace MetadataUtilities.Actions
                 return false;
 
             game.Game.UserScore = (int)item;
-            API.Instance.Database.Games.Update(game.Game);
+
+            _gamesAffected.Add(game.Game);
 
             return true;
         }

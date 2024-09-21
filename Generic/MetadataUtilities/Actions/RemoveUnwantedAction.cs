@@ -11,8 +11,8 @@ namespace MetadataUtilities.Actions
 {
     internal class RemoveUnwantedAction : BaseAction
     {
-        private static readonly object _mutex = new object();
         private static RemoveUnwantedAction _instance;
+        private static readonly object _mutex = new object();
 
         private readonly Dictionary<FieldType, ItemList> _types = new Dictionary<FieldType, ItemList>();
 
@@ -62,7 +62,7 @@ namespace MetadataUtilities.Actions
 
             if (mustUpdate && actionModifier != ActionModifierType.IsCombi)
             {
-                API.Instance.Database.Games.Update(game.Game);
+                _gamesAffected.Add(game.Game);
             }
 
             return mustUpdate;
@@ -70,6 +70,8 @@ namespace MetadataUtilities.Actions
 
         public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
+            base.FollowUp(actionModifier, item, isBulkAction);
+
             foreach (var metaDataItem in Settings.UnwantedItems)
             {
                 if (!metaDataItem.IsUsed())
@@ -83,6 +85,11 @@ namespace MetadataUtilities.Actions
 
         public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
+            if (!base.Prepare(actionModifier, item, isBulkAction))
+            {
+                return false;
+            }
+
             ClearLists();
 
             if (Settings.UnwantedItems.Count == 0)

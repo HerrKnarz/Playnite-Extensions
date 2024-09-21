@@ -8,7 +8,6 @@ namespace MetadataUtilities.Actions
 {
     public class QuickAddAction : BaseAction
     {
-        private static readonly object _mutex = new object();
         private static QuickAddAction _instance;
         private ActionModifierType _action = ActionModifierType.Add;
         private FieldType _type = FieldType.Category;
@@ -21,23 +20,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => $"LOCMetadataUtilitiesDialogQuickAddSuccess{_action}";
 
-        public static QuickAddAction Instance(Settings settings)
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
-
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new QuickAddAction(settings);
-                }
-            }
-
-            return _instance;
-        }
+        public static QuickAddAction Instance(Settings settings) => _instance ?? (_instance = new QuickAddAction(settings));
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
@@ -73,13 +56,14 @@ namespace MetadataUtilities.Actions
 
                 case ActionModifierType.None:
                 case ActionModifierType.IsManual:
+                case ActionModifierType.IsCombi:
                 default:
                     throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
             }
 
             if (mustUpdate)
             {
-                API.Instance.Database.Games.Update(game.Game);
+                _gamesAffected.Add(game.Game);
             }
 
             return mustUpdate;
@@ -87,6 +71,11 @@ namespace MetadataUtilities.Actions
 
         public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
+            if (!base.Prepare(actionModifier, item, isBulkAction))
+            {
+                return false;
+            }
+
             _action = actionModifier;
 
             var metaDataItem = (MetadataObject)item;

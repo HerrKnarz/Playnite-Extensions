@@ -6,7 +6,6 @@ namespace MetadataUtilities.Actions
 {
     public class AfterMetadataUpdateAction : BaseAction
     {
-        private static readonly object _mutex = new object();
         private static AfterMetadataUpdateAction _instance;
 
         private AfterMetadataUpdateAction(Settings settings) : base(settings)
@@ -17,23 +16,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogMergedMetadataMessage";
 
-        public static AfterMetadataUpdateAction Instance(Settings settings)
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
-
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new AfterMetadataUpdateAction(settings);
-                }
-            }
-
-            return _instance;
-        }
+        public static AfterMetadataUpdateAction Instance(Settings settings) => _instance ?? (_instance = new AfterMetadataUpdateAction(settings));
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
@@ -61,7 +44,7 @@ namespace MetadataUtilities.Actions
 
             if (result)
             {
-                API.Instance.Database.Games.Update(game.Game);
+                _gamesAffected.Add(game.Game);
             }
 
             return result;
@@ -69,6 +52,8 @@ namespace MetadataUtilities.Actions
 
         public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
+            base.FollowUp(ActionModifierType.IsCombi, item, isBulkAction);
+
             if (Settings.RemoveUnwantedOnMetadataUpdate)
             {
                 RemoveUnwantedAction.Instance(Settings).FollowUp(ActionModifierType.IsCombi, item, isBulkAction);
@@ -84,6 +69,11 @@ namespace MetadataUtilities.Actions
 
         public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
+            if (!base.Prepare(ActionModifierType.IsCombi, item, isBulkAction))
+            {
+                return false;
+            }
+
             var result = true;
 
             if (Settings.RemoveUnwantedOnMetadataUpdate)

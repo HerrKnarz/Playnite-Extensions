@@ -9,7 +9,6 @@ namespace MetadataUtilities.Actions
 {
     public class MergeAction : BaseAction
     {
-        private static readonly object _mutex = new object();
         private static MergeAction _instance;
 
         private readonly List<MergeRule> _rules = new List<MergeRule>();
@@ -22,23 +21,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogMergedMetadataMessage";
 
-        public static MergeAction Instance(Settings settings)
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
-
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new MergeAction(settings);
-                }
-            }
-
-            return _instance;
-        }
+        public static MergeAction Instance(Settings settings) => _instance ?? (_instance = new MergeAction(settings));
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None,
             object item = null, bool isBulkAction = true)
@@ -54,7 +37,7 @@ namespace MetadataUtilities.Actions
 
             if (result && actionModifier != ActionModifierType.IsCombi)
             {
-                API.Instance.Database.Games.Update(game.Game);
+                _gamesAffected.Add(game.Game);
             }
 
             return result;
@@ -62,6 +45,8 @@ namespace MetadataUtilities.Actions
 
         public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
+            base.Prepare(actionModifier, item, isBulkAction);
+
             var itemsToRemove = new List<MetadataObject>();
 
             foreach (var rule in _rules)
@@ -86,6 +71,11 @@ namespace MetadataUtilities.Actions
 
         public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
+            if (!base.Prepare(actionModifier, item, isBulkAction))
+            {
+                return false;
+            }
+
             _rules.Clear();
 
             if (item is MergeRule singleRule)

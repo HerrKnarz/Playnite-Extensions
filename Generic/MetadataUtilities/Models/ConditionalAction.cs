@@ -1,5 +1,4 @@
 ﻿using MetadataUtilities.Enums;
-using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
@@ -77,8 +76,8 @@ namespace MetadataUtilities.Models
         [DontSerialize]
         public string TypeString => Type.GetEnumDisplayName();
 
-        public bool CheckAndExecute(Game game, bool isManual = false, bool updateGame = true) =>
-            ((isManual && IgnoreConditionOnManual) || CheckConditions(game)) && Execute(game, updateGame);
+        public bool CheckAndExecute(Game game, bool isManual = false) =>
+            ((isManual && IgnoreConditionOnManual) || CheckConditions(game)) && Execute(game);
 
         public bool CheckConditions(Game game)
         {
@@ -109,15 +108,10 @@ namespace MetadataUtilities.Models
             }
         }
 
-        private bool Execute(Game game, bool updateGame = true)
+        private bool Execute(Game game)
         {
             var mustUpdate = Actions.OrderBy(x => x.ActionType == ActionType.ClearField ? 1 : 2)
                 .Aggregate(false, (current, action) => current | action.Execute(game));
-
-            if (mustUpdate && updateGame)
-            {
-                API.Instance.Database.Games.Update(game);
-            }
 
             return mustUpdate;
         }
