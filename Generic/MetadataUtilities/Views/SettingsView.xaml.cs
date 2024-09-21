@@ -7,9 +7,9 @@ namespace MetadataUtilities.Views
     {
         public SettingsView() => InitializeComponent();
 
-        private void b_Click(object sender, RoutedEventArgs e)
+        private void ButtonContextClick(object sender, RoutedEventArgs e)
         {
-            ContextMenu contextMenu = ((Button)sender)?.ContextMenu;
+            var contextMenu = ((Button)sender)?.ContextMenu;
 
             if (contextMenu == null)
                 return;
@@ -17,5 +17,7 @@ namespace MetadataUtilities.Views
             contextMenu.DataContext = ((Button)sender).DataContext;
             contextMenu.IsOpen = true;
         }
+
+        private void ClearSearchBox(object sender, RoutedEventArgs e) => SearchBox.Clear();
     }
 }

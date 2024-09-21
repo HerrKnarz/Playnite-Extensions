@@ -24,6 +24,7 @@ namespace MetadataUtilities.ViewModels
         private readonly MetadataUtilities _plugin;
         private MergeRules _mergeRules;
         private CollectionViewSource _mergeRuleViewSource;
+        private string _searchTerm = string.Empty;
         private MergeRule _selectedMergeRule;
         private Settings _settings;
         private CollectionViewSource _sourceObjectsViewSource;
@@ -79,23 +80,6 @@ namespace MetadataUtilities.ViewModels
             SourceObjectsViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             SourceObjectsViewSource.IsLiveSortingRequested = true;
         }
-
-        public static RelayCommand<object> RestartRequired => new RelayCommand<object>((sender) =>
-                {
-                    try
-                    {
-                        var winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
-
-                        if (winParent.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
-                        {
-                            ((dynamic)winParent.DataContext).IsRestartRequired = true;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                    }
-                });
 
         public RelayCommand AddConActionCommand => new RelayCommand(() =>
         {
@@ -205,6 +189,8 @@ namespace MetadataUtilities.ViewModels
             Settings.ConditionalActions = Settings.ConditionalActions.OrderBy(x => x.Name).ToObservable();
         }, conAction => conAction != null);
 
+        private Settings EditingClone { get; set; }
+
         public RelayCommand<object> EditMergeRuleCommand
             => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
 
@@ -299,6 +285,33 @@ namespace MetadataUtilities.ViewModels
             new RelayCommand<IList<object>>(items => RemoveFromList(items, Settings.UnwantedItems),
                 items => items?.Count != 0);
 
+        public static RelayCommand<object> RestartRequired => new RelayCommand<object>((sender) =>
+                {
+                    try
+                    {
+                        var winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
+
+                        if (winParent.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
+                        {
+                            ((dynamic)winParent.DataContext).IsRestartRequired = true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                });
+
+        public string SearchTerm
+        {
+            get => _searchTerm;
+            set
+            {
+                SetValue(ref _searchTerm, value);
+                MergeRuleViewSource.View.Filter = Filter;
+            }
+        }
+
         public MergeRule SelectedMergeRule
         {
             get => _selectedMergeRule;
@@ -334,7 +347,32 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        private Settings EditingClone { get; set; }
+        public void BeginEdit()
+        {
+            MergeRules = Settings.MergeRules;
+            MergeRuleViewSource.Source = MergeRules;
+
+            if (MergeRuleViewSource.View != null)
+            {
+                MergeRuleViewSource.View.Filter = Filter;
+            }
+
+            EditingClone = Serialization.GetClone(Settings);
+        }
+
+        public void CancelEdit()
+        {
+            Settings = EditingClone;
+            Settings.ResetReferences();
+        }
+
+        public void EndEdit() => _plugin.SavePluginSettings(Settings);
+
+        public bool VerifySettings(out List<string> errors)
+        {
+            errors = new List<string>();
+            return true;
+        }
 
         public void AddItemsToQuickAddList(List<MetadataObject> items)
         {
@@ -367,28 +405,7 @@ namespace MetadataUtilities.ViewModels
             AddItemsToQuickAddList(items);
         }
 
-        public void BeginEdit()
-        {
-            MergeRules = Settings.MergeRules;
-            MergeRuleViewSource.Source = MergeRules;
-            EditingClone = Serialization.GetClone(Settings);
-        }
-
-        public void CancelEdit()
-        {
-            Settings = EditingClone;
-            Settings.ResetReferences();
-        }
-
-        public void EndEdit() => _plugin.SavePluginSettings(Settings);
-
         public void RemoveFromList(IList<object> items, MetadataObjects list) => list.RemoveItems(items.ToList().Cast<MetadataObject>());
-
-        public bool VerifySettings(out List<string> errors)
-        {
-            errors = new List<string>();
-            return true;
-        }
 
         private void EditMergeRule(MergeRule rule = null)
         {
@@ -505,12 +522,14 @@ namespace MetadataUtilities.ViewModels
                         case MessageBoxResult.Yes:
                             Settings.MergeRules.AddRule(ruleToEdit, true);
                             Settings.MergeRules.Remove(rule);
+                            MergeRuleViewSource.View.Filter = Filter;
                             MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                             return;
 
                         case MessageBoxResult.No:
                             Settings.MergeRules.AddRule(ruleToEdit);
                             Settings.MergeRules.Remove(rule);
+                            MergeRuleViewSource.View.Filter = Filter;
                             MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                             return;
 
@@ -530,12 +549,14 @@ namespace MetadataUtilities.ViewModels
 
                     rule.SourceObjects.Clear();
                     rule.SourceObjects.AddMissing(ruleToEdit.SourceObjects);
+                    MergeRuleViewSource.View.Filter = Filter;
                     MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
                 }
 
                 // Case 4: The rule is new and no other with that target exists => we simply add the
                 // new one.
                 Settings.MergeRules.AddRule(ruleToEdit);
+                MergeRuleViewSource.View.Filter = Filter;
                 MergeRuleViewSource.View.MoveCurrentTo(ruleToEdit);
             }
             catch (Exception exception)
@@ -547,5 +568,9 @@ namespace MetadataUtilities.ViewModels
                 Cursor.Current = Cursors.Default;
             }
         }
+
+        private bool Filter(object item) => item is MergeRule rule && (rule.Name.RegExIsMatch(SearchTerm) ||
+                                                                       rule.SourceObjects.Any(x =>
+                                                                           x.Name.RegExIsMatch(SearchTerm)));
     }
 }

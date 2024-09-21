@@ -188,17 +188,17 @@
                                 CommandParameter="{Binding SelectedItems, ElementName=LbConditions}" />
                         <WrapPanel Orientation="Horizontal" DockPanel.Dock="Left">
                             <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_Contains}" Margin="0,0,10,10"
-                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuContains}" Click="b_Click" />
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuContains}" Click="ButtonContextClick" />
                             <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_DoesNotContain}" Margin="0,0,10,10"
-                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuContainNot}" Click="b_Click" />
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuContainNot}" Click="ButtonContextClick" />
                             <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsEmpty}" Margin="0,0,10,10"
-                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsEmpty}" Click="b_Click" />
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsEmpty}" Click="ButtonContextClick" />
                             <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsNotEmpty}" Margin="0,0,10,10"
-                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsNotEmpty}" Click="b_Click" />
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsNotEmpty}" Click="ButtonContextClick" />
                             <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsBiggerThan}" Margin="0,0,10,10"
-                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsBiggerThan}" Click="b_Click" />
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsBiggerThan}" Click="ButtonContextClick" />
                             <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsSmallerThan}" Margin="0,0,10,10"
-                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsSmallerThan}" Click="b_Click" />
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsSmallerThan}" Click="ButtonContextClick" />
                         </WrapPanel>
                     </DockPanel>
                     <ListBox DockPanel.Dock="Top" Name="LbConditions" ItemsSource="{Binding ConditionalAction.Conditions}"
@@ -226,11 +226,11 @@
                                 CommandParameter="{Binding SelectedItems, ElementName=LbActions}" />
                         <WrapPanel Orientation="Horizontal" DockPanel.Dock="Left">
                             <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_AddObject}" Margin="0,0,10,10"
-                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuAdd}" Click="b_Click" />
+                                    DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuAdd}" Click="ButtonContextClick" />
                             <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_RemoveObject}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuRemove}" Click="b_Click" />
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuRemove}" Click="ButtonContextClick" />
                             <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_ClearField}" Margin="0,0,10,10"
-                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuClear}" Click="b_Click" />
+                                DockPanel.Dock="Left" ContextMenu="{StaticResource ActionsMenuClear}" Click="ButtonContextClick" />
                         </WrapPanel>
                     </DockPanel>
                     <ListBox DockPanel.Dock="Top" Name="LbActions" ItemsSource="{Binding ConditionalAction.Actions}"

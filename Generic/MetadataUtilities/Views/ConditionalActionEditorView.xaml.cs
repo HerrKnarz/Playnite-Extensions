@@ -22,9 +22,9 @@ namespace MetadataUtilities.Views
             }
         }
 
-        private void b_Click(object sender, RoutedEventArgs e)
+        private void ButtonContextClick(object sender, RoutedEventArgs e)
         {
-            ContextMenu contextMenu = ((Button)sender)?.ContextMenu;
+            var contextMenu = ((Button)sender)?.ContextMenu;
 
             if (contextMenu == null)
                 return;

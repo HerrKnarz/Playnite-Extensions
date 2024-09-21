@@ -95,6 +95,12 @@
                     </Grid.RowDefinitions>
                     <DockPanel Margin="0,0,5,0" VerticalAlignment="Stretch">
                         <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsMergeRules}" />
+                        <DockPanel VerticalAlignment="Center" DockPanel.Dock="Top" Margin="0,10,0,0">
+                            <Button Content="&#xef00;" FontFamily="{DynamicResource FontIcoFont}" Click="ClearSearchBox" DockPanel.Dock="Right"
+                                    Margin="5,0,0,0" Padding="5,5,8,5" />
+                            <TextBox Name="SearchBox" DockPanel.Dock="Left"  Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
+                        </DockPanel>
+
                         <DataGrid Name="DgRules" ItemsSource="{Binding MergeRuleViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top"
                                   Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" SelectionMode="Single"
                                   SelectedItem="{Binding SelectedMergeRule}" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch"
@@ -337,7 +343,7 @@
                             Margin="0,0,10,0" Command="{Binding AddNewUnwantedCommand}"
                             DockPanel.Dock="Left" />
                     <Button Content="&#xec3e; &#xEF75;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
-                            Margin="0,0,10,0" ContextMenu="{StaticResource UnwantedContextMenu}" Click="b_Click"
+                            Margin="0,0,10,0" ContextMenu="{StaticResource UnwantedContextMenu}" Click="ButtonContextClick"
                             DockPanel.Dock="Left" />
                     <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
                             Margin="0,0,0,0" Command="{Binding RemoveUnwantedFromListCommand}"
@@ -379,7 +385,7 @@
             <DockPanel Margin="10">
                 <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
                     <Button Content="&#xec3e; &#xEF75;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
-                            Margin="0,0,10,0" ContextMenu="{StaticResource QuickAddContextMenu}" Click="b_Click"
+                            Margin="0,0,10,0" ContextMenu="{StaticResource QuickAddContextMenu}" Click="ButtonContextClick"
                             DockPanel.Dock="Left" />
                     <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
                             Margin="0,0,0,0" Command="{Binding RemoveQuickAddFromListCommand}"
