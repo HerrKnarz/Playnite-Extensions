@@ -61,9 +61,9 @@ namespace MetadataUtilities
 
         public override Guid Id { get; } = Guid.Parse("485ab5f0-bfb1-4c17-93cc-20d8338673be");
 
-        public SettingsViewModel Settings { get; }
-
         internal bool IsUpdating { get; set; }
+
+        public SettingsViewModel Settings { get; }
 
         public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
         {
@@ -145,7 +145,7 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
                     MenuSection = menuSection,
                     Icon = "muEditorIcon",
-                    Action = a => ShowEditor(games)
+                    Action = a => MetadataEditorViewModel.ShowEditor(this, games)
                 },
                 new GameMenuItem
                 {
@@ -232,7 +232,7 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
                     MenuSection = $"@{menuSection}",
                     Icon = "muEditorIcon",
-                    Action = a => ShowEditor()
+                    Action = a => MetadataEditorViewModel.ShowEditor(this)
                 },
                 new MainMenuItem
                 {
@@ -372,50 +372,7 @@ namespace MetadataUtilities
 
         private void OnRenameObject(object sender, string oldName, string newName) => MetadataFunctions.RenameObject(this, (IMetadataFieldType)sender, oldName, newName);
 
-        private void ShowEditor() => ShowEditor(null);
-
-        private void ShowEditor(List<Game> games)
-        {
-            Log.Debug("=== ShowEditor: Start ===");
-            var ts = DateTime.Now;
-
-            Cursor.Current = Cursors.WaitCursor;
-            try
-            {
-                var metadataObjects = new MetadataObjects(Settings.Settings);
-                var windowTitle = "LOCMetadataUtilitiesEditor";
-
-                if (games != null)
-                {
-                    metadataObjects.LoadGameMetadata(games);
-                    windowTitle = "LOCMetadataUtilitiesEditorForGames";
-                }
-                else
-                {
-                    metadataObjects.LoadMetadata();
-                }
-
-                var viewModel = new MetadataEditorViewModel(this, metadataObjects);
-
-                var editorView = new MetadataEditorView();
-
-                var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString(windowTitle), Settings.Settings.EditorWindowWidth, Settings.Settings.EditorWindowHeight);
-                window.Content = editorView;
-                window.DataContext = viewModel;
-
-                Log.Debug($"=== ShowEditor: Show Dialog ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-
-                window.ShowDialog();
-            }
-            catch (Exception exception)
-            {
-                Log.Error(exception, "Error during initializing Metadata Editor", true);
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
-            }
-        }
+        private void ShowEditor() => MetadataEditorViewModel.ShowEditor(this);
 
         private void ShowSettings() => OpenSettingsView();
     }

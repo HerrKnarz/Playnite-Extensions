@@ -3,6 +3,7 @@ using KNARZhelper.Enum;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -675,6 +676,51 @@ namespace MetadataUtilities.ViewModels
         public void EndEdit()
         { }
 
+        public static void ShowEditor(MetadataUtilities plugin, List<Game> games = null)
+        {
+            Log.Debug("=== ShowEditor: Start ===");
+            var ts = DateTime.Now;
+
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                var metadataObjects = new MetadataObjects(plugin.Settings.Settings);
+                var windowTitle = "LOCMetadataUtilitiesEditor";
+
+                if (games != null)
+                {
+                    metadataObjects.LoadGameMetadata(games);
+                    windowTitle = "LOCMetadataUtilitiesEditorForGames";
+                }
+                else
+                {
+                    metadataObjects.LoadMetadata();
+                }
+
+                var viewModel = new MetadataEditorViewModel(plugin, metadataObjects);
+
+                var editorView = new MetadataEditorView();
+
+                var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString(windowTitle),
+                    plugin.Settings.Settings.EditorWindowWidth, plugin.Settings.Settings.EditorWindowHeight);
+
+                window.Content = editorView;
+                window.DataContext = viewModel;
+
+                Log.Debug($"=== ShowEditor: Show Dialog ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+
+                window.ShowDialog();
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing Metadata Editor", true);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
         public void CalculateItemCount()
         {
             if (FilterTypes == null)
@@ -686,6 +732,18 @@ namespace MetadataUtilities.ViewModels
             {
                 type.UpdateCount();
             }
+        }
+
+        private static void UpdateGroupDisplay(List<MetadataObject> itemList)
+        {
+            Log.Debug("=== UpdateGroupDisplay: Start ===");
+            var ts = DateTime.Now;
+
+            var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+
+            Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
+
+            Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         private bool Filter(object item) =>
@@ -733,18 +791,6 @@ namespace MetadataUtilities.ViewModels
             {
                 Cursor.Current = Cursors.Default;
             }
-        }
-
-        private static void UpdateGroupDisplay(List<MetadataObject> itemList)
-        {
-            Log.Debug("=== UpdateGroupDisplay: Start ===");
-            var ts = DateTime.Now;
-
-            var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
-
-            Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
-
-            Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
     }
 }

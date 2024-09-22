@@ -227,6 +227,9 @@ namespace MetadataUtilities.ViewModels
                 }
             }
 
+            _settings.ConditionActionWindowHeight = Convert.ToInt32(win.Height);
+            _settings.ConditionActionWindowWidth = Convert.ToInt32(win.Width);
+
             win.DialogResult = true;
             win.Close();
         });
@@ -241,7 +244,9 @@ namespace MetadataUtilities.ViewModels
                 var conditionalActionEditorView = new ConditionalActionEditorView();
 
                 var window = WindowHelper.CreateSizedWindow(
-                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogConditionalActionEditor"), 800, 500);
+                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogConditionalActionEditor"),
+                    settings.ConditionActionWindowWidth, settings.ConditionActionWindowHeight);
+
                 window.Content = conditionalActionEditorView;
                 window.DataContext = viewModel;
 
