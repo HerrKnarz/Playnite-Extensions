@@ -29,6 +29,8 @@ namespace KNARZhelper
         public static DateTime EndOfMonth(this DateTime date)
                             => date.StartOfMonth().AddMonths(1).AddDays(-1);
 
+        public static bool IsOneOf(this object item, params object[] options) => options.Contains(item);
+
         public static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
             while (true)

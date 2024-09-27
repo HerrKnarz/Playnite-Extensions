@@ -24,7 +24,7 @@ namespace WikipediaMetadata
         /// startName = the first five characters of the search term to order by those.</returns>
         private static (string nameVideoGame, string compareName, string startName) PrepareSearchTerms(string searchTerm)
         {
-            string compareName = searchTerm.RemoveSpecialChars().ToLower().Replace(" ", "");
+            var compareName = searchTerm.RemoveSpecialChars().ToLower().Replace(" ", "");
 
             return
             (
@@ -41,34 +41,32 @@ namespace WikipediaMetadata
         /// <returns>Found game as a json result. Returns null if no confident single result was found.</returns>
         public Page FindGame(string gameName)
         {
-            Page foundPage = null;
+            var (nameVideoGame, compareName, _) = PrepareSearchTerms(gameName);
 
-            (string nameVideoGame, string compareName, _) = PrepareSearchTerms(gameName);
-
-            string searchName = gameName.RemoveEditionSuffix();
+            var searchName = gameName.RemoveEditionSuffix();
 
             // We search for the game name on Wikipedia
-            WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(searchName);
+            var searchResult = WikipediaApiCaller.GetSearchResults(searchName);
 
-            string searchNameVideoGame = (searchName + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
+            var searchNameVideoGame = (searchName + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
             searchName = searchName.RemoveSpecialChars().ToLower().Replace(" ", "");
 
-            if (searchResult.Pages?.Any() ?? false)
+            if (!(searchResult.Pages?.Any() ?? false))
             {
-                // Since name games have names, that aren't exclusive to video games, often "(video game)" is added to the
-                // page title, so we try that first, before searching the name itself. Only if we get a 100% match, we'll
-                // use the page in background mode. The description also needs to have the words "video game" in it to
-                // avoid cases like "Doom", where a completely wrong page would be returned.
-                List<Page> foundPages = searchResult.Pages.Where(p => p.Description != null && p.Description.ToLower().Contains("video game")).ToList();
-
-                foundPage =
-                    foundPages.FirstOrDefault(p => p.KeyMatch == nameVideoGame) ??
-                    foundPages.FirstOrDefault(p => p.KeyMatch == compareName) ??
-                    foundPages.FirstOrDefault(p => p.KeyMatch == searchNameVideoGame) ??
-                    foundPages.FirstOrDefault(p => p.KeyMatch == searchName);
+                return null;
             }
 
-            return foundPage;
+            // Since name games have names, that aren't exclusive to video games, often "(video game)" is added to the
+            // page title, so we try that first, before searching the name itself. Only if we get a 100% match, we'll
+            // use the page in background mode. The description also needs to have the words "video game" in it to
+            // avoid cases like "Doom", where a completely wrong page would be returned.
+            var foundPages = searchResult.Pages
+                .Where(p => p.Description != null && p.Description.ToLower().Contains("video game")).ToList();
+
+            return foundPages.FirstOrDefault(p => p.KeyMatch == nameVideoGame) ??
+                   foundPages.FirstOrDefault(p => p.KeyMatch == compareName) ??
+                   foundPages.FirstOrDefault(p => p.KeyMatch == searchNameVideoGame) ??
+                   foundPages.FirstOrDefault(p => p.KeyMatch == searchName);
         }
 
         /// <summary>
@@ -78,10 +76,10 @@ namespace WikipediaMetadata
         /// <returns>List of found results</returns>
         public List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            (string nameVideoGame, string compareName, string startName) = PrepareSearchTerms(searchTerm);
+            var (nameVideoGame, compareName, startName) = PrepareSearchTerms(searchTerm);
 
             // We search for the game name on Wikipedia
-            WikipediaSearchResult searchResult = WikipediaApiCaller.GetSearchResults(searchTerm);
+            var searchResult = WikipediaApiCaller.GetSearchResults(searchTerm);
 
             if (_useAdvancedSearchResultSorting)
             {

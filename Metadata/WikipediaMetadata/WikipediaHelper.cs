@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata
 {
@@ -10,13 +9,7 @@ namespace WikipediaMetadata
         /// </summary>
         /// <param name="key">Key of the page</param>
         /// <returns>Url of the image</returns>
-        internal static string GetImageUrl(string key)
-        {
-            WikipediaImage imageData = WikipediaApiCaller.GetImage(key);
-
-            ImagePage page = imageData?.Query?.Pages.FirstOrDefault();
-
-            return page?.Original?.Source;
-        }
+        internal static string GetImageUrl(string key) =>
+            WikipediaApiCaller.GetImage(key)?.Query?.Pages.FirstOrDefault()?.Original?.Source;
     }
 }

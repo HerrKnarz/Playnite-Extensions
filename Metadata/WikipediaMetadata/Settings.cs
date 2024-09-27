@@ -12,59 +12,13 @@ namespace WikipediaMetadata
         private readonly WikipediaMetadata _plugin;
         private PluginSettings _settings;
 
-        private PluginSettings EditingClone { get; set; }
-
-        public PluginSettings Settings
-        {
-            get => _settings;
-            set
-            {
-                _settings = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Dictionary<DateToUse, string> DateToUseModes { get; } = new Dictionary<DateToUse, string>
-        {
-            { DateToUse.Earliest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateEarliest") },
-            { DateToUse.Latest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateLatest") },
-            { DateToUse.First, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateFirst") }
-        };
-
-        public Dictionary<RatingToUse, string> RatingToUseModes { get; } = new Dictionary<RatingToUse, string>
-        {
-            { RatingToUse.Lowest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingLowest") },
-            { RatingToUse.Highest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingHighest") },
-            { RatingToUse.Average, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingAverage") }
-        };
-
-        public RelayCommand AddSectionCommand
-            => new RelayCommand(() =>
-            {
-                string value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCWikipediaMetadataSettingsAddValue"), "").SelectedString;
-
-                Settings.SectionsToRemove.AddMissing(value);
-                Settings.SectionsToRemove = new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
-            });
-
-        public RelayCommand<IList<object>> RemoveSectionCommand => new RelayCommand<IList<object>>((items) =>
-        {
-            foreach (string item in items.ToList().Cast<string>())
-            {
-                Settings.SectionsToRemove.Remove(item);
-            }
-        }, (items) => items?.Any() ?? false);
-
         public WikipediaMetadataSettingsViewModel(WikipediaMetadata plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             _plugin = plugin;
 
-            // Load saved _settings.
-            PluginSettings savedSettings = plugin.LoadPluginSettings<PluginSettings>();
-
             // LoadPluginSettings returns null if no saved data is available.
-            Settings = savedSettings ?? new PluginSettings();
+            Settings = plugin.LoadPluginSettings<PluginSettings>() ?? new PluginSettings();
 
             Settings.SectionsToRemove = Settings.SectionsToRemove is null
                 ? new ObservableCollection<string>()
@@ -84,25 +38,57 @@ namespace WikipediaMetadata
             }
         }
 
-        public void BeginEdit() =>
-            // Code executed when _settings view is opened and user starts editing values.
-            EditingClone = Serialization.GetClone(Settings);
+        public RelayCommand AddSectionCommand
+            => new RelayCommand(() =>
+            {
+                var value = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCWikipediaMetadataSettingsAddValue"), "").SelectedString;
 
-        public void CancelEdit() =>
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and ArcadeSystemAsPlatform.
-            Settings = EditingClone;
+                Settings.SectionsToRemove.AddMissing(value);
+                Settings.SectionsToRemove = new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
+            });
 
-        public void EndEdit() =>
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save _settings made to Option1 and ArcadeSystemAsPlatform.
-            _plugin.SavePluginSettings(Settings);
+        public Dictionary<DateToUse, string> DateToUseModes { get; } = new Dictionary<DateToUse, string>
+        {
+            { DateToUse.Earliest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateEarliest") },
+            { DateToUse.Latest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateLatest") },
+            { DateToUse.First, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateFirst") }
+        };
+
+        private PluginSettings EditingClone { get; set; }
+
+        public Dictionary<RatingToUse, string> RatingToUseModes { get; } = new Dictionary<RatingToUse, string>
+        {
+            { RatingToUse.Lowest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingLowest") },
+            { RatingToUse.Highest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingHighest") },
+            { RatingToUse.Average, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingAverage") }
+        };
+
+        public RelayCommand<IList<object>> RemoveSectionCommand => new RelayCommand<IList<object>>((items) =>
+        {
+            foreach (var item in items.ToList().Cast<string>())
+            {
+                Settings.SectionsToRemove.Remove(item);
+            }
+        }, (items) => items?.Any() ?? false);
+
+        public PluginSettings Settings
+        {
+            get => _settings;
+            set
+            {
+                _settings = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
+
+        public void CancelEdit() => Settings = EditingClone;
+
+        public void EndEdit() => _plugin.SavePluginSettings(Settings);
 
         public bool VerifySettings(out List<string> errors)
         {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
         }

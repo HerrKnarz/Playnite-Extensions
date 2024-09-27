@@ -5,26 +5,14 @@ namespace WikipediaMetadata.Models
 {
     public class PluginSettings : ObservableObject
     {
-        private DateToUse _dateToUse = DateToUse.Earliest;
-        private RatingToUse _ratingToUse = RatingToUse.Average;
         private bool _advancedSearchResultSorting = true;
-        private bool _arcadeSystemAsPlatform = false;
-        private bool _removeDescriptionLinks = false;
-        private bool _descriptionOverviewOnly = false;
+        private bool _arcadeSystemAsPlatform;
+        private DateToUse _dateToUse = DateToUse.Earliest;
+        private bool _descriptionOverviewOnly;
+        private RatingToUse _ratingToUse = RatingToUse.Average;
+        private bool _removeDescriptionLinks;
         private ObservableCollection<string> _sectionsToRemove = new ObservableCollection<string>();
         private ObservableCollection<TagSetting> _tagSettings;
-
-        public DateToUse DateToUse
-        {
-            get => _dateToUse;
-            set => SetValue(ref _dateToUse, value);
-        }
-
-        public RatingToUse RatingToUse
-        {
-            get => _ratingToUse;
-            set => SetValue(ref _ratingToUse, value);
-        }
 
         public bool AdvancedSearchResultSorting
         {
@@ -38,16 +26,28 @@ namespace WikipediaMetadata.Models
             set => SetValue(ref _arcadeSystemAsPlatform, value);
         }
 
-        public bool RemoveDescriptionLinks
+        public DateToUse DateToUse
         {
-            get => _removeDescriptionLinks;
-            set => SetValue(ref _removeDescriptionLinks, value);
+            get => _dateToUse;
+            set => SetValue(ref _dateToUse, value);
         }
 
         public bool DescriptionOverviewOnly
         {
             get => _descriptionOverviewOnly;
             set => SetValue(ref _descriptionOverviewOnly, value);
+        }
+
+        public RatingToUse RatingToUse
+        {
+            get => _ratingToUse;
+            set => SetValue(ref _ratingToUse, value);
+        }
+
+        public bool RemoveDescriptionLinks
+        {
+            get => _removeDescriptionLinks;
+            set => SetValue(ref _removeDescriptionLinks, value);
         }
 
         public ObservableCollection<string> SectionsToRemove
