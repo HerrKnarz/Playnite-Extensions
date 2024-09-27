@@ -38,7 +38,15 @@ namespace WikipediaMetadata
 
         public override string GetDescription(GetMetadataFieldArgs args)
         {
-            var description = ParseHtml(FindGame().Key).Description;
+            var key = FindGame().Key;
+
+            if (key == string.Empty)
+            {
+                return base.GetDescription(args);
+
+            }
+
+            var description = ParseHtml(key).Description;
             return string.IsNullOrEmpty(description) ? base.GetDescription(args) : description;
         }
 
@@ -113,35 +121,39 @@ namespace WikipediaMetadata
                 return _foundGame;
             }
 
-            var page = new WikipediaPage();
+            _foundGame = new WikipediaGameMetadata();
 
             try
             {
                 var gameFinder = new GameFinder(_plugin.Settings.Settings.AdvancedSearchResultSorting);
-                var key = string.Empty;
+
+                string key;
 
                 if (_options.IsBackgroundDownload)
                 {
-                    var foundPage = gameFinder.FindGame(_options.GameData.Name);
-
-                    if (foundPage != null)
-                    {
-                        key = foundPage.Key;
-                    }
+                    key = gameFinder.FindGame(_options.GameData.Name)?.Key;
                 }
                 else
                 {
-                    var chosen = _plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, gameFinder.GetSearchResults, _options.GameData.Name, $"{_plugin.Name}: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
+                    var chosen = _plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, gameFinder.GetSearchResults,
+                        _options.GameData.Name,
+                        $"{_plugin.Name}: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
 
-                    if (chosen != null)
+                    if (!(chosen is WikipediaItemOption option))
                     {
-                        key = ((WikipediaItemOption)chosen).Key;
+                        return _foundGame;
                     }
+
+                    key = option.Key;
                 }
 
                 if (key != string.Empty)
                 {
-                    page = WikipediaApiCaller.GetGameData(key);
+                    var wikitextParser = new WikitextParser(_plugin.Settings.Settings);
+
+                    wikitextParser.Parse(WikipediaApiCaller.GetGameData(key), _plugin.PlayniteApi.Database.Platforms);
+
+                    return _foundGame = wikitextParser.GameMetadata;
                 }
             }
             catch (Exception ex)
@@ -149,11 +161,7 @@ namespace WikipediaMetadata
                 Log.Error(ex, "Error loading data from Wikipedia");
             }
 
-            var wikitextParser = new WikitextParser(_plugin.Settings.Settings);
-
-            wikitextParser.Parse(page, _plugin.PlayniteApi.Database.Platforms);
-
-            return _foundGame = wikitextParser.GameMetadata;
+            return _foundGame;
         }
 
         /// <summary>
