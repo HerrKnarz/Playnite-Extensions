@@ -5,3 +5,12 @@ Version: 1.6
 Module: WikipediaMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
+Links:
+  - Name: Help
+    Url: https://knarzwerk.de/en/playnite-extensions/wikipedia-metadata
+  - Name: GitHub
+    Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
+  - Name: AddOn database
+    Url: https://playnite.link/addons.html#WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c
+  - Name: Translate
+    Url: https://crowdin.com/project/playnite-extension-linkutiliti

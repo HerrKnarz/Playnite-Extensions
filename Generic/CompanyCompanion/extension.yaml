@@ -5,3 +5,12 @@ Version: 0.6
 Module: CompanyCompanion.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+  - Name: Help
+    Url: https://knarzwerk.de/en/playnite-extensions/company-companion
+  - Name: GitHub
+    Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
+  - Name: AddOn database
+    Url: https://playnite.link/addons.html#CompanyCompanion_b76edaec-1aa8-48ef-83a4-2a49ab031029
+  - Name: Translate
+    Url: https://crowdin.com/project/playnite-extension-linkutiliti

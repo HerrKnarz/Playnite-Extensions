@@ -5,3 +5,12 @@ Version: 1.1
 Module: MetadataUtilities.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+  - Name: Help
+    Url: https://knarzwerk.de/en/playnite-extensions/metadata-utilities
+  - Name: GitHub
+    Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
+  - Name: AddOn database
+    Url: https://playnite.link/addons.html#MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
+  - Name: Translate
+    Url: https://crowdin.com/project/playnite-extension-linkutiliti
