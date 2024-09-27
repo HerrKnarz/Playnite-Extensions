@@ -31,13 +31,13 @@ namespace WikipediaMetadata
         /// <summary>
         /// Array of all in a paragraph accepted tags.
         /// </summary>
-        public static readonly string[] AllowedParagraphTags = { "u", "b", "strong", "i", "em", "sub", "sup", "mark", "small", "del", "ins" };
+        public static readonly string[] AllowedParagraphTags = { "u", "b", "strong", "i", "em", "sub", "sup", "mark", "small", "del", "ins", "dt", "dd" };
 
         /// <summary>
         /// We only fetch headings, paragraphs, lists and su sections from a section, because stuff like blockquotes or tables
         /// don't work well in Playnite and usually aren't essential to the description of a video game.
         /// </summary>
-        public static readonly string[] AllowedSecondLevelNodes = { "h2", "p", "ul", "ol", "section" };
+        public static readonly string[] AllowedSecondLevelNodes = { "h2", "p", "ul", "ol", "section", "dl" };
 
         /// <summary>
         /// Templates that will be treated like their own list of values.
@@ -47,7 +47,7 @@ namespace WikipediaMetadata
         /// <summary>
         /// The same for third levels...
         /// </summary>
-        public static readonly string[] AllowedThirdLevelNodes = { "h3", "p", "ul", "ol", "section" };
+        public static readonly string[] AllowedThirdLevelNodes = { "h3", "p", "ul", "ol", "section", "dl" };
 
         /// <summary>
         /// Typical date formats from wikipedia pages.
