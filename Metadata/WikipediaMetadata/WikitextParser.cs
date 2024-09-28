@@ -477,21 +477,19 @@ namespace WikipediaMetadata
         internal TemplateArgument StripUnwantedElements(TemplateArgument argument)
         {
             // First we remove every template we don't want.
-            foreach (var x in argument.EnumDescendants().OfType<Template>()
-                .Where(t => Resources.UnwantedTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
+            foreach (var item in argument.EnumDescendants().OfType<Template>().Where(t =>
+                         Resources.UnwantedTemplateNames.Contains(
+                             CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))).ToList())
             {
-                x.Remove();
+                item.Remove();
             }
 
             // Now we also remove <ref> tags, because those contain footnotes etc., we don't need.
             foreach (var line in argument.Value.Lines)
             {
-                foreach (var inline in line.EnumDescendants())
+                foreach (var item in line.EnumDescendants().Where(t => t.ToString().StartsWith("<ref")).ToList())
                 {
-                    if (inline.ToString().StartsWith("<ref"))
-                    {
-                        inline.Remove();
-                    }
+                    item.Remove();
                 }
             }
 

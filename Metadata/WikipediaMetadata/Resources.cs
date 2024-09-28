@@ -117,7 +117,7 @@ namespace WikipediaMetadata
         /// <summary>
         /// Templates that will be removed from the results.
         /// </summary>
-        public static readonly string[] UnwantedTemplateNames = { "efn", "cite web" };
+        public static readonly string[] UnwantedTemplateNames = { "efn", "cite web", "cite tweet", "cite video game" };
 
         /// <summary>
         /// Possible names for video game release templates. Is needed to remove the country value from the list of platforms.
