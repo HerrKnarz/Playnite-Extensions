@@ -64,12 +64,12 @@ namespace WikipediaMetadata
                                 // very rarely used, we don't consider those for now.
                                 foreach (var fourthLevelNode in thirdLevelNode.ChildNodes.Where(c => Resources.AllowedFourthLevelNodes.Contains(c.Name)))
                                 {
-                                    AddSectionToDescription(fourthLevelNode);
+                                    AddSectionToDescription(fourthLevelNode, 4);
                                 }
                             }
                             else
                             {
-                                AddSectionToDescription(thirdLevelNode);
+                                AddSectionToDescription(thirdLevelNode, 3);
                             }
                         }
                     }
@@ -125,11 +125,16 @@ namespace WikipediaMetadata
         ///     Adds the provided section to the description
         /// </summary>
         /// <param name="node">The section to add</param>
-        private void AddSectionToDescription(HtmlNode node)
+        /// <param name="level">Level the node appeared in. Is used in some elements to set the right heading level</param>
+        private void AddSectionToDescription(HtmlNode node, int level = 2)
         {
             if (node.Name.IsOneOf("ul", "ol"))
             {
                 Description += GetList(node) + Environment.NewLine + Environment.NewLine;
+            }
+            else if (node.Name == "dl")
+            {
+                Description += GetDescriptionList(node, level);
             }
             else
             {
@@ -140,6 +145,37 @@ namespace WikipediaMetadata
                     Description += $"<{node.Name}>{text}</{node.Name}>" + Environment.NewLine + Environment.NewLine;
                 }
             }
+        }
+
+        /// <summary>
+        ///     Gets the content of a dl description list and converts it to paragraphs with headlines
+        /// </summary>
+        /// <param name="htmlList">list to process</param>
+        /// <param name="level">Level the dl list appeared in. Is used to add the right heading level</param>
+        /// <returns>the cleaned up html string for the list and its items</returns>
+        private string GetDescriptionList(HtmlNode htmlList, int level = 2)
+        {
+            var result = new StringBuilder();
+
+            var heading = level == 2 ? "h3" : "h4";
+
+            foreach (var node in htmlList.ChildNodes.Where(c => c.Name.IsOneOf("dt", "dd")))
+            {
+                if (node.Name == "dt")
+                {
+                    result.Append("<").Append(heading).Append(">")
+                        .Append(RemoveUnwantedTags(RemoveAnnotationMarks(node), Resources.AllowedParagraphTags).InnerHtml)
+                        .Append("</").Append(heading).AppendLine(">").AppendLine();
+                }
+                else
+                {
+                    result.Append("<p>")
+                        .Append(RemoveUnwantedTags(RemoveAnnotationMarks(node), Resources.AllowedParagraphTags).InnerHtml)
+                        .AppendLine("</p>").AppendLine();
+                }
+            }
+
+            return result.ToString();
         }
 
         /// <summary>
@@ -193,7 +229,7 @@ namespace WikipediaMetadata
         }
 
         /// <summary>
-        ///     Gets the content of a ul or ol list as cleaned up html code.
+        ///     Gets the content of an ul or ol list as cleaned up html code.
         /// </summary>
         /// <param name="htmlList">list to process</param>
         /// <returns>the cleaned up html string for the list and its items</returns>
@@ -201,10 +237,12 @@ namespace WikipediaMetadata
         {
             var result = new StringBuilder();
 
-            result.AppendLine($"<{htmlList.Name}>");
+            result.Append("<").Append(htmlList.Name).AppendLine(">");
 
             foreach (var listNode in htmlList.SelectNodes("./li"))
             {
+                result.Append("<").Append(htmlList.Name).AppendLine(">");
+
                 result.AppendLine($"  <{listNode.Name}>{RemoveUnwantedTags(RemoveAnnotationMarks(listNode), Resources.AllowedParagraphTags).InnerHtml}</{listNode.Name}>");
             }
 
