@@ -15,7 +15,12 @@ namespace WikipediaMetadata
     /// </summary>
     internal class HtmlParser
     {
+        public static string[][] AllowedNodes =
+            { Resources.AllowedSecondLevelNodes, Resources.AllowedThirdLevelNodes, Resources.AllowedFourthLevelNodes };
+
         private readonly PluginSettings _settings;
+
+        private readonly List<string> _unwantedParagraphs;
 
         /// <summary>
         ///     Creates an instance of the class, fetches the html code and parses it.
@@ -27,9 +32,9 @@ namespace WikipediaMetadata
             _settings = settings;
 
             // All paragraphs we want to remove from the description by default.
-            var unwantedParagraphs = new List<string> { "see also", "notes", "references", "further reading", "sources", "external links" };
+            _unwantedParagraphs = Resources.UnwantedParagraphs.ToList();
 
-            unwantedParagraphs.AddMissing(settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
+            _unwantedParagraphs.AddMissing(settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
 
             // We use HTML Agility Pack to fetch and parse the code. For the description we strip all bloat from the text and
             // build a simple new html string.
@@ -44,40 +49,7 @@ namespace WikipediaMetadata
                     GetExternalLinks(topLevelSection);
                 }
 
-                // Now we fetch all allowed second level nodes.
-                foreach (var secondLevelNode in topLevelSection.ChildNodes.Where(c => Resources.AllowedSecondLevelNodes.Contains(c.Name)))
-                {
-                    // If the heading is one of the unwanted sections, we completely omit the section.
-                    if (secondLevelNode.Name == "h2" && unwantedParagraphs.Contains(secondLevelNode.InnerText.ToLower().Trim()))
-                    {
-                        break;
-                    }
-
-                    if (secondLevelNode.Name == "section")
-                    {
-                        // We now look for third level nodes and add those to the description.
-                        foreach (var thirdLevelNode in secondLevelNode.ChildNodes.Where(c => Resources.AllowedThirdLevelNodes.Contains(c.Name)))
-                        {
-                            if (thirdLevelNode.Name == "section")
-                            {
-                                // We now look for fourth level nodes and add those to the description. Since further levels are
-                                // very rarely used, we don't consider those for now.
-                                foreach (var fourthLevelNode in thirdLevelNode.ChildNodes.Where(c => Resources.AllowedFourthLevelNodes.Contains(c.Name)))
-                                {
-                                    AddSectionToDescription(fourthLevelNode, 4);
-                                }
-                            }
-                            else
-                            {
-                                AddSectionToDescription(thirdLevelNode, 3);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        AddSectionToDescription(secondLevelNode);
-                    }
-                }
+                LoopSection(topLevelSection);
 
                 // If we only want the overview, we directly break the loop after the first section.
                 if (settings.DescriptionOverviewOnly)
@@ -241,14 +213,42 @@ namespace WikipediaMetadata
 
             foreach (var listNode in htmlList.SelectNodes("./li"))
             {
-                result.Append("<").Append(htmlList.Name).AppendLine(">");
-
                 result.AppendLine($"  <{listNode.Name}>{RemoveUnwantedTags(RemoveAnnotationMarks(listNode), Resources.AllowedParagraphTags).InnerHtml}</{listNode.Name}>");
             }
 
             result.Append($"</{htmlList.Name}>");
 
             return result.ToString();
+        }
+
+        private void LoopSection(HtmlNode section, int level = 2)
+        {
+            var allowedNodesLevel = level > 4 ? 2 : level - 2;
+
+            foreach (var node in section.ChildNodes.Where(c => AllowedNodes[allowedNodesLevel].Contains(c.Name)))
+            {
+                switch (node.Name)
+                {
+                    // If the heading is one of the unwanted sections, we completely omit the section.
+                    case "h2" when _unwantedParagraphs.Contains(node.InnerText.ToLower().Trim()):
+                        return;
+                    // If we have an unsupported div, we simply skip it.
+                    case "div" when !node.Attributes.Any(a => a.Name == "class" && a.Value.Contains("div-col")):
+                        continue;
+                    // Is the div supported, we keep the level and loop through the content of the div, as if it wasn't there at all.
+                    case "div" when node.Attributes.Any(a => a.Name == "class" && a.Value.Contains("div-col")):
+                        LoopSection(node, level);
+                        break;
+                    // if we have a section, we go one level deeper and loop through the content
+                    case "section":
+                        LoopSection(node, ++level);
+                        break;
+                    // We add every other tag directly to the description
+                    default:
+                        AddSectionToDescription(node, level);
+                        break;
+                }
+            }
         }
 
         private HtmlNode RemoveUnwantedTags(HtmlNode htmlNode, string[] acceptableTags)
