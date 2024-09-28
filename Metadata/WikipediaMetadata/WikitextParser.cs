@@ -153,13 +153,15 @@ namespace WikipediaMetadata
             var values = new List<MetadataNameProperty>();
 
             // If the value is the only one and is a link, we return it without splitting.
-            if (value.Count(c => c == '[') == 2 && value.Count(c => c == ']') == 2 && value.StartsWith("[") && value.EndsWith("]"))
+            if (IsSingleLink(value))
             {
                 values.Add(new MetadataNameProperty(parser.Parse(value).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim()));
                 return values;
             }
 
-            // Now the build the list of separators to split the values by.
+            value = parser.Parse(value).ToPlainText(NodePlainTextOptions.RemoveRefTags);
+
+            // Now we build the list of separators to split the values by.
             var separators = new List<string>();
 
             separators.AddRange(Resources.StringSeparators);
@@ -178,9 +180,9 @@ namespace WikipediaMetadata
 
             // Now we split the values by the list of separators and parse the result to get the plain text values.
             values.AddRange(value.Split(separators.ToArray(), 100, StringSplitOptions.RemoveEmptyEntries)
-                .Select(segment => parser.Parse(segment).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim())
-                .Where(segmentEditable => segmentEditable.Length > 0)
-                .Select(segmentEditable => new MetadataNameProperty(segmentEditable)));
+                .Select(segment => segment.Trim())
+                .Where(segment => segment.Length > 0)
+                .Select(segment => new MetadataNameProperty(segment)));
 
             return values;
         }
@@ -476,7 +478,6 @@ namespace WikipediaMetadata
         /// <returns>The cleaned up argument</returns>
         internal TemplateArgument StripUnwantedElements(TemplateArgument argument)
         {
-            // First we remove every template we don't want.
             foreach (var item in argument.EnumDescendants().OfType<Template>().Where(t =>
                          Resources.UnwantedTemplateNames.Contains(
                              CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))).ToList())
@@ -484,16 +485,12 @@ namespace WikipediaMetadata
                 item.Remove();
             }
 
-            // Now we also remove <ref> tags, because those contain footnotes etc., we don't need.
-            foreach (var line in argument.Value.Lines)
-            {
-                foreach (var item in line.EnumDescendants().Where(t => t.ToString().StartsWith("<ref")).ToList())
-                {
-                    item.Remove();
-                }
-            }
-
             return argument;
         }
+
+        private static bool IsSingleLink(string value) => value.Count(c => c == '[') == 2 &&
+                                                          value.Count(c => c == ']') == 2 &&
+                                                          ((value.StartsWith("[") && value.EndsWith("]")) ||
+                                                           (value.StartsWith("''[[") && value.EndsWith("]]''")));
     }
 }
