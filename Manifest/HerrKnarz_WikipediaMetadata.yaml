@@ -1,5 +1,14 @@
 AddonId: WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c
 Packages:
+  - Version: 1.7
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-09-28
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-09-28/WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c_1_7.pext
+    Changelog:
+      - added support for definition lists in the descriptions. Will be converted to simple headlines and paragraphs since it looks better in the playnite HTML control.
+      - fixed missing description parts, when they are wrapped in a div-col container. 
+      - optimized parsing of values in the info box, fixing several bugs fetching all the metadata fields from the box.
+      - modernized and cleaned up code.
   - Version: 1.6
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2023-04-04
