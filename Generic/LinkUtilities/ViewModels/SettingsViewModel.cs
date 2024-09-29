@@ -27,7 +27,7 @@ namespace LinkUtilities
         {
             _plugin = plugin;
 
-            LinkUtilitiesSettings savedSettings = plugin.LoadPluginSettings<LinkUtilitiesSettings>();
+            var savedSettings = plugin.LoadPluginSettings<LinkUtilitiesSettings>();
 
             if (savedSettings != null)
             {
@@ -119,7 +119,7 @@ namespace LinkUtilities
         public RelayCommand AddSortItemCommand
             => new RelayCommand(() =>
             {
-                int position = 1;
+                var position = 1;
 
                 if (Settings.SortOrder.Any())
                 {
@@ -132,6 +132,8 @@ namespace LinkUtilities
                     Position = position
                 });
             });
+
+        private LinkUtilitiesSettings EditingClone { get; set; }
 
         public string ExampleName
         {
@@ -156,15 +158,15 @@ namespace LinkUtilities
 
         public RelayCommand HelpBookmarkletCommand => new RelayCommand(() =>
             Process.Start(new ProcessStartInfo(
-                "https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-URL-handler-and-bookmarklet")));
+                "https://knarzwerk.de/en/playnite-extensions/link-utilities/url-handler-and-bookmarklet/")));
 
         public RelayCommand HelpCustomLinkProfileCommand => new RelayCommand(() =>
             Process.Start(new ProcessStartInfo(
-                "https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Custom-link-profiles")));
+                "https://knarzwerk.de/en/playnite-extensions/link-utilities/custom-link-profiles/")));
 
         public RelayCommand<IList<object>> RemoveCustomLinkProfileCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (CustomLinkProfile item in items.ToList().Cast<CustomLinkProfile>())
+            foreach (var item in items.ToList().Cast<CustomLinkProfile>())
             {
                 Settings.CustomLinkProfiles.Remove(item);
             }
@@ -172,7 +174,7 @@ namespace LinkUtilities
 
         public RelayCommand<IList<object>> RemoveLinkNamePatternsCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (LinkNamePattern linkPattern in items.ToList().Cast<LinkNamePattern>())
+            foreach (var linkPattern in items.ToList().Cast<LinkNamePattern>())
             {
                 Settings.LinkNamePatterns.Remove(linkPattern);
             }
@@ -180,7 +182,7 @@ namespace LinkUtilities
 
         public RelayCommand<IList<object>> RemoveMissingLinkPatternsCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (LinkNamePattern missingLinkPattern in items.ToList().Cast<LinkNamePattern>())
+            foreach (var missingLinkPattern in items.ToList().Cast<LinkNamePattern>())
             {
                 Settings.MissingLinkPatterns.Remove(missingLinkPattern);
             }
@@ -188,7 +190,7 @@ namespace LinkUtilities
 
         public RelayCommand<IList<object>> RemoveRemovePatternsCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (LinkNamePattern removePattern in items.ToList().Cast<LinkNamePattern>())
+            foreach (var removePattern in items.ToList().Cast<LinkNamePattern>())
             {
                 Settings.RemovePatterns.Remove(removePattern);
             }
@@ -196,7 +198,7 @@ namespace LinkUtilities
 
         public RelayCommand<IList<object>> RemoveRenamePatternsCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (LinkNamePattern renamePattern in items.ToList().Cast<LinkNamePattern>())
+            foreach (var renamePattern in items.ToList().Cast<LinkNamePattern>())
             {
                 Settings.RenamePatterns.Remove(renamePattern);
             }
@@ -204,7 +206,7 @@ namespace LinkUtilities
 
         public RelayCommand<IList<object>> RemoveSortItemsCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (SortItem item in items.ToList().Cast<SortItem>())
+            foreach (var item in items.ToList().Cast<SortItem>())
             {
                 Settings.SortOrder.Remove(item);
             }
@@ -240,8 +242,6 @@ namespace LinkUtilities
 
         public RelayCommand TestCustomLinkProfileCommand => new RelayCommand(() =>
             ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty);
-
-        private LinkUtilitiesSettings EditingClone { get; set; }
 
         public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
 
@@ -282,9 +282,9 @@ namespace LinkUtilities
             Settings.UseSteamAppLinks = EditingClone.UseSteamAppLinks;
             Settings.ChangeSteamLinksAfterChange = EditingClone.ChangeSteamLinksAfterChange;
 
-            foreach (LinkSourceSetting originalItem in Settings.LinkSettings)
+            foreach (var originalItem in Settings.LinkSettings)
             {
-                LinkSourceSetting clonedItem = EditingClone.LinkSettings.FirstOrDefault(x => x.LinkName == originalItem.LinkName);
+                var clonedItem = EditingClone.LinkSettings.FirstOrDefault(x => x.LinkName == originalItem.LinkName);
 
                 if (clonedItem == null)
                 {
@@ -321,7 +321,7 @@ namespace LinkUtilities
         {
             errors = new List<string>();
 
-            HashSet<string> hashset = new HashSet<string>();
+            var hashset = new HashSet<string>();
 
             if (Settings.SortOrder.All(item => hashset.Add(item.LinkName)))
             {
@@ -353,7 +353,7 @@ namespace LinkUtilities
             TagMissingLinks.Instance().MissingLinkPrefix = Settings.MissingLinkPrefix;
             ChangeSteamLinks.Instance().ChangeSteamLinksAfterChange = Settings.ChangeSteamLinksAfterChange;
 
-            LibraryLinkSteam steamLink = (LibraryLinkSteam)AddWebsiteLinks.Instance().Links?.FirstOrDefault(x => x.LinkName == "Steam");
+            var steamLink = (LibraryLinkSteam)AddWebsiteLinks.Instance().Links?.FirstOrDefault(x => x.LinkName == "Steam");
 
             if (steamLink != null)
             {
@@ -374,7 +374,7 @@ namespace LinkUtilities
                 steamLink.NameWorkshopLink = Settings.NameSteamWorkshopLink;
             }
 
-            LibraryLinkSteam steamLibLink = (LibraryLinkSteam)AddLibraryLinks.Instance().Libraries?[Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab")];
+            var steamLibLink = (LibraryLinkSteam)AddLibraryLinks.Instance().Libraries?[Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab")];
 
             if (steamLibLink == null)
             {
