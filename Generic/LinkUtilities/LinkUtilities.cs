@@ -132,8 +132,45 @@ namespace LinkUtilities
             var menuBrowserSearchLinks = ResourceProvider.GetString("LOCLinkUtilitiesMenuBrowserSearchLinkTo");
 
             var menuItems = new List<GameMenuItem>();
+            var menuAddItems = new List<GameMenuItem>();
+            var menuSearchItems = new List<GameMenuItem>();
+            var menuBrowserSearchItems = new List<GameMenuItem>();
 
             var games = args.Games.Distinct().ToList();
+
+            // Adds all linkable websites to the "add link to" and "search link to" sub menus.
+            foreach (var link in AddWebsiteLinks.Instance().Links.OrderBy(x => x.LinkName))
+            {
+                if (link.Settings.ShowInMenus & (link.AddType != LinkAddTypes.None))
+                {
+                    menuAddItems.Add(new GameMenuItem
+                    {
+                        Description = link.LinkName,
+                        MenuSection = $"{menuSection}|{menuAddLinks}",
+                        Action = a => DoForAll(games, link, true, ActionModifierTypes.Add)
+                    });
+                }
+
+                if (link.Settings.ShowInMenus & link.CanBeSearched)
+                {
+                    menuSearchItems.Add(new GameMenuItem
+                    {
+                        Description = link.LinkName,
+                        MenuSection = $"{menuSection}|{menuSearchLinks}",
+                        Action = a => DoForAll(games, link, true, ActionModifierTypes.Search)
+                    });
+                }
+
+                if (games.Count == 1 && link.Settings.ShowInMenus && link.CanBeBrowserSearched)
+                {
+                    menuBrowserSearchItems.Add(new GameMenuItem
+                    {
+                        Description = link.LinkName,
+                        MenuSection = $"{menuSection}|{menuBrowserSearchLinks}",
+                        Action = a => DoForAll(games, link, true, ActionModifierTypes.SearchInBrowser)
+                    });
+                }
+            }
 
             if (games.Any(g => AddLibraryLinks.Instance().Libraries.ContainsKey(g.PluginId)))
             {
@@ -147,13 +184,15 @@ namespace LinkUtilities
                 });
             }
 
+            menuItems.AddRange(menuAddItems);
+
             menuItems.AddRange(new List<GameMenuItem>
             {
                 // Adds the "All configured websites" item to the "add link to" sub menu.
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllConfiguredWebsites"),
-                    MenuSection = $"{menuSection}|{menuAddLinks}",
+                    MenuSection = menuSection,
                     Icon = "luAddIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.Add)
                 },
@@ -161,7 +200,7 @@ namespace LinkUtilities
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSelectedWebsites"),
-                    MenuSection = $"{menuSection}|{menuAddLinks}",
+                    MenuSection = menuSection,
                     Icon = "luAddIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.AddSelected)
                 },
@@ -169,13 +208,19 @@ namespace LinkUtilities
                 new GameMenuItem
                 {
                     Description = "-",
-                    MenuSection = $"{menuSection}|{menuAddLinks}"
-                },
+                    MenuSection = menuSection
+                }
+            });
+
+            menuItems.AddRange(menuSearchItems);
+
+            menuItems.AddRange(new List<GameMenuItem>
+            {
                 // Adds the "All configured websites" item to the "search link to" sub menu.
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllConfiguredWebsites"),
-                    MenuSection = $"{menuSection}|{menuSearchLinks}",
+                    MenuSection = menuSection,
                     Icon = "luSearchIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.Search)
                 },
@@ -183,7 +228,7 @@ namespace LinkUtilities
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllMissingWebsites"),
-                    MenuSection = $"{menuSection}|{menuSearchLinks}",
+                    MenuSection = menuSection,
                     Icon = "luSearchIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.SearchMissing)
                 },
@@ -191,7 +236,7 @@ namespace LinkUtilities
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSelectedWebsites"),
-                    MenuSection = $"{menuSection}|{menuSearchLinks}",
+                    MenuSection = menuSection,
                     Icon = "luSearchIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.SearchSelected)
                 },
@@ -199,13 +244,19 @@ namespace LinkUtilities
                 new GameMenuItem
                 {
                     Description = "-",
-                    MenuSection = $"{menuSection}|{menuSearchLinks}"
-                },
+                    MenuSection = menuSection
+                }
+            });
+
+            menuItems.AddRange(menuBrowserSearchItems);
+
+            menuItems.AddRange(new List<GameMenuItem>
+            {
                 // Adds the "All missing websites" item to the browser search sub menu.
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllMissingWebsites"),
-                    MenuSection = $"{menuSection}|{menuBrowserSearchLinks}",
+                    MenuSection = menuSection,
                     Icon = "luWebIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), false, ActionModifierTypes.SearchInBrowser)
                 },
@@ -213,91 +264,52 @@ namespace LinkUtilities
                 new GameMenuItem
                 {
                     Description = "-",
-                    MenuSection = $"{menuSection}|{menuBrowserSearchLinks}"
+                    MenuSection = menuSection
+                },
+                // Adds the "Add link from clipboard" item to the game menu
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAddLinkFromClipboard"),
+                    MenuSection = menuSection,
+                    Icon = "luClipboardIcon",
+                    Action = a => DoForAll(games, AddLinkFromClipboard.Instance(), true)
+                },
+                // Adds a separator to the game menu
+                new GameMenuItem
+                {
+                    Description = "-",
+                    MenuSection = menuSection
+                },
+                // Adds the "Check links" item to the game menu
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCheckLinks"),
+                    MenuSection = menuSection,
+                    Icon = "luCheckIcon",
+                    Action = a => CheckLinks(games)
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
+                    MenuSection = menuSection,
+                    Icon = "luCleanIcon",
+                    Action = a => DoForAll(games, DoAfterChange.Instance(), true)
+                },
+                // Adds a separator to the game menu
+                new GameMenuItem
+                {
+                    Description = "-",
+                    MenuSection = menuSection
+                },
+                // Adds the "sort Links by name" item to the game menu.
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
+                    MenuSection = menuSection,
+                    Icon = "luSortIcon",
+                    Action = a => DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.Name)
                 }
             });
-
-            // Adds all linkable websites to the "add link to" and "search link to" sub menus.
-            foreach (var link in AddWebsiteLinks.Instance().Links.OrderBy(x => x.LinkName))
-            {
-                if (link.Settings.ShowInMenus & (link.AddType != LinkAddTypes.None))
-                {
-                    menuItems.Add(new GameMenuItem
-                    {
-                        Description = link.LinkName,
-                        MenuSection = $"{menuSection}|{menuAddLinks}",
-                        Action = a => DoForAll(games, link, true, ActionModifierTypes.Add)
-                    });
-                }
-
-                if (link.Settings.ShowInMenus & link.CanBeSearched)
-                {
-                    menuItems.Add(new GameMenuItem
-                    {
-                        Description = link.LinkName,
-                        MenuSection = $"{menuSection}|{menuSearchLinks}",
-                        Action = a => DoForAll(games, link, true, ActionModifierTypes.Search)
-                    });
-                }
-
-                if (games.Count == 1 && link.Settings.ShowInMenus && link.CanBeBrowserSearched)
-                {
-                    menuItems.Add(new GameMenuItem
-                    {
-                        Description = link.LinkName,
-                        MenuSection = $"{menuSection}|{menuBrowserSearchLinks}",
-                        Action = a => DoForAll(games, link, true, ActionModifierTypes.SearchInBrowser)
-                    });
-                }
-            }
-
-            menuItems.AddRange(new List<GameMenuItem>
-                {
-                    // Adds the "Add link from clipboard" item to the game menu
-                    new GameMenuItem
-                    {
-                        Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAddLinkFromClipboard"),
-                        MenuSection = menuSection,
-                        Icon = "luClipboardIcon",
-                        Action = a => DoForAll(games, AddLinkFromClipboard.Instance(), true)
-                    },
-                    // Adds a separator to the game menu
-                    new GameMenuItem
-                    {
-                        Description = "-",
-                        MenuSection = menuSection
-                    },
-                    // Adds the "Check links" item to the game menu
-                    new GameMenuItem
-                    {
-                        Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCheckLinks"),
-                        MenuSection = menuSection,
-                        Icon = "luCheckIcon",
-                        Action = a => CheckLinks(games)
-                    },
-                    new GameMenuItem
-                    {
-                        Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
-                        MenuSection = menuSection,
-                        Icon = "luCleanIcon",
-                        Action = a => DoForAll(games, DoAfterChange.Instance(), true)
-                    },
-                    // Adds a separator to the game menu
-                    new GameMenuItem
-                    {
-                        Description = "-",
-                        MenuSection = menuSection
-                    },
-                    // Adds the "sort Links by name" item to the game menu.
-                    new GameMenuItem
-                    {
-                        Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
-                        MenuSection = menuSection,
-                        Icon = "luSortIcon",
-                        Action = a => DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.Name)
-                    }
-                }
-            );
 
             // Adds the "sort Links by sort order" item to the game menu.
             if (SortLinks.Instance().SortOrder?.Any() ?? false)
