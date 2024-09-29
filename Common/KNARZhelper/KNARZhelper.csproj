@@ -47,7 +47,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseObjectHelper.cs" />
     <Compile Include="DatabaseObjectTypes\BaseBooleanType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseCompanyType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseDateType.cs" />

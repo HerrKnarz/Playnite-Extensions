@@ -7,7 +7,6 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace LinkUtilities
@@ -38,12 +37,12 @@ namespace LinkUtilities
                     return;
                 }
 
-                List<Game> games = PlayniteApi.MainView.SelectedGames.Distinct().ToList();
+                var games = PlayniteApi.MainView.SelectedGames.Distinct().ToList();
 
                 DoForAll(games, HandleUriActions.Instance(), true, HandleUriActions.Instance().Action);
             });
 
-            Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
+            var iconResourcesToAdd = new Dictionary<string, string>
             {
                 { "luLinkIcon", "\xef71" },
                 { "luAddIcon", "\xec3e" },
@@ -62,11 +61,16 @@ namespace LinkUtilities
                 { "luWebIcon", "\xf028" }
             };
 
-            foreach (KeyValuePair<string, string> iconResource in iconResourcesToAdd)
+            foreach (var iconResource in iconResourcesToAdd)
             {
                 MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
             }
         }
+
+        /// <summary>
+        ///     The global GUID to identify the extension in playnite
+        /// </summary>
+        public override Guid Id { get; } = Guid.Parse("f692b4bb-238d-4080-ae76-4aaefde6f7a1");
 
         /// <summary>
         ///     Is set to true, while the library is updated via the sortLinks function. Is used to avoid an endless loop in the
@@ -79,91 +83,28 @@ namespace LinkUtilities
         /// </summary>
         public SettingsViewModel Settings { get; set; }
 
-        /// <summary>
-        ///     The global GUID to identify the extension in playnite
-        /// </summary>
-        public override Guid Id { get; } = Guid.Parse("f692b4bb-238d-4080-ae76-4aaefde6f7a1");
-
-        /// <summary>
-        ///     Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update
-        ///     mode if the
-        ///     list contains more than one game.
-        /// </summary>
-        /// <param name="games">List of games to be processed</param>
-        /// <param name="linkAction">Instance of the action to be executed</param>
-        /// <param name="showDialog">If true a dialog will be shown after completion</param>
-        /// <param name="actionModifier">specifies the type of action to execute, if more than one is possible.</param>
-        private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
+        public void CheckLinks(List<Game> games)
         {
-            // While sorting Links we set IsUpdating to true, so the library update event knows it doesn't need to sort again.
-            IsUpdating = true;
-
             try
             {
-                if (games.Count == 1)
+                var viewModel = new CheckLinksViewModel(games, Settings.Settings.HideOkOnLinkCheck);
+
+                if (!viewModel.CheckLinks.Links?.Any() ?? true)
                 {
-                    linkAction.Execute(games.First(), actionModifier, false);
+                    API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCLinkUtilitiesDialogNoLinksFound"));
+                    return;
                 }
-                // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
-                else if (games.Count > 1)
-                {
-                    int gamesAffected = 0;
 
-                    using (PlayniteApi.Database.BufferedUpdate())
-                    {
-                        if (!linkAction.Prepare(actionModifier))
-                        {
-                            return;
-                        }
+                var window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesCheckLinksWindowName"));
+                var view = new CheckLinksView { DataContext = viewModel };
 
-                        GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                            $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
-                            true
-                        )
-                        {
-                            IsIndeterminate = false
-                        };
+                window.Content = view;
 
-                        PlayniteApi.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                        {
-                            try
-                            {
-                                activateGlobalProgress.ProgressMaxValue = games.Count;
-
-                                foreach (Game game in games)
-                                {
-                                    activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(linkAction.ProgressMessage)}{Environment.NewLine}{game.Name}";
-
-                                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                                    {
-                                        break;
-                                    }
-
-                                    if (linkAction.Execute(game, actionModifier))
-                                    {
-                                        gamesAffected++;
-                                    }
-
-                                    activateGlobalProgress.CurrentProgressValue++;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Log.Error(ex);
-                            }
-                        }, globalProgressOptions);
-                    }
-
-                    // Shows a dialog with the number of games actually affected.
-                    if (showDialog)
-                    {
-                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
-                    }
-                }
+                window.ShowDialog();
             }
-            finally
+            catch (Exception exception)
             {
-                IsUpdating = false;
+                Log.Error(exception, "Error during initializing CheckLinksView", true);
             }
         }
 
@@ -179,346 +120,20 @@ namespace LinkUtilities
                 return;
             }
 
-            List<Game> games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
-            TagMissingLinks.Instance().TagsCache.Clear();
+            var games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
             DoForAll(games, DoAfterChange.Instance());
-        }
-
-        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
-        {
-            if (Settings.Settings.AddLinksToNewGames)
-            {
-                List<Game> games = PlayniteApi.Database.Games
-                    .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
-
-                DoForAll(games, AddWebsiteLinks.Instance(), false, ActionModifierTypes.Add);
-            }
-
-            Settings.Settings.LastAutoLibUpdate = DateTime.Now;
-            SavePluginSettings(Settings.Settings);
-        }
-
-        public void CheckLinks(List<Game> games)
-        {
-            try
-            {
-                CheckLinksViewModel viewModel = new CheckLinksViewModel(games, Settings.Settings.HideOkOnLinkCheck);
-
-                if (!viewModel.CheckLinks.Links?.Any() ?? true)
-                {
-                    API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCLinkUtilitiesDialogNoLinksFound"));
-                    return;
-                }
-
-                Window window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesCheckLinksWindowName"));
-                CheckLinksView view = new CheckLinksView { DataContext = viewModel };
-
-                window.Content = view;
-
-                window.ShowDialog();
-            }
-            catch (Exception exception)
-            {
-                Log.Error(exception, "Error during initializing CheckLinksView", true);
-            }
-        }
-
-        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
-        {
-            string menuSection = ResourceProvider.GetString("LOCLinkUtilitiesName");
-            string menuFilteredGames = ResourceProvider.GetString("LOCLinkUtilitiesMenuFilteredGames");
-            string menuAllGames = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllGames");
-
-            List<MainMenuItem> menuItems = new List<MainMenuItem>
-            {
-                // Adds the "clean up" item to the main menu.
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
-                    MenuSection = $"@{menuSection}|{menuAllGames}",
-                    Icon = "luCleanIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        TagMissingLinks.Instance().TagsCache.Clear();
-                        DoForAll(games, DoAfterChange.Instance(), true);
-                    }
-                },
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
-                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
-                    Icon = "luCleanIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        TagMissingLinks.Instance().TagsCache.Clear();
-                        DoForAll(games, DoAfterChange.Instance(), true);
-                    }
-                },
-                // Adds a separator
-                new MainMenuItem
-                {
-                    Description = "-",
-                    MenuSection = $"@{menuSection}|{menuAllGames}"
-                },
-                new MainMenuItem
-                {
-                    Description = "-",
-                    MenuSection = $"@{menuSection}|{menuFilteredGames}"
-                },
-                // Adds the "sort Links by name" item to the main menu.
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
-                    MenuSection = $"@{menuSection}|{menuAllGames}",
-                    Icon = "luSortIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.Name);
-                    }
-                },
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
-                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
-                    Icon = "luSortIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.Name);
-                    }
-                }
-            };
-
-            // Adds the "sort Links by sort order" item to the main menu.
-            if (SortLinks.Instance().SortOrder?.Any() ?? false)
-            {
-                menuItems.Add(new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksBySortOrder"),
-                    MenuSection = $"@{menuSection}|{menuAllGames}",
-                    Icon = "luSortIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.SortOrder);
-                    }
-                });
-
-                menuItems.Add(new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksBySortOrder"),
-                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
-                    Icon = "luSortIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.SortOrder);
-                    }
-                });
-            }
-
-            // Adds the "Remove duplicate links" item to the main menu.
-            menuItems.Add(new MainMenuItem
-            {
-                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
-                MenuSection = $"@{menuSection}|{menuAllGames}",
-                Icon = "luDuplicateIcon",
-                Action = a =>
-                {
-                    List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                    DoForAll(games, RemoveDuplicates.Instance(), true);
-                }
-            });
-
-            // Adds the "Review duplicate links" item to the main menu.
-            menuItems.Add(new MainMenuItem
-            {
-                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
-                MenuSection = $"@{menuSection}|{menuAllGames}",
-                Icon = "luReviewIcon",
-                Action = a =>
-                {
-                    List<Game> games = PlayniteApi.Database.Games.Distinct().Where(x => !x.Hidden).ToList();
-                    RemoveDuplicates.ShowReviewDuplicatesView(games);
-                }
-            });
-
-            menuItems.Add(new MainMenuItem
-            {
-                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
-                MenuSection = $"@{menuSection}|{menuFilteredGames}",
-                Icon = "luDuplicateIcon",
-                Action = a =>
-                {
-                    List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                    DoForAll(games, RemoveDuplicates.Instance(), true);
-                }
-            });
-
-            // Adds the "Review duplicate links" item to the main menu.
-            menuItems.Add(new MainMenuItem
-            {
-                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
-                MenuSection = $"@{menuSection}|{menuFilteredGames}",
-                Icon = "luReviewIcon",
-                Action = a =>
-                {
-                    List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                    RemoveDuplicates.ShowReviewDuplicatesView(games);
-                }
-            });
-
-            // Adds the "Remove unwanted links" item to the main menu.
-            if (RemoveLinks.Instance().RemovePatterns?.Any() ?? false)
-            {
-                menuItems.Add(new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveUnwantedLinks"),
-                    MenuSection = $"@{menuSection}|{menuAllGames}",
-                    Icon = "luRemoveIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        DoForAll(games, RemoveLinks.Instance(), true);
-                    }
-                });
-
-                menuItems.Add(new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveUnwantedLinks"),
-                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
-                    Icon = "luRemoveIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        DoForAll(games, RemoveLinks.Instance(), true);
-                    }
-                });
-            }
-
-            // Adds the "Rename links" item to the main menu.
-            if (RenameLinks.Instance().RenamePatterns?.Any() ?? false)
-            {
-                menuItems.Add(new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRenameLinks"),
-                    MenuSection = $"@{menuSection}|{menuAllGames}",
-                    Icon = "luRenameIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        DoForAll(games, RenameLinks.Instance(), true);
-                    }
-                });
-
-                menuItems.Add(new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRenameLinks"),
-                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
-                    Icon = "luRenameIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        DoForAll(games, RenameLinks.Instance(), true);
-                    }
-                });
-            }
-
-            // Adds the "Change steam links" item to the main menu.
-            menuItems.Add(new MainMenuItem
-            {
-                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToApp"),
-                MenuSection = $"@{menuSection}|{menuAllGames}",
-                Icon = "luSteamIcon",
-                Action = a =>
-                {
-                    List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.AppLink);
-                }
-            });
-
-            menuItems.Add(new MainMenuItem
-            {
-                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToApp"),
-                MenuSection = $"@{menuSection}|{menuFilteredGames}",
-                Icon = "luSteamIcon",
-                Action = a =>
-                {
-                    List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.AppLink);
-                }
-            });
-
-            menuItems.Add(new MainMenuItem
-            {
-                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToWeb"),
-                MenuSection = $"@{menuSection}|{menuAllGames}",
-                Icon = "luSteamIcon",
-                Action = a =>
-                {
-                    List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.WebLink);
-                }
-            });
-
-            menuItems.Add(new MainMenuItem
-            {
-                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToWeb"),
-                MenuSection = $"@{menuSection}|{menuFilteredGames}",
-                Icon = "luSteamIcon",
-                Action = a =>
-                {
-                    List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.WebLink);
-                }
-            });
-
-            // Adds the "Tag missing links" item to the main menu.
-            if (TagMissingLinks.Instance().MissingLinkPatterns?.Any() ?? false)
-            {
-                menuItems.Add(new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
-                    MenuSection = $"@{menuSection}|{menuAllGames}",
-                    Icon = "luTagIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.Database.Games.Distinct().ToList();
-                        TagMissingLinks.Instance().TagsCache.Clear();
-                        DoForAll(games, TagMissingLinks.Instance(), true);
-                    }
-                });
-
-                menuItems.Add(new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
-                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
-                    Icon = "luTagIcon",
-                    Action = a =>
-                    {
-                        List<Game> games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
-                        TagMissingLinks.Instance().TagsCache.Clear();
-                        DoForAll(games, TagMissingLinks.Instance(), true);
-                    }
-                });
-            }
-
-            return menuItems;
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            string menuSection = ResourceProvider.GetString("LOCLinkUtilitiesName");
-            string menuAddLinks = ResourceProvider.GetString("LOCLinkUtilitiesMenuAddLinkTo");
-            string menuSearchLinks = ResourceProvider.GetString("LOCLinkUtilitiesMenuSearchLinkTo");
-            string menuBrowserSearchLinks = ResourceProvider.GetString("LOCLinkUtilitiesMenuBrowserSearchLinkTo");
+            var menuSection = ResourceProvider.GetString("LOCLinkUtilitiesName");
+            var menuAddLinks = ResourceProvider.GetString("LOCLinkUtilitiesMenuAddLinkTo");
+            var menuSearchLinks = ResourceProvider.GetString("LOCLinkUtilitiesMenuSearchLinkTo");
+            var menuBrowserSearchLinks = ResourceProvider.GetString("LOCLinkUtilitiesMenuBrowserSearchLinkTo");
 
-            List<GameMenuItem> menuItems = new List<GameMenuItem>();
+            var menuItems = new List<GameMenuItem>();
 
-            List<Game> games = args.Games.Distinct().ToList();
+            var games = args.Games.Distinct().ToList();
 
             if (games.Any(g => AddLibraryLinks.Instance().Libraries.ContainsKey(g.PluginId)))
             {
@@ -603,7 +218,7 @@ namespace LinkUtilities
             });
 
             // Adds all linkable websites to the "add link to" and "search link to" sub menus.
-            foreach (BaseClasses.Linker link in AddWebsiteLinks.Instance().Links.OrderBy(x => x.LinkName))
+            foreach (var link in AddWebsiteLinks.Instance().Links.OrderBy(x => x.LinkName))
             {
                 if (link.Settings.ShowInMenus & (link.AddType != LinkAddTypes.None))
                 {
@@ -665,11 +280,7 @@ namespace LinkUtilities
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
                         MenuSection = menuSection,
                         Icon = "luCleanIcon",
-                        Action = a =>
-                        {
-                            TagMissingLinks.Instance().TagsCache.Clear();
-                            DoForAll(games, DoAfterChange.Instance(), true);
-                        }
+                        Action = a => DoForAll(games, DoAfterChange.Instance(), true)
                     },
                     // Adds a separator to the game menu
                     new GameMenuItem
@@ -766,9 +377,287 @@ namespace LinkUtilities
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
                     MenuSection = menuSection,
                     Icon = "luTagIcon",
+                    Action = a => DoForAll(games, TagMissingLinks.Instance(), true)
+                });
+            }
+
+            return menuItems;
+        }
+
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            var menuSection = ResourceProvider.GetString("LOCLinkUtilitiesName");
+            var menuFilteredGames = ResourceProvider.GetString("LOCLinkUtilitiesMenuFilteredGames");
+            var menuAllGames = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllGames");
+
+            var menuItems = new List<MainMenuItem>
+            {
+                // Adds the "clean up" item to the main menu.
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luCleanIcon",
                     Action = a =>
                     {
-                        TagMissingLinks.Instance().TagsCache.Clear();
+                        var games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, DoAfterChange.Instance(), true);
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luCleanIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, DoAfterChange.Instance(), true);
+                    }
+                },
+                // Adds a separator
+                new MainMenuItem
+                {
+                    Description = "-",
+                    MenuSection = $"@{menuSection}|{menuAllGames}"
+                },
+                new MainMenuItem
+                {
+                    Description = "-",
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}"
+                },
+                // Adds the "sort Links by name" item to the main menu.
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luSortIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.Name);
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luSortIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.Name);
+                    }
+                }
+            };
+
+            // Adds the "sort Links by sort order" item to the main menu.
+            if (SortLinks.Instance().SortOrder?.Any() ?? false)
+            {
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksBySortOrder"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luSortIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.SortOrder);
+                    }
+                });
+
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksBySortOrder"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luSortIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.SortOrder);
+                    }
+                });
+            }
+
+            // Adds the "Remove duplicate links" item to the main menu.
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
+                MenuSection = $"@{menuSection}|{menuAllGames}",
+                Icon = "luDuplicateIcon",
+                Action = a =>
+                {
+                    var games = PlayniteApi.Database.Games.Distinct().ToList();
+                    DoForAll(games, RemoveDuplicates.Instance(), true);
+                }
+            });
+
+            // Adds the "Review duplicate links" item to the main menu.
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
+                MenuSection = $"@{menuSection}|{menuAllGames}",
+                Icon = "luReviewIcon",
+                Action = a =>
+                {
+                    var games = PlayniteApi.Database.Games.Distinct().Where(x => !x.Hidden).ToList();
+                    RemoveDuplicates.ShowReviewDuplicatesView(games);
+                }
+            });
+
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveDuplicateLinks"),
+                MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                Icon = "luDuplicateIcon",
+                Action = a =>
+                {
+                    var games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                    DoForAll(games, RemoveDuplicates.Instance(), true);
+                }
+            });
+
+            // Adds the "Review duplicate links" item to the main menu.
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuReviewDuplicateLinks"),
+                MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                Icon = "luReviewIcon",
+                Action = a =>
+                {
+                    var games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                    RemoveDuplicates.ShowReviewDuplicatesView(games);
+                }
+            });
+
+            // Adds the "Remove unwanted links" item to the main menu.
+            if (RemoveLinks.Instance().RemovePatterns?.Any() ?? false)
+            {
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveUnwantedLinks"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luRemoveIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, RemoveLinks.Instance(), true);
+                    }
+                });
+
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveUnwantedLinks"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luRemoveIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, RemoveLinks.Instance(), true);
+                    }
+                });
+            }
+
+            // Adds the "Rename links" item to the main menu.
+            if (RenameLinks.Instance().RenamePatterns?.Any() ?? false)
+            {
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRenameLinks"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luRenameIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, RenameLinks.Instance(), true);
+                    }
+                });
+
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRenameLinks"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luRenameIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                        DoForAll(games, RenameLinks.Instance(), true);
+                    }
+                });
+            }
+
+            // Adds the "Change steam links" item to the main menu.
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToApp"),
+                MenuSection = $"@{menuSection}|{menuAllGames}",
+                Icon = "luSteamIcon",
+                Action = a =>
+                {
+                    var games = PlayniteApi.Database.Games.Distinct().ToList();
+                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.AppLink);
+                }
+            });
+
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToApp"),
+                MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                Icon = "luSteamIcon",
+                Action = a =>
+                {
+                    var games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.AppLink);
+                }
+            });
+
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToWeb"),
+                MenuSection = $"@{menuSection}|{menuAllGames}",
+                Icon = "luSteamIcon",
+                Action = a =>
+                {
+                    var games = PlayniteApi.Database.Games.Distinct().ToList();
+                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.WebLink);
+                }
+            });
+
+            menuItems.Add(new MainMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuChangeSteamLinksToWeb"),
+                MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                Icon = "luSteamIcon",
+                Action = a =>
+                {
+                    var games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
+                    DoForAll(games, ChangeSteamLinks.Instance(), true, ActionModifierTypes.WebLink);
+                }
+            });
+
+            // Adds the "Tag missing links" item to the main menu.
+            if (TagMissingLinks.Instance().MissingLinkPatterns?.Any() ?? false)
+            {
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
+                    MenuSection = $"@{menuSection}|{menuAllGames}",
+                    Icon = "luTagIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.Database.Games.Distinct().ToList();
+                        DoForAll(games, TagMissingLinks.Instance(), true);
+                    }
+                });
+
+                menuItems.Add(new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuTagMissingLinks"),
+                    MenuSection = $"@{menuSection}|{menuFilteredGames}",
+                    Icon = "luTagIcon",
+                    Action = a =>
+                    {
+                        var games = PlayniteApi.MainView.FilteredGames.Distinct().ToList();
                         DoForAll(games, TagMissingLinks.Instance(), true);
                     }
                 });
@@ -790,5 +679,102 @@ namespace LinkUtilities
         /// <param name="firstRunSettings">True, if it's the first time the settings view is fetched</param>
         /// <returns>Settings view</returns>
         public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
+
+        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
+        {
+            if (Settings.Settings.AddLinksToNewGames)
+            {
+                var games = PlayniteApi.Database.Games
+                    .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
+
+                DoForAll(games, AddWebsiteLinks.Instance(), false, ActionModifierTypes.Add);
+            }
+
+            Settings.Settings.LastAutoLibUpdate = DateTime.Now;
+            SavePluginSettings(Settings.Settings);
+        }
+
+        /// <summary>
+        ///     Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update
+        ///     mode if the
+        ///     list contains more than one game.
+        /// </summary>
+        /// <param name="games">List of games to be processed</param>
+        /// <param name="linkAction">Instance of the action to be executed</param>
+        /// <param name="showDialog">If true a dialog will be shown after completion</param>
+        /// <param name="actionModifier">specifies the type of action to execute, if more than one is possible.</param>
+        private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
+        {
+            // While sorting Links we set IsUpdating to true, so the library update event knows it doesn't need to sort again.
+            IsUpdating = true;
+
+            try
+            {
+                if (games.Count == 1)
+                {
+                    linkAction.Execute(games.First(), actionModifier, false);
+                }
+                // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
+                else if (games.Count > 1)
+                {
+                    var gamesAffected = 0;
+
+                    using (PlayniteApi.Database.BufferedUpdate())
+                    {
+                        if (!linkAction.Prepare(actionModifier))
+                        {
+                            return;
+                        }
+
+                        var globalProgressOptions = new GlobalProgressOptions(
+                            $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
+                            true
+                        )
+                        {
+                            IsIndeterminate = false
+                        };
+
+                        PlayniteApi.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                        {
+                            try
+                            {
+                                activateGlobalProgress.ProgressMaxValue = games.Count;
+
+                                foreach (var game in games)
+                                {
+                                    activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(linkAction.ProgressMessage)}{Environment.NewLine}{game.Name}";
+
+                                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                                    {
+                                        break;
+                                    }
+
+                                    if (linkAction.Execute(game, actionModifier))
+                                    {
+                                        gamesAffected++;
+                                    }
+
+                                    activateGlobalProgress.CurrentProgressValue++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Error(ex);
+                            }
+                        }, globalProgressOptions);
+                    }
+
+                    // Shows a dialog with the number of games actually affected.
+                    if (showDialog)
+                    {
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
+                    }
+                }
+            }
+            finally
+            {
+                IsUpdating = false;
+            }
+        }
     }
 }

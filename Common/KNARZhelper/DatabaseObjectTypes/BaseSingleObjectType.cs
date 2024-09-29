@@ -1,5 +1,4 @@
-﻿using KNARZhelper.Enum;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -84,18 +83,12 @@ namespace KNARZhelper.DatabaseObjectTypes
             }
         }
 
-        public override IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id, FieldType? newType = null, Guid? newId = null)
+        public override IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id, IEditableObjectType newType = null, Guid? newId = null)
         {
             if (id == Guid.Empty)
             {
                 yield break;
             }
-
-            var newTypeManager =
-                newType != null && newType != Type &&
-                newType.Value.GetTypeManager() is IEditableObjectType editableObjectType
-                    ? editableObjectType
-                    : this;
 
             foreach (var game in games.Where(g => GetValue(g) == id))
             {
@@ -106,7 +99,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
                 if (newType != null && newId != null)
                 {
-                    newTypeManager.AddValueToGame(game, (Guid)newId);
+                    newType.AddValueToGame(game, (Guid)newId);
                 }
 
                 yield return game.Id;

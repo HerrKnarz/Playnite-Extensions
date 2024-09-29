@@ -84,7 +84,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract IEnumerable<Guid> RemoveObjectFromGames(List<Game> games, Guid id);
 
-        public abstract IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id, FieldType? newType = null, Guid? newId = null);
+        public abstract IEnumerable<Guid> ReplaceDbObject(List<Game> games, Guid id, IEditableObjectType newType = null, Guid? newId = null);
 
         public abstract void UpdateDbObject(Guid id, string name);
 

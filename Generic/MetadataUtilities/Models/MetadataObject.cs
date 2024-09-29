@@ -261,7 +261,9 @@ namespace MetadataUtilities.Models
                 return gameIds;
             }
 
-            gameIds = type.ReplaceDbObject(games, Id, newType, newId);
+            gameIds = newType?.GetTypeManager() is IEditableObjectType newTypeManager
+                ? type.ReplaceDbObject(games, Id, newTypeManager, newId)
+                : type.ReplaceDbObject(games, Id);
 
             if (removeAfter && type.RemoveDbObject(Id))
             {
