@@ -108,18 +108,6 @@ namespace LinkUtilities.Test
             {
                 new TestCase()
                 {
-                    CaseName = "HowLongToBeat",
-                    Link = new LinkHowLongToBeat(),
-                    GameName = "The Elder Scrolls V: Skyrim",
-                    GamePath = "https://howlongtobeat.com/game/9859",
-                    Url = "https://howlongtobeat.com/game/9859",
-                    SearchedUrl = "https://howlongtobeat.com/game/14996"
-                }
-            },
-            new object[]
-            {
-                new TestCase()
-                {
                     CaseName = "IGN",
                     Link = new LinkIgn(),
                     GameName = "Monkey Island 2: LeChuck's Revenge",

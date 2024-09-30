@@ -26,7 +26,6 @@ namespace LinkUtilities.Linker
             Add(new LinkGogDb());
             Add(new LinkGrouvee());
             Add(new LinkHg101());
-            Add(new LinkHowLongToBeat());
             Add(new LinkIgn());
             Add(new LinkIgnGuides());
             Add(new LinkIsThereAnyDeal());
