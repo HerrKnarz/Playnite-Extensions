@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.LinkActions;
 using LinkUtilities.ViewModels;
@@ -108,6 +109,89 @@ namespace LinkUtilities
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during initializing CheckLinksView", true);
+            }
+        }
+
+        /// <summary>
+        ///     Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update
+        ///     mode if the
+        ///     list contains more than one game.
+        /// </summary>
+        /// <param name="games">List of games to be processed</param>
+        /// <param name="linkAction">Instance of the action to be executed</param>
+        /// <param name="showDialog">If true a dialog will be shown after completion</param>
+        /// <param name="actionModifier">specifies the type of action to execute, if more than one is possible.</param>
+        public void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
+        {
+            // While sorting Links we set IsUpdating to true, so the library update event knows it doesn't need to sort again.
+            IsUpdating = true;
+
+            try
+            {
+                if (games.Count == 1)
+                {
+                    linkAction.Execute(games.First(), actionModifier, false);
+                }
+                // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
+                else if (games.Count > 1)
+                {
+                    var gamesAffected = 0;
+
+                    using (PlayniteApi.Database.BufferedUpdate())
+                    {
+                        if (!linkAction.Prepare(actionModifier))
+                        {
+                            return;
+                        }
+
+                        var globalProgressOptions = new GlobalProgressOptions(
+                            $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
+                            true
+                        )
+                        {
+                            IsIndeterminate = false
+                        };
+
+                        PlayniteApi.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                        {
+                            try
+                            {
+                                activateGlobalProgress.ProgressMaxValue = games.Count;
+
+                                foreach (var game in games)
+                                {
+                                    activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(linkAction.ProgressMessage)}{Environment.NewLine}{game.Name}";
+
+                                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                                    {
+                                        break;
+                                    }
+
+                                    if (linkAction.Execute(game, actionModifier))
+                                    {
+                                        gamesAffected++;
+                                    }
+
+                                    activateGlobalProgress.CurrentProgressValue++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Error(ex);
+                            }
+                        }, globalProgressOptions);
+                    }
+
+                    // Shows a dialog with the number of games actually affected.
+                    if (showDialog)
+                    {
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
+                    }
+                }
+            }
+            finally
+            {
+                IsUpdating = false;
             }
         }
 
@@ -331,6 +415,15 @@ namespace LinkUtilities
                     Action = a => DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.SortOrder)
                 });
             }
+
+            // Adds the "Remove specific links" item to the game menu.
+            menuItems.Add(new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuRemoveSpecificLinks"),
+                MenuSection = menuSection,
+                Icon = "luDuplicateIcon",
+                Action = a => LinkHelper.RemoveSpecificLinks(games, this)
+            });
 
             // Adds the "Remove duplicate links" item to the game menu.
             menuItems.Add(new GameMenuItem
@@ -713,89 +806,6 @@ namespace LinkUtilities
 
             Settings.Settings.LastAutoLibUpdate = DateTime.Now;
             SavePluginSettings(Settings.Settings);
-        }
-
-        /// <summary>
-        ///     Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update
-        ///     mode if the
-        ///     list contains more than one game.
-        /// </summary>
-        /// <param name="games">List of games to be processed</param>
-        /// <param name="linkAction">Instance of the action to be executed</param>
-        /// <param name="showDialog">If true a dialog will be shown after completion</param>
-        /// <param name="actionModifier">specifies the type of action to execute, if more than one is possible.</param>
-        private void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
-        {
-            // While sorting Links we set IsUpdating to true, so the library update event knows it doesn't need to sort again.
-            IsUpdating = true;
-
-            try
-            {
-                if (games.Count == 1)
-                {
-                    linkAction.Execute(games.First(), actionModifier, false);
-                }
-                // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
-                else if (games.Count > 1)
-                {
-                    var gamesAffected = 0;
-
-                    using (PlayniteApi.Database.BufferedUpdate())
-                    {
-                        if (!linkAction.Prepare(actionModifier))
-                        {
-                            return;
-                        }
-
-                        var globalProgressOptions = new GlobalProgressOptions(
-                            $"{ResourceProvider.GetString("LOCLinkUtilitiesName")} - {ResourceProvider.GetString(linkAction.ProgressMessage)}",
-                            true
-                        )
-                        {
-                            IsIndeterminate = false
-                        };
-
-                        PlayniteApi.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                        {
-                            try
-                            {
-                                activateGlobalProgress.ProgressMaxValue = games.Count;
-
-                                foreach (var game in games)
-                                {
-                                    activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(linkAction.ProgressMessage)}{Environment.NewLine}{game.Name}";
-
-                                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                                    {
-                                        break;
-                                    }
-
-                                    if (linkAction.Execute(game, actionModifier))
-                                    {
-                                        gamesAffected++;
-                                    }
-
-                                    activateGlobalProgress.CurrentProgressValue++;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Log.Error(ex);
-                            }
-                        }, globalProgressOptions);
-                    }
-
-                    // Shows a dialog with the number of games actually affected.
-                    if (showDialog)
-                    {
-                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
-                    }
-                }
-            }
-            finally
-            {
-                IsUpdating = false;
-            }
         }
     }
 }

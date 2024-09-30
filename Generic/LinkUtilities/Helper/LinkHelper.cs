@@ -4,6 +4,7 @@ using LinkUtilities.Interfaces;
 using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using LinkUtilities.Settings;
+using LinkUtilities.ViewModels;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -21,6 +22,13 @@ namespace LinkUtilities.Helper
     internal static class LinkHelper
     {
         private static bool _allowRedirects = true;
+
+        public static void RemoveSpecificLinks(List<Game> games, LinkUtilities plugin)
+        {
+            var window = RemoveSpecificLinksViewModel.GetWindow(games, plugin);
+
+            window?.ShowDialog();
+        }
 
         /// <summary>
         ///     Adds a link to the specified URL to a game.

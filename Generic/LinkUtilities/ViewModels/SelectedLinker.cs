@@ -1,10 +1,10 @@
 ﻿namespace LinkUtilities.ViewModels
 {
-    internal class SelectedLink : ViewModelBase
+    internal class SelectedLinker : ViewModelBase
     {
         private bool _selected;
 
-        public SelectedLink(BaseClasses.Linker linker, bool add = true)
+        public SelectedLinker(BaseClasses.Linker linker, bool add = true)
         {
             Linker = linker;
             _selected = add ? linker.Settings.IsAddable == true : linker.Settings.IsSearchable == true;

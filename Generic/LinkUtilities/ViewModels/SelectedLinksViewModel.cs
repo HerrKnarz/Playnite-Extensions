@@ -7,13 +7,13 @@ namespace LinkUtilities.ViewModels
 {
     internal class SelectedLinksViewModel : ViewModelBase
     {
-        private ObservableCollection<SelectedLink> _links = new ObservableCollection<SelectedLink>();
+        private ObservableCollection<SelectedLinker> _links = new ObservableCollection<SelectedLinker>();
 
         public SelectedLinksViewModel(Links links, bool add = true)
         {
             foreach (var linker in links.Where(linker => add ? linker.Settings.IsAddable != null : linker.Settings.IsSearchable != null).OrderBy(x => x.LinkName))
             {
-                Links.Add(new SelectedLink(linker, add));
+                Links.Add(new SelectedLinker(linker, add));
             }
         }
 
@@ -25,7 +25,7 @@ namespace LinkUtilities.ViewModels
             }
         });
 
-        public ObservableCollection<SelectedLink> Links
+        public ObservableCollection<SelectedLinker> Links
         {
             get => _links;
             set

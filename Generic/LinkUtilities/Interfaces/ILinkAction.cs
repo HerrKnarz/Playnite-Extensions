@@ -23,7 +23,7 @@ namespace LinkUtilities.Interfaces
     ///     the action to
     ///     execute.
     /// </summary>
-    internal interface ILinkAction
+    public interface ILinkAction
     {
         /// <summary>
         ///     Resource for the localized text in the progress bar

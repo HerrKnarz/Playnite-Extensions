@@ -115,6 +115,7 @@
     <Compile Include="LinkActions\AddLinkFromClipboard.cs" />
     <Compile Include="LinkActions\ChangeSteamLinks.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
+    <Compile Include="LinkActions\RemoveSpecificLinks.cs" />
     <Compile Include="Linker\LinkSources\CustomLinker.cs" />
     <Compile Include="Linker\LinkSources\LinkGogDb.cs" />
     <Compile Include="Linker\LinkSources\LinkGrouvee.cs" />
@@ -124,10 +125,12 @@
     <Compile Include="Linker\LinkSources\LinkProtonDb.cs" />
     <Compile Include="Linker\LinkSources\LinkSteamDb.cs" />
     <Compile Include="Linker\LinkSources\LinkTvTropes.cs" />
+    <Compile Include="Models\SelectedLink.cs" />
     <Compile Include="Models\CustomLinkProfile.cs" />
     <Compile Include="ViewModels\CheckLink.cs" />
     <Compile Include="ViewModels\CheckLinks.cs" />
     <Compile Include="ViewModels\CheckLinksViewModel.cs" />
+    <Compile Include="ViewModels\RemoveSpecificLinksViewModel.cs" />
     <Compile Include="ViewModels\ReviewDuplicatesViewModel.cs" />
     <Compile Include="ViewModels\ReviewDuplicates.cs" />
     <Compile Include="LinkActions\RemoveDuplicates.cs" />
@@ -182,7 +185,7 @@
     <Compile Include="Helper\LinkHelper.cs" />
     <Compile Include="LinkUtilities.cs" />
     <Compile Include="Settings\LinkUtilitiesSettings.cs" />
-    <Compile Include="ViewModels\SelectedLink.cs" />
+    <Compile Include="ViewModels\SelectedLinker.cs" />
     <Compile Include="ViewModels\SelectedLinksViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\CheckLinksView.xaml.cs">
@@ -213,6 +216,9 @@
     <Compile Include="Views\SelectedLinksView.xaml.cs">
       <DependentUpon>SelectedLinksView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RemoveSpecificLinksView.xaml.cs">
+      <DependentUpon>RemoveSpecificLinksView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="extension.yaml">
@@ -239,6 +245,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SelectedLinksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RemoveSpecificLinksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
