@@ -3,7 +3,7 @@ Packages:
   - Version: 1.2
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-09-30
-    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-09-30/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_1_2.pext
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-09-30.2/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_1_2.pext
     Changelog:
       - Dimensions of the conditional action editor are now saved when closing it via the save button.
       - Fixed critical bug that prevented games from being updated in some cases.
