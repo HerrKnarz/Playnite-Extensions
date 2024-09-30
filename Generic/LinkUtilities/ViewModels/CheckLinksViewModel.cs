@@ -3,7 +3,7 @@ using Playnite.SDK.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LinkUtilities
+namespace LinkUtilities.ViewModels
 {
     internal class CheckLinksViewModel : ViewModelBase
     {
@@ -16,16 +16,6 @@ namespace LinkUtilities
             CheckLinks = new CheckLinks(_games, hideOkOnLinkCheck);
         }
 
-        public List<Game> Games
-        {
-            get => _games;
-            set
-            {
-                _games = value;
-                OnPropertyChanged("Games");
-            }
-        }
-
         public CheckLinks CheckLinks
         {
             get => _checkLinks;
@@ -36,9 +26,22 @@ namespace LinkUtilities
             }
         }
 
+        public RelayCommand FilterCommand
+            => new RelayCommand(() => CheckLinks.FilterLinks());
+
+        public List<Game> Games
+        {
+            get => _games;
+            set
+            {
+                _games = value;
+                OnPropertyChanged("Games");
+            }
+        }
+
         public RelayCommand<IList<object>> RemoveCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (CheckLink item in items.ToList().Cast<CheckLink>())
+            foreach (var item in items.ToList().Cast<CheckLink>())
             {
                 _checkLinks.Remove(item);
             }
@@ -46,16 +49,10 @@ namespace LinkUtilities
 
         public RelayCommand<IList<object>> ReplaceCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (CheckLink item in items.ToList().Cast<CheckLink>())
+            foreach (var item in items.ToList().Cast<CheckLink>())
             {
                 _checkLinks.Replace(item);
             }
         }, items => items?.Any() ?? false);
-
-        public RelayCommand FilterCommand
-            => new RelayCommand(() =>
-            {
-                CheckLinks.FilterLinks();
-            });
     }
 }

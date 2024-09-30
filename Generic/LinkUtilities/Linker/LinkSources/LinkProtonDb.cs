@@ -1,7 +1,7 @@
 ﻿using Playnite.SDK.Models;
 using System;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to ProtonDB.
@@ -9,8 +9,8 @@ namespace LinkUtilities.Linker
     internal class LinkProtonDb : BaseClasses.Linker
     {
         private const string _baseUrl = "https://www.protondb.com";
-        public override string LinkName => "ProtonDB";
         public override string BaseUrl => _baseUrl + "/app/";
+        public override string LinkName => "ProtonDB";
 
         // ProtonDb Links need the steam game id. Because of that the add function only works with the steam library.
         public override string GetGamePath(Game game, string gameName = null) =>

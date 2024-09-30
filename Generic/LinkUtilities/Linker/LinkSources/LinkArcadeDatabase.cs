@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     /// Adds a link to Arcade Database (arcadeitalia.net).
@@ -17,9 +17,9 @@ namespace LinkUtilities.Linker
     internal class LinkArcadeDatabase : BaseClasses.Linker
     {
         private const string _websiteUrl = "http://adb.arcadeitalia.net/";
+        public override string BaseUrl => "http://adb.arcadeitalia.net/dettaglio_mame.php?lang=en&game_name=";
 
         public override string LinkName => "Arcade Database";
-        public override string BaseUrl => "http://adb.arcadeitalia.net/dettaglio_mame.php?lang=en&game_name=";
         public override string SearchUrl => "http://adb.arcadeitalia.net/lista_mame.php?lang=en&ricerca=";
 
         public override bool CheckLink(string link)
@@ -27,8 +27,8 @@ namespace LinkUtilities.Linker
             try
             {
                 // Arcade Database returns code 200, if the game isn't found. So we have to check the HTML itself.
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load(link);
+                var web = new HtmlWeb();
+                var doc = web.Load(link);
                 return doc.DocumentNode.SelectSingleNode("//div[@id='game_not_found']") is null;
             }
             catch
@@ -47,10 +47,10 @@ namespace LinkUtilities.Linker
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var web = new HtmlWeb();
+                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//li[@class='elenco_galleria']");
+                var htmlNodes = doc.DocumentNode.SelectNodes("//li[@class='elenco_galleria']");
 
                 if (htmlNodes?.Any() ?? false)
                 {

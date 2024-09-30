@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
+// ReSharper disable once CheckNamespace
 namespace LinkUtilities.Models.IsThereAnyDeal
 {
     public class Data

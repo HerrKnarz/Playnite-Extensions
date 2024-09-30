@@ -1,7 +1,7 @@
 ﻿using KNARZhelper;
 using Playnite.SDK.Models;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     /// Adds a link to IGN.

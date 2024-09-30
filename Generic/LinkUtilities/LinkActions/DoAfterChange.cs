@@ -1,4 +1,5 @@
 ﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Interfaces;
 using Playnite.SDK.Models;
 using System.Linq;
 
@@ -10,29 +11,12 @@ namespace LinkUtilities.LinkActions
     internal class DoAfterChange : LinkAction
     {
         private static DoAfterChange _instance;
-        private static readonly object _mutex = new object();
         private DoAfterChange() { }
 
         public override string ProgressMessage => "LOCLinkUtilitiesProgressSortLinks";
         public override string ResultMessage => "LOCLinkUtilitiesDialogSortedMessage";
 
-        public static DoAfterChange Instance()
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
-
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new DoAfterChange();
-                }
-            }
-
-            return _instance;
-        }
+        public static DoAfterChange Instance() => _instance ?? (_instance = new DoAfterChange());
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -41,9 +25,10 @@ namespace LinkUtilities.LinkActions
                 return false;
             }
 
-            bool result = false;
+            var result = false;
 
-            if (actionModifier != ActionModifierTypes.DontRename && RenameLinks.Instance().RenameLinksAfterChange && (RenameLinks.Instance().RenamePatterns?.Any() ?? false))
+            if (actionModifier != ActionModifierTypes.DontRename && RenameLinks.Instance().RenameLinksAfterChange &&
+                (RenameLinks.Instance().RenamePatterns?.Any() ?? false))
             {
                 result = RenameLinks.Instance().Execute(game, actionModifier);
             }

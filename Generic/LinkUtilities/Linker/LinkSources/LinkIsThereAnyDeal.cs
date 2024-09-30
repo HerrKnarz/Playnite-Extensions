@@ -3,28 +3,28 @@ using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.IsThereAnyDeal;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game = Playnite.SDK.Models.Game;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to IsThereAnyDeal.
     /// </summary>
     internal class LinkIsThereAnyDeal : BaseClasses.Linker
     {
-        private const string _steamUrl = "https://isthereanydeal.com/steam/app/";
         private const string _standardUrl = "https://isthereanydeal.com/game/";
+        private const string _steamUrl = "https://isthereanydeal.com/steam/app/";
         private string _baseUrl;
 
         public LinkIsThereAnyDeal() => Settings.NeedsApiKey = true;
+        public override string BaseUrl => _baseUrl;
+        public override string BrowserSearchUrl => "https://isthereanydeal.com/search/?q=";
 
         public override string LinkName => "IsThereAnyDeal";
-        public override string BaseUrl => _baseUrl;
         public override string SearchUrl => "https://api.isthereanydeal.com/v02/search/search/?key={0}&q={1}&limit=20&strict=0";
-        public override string BrowserSearchUrl => "https://isthereanydeal.com/search/?q=";
 
         public override string GetGamePath(Game game, string gameName = null)
         {
@@ -53,7 +53,7 @@ namespace LinkUtilities.Linker
                 return base.GetSearchResults(searchTerm);
             }
 
-            IsThereAnyDealSearchResult searchResult = ParseHelper.GetJsonFromApi<IsThereAnyDealSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+            var searchResult = ParseHelper.GetJsonFromApi<IsThereAnyDealSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
 
             return searchResult?.Data?.Results?.Any() ?? false
                 ? new List<GenericItemOption>(searchResult.Data.Results.Select(r => new SearchResult

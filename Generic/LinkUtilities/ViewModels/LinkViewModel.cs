@@ -3,7 +3,7 @@ using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 
-namespace LinkUtilities
+namespace LinkUtilities.ViewModels
 {
     public class LinkViewModel : ViewModelBase
     {

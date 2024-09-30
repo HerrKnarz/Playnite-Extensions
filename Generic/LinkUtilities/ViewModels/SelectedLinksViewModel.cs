@@ -3,7 +3,7 @@ using Playnite.SDK;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace LinkUtilities
+namespace LinkUtilities.ViewModels
 {
     internal class SelectedLinksViewModel : ViewModelBase
     {
@@ -11,11 +11,19 @@ namespace LinkUtilities
 
         public SelectedLinksViewModel(Links links, bool add = true)
         {
-            foreach (BaseClasses.Linker linker in links.Where(linker => add ? linker.Settings.IsAddable != null : linker.Settings.IsSearchable != null).OrderBy(x => x.LinkName))
+            foreach (var linker in links.Where(linker => add ? linker.Settings.IsAddable != null : linker.Settings.IsSearchable != null).OrderBy(x => x.LinkName))
             {
                 Links.Add(new SelectedLink(linker, add));
             }
         }
+
+        public RelayCommand<object> CheckAllCommand => new RelayCommand<object>(a =>
+        {
+            foreach (var link in Links)
+            {
+                link.Selected = true;
+            }
+        });
 
         public ObservableCollection<SelectedLink> Links
         {
@@ -27,27 +35,19 @@ namespace LinkUtilities
             }
         }
 
-        public RelayCommand<object> CheckAllCommand => new RelayCommand<object>(a =>
+        public RelayCommand<object> ReverseCheckCommand => new RelayCommand<object>(a =>
         {
-            foreach (SelectedLink link in Links)
+            foreach (var link in Links)
             {
-                link.Selected = true;
+                link.Selected = !link.Selected;
             }
         });
 
         public RelayCommand<object> UncheckAllCommand => new RelayCommand<object>(a =>
         {
-            foreach (SelectedLink link in Links)
+            foreach (var link in Links)
             {
                 link.Selected = false;
-            }
-        });
-
-        public RelayCommand<object> ReverseCheckCommand => new RelayCommand<object>(a =>
-        {
-            foreach (SelectedLink link in Links)
-            {
-                link.Selected = !link.Selected;
             }
         });
     }

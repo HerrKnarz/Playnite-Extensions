@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 // Contains all the classes needed to deserialize the JSON fetched from the Epic graphql api.
-namespace LinkUtilities.Models.Epic
+namespace LinkUtilities.Models.ApiResults
 {
     public class Catalog
     {
@@ -18,17 +18,17 @@ namespace LinkUtilities.Models.Epic
 
     public class Element
     {
+        [JsonProperty("seller")]
+        public Seller Seller;
+
         [JsonProperty("title")]
         public string Title;
 
         [JsonProperty("urlSlug")]
         public string UrlSlug;
-
-        [JsonProperty("seller")]
-        public Seller Seller;
     }
 
-    public class Extensions { }
+    public class Extensions {}
 
     public class EpicSearchResult
     {

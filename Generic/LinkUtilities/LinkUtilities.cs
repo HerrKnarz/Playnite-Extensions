@@ -1,5 +1,8 @@
 ﻿using KNARZhelper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.LinkActions;
+using LinkUtilities.ViewModels;
+using LinkUtilities.Views;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
@@ -172,7 +175,7 @@ namespace LinkUtilities
                 }
             }
 
-            if (games.Any(g => AddLibraryLinks.Instance().Libraries.ContainsKey(g.PluginId)))
+            if (games.Any(g => AddLibraryLinks.Instance().LibraryLinks.ContainsKey(g.PluginId)))
             {
                 // Adds the "add library Links" item to the game menu.
                 menuItems.Add(new GameMenuItem

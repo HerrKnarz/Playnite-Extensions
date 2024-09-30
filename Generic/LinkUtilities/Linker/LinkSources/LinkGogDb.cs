@@ -1,7 +1,7 @@
 ﻿using Playnite.SDK.Models;
 using System;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to GOG Database.
@@ -9,8 +9,8 @@ namespace LinkUtilities.Linker
     internal class LinkGogDb : BaseClasses.Linker
     {
         private const string _baseUrl = "https://gogdb.org";
-        public override string LinkName => "GOG Database";
         public override string BaseUrl => _baseUrl + "/product/";
+        public override string LinkName => "GOG Database";
         public override bool NeedsToBeChecked => false;
 
         // GOG Database Links need the gog game id. Because of that the add function only works with the gog library.

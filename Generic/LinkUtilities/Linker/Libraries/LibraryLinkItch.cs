@@ -1,8 +1,9 @@
 ﻿using KNARZhelper;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
-using LinkUtilities.Models.Itch;
+using LinkUtilities.Models.ApiResults;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -11,16 +12,18 @@ using System.Linq;
 using System.Text;
 using Game = Playnite.SDK.Models.Game;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.Libraries
 {
     /// <summary>
     ///     Adds a link to itch.io.
     /// </summary>
     internal class LibraryLinkItch : LibraryLink
     {
-        private readonly string _libraryUrl = "https://itch.io/api/1/{0}/game/{1}";
+        private const string _libraryUrl = "https://itch.io/api/1/{0}/game/{1}";
 
         public LibraryLinkItch() => Settings.NeedsApiKey = true;
+        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
+        public override string BrowserSearchUrl => "https://itch.io/search?q=";
 
         /// <summary>
         ///     ID of the game library to identify it in Playnite.
@@ -28,9 +31,7 @@ namespace LinkUtilities.Linker
         public override Guid Id { get; } = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
 
         public override string LinkName => "Itch";
-        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string SearchUrl => "https://itch.io/api/1/{0}/search/games?query={1}";
-        public override string BrowserSearchUrl => "https://itch.io/search?q=";
 
         public override bool FindLibraryLink(Game game, out List<Link> links)
         {
@@ -42,7 +43,7 @@ namespace LinkUtilities.Linker
                 return false;
             }
 
-            ItchMetaData itchMetaData = ParseHelper.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName);
+            var itchMetaData = ParseHelper.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName);
 
             LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
 
@@ -52,26 +53,28 @@ namespace LinkUtilities.Linker
             }
 
             links.Add(new Link(LinkName, LinkUrl));
+
             return true;
         }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            if (!string.IsNullOrWhiteSpace(Settings.ApiKey))
+            if (string.IsNullOrWhiteSpace(Settings.ApiKey))
             {
-                ItchSearchResult itchSearchResult = ParseHelper.GetJsonFromApi<ItchSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName, Encoding.UTF8);
-
-                return itchSearchResult?.Games?.Any() ?? false
-                    ? new List<GenericItemOption>(itchSearchResult.Games.Select(g => new SearchResult
-                    {
-                        Name = g.Title,
-                        Url = g.Url,
-                        Description = g.PublishedAt
-                    }))
-                    : base.GetSearchResults(searchTerm);
+                return base.GetSearchResults(searchTerm);
             }
 
-            return base.GetSearchResults(searchTerm);
+            var itchSearchResult = ParseHelper.GetJsonFromApi<ItchSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName, Encoding.UTF8);
+
+            return itchSearchResult?.Games?.Any() ?? false
+                ? new List<GenericItemOption>(itchSearchResult.Games.Select(g => new SearchResult
+                {
+                    Name = g.Title,
+                    Url = g.Url,
+                    Description = g.PublishedAt
+                }))
+                : base.GetSearchResults(searchTerm);
+
         }
     }
 }

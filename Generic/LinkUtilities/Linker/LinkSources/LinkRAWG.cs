@@ -3,12 +3,12 @@ using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.RAWG;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game = Playnite.SDK.Models.Game;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to RAWG.io.
@@ -16,10 +16,10 @@ namespace LinkUtilities.Linker
     internal class LinkRawg : BaseClasses.Linker
     {
         public LinkRawg() => Settings.NeedsApiKey = true;
-        public override string LinkName => "RAWG";
         public override string BaseUrl => "https://rawg.io/games/";
-        public override string SearchUrl => "https://api.rawg.io/api/games?key={0}&search={1}&search_precise=true&page_size=50";
         public override string BrowserSearchUrl => "https://rawg.io/search?query=";
+        public override string LinkName => "RAWG";
+        public override string SearchUrl => "https://api.rawg.io/api/games?key={0}&search={1}&search_precise=true&page_size=50";
 
         // RAWG Links need the result name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
@@ -37,22 +37,23 @@ namespace LinkUtilities.Linker
                 return base.GetSearchResults(searchTerm);
             }
 
-            RawgSearchResult rawgSearchResult = ParseHelper.GetJsonFromApi<RawgSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+            var rawgSearchResult = ParseHelper.GetJsonFromApi<RawgSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
 
             if (!rawgSearchResult?.Results?.Any() ?? true)
             {
                 return base.GetSearchResults(searchTerm);
             }
 
-            List<GenericItemOption> searchResults = new List<GenericItemOption>();
+            var searchResults = new List<GenericItemOption>();
 
-            foreach (Result result in rawgSearchResult.Results)
+            foreach (var result in rawgSearchResult.Results)
             {
-                string genres = string.Empty;
+                var genres = string.Empty;
 
                 if (result.Genres?.Any() ?? false)
                 {
-                    genres = result.Genres.Select(genre => genre.Name).Aggregate((total, part) => total + ", " + part);
+                    genres = result.Genres.Select(genre => genre.Name)
+                        .Aggregate((total, part) => total + ", " + part);
                 }
 
                 searchResults.Add(new SearchResult

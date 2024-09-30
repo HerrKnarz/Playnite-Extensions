@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace LinkUtilities.Models.GiantBomb
+namespace LinkUtilities.Models.ApiResults
 {
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Platform
     {
+        [JsonProperty("abbreviation")]
+        public string Abbreviation;
+
         [JsonProperty("api_detail_url")]
         public string ApiDetailUrl;
 
@@ -17,9 +20,6 @@ namespace LinkUtilities.Models.GiantBomb
 
         [JsonProperty("site_detail_url")]
         public string SiteDetailUrl;
-
-        [JsonProperty("abbreviation")]
-        public string Abbreviation;
     }
 
     public class Result
@@ -33,11 +33,11 @@ namespace LinkUtilities.Models.GiantBomb
         [JsonProperty("platforms")]
         public List<Platform> Platforms;
 
-        [JsonProperty("site_detail_url")]
-        public string SiteDetailUrl;
-
         [JsonProperty("resource_type")]
         public string ResourceType;
+
+        [JsonProperty("site_detail_url")]
+        public string SiteDetailUrl;
     }
 
     public class GiantBombSearchResult
@@ -48,20 +48,20 @@ namespace LinkUtilities.Models.GiantBomb
         [JsonProperty("limit")]
         public int Limit;
 
-        [JsonProperty("offset")]
-        public int Offset;
-
         [JsonProperty("number_of_page_results")]
         public int NumberOfPageResults;
 
         [JsonProperty("number_of_total_results")]
         public int NumberOfTotalResults;
 
-        [JsonProperty("status_code")]
-        public int StatusCode;
+        [JsonProperty("offset")]
+        public int Offset;
 
         [JsonProperty("results")]
         public List<Result> Results;
+
+        [JsonProperty("status_code")]
+        public int StatusCode;
 
         [JsonProperty("version")]
         public string Version;

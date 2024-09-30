@@ -1,44 +1,46 @@
 ﻿using HtmlAgilityPack;
 using KNARZhelper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+// ReSharper disable IdentifierTypo
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to Grouvee.
     /// </summary>
     internal class LinkGrouvee : BaseClasses.Linker
     {
-        public override string LinkName => "Grouvee";
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl => "https://www.grouvee.com/search/?q=";
 
         public override string BaseUrl => "https://www.grouvee.com";
+        public override string LinkName => "Grouvee";
+        public override string SearchUrl => "https://www.grouvee.com/search/?q=";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc =
+                var web = new HtmlWeb();
+                var doc =
                     web.Load(
                         $"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                HtmlNodeCollection htmlNodes =
+                var htmlNodes =
                     doc.DocumentNode.SelectNodes("//div[@class='details-section']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    List<GenericItemOption> searchResults = new List<GenericItemOption>();
+                    var searchResults = new List<GenericItemOption>();
 
-                    foreach (HtmlNode node in htmlNodes)
+                    foreach (var node in htmlNodes)
                     {
-                        foreach (HtmlNode span in node.SelectNodes("./h4/span"))
+                        foreach (var span in node.SelectNodes("./h4/span"))
                         {
                             span.Remove();
                         }

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to Lemon Amiga.
@@ -16,9 +16,9 @@ namespace LinkUtilities.Linker
     internal class LinkLemon64 : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://www.lemon64.com";
+        public override string BaseUrl => _websiteUrl + "/game/";
         public override string LinkName => "Lemon64";
         public override string SearchUrl => "https://www.lemon64.com/games/list.php?list_title=";
-        public override string BaseUrl => _websiteUrl + "/game/";
 
         // Lemon64 Links need the game name in lowercase without leading articles, special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
@@ -33,10 +33,9 @@ namespace LinkUtilities.Linker
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var doc = new HtmlWeb().Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]/div/div[2]");
+                var htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]/div/div[2]");
 
                 if (htmlNodes?.Any() ?? false)
                 {

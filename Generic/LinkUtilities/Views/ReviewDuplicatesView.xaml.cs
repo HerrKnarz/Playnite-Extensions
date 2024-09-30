@@ -1,8 +1,8 @@
-﻿using KNARZhelper;
-using System;
+﻿using System;
 using System.Windows.Controls;
+using KNARZhelper;
 
-namespace LinkUtilities
+namespace LinkUtilities.Views
 {
     /// <summary>
     ///     Interaction logic for ReviewDuplicatesView.xaml

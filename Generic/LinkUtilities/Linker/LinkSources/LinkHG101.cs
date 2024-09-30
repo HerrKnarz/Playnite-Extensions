@@ -8,15 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     /// Adds a link to Hardcore Gaming 101.
     /// </summary>
     internal class LinkHg101 : BaseClasses.Linker
     {
-        public override string LinkName => "Hardcore Gaming 101";
         public override string BaseUrl => "http://www.hardcoregaming101.net/";
+        public override string LinkName => "Hardcore Gaming 101";
         public override string SearchUrl => "http://www.hardcoregaming101.net/?s=";
 
         // HG101 Links need the game name in lowercase without special characters and hyphens instead of white spaces.
@@ -30,31 +30,28 @@ namespace LinkUtilities.Linker
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var doc = new HtmlWeb().Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//header[@class='entry-header']");
+                var htmlNodes = doc.DocumentNode.SelectNodes("//header[@class='entry-header']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    List<GenericItemOption> searchResults = new List<GenericItemOption>();
-
-                    foreach (HtmlNode node in htmlNodes)
-                    {
-                        HtmlNodeCollection reviewNodes = node.SelectNodes("./div[@class='index-entry-meta']/div[a='Review']");
-
-                        if (reviewNodes?.Any() ?? false)
+                    return htmlNodes
+                        .Select(node => new
                         {
-                            searchResults.Add(new SearchResult
-                            {
-                                Name = WebUtility.HtmlDecode(node.SelectSingleNode("./h2/a").InnerText),
-                                Url = node.SelectSingleNode("./h2/a").GetAttributeValue("href", ""),
-                                Description = WebUtility.HtmlDecode(node.SelectNodes("./div[@class='index-entry-meta']/div/a").Select(tagNode => tagNode.InnerText).Aggregate((total, part) => total + ", " + part))
-                            });
-                        }
-                    }
-
-                    return searchResults;
+                            node,
+                            reviewNodes = node.SelectNodes("./div[@class='index-entry-meta']/div[a='Review']")
+                        })
+                        .Where(t => t.reviewNodes?.Any() ?? false)
+                        .Select(t => new SearchResult
+                        {
+                            Name = WebUtility.HtmlDecode(t.node.SelectSingleNode("./h2/a").InnerText),
+                            Url = t.node.SelectSingleNode("./h2/a").GetAttributeValue("href", ""),
+                            Description =
+                                WebUtility.HtmlDecode(t.node.SelectNodes("./div[@class='index-entry-meta']/div/a")
+                                    .Select(tagNode => tagNode.InnerText)
+                                    .Aggregate((total, part) => total + ", " + part))
+                        }).Cast<GenericItemOption>().ToList();
                 }
             }
             catch (Exception ex)

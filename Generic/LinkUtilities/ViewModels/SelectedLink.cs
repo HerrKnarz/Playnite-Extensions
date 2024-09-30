@@ -1,4 +1,4 @@
-﻿namespace LinkUtilities
+﻿namespace LinkUtilities.ViewModels
 {
     internal class SelectedLink : ViewModelBase
     {

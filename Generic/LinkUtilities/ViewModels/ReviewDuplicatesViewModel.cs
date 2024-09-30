@@ -3,7 +3,7 @@ using Playnite.SDK.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LinkUtilities
+namespace LinkUtilities.ViewModels
 {
     /// <summary>
     ///     View model for the Review Duplicates window
@@ -29,6 +29,17 @@ namespace LinkUtilities
             }
         }
 
+        public RelayCommand RefreshCommand
+            => new RelayCommand(() => _reviewDuplicates.GetDuplicates());
+
+        public RelayCommand<IList<object>> RemoveCommand => new RelayCommand<IList<object>>(items =>
+        {
+            foreach (var item in items.ToList().Cast<LinkViewModel>())
+            {
+                _reviewDuplicates.Remove(item);
+            }
+        }, items => items?.Any() ?? false);
+
         public ReviewDuplicates ReviewDuplicates
         {
             get => _reviewDuplicates;
@@ -38,16 +49,5 @@ namespace LinkUtilities
                 OnPropertyChanged("ReviewDuplicates");
             }
         }
-
-        public RelayCommand RefreshCommand
-            => new RelayCommand(() => _reviewDuplicates.GetDuplicates());
-
-        public RelayCommand<IList<object>> RemoveCommand => new RelayCommand<IList<object>>(items =>
-        {
-            foreach (LinkViewModel item in items.ToList().Cast<LinkViewModel>())
-            {
-                _reviewDuplicates.Remove(item);
-            }
-        }, items => items?.Any() ?? false);
     }
 }

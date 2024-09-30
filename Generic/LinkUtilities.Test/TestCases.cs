@@ -1,5 +1,5 @@
-﻿using LinkUtilities.BaseClasses;
-using LinkUtilities.Linker;
+﻿using LinkUtilities.Linker.Libraries;
+using LinkUtilities.Linker.LinkSources;
 using System.Collections;
 using System.Collections.Generic;
 

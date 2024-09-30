@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using KNARZhelper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using System;
@@ -7,26 +8,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to Zophar's Domain for game soundtracks.
     /// </summary>
     internal class LinkZopharsDomain : BaseClasses.Linker
     {
-        public override string LinkName => "Zophar (Music)";
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl => "https://www.zophar.net/music/search?search=";
         public override string BaseUrl => "https://www.zophar.net";
+        public override string LinkName => "Zophar (Music)";
+        public override string SearchUrl => "https://www.zophar.net/music/search?search=";
+
+        public override string GetBrowserSearchLink(string searchTerm) => $"{BrowserSearchUrl}{searchTerm.RemoveDiacritics().EscapeDataString()}";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load(GetBrowserSearchLink(searchTerm));
+                var web = new HtmlWeb();
+                var doc = web.Load(GetBrowserSearchLink(searchTerm));
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//tr[contains(@class, 'regularrow')]");
+                var htmlNodes = doc.DocumentNode.SelectNodes("//tr[contains(@class, 'regularrow')]");
 
                 if (htmlNodes?.Any() ?? false)
                 {
@@ -45,7 +48,5 @@ namespace LinkUtilities.Linker
 
             return base.GetSearchResults(searchTerm);
         }
-
-        public override string GetBrowserSearchLink(string searchTerm) => $"{BrowserSearchUrl}{searchTerm.RemoveDiacritics().EscapeDataString()}";
     }
 }

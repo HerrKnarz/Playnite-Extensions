@@ -7,8 +7,8 @@ namespace LinkUtilities.Models
     public class LinkCheckResult
     {
         public string ErrorDetails { get; set; } = string.Empty;
-        public string ResponseUrl { get; set; } = string.Empty;
         public string PageTitle { get; set; } = string.Empty;
+        public string ResponseUrl { get; set; } = string.Empty;
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.Unused;
 
         public SolidColorBrush StatusColor => StatusCode >= HttpStatusCode.OK && StatusCode < HttpStatusCode.Ambiguous

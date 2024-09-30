@@ -4,7 +4,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to Sega Retro.

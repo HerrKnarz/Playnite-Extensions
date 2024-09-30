@@ -1,4 +1,6 @@
 ﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Helper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Events;
@@ -14,40 +16,7 @@ namespace LinkUtilities.LinkActions
     internal class HandleUriActions : LinkAction
     {
         private static HandleUriActions _instance;
-        private static readonly object _mutex = new object();
         private HandleUriActions() { }
-
-        public static HandleUriActions Instance()
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
-
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new HandleUriActions();
-                }
-            }
-
-            return _instance;
-        }
-
-        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
-
-        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
-
-        /// <summary>
-        /// URL of the link to be added in the "AddLink" action
-        /// </summary>
-        public string LinkUrl { get; set; }
-
-        /// <summary>
-        /// Name of the link to be added in the "AddLink" action
-        /// </summary>
-        public string LinkName { get; set; }
 
         /// <summary>
         /// Action that will be executed
@@ -55,9 +24,30 @@ namespace LinkUtilities.LinkActions
         public ActionModifierTypes Action { get; set; }
 
         /// <summary>
+        /// Name of the link to be added in the "AddLink" action
+        /// </summary>
+        public string LinkName { get; set; }
+
+        /// <summary>
         /// List of patterns to find the right link name for a given set of URL and link title
         /// </summary>
         public LinkNamePatterns LinkNamePatterns { get; set; }
+
+        /// <summary>
+        /// URL of the link to be added in the "AddLink" action
+        /// </summary>
+        public string LinkUrl { get; set; }
+
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressWebsiteLink";
+
+        public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
+
+        public static HandleUriActions Instance() => _instance ?? (_instance = new HandleUriActions());
+
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+            => actionModifier == ActionModifierTypes.Add &&
+               base.Execute(game, actionModifier, isBulkAction) &&
+               LinkHelper.AddLink(game, LinkName, LinkUrl, false);
 
         /// <summary>
         /// Processes the arguments received from the UriHandler.
@@ -81,7 +71,7 @@ namespace LinkUtilities.LinkActions
                 return false;
             }
 
-            string tempLinkName = args.Arguments[1];
+            var tempLinkName = args.Arguments[1];
             LinkUrl = WebUtility.UrlDecode(args.Arguments[2]);
 
             if (LinkNamePatterns.LinkMatch(ref tempLinkName, LinkUrl))
@@ -90,7 +80,7 @@ namespace LinkUtilities.LinkActions
                 return true;
             }
 
-            StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
+            var selectResult = API.Instance.Dialogs.SelectString(
                 ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkText"),
                 ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkCaption"),
                 tempLinkName);
@@ -103,10 +93,5 @@ namespace LinkUtilities.LinkActions
             LinkName = selectResult.SelectedString;
             return true;
         }
-
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => actionModifier == ActionModifierTypes.Add &&
-               base.Execute(game, actionModifier, isBulkAction) &&
-               LinkHelper.AddLink(game, LinkName, LinkUrl, false);
     }
 }

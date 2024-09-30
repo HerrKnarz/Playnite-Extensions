@@ -1,10 +1,11 @@
 ﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to Metacritic.
@@ -41,10 +42,11 @@ namespace LinkUtilities.Linker
             { "xbox_series", "xbox-series-x" }
         };
 
-        public override string LinkName => "Metacritic";
         public override string BaseUrl => "https://www.metacritic.com/game/";
-        public override string SearchUrl => string.Empty;
         public override string BrowserSearchUrl => "https://www.metacritic.com/search/{0}/?page=1&category=13";
+
+        public override string LinkName => "Metacritic";
+        public override string SearchUrl => string.Empty;
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
@@ -55,13 +57,13 @@ namespace LinkUtilities.Linker
                 return false;
             }
 
-            bool result = false;
-            bool addPlatformName = game.Platforms.Count > 1;
+            var result = false;
+            var addPlatformName = game.Platforms.Count > 1;
 
-            string linkName = LinkName;
+            var linkName = LinkName;
 
             // Since Metacritic has an own link for every platform, we'll go through all of them and add one for each.
-            foreach (Platform platform in game.Platforms.Where(x => x.SpecificationId != null))
+            foreach (var platform in game.Platforms.Where(x => x.SpecificationId != null))
             {
                 if (addPlatformName)
                 {
@@ -98,13 +100,13 @@ namespace LinkUtilities.Linker
             return result;
         }
 
+        public override string GetBrowserSearchLink(string searchTerm) => string.Format(BrowserSearchUrl, searchTerm.RemoveDiacritics().EscapeDataString());
+
         // Metacritic Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()
                 .CollapseWhitespaces()
                 .Replace(" ", "-")
                 .ToLower();
-
-        public override string GetBrowserSearchLink(string searchTerm) => string.Format(BrowserSearchUrl, searchTerm.RemoveDiacritics().EscapeDataString());
     }
 }

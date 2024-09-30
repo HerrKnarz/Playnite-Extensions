@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace LinkUtilities
+namespace LinkUtilities.ViewModels
 {
     /// <summary>
     /// Base class for the view models

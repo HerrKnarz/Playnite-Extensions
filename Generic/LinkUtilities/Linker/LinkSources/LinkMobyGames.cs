@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using KNARZhelper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using System;
@@ -7,25 +8,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to MobyGames.
     /// </summary>
     internal class LinkMobyGames : BaseClasses.Linker
     {
-        public override string LinkName => "MobyGames";
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
+        public override string LinkName => "MobyGames";
         public override string SearchUrl => "https://www.mobygames.com/search/?type=game&q=";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var web = new HtmlWeb();
+                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//table/tr/td[last()]");
+                var htmlNodes = doc.DocumentNode.SelectNodes("//table/tr/td[last()]");
 
                 if (htmlNodes?.Any() ?? false)
                 {

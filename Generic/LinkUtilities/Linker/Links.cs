@@ -1,4 +1,6 @@
-﻿using LinkUtilities.Models;
+﻿using LinkUtilities.Linker.Libraries;
+using LinkUtilities.Linker.LinkSources;
+using LinkUtilities.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +20,7 @@ namespace LinkUtilities.Linker
             Add(new LinkEpic());
             Add(new LinkGamePressureGuides());
             Add(new LinkGamerGuides());
-            Add(new LinkGGDeals());
+            Add(new LinkGgDeals());
             Add(new LinkGiantBomb());
             Add(new LibraryLinkGog());
             Add(new LinkGogDb());
@@ -34,7 +36,7 @@ namespace LinkUtilities.Linker
             Add(new LinkMapGenie());
             Add(new LinkMetacritic());
             Add(new LinkMobyGames());
-            Add(new LinkModDB());
+            Add(new LinkModDb());
             Add(new LinkNecRetro());
             Add(new LinkNintendoWiki());
             Add(new LinkPcGamingWiki());
@@ -52,14 +54,14 @@ namespace LinkUtilities.Linker
 
         public void RefreshCustomLinkProfiles(List<CustomLinkProfile> customLinkProfiles)
         {
-            List<BaseClasses.Linker> linksToRemove = this.Where(x => x.Settings.IsCustomSource).ToList();
+            var linksToRemove = this.Where(x => x.Settings.IsCustomSource).ToList();
 
-            foreach (BaseClasses.Linker linker in linksToRemove)
+            foreach (var linker in linksToRemove)
             {
                 Remove(linker);
             }
 
-            foreach (CustomLinkProfile customLinkProfile in customLinkProfiles)
+            foreach (var customLinkProfile in customLinkProfiles)
             {
                 Add(new CustomLinker(customLinkProfile));
             }

@@ -2,15 +2,15 @@
 using Playnite.SDK.Models;
 using System.Threading;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     /// Adds a link to Map Genie.
     /// </summary>
     internal class LinkMapGenie : BaseClasses.Linker
     {
-        public override string LinkName => "Map Genie";
         public override string BaseUrl => "https://mapgenie.io/";
+        public override string LinkName => "Map Genie";
 
         // Map Genie Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)

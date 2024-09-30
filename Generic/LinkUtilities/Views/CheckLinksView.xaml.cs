@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace LinkUtilities
+namespace LinkUtilities.Views
 {
     /// <summary>
     ///     Interaction logic for CheckLinksView.xaml

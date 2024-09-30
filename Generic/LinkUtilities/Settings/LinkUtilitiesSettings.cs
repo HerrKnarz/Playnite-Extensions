@@ -1,12 +1,11 @@
 ﻿using LinkUtilities.Models;
-using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace LinkUtilities
+namespace LinkUtilities.Settings
 {
     /// <summary>
     ///     Contains all settings for the extension
@@ -26,7 +25,7 @@ namespace LinkUtilities
         private bool _hideOkOnLinkCheck;
         private DateTime _lastAutoLibUpdate = DateTime.Now;
         private LinkNamePatterns _linkPatterns;
-        private LinkSourceSettings _linkSettings;
+        private LinkSourceSettings _linkSettings = new LinkSourceSettings();
         private LinkNamePatterns _missingLinkPatterns;
         private string _missingLinkPrefix = ResourceProvider.GetString("LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue");
         private string _nameSteamAchievementLink = "Achievements";
@@ -50,32 +49,10 @@ namespace LinkUtilities
         private bool _useCustomSortOrder;
         private bool _useSteamAppLinks;
 
-
-        public LinkUtilitiesSettings()
-        {
-            _linkSettings = new LinkSourceSettings();
-            DuplicateTypesWithCaptions = new DuplicateTypesWithCaptions();
-        }
-
-        [DontSerialize]
-        public DuplicateTypesWithCaptions DuplicateTypesWithCaptions { get; }
-
-        public bool SortAfterChange
-        {
-            get => _sortAfterChange;
-            set => SetValue(ref _sortAfterChange, value);
-        }
-
         public bool AddLinksToNewGames
         {
             get => _addLinksToNewGames;
             set => SetValue(ref _addLinksToNewGames, value);
-        }
-
-        public bool UseSteamAppLinks
-        {
-            get => _useSteamAppLinks;
-            set => SetValue(ref _useSteamAppLinks, value);
         }
 
         public bool AddSteamAchievementLink
@@ -126,6 +103,51 @@ namespace LinkUtilities
             set => SetValue(ref _changeSteamLinksAfterChange, value);
         }
 
+        public ObservableCollection<CustomLinkProfile> CustomLinkProfiles
+        {
+            get => _customLinkProfiles;
+            set => SetValue(ref _customLinkProfiles, value);
+        }
+
+        [DontSerialize]
+        public DuplicateTypesWithCaptions DuplicateTypesWithCaptions { get; } = new DuplicateTypesWithCaptions();
+
+        public bool HideOkOnLinkCheck
+        {
+            get => _hideOkOnLinkCheck;
+            set => SetValue(ref _hideOkOnLinkCheck, value);
+        }
+
+        public DateTime LastAutoLibUpdate
+        {
+            get => _lastAutoLibUpdate;
+            set => SetValue(ref _lastAutoLibUpdate, value);
+        }
+
+        public LinkNamePatterns LinkNamePatterns
+        {
+            get => _linkPatterns;
+            set => SetValue(ref _linkPatterns, value);
+        }
+
+        public LinkSourceSettings LinkSettings
+        {
+            get => _linkSettings;
+            set => SetValue(ref _linkSettings, value);
+        }
+
+        public LinkNamePatterns MissingLinkPatterns
+        {
+            get => _missingLinkPatterns;
+            set => SetValue(ref _missingLinkPatterns, value);
+        }
+
+        public string MissingLinkPrefix
+        {
+            get => _missingLinkPrefix;
+            set => SetValue(ref _missingLinkPrefix, value);
+        }
+
         public string NameSteamAchievementLink
         {
             get => _nameSteamAchievementLink;
@@ -168,12 +190,6 @@ namespace LinkUtilities
             set => SetValue(ref _nameSteamWorkshopLink, value);
         }
 
-        public bool UseCustomSortOrder
-        {
-            get => _useCustomSortOrder;
-            set => SetValue(ref _useCustomSortOrder, value);
-        }
-
         public bool RemoveDuplicatesAfterChange
         {
             get => _removeDuplicatesAfterChange;
@@ -192,28 +208,10 @@ namespace LinkUtilities
             set => SetValue(ref _removeLinksAfterChange, value);
         }
 
-        public bool RenameLinksAfterChange
+        public LinkNamePatterns RemovePatterns
         {
-            get => _renameLinksAfterChange;
-            set => SetValue(ref _renameLinksAfterChange, value);
-        }
-
-        public bool TagMissingLinksAfterChange
-        {
-            get => _tagMissingLinksAfterChange;
-            set => SetValue(ref _tagMissingLinksAfterChange, value);
-        }
-
-        public bool TagMissingLibraryLinks
-        {
-            get => _tagMissingLibraryLinks;
-            set => SetValue(ref _tagMissingLibraryLinks, value);
-        }
-
-        public bool HideOkOnLinkCheck
-        {
-            get => _hideOkOnLinkCheck;
-            set => SetValue(ref _hideOkOnLinkCheck, value);
+            get => _removePatterns;
+            set => SetValue(ref _removePatterns, value);
         }
 
         public string RenameBlocker
@@ -222,47 +220,10 @@ namespace LinkUtilities
             set => SetValue(ref _renameBlocker, value);
         }
 
-        public string MissingLinkPrefix
+        public bool RenameLinksAfterChange
         {
-            get => _missingLinkPrefix;
-            set => SetValue(ref _missingLinkPrefix, value);
-        }
-
-        public DateTime LastAutoLibUpdate
-        {
-            get => _lastAutoLibUpdate;
-            set => SetValue(ref _lastAutoLibUpdate, value);
-        }
-
-
-        public ObservableCollection<CustomLinkProfile> CustomLinkProfiles
-        {
-            get => _customLinkProfiles;
-            set => SetValue(ref _customLinkProfiles, value);
-        }
-
-        public ObservableCollection<SortItem> SortOrder
-        {
-            get => _sortOrder;
-            set => SetValue(ref _sortOrder, value);
-        }
-
-        public LinkSourceSettings LinkSettings
-        {
-            get => _linkSettings;
-            set => SetValue(ref _linkSettings, value);
-        }
-
-        public LinkNamePatterns LinkNamePatterns
-        {
-            get => _linkPatterns;
-            set => SetValue(ref _linkPatterns, value);
-        }
-
-        public LinkNamePatterns RemovePatterns
-        {
-            get => _removePatterns;
-            set => SetValue(ref _removePatterns, value);
+            get => _renameLinksAfterChange;
+            set => SetValue(ref _renameLinksAfterChange, value);
         }
 
         public LinkNamePatterns RenamePatterns
@@ -271,10 +232,40 @@ namespace LinkUtilities
             set => SetValue(ref _renamePatterns, value);
         }
 
-        public LinkNamePatterns MissingLinkPatterns
+        public bool SortAfterChange
         {
-            get => _missingLinkPatterns;
-            set => SetValue(ref _missingLinkPatterns, value);
+            get => _sortAfterChange;
+            set => SetValue(ref _sortAfterChange, value);
+        }
+
+        public ObservableCollection<SortItem> SortOrder
+        {
+            get => _sortOrder;
+            set => SetValue(ref _sortOrder, value);
+        }
+
+        public bool TagMissingLibraryLinks
+        {
+            get => _tagMissingLibraryLinks;
+            set => SetValue(ref _tagMissingLibraryLinks, value);
+        }
+
+        public bool TagMissingLinksAfterChange
+        {
+            get => _tagMissingLinksAfterChange;
+            set => SetValue(ref _tagMissingLinksAfterChange, value);
+        }
+
+        public bool UseCustomSortOrder
+        {
+            get => _useCustomSortOrder;
+            set => SetValue(ref _useCustomSortOrder, value);
+        }
+
+        public bool UseSteamAppLinks
+        {
+            get => _useSteamAppLinks;
+            set => SetValue(ref _useSteamAppLinks, value);
         }
     }
 }

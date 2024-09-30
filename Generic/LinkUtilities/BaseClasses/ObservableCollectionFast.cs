@@ -9,7 +9,8 @@ namespace LinkUtilities.BaseClasses
 
     public class ObservableCollectionFast<T> : ObservableCollection<T>
     {
-        public ObservableCollectionFast() : base() { }
+        public ObservableCollectionFast()
+        { }
 
         public ObservableCollectionFast(IEnumerable<T> collection) : base(collection) { }
 
@@ -17,7 +18,7 @@ namespace LinkUtilities.BaseClasses
 
         public void AddRange(IEnumerable<T> range)
         {
-            foreach (T item in range)
+            foreach (var item in range)
             {
                 Items.Add(item);
             }

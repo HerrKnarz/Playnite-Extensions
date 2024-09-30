@@ -39,11 +39,42 @@ namespace LinkUtilities.Settings
 
         public bool SortByPosition { get; set; }
 
+        /// <summary>
+        ///     Adds the default patterns to the list and sorts it afterward.
+        /// </summary>
+        /// <param name="type">
+        ///     Type of the pattern to be added
+        /// </param>
+        public void AddDefaultPatterns(PatternTypes type)
+        {
+            foreach (var item in GetDefaultLinkNamePatterns(type).Where(item => this.All(x => x.LinkName != item.LinkName)))
+            {
+                Add(item);
+            }
+
+            SortPatterns();
+        }
+
+        public bool LinkMatch(ref string linkName, string linkUrl, bool overridePartialMatch = false)
+        {
+            var tempLinkName = linkName;
+
+            var pattern = this.FirstOrDefault(x => x.LinkMatch(tempLinkName, linkUrl, overridePartialMatch));
+
+            if (pattern == null)
+            {
+                return false;
+            }
+
+            linkName = pattern.LinkName;
+            return true;
+        }
+
         public void RemoveEmpty() => this.RemoveAll(x => !(x.NamePattern?.Any() ?? false) && !(x.UrlPattern?.Any() ?? false));
 
         public void SortPatterns()
         {
-            List<LinkNamePattern> patterns = this.ToList();
+            var patterns = this.ToList();
             Clear();
 
             if (SortByPosition)
@@ -71,7 +102,7 @@ namespace LinkUtilities.Settings
         /// <param name="type">
         ///     Type of the pattern to be added
         /// </param>
-        private static List<LinkNamePattern> GetDefaultLinkNamePatterns(PatternTypes type)
+        private static IEnumerable<LinkNamePattern> GetDefaultLinkNamePatterns(PatternTypes type)
         {
             string fileName;
 
@@ -104,37 +135,6 @@ namespace LinkUtilities.Settings
             return Serialization.FromJsonFile<List<LinkNamePattern>>(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Resources",
                 fileName));
-        }
-
-        /// <summary>
-        ///     Adds the default patterns to the list and sorts it afterwards.
-        /// </summary>
-        /// <param name="type">
-        ///     Type of the pattern to be added
-        /// </param>
-        public void AddDefaultPatterns(PatternTypes type)
-        {
-            foreach (LinkNamePattern item in GetDefaultLinkNamePatterns(type).Where(item => this.All(x => x.LinkName != item.LinkName)))
-            {
-                Add(item);
-            }
-
-            SortPatterns();
-        }
-
-        public bool LinkMatch(ref string linkName, string linkUrl, bool overridePartialMatch = false)
-        {
-            string tempLinkName = linkName;
-
-            LinkNamePattern pattern = this.FirstOrDefault(x => x.LinkMatch(tempLinkName, linkUrl, overridePartialMatch));
-
-            if (pattern == null)
-            {
-                return false;
-            }
-
-            linkName = pattern.LinkName;
-            return true;
         }
     }
 }

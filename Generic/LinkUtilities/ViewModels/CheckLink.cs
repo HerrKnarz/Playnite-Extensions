@@ -3,7 +3,7 @@ using LinkUtilities.Settings;
 using Playnite.SDK;
 using System.Linq;
 
-namespace LinkUtilities
+namespace LinkUtilities.ViewModels
 {
     internal class CheckLink : LinkViewModel
     {

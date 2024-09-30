@@ -4,7 +4,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to PCGamingWiki.
@@ -12,16 +12,10 @@ namespace LinkUtilities.Linker
     internal class LinkPcGamingWiki : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://www.pcgamingwiki.com";
-        public override string LinkName => "PCGamingWiki";
         public override string BaseUrl => $"{_websiteUrl}/wiki/";
-        public override string SearchUrl => _websiteUrl + "/w/index.php?search={0}&fulltext=1";
         public override string BrowserSearchUrl => $"{_websiteUrl}/w/index.php?search=";
-
-        // PCGamingWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
-        public override string GetGamePath(Game game, string gameName = null)
-            => (gameName ?? game.Name).CollapseWhitespaces()
-                .Replace(" ", "_")
-                .EscapeDataString();
+        public override string LinkName => "PCGamingWiki";
+        public override string SearchUrl => _websiteUrl + "/w/index.php?search={0}&fulltext=1";
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
@@ -33,7 +27,7 @@ namespace LinkUtilities.Linker
                 return false;
             }
 
-            string gameName = GetGamePath(game, game.Name.RemoveEditionSuffix());
+            var gameName = GetGamePath(game, game.Name.RemoveEditionSuffix());
 
             if (string.IsNullOrEmpty(gameName))
             {
@@ -47,7 +41,7 @@ namespace LinkUtilities.Linker
             // if the first try didn't find a link, we try it with the capitalized game name.
             else
             {
-                string gameNameCapitalized = game.Name.CollapseWhitespaces().ToTitleCase().Replace(" ", "_").EscapeDataString();
+                var gameNameCapitalized = game.Name.CollapseWhitespaces().ToTitleCase().Replace(" ", "_").EscapeDataString();
 
                 if (gameNameCapitalized != gameName && CheckLink($"{BaseUrl}{gameNameCapitalized}"))
                 {
@@ -64,6 +58,12 @@ namespace LinkUtilities.Linker
 
             return true;
         }
+
+        // PCGamingWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
+        public override string GetGamePath(Game game, string gameName = null)
+            => (gameName ?? game.Name).CollapseWhitespaces()
+                .Replace(" ", "_")
+                .EscapeDataString();
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
             => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName));

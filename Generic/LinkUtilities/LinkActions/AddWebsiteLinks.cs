@@ -1,7 +1,11 @@
 ﻿using KNARZhelper;
 using LinkUtilities.BaseClasses;
+using LinkUtilities.Helper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Linker;
 using LinkUtilities.Models;
+using LinkUtilities.ViewModels;
+using LinkUtilities.Views;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -9,7 +13,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace LinkUtilities.LinkActions
 {
@@ -19,7 +22,6 @@ namespace LinkUtilities.LinkActions
     internal class AddWebsiteLinks : LinkAction
     {
         private static AddWebsiteLinks _instance;
-        private static readonly object _mutex = new object();
 
         private readonly List<CustomLinkProfile> _customLinkProfiles = new List<CustomLinkProfile>();
 
@@ -44,22 +46,104 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage => "LOCLinkUtilitiesProgressWebsiteLink";
         public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
-        public static AddWebsiteLinks Instance()
+        public static AddWebsiteLinks Instance() => _instance ?? (_instance = new AddWebsiteLinks());
+
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            if (_instance != null)
+            if (!base.Execute(game, actionModifier, isBulkAction))
             {
-                return _instance;
+                return false;
             }
 
-            lock (_mutex)
+            switch (actionModifier)
             {
-                if (_instance == null)
+                case ActionModifierTypes.Add:
+                case ActionModifierTypes.AddSelected:
+                    return AddLinks(game, isBulkAction);
+                case ActionModifierTypes.Search:
+                case ActionModifierTypes.SearchMissing:
+                case ActionModifierTypes.SearchSelected:
+                    return SearchLinks(game, actionModifier, isBulkAction);
+                case ActionModifierTypes.SearchInBrowser:
+                    return SearchLinksInBrowser(game, isBulkAction);
+                case ActionModifierTypes.AppLink:
+                case ActionModifierTypes.DontRename:
+                case ActionModifierTypes.Name:
+                case ActionModifierTypes.None:
+                case ActionModifierTypes.SortOrder:
+                case ActionModifierTypes.WebLink:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
+            }
+        }
+
+        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            switch (actionModifier)
+            {
+                case ActionModifierTypes.Add:
+                    _linkers = Links.Where(x => x.Settings.IsAddable == true).ToList();
+                    return true;
+                case ActionModifierTypes.AddSelected:
+                    return SelectLinks();
+                case ActionModifierTypes.Search:
+                case ActionModifierTypes.SearchMissing:
+                    _linkers = Links.Where(x => x.Settings.IsSearchable == true).ToList();
+                    return true;
+                case ActionModifierTypes.SearchInBrowser:
+                    _linkers = Links.Where(x => x.CanBeBrowserSearched).ToList();
+                    return true;
+                case ActionModifierTypes.SearchSelected:
+                    return SelectLinks(false);
+                case ActionModifierTypes.AppLink:
+                case ActionModifierTypes.DontRename:
+                case ActionModifierTypes.Name:
+                case ActionModifierTypes.None:
+                case ActionModifierTypes.SortOrder:
+                case ActionModifierTypes.WebLink:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
+            }
+        }
+
+        private bool Add(Game g, Game game) => FindLinks(game, out var links) && (links?.Any() ?? false) && LinkHelper.AddLinks(g, links);
+
+        /// <summary>
+        ///     Adds links to all configured websites
+        /// </summary>
+        /// <param name="game">game the links will be added to.</param>
+        /// <param name="isBulkAction">If true, the method already is used in a progress bar and no new one has to be started.</param>
+        /// <returns>True, if new links were added.</returns>
+        private bool AddLinks(Game game, bool isBulkAction = true)
+        {
+            if (isBulkAction)
+            {
+                return Add(game, game);
+            }
+
+            var globalProgressOptions = new GlobalProgressOptions(
+                $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}",
+                true
+            )
+            {
+                IsIndeterminate = true
+            };
+
+            var result = false;
+
+            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            {
+                try
                 {
-                    _instance = new AddWebsiteLinks();
+                    result = Add(game, game);
                 }
-            }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            }, globalProgressOptions);
 
-            return _instance;
+            return result;
         }
 
         /// <summary>
@@ -73,59 +157,19 @@ namespace LinkUtilities.LinkActions
         {
             links = new List<Link>();
 
-            ConcurrentQueue<Link> linksQueue = new ConcurrentQueue<Link>();
+            var linksQueue = new ConcurrentQueue<Link>();
 
             Parallel.ForEach(_linkers, linker =>
             {
-                linker.FindLinks(game, out List<Link> innerLinks);
+                linker.FindLinks(game, out var innerLinks);
 
-                foreach (Link innerLink in innerLinks)
+                foreach (var innerLink in innerLinks)
                 {
                     linksQueue.Enqueue(innerLink);
                 }
             });
 
             return links.AddMissing(linksQueue.Distinct());
-        }
-
-        /// <summary>
-        ///     Adds links to all configured websites
-        /// </summary>
-        /// <param name="game">game the links will be added to.</param>
-        /// <param name="isBulkAction">If true, the method already is used in a progress bar and no new one has to be started.</param>
-        /// <returns>True, if new links were added.</returns>
-        private bool AddLinks(Game game, bool isBulkAction = true)
-        {
-            bool Add(Game g) => FindLinks(game, out List<Link> links) && (links?.Any() ?? false) && LinkHelper.AddLinks(g, links);
-
-            if (isBulkAction)
-            {
-                return Add(game);
-            }
-
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}",
-                true
-            )
-            {
-                IsIndeterminate = true
-            };
-
-            bool result = false;
-
-            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-            {
-                try
-                {
-                    result = Add(game);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                }
-            }, globalProgressOptions);
-
-            return result;
         }
 
         /// <summary>
@@ -137,18 +181,18 @@ namespace LinkUtilities.LinkActions
         /// <returns>True, if new links were added.</returns>
         private bool SearchLinks(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            bool result = false;
+            var result = false;
 
             if (isBulkAction)
             {
-                foreach (BaseClasses.Linker link in _linkers)
-                {
-                    result |= link.AddSearchedLink(game, actionModifier == ActionModifierTypes.SearchMissing, false);
-                }
+                result = _linkers.Aggregate(false,
+                    (current, link) =>
+                        current | link.AddSearchedLink(game, actionModifier == ActionModifierTypes.SearchMissing,
+                            false));
             }
             else
             {
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions($"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}", true)
+                var globalProgressOptions = new GlobalProgressOptions($"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}", true)
                 {
                     IsIndeterminate = false
                 };
@@ -192,16 +236,15 @@ namespace LinkUtilities.LinkActions
         ///     Opens the search page for all configured websites in the standard web browser
         /// </summary>
         /// <param name="game">game the links will be searched for.</param>
-        /// <param name="actionModifier">Kind of search (e.g. Search or SearchMissing)</param>
         /// <param name="isBulkAction">If true, the method already is used in a progress bar and no new one has to be started.</param>
         /// <returns>True, if pages were opened.</returns>
-        private bool SearchLinksInBrowser(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        private bool SearchLinksInBrowser(Game game, bool isBulkAction = true)
         {
-            bool result = false;
+            var result = false;
 
             if (isBulkAction)
             {
-                foreach (BaseClasses.Linker link in _linkers.Where(link => !LinkHelper.LinkExists(game, link.LinkName)))
+                foreach (var link in _linkers.Where(link => !LinkHelper.LinkExists(game, link.LinkName)))
                 {
                     link.StartBrowserSearch(game);
                     result = true;
@@ -209,7 +252,7 @@ namespace LinkUtilities.LinkActions
             }
             else
             {
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions($"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}", true)
+                var globalProgressOptions = new GlobalProgressOptions($"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}", true)
                 {
                     IsIndeterminate = false
                 };
@@ -220,7 +263,7 @@ namespace LinkUtilities.LinkActions
                     {
                         activateGlobalProgress.ProgressMaxValue = _linkers.Count(link => !LinkHelper.LinkExists(game, link.LinkName));
 
-                        foreach (BaseClasses.Linker link in _linkers.Where(link => !LinkHelper.LinkExists(game, link.LinkName)))
+                        foreach (var link in _linkers.Where(link => !LinkHelper.LinkExists(game, link.LinkName)))
                         {
                             activateGlobalProgress.Text = $"{ResourceProvider.GetString("LOCLinkUtilitiesName")}{Environment.NewLine}{ResourceProvider.GetString(ProgressMessage)}{Environment.NewLine}{link.LinkName}";
 
@@ -249,9 +292,9 @@ namespace LinkUtilities.LinkActions
         {
             try
             {
-                SelectedLinksViewModel viewModel = new SelectedLinksViewModel(Links, add);
-                Window window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesSelectLinksWindowName"));
-                SelectedLinksView view = new SelectedLinksView(window) { DataContext = viewModel };
+                var viewModel = new SelectedLinksViewModel(Links, add);
+                var window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesSelectLinksWindowName"));
+                var view = new SelectedLinksView(window) { DataContext = viewModel };
 
                 window.Content = view;
                 if (window.ShowDialog() != true)
@@ -265,55 +308,9 @@ namespace LinkUtilities.LinkActions
             }
             catch (Exception exception)
             {
-                Log.Error(exception, "Error during initializing ReviewDuplicatesView", true);
+                Log.Error(exception, "Error during initializing SelectedLinksView", true);
 
                 return false;
-            }
-        }
-
-        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            switch (actionModifier)
-            {
-                case ActionModifierTypes.Add:
-                    _linkers = Links.Where(x => x.Settings.IsAddable == true).ToList();
-                    return true;
-                case ActionModifierTypes.AddSelected:
-                    return SelectLinks();
-                case ActionModifierTypes.Search:
-                case ActionModifierTypes.SearchMissing:
-                    _linkers = Links.Where(x => x.Settings.IsSearchable == true).ToList();
-                    return true;
-                case ActionModifierTypes.SearchInBrowser:
-                    _linkers = Links.Where(x => x.CanBeBrowserSearched).ToList();
-                    return true;
-                case ActionModifierTypes.SearchSelected:
-                    return SelectLinks(false);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
-            }
-        }
-
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-        {
-            if (!base.Execute(game, actionModifier, isBulkAction))
-            {
-                return false;
-            }
-
-            switch (actionModifier)
-            {
-                case ActionModifierTypes.Add:
-                case ActionModifierTypes.AddSelected:
-                    return AddLinks(game, isBulkAction);
-                case ActionModifierTypes.Search:
-                case ActionModifierTypes.SearchMissing:
-                case ActionModifierTypes.SearchSelected:
-                    return SearchLinks(game, actionModifier, isBulkAction);
-                case ActionModifierTypes.SearchInBrowser:
-                    return SearchLinksInBrowser(game, actionModifier, isBulkAction);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
             }
         }
     }

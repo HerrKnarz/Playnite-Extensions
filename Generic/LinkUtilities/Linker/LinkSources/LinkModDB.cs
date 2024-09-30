@@ -8,17 +8,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to Mod DB.
     /// </summary>
-    internal class LinkModDB : BaseClasses.Linker
+    internal class LinkModDb : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://www.moddb.com";
+        public override string BaseUrl => _websiteUrl + "/games/";
 
         public override string LinkName => "Mod DB";
-        public override string BaseUrl => _websiteUrl + "/games/";
         public override string SearchUrl => _websiteUrl + "/games?filter=t&kw=";
 
         // Mod DB Links need the game name in lowercase without special characters and hyphens instead of white spaces.
@@ -32,11 +32,11 @@ namespace LinkUtilities.Linker
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
+                var web = new HtmlWeb();
 
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'rowcontent')]/div[@class='content']");
+                var htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'rowcontent')]/div[@class='content']");
 
                 if (htmlNodes?.Any() ?? false)
                 {

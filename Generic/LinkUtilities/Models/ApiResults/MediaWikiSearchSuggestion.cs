@@ -1,4 +1,4 @@
-﻿namespace LinkUtilities.Models.MediaWiki
+﻿namespace LinkUtilities.Models.ApiResults
 {
     /// <remarks/>
     [System.Serializable()]
@@ -7,20 +7,12 @@
     [System.Xml.Serialization.XmlRoot(Namespace = "http://opensearch.org/searchsuggest2", IsNullable = false)]
     public class SearchSuggestion
     {
-        private SearchSuggestionWarnings _warningsField;
-
         private SearchSuggestionQuery _queryField;
 
         private SearchSuggestionItem[] _sectionField;
 
         private decimal _versionField;
-
-        /// <remarks/>
-        public SearchSuggestionWarnings Warnings
-        {
-            get => _warningsField;
-            set => _warningsField = value;
-        }
+        private SearchSuggestionWarnings _warningsField;
 
         /// <remarks/>
         public SearchSuggestionQuery Query
@@ -43,6 +35,13 @@
         {
             get => _versionField;
             set => _versionField = value;
+        }
+
+        /// <remarks/>
+        public SearchSuggestionWarnings Warnings
+        {
+            get => _warningsField;
+            set => _warningsField = value;
         }
     }
 

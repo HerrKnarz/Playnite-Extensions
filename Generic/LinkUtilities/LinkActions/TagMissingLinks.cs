@@ -1,5 +1,6 @@
 ﻿using KNARZhelper.DatabaseObjectTypes;
 using LinkUtilities.BaseClasses;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using LinkUtilities.Settings;
 using Playnite.SDK;

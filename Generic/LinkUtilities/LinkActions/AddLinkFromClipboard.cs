@@ -1,13 +1,12 @@
 ﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Helper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Settings;
 using Playnite.SDK;
-using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using System;
 using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Media.TextFormatting;
 
 namespace LinkUtilities.LinkActions
 {
@@ -17,41 +16,8 @@ namespace LinkUtilities.LinkActions
     internal class AddLinkFromClipboard : LinkAction
     {
         private static AddLinkFromClipboard _instance;
-        private static readonly object _mutex = new object();
 
         private AddLinkFromClipboard() { }
-
-        public static AddLinkFromClipboard Instance()
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
-
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new AddLinkFromClipboard();
-                }
-            }
-
-            return _instance;
-        }
-
-        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressWebsiteLink";
-
-        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogAddedMessage";
-
-        /// <summary>
-        /// URL of the link to be added in the "AddLink" action
-        /// </summary>
-        public string LinkUrl { get; set; }
-
-        /// <summary>
-        /// Name of the link to be added in the "AddLink" action
-        /// </summary>
-        public string LinkName { get; set; }
 
         /// <summary>
         /// Action that will be executed
@@ -59,17 +25,37 @@ namespace LinkUtilities.LinkActions
         public ActionModifierTypes Action { get; set; }
 
         /// <summary>
+        /// Name of the link to be added in the "AddLink" action
+        /// </summary>
+        public string LinkName { get; set; }
+
+        /// <summary>
         /// List of patterns to find the right link name for a given URL
         /// </summary>
         public LinkNamePatterns LinkNamePatterns { get; set; }
+
+        /// <summary>
+        /// URL of the link to be added in the "AddLink" action
+        /// </summary>
+        public string LinkUrl { get; set; }
+
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressWebsiteLink";
+
+        public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
+
+        public static AddLinkFromClipboard Instance() => _instance ?? (_instance = new AddLinkFromClipboard());
+
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+            => base.Execute(game, actionModifier, isBulkAction) &&
+               LinkHelper.AddLink(game, LinkName, LinkUrl, false);
 
         public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
             LinkName = string.Empty;
             LinkUrl = string.Empty;
 
-            string url = Clipboard.GetText();
-            string tempLinkName = string.Empty;
+            var url = Clipboard.GetText();
+            var tempLinkName = string.Empty;
 
             if (!url.Any() || !Uri.TryCreate(url, UriKind.Absolute, out _))
             {
@@ -84,7 +70,7 @@ namespace LinkUtilities.LinkActions
                 return true;
             }
 
-            StringSelectionDialogResult selectResult = API.Instance.Dialogs.SelectString(
+            var selectResult = API.Instance.Dialogs.SelectString(
                 ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkText") + Environment.NewLine + url,
                 ResourceProvider.GetString("LOCLinkUtilitiesDialogNameLinkCaption"),
                 tempLinkName);
@@ -98,9 +84,5 @@ namespace LinkUtilities.LinkActions
 
             return true;
         }
-
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => base.Execute(game, actionModifier, isBulkAction) &&
-               LinkHelper.AddLink(game, LinkName, LinkUrl, false);
     }
 }

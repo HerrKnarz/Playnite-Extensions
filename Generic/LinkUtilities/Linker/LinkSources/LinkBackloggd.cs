@@ -7,8 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+// ReSharper disable CommentTypo
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to Backloggd.
@@ -16,12 +17,12 @@ namespace LinkUtilities.Linker
     internal class LinkBackloggd : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://www.backloggd.com";
+        public override string BaseUrl => _websiteUrl + "/games/";
 
         public override string LinkName => "Backloggd";
-        public override string BaseUrl => _websiteUrl + "/games/";
         public override string SearchUrl => _websiteUrl + "/search/games/";
 
-        // Since Backloggd always returns the status code OK and the same url, even if that leads to a non existing game, we also check if the title isn't the one
+        // Since Backloggd always returns the status code OK and the same url, even if that leads to a non-existing game, we also check if the title isn't the one
         // of that generic page. Funny enough it says 404 but doesn't return that status code...
         public override string WrongTitle => "404 Not Found";
 
@@ -36,10 +37,10 @@ namespace LinkUtilities.Linker
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var web = new HtmlWeb();
+                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'result')]");
+                var htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'result')]");
 
                 if (htmlNodes?.Any() ?? false)
                 {

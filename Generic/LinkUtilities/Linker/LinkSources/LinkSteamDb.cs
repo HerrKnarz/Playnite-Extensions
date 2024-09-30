@@ -1,7 +1,7 @@
 ﻿using Playnite.SDK.Models;
 using System;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to SteamDB.
@@ -9,8 +9,8 @@ namespace LinkUtilities.Linker
     internal class LinkSteamDb : BaseClasses.Linker
     {
         private const string _baseUrl = "https://steamdb.info";
-        public override string LinkName => "SteamDB";
         public override string BaseUrl => _baseUrl + "/app/";
+        public override string LinkName => "SteamDB";
         public override bool NeedsToBeChecked => false;
 
         // SteamDb Links need the steam game id. Because of that the add function only works with the steam library.

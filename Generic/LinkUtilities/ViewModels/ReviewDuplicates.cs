@@ -1,10 +1,10 @@
 ﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Helper;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace LinkUtilities
+namespace LinkUtilities.ViewModels
 {
     public class ReviewDuplicates : ViewModelBase
     {
@@ -33,6 +33,13 @@ namespace LinkUtilities
             _games.Aggregate(false, (current, game) => current | GetDuplicates(game));
         }
 
+        public void Remove(LinkViewModel linkViewModel)
+        {
+            linkViewModel.Remove();
+
+            Duplicates.Remove(linkViewModel);
+        }
+
         private bool GetDuplicates(Game game)
         {
             if (!game.Links?.Any() ?? true)
@@ -40,7 +47,7 @@ namespace LinkUtilities
                 return false;
             }
 
-            ObservableCollection<Link> newLinks =
+            var newLinks =
                 game.Links.GroupBy(x => x.Name).Where(x => x.Count() > 1).SelectMany(x => x).ToObservable();
 
             newLinks.AddMissing(game.Links?.GroupBy(x => LinkHelper.CleanUpUrl(x.Url)).Where(x => x.Count() > 1).SelectMany(x => x));
@@ -53,13 +60,6 @@ namespace LinkUtilities
             Duplicates.AddRange(newLinks.Select(x => new LinkViewModel { Game = game, Link = x }));
 
             return true;
-        }
-
-        public void Remove(LinkViewModel linkViewModel)
-        {
-            linkViewModel.Remove();
-
-            Duplicates.Remove(linkViewModel);
         }
     }
 }

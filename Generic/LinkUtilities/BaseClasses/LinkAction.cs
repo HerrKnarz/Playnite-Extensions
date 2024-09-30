@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Models;
+﻿using LinkUtilities.Interfaces;
+using Playnite.SDK.Models;
 
 namespace LinkUtilities.BaseClasses
 {

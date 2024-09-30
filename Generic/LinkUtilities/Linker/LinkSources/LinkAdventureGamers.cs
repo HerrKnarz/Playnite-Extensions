@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using KNARZhelper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using System;
@@ -7,27 +8,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to Adventure Gamers.
     /// </summary>
     internal class LinkAdventureGamers : BaseClasses.Linker
     {
-        public override string LinkName => "Adventure Gamers";
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl => "https://adventuregamers.com/games/search?keywords=";
 
         public override string BaseUrl => "https://adventuregamers.com";
+        public override string LinkName => "Adventure Gamers";
+        public override string SearchUrl => "https://adventuregamers.com/games/search?keywords=";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var web = new HtmlWeb();
+                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                HtmlNodeCollection htmlNodes =
+                var htmlNodes =
                     doc.DocumentNode.SelectNodes("//div[@class='item_article']//h2//a[contains(@href,'games')]");
 
                 if (htmlNodes?.Any() ?? false)

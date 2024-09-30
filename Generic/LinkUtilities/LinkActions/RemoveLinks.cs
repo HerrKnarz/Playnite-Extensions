@@ -1,8 +1,8 @@
 ﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace LinkUtilities.LinkActions
@@ -13,12 +13,9 @@ namespace LinkUtilities.LinkActions
     internal class RemoveLinks : LinkAction
     {
         private static RemoveLinks _instance;
-        private static readonly object _mutex = new object();
         private RemoveLinks() { }
 
-        public override string ProgressMessage { get; } = "LOCLinkUtilitiesProgressRemoveLinks";
-
-        public override string ResultMessage { get; } = "LOCLinkUtilitiesDialogRemovedMessage";
+        public override string ProgressMessage => "LOCLinkUtilitiesProgressRemoveLinks";
 
         public bool RemoveLinksAfterChange { get; set; } = false;
 
@@ -27,23 +24,9 @@ namespace LinkUtilities.LinkActions
         /// </summary>
         public LinkNamePatterns RemovePatterns { get; set; }
 
-        public static RemoveLinks Instance()
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
+        public override string ResultMessage => "LOCLinkUtilitiesDialogRemovedMessage";
 
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new RemoveLinks();
-                }
-            }
-
-            return _instance;
-        }
+        public static RemoveLinks Instance() => _instance ?? (_instance = new RemoveLinks());
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -52,32 +35,31 @@ namespace LinkUtilities.LinkActions
                 return false;
             }
 
-            bool mustUpdate = false;
+            var mustUpdate = false;
 
             if (!game.Links?.Any() ?? true)
             {
                 return false;
             }
 
-            List<Link> links = game.Links.ToList();
+            var links = game.Links.ToList();
 
-            foreach (Link link in links)
+            foreach (var link in links)
             {
-                string linkName = link.Name;
+                var linkName = link.Name;
 
-                if (RemovePatterns.LinkMatch(ref linkName, link.Url))
+                if (!RemovePatterns.LinkMatch(ref linkName, link.Url))
                 {
-                    if (GlobalSettings.Instance().OnlyATest)
-                    {
-                        mustUpdate |= game.Links.Remove(link);
-                    }
-                    else
-                    {
-                        API.Instance.MainView.UIDispatcher.Invoke(delegate
-                        {
-                            mustUpdate |= game.Links.Remove(link);
-                        });
-                    }
+                    continue;
+                }
+
+                if (GlobalSettings.Instance().OnlyATest)
+                {
+                    mustUpdate |= game.Links.Remove(link);
+                }
+                else
+                {
+                    mustUpdate |= API.Instance.MainView.UIDispatcher.Invoke(() => game.Links.Remove(link));
                 }
             }
 

@@ -1,5 +1,5 @@
 ﻿using LinkUtilities.LinkActions;
-using LinkUtilities.Linker;
+using LinkUtilities.Linker.Libraries;
 using LinkUtilities.Models;
 using LinkUtilities.Settings;
 using Playnite.SDK;
@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
-namespace LinkUtilities
+namespace LinkUtilities.ViewModels
 {
     public class SettingsViewModel : ObservableObject, ISettings
     {
@@ -374,7 +374,7 @@ namespace LinkUtilities
                 steamLink.NameWorkshopLink = Settings.NameSteamWorkshopLink;
             }
 
-            var steamLibLink = (LibraryLinkSteam)AddLibraryLinks.Instance().Libraries?[Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab")];
+            var steamLibLink = (LibraryLinkSteam)AddLibraryLinks.Instance().LibraryLinks?[Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab")];
 
             if (steamLibLink == null)
             {

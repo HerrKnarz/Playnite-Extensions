@@ -1,4 +1,5 @@
 ﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -12,39 +13,26 @@ namespace LinkUtilities.LinkActions
     internal class RenameLinks : LinkAction
     {
         private static RenameLinks _instance;
-        private static readonly object _mutex = new object();
         private RenameLinks() { }
 
         public override string ProgressMessage => "LOCLinkUtilitiesProgressRenameLinks";
 
-        public override string ResultMessage => "LOCLinkUtilitiesDialogRenamedMessage";
+        public string RenameBlocker { get; set; } = string.Empty;
 
         public bool RenameLinksAfterChange { get; set; } = false;
-
-        public string RenameBlocker { get; set; } = string.Empty;
 
         /// <summary>
         ///     List of patterns to find the links to rename based on URL or link name
         /// </summary>
         public LinkNamePatterns RenamePatterns { get; set; }
 
-        public static RenameLinks Instance()
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
+        public override string ResultMessage => "LOCLinkUtilitiesDialogRenamedMessage";
 
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new RenameLinks();
-                }
-            }
+        public static RenameLinks Instance() => _instance ?? (_instance = new RenameLinks());
 
-            return _instance;
-        }
+        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+            => base.Execute(game, actionModifier, isBulkAction) &&
+               Rename(game);
 
         private bool Rename(Game game, bool updateDb = true)
         {
@@ -53,16 +41,16 @@ namespace LinkUtilities.LinkActions
                 return false;
             }
 
-            bool mustUpdate = false;
+            var mustUpdate = false;
 
-            foreach (Link link in game.Links)
+            foreach (var link in game.Links)
             {
                 if (RenameBlocker.Any() && link.Name.Contains(RenameBlocker))
                 {
                     continue;
                 }
 
-                string linkName = link.Name;
+                var linkName = link.Name;
 
                 if (!RenamePatterns.LinkMatch(ref linkName, link.Url))
                 {
@@ -105,9 +93,5 @@ namespace LinkUtilities.LinkActions
 
             return true;
         }
-
-        public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => base.Execute(game, actionModifier, isBulkAction) &&
-               Rename(game);
     }
 }

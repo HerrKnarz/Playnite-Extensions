@@ -1,10 +1,9 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Linker;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace LinkUtilities
+namespace LinkUtilities.Views
 {
     /// <summary>
     /// Interaction logic for SelectedLinksView.xaml

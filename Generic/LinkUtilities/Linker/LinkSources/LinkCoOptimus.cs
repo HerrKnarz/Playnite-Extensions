@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using KNARZhelper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using System;
@@ -7,26 +8,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to Co-Optimus.
     /// </summary>
     internal class LinkCoOptimus : BaseClasses.Linker
     {
-        public override string LinkName => "Co-Optimus";
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
-        public override string SearchUrl => "https://api.co-optimus.com/games.php?search=true&name=";
         public override string BrowserSearchUrl => "https://www.co-optimus.com/search.php?q=";
+        public override string LinkName => "Co-Optimus";
+        public override string SearchUrl => "https://api.co-optimus.com/games.php?search=true&name=";
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
             {
-                HtmlWeb web = new HtmlWeb();
-                HtmlDocument doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var web = new HtmlWeb();
+                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//game");
+                var htmlNodes = doc.DocumentNode.SelectNodes("//game");
 
                 if (htmlNodes?.Any() ?? false)
                 {

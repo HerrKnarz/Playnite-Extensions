@@ -158,7 +158,7 @@
     <Compile Include="Linker\LinkSources\LinkMetacritic.cs" />
     <Compile Include="Linker\LinkSources\LinkHG101.cs" />
     <Compile Include="Linker\LinkSources\LinkMobyGames.cs" />
-    <Compile Include="Linker\Libraries.cs" />
+    <Compile Include="Linker\LibraryLinks.cs" />
     <Compile Include="Linker\Libraries\LibraryLinkGog.cs" />
     <Compile Include="Linker\Libraries\LibraryLinkItch.cs" />
     <Compile Include="Linker\Libraries\LibraryLinkSteam.cs" />

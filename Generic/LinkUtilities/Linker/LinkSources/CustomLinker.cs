@@ -1,4 +1,6 @@
 ﻿using KNARZhelper;
+using LinkUtilities.Helper;
+using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK.Models;
 using System;
@@ -6,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     public class CustomLinker : BaseClasses.Linker
     {
@@ -17,19 +19,17 @@ namespace LinkUtilities.Linker
             Settings.IsCustomSource = true;
         }
 
-        public CustomLinkProfile CustomSettings { get; }
-
-        public override string LinkName => CustomSettings?.Name ?? string.Empty;
+        public override LinkAddTypes AddType => CustomSettings?.GameUrl?.Any() ?? false ? LinkAddTypes.UrlMatch : LinkAddTypes.None;
+        public override bool AllowRedirects => CustomSettings?.AllowRedirects ?? true;
 
         public override string BaseUrl => CustomSettings?.GameUrl ?? string.Empty;
         public override string BrowserSearchUrl => CustomSettings?.BrowserSearchUrl ?? string.Empty;
-        public override bool AllowRedirects => CustomSettings?.AllowRedirects ?? true;
-        public override bool ReturnsSameUrl => CustomSettings?.ReturnsSameUrl ?? false;
+
+        public CustomLinkProfile CustomSettings { get; }
+
+        public override string LinkName => CustomSettings?.Name ?? string.Empty;
         public override bool NeedsToBeChecked => CustomSettings?.NeedsToBeChecked ?? true;
-
-        public override LinkAddTypes AddType => CustomSettings?.GameUrl?.Any() ?? false ? LinkAddTypes.UrlMatch : LinkAddTypes.None;
-
-        public override string GetGamePath(Game game, string gameName = null) => CustomSettings.FormatGameName(game.Name);
+        public override bool ReturnsSameUrl => CustomSettings?.ReturnsSameUrl ?? false;
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
@@ -41,11 +41,11 @@ namespace LinkUtilities.Linker
                 return false;
             }
 
-            string linkUrl = BaseUrl;
+            var linkUrl = BaseUrl;
 
             if (linkUrl.Contains("{GameName}"))
             {
-                string gameName = GetGamePath(game);
+                var gameName = GetGamePath(game);
 
                 if (string.IsNullOrEmpty(gameName))
                 {
@@ -107,5 +107,7 @@ namespace LinkUtilities.Linker
         }
 
         public override string GetBrowserSearchLink(string searchTerm) => BrowserSearchUrl.Replace("{GameName}", searchTerm.UrlEncode());
+
+        public override string GetGamePath(Game game, string gameName = null) => CustomSettings.FormatGameName(game.Name);
     }
 }

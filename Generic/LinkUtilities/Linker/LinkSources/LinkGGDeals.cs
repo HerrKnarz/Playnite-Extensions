@@ -2,19 +2,19 @@
 using Playnite.SDK.Models;
 using System;
 
-namespace LinkUtilities.Linker
+namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
     ///     Adds a link to GG.deals.
     /// </summary>
-    internal class LinkGGDeals : BaseClasses.Linker
+    internal class LinkGgDeals : BaseClasses.Linker
     {
-        private const string _steamUrl = "https://gg.deals/steam/app/";
         private const string _standardUrl = "https://gg.deals/game/";
+        private const string _steamUrl = "https://gg.deals/steam/app/";
         private string _baseUrl;
-        public override string LinkName => "GG.deals";
         public override string BaseUrl => _baseUrl;
         public override string BrowserSearchUrl => "https://gg.deals/games/?title=";
+        public override string LinkName => "GG.deals";
 
         // GG.deals Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)

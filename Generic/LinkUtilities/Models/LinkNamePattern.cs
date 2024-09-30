@@ -10,22 +10,10 @@ namespace LinkUtilities.Models
     public class LinkNamePattern
     {
         /// <summary>
-        /// Position used to sort the patterns
-        /// </summary>
-        [SerializationPropertyName("position")]
-        public int? Position { get; set; }
-
-        /// <summary>
         /// Name to use for the link if the patterns match
         /// </summary>
         [SerializationPropertyName("linkName")]
         public string LinkName { get; set; }
-
-        /// <summary>
-        /// Pattern the URL has to match. Can contain wildcards * (zero or more characters) or ? (exactly one character).
-        /// </summary>
-        [SerializationPropertyName("urlPattern")]
-        public string UrlPattern { get; set; }
 
         /// <summary>
         /// Pattern the link title has to match. Can contain wildcards * (zero or more characters) or ? (exactly one character).
@@ -34,22 +22,34 @@ namespace LinkUtilities.Models
         public string NamePattern { get; set; }
 
         /// <summary>
+        /// Regular expression of the NamePattern
+        /// </summary>
+        [DontSerialize]
+        public string NameRegEx => ParseHelper.WildCardToRegular(NamePattern);
+
+        /// <summary>
         /// If true only one of both patterns has to match. If false both have to match.
         /// </summary>
         [SerializationPropertyName("partialMatch")]
         public bool PartialMatch { get; set; }
 
         /// <summary>
+        /// Position used to sort the patterns
+        /// </summary>
+        [SerializationPropertyName("position")]
+        public int? Position { get; set; }
+
+        /// <summary>
+        /// Pattern the URL has to match. Can contain wildcards * (zero or more characters) or ? (exactly one character).
+        /// </summary>
+        [SerializationPropertyName("urlPattern")]
+        public string UrlPattern { get; set; }
+
+        /// <summary>
         /// Regular expression of the UrlPattern
         /// </summary>
         [DontSerialize]
         public string UrlRegEx => ParseHelper.WildCardToRegular(UrlPattern);
-
-        /// <summary>
-        /// Regular expression of the NamePattern
-        /// </summary>
-        [DontSerialize]
-        public string NameRegEx => ParseHelper.WildCardToRegular(NamePattern);
 
         public bool LinkMatch(string linkName, string linkUrl, bool overridePartialMatch = false)
             => overridePartialMatch || PartialMatch
