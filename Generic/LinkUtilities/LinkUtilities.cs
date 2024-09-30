@@ -123,7 +123,13 @@ namespace LinkUtilities
                 return;
             }
 
-            var games = args.UpdatedItems.Select(item => item.NewData).Distinct().ToList();
+            var games = args.UpdatedItems.Where(item =>
+                    item.OldData == null ||
+                    (item.NewData.Links != null &&
+                     item.NewData.Links.Count > 0 &&
+                     (item.OldData.Links == null ||
+                     !item.OldData.Links.IsListEqualExact(item.NewData.Links))))
+                .Select(item => item.NewData).Distinct().ToList();
             DoForAll(games, DoAfterChange.Instance());
         }
 
