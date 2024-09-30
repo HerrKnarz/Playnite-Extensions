@@ -9,27 +9,12 @@ namespace LinkUtilities.Test
     {
         [Theory]
         [ClassData(typeof(TestCases))]
-        internal void TestGetGamePath(TestCase testCase)
-        {
-            // Set the plugin to test mode
-            _ = GlobalSettings.Instance(true);
-
-            Game game = new Game
-            {
-                Name = testCase.GameName
-            };
-
-            Assert.Equal(testCase.GamePath, testCase.Link.GetGamePath(game));
-        }
-
-        [Theory]
-        [ClassData(typeof(TestCases))]
         internal void TestAddLink(TestCase testCase)
         {
             // Set the plugin to test mode
             _ = GlobalSettings.Instance(true);
 
-            Game game = new Game
+            var game = new Game
             {
                 Name = testCase.GameName
             };
@@ -49,7 +34,7 @@ namespace LinkUtilities.Test
             // Set the plugin to test mode
             _ = GlobalSettings.Instance(true);
 
-            Game game = new Game
+            var game = new Game
             {
                 Name = testCase.GameName
             };
@@ -57,6 +42,21 @@ namespace LinkUtilities.Test
             Assert.True(testCase.Link.AddSearchedLink(game));
 
             Assert.Equal(testCase.SearchedUrl, game.Links?.FirstOrDefault()?.Url ?? "not found!");
+        }
+
+        [Theory]
+        [ClassData(typeof(TestCases))]
+        internal void TestGetGamePath(TestCase testCase)
+        {
+            // Set the plugin to test mode
+            _ = GlobalSettings.Instance(true);
+
+            var game = new Game
+            {
+                Name = testCase.GameName
+            };
+
+            Assert.Equal(testCase.GamePath, testCase.Link.GetGamePath(game));
         }
     }
 }

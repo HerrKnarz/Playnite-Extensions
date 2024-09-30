@@ -102,6 +102,12 @@
         "partialMatch": false
     },
     {
+        "linkName": "Killer List Of Video Games",
+        "urlPattern": "*arcade-museum.com*",
+        "namePattern": "Museum of the Game",
+        "partialMatch": false
+    },
+    {
         "linkName": "Lemon64",
         "urlPattern": "*lemon64.com*",
         "namePattern": "Lemon64",

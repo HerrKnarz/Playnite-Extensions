@@ -29,6 +29,7 @@ namespace LinkUtilities.Linker
             Add(new LinkIgn());
             Add(new LinkIgnGuides());
             Add(new LinkIsThereAnyDeal());
+            Add(new LinkKillerListOfVideoGames());
             Add(new LibraryLinkItch());
             Add(new LinkLemon64());
             Add(new LinkLemonAmiga());

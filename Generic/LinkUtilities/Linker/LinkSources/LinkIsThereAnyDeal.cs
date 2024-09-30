@@ -40,6 +40,7 @@ namespace LinkUtilities.Linker.LinkSources
 
             return (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()
+                .Replace("-", " ")
                 .CollapseWhitespaces()
                 .Replace(" ", "-")
                 .ToLower() + "/info/";
