@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using LinkUtilities.Models;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace LinkUtilities.ViewModels
     /// <summary>
     ///     View model for the Review Duplicates window
     /// </summary>
-    public class ReviewDuplicatesViewModel : ViewModelBase
+    public class ReviewDuplicatesViewModel : ObservableObject
     {
         private List<Game> _games;
         private ReviewDuplicates _reviewDuplicates;
@@ -22,32 +23,24 @@ namespace LinkUtilities.ViewModels
         public List<Game> Games
         {
             get => _games;
-            set
-            {
-                _games = value;
-                OnPropertyChanged("Games");
-            }
+            set => SetValue(ref _games, value);
         }
 
         public RelayCommand RefreshCommand
-            => new RelayCommand(() => _reviewDuplicates.GetDuplicates());
+            => new RelayCommand(() => ReviewDuplicates.GetDuplicates());
 
         public RelayCommand<IList<object>> RemoveCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (var item in items.ToList().Cast<LinkViewModel>())
+            foreach (var item in items.ToList().Cast<GameLink>())
             {
-                _reviewDuplicates.Remove(item);
+                ReviewDuplicates.Remove(item);
             }
         }, items => items?.Any() ?? false);
 
         public ReviewDuplicates ReviewDuplicates
         {
             get => _reviewDuplicates;
-            set
-            {
-                _reviewDuplicates = value;
-                OnPropertyChanged("ReviewDuplicates");
-            }
+            set => SetValue(ref _reviewDuplicates, value);
         }
     }
 }

@@ -2,10 +2,11 @@
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using System.Collections.Generic;
 
-namespace LinkUtilities.ViewModels
+namespace LinkUtilities.Models
 {
-    public class LinkViewModel : ViewModelBase
+    public class GameLink : ObservableObject
     {
         private Game _game;
 
@@ -14,21 +15,13 @@ namespace LinkUtilities.ViewModels
         public Game Game
         {
             get => _game;
-            set
-            {
-                _game = value;
-                OnPropertyChanged("Game");
-            }
+            set => SetValue(ref _game, value);
         }
 
         public Link Link
         {
             get => _link;
-            set
-            {
-                _link = value;
-                OnPropertyChanged("Link");
-            }
+            set => SetValue(ref _link, value);
         }
 
         public void Remove()

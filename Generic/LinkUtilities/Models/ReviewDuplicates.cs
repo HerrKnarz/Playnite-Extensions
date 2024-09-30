@@ -4,12 +4,12 @@ using Playnite.SDK.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LinkUtilities.ViewModels
+namespace LinkUtilities.Models
 {
-    public class ReviewDuplicates : ViewModelBase
+    public class ReviewDuplicates : ObservableObject
     {
         private readonly IEnumerable<Game> _games;
-        private ObservableCollectionFast<LinkViewModel> _duplicates = new ObservableCollectionFast<LinkViewModel>();
+        private ObservableCollectionFast<GameLink> _duplicates = new ObservableCollectionFast<GameLink>();
 
         public ReviewDuplicates(IEnumerable<Game> games)
         {
@@ -17,14 +17,10 @@ namespace LinkUtilities.ViewModels
             GetDuplicates();
         }
 
-        public ObservableCollectionFast<LinkViewModel> Duplicates
+        public ObservableCollectionFast<GameLink> Duplicates
         {
             get => _duplicates;
-            set
-            {
-                _duplicates = value;
-                OnPropertyChanged("Duplicates");
-            }
+            set => SetValue(ref _duplicates, value);
         }
 
         public void GetDuplicates()
@@ -33,11 +29,11 @@ namespace LinkUtilities.ViewModels
             _games.Aggregate(false, (current, game) => current | GetDuplicates(game));
         }
 
-        public void Remove(LinkViewModel linkViewModel)
+        public void Remove(GameLink gameLink)
         {
-            linkViewModel.Remove();
+            gameLink.Remove();
 
-            Duplicates.Remove(linkViewModel);
+            Duplicates.Remove(gameLink);
         }
 
         private bool GetDuplicates(Game game)
@@ -57,7 +53,7 @@ namespace LinkUtilities.ViewModels
                 return false;
             }
 
-            Duplicates.AddRange(newLinks.Select(x => new LinkViewModel { Game = game, Link = x }));
+            Duplicates.AddRange(newLinks.Select(x => new GameLink { Game = game, Link = x }));
 
             return true;
         }

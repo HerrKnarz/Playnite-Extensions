@@ -1,11 +1,13 @@
 ﻿using LinkUtilities.Linker;
+using LinkUtilities.Models;
 using Playnite.SDK;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace LinkUtilities.ViewModels
 {
-    internal class SelectedLinksViewModel : ViewModelBase
+    internal class SelectedLinksViewModel : ObservableObject
     {
         private ObservableCollection<SelectedLinker> _links = new ObservableCollection<SelectedLinker>();
 
@@ -28,11 +30,7 @@ namespace LinkUtilities.ViewModels
         public ObservableCollection<SelectedLinker> Links
         {
             get => _links;
-            set
-            {
-                _links = value;
-                OnPropertyChanged("Links");
-            }
+            set => SetValue(ref _links, value);
         }
 
         public RelayCommand<object> ReverseCheckCommand => new RelayCommand<object>(a =>

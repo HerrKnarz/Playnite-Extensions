@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace LinkUtilities.ViewModels
 {
-    internal class CheckLink : LinkViewModel
+    internal class CheckGameLink : GameLink
     {
         private LinkCheckResult _linkCheckResult;
         private bool _urlIsEqual;
@@ -13,21 +13,13 @@ namespace LinkUtilities.ViewModels
         public LinkCheckResult LinkCheckResult
         {
             get => _linkCheckResult;
-            set
-            {
-                _linkCheckResult = value;
-                OnPropertyChanged("LinkCheckResult");
-            }
+            set => SetValue(ref _linkCheckResult, value);
         }
 
         public bool UrlIsEqual
         {
             get => _urlIsEqual;
-            set
-            {
-                _urlIsEqual = value;
-                OnPropertyChanged("UrlIsEqual");
-            }
+            set => SetValue(ref _urlIsEqual, value);
         }
 
         public void Replace()

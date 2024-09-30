@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
+using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -12,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace LinkUtilities.ViewModels
 {
-    internal class CheckLinks : ViewModelBase
+    internal class CheckLinks : ObservableObject
     {
         private readonly List<Game> _games;
-        private ObservableCollectionFast<CheckLink> _filteredLinks = new ObservableCollectionFast<CheckLink>();
-        private ObservableCollectionFast<CheckLink> _links = new ObservableCollectionFast<CheckLink>();
+        private ObservableCollectionFast<CheckGameLink> _filteredLinks = new ObservableCollectionFast<CheckGameLink>();
+        private ObservableCollectionFast<CheckGameLink> _links = new ObservableCollectionFast<CheckGameLink>();
         private string _searchString = string.Empty;
 
         public CheckLinks(List<Game> games, bool hideOkOnLinkCheck)
@@ -25,24 +26,16 @@ namespace LinkUtilities.ViewModels
             Check(hideOkOnLinkCheck);
         }
 
-        public ObservableCollectionFast<CheckLink> FilteredLinks
+        public ObservableCollectionFast<CheckGameLink> FilteredLinks
         {
             get => _filteredLinks;
-            set
-            {
-                _filteredLinks = value;
-                OnPropertyChanged("FilteredLinks");
-            }
+            set => SetValue(ref _filteredLinks, value);
         }
 
-        public ObservableCollectionFast<CheckLink> Links
+        public ObservableCollectionFast<CheckGameLink> Links
         {
             get => _links;
-            set
-            {
-                _links = value;
-                OnPropertyChanged("Links");
-            }
+            set => SetValue(ref _links, value);
         }
 
         public string SearchString
@@ -50,9 +43,8 @@ namespace LinkUtilities.ViewModels
             get => _searchString;
             set
             {
-                _searchString = value;
+                SetValue(ref _searchString, value);
                 FilterLinks();
-                OnPropertyChanged("SearchString");
             }
         }
 
@@ -108,15 +100,15 @@ namespace LinkUtilities.ViewModels
             FilteredLinks.AddRange(SearchString.Any() ? Links.Where(x => x.Link.Name.Contains(SearchString, StringComparison.OrdinalIgnoreCase)) : Links);
         }
 
-        public void Remove(CheckLink checkLink)
+        public void Remove(CheckGameLink checkGameLink)
         {
-            checkLink.Remove();
+            checkGameLink.Remove();
 
-            Links.Remove(checkLink);
-            FilteredLinks.Remove(checkLink);
+            Links.Remove(checkGameLink);
+            FilteredLinks.Remove(checkGameLink);
         }
 
-        public void Replace(CheckLink checkLink) => checkLink.Replace();
+        public void Replace(CheckGameLink checkGameLink) => checkGameLink.Replace();
 
         private void Check(Game game, bool hideOkOnLinkCheck)
         {
@@ -125,7 +117,7 @@ namespace LinkUtilities.ViewModels
                 return;
             }
 
-            var linksQueue = new ConcurrentQueue<CheckLink>();
+            var linksQueue = new ConcurrentQueue<CheckGameLink>();
 
             Parallel.ForEach(game.Links.Where(x => !x.Url.StartsWith("steam")), link =>
             {
@@ -133,7 +125,7 @@ namespace LinkUtilities.ViewModels
 
                 if (!hideOkOnLinkCheck || linkCheckResult.StatusCode != HttpStatusCode.OK)
                 {
-                    linksQueue.Enqueue(new CheckLink
+                    linksQueue.Enqueue(new CheckGameLink
                     {
                         Game = game,
                         Link = link,
