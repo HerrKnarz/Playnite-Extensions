@@ -1,7 +1,7 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Helper;
 using LinkUtilities.Models;
-using LinkUtilities.Models.IsThereAnyDeal;
+using LinkUtilities.Models.ApiResults;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BrowserSearchUrl => "https://isthereanydeal.com/search/?q=";
 
         public override string LinkName => "IsThereAnyDeal";
-        public override string SearchUrl => "https://api.isthereanydeal.com/v02/search/search/?key={0}&q={1}&limit=20&strict=0";
+        public override string SearchUrl => "https://api.isthereanydeal.com/games/search/v1?key={0}&title={1}";
 
         public override string GetGamePath(Game game, string gameName = null)
         {
@@ -35,15 +35,14 @@ namespace LinkUtilities.Linker.LinkSources
                 return game.GameId;
             }
 
-            // For all other libraries links need the result name in lowercase without special characters and white spaces with numbers translated to roman numbers.
+            // For all other libraries links need the result name in lowercase without special characters and hyphens instead of white spaces.
             _baseUrl = _standardUrl;
 
             return (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()
-                .Replace("-", "")
-                .Replace(" ", "")
-                .DigitsToRomanNumbers()
-                .ToLower();
+                .CollapseWhitespaces()
+                .Replace(" ", "-")
+                .ToLower() + "/info/";
         }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
@@ -53,13 +52,13 @@ namespace LinkUtilities.Linker.LinkSources
                 return base.GetSearchResults(searchTerm);
             }
 
-            var searchResult = ParseHelper.GetJsonFromApi<IsThereAnyDealSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+            var searchResult = ParseHelper.GetJsonFromApi<IsThereAnyDealSearchResult[]>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
 
-            return searchResult?.Data?.Results?.Any() ?? false
-                ? new List<GenericItemOption>(searchResult.Data.Results.Select(r => new SearchResult
+            return searchResult?.Any(g => g.Type == "game") ?? false
+                ? new List<GenericItemOption>(searchResult.Where(g => g.Type == "game").Select(r => new SearchResult
                 {
                     Name = r.Title,
-                    Url = $"{_standardUrl}{r.Plain}",
+                    Url = $"{_standardUrl}{r.Slug}/info/",
                     Description = $"{r.Id}"
                 }))
                 : base.GetSearchResults(searchTerm);

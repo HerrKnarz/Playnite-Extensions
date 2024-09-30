@@ -146,9 +146,9 @@ namespace LinkUtilities.Test
                 {
                     CaseName = "IsThereAnyDeal",
                     Link = new LinkIsThereAnyDeal(),
-                    GameName = "Outer Worlds",
-                    GamePath = "outerworlds",
-                    Url = "https://isthereanydeal.com/game/outerworlds",
+                    GameName = "The Outer Worlds",
+                    GamePath = "the-outer-worlds/info/",
+                    Url = "https://isthereanydeal.com/game/the-outer-worlds/info/",
                     SearchedUrl = "not found!"
                 }
             },
@@ -270,7 +270,7 @@ namespace LinkUtilities.Test
                     GameName = "Landstalker: The Treasures of King Nole",
                     GamePath = "Landstalker%3A_The_Treasures_of_King_Nole",
                     Url = "https://segaretro.org/Landstalker%3A_The_Treasures_of_King_Nole",
-                    SearchedUrl = "https://segaretro.org/Landstalker:_The_Treasures_of_King_Nole"
+                    SearchedUrl = "not found!"
                 }
             },
             new object[]

@@ -1,39 +1,23 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
-namespace LinkUtilities.Models.IsThereAnyDeal
+namespace LinkUtilities.Models.ApiResults
 {
-    public class Data
-    {
-        [JsonProperty("results")]
-        public List<Result> Results;
-
-        [JsonProperty("urls")]
-        public Urls Urls;
-    }
-
-    public class Result
+    public class IsThereAnyDealSearchResult
     {
         [JsonProperty("id")]
-        public int Id;
+        public string Id;
 
-        [JsonProperty("plain")]
-        public string Plain;
+        [JsonProperty("mature")]
+        public bool Mature;
+
+        [JsonProperty("slug")]
+        public string Slug;
 
         [JsonProperty("title")]
         public string Title;
-    }
 
-    public class IsThereAnyDealSearchResult
-    {
-        [JsonProperty("data")]
-        public Data Data;
-    }
-
-    public class Urls
-    {
-        [JsonProperty("search")]
-        public string Search;
+        [JsonProperty("type")]
+        public string Type;
     }
 }
