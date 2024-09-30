@@ -97,11 +97,6 @@ namespace MetadataUtilities.Actions
                 rule.AddToDb();
             }
 
-            if (Settings.WriteDebugLog)
-            {
-                Log.Debug("Starting merge loop");
-            }
-
             return true;
         }
     }
