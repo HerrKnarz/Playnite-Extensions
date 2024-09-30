@@ -9,7 +9,7 @@
              d:DataContext="{d:DesignInstance Type=vm:ReviewDuplicatesViewModel}">
     <UserControl.Resources>
         <CollectionViewSource x:Key='GroupedItems' 
-                              Source="{Binding ReviewDuplicates.Duplicates}">
+                              Source="{Binding ReviewDuplicates}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Game.Name" />
             </CollectionViewSource.GroupDescriptions>

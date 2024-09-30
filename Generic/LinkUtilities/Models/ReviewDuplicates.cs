@@ -6,10 +6,9 @@ using System.Linq;
 
 namespace LinkUtilities.Models
 {
-    public class ReviewDuplicates : ObservableObject
+    public class ReviewDuplicates : ObservableCollectionFast<GameLink>
     {
         private readonly IEnumerable<Game> _games;
-        private ObservableCollectionFast<GameLink> _duplicates = new ObservableCollectionFast<GameLink>();
 
         public ReviewDuplicates(IEnumerable<Game> games)
         {
@@ -17,23 +16,17 @@ namespace LinkUtilities.Models
             GetDuplicates();
         }
 
-        public ObservableCollectionFast<GameLink> Duplicates
-        {
-            get => _duplicates;
-            set => SetValue(ref _duplicates, value);
-        }
-
         public void GetDuplicates()
         {
-            Duplicates.Clear();
+            Clear();
             _games.Aggregate(false, (current, game) => current | GetDuplicates(game));
         }
 
-        public void Remove(GameLink gameLink)
+        public new void Remove(GameLink gameLink)
         {
             gameLink.Remove();
 
-            Duplicates.Remove(gameLink);
+            base.Remove(gameLink);
         }
 
         private bool GetDuplicates(Game game)
@@ -53,7 +46,7 @@ namespace LinkUtilities.Models
                 return false;
             }
 
-            Duplicates.AddRange(newLinks.Select(x => new GameLink { Game = game, Link = x }));
+            AddRange(newLinks.Select(x => new GameLink { Game = game, Link = x }));
 
             return true;
         }

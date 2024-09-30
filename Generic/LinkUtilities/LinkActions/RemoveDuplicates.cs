@@ -38,7 +38,7 @@ namespace LinkUtilities.LinkActions
             {
                 var viewModel = new ReviewDuplicatesViewModel(games);
 
-                if (!viewModel.ReviewDuplicates.Duplicates?.Any() ?? true)
+                if (!viewModel.ReviewDuplicates?.Any() ?? true)
                 {
                     API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCLinkUtilitiesDialogNoDuplicatesFound"));
                     return;
