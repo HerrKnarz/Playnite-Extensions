@@ -36,7 +36,11 @@ namespace MetadataUtilities.ViewModels
 
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
         {
-            Log.Debug("=== MetadataEditorViewModel: Start ===");
+            if (plugin.Settings.Settings.WriteDebugLog)
+            {
+                Log.Debug("=== MetadataEditorViewModel: Start ===");
+            }
+
             var ts = DateTime.Now;
 
             Cursor.Current = Cursors.WaitCursor;
@@ -57,16 +61,22 @@ namespace MetadataUtilities.ViewModels
                 GamesViewSource.SortDescriptions.Add(new SortDescription("RealSortingName", ListSortDirection.Ascending));
                 GamesViewSource.IsLiveSortingRequested = true;
 
-                Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                ts = DateTime.Now;
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+                }
 
                 MetadataViewSource = new CollectionViewSource
                 {
                     Source = _completeMetadata
                 };
 
-                Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                ts = DateTime.Now;
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+                }
 
                 using (MetadataViewSource.DeferRefresh())
                 {
@@ -75,8 +85,11 @@ namespace MetadataUtilities.ViewModels
                     MetadataViewSource.SortDescriptions.Add(new SortDescription("EditName", ListSortDirection.Ascending));
                     MetadataViewSource.IsLiveSortingRequested = true;
 
-                    Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                    ts = DateTime.Now;
+                    if (plugin.Settings.Settings.WriteDebugLog)
+                    {
+                        Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                        ts = DateTime.Now;
+                    }
 
                     // We copy the settings, so we won't overwrite them when closing the window
                     // without using the close command
@@ -99,12 +112,18 @@ namespace MetadataUtilities.ViewModels
 
                 MetadataViewSource.View.Filter = Filter;
 
-                Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                ts = DateTime.Now;
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+                }
 
                 MetadataViewSource.View.MoveCurrentToFirst();
 
-                Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                }
             }
             finally
             {
@@ -678,7 +697,11 @@ namespace MetadataUtilities.ViewModels
 
         public static void ShowEditor(MetadataUtilities plugin, List<Game> games = null)
         {
-            Log.Debug("=== ShowEditor: Start ===");
+            if (plugin.Settings.Settings.WriteDebugLog)
+            {
+                Log.Debug("=== ShowEditor: Start ===");
+            }
+
             var ts = DateTime.Now;
 
             Cursor.Current = Cursors.WaitCursor;
@@ -707,7 +730,10 @@ namespace MetadataUtilities.ViewModels
                 window.Content = editorView;
                 window.DataContext = viewModel;
 
-                Log.Debug($"=== ShowEditor: Show Dialog ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== ShowEditor: Show Dialog ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                }
 
                 window.ShowDialog();
             }
@@ -732,18 +758,6 @@ namespace MetadataUtilities.ViewModels
             {
                 type.UpdateCount();
             }
-        }
-
-        private static void UpdateGroupDisplay(List<MetadataObject> itemList)
-        {
-            Log.Debug("=== UpdateGroupDisplay: Start ===");
-            var ts = DateTime.Now;
-
-            var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
-
-            Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
-
-            Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
         }
 
         private bool Filter(object item) =>
@@ -790,6 +804,25 @@ namespace MetadataUtilities.ViewModels
             finally
             {
                 Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private void UpdateGroupDisplay(List<MetadataObject> itemList)
+        {
+            if (_plugin.Settings.Settings.WriteDebugLog)
+            {
+                Log.Debug("=== UpdateGroupDisplay: Start ===");
+            }
+
+            var ts = DateTime.Now;
+
+            var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+
+            Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
+
+            if (_plugin.Settings.Settings.WriteDebugLog)
+            {
+                Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             }
         }
     }

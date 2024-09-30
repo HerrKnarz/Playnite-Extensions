@@ -52,8 +52,6 @@ namespace MetadataUtilities.Actions
 
         public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
-            base.FollowUp(ActionModifierType.IsCombi, item, isBulkAction);
-
             if (Settings.RemoveUnwantedOnMetadataUpdate)
             {
                 RemoveUnwantedAction.Instance(Settings).FollowUp(ActionModifierType.IsCombi, item, isBulkAction);
@@ -65,6 +63,8 @@ namespace MetadataUtilities.Actions
             }
 
             ExecuteConditionalActionsAction.Instance(Settings).FollowUp(ActionModifierType.IsCombi, item, isBulkAction);
+
+            base.FollowUp(ActionModifierType.None, item, isBulkAction);
         }
 
         public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)

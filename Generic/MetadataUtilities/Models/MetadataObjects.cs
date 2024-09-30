@@ -153,7 +153,11 @@ namespace MetadataUtilities.Models
 
         public void LoadMetadata(bool showGameNumber = true, bool onlyMergeAble = true)
         {
-            Log.Debug("=== LoadMetadata: Start ===");
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug("=== LoadMetadata: Start ===");
+            }
+
             var ts = DateTime.Now;
 
             var temporaryList = new List<MetadataObject>();
@@ -208,7 +212,11 @@ namespace MetadataUtilities.Models
 
             Clear();
             this.AddMissing(temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
-            Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            }
         }
 
         public void RemoveItems(IEnumerable<MetadataObject> items)
@@ -219,9 +227,13 @@ namespace MetadataUtilities.Models
             }
         }
 
-        private static void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames, IObjectType typeManager = null, bool onlyMergeAble = true)
+        private void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames, IObjectType typeManager = null, bool onlyMergeAble = true)
         {
-            Log.Debug("=== UpdateGameCounts: Start ===");
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug("=== UpdateGameCounts: Start ===");
+            }
+
             var ts = DateTime.Now;
 
             var types = new List<IObjectType>();
@@ -262,7 +274,10 @@ namespace MetadataUtilities.Models
 
             Parallel.ForEach(itemList, opts, item => item.GameCount = li.FirstOrDefault(i => i.Key == item.Id)?.Count() ?? 0);
 
-            Log.Debug($"=== UpdateGameCounts: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug($"=== UpdateGameCounts: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            }
         }
     }
 }

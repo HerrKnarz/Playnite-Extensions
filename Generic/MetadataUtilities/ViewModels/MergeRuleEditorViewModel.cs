@@ -30,7 +30,11 @@ namespace MetadataUtilities.ViewModels
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                Log.Debug("=== MetadataEditorViewModel: Start ===");
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug("=== MetadataEditorViewModel: Start ===");
+                }
+
                 var ts = DateTime.Now;
 
                 Plugin = plugin;
@@ -39,8 +43,11 @@ namespace MetadataUtilities.ViewModels
                 Prefixes.Add(string.Empty);
                 Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
 
-                Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                ts = DateTime.Now;
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+                }
 
                 MetadataViewSource = new CollectionViewSource
                 {
@@ -49,8 +56,11 @@ namespace MetadataUtilities.ViewModels
                 };
 
                 // ReSharper disable once PossibleNullReferenceException
-                Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                ts = DateTime.Now;
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+                }
 
                 using (MetadataViewSource.DeferRefresh())
                 {
@@ -70,12 +80,18 @@ namespace MetadataUtilities.ViewModels
 
                 MetadataViewSource.View.Filter = Filter;
 
-                Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                ts = DateTime.Now;
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+                }
 
                 MetadataViewSource.View.MoveCurrentToFirst();
 
-                Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                }
             }
             finally
             {

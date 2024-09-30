@@ -17,7 +17,15 @@ namespace MetadataUtilities.Actions
             bool isBulkAction = true) => isBulkAction || Prepare(actionModifier, item, false);
 
         public virtual void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null,
-            bool isBulkAction = true) => _gamesAffected.Clear();
+            bool isBulkAction = true)
+        {
+            if (actionModifier != ActionModifierType.IsCombi)
+            {
+                MetadataFunctions.UpdateGames(_gamesAffected);
+            }
+
+            _gamesAffected.Clear();
+        }
 
         public virtual bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null,
             bool isBulkAction = true)

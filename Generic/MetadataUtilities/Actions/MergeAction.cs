@@ -45,7 +45,7 @@ namespace MetadataUtilities.Actions
 
         public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
-            base.Prepare(actionModifier, item, isBulkAction);
+            base.FollowUp(actionModifier, item, isBulkAction);
 
             var itemsToRemove = new List<MetadataObject>();
 
@@ -95,6 +95,11 @@ namespace MetadataUtilities.Actions
                 }
 
                 rule.AddToDb();
+            }
+
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug("Starting merge loop");
             }
 
             return true;

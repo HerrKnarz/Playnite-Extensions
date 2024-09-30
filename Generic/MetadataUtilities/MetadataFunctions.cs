@@ -116,15 +116,11 @@ namespace MetadataUtilities
                 : new List<MetadataObject>();
         }
 
-        public static void MergeItems(MetadataUtilities plugin, MergeRule rule) =>
-            MergeItems(plugin, new List<MergeRule> { rule }, true);
-
-        public static void MergeItems(MetadataUtilities plugin, List<MergeRule> rules = null, bool showDialog = false)
+        public static void MergeItems(MetadataUtilities plugin, MergeRule rule, bool showDialog = true)
         {
-            var gamesAffected = new List<Guid>();
-
             plugin.IsUpdating = true;
             Cursor.Current = Cursors.WaitCursor;
+            var gamesAffected = new List<Guid>();
             try
             {
                 using (API.Instance.Database.BufferedUpdate())
@@ -141,32 +137,7 @@ namespace MetadataUtilities
                     {
                         try
                         {
-                            if (rules == null)
-                            {
-                                rules = new List<MergeRule>();
-                                rules.AddRange(plugin.Settings.Settings.MergeRules);
-                            }
-
-                            var itemsToRemove = new List<MetadataObject>();
-
-                            foreach (var rule in rules)
-                            {
-                                gamesAffected.AddMissing(rule.Merge(API.Instance.Database.Games.ToList(), false));
-
-                                itemsToRemove.AddRange(rule.SourceObjects.Where(x =>
-                                    x.Id != rule.Id && x.Id != default && !itemsToRemove.Any(i =>
-                                        i.Type == x.Type && i.Name == x.Name)));
-                            }
-
-                            if (itemsToRemove.Count <= 0)
-                            {
-                                return;
-                            }
-
-                            foreach (var item in itemsToRemove)
-                            {
-                                item.RemoveFromDb();
-                            }
+                            gamesAffected.AddMissing(rule.Merge(API.Instance.Database.Games.ToList()));
                         }
                         catch (Exception ex)
                         {
