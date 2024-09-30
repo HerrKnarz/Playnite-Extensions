@@ -15,7 +15,7 @@
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
-    <DockPanel Margin="10">
+    <DockPanel Margin="15">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
             <Label Content="{DynamicResource LOCLinkUtilitiesCheckLinksFilter}"/>
             <TextBox Text="{Binding CheckLinks.SearchString}" Width="150" Margin="10,0,0,0"/>
@@ -30,7 +30,7 @@
                     Command="{Binding ReplaceCommand}" Margin="10,0,0,0"
                     CommandParameter="{Binding SelectedItems, ElementName=LvCheckedLinks}"/>
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonHelp}" Margin="10,0,0,0"
-                    Click="HelpClick"/>
+                    Command="{Binding HelpCommand}"/>
         </StackPanel>
         <ListView Name="LvCheckedLinks" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0" HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource GroupedItems}}"

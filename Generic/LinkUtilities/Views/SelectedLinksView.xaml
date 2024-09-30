@@ -7,15 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:SelectedLinksViewModel}">
-    <DockPanel Margin="10">
+    <DockPanel Margin="15">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Right">
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonUncheckAll}" Command="{Binding UncheckAllCommand}"/>
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonCheckAll}" Command="{Binding CheckAllCommand}"/>
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonReverseCheck}" Command="{Binding ReverseCheckCommand}"/>
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonOk}" Margin="10,0,0,0"
-                    Click="OK_Click" IsDefault="True"/>
+                    Style="{StaticResource BottomButton}" Click="OK_Click" IsDefault="True"/>
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonCancel}" Margin="10,0,0,0"
-                    Click="Cancel_Click" IsCancel="True"/>
+                    Style="{StaticResource BottomButton}" Click="Cancel_Click" IsCancel="True"/>
         </StackPanel>
         <ListView Name="SelectedLinks" SelectionMode="Single" DockPanel.Dock="Top" HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch" ItemsSource="{Binding Links}">

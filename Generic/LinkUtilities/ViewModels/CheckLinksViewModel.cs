@@ -1,7 +1,7 @@
-﻿using LinkUtilities.Models;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace LinkUtilities.ViewModels
@@ -20,6 +20,10 @@ namespace LinkUtilities.ViewModels
 
         public RelayCommand FilterCommand
             => new RelayCommand(() => CheckLinks.FilterLinks());
+
+        public RelayCommand HelpCommand => new RelayCommand(() =>
+            Process.Start(new ProcessStartInfo(
+                "https://knarzwerk.de/en/playnite-extensions/link-utilities/check-links/")));
 
         public RelayCommand<IList<object>> RemoveCommand => new RelayCommand<IList<object>>(items =>
         {

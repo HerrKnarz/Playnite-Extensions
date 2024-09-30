@@ -23,12 +23,6 @@ namespace LinkUtilities.Views
             }
         }
 
-        private void HelpClick(object sender, RoutedEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo("https://github.com/HerrKnarz/Playnite-Extensions/wiki/Link-Utilities:-Check-links"));
-            e.Handled = true;
-        }
-
         private void UrlClick(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo((string)((Button)sender).Tag));
