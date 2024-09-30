@@ -1,5 +1,20 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 4.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-09-30
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-09-30/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_1.pext
+    Changelog:
+      - Added option to remove specific links from selected games via a new dialog.
+      - Added support for Killer List Of Video Games
+      - Only run through games, that actually changed something in their links and still have any after game metadata was changed.
+      - Removed support for HowLongToBeat for the time being, since they made it even more difficult to access their not publicly available API. I'll maybe reintroduce it, once there is a public API available.
+      - Fixed linker for IsThereAnyDeal. Old links for non steam games already added unfortunately won't work anymore, since they changed their link structure some time ago.
+      - Rearranged game menu items to make often used ones more accessible.
+      - Small layout optimizations in dialogs
+      - Replaced github wiki links with my own website
+      - Cleaned up code
+      - updated localizations
   - Version: 4.0
     RequiredApiVersion: 6.8.0
     ReleaseDate: 2024-01-12
