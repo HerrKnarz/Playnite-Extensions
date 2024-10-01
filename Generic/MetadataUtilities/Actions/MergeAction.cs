@@ -31,9 +31,31 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
+            var types = FieldTypeHelper.GetItemListTypes().ToList();
+
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug($"==== Started executing Merge Rules on Game \"{game.Game.Name}\" ======================================");
+
+                foreach (var type in types)
+                {
+                    Log.Debug($"{type.LabelPlural} before: {string.Join(", ", type.LoadGameMetadata(game.Game).Select(x => x.Name))}");
+                }
+            }
+
             var result = item is MergeRule singleRule
                 ? singleRule.Merge(game.Game)
                 : _rules.Aggregate(false, (current, rule) => current | rule.Merge(game.Game));
+
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug($"==== Finished executing Merge Rules on Game \"{game.Game.Name}\" ({result}) ============================");
+
+                foreach (var type in types)
+                {
+                    Log.Debug($"{type.LabelPlural} after: {string.Join(", ", type.LoadGameMetadata(game.Game).Select(x => x.Name))}");
+                }
+            }
 
             if (result && actionModifier != ActionModifierType.IsCombi)
             {
