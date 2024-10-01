@@ -67,6 +67,11 @@ namespace MetadataUtilities
 
         public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
         {
+            if (Settings.Settings.WriteDebugLog)
+            {
+                Log.Debug($"IsUpdating: {IsUpdating}");
+            }
+
             if (IsUpdating)
             {
                 return;

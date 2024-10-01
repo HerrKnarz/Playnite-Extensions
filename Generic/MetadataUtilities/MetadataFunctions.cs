@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
+using MergeAction = MetadataUtilities.Actions.MergeAction;
 
 namespace MetadataUtilities
 {
@@ -21,6 +22,11 @@ namespace MetadataUtilities
             bool showDialog = false, ActionModifierType actionModifier = ActionModifierType.None, object item = null)
         {
             plugin.IsUpdating = true;
+
+            if (plugin.Settings.Settings.WriteDebugLog)
+            {
+                Log.Debug($"===> Started {action.GetType()} for {games.Count} games. =======================");
+            }
 
             Cursor.Current = Cursors.WaitCursor;
             try
@@ -82,6 +88,11 @@ namespace MetadataUtilities
                                 Log.Error(ex);
                             }
                         }, globalProgressOptions);
+                    }
+
+                    if (plugin.Settings.Settings.WriteDebugLog)
+                    {
+                        Log.Debug($"===> Finished {action.GetType()} with {gamesAffected} games affected. =======================");
                     }
 
                     // Shows a dialog with the number of games actually affected.
@@ -353,6 +364,11 @@ namespace MetadataUtilities
 
                     break;
                 }
+            }
+
+            if (MergeAction.Instance(null).Settings?.WriteDebugLog ?? false)
+            {
+                Log.Debug($"Updating {gamesToUpdate.Count} games:\n{string.Join("\n", gamesToUpdate.Select(g => g.Name))}");
             }
 
             if (gamesToUpdate.Count == 0)

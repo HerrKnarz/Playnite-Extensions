@@ -1,4 +1,5 @@
-﻿using MetadataUtilities.Enums;
+﻿using KNARZhelper;
+using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
 
@@ -20,6 +21,14 @@ namespace MetadataUtilities.Actions
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug($"===> Game \"{game.Game.Name}\"  =======================================");
+                Log.Debug($"ExecuteRemoveUnwanted: {game.ExecuteRemoveUnwanted}");
+                Log.Debug($"ExecuteMergeRules: {game.ExecuteMergeRules}");
+                Log.Debug($"ExecuteConditionalActions: {game.ExecuteConditionalActions}");
+            }
+
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
                 return false;
@@ -69,6 +78,13 @@ namespace MetadataUtilities.Actions
 
         public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug($"===> preparing AfterMetadataUpdate =======================");
+                Log.Debug($"RemoveUnwantedOnMetadataUpdate: {Settings.RemoveUnwantedOnMetadataUpdate}");
+                Log.Debug($"MergeMetadataOnMetadataUpdate: {Settings.MergeMetadataOnMetadataUpdate}");
+            }
+
             if (!base.Prepare(ActionModifierType.IsCombi, item, isBulkAction))
             {
                 return false;
