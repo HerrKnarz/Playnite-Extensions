@@ -1,5 +1,12 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 1.2.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-10-01
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-10-01/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_1_2_1.pext
+    Changelog:
+      - Added optional debug logging for merging after metadata updates. Needs to be activated in the addon settings.
+      - Fixed items not being removed after merging them in Metadata Editor.
   - Version: 1.2
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-09-30
