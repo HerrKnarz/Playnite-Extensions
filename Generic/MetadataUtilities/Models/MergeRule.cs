@@ -43,10 +43,19 @@ namespace MetadataUtilities.Models
                         games = API.Instance.Database.Games.ToList();
                     }
 
-                    result.AddMissing(item.ReplaceInDb(games, Type, Id, removeAfter));
+                    result.AddMissing(item.ReplaceInDb(games, Type, Id));
                 }
 
                 MetadataFunctions.UpdateGames(result);
+
+                if (removeAfter)
+                {
+                    foreach (var item in SourceObjects.Where(x =>
+                                 x.Id != Id && x.Id != default))
+                    {
+                        item.RemoveFromDb();
+                    }
+                }
             }
             catch (Exception ex)
             {

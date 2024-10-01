@@ -251,8 +251,7 @@ namespace MetadataUtilities.Models
 
         public bool RemoveFromGame(Game game) => TypeManager is IEditableObjectType type && type.RemoveObjectFromGame(game, Id);
 
-        public IEnumerable<Guid> ReplaceInDb(List<Game> games, FieldType? newType = null, Guid? newId = null,
-            bool removeAfter = true)
+        public IEnumerable<Guid> ReplaceInDb(List<Game> games, FieldType? newType = null, Guid? newId = null)
         {
             IEnumerable<Guid> gameIds = new List<Guid>();
 
@@ -264,11 +263,6 @@ namespace MetadataUtilities.Models
             gameIds = newType?.GetTypeManager() is IEditableObjectType newTypeManager
                 ? type.ReplaceDbObject(games, Id, newTypeManager, newId)
                 : type.ReplaceDbObject(games, Id);
-
-            if (removeAfter && type.RemoveDbObject(Id))
-            {
-                Id = default;
-            }
 
             return gameIds;
         }

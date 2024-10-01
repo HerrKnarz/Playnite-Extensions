@@ -532,7 +532,7 @@ namespace MetadataUtilities.ViewModels
 
                 foreach (var item in SelectedItems)
                 {
-                    gamesAffected.AddMissing(item.ReplaceInDb(games, null, null, false).ToList());
+                    gamesAffected.AddMissing(item.ReplaceInDb(games).ToList());
                 }
 
                 if (gamesAffected.Count == 0)
