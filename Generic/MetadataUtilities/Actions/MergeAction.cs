@@ -2,6 +2,7 @@
 using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -93,30 +94,43 @@ namespace MetadataUtilities.Actions
 
         public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
-            if (!base.Prepare(actionModifier, item, isBulkAction))
+            try
             {
-                return false;
-            }
-
-            _rules.Clear();
-
-            if (item is MergeRule singleRule)
-            {
-                _rules.Add(singleRule);
-            }
-            else
-            {
-                _rules.AddRange(Settings.MergeRules.DeepClone().ToList());
-            }
-
-            foreach (var rule in _rules)
-            {
-                foreach (var sourceItem in rule.SourceObjects)
+                if (!base.Prepare(actionModifier, item, isBulkAction))
                 {
-                    sourceItem.RefreshId();
+                    return false;
                 }
 
-                rule.AddToDb();
+                _rules.Clear();
+
+                if (item is MergeRule singleRule)
+                {
+                    _rules.Add(singleRule);
+                }
+                else
+                {
+                    _rules.AddRange(Settings.MergeRules.DeepClone().ToList());
+                }
+
+                if (_rules.Count == 0)
+                {
+                    return false;
+                }
+
+                foreach (var rule in _rules)
+                {
+                    foreach (var sourceItem in rule.SourceObjects)
+                    {
+                        sourceItem.RefreshId();
+                    }
+
+                    rule.AddToDb();
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return false;
             }
 
             return true;

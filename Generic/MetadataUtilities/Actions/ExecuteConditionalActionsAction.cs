@@ -40,5 +40,8 @@ namespace MetadataUtilities.Actions
 
             return mustUpdate;
         }
+
+        public override bool Prepare(ActionModifierType actionModifier = ActionModifierType.None, object item = null,
+            bool isBulkAction = true) => base.Prepare(actionModifier, item, isBulkAction) && Settings.ConditionalActions.Count > 0;
     }
 }

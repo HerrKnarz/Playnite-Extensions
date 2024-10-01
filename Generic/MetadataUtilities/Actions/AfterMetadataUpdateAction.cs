@@ -8,6 +8,9 @@ namespace MetadataUtilities.Actions
     public class AfterMetadataUpdateAction : BaseAction
     {
         private static AfterMetadataUpdateAction _instance;
+        private bool _haveToExecActions;
+        private bool _haveToMerge;
+        private bool _haveToRemove;
 
         private AfterMetadataUpdateAction(Settings settings) : base(settings)
         {
@@ -36,17 +39,17 @@ namespace MetadataUtilities.Actions
 
             var result = false;
 
-            if (Settings.RemoveUnwantedOnMetadataUpdate && game.ExecuteRemoveUnwanted)
+            if (Settings.RemoveUnwantedOnMetadataUpdate && game.ExecuteRemoveUnwanted && _haveToRemove)
             {
                 result |= RemoveUnwantedAction.Instance(Settings).Execute(game, ActionModifierType.IsCombi, item, isBulkAction);
             }
 
-            if (Settings.MergeMetadataOnMetadataUpdate && game.ExecuteMergeRules)
+            if (Settings.MergeMetadataOnMetadataUpdate && game.ExecuteMergeRules && _haveToMerge)
             {
                 result |= MergeAction.Instance(Settings).Execute(game, ActionModifierType.IsCombi, item, isBulkAction);
             }
 
-            if (game.ExecuteConditionalActions)
+            if (game.ExecuteConditionalActions && _haveToExecActions)
             {
                 result |= ExecuteConditionalActionsAction.Instance(Settings).Execute(game, ActionModifierType.IsCombi, item, isBulkAction);
             }
@@ -61,17 +64,20 @@ namespace MetadataUtilities.Actions
 
         public override void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
-            if (Settings.RemoveUnwantedOnMetadataUpdate)
+            if (Settings.RemoveUnwantedOnMetadataUpdate && _haveToRemove)
             {
                 RemoveUnwantedAction.Instance(Settings).FollowUp(ActionModifierType.IsCombi, item, isBulkAction);
             }
 
-            if (Settings.MergeMetadataOnMetadataUpdate)
+            if (Settings.MergeMetadataOnMetadataUpdate && _haveToMerge)
             {
                 MergeAction.Instance(Settings).FollowUp(ActionModifierType.IsCombi, item, isBulkAction);
             }
 
-            ExecuteConditionalActionsAction.Instance(Settings).FollowUp(ActionModifierType.IsCombi, item, isBulkAction);
+            if (_haveToExecActions)
+            {
+                ExecuteConditionalActionsAction.Instance(Settings).FollowUp(ActionModifierType.IsCombi, item, isBulkAction);
+            }
 
             base.FollowUp(ActionModifierType.None, item, isBulkAction);
         }
@@ -90,19 +96,22 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            var result = true;
+            var result = false;
 
             if (Settings.RemoveUnwantedOnMetadataUpdate)
             {
-                result &= RemoveUnwantedAction.Instance(Settings).Prepare(ActionModifierType.IsCombi, item, isBulkAction);
+                _haveToRemove = RemoveUnwantedAction.Instance(Settings).Prepare(ActionModifierType.IsCombi, item, isBulkAction);
+                result |= _haveToRemove;
             }
 
             if (Settings.MergeMetadataOnMetadataUpdate)
             {
-                result &= MergeAction.Instance(Settings).Prepare(ActionModifierType.IsCombi, item, isBulkAction);
+                _haveToMerge = MergeAction.Instance(Settings).Prepare(ActionModifierType.IsCombi, item, isBulkAction);
+                result |= _haveToMerge;
             }
 
-            result &= ExecuteConditionalActionsAction.Instance(Settings).Prepare(ActionModifierType.IsCombi, item, isBulkAction);
+            _haveToExecActions = ExecuteConditionalActionsAction.Instance(Settings).Prepare(ActionModifierType.IsCombi, item, isBulkAction);
+            result |= _haveToExecActions;
 
             return result;
         }

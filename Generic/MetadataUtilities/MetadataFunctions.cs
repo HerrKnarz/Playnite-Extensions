@@ -22,6 +22,7 @@ namespace MetadataUtilities
             bool showDialog = false, ActionModifierType actionModifier = ActionModifierType.None, object item = null)
         {
             plugin.IsUpdating = true;
+            var gamesAffected = 0;
 
             if (plugin.Settings.Settings.WriteDebugLog)
             {
@@ -33,15 +34,17 @@ namespace MetadataUtilities
             {
                 if (games.Count == 1)
                 {
-                    action.Execute(games.First(), actionModifier, item, false);
+                    if (action.Execute(games.First(), actionModifier, item, false))
+                    {
+                        gamesAffected++;
+                    }
+
                     action.FollowUp(actionModifier, item, false);
                 }
                 // if we have more than one game in the list, we want to start buffered mode and
                 // show a progress bar.
                 else if (games.Count > 1)
                 {
-                    var gamesAffected = 0;
-
                     using (plugin.PlayniteApi.Database.BufferedUpdate())
                     {
                         if (!action.Prepare(actionModifier, item))
@@ -90,11 +93,6 @@ namespace MetadataUtilities
                         }, globalProgressOptions);
                     }
 
-                    if (plugin.Settings.Settings.WriteDebugLog)
-                    {
-                        Log.Debug($"===> Finished {action.GetType()} with {gamesAffected} games affected. =======================");
-                    }
-
                     // Shows a dialog with the number of games actually affected.
                     if (!showDialog)
                     {
@@ -107,6 +105,11 @@ namespace MetadataUtilities
             }
             finally
             {
+                if (plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"===> Finished {action.GetType()} with {gamesAffected} games affected. =======================");
+                }
+
                 plugin.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
