@@ -107,7 +107,7 @@ namespace WikipediaMetadata
         /// <summary>
         /// Array of strings to separate the values by.
         /// </summary>
-        public static readonly string[] StringSeparators = { "<br />", "<br/>", "<br>", "\n" };
+        public static readonly string[] StringSeparators = { "<br />", "<br/>", "<br>" };
 
         /// <summary>
         /// List of paragpraphs that usually contain stuff, that's either very hard to parse for a playnite description or unnecessary.

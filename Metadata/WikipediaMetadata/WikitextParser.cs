@@ -143,24 +143,6 @@ namespace WikipediaMetadata
 
             value = value.RemoveTextBetween("<!--", "-->").Trim();
 
-            // Since we also split by new line and don't need to do that, if it's the last character, we remove that one.
-            if (value.EndsWith("\n"))
-            {
-                value = value.Remove(value.Length - "\n".Length).Trim();
-            }
-
-            var parser = new MwParserFromScratch.WikitextParser();
-            var values = new List<MetadataNameProperty>();
-
-            // If the value is the only one and is a link, we return it without splitting.
-            if (IsSingleLink(value))
-            {
-                values.Add(new MetadataNameProperty(parser.Parse(value).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim()));
-                return values;
-            }
-
-            value = parser.Parse(value).ToPlainText(NodePlainTextOptions.RemoveRefTags);
-
             // Now we build the list of separators to split the values by.
             var separators = new List<string>();
 
@@ -178,8 +160,28 @@ namespace WikipediaMetadata
                 }
             }
 
-            // Now we split the values by the list of separators and parse the result to get the plain text values.
-            values.AddRange(value.Split(separators.ToArray(), 100, StringSplitOptions.RemoveEmptyEntries)
+            // Since most separators are HTML, we simply replace them with a line break, so ToPlainText doesn't remove them.
+            value = separators.Aggregate(value, (current, replacement) => current.Replace(replacement, "\n"));
+
+            // Since we also split by new line and don't need to do that, if it's the last character, we remove that one.
+            if (value.EndsWith("\n"))
+            {
+                value = value.Remove(value.Length - "\n".Length).Trim();
+            }
+
+            var parser = new MwParserFromScratch.WikitextParser();
+            var values = new List<MetadataNameProperty>();
+            var plainTextValue = parser.Parse(value).ToPlainText(NodePlainTextOptions.RemoveRefTags).Trim();
+
+            // If the value is the only one and is a link, we return it without splitting.
+            if (IsSingleLink(value))
+            {
+                values.Add(new MetadataNameProperty(plainTextValue));
+                return values;
+            }
+
+            // Now we split the values by the new line characters.
+            values.AddRange(plainTextValue.Split(new[] { "\r\n", "\r", "\n" }, 100, StringSplitOptions.RemoveEmptyEntries)
                 .Select(segment => segment.Trim())
                 .Where(segment => segment.Length > 0)
                 .Select(segment => new MetadataNameProperty(segment)));
