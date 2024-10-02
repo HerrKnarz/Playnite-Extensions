@@ -227,6 +227,9 @@
     </Compile>
     <Compile Include="Actions\AfterMetadataUpdateAction.cs" />
     <Compile Include="Actions\MergeAction.cs" />
+    <Compile Include="Controls\PrefixItemControl.xaml.cs">
+      <DependentUpon>PrefixItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enums\ActionModifierType.cs" />
     <Compile Include="Actions\AddDefaultsAction.cs" />
     <Compile Include="Actions\BaseAction.cs" />
@@ -252,6 +255,7 @@
     <Compile Include="Models\MetadataObject.cs" />
     <Compile Include="Models\MetadataObjects.cs" />
     <Compile Include="Models\MyGame.cs" />
+    <Compile Include="Models\PrefixItemList.cs" />
     <Compile Include="Models\QuickAddObject.cs" />
     <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
     <Compile Include="ViewModels\ChangeTypeViewModel.cs" />
@@ -259,6 +263,7 @@
     <Compile Include="ViewModels\FieldTypeContextAction.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\MergeRuleEditorViewModel.cs" />
+    <Compile Include="ViewModels\PrefixItemControlViewModel.cs" />
     <Compile Include="ViewModels\SearchGameViewModel.cs" />
     <Compile Include="ViewModels\SelectDateViewModel.cs" />
     <Compile Include="ViewModels\SelectIntViewModel.cs" />
@@ -312,6 +317,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="Controls\PrefixItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ConditionalActionEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

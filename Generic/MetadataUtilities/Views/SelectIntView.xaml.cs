@@ -5,7 +5,7 @@ using System.Windows.Input;
 namespace MetadataUtilities.Views
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for PrefixItemControl.xaml
     /// </summary>
     public partial class SelectIntView
     {

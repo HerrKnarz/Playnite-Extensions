@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using KNARZhelper.DatabaseObjectTypes;
 using MetadataUtilities.Actions;
+using MetadataUtilities.Controls;
 using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using MetadataUtilities.ViewModels;
@@ -17,6 +18,7 @@ using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
+using Control = System.Windows.Controls.Control;
 using MergeAction = MetadataUtilities.Actions.MergeAction;
 using UserControl = System.Windows.Controls.UserControl;
 
@@ -42,6 +44,12 @@ namespace MetadataUtilities
             }
 
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
+
+            AddCustomElementSupport(new AddCustomElementSupportArgs
+            {
+                ElementList = new List<string> { "PrefixItemControl" },
+                SourceName = "MetadataUtilities"
+            });
 
             var iconResourcesToAdd = new Dictionary<string, string>
             {
@@ -225,6 +233,9 @@ namespace MetadataUtilities
 
             return menuItems;
         }
+
+        public override Control GetGameViewControl(GetGameViewControlArgs args) =>
+            args.Name == "PrefixItemControl" ? new PrefixItemControl(this) : null;
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
