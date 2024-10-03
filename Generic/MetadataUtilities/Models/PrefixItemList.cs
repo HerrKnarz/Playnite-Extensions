@@ -15,18 +15,19 @@ namespace MetadataUtilities.Models
         private string _name;
         private string _prefix;
 
-        public PrefixItemList(MetadataUtilities plugin, Game game, FieldType fieldType)
+        public PrefixItemList(MetadataUtilities plugin, Game game, PrefixItemList itemList)
         {
-            _fieldType = fieldType;
+            _fieldType = itemList.FieldType;
+            _icon = itemList.Icon;
+            _name = itemList.Name;
+            _prefix = itemList.Prefix;
 
             _items = new MetadataObjects(plugin.Settings.Settings);
 
-            if (!(fieldType.GetTypeManager() is IEditableObjectType type))
+            if (!(_fieldType.GetTypeManager() is IEditableObjectType type))
             {
                 return;
             }
-
-            _name = type.LabelPlural;
 
             _items.AddMissing(type.LoadGameMetadata(game).Select(x =>
                 new MetadataObject(plugin.Settings.Settings)
@@ -34,7 +35,7 @@ namespace MetadataUtilities.Models
                     Id = x.Id,
                     Name = x.Name,
                     Type = type.Type
-                }));
+                }).Where(x => x.Prefix == _prefix));
         }
 
         public PrefixItemList()

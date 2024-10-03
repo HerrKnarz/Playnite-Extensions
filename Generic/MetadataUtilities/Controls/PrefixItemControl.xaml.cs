@@ -19,19 +19,23 @@ namespace MetadataUtilities.Controls
         {
             base.GameContextChanged(oldContext, newContext);
 
+            RefreshData();
+        }
+
+        public void RefreshData()
+        {
             if (!(DataContext is PrefixItemControlViewModel viewModel))
             {
                 return;
             }
 
-            if (viewModel.GameId == (newContext?.Id ?? Guid.Empty))
+            if (viewModel.GameId == (GameContext?.Id ?? Guid.Empty))
             {
                 viewModel.RefreshData();
-
                 return;
             }
 
-            viewModel.GameId = newContext?.Id ?? Guid.Empty;
+            viewModel.GameId = GameContext?.Id ?? Guid.Empty;
         }
     }
 }

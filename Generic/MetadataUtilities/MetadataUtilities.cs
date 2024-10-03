@@ -123,7 +123,7 @@ namespace MetadataUtilities
 
             MetadataFunctions.DoForAll(this, myGames, AfterMetadataUpdateAction.Instance(Settings.Settings), false, ActionModifierType.IsCombi);
 
-            PrefixItemControl.GameContextChanged(PrefixItemControl.GameContext, PrefixItemControl.GameContext);
+            PrefixItemControl.RefreshData();
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)

@@ -4,6 +4,8 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MetadataUtilities.ViewModels
 {
@@ -12,7 +14,7 @@ namespace MetadataUtilities.ViewModels
         private readonly MetadataUtilities _plugin;
         private Game _game;
         private Guid _gameId = Guid.Empty;
-        private PrefixItemList _tags;
+        private ObservableCollection<PrefixItemList> _itemLists = new ObservableCollection<PrefixItemList>();
 
         public PrefixItemControlViewModel(MetadataUtilities plugin) => _plugin = plugin;
 
@@ -27,18 +29,27 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public PrefixItemList Tags
+        public ObservableCollection<PrefixItemList> ItemLists
         {
-            get => _tags;
-            set => SetValue(ref _tags, value);
+            get => _itemLists;
+            set => SetValue(ref _itemLists, value);
         }
 
         public void RefreshData()
         {
             _game = API.Instance.Database.Games[GameId];
 
-            Tags = new PrefixItemList(_plugin, _game, FieldType.Tag);
+            ItemLists.Clear();
 
+            foreach (var itemList in _plugin.Settings.Settings.PrefixItemTypes.Where(x => x.FieldType != FieldType.Empty && x.Name != default))
+            {
+                var tempList = new PrefixItemList(_plugin, _game, itemList);
+
+                if (tempList.Items.Count > 0)
+                {
+                    ItemLists.Add(new PrefixItemList(_plugin, _game, itemList));
+                }
+            }
         }
     }
 }
