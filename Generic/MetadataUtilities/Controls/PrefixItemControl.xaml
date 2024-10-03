@@ -11,24 +11,24 @@
         <ItemsControl ItemsSource="{Binding ItemLists}" DockPanel.Dock="Top" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel>
-                        <Label DockPanel.Dock="Top">
+                    <DockPanel LastChildFill="False">
+                        <Label DockPanel.Dock="Left">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Icon}" Style="{DynamicResource Icon}" />
                                 <TextBlock Text="{Binding Name}"/>
                             </StackPanel>
                         </Label>
-                        <ItemsControl ItemsSource="{Binding Items}" DockPanel.Dock="Top" Margin="0,3,0,3">
+                        <ItemsControl ItemsSource="{Binding Items}" DockPanel.Dock="Right">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel Orientation="Horizontal" Margin="15,0,0,0" />
+                                    <StackPanel />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Button Content="{Binding EditName}" Style="{StaticResource PropertyItemFeedPanelButton}"
                                             Command="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=DataContext.SetFeatureFilterCommand}"
-                                            CommandParameter="{Binding}"/>
+                                            CommandParameter="{Binding}" HorizontalAlignment="Right"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

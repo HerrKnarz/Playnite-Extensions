@@ -45,11 +45,14 @@ namespace MetadataUtilities
 
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
 
-            PrefixItemControl = new PrefixItemControl(this);
+            foreach (var type in FieldTypeHelper.ItemListFieldValues())
+            {
+                PrefixItemControls.Add($"{type.Value}PrefixItemControl", new PrefixItemControl(this, type.Key));
+            }
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "PrefixItemControl" },
+                ElementList = PrefixItemControls.Select(type => type.Key).ToList(),
                 SourceName = "MetadataUtilities"
             });
 
@@ -73,7 +76,7 @@ namespace MetadataUtilities
 
         internal bool IsUpdating { get; set; }
 
-        public PrefixItemControl PrefixItemControl { get; set; }
+        public Dictionary<string, PrefixItemControl> PrefixItemControls { get; set; } = new Dictionary<string, PrefixItemControl>();
 
         public SettingsViewModel Settings { get; }
 
@@ -123,7 +126,10 @@ namespace MetadataUtilities
 
             MetadataFunctions.DoForAll(this, myGames, AfterMetadataUpdateAction.Instance(Settings.Settings), false, ActionModifierType.IsCombi);
 
-            PrefixItemControl.RefreshData();
+            foreach (var control in PrefixItemControls)
+            {
+                control.Value.RefreshData();
+            }
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -240,8 +246,12 @@ namespace MetadataUtilities
             return menuItems;
         }
 
-        public override Control GetGameViewControl(GetGameViewControlArgs args) =>
-            args.Name == "PrefixItemControl" ? PrefixItemControl : null;
+        public override Control GetGameViewControl(GetGameViewControlArgs args)
+        {
+            PrefixItemControls.TryGetValue(args.Name, out var result);
+
+            return result;
+        }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {

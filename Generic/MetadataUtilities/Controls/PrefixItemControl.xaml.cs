@@ -1,4 +1,5 @@
-﻿using MetadataUtilities.ViewModels;
+﻿using KNARZhelper.Enum;
+using MetadataUtilities.ViewModels;
 using Playnite.SDK.Models;
 using System;
 
@@ -9,11 +10,13 @@ namespace MetadataUtilities.Controls
     /// </summary>
     public partial class PrefixItemControl
     {
-        public PrefixItemControl(MetadataUtilities plugin)
+        public PrefixItemControl(MetadataUtilities plugin, FieldType type)
         {
             InitializeComponent();
-            DataContext = new PrefixItemControlViewModel(plugin);
+            DataContext = new PrefixItemControlViewModel(plugin, type, Icon);
         }
+
+        public string Icon { get; set; }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
