@@ -165,9 +165,14 @@ namespace MetadataUtilities.Models
 
         public Guid AddToDb()
         {
-            if (TypeManager is IEditableObjectType type)
+            if (TypeManager is IEditableObjectType editableType)
             {
-                Id = type.AddDbObject(Name);
+                Id = editableType.AddDbObject(Name);
+            }
+            // If we can't add the item, for consistency we still get the id, since adding also returns the id.
+            else
+            {
+                RefreshId();
             }
 
             return Id;
