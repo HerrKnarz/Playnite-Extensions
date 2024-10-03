@@ -45,6 +45,8 @@ namespace MetadataUtilities
 
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
 
+            PrefixItemControl = new PrefixItemControl(this);
+
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
                 ElementList = new List<string> { "PrefixItemControl" },
@@ -70,6 +72,8 @@ namespace MetadataUtilities
         public override Guid Id { get; } = Guid.Parse("485ab5f0-bfb1-4c17-93cc-20d8338673be");
 
         internal bool IsUpdating { get; set; }
+
+        public PrefixItemControl PrefixItemControl { get; set; }
 
         public SettingsViewModel Settings { get; }
 
@@ -118,6 +122,8 @@ namespace MetadataUtilities
             }).ToList();
 
             MetadataFunctions.DoForAll(this, myGames, AfterMetadataUpdateAction.Instance(Settings.Settings), false, ActionModifierType.IsCombi);
+
+            PrefixItemControl.GameContextChanged(PrefixItemControl.GameContext, PrefixItemControl.GameContext);
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -235,7 +241,7 @@ namespace MetadataUtilities
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args) =>
-            args.Name == "PrefixItemControl" ? new PrefixItemControl(this) : null;
+            args.Name == "PrefixItemControl" ? PrefixItemControl : null;
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {

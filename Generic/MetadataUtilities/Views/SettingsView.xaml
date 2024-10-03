@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:metadataUtilities="clr-namespace:MetadataUtilities"
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel}"
              mc:Ignorable="d"
@@ -373,12 +372,51 @@
                             Command="{Binding AddPrefixCommand}" />
                     <Button Content="&#xec53;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
                             Command="{Binding RemovePrefixCommand}"
-                            CommandParameter="{Binding SelectedItems, ElementName=ListBoxPrefixes}" />
+                            CommandParameter="{Binding SelectedItems, ElementName=LvPrefixes}" />
                     <Button Content="&#xEFCA;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMenuHelpTitle}"
                             Command="{Binding HelpPrefixesCommand}" Margin="10,0,0,0" />
                 </DockPanel>
-                <ListBox DockPanel.Dock="Top" Name="ListBoxPrefixes" SelectionMode="Extended"
-                         ItemsSource="{Binding Settings.Prefixes}" />
+                <ListView Name="LvPrefixes" SelectionMode="Extended" DockPanel.Dock="Top"
+                          ItemsSource="{Binding Settings.PrefixItemTypes}" HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="200" Header="{DynamicResource LOCMetadataUtilitiesPrefixLabel}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Prefix, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="100" Header="{DynamicResource LOCGameIconTitle}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Icon, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="200" Header="{DynamicResource LOCNameLabel}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="200" Header="{DynamicResource LOCTypeLabel}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox SelectedValue="{Binding FieldType}"
+                                                  ItemsSource="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}, Path=DataContext.FieldValuePairs}"
+                                                  SelectedValuePath="Key" DisplayMemberPath="Value"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </DockPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabQuickAdd}">

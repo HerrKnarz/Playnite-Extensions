@@ -7,7 +7,6 @@
              d:DataContext="{d:DesignInstance Type=viewModels:ConditionalActionEditorViewModel}"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
-             xmlns:models="clr-namespace:MetadataUtilities.Models"
              xmlns:enums="clr-namespace:MetadataUtilities.Enums"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">

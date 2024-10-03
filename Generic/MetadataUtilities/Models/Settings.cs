@@ -31,6 +31,7 @@ namespace MetadataUtilities.Models
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
         private ObservableCollection<string> _prefixes = new ObservableCollection<string>();
+        private ObservableCollection<PrefixItemList> _prefixItemTypes = new ObservableCollection<PrefixItemList>();
         private string _quickAddCustomPath = string.Empty;
         private ObservableCollection<QuickAddObject> _quickAddObjects = new ObservableCollection<QuickAddObject>();
         private bool _quickAddShowDialog = true;
@@ -187,6 +188,12 @@ namespace MetadataUtilities.Models
         {
             get => _prefixes;
             set => SetValue(ref _prefixes, value);
+        }
+
+        public ObservableCollection<PrefixItemList> PrefixItemTypes
+        {
+            get => _prefixItemTypes;
+            set => SetValue(ref _prefixItemTypes, value);
         }
 
         public string QuickAddCustomPath

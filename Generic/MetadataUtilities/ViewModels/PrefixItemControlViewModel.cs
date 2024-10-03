@@ -23,7 +23,7 @@ namespace MetadataUtilities.ViewModels
             {
                 SetValue(ref _gameId, value);
 
-                SetData();
+                RefreshData();
             }
         }
 
@@ -33,7 +33,7 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _tags, value);
         }
 
-        private void SetData()
+        public void RefreshData()
         {
             _game = API.Instance.Database.Games[GameId];
 

@@ -10,6 +10,7 @@ namespace MetadataUtilities.Models
     public class PrefixItemList : ObservableObject
     {
         private FieldType _fieldType;
+        private string _icon;
         private MetadataObjects _items;
         private string _name;
         private string _prefix;
@@ -36,10 +37,20 @@ namespace MetadataUtilities.Models
                 }));
         }
 
+        public PrefixItemList()
+        {
+        }
+
         public FieldType FieldType
         {
             get => _fieldType;
             set => SetValue(ref _fieldType, value);
+        }
+
+        public string Icon
+        {
+            get => _icon;
+            set => SetValue(ref _icon, value);
         }
 
         public MetadataObjects Items

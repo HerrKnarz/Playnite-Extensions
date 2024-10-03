@@ -172,7 +172,21 @@ namespace KNARZhelper
             }
         }
 
-        public static Dictionary<FieldType, string> ItemListFieldValues() => GetItemListTypes()
-            .ToDictionary(type => type.Type, type => type.LabelSingular);
+        public static Dictionary<FieldType, string> ItemListFieldValues(bool withEmptyEntry = false)
+        {
+            var result = new Dictionary<FieldType, string>();
+
+            if (withEmptyEntry)
+            {
+                result.Add(FieldType.Empty, "");
+            }
+
+            foreach (var item in GetItemListTypes())
+            {
+                result.Add(item.Type, item.LabelSingular);
+            }
+
+            return result;
+        }
     }
 }

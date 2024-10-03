@@ -2,6 +2,7 @@
 {
     public enum FieldType
     {
+        Empty = -1,
         AgeRating = 5,
         Background = 13,
         Category = 0,

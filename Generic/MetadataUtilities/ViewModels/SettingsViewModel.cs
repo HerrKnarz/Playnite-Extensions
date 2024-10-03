@@ -39,6 +39,11 @@ namespace MetadataUtilities.ViewModels
 
             Settings = savedSettings ?? new Settings();
 
+            if (Settings.PrefixItemTypes.Count == 0 && Settings.Prefixes.Count > 0)
+            {
+                Settings.PrefixItemTypes.AddMissing(Settings.Prefixes.Select(p => new PrefixItemList { Prefix = p, FieldType = FieldType.Empty }));
+            }
+
             Settings.ResetReferences();
 
             FieldTypeButtons.AddMissing(_fieldTypes
@@ -141,18 +146,7 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand AddNewUnwantedCommand => new RelayCommand(() => Settings.UnwantedItems.AddNewItem(FieldType.Tag));
 
         public RelayCommand AddPrefixCommand
-            => new RelayCommand(() =>
-            {
-                var res = API.Instance.Dialogs.SelectString(ResourceProvider.GetString("LOCAddNewItem"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), "");
-
-                if (!res.Result)
-                {
-                    return;
-                }
-
-                Settings.Prefixes.AddMissing(res.SelectedString);
-                Settings.Prefixes = new ObservableCollection<string>(Settings.Prefixes.OrderBy(x => x));
-            });
+            => new RelayCommand(() => Settings.PrefixItemTypes.Add(new PrefixItemList()));
 
         public RelayCommand<FieldType> AddQuickAddCommand
             => new RelayCommand<FieldType>(AddQuickAddItems);
@@ -202,6 +196,8 @@ namespace MetadataUtilities.ViewModels
 
         public ObservableCollection<FieldTypeContextAction> FieldTypeButtonsUnwanted { get; set; } =
             new ObservableCollection<FieldTypeContextAction>();
+
+        public Dictionary<FieldType, string> FieldValuePairs => FieldTypeHelper.ItemListFieldValues(true);
 
         public RelayCommand HelpConActionCommand
             => new RelayCommand(()
@@ -263,9 +259,9 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<IList<object>> RemovePrefixCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (var item in items.ToList().Cast<string>())
+            foreach (var item in items.ToList().Cast<PrefixItemList>())
             {
-                Settings.Prefixes.Remove(item);
+                Settings.PrefixItemTypes.Remove(item);
             }
         }, items => items?.Count != 0);
 
@@ -366,7 +362,14 @@ namespace MetadataUtilities.ViewModels
             Settings.ResetReferences();
         }
 
-        public void EndEdit() => _plugin.SavePluginSettings(Settings);
+        public void EndEdit()
+        {
+            Settings.Prefixes.Clear();
+
+            Settings.Prefixes.AddMissing(Settings.PrefixItemTypes.Select(p => p.Prefix).Distinct());
+
+            _plugin.SavePluginSettings(Settings);
+        }
 
         public bool VerifySettings(out List<string> errors)
         {
