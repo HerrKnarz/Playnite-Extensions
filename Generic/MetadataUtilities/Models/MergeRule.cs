@@ -46,7 +46,7 @@ namespace MetadataUtilities.Models
                     result.AddMissing(item.ReplaceInDb(games, Type, Id));
                 }
 
-                MetadataFunctions.UpdateGames(result);
+                MetadataFunctions.UpdateGames(result, Settings);
 
                 if (removeAfter)
                 {

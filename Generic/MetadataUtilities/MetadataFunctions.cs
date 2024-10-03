@@ -344,7 +344,7 @@ namespace MetadataUtilities
             }
         }
 
-        public static void UpdateGames<T>(List<T> games)
+        public static void UpdateGames<T>(List<T> games, Settings settings)
         {
             if (games == null || games.Count == 0)
             {
@@ -369,7 +369,7 @@ namespace MetadataUtilities
                 }
             }
 
-            if (MergeAction.Instance(null).Settings?.WriteDebugLog ?? false)
+            if (MergeAction.Instance(settings).Settings?.WriteDebugLog ?? false)
             {
                 Log.Debug($"Updating {gamesToUpdate.Count} games:\n{string.Join("\n", gamesToUpdate.Select(g => g.Name))}");
             }

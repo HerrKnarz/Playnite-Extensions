@@ -72,7 +72,7 @@ namespace MetadataUtilities.ViewModels
                     gamesAffected.AddMissing(game);
                 }
 
-                MetadataFunctions.UpdateGames(gamesAffected);
+                MetadataFunctions.UpdateGames(gamesAffected, Plugin.Settings.Settings);
             }
             finally
             {

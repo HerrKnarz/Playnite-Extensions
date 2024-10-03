@@ -21,7 +21,7 @@ namespace MetadataUtilities.Actions
         {
             if (actionModifier != ActionModifierType.IsCombi)
             {
-                MetadataFunctions.UpdateGames(_gamesAffected);
+                MetadataFunctions.UpdateGames(_gamesAffected, Settings);
             }
 
             _gamesAffected.Clear();

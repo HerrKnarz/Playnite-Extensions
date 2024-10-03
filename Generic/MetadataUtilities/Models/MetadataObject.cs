@@ -236,7 +236,7 @@ namespace MetadataUtilities.Models
             {
                 var gamesAffected = type.RemoveObjectFromGames(API.Instance.Database.Games.ToList(), Id);
 
-                MetadataFunctions.UpdateGames(gamesAffected.ToList());
+                MetadataFunctions.UpdateGames(gamesAffected.ToList(), Settings);
             }
 
             if (!type.RemoveDbObject(Id))

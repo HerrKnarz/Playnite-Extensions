@@ -540,7 +540,7 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                MetadataFunctions.UpdateGames(gamesAffected);
+                MetadataFunctions.UpdateGames(gamesAffected, Plugin.Settings.Settings);
 
                 LoadRelatedGames();
 
