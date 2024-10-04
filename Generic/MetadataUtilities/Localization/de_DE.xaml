@@ -67,7 +67,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Nicht verwendete Metadaten entfernen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Unerwünschte Metadaten entfernen</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Game is new</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Spiel ist neu</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Zusammenführungsregel-Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Folgende nicht verwendete Metadatenelemente wurden entfernt:</sys:String>
