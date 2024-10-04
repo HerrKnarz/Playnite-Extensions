@@ -2,6 +2,7 @@
 using MetadataUtilities.ViewModels;
 using Playnite.SDK.Models;
 using System;
+using System.Windows;
 
 namespace MetadataUtilities.Controls
 {
@@ -13,10 +14,8 @@ namespace MetadataUtilities.Controls
         public PrefixItemControl(MetadataUtilities plugin, FieldType type)
         {
             InitializeComponent();
-            DataContext = new PrefixItemControlViewModel(plugin, type, Icon);
+            DataContext = new PrefixItemControlViewModel(plugin, type);
         }
-
-        public string Icon { get; set; }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
@@ -31,6 +30,8 @@ namespace MetadataUtilities.Controls
             {
                 return;
             }
+
+            viewModel.DefaultIcon = (string)((FrameworkElement)Parent).Tag;
 
             if (viewModel.GameId == (GameContext?.Id ?? Guid.Empty))
             {

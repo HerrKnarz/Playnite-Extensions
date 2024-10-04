@@ -11,18 +11,23 @@ namespace MetadataUtilities.ViewModels
 {
     public class PrefixItemControlViewModel : ObservableObject
     {
-        private readonly string _defaultIcon;
         private readonly FieldType _fieldType;
         private readonly MetadataUtilities _plugin;
+        private string _defaultIcon;
         private Game _game;
         private Guid _gameId = Guid.Empty;
         private ObservableCollection<PrefixItemList> _itemLists = new ObservableCollection<PrefixItemList>();
 
-        public PrefixItemControlViewModel(MetadataUtilities plugin, FieldType type, string icon)
+        public PrefixItemControlViewModel(MetadataUtilities plugin, FieldType type)
         {
             _plugin = plugin;
             _fieldType = type;
-            _defaultIcon = icon;
+        }
+
+        public string DefaultIcon
+        {
+            get => _defaultIcon;
+            set => SetValue(ref _defaultIcon, value);
         }
 
         public Guid GameId
@@ -41,6 +46,83 @@ namespace MetadataUtilities.ViewModels
             get => _itemLists;
             set => SetValue(ref _itemLists, value);
         }
+
+        public RelayCommand<object> SetFilterCommand => new RelayCommand<object>(item =>
+        {
+            if (!(item is MetadataObject metadataItem))
+            {
+                return;
+            }
+
+            var filterField = new IdItemFilterItemProperties(metadataItem.Id);
+
+            var preset = new FilterPreset
+            {
+                Settings = API.Instance.MainView.GetCurrentFilterSettings()
+            };
+
+            switch (metadataItem.Type)
+            {
+                case FieldType.AgeRating:
+                    preset.Settings.AgeRating = filterField;
+                    break;
+                case FieldType.Category:
+                    preset.Settings.Category = filterField;
+                    break;
+                case FieldType.Feature:
+                    preset.Settings.Feature = filterField;
+                    break;
+                case FieldType.Genre:
+                    preset.Settings.Genre = filterField;
+                    break;
+                case FieldType.Series:
+                    preset.Settings.Series = filterField;
+                    break;
+                case FieldType.Tag:
+                    preset.Settings.Tag = filterField;
+                    break;
+                case FieldType.Empty:
+                case FieldType.Background:
+                case FieldType.CompletionStatus:
+                case FieldType.CommunityScore:
+                case FieldType.Cover:
+                case FieldType.CriticScore:
+                case FieldType.DateAdded:
+                case FieldType.Description:
+                case FieldType.Developer:
+                case FieldType.Favorite:
+                case FieldType.Hdr:
+                case FieldType.Hidden:
+                case FieldType.Icon:
+                case FieldType.InstallSize:
+                case FieldType.IsInstalled:
+                case FieldType.LastPlayed:
+                case FieldType.Library:
+                case FieldType.Name:
+                case FieldType.Notes:
+                case FieldType.Platform:
+                case FieldType.PlayCount:
+                case FieldType.Publisher:
+                case FieldType.OverrideInstallState:
+                case FieldType.Region:
+                case FieldType.ReleaseDate:
+                case FieldType.SortingName:
+                case FieldType.Source:
+                case FieldType.TimePlayed:
+                case FieldType.UserScore:
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            var oldGameId = _game.Id;
+
+            API.Instance.MainView.ApplyFilterPreset(preset);
+
+            if (oldGameId != default && API.Instance.MainView.FilteredGames.Any(g => g.Id == oldGameId))
+            {
+                API.Instance.MainView.SelectGame(oldGameId);
+            }
+        });
 
         public void RefreshData()
         {

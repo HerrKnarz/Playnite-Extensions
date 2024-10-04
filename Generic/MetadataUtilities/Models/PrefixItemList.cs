@@ -25,8 +25,6 @@ namespace MetadataUtilities.Models
             PrepareData(plugin, game);
 
             _name = _items.Count > 1 ? fieldType.GetTypeManager().LabelPlural : fieldType.GetTypeManager().LabelSingular;
-
-            //TODO: Figure out, how to get the icon from the control
         }
 
         public PrefixItemList(MetadataUtilities plugin, Game game, PrefixItemList itemList)
@@ -95,9 +93,7 @@ namespace MetadataUtilities.Models
                     Id = x.Id,
                     Name = x.Name,
                     Type = type.Type
-                }).Where(x => prefixes.Contains(x.Prefix)).OrderBy(x => x.EditName));
-
-            // TODO: Display Name instead of EditName, when prefix = default.
+                }).Where(x => prefixes.Contains(x.Prefix)).OrderBy(x => x.DisplayName));
         }
     }
 }

@@ -7,14 +7,14 @@
                    d:DataContext="{d:DesignInstance Type=vm:PrefixItemControlViewModel}"
                    mc:Ignorable="d" 
                    d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel>
-        <ItemsControl ItemsSource="{Binding ItemLists}" DockPanel.Dock="Top" >
+    <Grid Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Tag}">
+        <ItemsControl ItemsSource="{Binding ItemLists}" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <DockPanel LastChildFill="False">
                         <Label DockPanel.Dock="Left">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Icon}" Style="{DynamicResource Icon}" />
+                                <TextBlock Text="{Binding Icon}" FontFamily="{DynamicResource FontIcoFont}" Style="{DynamicResource Icon}" />
                                 <TextBlock Text="{Binding Name}"/>
                             </StackPanel>
                         </Label>
@@ -26,8 +26,8 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Content="{Binding EditName}" Style="{StaticResource PropertyItemFeedPanelButton}"
-                                            Command="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=DataContext.SetFeatureFilterCommand}"
+                                    <Button Content="{Binding DisplayName}" Style="{StaticResource PropertyItemFeedPanelButton}"
+                                            Command="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=DataContext.SetFilterCommand}"
                                             CommandParameter="{Binding}" HorizontalAlignment="Right"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -36,5 +36,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </DockPanel>
+    </Grid>
 </PluginUserControl>

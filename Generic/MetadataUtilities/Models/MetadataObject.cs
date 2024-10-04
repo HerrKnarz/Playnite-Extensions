@@ -33,6 +33,9 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
+        public string DisplayName { get; private set; }
+
+        [DontSerialize]
         public string EditName
         {
             get => _editName;
@@ -101,6 +104,10 @@ namespace MetadataUtilities.Models
                 }
 
                 CleanedUpName = EditName.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
+
+                DisplayName = Settings?.PrefixItemTypes?.Any(x => (x.Name != default || x.FieldType != FieldType.Empty) && x.Prefix == Prefix) ?? false
+                    ? EditName
+                    : Name;
             }
         }
 
