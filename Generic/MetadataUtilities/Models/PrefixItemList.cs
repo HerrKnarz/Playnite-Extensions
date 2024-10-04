@@ -84,6 +84,7 @@ namespace MetadataUtilities.Models
 
             if (_prefix == default)
             {
+                prefixes.Add(string.Empty);
                 prefixes.AddMissing(plugin.Settings.Settings.PrefixItemTypes.Where(p => p.Name == default).Select(p => p.Prefix));
             }
 

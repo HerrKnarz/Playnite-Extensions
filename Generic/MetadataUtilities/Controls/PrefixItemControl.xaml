@@ -6,19 +6,23 @@
                    xmlns:vm="clr-namespace:MetadataUtilities.ViewModels"
                    d:DataContext="{d:DesignInstance Type=vm:PrefixItemControlViewModel}"
                    mc:Ignorable="d" 
-                   d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentControl}}, Path=Tag}">
-        <ItemsControl ItemsSource="{Binding ItemLists}" >
+                   d:DesignHeight="200" d:DesignWidth="200">
+    <DockPanel>
+        <ItemsControl ItemsSource="{Binding ItemLists}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel LastChildFill="False">
-                        <Label DockPanel.Dock="Left">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Icon}" FontFamily="{DynamicResource FontIcoFont}" Style="{DynamicResource Icon}" />
                                 <TextBlock Text="{Binding Name}"/>
                             </StackPanel>
                         </Label>
-                        <ItemsControl ItemsSource="{Binding Items}" DockPanel.Dock="Right">
+                        <ItemsControl Grid.Column="1" ItemsSource="{Binding Items}" Margin="-3,0,0,0">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel />
@@ -27,14 +31,15 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Button Content="{Binding DisplayName}" Style="{StaticResource PropertyItemFeedPanelButton}"
-                                            Command="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=DataContext.SetFilterCommand}"
-                                            CommandParameter="{Binding}" HorizontalAlignment="Right"/>
+                                            Command="{Binding RelativeSource={RelativeSource AncestorType=DockPanel}, Path=DataContext.SetFilterCommand}"
+                                            CommandParameter="{Binding}"
+                                            ToolTip="{Binding DisplayName}"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                    </DockPanel>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </Grid>
+    </DockPanel>
 </PluginUserControl>

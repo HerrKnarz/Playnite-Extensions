@@ -47,7 +47,7 @@ namespace MetadataUtilities
 
             foreach (var type in FieldTypeHelper.ItemListFieldValues())
             {
-                PrefixItemControls.Add($"{type.Value}PrefixItemControl", new PrefixItemControl(this, type.Key));
+                PrefixItemControls.Add($"{type.Value.Replace(" ", "")}PrefixItemControl", new PrefixItemControl(this, type.Key));
             }
 
             AddCustomElementSupport(new AddCustomElementSupportArgs

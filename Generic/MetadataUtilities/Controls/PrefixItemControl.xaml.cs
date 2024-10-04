@@ -31,7 +31,10 @@ namespace MetadataUtilities.Controls
                 return;
             }
 
-            viewModel.DefaultIcon = (string)((FrameworkElement)Parent).Tag;
+            if (Parent is FrameworkElement parentElement && parentElement.Tag is string tag)
+            {
+                viewModel.DefaultIcon = tag;
+            }
 
             if (viewModel.GameId == (GameContext?.Id ?? Guid.Empty))
             {
