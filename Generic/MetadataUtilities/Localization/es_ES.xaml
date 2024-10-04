@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAddedDefaultsMessage">¡Se añadieron categorías/etiquetas por defecto a {0} juegos!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Añadir nuevo objeto</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">¿Quieres añadir el/los elemento(s) a la lista no deseada?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Ya existe un {0} con ese nombre.</sys:String>
@@ -60,7 +59,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">remove</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">clear field</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesMenuAddDefaults">Añadir categorías/etiquetas por defecto</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Abrir editor de metadatos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Combinar metadatos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">Añadir {0}</sys:String>
@@ -69,12 +67,12 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Eliminar metadatos no usados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Eliminar metadatos no deseados</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Game is new</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Editor de reglas de fusión</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Utilidades de metadatos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Eliminados los siguientes metadatos sin usar:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefijo</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesProgressAddingDefaults">Añadiendo predeterminados...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Executing conditional actions...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Combinando metadatos...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Añadiendo {0}</sys:String>
@@ -92,9 +90,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Columnas en la cuadrícula del editor de metadatos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Conditions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Ruta de menú personalizada</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCategories">Categorías predeterminadas para nuevo juego</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Ruta de menú personalizada por defecto</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultTags">Etiquetas predeterminadas para nuevo juego</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignore conditions when executing manually</sys:String>
@@ -106,17 +102,14 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Eliminar metadatos no usados al iniciar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Eliminar elementos no deseados al actualizar metadatos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameConditionalActions">Automatically rename items in conditional actions when the corresponding original item is renamed.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameDefaults">Renombrar automáticamente las etiquetas/categorías por defecto cuando el artículo original correspondiente sea renombrado.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Renombrar automáticamente el objetivo de la regla de fusión cuando se cambia el nombre del elemento original correspondiente.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Automatically rename quick add items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Automatically rename whitelist items when the corresponding original item is renamed.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsSetDefaultTagsWhenEmpty">Establecer sólo cuando no se añadieron etiquetas en la importación de metadatos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Mostrar diálogo de resultados después de establecer un valor para más de un juego</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Show Settings button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Mostrar botón del editor de metadatos en el panel superior (requiere reiniciar)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Poner los submenús en la entrada del menú Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Conditional actions</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabDefaults">Predeterminados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">General</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Fusiones</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefijos</sys:String>
