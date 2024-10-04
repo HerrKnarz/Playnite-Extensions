@@ -22,7 +22,7 @@
                                 <TextBlock Text="{Binding Name}"/>
                             </StackPanel>
                         </Label>
-                        <ItemsControl Grid.Column="1" ItemsSource="{Binding Items}" Margin="-3,0,0,0">
+                        <ItemsControl Grid.Column="1" ItemsSource="{Binding Items}" Margin="-2,0,0,0">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel />

@@ -1,5 +1,11 @@
 AddonId: WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c
 Packages:
+  - Version: 1.7.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-10-04
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-10-04/WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c_1_7_1.pext
+    Changelog:
+      - fixed "br" as a string to split tags by not being recognized anymore.
   - Version: 1.7
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-09-28
