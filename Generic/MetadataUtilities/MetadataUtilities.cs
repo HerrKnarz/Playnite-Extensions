@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using KNARZhelper.DatabaseObjectTypes;
+using KNARZhelper.Enum;
 using MetadataUtilities.Actions;
 using MetadataUtilities.Controls;
 using MetadataUtilities.Enums;
@@ -26,6 +27,9 @@ namespace MetadataUtilities
 {
     public class MetadataUtilities : GenericPlugin
     {
+        private readonly Dictionary<string, FieldType> _controlTypes = FieldTypeHelper.ItemListFieldValues()
+            .ToDictionary(type => $"{type.Value.Replace(" ", "")}PrefixItemControl", type => type.Key);
+
         private readonly List<IEditableObjectType> _fieldTypes = FieldTypeHelper.GetAllTypes<IEditableObjectType>(true).ToList();
 
         public MetadataUtilities(IPlayniteAPI api) : base(api)
@@ -45,14 +49,9 @@ namespace MetadataUtilities
 
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
 
-            foreach (var type in FieldTypeHelper.ItemListFieldValues())
-            {
-                PrefixItemControls.Add($"{type.Value.Replace(" ", "")}PrefixItemControl", new PrefixItemControl(this, type.Key));
-            }
-
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = PrefixItemControls.Select(type => type.Key).ToList(),
+                ElementList = _controlTypes.Select(type => type.Key).ToList(),
                 SourceName = "MetadataUtilities"
             });
 
@@ -76,7 +75,7 @@ namespace MetadataUtilities
 
         internal bool IsUpdating { get; set; }
 
-        public Dictionary<string, PrefixItemControl> PrefixItemControls { get; set; } = new Dictionary<string, PrefixItemControl>();
+        public List<PrefixItemControl> PrefixItemControls { get; set; } = new List<PrefixItemControl>();
 
         public SettingsViewModel Settings { get; }
 
@@ -130,10 +129,13 @@ namespace MetadataUtilities
 
             SavePluginSettings(Settings.Settings);
 
-            foreach (var control in PrefixItemControls)
+            API.Instance.MainView.UIDispatcher.Invoke(delegate
             {
-                control.Value.RefreshData();
-            }
+                foreach (var control in PrefixItemControls)
+                {
+                    control.RefreshData();
+                }
+            });
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -245,9 +247,17 @@ namespace MetadataUtilities
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
-            PrefixItemControls.TryGetValue(args.Name, out var result);
+            if (!_controlTypes.TryGetValue(args.Name, out var type))
+            {
+                return null;
+            }
 
-            return result;
+            var newControl = new PrefixItemControl(this, type);
+
+            PrefixItemControls.Add(newControl);
+
+            return newControl;
+
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
