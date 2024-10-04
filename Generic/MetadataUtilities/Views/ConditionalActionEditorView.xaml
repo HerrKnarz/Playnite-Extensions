@@ -198,6 +198,8 @@
                                     DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsBiggerThan}" Click="ButtonContextClick" />
                             <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsSmallerThan}" Margin="0,0,10,10"
                                     DockPanel.Dock="Left" ContextMenu="{StaticResource ConditionsMenuIsSmallerThan}" Click="ButtonContextClick" />
+                            <Button Content="{DynamicResource LOCMetadataUtilitiesGameIsNew}" Margin="0,0,10,10"
+                                    DockPanel.Dock="Left" Command="{Binding AddConditionGameIsNewCommand}" />
                         </WrapPanel>
                     </DockPanel>
                     <ListBox DockPanel.Dock="Top" Name="LbConditions" ItemsSource="{Binding ConditionalAction.Conditions}"

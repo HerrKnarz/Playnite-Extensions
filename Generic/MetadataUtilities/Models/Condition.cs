@@ -1,6 +1,7 @@
 ﻿using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 using MetadataUtilities.Enums;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
@@ -48,6 +49,11 @@ namespace MetadataUtilities.Models
         {
             get
             {
+                if (Comparator == ComparatorType.GameIsNew)
+                {
+                    return ResourceProvider.GetString("LOCMetadataUtilitiesGameIsNew");
+                }
+
                 switch (TypeManager.ValueType)
                 {
                     case ItemValueType.Boolean:
@@ -149,6 +155,8 @@ namespace MetadataUtilities.Models
                         ? smallerType.IsSmallerThan(game, IntValue)
                         : smallerType.IsSmallerThan(game, DateValue));
 
+                case ComparatorType.GameIsNew:
+                    return game.Added > Settings.LastAutoConditionCheck;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -167,6 +167,9 @@ namespace KNARZhelper
                 case FieldType.UserScore:
                     return new TypeUserScore();
 
+                case FieldType.Empty:
+                    return null;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(e), e, null);
             }

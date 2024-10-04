@@ -126,6 +126,10 @@ namespace MetadataUtilities
 
             MetadataFunctions.DoForAll(this, myGames, AfterMetadataUpdateAction.Instance(Settings.Settings), false, ActionModifierType.IsCombi);
 
+            Settings.Settings.LastAutoConditionCheck = DateTime.Now;
+
+            SavePluginSettings(Settings.Settings);
+
             foreach (var control in PrefixItemControls)
             {
                 control.Value.RefreshData();
@@ -171,13 +175,6 @@ namespace MetadataUtilities
                     MenuSection = menuSection,
                     Icon = "muEditorIcon",
                     Action = a => MetadataEditorViewModel.ShowEditor(this, games)
-                },
-                new GameMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuAddDefaults"),
-                    MenuSection = menuSection,
-                    Icon = "muTagIcon",
-                    Action = a => MetadataFunctions.DoForAll(this, myGames, AddDefaultsAction.Instance(Settings.Settings), true)
                 },
                 new GameMenuItem
                 {
@@ -329,19 +326,6 @@ namespace MetadataUtilities
             }
 
             RemoveUnused();
-        }
-
-        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
-        {
-            var games = PlayniteApi.Database.Games
-                .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate)
-                .Select(x => new MyGame() { Game = x }).ToList();
-
-            MetadataFunctions.DoForAll(this, games, AddDefaultsAction.Instance(Settings.Settings));
-
-            Settings.Settings.LastAutoLibUpdate = DateTime.Now;
-
-            SavePluginSettings(Settings.Settings);
         }
 
         public void RemoveUnused()

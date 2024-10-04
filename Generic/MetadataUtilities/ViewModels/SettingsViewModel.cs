@@ -106,18 +106,6 @@ namespace MetadataUtilities.ViewModels
             Settings.ConditionalActions = Settings.ConditionalActions.OrderBy(x => x.Name).ToObservable();
         });
 
-        public RelayCommand AddExistingDefaultCategoriesCommand =>
-            new RelayCommand(() => Settings.DefaultCategories.AddItems(FieldType.Category));
-
-        public RelayCommand AddExistingDefaultTagsCommand =>
-            new RelayCommand(() => Settings.DefaultTags.AddItems(FieldType.Tag));
-
-        public RelayCommand AddNewDefaultCategoryCommand
-            => new RelayCommand(() => Settings.DefaultCategories.AddNewItem(FieldType.Category, "", false));
-
-        public RelayCommand AddNewDefaultTagCommand
-            => new RelayCommand(() => Settings.DefaultTags.AddNewItem(FieldType.Tag, "", false));
-
         public RelayCommand AddNewMergeRuleCommand => new RelayCommand(() => EditMergeRule());
 
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
@@ -164,6 +152,8 @@ namespace MetadataUtilities.ViewModels
 
             var conditionalActionOriginal = (ConditionalAction)conAction;
             var conditionalActionToEdit = conditionalActionOriginal.DeepClone();
+
+            conditionalActionToEdit.ResetSettings(Settings);
 
             var window = ConditionalActionEditorViewModel.GetWindow(Settings, conditionalActionToEdit);
 
@@ -241,14 +231,6 @@ namespace MetadataUtilities.ViewModels
                 Settings.ConditionalActions.Remove(conAction);
             }
         }, items => items?.Count != 0);
-
-        public RelayCommand<IList<object>> RemoveDefaultCategoryCommand =>
-            new RelayCommand<IList<object>>(items => RemoveFromList(items, Settings.DefaultCategories),
-                items => items?.Count != 0);
-
-        public RelayCommand<IList<object>> RemoveDefaultTagCommand =>
-            new RelayCommand<IList<object>>(items => RemoveFromList(items, Settings.DefaultTags),
-                items => items?.Count != 0);
 
         public RelayCommand<object> RemoveMergeRuleCommand =>
             new RelayCommand<object>(rule => Settings.MergeRules.Remove((MergeRule)rule), rule => rule != null);

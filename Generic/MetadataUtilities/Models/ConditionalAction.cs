@@ -108,6 +108,19 @@ namespace MetadataUtilities.Models
             }
         }
 
+        public void ResetSettings(Settings settings)
+        {
+            foreach (var condition in Conditions)
+            {
+                condition.Settings = settings;
+            }
+
+            foreach (var action in Actions)
+            {
+                action.Settings = settings;
+            }
+        }
+
         private bool Execute(Game game)
         {
             var mustUpdate = Actions.OrderBy(x => x.ActionType == ActionType.ClearField ? 1 : 2)

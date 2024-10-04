@@ -7,6 +7,7 @@
         IsEmpty,
         IsNotEmpty,
         IsBiggerThan,
-        IsSmallerThan
+        IsSmallerThan,
+        GameIsNew
     }
 }

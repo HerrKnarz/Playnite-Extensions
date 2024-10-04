@@ -231,7 +231,6 @@
       <DependentUpon>PrefixItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\ActionModifierType.cs" />
-    <Compile Include="Actions\AddDefaultsAction.cs" />
     <Compile Include="Actions\BaseAction.cs" />
     <Compile Include="Actions\ExecuteConditionalActionsAction.cs" />
     <Compile Include="Actions\IBaseAction.cs" />

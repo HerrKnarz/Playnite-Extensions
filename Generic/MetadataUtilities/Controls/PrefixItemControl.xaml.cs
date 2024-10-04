@@ -1,4 +1,5 @@
-﻿using KNARZhelper.Enum;
+﻿using KNARZhelper;
+using KNARZhelper.Enum;
 using MetadataUtilities.ViewModels;
 using Playnite.SDK.Models;
 using System;
@@ -26,23 +27,30 @@ namespace MetadataUtilities.Controls
 
         public void RefreshData()
         {
-            if (!(DataContext is PrefixItemControlViewModel viewModel))
+            try
             {
-                return;
-            }
+                if (!(DataContext is PrefixItemControlViewModel viewModel))
+                {
+                    return;
+                }
 
-            if (Parent is FrameworkElement parentElement && parentElement.Tag is string tag)
+                if (Parent is FrameworkElement parentElement && parentElement.Tag is string tag)
+                {
+                    viewModel.DefaultIcon = tag;
+                }
+
+                if (viewModel.GameId == (GameContext?.Id ?? Guid.Empty))
+                {
+                    viewModel.RefreshData();
+                    return;
+                }
+
+                viewModel.GameId = GameContext?.Id ?? Guid.Empty;
+            }
+            catch (Exception e)
             {
-                viewModel.DefaultIcon = tag;
+                Log.Error(e);
             }
-
-            if (viewModel.GameId == (GameContext?.Id ?? Guid.Empty))
-            {
-                viewModel.RefreshData();
-                return;
-            }
-
-            viewModel.GameId = GameContext?.Id ?? Guid.Empty;
         }
     }
 }

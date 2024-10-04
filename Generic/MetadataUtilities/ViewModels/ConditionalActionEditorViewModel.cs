@@ -140,6 +140,9 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand<FieldType> AddConditionContainsNotCommand => new RelayCommand<FieldType>(type =>
             AddConditions(type, ComparatorType.DoesNotContain));
 
+        public RelayCommand AddConditionGameIsNewCommand => new RelayCommand(() =>
+            AddConditions(FieldType.Empty, ComparatorType.GameIsNew));
+
         public RelayCommand<FieldType> AddConditionIsBiggerThanCommand => new RelayCommand<FieldType>(type =>
             AddConditions(type, ComparatorType.IsBiggerThan));
 
@@ -378,6 +381,7 @@ namespace MetadataUtilities.ViewModels
             {
                 case ComparatorType.IsEmpty:
                 case ComparatorType.IsNotEmpty:
+                case ComparatorType.GameIsNew:
                 {
                     if (!ConditionalAction.Conditions.Any(x => x.Comparator == comparatorType && x.Type == fieldType))
                     {

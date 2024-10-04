@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.Enum;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,8 +13,6 @@ namespace MetadataUtilities.Models
         private int _conditionActionWindowHeight = 600;
         private int _conditionActionWindowWidth = 800;
         private ObservableCollection<ConditionalAction> _conditionalActions = new ObservableCollection<ConditionalAction>();
-        private MetadataObjects _defaultCategories;
-        private MetadataObjects _defaultTags;
         private int _editorWindowHeight = 600;
         private int _editorWindowWidth = 1200;
         private ObservableCollection<FilterType> _filterTypes = new ObservableCollection<FilterType>();
@@ -27,7 +24,7 @@ namespace MetadataUtilities.Models
         private int _gameSearchWindowWidth = 700;
         private bool _ignoreHiddenGamesInGameCount;
         private bool _ignoreHiddenGamesInRemoveUnused;
-        private DateTime _lastAutoLibUpdate = DateTime.Now;
+        private DateTime _lastAutoConditionCheck = DateTime.Now;
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
         private ObservableCollection<string> _prefixes = new ObservableCollection<string>();
@@ -39,11 +36,9 @@ namespace MetadataUtilities.Models
         private bool _removeUnusedOnStartup;
         private bool _removeUnwantedOnMetadataUpdate = true;
         private bool _renameConditionalActions = true;
-        private bool _renameDefaults = true;
         private bool _renameMergeRules = true;
         private bool _renameQuickAdd = true;
         private bool _renameWhitelist = true;
-        private bool _setDefaultTagsOnlyIfEmpty = true;
         private bool _showTopPanelButton = true;
         private bool _showTopPanelSettingsButton;
         private MetadataObjects _unusedItemsWhiteList;
@@ -52,8 +47,6 @@ namespace MetadataUtilities.Models
 
         public Settings()
         {
-            _defaultCategories = new MetadataObjects(this, FieldType.Category);
-            _defaultTags = new MetadataObjects(this, FieldType.Tag);
             _unusedItemsWhiteList = new MetadataObjects(this);
             _unwantedItems = new MetadataObjects(this);
         }
@@ -86,18 +79,6 @@ namespace MetadataUtilities.Models
         {
             get => _conditionalActions;
             set => SetValue(ref _conditionalActions, value);
-        }
-
-        public MetadataObjects DefaultCategories
-        {
-            get => _defaultCategories;
-            set => SetValue(ref _defaultCategories, value);
-        }
-
-        public MetadataObjects DefaultTags
-        {
-            get => _defaultTags;
-            set => SetValue(ref _defaultTags, value);
         }
 
         public int EditorWindowHeight
@@ -166,10 +147,10 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _ignoreHiddenGamesInRemoveUnused, value);
         }
 
-        public DateTime LastAutoLibUpdate
+        public DateTime LastAutoConditionCheck
         {
-            get => _lastAutoLibUpdate;
-            set => SetValue(ref _lastAutoLibUpdate, value);
+            get => _lastAutoConditionCheck;
+            set => SetValue(ref _lastAutoConditionCheck, value);
         }
 
         public bool MergeMetadataOnMetadataUpdate
@@ -238,12 +219,6 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _renameConditionalActions, value);
         }
 
-        public bool RenameDefaults
-        {
-            get => _renameDefaults;
-            set => SetValue(ref _renameDefaults, value);
-        }
-
         public bool RenameMergeRules
         {
             get => _renameMergeRules;
@@ -260,12 +235,6 @@ namespace MetadataUtilities.Models
         {
             get => _renameWhitelist;
             set => SetValue(ref _renameWhitelist, value);
-        }
-
-        public bool SetDefaultTagsOnlyIfEmpty
-        {
-            get => _setDefaultTagsOnlyIfEmpty;
-            set => SetValue(ref _setDefaultTagsOnlyIfEmpty, value);
         }
 
         public bool ShowTopPanelButton
@@ -306,12 +275,15 @@ namespace MetadataUtilities.Models
         {
             UnusedItemsWhiteList.Settings = this;
             UnwantedItems.Settings = this;
-            DefaultCategories.Settings = this;
-            DefaultTags.Settings = this;
 
             foreach (var rule in MergeRules)
             {
                 rule.SourceObjects.Settings = this;
+            }
+
+            foreach (var condAction in ConditionalActions)
+            {
+                condAction.ResetSettings(this);
             }
 
             foreach (var item in FieldTypeHelper.ItemListFieldValues().Keys

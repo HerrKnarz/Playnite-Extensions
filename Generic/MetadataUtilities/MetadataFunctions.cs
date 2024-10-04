@@ -257,25 +257,6 @@ namespace MetadataUtilities
                 return;
             }
 
-            if (plugin.Settings.Settings.RenameDefaults && (type.Type == FieldType.Category || type.Type == FieldType.Tag))
-            {
-                var tag = plugin.Settings.Settings.DefaultTags?.FirstOrDefault(x => x.Name == oldName);
-
-                if (tag != null)
-                {
-                    tag.Name = newName;
-                    mustSave = true;
-                }
-
-                var category = plugin.Settings.Settings.DefaultCategories?.FirstOrDefault(x => x.Name == oldName);
-
-                if (category != null)
-                {
-                    category.Name = newName;
-                    mustSave = true;
-                }
-            }
-
             if (plugin.Settings.Settings.RenameMergeRules && FieldTypeHelper.ItemListFieldValues().ContainsKey(type.Type))
             {
                 mustSave = plugin.Settings.Settings.MergeRules.FindAndRenameRule(type.Type, oldName,

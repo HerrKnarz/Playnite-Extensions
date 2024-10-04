@@ -69,7 +69,7 @@ namespace MetadataUtilities.Actions
                 }
                 else
                 {
-                    _actions.AddRange(Settings.ConditionalActions.DeepClone().ToList());
+                    _actions.AddRange(Settings.ConditionalActions);
                 }
 
                 if (_actions.Count == 0)

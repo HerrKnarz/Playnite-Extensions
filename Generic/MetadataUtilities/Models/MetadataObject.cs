@@ -140,7 +140,7 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
-        public Settings Settings { get; }
+        public Settings Settings { get; set; }
 
         [DontSerialize]
         public bool ShowGrouped
