@@ -13,6 +13,7 @@ namespace MetadataUtilities.Models
         private string _icon;
         private MetadataObjects _items;
         private string _name;
+        private int _position;
         private string _prefix;
 
         public PrefixItemList(MetadataUtilities plugin, Game game, FieldType fieldType, string icon)
@@ -33,6 +34,7 @@ namespace MetadataUtilities.Models
             _icon = itemList.Icon;
             _name = itemList.Name;
             _prefix = itemList.Prefix;
+            _position = itemList.Position;
 
             PrepareData(plugin, game);
         }
@@ -63,6 +65,12 @@ namespace MetadataUtilities.Models
         {
             get => _name;
             set => SetValue(ref _name, value);
+        }
+
+        public int Position
+        {
+            get => _position;
+            set => SetValue(ref _position, value);
         }
 
         public string Prefix

@@ -308,6 +308,8 @@
                     <Button Content="&#xec53;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
                             Command="{Binding RemovePrefixCommand}"
                             CommandParameter="{Binding SelectedItems, ElementName=LvPrefixes}" />
+                    <Button Content="&#xEFEE;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" 
+                            Command="{Binding SortPrefixesCommand}" />
                     <Button Content="&#xEFCA;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMenuHelpTitle}"
                             Command="{Binding HelpPrefixesCommand}" Margin="10,0,0,0" />
                 </DockPanel>
@@ -316,6 +318,14 @@
                           VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
+                            <GridViewColumn Width="50" Header="{DynamicResource LOCMetadataUtilitiesSettingsPosition}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center" HorizontalContentAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Width="200" Header="{DynamicResource LOCMetadataUtilitiesPrefixLabel}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>

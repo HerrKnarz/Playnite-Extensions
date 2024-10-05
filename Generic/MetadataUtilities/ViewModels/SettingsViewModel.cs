@@ -315,6 +315,10 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
+        public RelayCommand SortPrefixesCommand => new RelayCommand(() =>
+            Settings.PrefixItemTypes =
+                Settings.PrefixItemTypes.OrderBy(x => x.Position).ThenBy(x => x.Name).ToObservable());
+
         public CollectionViewSource SourceObjectsViewSource
         {
             get => _sourceObjectsViewSource;

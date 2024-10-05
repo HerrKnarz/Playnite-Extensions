@@ -135,14 +135,16 @@ namespace MetadataUtilities.ViewModels
 
             ItemLists.Clear();
 
-            foreach (var itemList in _plugin.Settings.Settings.PrefixItemTypes.Where(x => x.FieldType == _fieldType && x.Name != default))
+            foreach (var itemList in _plugin.Settings.Settings.PrefixItemTypes.Where(x =>
+                         x.FieldType == _fieldType && x.Name != default))
             {
                 ItemLists.Add(new PrefixItemList(_plugin, _game, itemList));
             }
 
             ItemLists.Add(new PrefixItemList(_plugin, _game, _fieldType, _defaultIcon));
 
-            ItemLists = ItemLists.Where(x => x.Items.Count > 0).ToObservable();
+            ItemLists = ItemLists.Where(x => x.Items.Count > 0).OrderBy(x => x.Position).ThenBy(x => x.Name)
+                .ToObservable();
         }
     }
 }
