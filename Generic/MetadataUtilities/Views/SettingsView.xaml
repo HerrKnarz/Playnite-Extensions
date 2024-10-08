@@ -305,11 +305,11 @@
                 <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
                     <Button Content="&#xec3e;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
                             Command="{Binding AddPrefixCommand}" />
-                    <Button Content="&#xec53;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
-                            Command="{Binding RemovePrefixCommand}"
+                    <Button Content="&#xec53;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
+                            Command="{Binding RemovePrefixCommand}" Margin="10,0,0,0"
                             CommandParameter="{Binding SelectedItems, ElementName=LvPrefixes}" />
                     <Button Content="&#xEFEE;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" 
-                            Command="{Binding SortPrefixesCommand}" />
+                            Command="{Binding SortPrefixesCommand}" Margin="10,0,0,0" />
                     <Button Content="&#xEFCA;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMenuHelpTitle}"
                             Command="{Binding HelpPrefixesCommand}" Margin="10,0,0,0" />
                 </DockPanel>
