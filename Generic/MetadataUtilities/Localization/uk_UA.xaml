@@ -67,7 +67,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Прибрати невикористані метадані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Прибрати небажані метадані</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Game is new</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Нова гра</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Редактор правил об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Прибрано наступні невикористані елементи метаданих:</sys:String>
