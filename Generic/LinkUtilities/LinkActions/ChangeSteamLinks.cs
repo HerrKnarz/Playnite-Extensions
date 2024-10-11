@@ -3,7 +3,6 @@ using LinkUtilities.Interfaces;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using System;
 using System.Linq;
 
 namespace LinkUtilities.LinkActions
@@ -68,7 +67,7 @@ namespace LinkUtilities.LinkActions
                     case ActionModifierTypes.SearchSelected:
                     case ActionModifierTypes.SortOrder:
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
+                        break;
                 }
 
                 if (url == link.Url)
