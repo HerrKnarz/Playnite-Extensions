@@ -1,5 +1,11 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 4.1.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-10-11
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-10-11/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_1_1.pext
+    Changelog:
+      - Fixed error when trying to change steam links to app links, when they already are in that format.
   - Version: 4.1
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-09-30
