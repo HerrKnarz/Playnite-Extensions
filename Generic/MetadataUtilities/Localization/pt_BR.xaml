@@ -5,7 +5,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Um {0} com esse nome já existe.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Alterar tipo de metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Editor de ações condicionais</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Please enter a value</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Insira um valor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Conditional actions changed {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Mesclar como</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Metadados mesclados em {0} jogos!</sys:String>
