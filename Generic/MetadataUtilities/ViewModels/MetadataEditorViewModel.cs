@@ -147,19 +147,17 @@ namespace MetadataUtilities.ViewModels
                     prefix = templateItem.Prefix;
                 }
 
-                MetadataObject newItem;
+                var newItem = CompleteMetadata.AddNewItem(type, prefix, true, true);
+
+                if (newItem == null)
+                {
+                    return;
+                }
+
+                Cursor.Current = Cursors.WaitCursor;
 
                 using (MetadataViewSource.DeferRefresh())
                 {
-                    newItem = CompleteMetadata.AddNewItem(type, prefix, true, true);
-
-                    if (newItem == null)
-                    {
-                        return;
-                    }
-
-                    Cursor.Current = Cursors.WaitCursor;
-
                     UpdateGroupDisplay();
 
                     CalculateItemCount();
@@ -449,17 +447,9 @@ namespace MetadataUtilities.ViewModels
                 // We prepare the original item, save the old values and create a new one to edit.
                 var templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
-                var oldItem = new MetadataObject(Plugin.Settings.Settings)
-                {
-                    Type = templateItem.Type,
-                    Name = templateItem.Name
-                };
+                var oldItem = new MetadataObject(Plugin.Settings.Settings, templateItem.Type, templateItem.Name);
 
-                var newItem = new MetadataObject(Plugin.Settings.Settings)
-                {
-                    Type = templateItem.Type,
-                    Name = templateItem.Name
-                };
+                var newItem = new MetadataObject(Plugin.Settings.Settings, templateItem.Type, templateItem.Name);
 
                 // Using the Add New dialog we rename the item
                 var window = AddNewObjectViewModel.GetWindow(Plugin.Settings.Settings, newItem, false,
@@ -481,10 +471,8 @@ namespace MetadataUtilities.ViewModels
                 }
 
                 // Finally we create a new merge rule and add it to the list.
-                var newRule = new MergeRule(Plugin.Settings.Settings)
+                var newRule = new MergeRule(Plugin.Settings.Settings, newItem.Type, newItem.Name)
                 {
-                    Name = newItem.Name,
-                    Type = newItem.Type,
                     SourceObjects = new MetadataObjects(Plugin.Settings.Settings) { oldItem }
                 };
 

@@ -51,16 +51,12 @@ namespace MetadataUtilities.ViewModels
                         continue;
                     }
 
-                    var rule = new MergeRule(_plugin.Settings.Settings)
+                    var rule = new MergeRule(_plugin.Settings.Settings, NewType, item.Name)
                     {
-                        Type = NewType,
-                        Name = item.Name,
                         SourceObjects = new MetadataObjects(_plugin.Settings.Settings)
                         {
-                            new MetadataObject(_plugin.Settings.Settings)
+                            new MetadataObject(_plugin.Settings.Settings, item.Type, item.Name)
                             {
-                                Type = item.Type,
-                                Name = item.Name,
                                 Id = item.Id
                             }
                         }
@@ -68,10 +64,8 @@ namespace MetadataUtilities.ViewModels
 
                     rule.Merge();
 
-                    NewObjects.Add(new MetadataObject(_plugin.Settings.Settings)
+                    NewObjects.Add(new MetadataObject(_plugin.Settings.Settings, NewType, item.Name)
                     {
-                        Type = NewType,
-                        Name = item.Name,
                         Id = rule.Id
                     });
 

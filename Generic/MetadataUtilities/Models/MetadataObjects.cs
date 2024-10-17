@@ -59,11 +59,7 @@ namespace MetadataUtilities.Models
 
             foreach (var item in items.Where(item => this.All(x => x.TypeAndName != item.TypeAndName)))
             {
-                Add(new MetadataObject(Settings)
-                {
-                    Name = item.Name,
-                    Type = item.Type
-                });
+                Add(new MetadataObject(Settings, item.Type, item.Name));
             }
 
             this.Sort(x => x.TypeAndName);
@@ -71,9 +67,8 @@ namespace MetadataUtilities.Models
 
         public MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
         {
-            var newItem = new MetadataObject(Settings)
+            var newItem = new MetadataObject(Settings, type)
             {
-                Type = type,
                 Prefix = prefix
             };
 
@@ -129,11 +124,9 @@ namespace MetadataUtilities.Models
                         foreach (var type in types)
                         {
                             temporaryList.AddMissing(type.LoadGameMetadata(game).Select(x =>
-                                new MetadataObject(Settings)
+                                new MetadataObject(Settings, type.Type, x.Name)
                                 {
-                                    Id = x.Id,
-                                    Name = x.Name,
-                                    Type = type.Type
+                                    Id = x.Id
                                 }));
                         }
                     }
@@ -191,11 +184,9 @@ namespace MetadataUtilities.Models
                 {
                     foreach (var typeManager in types)
                     {
-                        temporaryList.AddRange(typeManager.LoadAllMetadata().Select(x => new MetadataObject(Settings)
+                        temporaryList.AddRange(typeManager.LoadAllMetadata().Select(x => new MetadataObject(Settings, typeManager.Type, x.Name)
                         {
-                            Id = x.Id,
-                            Name = x.Name,
-                            Type = typeManager.Type
+                            Id = x.Id
                         }));
                     }
 

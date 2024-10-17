@@ -1,8 +1,10 @@
-﻿namespace MetadataUtilities.Models
+﻿using KNARZhelper.Enum;
+
+namespace MetadataUtilities.Models
 {
     public class QuickAddObject : MetadataObject
     {
-        public QuickAddObject(Settings settings) : base(settings)
+        public QuickAddObject(Settings settings, FieldType type, string name = default) : base(settings, type, name)
         {
         }
 

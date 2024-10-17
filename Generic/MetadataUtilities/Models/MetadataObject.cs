@@ -23,7 +23,12 @@ namespace MetadataUtilities.Models
         private FieldType _type;
         private IMetadataFieldType _typeManager;
 
-        public MetadataObject(Settings settings) => Settings = settings;
+        public MetadataObject(Settings settings, FieldType type, string name = default)
+        {
+            Settings = settings;
+            Type = type;
+            Name = name;
+        }
 
         [DontSerialize]
         public string CleanedUpName
@@ -50,7 +55,8 @@ namespace MetadataUtilities.Models
                 {
                     SetValue(ref _editName, value);
                     _name = Prefix + value;
-                    CleanedUpName = EditName.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
+                    CleanedUpName = GetCleanedUpName();
+                    DisplayName = GetDisplayName();
                 }
 
                 OnPropertyChanged();
@@ -103,11 +109,9 @@ namespace MetadataUtilities.Models
                     _editName = _prefix == string.Empty ? value : value.RemoveFirst(_prefix);
                 }
 
-                CleanedUpName = EditName.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
+                CleanedUpName = GetCleanedUpName();
 
-                DisplayName = Settings?.PrefixItemTypes?.Any(x => (x.Name != default || x.FieldType != FieldType.Empty) && x.Prefix == Prefix) ?? false
-                    ? EditName
-                    : Name;
+                DisplayName = GetDisplayName();
             }
         }
 
@@ -193,6 +197,41 @@ namespace MetadataUtilities.Models
         public bool ExistsInDb() => TypeManager is IObjectType type && type.DbObjectExists(Name);
 
         public bool ExistsInGame(Game game) => TypeManager is IValueType type && type.GameContainsValue(game, Id);
+
+        public string GetCleanedUpName()
+        {
+            switch (Type)
+            {
+                case FieldType.Developer:
+                case FieldType.Publisher:
+                    if (string.IsNullOrEmpty(EditName))
+                    {
+                        return EditName;
+                    }
+
+                    var newName = EditName;
+
+                    if (newName.EndsWith(")"))
+                    {
+                        newName = newName.Remove(newName.Length - 1);
+                    }
+
+                    newName = Settings.CompanyFormRegex.Replace(newName, string.Empty).CollapseWhitespaces().Trim();
+
+                    if (EditName.EndsWith(")"))
+                    {
+                        newName = $"{newName})";
+                    }
+
+                    return newName;
+                default:
+                    return EditName.RemoveDiacritics().RemoveSpecialChars().ToLower().Replace("-", "").Replace(" ", "");
+            }
+        }
+
+        public string GetDisplayName() => Settings?.PrefixItemTypes?.Any(x => (x.Name != default || x.FieldType != FieldType.Empty) && x.Prefix == Prefix) ?? false
+            ? EditName
+            : Name;
 
         public void GetGameCount()
         {

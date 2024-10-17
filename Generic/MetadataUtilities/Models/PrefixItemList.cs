@@ -97,11 +97,9 @@ namespace MetadataUtilities.Models
             }
 
             _items.AddMissing(type.LoadGameMetadata(game).Select(x =>
-                new MetadataObject(plugin.Settings.Settings)
+                new MetadataObject(plugin.Settings.Settings, type.Type, x.Name)
                 {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Type = type.Type
+                    Id = x.Id
                 }).Where(x => prefixes.Contains(x.Prefix)).OrderBy(x => x.DisplayName));
         }
     }

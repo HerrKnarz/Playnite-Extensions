@@ -269,10 +269,8 @@ namespace MetadataUtilities.ViewModels
             {
                 if (!ConditionalAction.Actions.Any(x => x.ActionType == actionType && x.Type == fieldType))
                 {
-                    ConditionalAction.Actions.Add(new Action(_settings)
+                    ConditionalAction.Actions.Add(new Action(_settings, fieldType)
                     {
-                        Name = string.Empty,
-                        Type = fieldType,
                         ActionType = actionType
                     });
                 }
@@ -294,10 +292,8 @@ namespace MetadataUtilities.ViewModels
                                  ConditionalAction.Actions.All(x =>
                                      x.TypeAndName != item.TypeAndName || x.ActionType != actionType)))
                     {
-                        ConditionalAction.Actions.Add(new Action(_settings)
+                        ConditionalAction.Actions.Add(new Action(_settings, item.Type, item.Name)
                         {
-                            Name = item.Name,
-                            Type = item.Type,
                             ActionType = actionType
                         });
                     }
@@ -309,10 +305,8 @@ namespace MetadataUtilities.ViewModels
                             x => x.ActionType == actionType &&
                                  x.Type == fieldType))
                     {
-                        ConditionalAction.Actions.Add(new Action(_settings)
+                        ConditionalAction.Actions.Add(new Action(_settings, fieldType)
                         {
-                            Name = string.Empty,
-                            Type = fieldType,
                             ActionType = actionType
                         });
                     }
@@ -331,11 +325,9 @@ namespace MetadataUtilities.ViewModels
                             x => x.ActionType == actionType &&
                                  x.Type == fieldType && x.IntValue == intValue))
                     {
-                        ConditionalAction.Actions.Add(new Action(_settings)
+                        ConditionalAction.Actions.Add(new Action(_settings, fieldType)
                         {
-                            Name = string.Empty,
                             IntValue = intValue,
-                            Type = fieldType,
                             ActionType = actionType
                         });
                     }
@@ -354,11 +346,9 @@ namespace MetadataUtilities.ViewModels
                             x => x.ActionType == actionType &&
                                  x.Type == fieldType && x.DateValue == dateValue))
                     {
-                        ConditionalAction.Actions.Add(new Action(_settings)
+                        ConditionalAction.Actions.Add(new Action(_settings, fieldType)
                         {
-                            Name = string.Empty,
                             DateValue = dateValue,
-                            Type = fieldType,
                             ActionType = actionType
                         });
                     }
@@ -385,10 +375,8 @@ namespace MetadataUtilities.ViewModels
                 {
                     if (!ConditionalAction.Conditions.Any(x => x.Comparator == comparatorType && x.Type == fieldType))
                     {
-                        ConditionalAction.Conditions.Add(new Condition(_settings)
+                        ConditionalAction.Conditions.Add(new Condition(_settings, fieldType)
                         {
-                            Name = string.Empty,
-                            Type = fieldType,
                             Comparator = comparatorType
                         });
                     }
@@ -456,10 +444,8 @@ namespace MetadataUtilities.ViewModels
                          ConditionalAction.Conditions.All(x =>
                              x.TypeAndName != item.TypeAndName || x.Comparator != comparatorType)))
             {
-                ConditionalAction.Conditions.Add(new Condition(_settings)
+                ConditionalAction.Conditions.Add(new Condition(_settings, item.Type, item.Name)
                 {
-                    Name = item.Name,
-                    Type = item.Type,
                     Comparator = comparatorType
                 });
             }
@@ -480,11 +466,9 @@ namespace MetadataUtilities.ViewModels
                     x => x.Comparator == comparatorType &&
                          x.Type == fieldType && x.DateValue == dateValue))
             {
-                ConditionalAction.Conditions.Add(new Condition(_settings)
+                ConditionalAction.Conditions.Add(new Condition(_settings, fieldType)
                 {
-                    Name = string.Empty,
                     DateValue = dateValue,
-                    Type = fieldType,
                     Comparator = comparatorType
                 });
             }
@@ -503,11 +487,9 @@ namespace MetadataUtilities.ViewModels
                     x => x.Comparator == comparatorType &&
                          x.Type == fieldType && x.IntValue == intValue))
             {
-                ConditionalAction.Conditions.Add(new Condition(_settings)
+                ConditionalAction.Conditions.Add(new Condition(_settings, fieldType)
                 {
-                    Name = string.Empty,
                     IntValue = intValue,
-                    Type = fieldType,
                     Comparator = comparatorType
                 });
             }
@@ -528,11 +510,9 @@ namespace MetadataUtilities.ViewModels
                     x => x.Comparator == comparatorType &&
                          x.Type == fieldType && x.StringValue == dialogResult.SelectedString))
             {
-                ConditionalAction.Conditions.Add(new Condition(_settings)
+                ConditionalAction.Conditions.Add(new Condition(_settings, fieldType)
                 {
-                    Name = string.Empty,
                     StringValue = dialogResult.SelectedString,
-                    Type = fieldType,
                     Comparator = comparatorType
                 });
             }

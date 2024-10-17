@@ -372,11 +372,7 @@ namespace MetadataUtilities.ViewModels
 
             foreach (var item in items.Where(item => Settings.QuickAddObjects.All(x => x.TypeAndName != item.TypeAndName)))
             {
-                Settings.QuickAddObjects.Add(new QuickAddObject(_settings)
-                {
-                    Name = item.Name,
-                    Type = item.Type
-                });
+                Settings.QuickAddObjects.Add(new QuickAddObject(_settings, item.Type, item.Name));
             }
 
             Settings.QuickAddObjects = new ObservableCollection<QuickAddObject>(Settings.QuickAddObjects.OrderBy(x => x.TypeAndName));
@@ -403,7 +399,7 @@ namespace MetadataUtilities.ViewModels
             {
                 var isNewRule = rule == null;
 
-                var ruleToEdit = new MergeRule(_settings);
+                var ruleToEdit = new MergeRule(_settings, FieldType.Category);
 
                 if (rule != null)
                 {
@@ -412,10 +408,8 @@ namespace MetadataUtilities.ViewModels
 
                     foreach (var sourceItem in rule.SourceObjects)
                     {
-                        ruleToEdit.SourceObjects.Add(new MetadataObject(_settings)
+                        ruleToEdit.SourceObjects.Add(new MetadataObject(_settings, sourceItem.Type, sourceItem.Name)
                         {
-                            Name = sourceItem.Name,
-                            Type = sourceItem.Type,
                             GameCount = 0
                         });
                     }
@@ -477,11 +471,9 @@ namespace MetadataUtilities.ViewModels
 
                 foreach (var item in metadataObjects.Where(x => x.Selected).ToList())
                 {
-                    ruleToEdit.SourceObjects.Add(new MetadataObject(_settings)
+                    ruleToEdit.SourceObjects.Add(new MetadataObject(_settings, item.Type, item.Name)
                     {
                         Id = item.Id,
-                        Name = item.Name,
-                        Type = item.Type,
                         Selected = item.Selected
                     });
                 }

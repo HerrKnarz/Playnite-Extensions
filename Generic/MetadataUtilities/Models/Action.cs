@@ -13,7 +13,7 @@ namespace MetadataUtilities.Models
         private DateTime _dateValue;
         private int _intValue;
 
-        public Action(Settings settings) : base(settings)
+        public Action(Settings settings, FieldType type, string name = default) : base(settings, type, name)
         {
         }
 

@@ -45,7 +45,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) =>
             _collection.Where(x => !API.Instance.Database.Games.Any(g =>
-                !(ignoreHiddenGames && g.Hidden) && (g.DeveloperIds?.Contains(x.Id) ?? false) && (g.PublisherIds?.Contains(x.Id) ?? false)))
+                !(ignoreHiddenGames && g.Hidden) && ((g.DeveloperIds?.Contains(x.Id) ?? false) || (g.PublisherIds?.Contains(x.Id) ?? false))))
             .Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();
 
         public override bool NameExists(string name, Guid id) => NameExists(name, id, _collection);

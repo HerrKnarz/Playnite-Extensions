@@ -202,11 +202,9 @@ namespace MetadataUtilities
                     foreach (var type in types)
                     {
                         temporaryList.AddRange(type.LoadUnusedMetadata(settings.IgnoreHiddenGamesInRemoveUnused).Select(x
-                            => new MetadataObject(settings)
+                            => new MetadataObject(settings, type.Type, x.Name)
                             {
-                                Id = x.Id,
-                                Name = x.Name,
-                                Type = type.Type
+                                Id = x.Id
                             }));
                     }
 
