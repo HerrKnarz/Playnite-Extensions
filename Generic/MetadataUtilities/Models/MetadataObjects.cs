@@ -236,19 +236,27 @@ namespace MetadataUtilities.Models
 
             var ts = DateTime.Now;
 
-            var types = new List<IObjectType>();
+            var maxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0));
+
+            var types = new ConcurrentDictionary<FieldType, ConcurrentQueue<Guid>>(maxDegreeOfParallelism, 10);
 
             if (typeManager != null)
             {
-                types.Add(typeManager);
+                types.TryAdd(typeManager.Type, new ConcurrentQueue<Guid>());
             }
             else if (onlyMergeAble)
             {
-                types.AddRange(FieldTypeHelper.GetItemListTypes());
+                foreach (var type in FieldTypeHelper.GetItemListTypes())
+                {
+                    types.TryAdd(type.Type, new ConcurrentQueue<Guid>());
+                }
             }
             else
             {
-                types.AddRange(FieldTypeHelper.GetAllTypes<IObjectType>());
+                foreach (var type in FieldTypeHelper.GetAllTypes<IObjectType>())
+                {
+                    types.TryAdd(type.Type, new ConcurrentQueue<Guid>());
+                }
             }
 
             var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
@@ -260,19 +268,26 @@ namespace MetadataUtilities.Models
                 return;
             }
 
-            var items = new ConcurrentQueue<Guid>();
-
             Parallel.ForEach(API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden)), opts, game =>
             {
                 foreach (var type in types)
                 {
-                    type.LoadGameMetadata(game).ForEach(o => items.Enqueue(o.Id));
+                    if (type.Key.GetTypeManager() is IObjectType objectType)
+                    {
+                        objectType.LoadGameMetadata(game).ForEach(o => type.Value.Enqueue(o.Id));
+                    }
                 }
             });
 
-            var li = items.GroupBy(i => i).ToList();
+            var li = types.ToDictionary(type => type.Key, type => type.Value.GroupBy(i => i).ToList());
 
-            Parallel.ForEach(itemList, opts, item => item.GameCount = li.FirstOrDefault(i => i.Key == item.Id)?.Count() ?? 0);
+            Parallel.ForEach(itemList, opts, item =>
+            {
+                if (li.TryGetValue(item.Type, out var value))
+                {
+                    item.GameCount = value.FirstOrDefault(i => i.Key == item.Id)?.Count() ?? 0;
+                }
+            });
 
             if (Settings.WriteDebugLog)
             {

@@ -23,15 +23,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override event RenameObjectEventHandler RenameObject;
 
-        // The field isn't really read only, but since developers and publishers both use the
-        // metadata company we won't support modifying or deleting them for now. Adding new ones and
-        // adding/removing from games is fine.
-        public override bool CanBeAdded => false;
-
-        public override bool CanBeDeleted => false;
-
-        public override bool CanBeModified => false;
-
         public override int Count => _collection?.Count ?? 0;
 
         public abstract override string LabelSingular { get; }
@@ -44,6 +35,10 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool DbObjectExists(Guid id) => DbObjectExists(id, _collection);
 
+        public override bool DbObjectInUse(Guid id, bool ignoreHiddenGames = false) => API.Instance.Database.Games.Any(
+            x => !(ignoreHiddenGames && x.Hidden) &&
+                 ((x.DeveloperIds?.Contains(id) ?? false) || (x.PublisherIds?.Contains(id) ?? false)));
+
         public override Guid GetDbObjectId(string name) => GetDbObjectId(name, _collection);
 
         public override List<DatabaseObject> LoadAllMetadata() => LoadAllMetadata(_collection);
@@ -55,11 +50,9 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool NameExists(string name, Guid id) => NameExists(name, id, _collection);
 
-        public override bool RemoveDbObject(Guid id) => false;
+        public override bool RemoveDbObject(Guid id) => RemoveDbObject(id, _collection);
 
-        public override void UpdateDbObject(Guid id, string name)
-        {
-        }
+        public override void UpdateDbObject(Guid id, string name) => UpdateDbObject(id, name, _collection);
 
         private void ItemUpdated(object sender, ItemUpdatedEventArgs<Company> args)
         {

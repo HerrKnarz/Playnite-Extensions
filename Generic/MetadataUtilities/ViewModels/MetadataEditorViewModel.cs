@@ -94,13 +94,14 @@ namespace MetadataUtilities.ViewModels
                     // We copy the settings, so we won't overwrite them when closing the window
                     // without using the close command
                     _filterTypes = plugin.Settings.Settings.FilterTypes
-                        .Select(x => new FilterType() { Selected = x.Selected, Type = x.Type }).ToObservable();
+                        .Select(x => new FilterType() { Selected = x.Selected, Type = x.Type }).OrderBy(x => x.Label).ToObservable();
 
                     foreach (var filterType in FilterTypes)
                     {
                         filterType.PropertyChanged += (x, y) =>
                         {
                             ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
+                            UpdateGroupDisplay();
                             MetadataViewSource.View.Filter = Filter;
                         };
 
@@ -146,18 +147,24 @@ namespace MetadataUtilities.ViewModels
                     prefix = templateItem.Prefix;
                 }
 
-                var newItem = CompleteMetadata.AddNewItem(type, prefix, true, true);
+                MetadataObject newItem;
 
-                if (newItem == null)
+                using (MetadataViewSource.DeferRefresh())
                 {
-                    return;
+                    newItem = CompleteMetadata.AddNewItem(type, prefix, true, true);
+
+                    if (newItem == null)
+                    {
+                        return;
+                    }
+
+                    Cursor.Current = Cursors.WaitCursor;
+
+                    UpdateGroupDisplay();
+
+                    CalculateItemCount();
                 }
 
-                Cursor.Current = Cursors.WaitCursor;
-
-                UpdateGroupDisplay(CompleteMetadata.ToList());
-
-                CalculateItemCount();
                 MetadataViewSource.View.Filter = Filter;
                 MetadataViewSource.View.MoveCurrentTo(newItem);
             }
@@ -226,27 +233,30 @@ namespace MetadataUtilities.ViewModels
 
                 Cursor.Current = Cursors.WaitCursor;
 
-                foreach (var itemToRemove in changeItems)
+                using (MetadataViewSource.DeferRefresh())
                 {
-                    if (!itemToRemove.ExistsInDb())
+                    foreach (var itemToRemove in changeItems)
                     {
-                        CompleteMetadata.Remove(itemToRemove);
+                        if (!itemToRemove.ExistsInDb())
+                        {
+                            CompleteMetadata.Remove(itemToRemove);
+                        }
+                        else
+                        {
+                            itemToRemove.GetGameCount();
+                        }
                     }
-                    else
+
+                    foreach (var itemToAdd in viewModel.NewObjects)
                     {
-                        itemToRemove.GetGameCount();
+                        itemToAdd.GetGameCount();
                     }
+
+                    CompleteMetadata.AddMissing(viewModel.NewObjects);
+
+                    UpdateGroupDisplay();
+                    CalculateItemCount();
                 }
-
-                foreach (var itemToAdd in viewModel.NewObjects)
-                {
-                    itemToAdd.GetGameCount();
-                }
-
-                CompleteMetadata.AddMissing(viewModel.NewObjects);
-
-                UpdateGroupDisplay(CompleteMetadata.ToList());
-                CalculateItemCount();
             }
             catch (Exception exception)
             {
@@ -346,7 +356,7 @@ namespace MetadataUtilities.ViewModels
                     Cursor.Current = Cursors.WaitCursor;
                     try
                     {
-                        UpdateGroupDisplay(CompleteMetadata.ToList());
+                        UpdateGroupDisplay();
                         MetadataViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("CleanedUpName"));
                         ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                         MetadataViewSource.View.Filter = Filter;
@@ -396,21 +406,24 @@ namespace MetadataUtilities.ViewModels
 
                 Cursor.Current = Cursors.WaitCursor;
 
-                foreach (var itemToRemove in mergeItems)
+                using (MetadataViewSource.DeferRefresh())
                 {
-                    if (!itemToRemove.ExistsInDb())
+                    foreach (var itemToRemove in mergeItems)
                     {
-                        CompleteMetadata.Remove(itemToRemove);
+                        if (!itemToRemove.ExistsInDb())
+                        {
+                            CompleteMetadata.Remove(itemToRemove);
+                        }
+                        else
+                        {
+                            itemToRemove.GetGameCount();
+                        }
                     }
-                    else
-                    {
-                        itemToRemove.GetGameCount();
-                    }
+
+                    UpdateGroupDisplay();
+                    CalculateItemCount();
                 }
 
-                UpdateGroupDisplay(CompleteMetadata.ToList());
-
-                CalculateItemCount();
                 LoadRelatedGames();
             }
             catch (Exception exception)
@@ -480,7 +493,7 @@ namespace MetadataUtilities.ViewModels
 
                 Cursor.Current = Cursors.WaitCursor;
 
-                UpdateGroupDisplay(CompleteMetadata.ToList());
+                UpdateGroupDisplay();
             }
             catch (Exception exception)
             {
@@ -611,20 +624,23 @@ namespace MetadataUtilities.ViewModels
 
                 var unwantedItems = new List<MetadataObject>();
 
-                foreach (var item in items.ToList().Cast<MetadataObject>())
+                using (MetadataViewSource.DeferRefresh())
                 {
-                    unwantedItems.Add(item);
+                    foreach (var item in items.ToList().Cast<MetadataObject>())
+                    {
+                        unwantedItems.Add(item);
 
-                    CompleteMetadata.Remove(item);
+                        CompleteMetadata.Remove(item);
+                    }
+
+                    if (response == MessageBoxResult.Yes)
+                    {
+                        Plugin.Settings.Settings.UnwantedItems.AddItems(unwantedItems);
+                    }
+
+                    UpdateGroupDisplay();
+                    CalculateItemCount();
                 }
-
-                if (response == MessageBoxResult.Yes)
-                {
-                    Plugin.Settings.Settings.UnwantedItems.AddItems(unwantedItems);
-                }
-
-                UpdateGroupDisplay(CompleteMetadata.ToList());
-                CalculateItemCount();
             }
             finally
             {
@@ -647,16 +663,19 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                var itemsToRemove = CompleteMetadata
-                    .Where(x => removedItems.Any(y => x.Type == y.Type && x.Name == y.Name)).ToList();
-
-                CalculateItemCount();
-                foreach (var itemToRemove in itemsToRemove)
+                using (MetadataViewSource.DeferRefresh())
                 {
-                    CompleteMetadata.Remove(itemToRemove);
-                }
+                    var itemsToRemove = CompleteMetadata
+                        .Where(x => removedItems.Any(y => x.Type == y.Type && x.Name == y.Name)).ToList();
 
-                UpdateGroupDisplay(CompleteMetadata.ToList());
+                    CalculateItemCount();
+                    foreach (var itemToRemove in itemsToRemove)
+                    {
+                        CompleteMetadata.Remove(itemToRemove);
+                    }
+
+                    UpdateGroupDisplay();
+                }
             }
             finally
             {
@@ -807,7 +826,7 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        private void UpdateGroupDisplay(List<MetadataObject> itemList)
+        private void UpdateGroupDisplay()
         {
             if (_plugin.Settings.Settings.WriteDebugLog)
             {
@@ -816,9 +835,18 @@ namespace MetadataUtilities.ViewModels
 
             var ts = DateTime.Now;
 
-            var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+            using (MetadataViewSource.DeferRefresh())
+            {
+                var tempList = CompleteMetadata.Where(x => _filterTypes.Any(f => f.Selected && f.Type == x.Type)).ToList();
 
-            Parallel.ForEach(itemList, opts, item => item.CheckGroup(itemList));
+                var groups = tempList.GroupBy(x => x.CleanedUpName)
+                    .ToDictionary(group => group.Key, group => group.Count());
+
+                var opts = new ParallelOptions
+                { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+
+                Parallel.ForEach(tempList, opts, item => item.CheckGroup(groups));
+            }
 
             if (_plugin.Settings.Settings.WriteDebugLog)
             {

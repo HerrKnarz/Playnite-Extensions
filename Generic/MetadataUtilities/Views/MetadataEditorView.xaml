@@ -108,8 +108,8 @@
                 <FrameworkElement x:Name="DummyElement" Visibility="Collapsed" />
                 <DataGrid x:Name="MetadataGrid" ItemsSource="{Binding MetadataViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top"
                                      Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
-                                     SelectionMode="Extended" EnableRowVirtualization="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                                     PreparingCellForEdit="DataGrid_PreparingCellForEdit" RowHeaderWidth="0"
+                                     SelectionMode="Extended" EnableRowVirtualization="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.IsVirtualizing="True"
+                                     PreparingCellForEdit="DataGrid_PreparingCellForEdit" RowHeaderWidth="0" ScrollViewer.CanContentScroll="True"
                                      SelectionChanged="DataGrid_SelectionChanged">
                     <DataGrid.InputBindings>
                         <KeyBinding Key="Insert" Command="{Binding AddNewCommand}" />

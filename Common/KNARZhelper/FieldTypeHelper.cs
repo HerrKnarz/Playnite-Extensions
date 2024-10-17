@@ -59,7 +59,8 @@ namespace KNARZhelper
             };
 
         public static IEnumerable<IEditableObjectType> GetItemListTypes() => GetAllTypes<IEditableObjectType>()
-            .Where(x => x.ValueType == ItemValueType.ItemList && x.CanBeSetInGame && x.IsList && x.CanBeModified);
+            .Where(x => x.ValueType == ItemValueType.ItemList && x.CanBeSetInGame && x.IsList && x.CanBeModified)
+            .OrderBy(x => x.LabelSingular);
 
         public static IMetadataFieldType GetTypeManager(this FieldType e)
         {

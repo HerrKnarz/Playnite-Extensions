@@ -179,6 +179,12 @@ namespace MetadataUtilities
         {
             var temporaryList = new List<MetadataObject>();
 
+            if (API.Instance == null || API.Instance.Dialogs == null)
+
+            {
+                return temporaryList;
+            }
+
             var types = FieldTypeHelper.GetItemListTypes().ToList();
 
             var globalProgressOptions = new GlobalProgressOptions(

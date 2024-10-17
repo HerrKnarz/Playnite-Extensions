@@ -187,8 +187,8 @@ namespace MetadataUtilities.Models
 
         public bool AddToGame(Game game) => TypeManager is IEditableObjectType type && type.AddValueToGame(game, Id);
 
-        public void CheckGroup(List<MetadataObject> metadataList)
-            => ShowGrouped = metadataList.Any(x => x.CleanedUpName == CleanedUpName && !x.Equals(this));
+        public void CheckGroup(Dictionary<string, int> groups) =>
+            ShowGrouped = groups.TryGetValue(CleanedUpName, out var count) && count > 1;
 
         public bool ExistsInDb() => TypeManager is IObjectType type && type.DbObjectExists(Name);
 
