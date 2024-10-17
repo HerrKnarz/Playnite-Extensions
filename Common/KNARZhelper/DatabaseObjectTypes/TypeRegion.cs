@@ -23,12 +23,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override event RenameObjectEventHandler RenameObject;
 
-        public override bool CanBeAdded => false;
-
-        public override bool CanBeDeleted => false;
-
-        public override bool CanBeModified => false;
-
         public override int Count => _collection?.Count ?? 0;
 
         public override string LabelPlural => ResourceProvider.GetString("LOCRegionsLabel");
