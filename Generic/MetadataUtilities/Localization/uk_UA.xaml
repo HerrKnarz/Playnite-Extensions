@@ -92,8 +92,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Користувацький шлях меню</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Стандартний шлях меню</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Змінити</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Hide in details</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Hide in editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Сховати в подробицях</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Сховати в редакторі</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ігнорувати умови</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ігнорувати умови при виконанні вручну</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ігнорувати приховані ігри в при підрахунку</sys:String>
@@ -108,7 +108,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Автоматично перейменовувати елементи швидкого додавання під час перейменування відповідного оригінального елемента.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Автоматично перейменовувати елементи білого списку, коли перейменовано відповідний вихідний елемент.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Після встановлення значення для кількох ігор одночасно показувати діалогове вікно з результатами</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Show in Metadata Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Показати в Редакторі Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Показувати кнопку Налаштування у верхній панелі (потрібен перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Показувати кнопку Редактора Метаданих у верхній панелі (потрібен перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Помістити підменю під елементом меню Metadata Utilities</sys:String>
@@ -118,10 +118,10 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Префікси</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Швидке додавання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Прибрати небажані</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Whitelist</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Типи полів</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Білий список</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Перемкнути</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Значення для об'єднання</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">Ці елементи не будуть видалятися під час видалення невикористаних елементів.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Записувати повідомлення журналу налагодження (використовуйте тільки якщо підозрюєте помилки!)</sys:String>
 </ResourceDictionary>
