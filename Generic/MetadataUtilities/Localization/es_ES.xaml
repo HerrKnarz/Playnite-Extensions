@@ -106,6 +106,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Automatically rename quick add items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Automatically rename whitelist items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Mostrar diálogo de resultados después de establecer un valor para más de un juego</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Show in Metadata Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Show Settings button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Mostrar botón del editor de metadatos en el panel superior (requiere reiniciar)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Poner los submenús en la entrada del menú Metadata Utilities</sys:String>
@@ -116,6 +117,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Adición rápida</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Remove unwanted</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Alternar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Whitelist (These items won't be removed when unused)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valores a combinar</sys:String>
