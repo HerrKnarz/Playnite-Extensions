@@ -106,6 +106,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Renommer automatiquement les éléments ajoutés rapidement lorsque l'élément original correspondant est renommé.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Renommer automatiquement les éléments de la liste blanche lorsque l'élément original correspondant est renommé.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Montrer la boîte de dialogue après avoir changé la valeur pour plus d'un jeu</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Show in Metadata Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Afficher le bouton Paramètres dans le panneau supérieur (nécessite un redémarrage)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Afficher le bouton de l'éditeur de métadonnées dans le panneau supérieur (nécessite un redémarrage)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Mettre les sous-menus sous l'entrée de menu utilitaires des métadonnées</sys:String>
@@ -116,6 +117,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Ajout rapide</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Retirer inutilisé</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Retirer indésirables</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Inverser</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Whitelist (These items won't be removed when unused)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valeurs à fusionner</sys:String>
