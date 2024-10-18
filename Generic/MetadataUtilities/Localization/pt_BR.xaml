@@ -92,6 +92,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Caminho do menu personalizado</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Caminho de menu personalizado padrão</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editar</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Hide in details</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Hide in editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignorar condições ao executar manualmente</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignorar jogos ocultos na contagem de jogos</sys:String>
@@ -115,11 +117,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Mesclando</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefixos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Adicionar Rápido</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Remove unwanted</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Alternar</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Whitelist (These items won't be removed when unused)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valores a serem mesclados</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Escrever mensagens de log de depuração (use somente em caso de suspeita de erro!)</sys:String>
 </ResourceDictionary>
