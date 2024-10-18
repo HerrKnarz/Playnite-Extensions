@@ -96,11 +96,13 @@ namespace MetadataUtilities.Models
                 prefixes.AddMissing(plugin.Settings.Settings.PrefixItemTypes.Where(p => p.Name == default).Select(p => p.Prefix));
             }
 
-            _items.AddMissing(type.LoadGameMetadata(game).Select(x =>
-                new MetadataObject(plugin.Settings.Settings, type.Type, x.Name)
-                {
-                    Id = x.Id
-                }).Where(x => prefixes.Contains(x.Prefix)).OrderBy(x => x.DisplayName));
+            _items.AddMissing(type.LoadGameMetadata(game)
+                .Where(x => !plugin.Settings.Settings.UnusedItemsWhiteList.Any(y => y.HideInDetails && y.Type == type.Type && y.Name == x.Name))
+                .Select(x =>
+                    new MetadataObject(plugin.Settings.Settings, type.Type, x.Name)
+                    {
+                        Id = x.Id
+                    }).Where(x => prefixes.Contains(x.Prefix)).OrderBy(x => x.DisplayName));
         }
     }
 }

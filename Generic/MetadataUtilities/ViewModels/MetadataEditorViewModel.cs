@@ -47,6 +47,11 @@ namespace MetadataUtilities.ViewModels
             try
             {
                 Plugin = plugin;
+
+                objects.RemoveItems(objects.Where(x =>
+                    Plugin.Settings.Settings.UnusedItemsWhiteList.Any(y =>
+                        y.HideInEditor && y.TypeAndName == x.TypeAndName)).ToList());
+
                 CompleteMetadata = objects;
 
                 Prefixes.Add(string.Empty);
