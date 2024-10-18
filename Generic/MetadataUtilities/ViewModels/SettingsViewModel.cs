@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
@@ -105,6 +107,8 @@ namespace MetadataUtilities.ViewModels
             Settings.ConditionalActions.Add(conditionalAction);
             Settings.ConditionalActions.Sort(x => x.Name);
         });
+
+        public RelayCommand AddDefaultWhiteListItemsCommand => new RelayCommand(AddDefaultWhiteListItems);
 
         public RelayCommand AddNewMergeRuleCommand => new RelayCommand(() => EditMergeRule());
 
@@ -370,6 +374,25 @@ namespace MetadataUtilities.ViewModels
         {
             errors = new List<string>();
             return true;
+        }
+
+        public void AddDefaultWhiteListItems()
+        {
+            var defaults = Serialization.FromJsonFile<List<WhiteListItem>>(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Resources",
+                "WhiteListDefaults.json"));
+
+            if (defaults == null)
+            {
+                return;
+            }
+
+            foreach (var item in defaults.Where(item => Settings.UnusedItemsWhiteList.All(x => x.TypeAndName != item.TypeAndName)))
+            {
+                Settings.UnusedItemsWhiteList.Add(item);
+            }
+
+            Settings.UnusedItemsWhiteList.Sort(x => x.TypeAndName);
         }
 
         public void AddItemsToQuickAddList(List<MetadataObject> items)

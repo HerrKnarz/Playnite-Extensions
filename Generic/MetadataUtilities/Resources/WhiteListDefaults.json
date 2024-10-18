@@ -1,0 +1,42 @@
+﻿[
+    {
+        "Name": "[DH] Hidden",
+        "Type": 4
+    },
+    {
+        "Name": "[DH] High",
+        "Type": 4
+    },
+    {
+        "Name": "[DH] Low",
+        "Type": 4
+    },
+    {
+        "Name": "[DH] Revealed",
+        "Type": 4
+    },
+    {
+        "Name": "Optimization: Background not optimized",
+        "Type": 4
+    },
+    {
+        "Name": "Optimization: Cover not optimized",
+        "Type": 4
+    },
+    {
+        "Name": "Optimization: Icon not optimized",
+        "Type": 4
+    },
+    {
+        "Name": "No Media: Background",
+        "Type": 4
+    },
+    {
+        "Name": "No Media: Cover",
+        "Type": 4
+    },
+    {
+        "Name": "No Media: Icon",
+        "Type": 4
+    }
+]

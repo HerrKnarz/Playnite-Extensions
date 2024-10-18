@@ -266,8 +266,10 @@
                             Margin="0,0,10,0" ContextMenu="{StaticResource WhitelistContextMenu}" Click="ButtonContextClick"
                             DockPanel.Dock="Left" />
                     <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
-                            Margin="0,0,0,0" Command="{Binding RemoveUnusedFromListCommand}"
+                            Margin="0,0,20,0" Command="{Binding RemoveUnusedFromListCommand}"
                             CommandParameter="{Binding SelectedItems, ElementName=LvUnusedWhiteList}" DockPanel.Dock="Left" />
+                    <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddDefaults}" Margin="0,0,0,0"
+                            Command="{Binding AddDefaultWhiteListItemsCommand}" DockPanel.Dock="Left" />
                 </DockPanel>
                 
                 <Label Content="{DynamicResource LOCMetadataUtilitiesSettingsWhiteListInfo}" DockPanel.Dock="Top" />
