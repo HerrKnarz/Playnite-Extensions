@@ -5,7 +5,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Um {0} com esse nome já existe.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Alterar tipo de metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Editor de ações condicionais</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Please enter a value</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Insira um valor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Conditional actions changed {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Mesclar como</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Metadados mesclados em {0} jogos!</sys:String>
@@ -83,6 +83,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Removendo itens de metadados indesejados...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Setting user score...</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Add defaults</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Adicionar item existente</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Sempre adicione itens que você remover no Editor de Metadados à lista indesejada sem perguntar.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Sempre salvar mesclagens manuais como regras de mesclagem.</sys:String>
@@ -92,6 +93,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Caminho do menu personalizado</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Caminho de menu personalizado padrão</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editar</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Hide in details</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Hide in editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignorar condições ao executar manualmente</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignorar jogos ocultos na contagem de jogos</sys:String>
@@ -106,6 +109,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Automatically rename quick add items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Automatically rename whitelist items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Mostrar a caixa de resultados após definir um valor para mais de um jogo</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Show in Metadata Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Show Settings button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Exibir botão do Editor de Metadados no painel superior (requer reinicialização)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Colocar os submenus sob a entrada de menu de Metadados</sys:String>
@@ -114,10 +118,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Mesclando</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefixos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Adicionar Rápido</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Remove unwanted</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Alternar</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Whitelist (These items won't be removed when unused)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valores a serem mesclados</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Escrever mensagens de log de depuração (use somente em caso de suspeita de erro!)</sys:String>
 </ResourceDictionary>
