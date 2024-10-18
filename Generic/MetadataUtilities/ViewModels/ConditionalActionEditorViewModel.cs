@@ -362,7 +362,7 @@ namespace MetadataUtilities.ViewModels
                     throw new ArgumentOutOfRangeException();
             }
 
-            ConditionalAction.Actions = ConditionalAction.Actions.OrderBy(x => x.ToString).ToObservable();
+            ConditionalAction.Actions.Sort(x => x.ToString);
         }
 
         public void AddConditions(FieldType fieldType, ComparatorType comparatorType)
@@ -450,7 +450,7 @@ namespace MetadataUtilities.ViewModels
                 });
             }
 
-            ConditionalAction.Conditions = ConditionalAction.Conditions.OrderBy(x => x.ToString).ToObservable();
+            ConditionalAction.Conditions.Sort(x => x.ToString);
         }
 
         private void CreateDateCondition(FieldType fieldType, ComparatorType comparatorType)

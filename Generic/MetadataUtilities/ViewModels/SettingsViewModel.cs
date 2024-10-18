@@ -103,7 +103,7 @@ namespace MetadataUtilities.ViewModels
             }
 
             Settings.ConditionalActions.Add(conditionalAction);
-            Settings.ConditionalActions = Settings.ConditionalActions.OrderBy(x => x.Name).ToObservable();
+            Settings.ConditionalActions.Sort(x => x.Name);
         });
 
         public RelayCommand AddNewMergeRuleCommand => new RelayCommand(() => EditMergeRule());
@@ -170,7 +170,7 @@ namespace MetadataUtilities.ViewModels
             Settings.ConditionalActions.Remove(conditionalActionOriginal);
             Settings.ConditionalActions.Add(conditionalActionToEdit);
 
-            Settings.ConditionalActions = Settings.ConditionalActions.OrderBy(x => x.Name).ToObservable();
+            Settings.ConditionalActions.Sort(x => x.Name);
         }, conAction => conAction != null);
 
         private Settings EditingClone { get; set; }
