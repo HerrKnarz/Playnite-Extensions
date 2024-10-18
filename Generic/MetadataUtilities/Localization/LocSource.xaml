@@ -92,6 +92,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Custom menu path</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Default custom menu path</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Edit</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Hide in details</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Hide in editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignore conditions when executing manually</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignore hidden games in game count</sys:String>
@@ -115,11 +117,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Merging</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefixes</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Quick Add</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Remove unwanted</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Toggle</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Whitelist (These items won't be removed when unused)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Values to merge</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Write debug log messages (only use in case of suspected error!)</sys:String>
 </ResourceDictionary>

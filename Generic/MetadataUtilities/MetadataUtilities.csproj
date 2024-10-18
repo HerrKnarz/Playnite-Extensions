@@ -257,6 +257,7 @@
     <Compile Include="Models\PrefixItemList.cs" />
     <Compile Include="Models\QuickAddObject.cs" />
     <Compile Include="Models\TypeConfig.cs" />
+    <Compile Include="Models\WhiteListItem.cs" />
     <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
     <Compile Include="ViewModels\ChangeTypeViewModel.cs" />
     <Compile Include="ViewModels\ConditionalActionEditorViewModel.cs" />

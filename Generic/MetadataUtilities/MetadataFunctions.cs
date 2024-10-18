@@ -18,6 +18,33 @@ namespace MetadataUtilities
 {
     public static class MetadataFunctions
     {
+        public static MetadataObject AddNewItem(Settings settings, FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
+        {
+            var newItem = new MetadataObject(settings, type)
+            {
+                Prefix = prefix
+            };
+
+            var window = AddNewObjectViewModel.GetWindow(settings, newItem, enableTypeSelection);
+
+            if (window == null)
+            {
+                return null;
+            }
+
+            if (!(window.ShowDialog() ?? false))
+            {
+                return null;
+            }
+
+            if (addToDb)
+            {
+                newItem.AddToDb();
+            }
+
+            return newItem;
+        }
+
         public static void DoForAll(MetadataUtilities plugin, List<MyGame> games, IBaseAction action,
             bool showDialog = false, ActionModifierType actionModifier = ActionModifierType.None, object item = null)
         {

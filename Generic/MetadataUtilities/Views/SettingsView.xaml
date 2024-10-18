@@ -8,6 +8,15 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
+        <ContextMenu x:Key="WhitelistContextMenu" ItemsSource="{Binding FieldTypeButtons}">
+            <ContextMenu.ItemContainerStyle>
+                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Header" Value="{Binding Name}" />
+                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddUnusedCommand}" />
+                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                </Style>
+            </ContextMenu.ItemContainerStyle>
+        </ContextMenu>
         <ContextMenu x:Key="QuickAddContextMenu" ItemsSource="{Binding FieldTypeButtonsExtended}">
             <ContextMenu.ItemContainerStyle>
                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
@@ -247,45 +256,52 @@
                 </ListView>
             </DockPanel>
         </TabItem>
-        <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabRemoveUnused}">
+        <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabWhitelist}">
             <DockPanel Margin="10" Name="DpUnusedSettings">
+                <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
+                    <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
+                            Margin="0,0,10,0" Command="{Binding AddNewUnusedCommand}"
+                            DockPanel.Dock="Left" />
+                    <Button Content="&#xec3e; &#xEF75;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
+                            Margin="0,0,10,0" ContextMenu="{StaticResource WhitelistContextMenu}" Click="ButtonContextClick"
+                            DockPanel.Dock="Left" />
+                    <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
+                            Margin="0,0,0,0" Command="{Binding RemoveUnusedFromListCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=LvUnusedWhiteList}" DockPanel.Dock="Left" />
+                </DockPanel>
+                
+                <Label Content="{DynamicResource LOCMetadataUtilitiesSettingsWhiteListInfo}" DockPanel.Dock="Top" />
+
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameWhiteList}" Margin="0,10,0,0">
                     <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameWhitelist}" TextWrapping="Wrap" />
                 </CheckBox>
-                <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsUnusedWhiteList}" Margin="0,10,0,0" DockPanel.Dock="Top"
-                          Padding="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="200" />
-                        </Grid.ColumnDefinitions>
-                        <ListBox DockPanel.Dock="Bottom" Name="LbUnusedWhiteList" HorizontalContentAlignment="Stretch"
-                                 VerticalContentAlignment="Stretch" ItemsSource="{Binding Settings.UnusedItemsWhiteList}"
-                                 VerticalAlignment="Stretch" SelectionMode="Extended">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding TypeAndName}" />
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                            <Button Content="{DynamicResource LOCAddNewItem}"
-                                    Command="{Binding AddNewUnusedCommand}" Margin="0,0,0,10" />
-                            <ItemsControl ItemsSource="{Binding FieldTypeButtons}">
-                                <ItemsControl.Resources>
-                                    <DataTemplate DataType="{x:Type viewModels:FieldTypeContextAction}">
-                                        <Button Content="{Binding Name}" Margin="0,10,0,0"
-                                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.AddUnusedCommand}"
-                                                CommandParameter="{Binding FieldType}" />
+
+                <ListView Name="LvUnusedWhiteList" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0"
+                          ItemsSource="{Binding Settings.UnusedItemsWhiteList}" HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCNameLabel}"
+                                DisplayMemberBinding="{Binding TypeAndName}" />
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsHideInDetails}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding HideInDetails, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
+                                      HorizontalAlignment="Center" />
                                     </DataTemplate>
-                                </ItemsControl.Resources>
-                            </ItemsControl>
-                            <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,20,0,0"
-                                Command="{Binding RemoveUnusedFromListCommand}"
-                                CommandParameter="{Binding SelectedItems, ElementName=LbUnusedWhiteList}" />
-                        </StackPanel>
-                    </Grid>
-                </GroupBox>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsHideInEditor}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding HideInEditor, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
+                                      HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </DockPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabRemoveUnwanted}">

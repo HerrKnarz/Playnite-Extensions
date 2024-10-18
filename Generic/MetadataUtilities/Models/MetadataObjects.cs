@@ -1,7 +1,6 @@
 ﻿using KNARZhelper;
 using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
-using MetadataUtilities.ViewModels;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
@@ -67,31 +66,11 @@ namespace MetadataUtilities.Models
 
         public MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
         {
-            var newItem = new MetadataObject(Settings, type)
-            {
-                Prefix = prefix
-            };
-
-            var window = AddNewObjectViewModel.GetWindow(Settings, newItem, enableTypeSelection);
-
-            if (window == null)
-            {
-                return null;
-            }
-
-            if (!(window.ShowDialog() ?? false))
-            {
-                return null;
-            }
+            var newItem = MetadataFunctions.AddNewItem(Settings, type, prefix, enableTypeSelection, addToDb);
 
             if (this.Any(x => x.TypeAndName == newItem.TypeAndName))
             {
                 return null;
-            }
-
-            if (addToDb)
-            {
-                newItem.AddToDb();
             }
 
             Add(newItem);

@@ -46,13 +46,13 @@ namespace MetadataUtilities.Models
         private bool _showTopPanelButton = true;
         private bool _showTopPanelSettingsButton;
         private ObservableCollection<TypeConfig> _typeConfigs = new ObservableCollection<TypeConfig>();
-        private MetadataObjects _unusedItemsWhiteList;
+        private ObservableCollection<WhiteListItem> _unusedItemsWhiteList;
         private MetadataObjects _unwantedItems;
         private bool _writeDebugLog;
 
         public Settings()
         {
-            _unusedItemsWhiteList = new MetadataObjects(this);
+            _unusedItemsWhiteList = new ObservableCollection<WhiteListItem>();
             _unwantedItems = new MetadataObjects(this);
         }
 
@@ -248,7 +248,7 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _typeConfigs, value);
         }
 
-        public MetadataObjects UnusedItemsWhiteList
+        public ObservableCollection<WhiteListItem> UnusedItemsWhiteList
         {
             get => _unusedItemsWhiteList;
             set => SetValue(ref _unusedItemsWhiteList, value);
@@ -272,7 +272,11 @@ namespace MetadataUtilities.Models
         /// </summary>
         public void ResetReferences()
         {
-            UnusedItemsWhiteList.Settings = this;
+            foreach (var item in UnusedItemsWhiteList)
+            {
+                item.Settings = this;
+            }
+
             UnwantedItems.Settings = this;
 
             foreach (var rule in MergeRules)

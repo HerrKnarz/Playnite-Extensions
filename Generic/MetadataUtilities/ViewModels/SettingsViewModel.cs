@@ -59,7 +59,7 @@ namespace MetadataUtilities.ViewModels
                 .Select(x =>
                     new FieldTypeContextAction
                     {
-                        Name = x.LabelSingular,
+                        Name = x.LabelPlural,
                         FieldType = x.Type
                     }
                 ));
@@ -68,7 +68,7 @@ namespace MetadataUtilities.ViewModels
                 .Select(x =>
                     new FieldTypeContextAction
                     {
-                        Name = x.LabelSingular,
+                        Name = x.LabelPlural,
                         FieldType = x.Type
                     }
                 ));
@@ -129,7 +129,7 @@ namespace MetadataUtilities.ViewModels
             }
         }, rule => rule != null);
 
-        public RelayCommand AddNewUnusedCommand => new RelayCommand(() => Settings.UnusedItemsWhiteList.AddNewItem(FieldType.Tag));
+        public RelayCommand AddNewUnusedCommand => new RelayCommand(() => AddNewWhiteListItem(FieldType.Tag));
 
         public RelayCommand AddNewUnwantedCommand => new RelayCommand(() => Settings.UnwantedItems.AddNewItem(FieldType.Tag));
 
@@ -140,7 +140,7 @@ namespace MetadataUtilities.ViewModels
             => new RelayCommand<FieldType>(AddQuickAddItems);
 
         public RelayCommand<FieldType> AddUnusedCommand
-            => new RelayCommand<FieldType>(type => Settings.UnusedItemsWhiteList.AddItems(type));
+            => new RelayCommand<FieldType>(AddWhiteListItems);
 
         public RelayCommand<FieldType> AddUnwantedCommand
             => new RelayCommand<FieldType>(type => Settings.UnwantedItems.AddItems(type));
@@ -256,7 +256,16 @@ namespace MetadataUtilities.ViewModels
         }, items => items?.Count != 0);
 
         public RelayCommand<IList<object>> RemoveUnusedFromListCommand =>
-            new RelayCommand<IList<object>>(items => RemoveFromList(items, Settings.UnusedItemsWhiteList),
+            new RelayCommand<IList<object>>(items =>
+                {
+                    foreach (var item in items.ToList())
+                    {
+                        if (item is WhiteListItem whiteListItem)
+                        {
+                            Settings.UnusedItemsWhiteList.Remove(whiteListItem);
+                        }
+                    }
+                },
                 items => items?.Count != 0);
 
         public RelayCommand<IList<object>> RemoveUnwantedFromListCommand =>
@@ -375,7 +384,36 @@ namespace MetadataUtilities.ViewModels
                 Settings.QuickAddObjects.Add(new QuickAddObject(_settings, item.Type, item.Name));
             }
 
-            Settings.QuickAddObjects = new ObservableCollection<QuickAddObject>(Settings.QuickAddObjects.OrderBy(x => x.TypeAndName));
+            Settings.QuickAddObjects.Sort(x => x.TypeAndName);
+        }
+
+        public void AddItemsToWhiteList(List<MetadataObject> items)
+        {
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in items.Where(item => Settings.UnusedItemsWhiteList.All(x => x.TypeAndName != item.TypeAndName)))
+            {
+                Settings.UnusedItemsWhiteList.Add(new WhiteListItem(_settings, item.Type, item.Name));
+            }
+
+            Settings.UnusedItemsWhiteList.Sort(x => x.TypeAndName);
+        }
+
+        public void AddNewWhiteListItem(FieldType type)
+        {
+            var newItem = MetadataFunctions.AddNewItem(Settings, type);
+
+            if (Settings.UnusedItemsWhiteList.Any(x => x.TypeAndName == newItem.TypeAndName))
+            {
+                return;
+            }
+
+            Settings.UnusedItemsWhiteList.Add(new WhiteListItem(Settings, newItem.Type, newItem.Name));
+
+            Settings.UnusedItemsWhiteList.Sort(x => x.TypeAndName);
         }
 
         public void AddQuickAddItems(FieldType type)
@@ -388,6 +426,18 @@ namespace MetadataUtilities.ViewModels
             }
 
             AddItemsToQuickAddList(items);
+        }
+
+        public void AddWhiteListItems(FieldType type)
+        {
+            var items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
+
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            AddItemsToWhiteList(items);
         }
 
         public void RemoveFromList(IList<object> items, MetadataObjects list) => list.RemoveItems(items.ToList().Cast<MetadataObject>());
