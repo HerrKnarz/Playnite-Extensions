@@ -92,6 +92,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Chemin de menu personnalisé</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Chemin de menu personnalisé par défaut</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Éditer</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Hide in details</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Hide in editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignore conditions when executing manually</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignorer les jeux cachés dans le nombre de jeux</sys:String>
@@ -115,11 +117,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Fusion en cours</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Préfixes</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Ajout rapide</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Retirer inutilisé</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Retirer indésirables</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Inverser</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Whitelist (These items won't be removed when unused)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valeurs à fusionner</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Écrire les messages de débogage (utiliser uniquement en cas d'erreur suspecte !)</sys:String>
 </ResourceDictionary>
