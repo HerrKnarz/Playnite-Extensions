@@ -117,17 +117,20 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
-                    var types = FieldTypeHelper.GetItemListTypes().ToList();
+                    var types = Settings.TypeConfigs.Where(x => x.Selected).ToList();
 
                     foreach (var game in games)
                     {
                         foreach (var type in types)
                         {
-                            temporaryList.AddMissing(type.LoadGameMetadata(game).Select(x =>
-                                new MetadataObject(Settings, type.Type, x.Name)
-                                {
-                                    Id = x.Id
-                                }));
+                            if (type.Type.GetTypeManager() is IObjectType objectType)
+                            {
+                                temporaryList.AddMissing(objectType.LoadGameMetadata(game).Select(x =>
+                                    new MetadataObject(Settings, type.Type, x.Name)
+                                    {
+                                        Id = x.Id
+                                    }));
+                            }
                         }
                     }
 
@@ -163,7 +166,8 @@ namespace MetadataUtilities.Models
             }
             else if (onlyMergeAble)
             {
-                types.AddRange(FieldTypeHelper.GetItemListTypes());
+                types.AddRange(Settings.TypeConfigs.Where(x => x.Selected)
+                    .Select(x => x.Type.GetTypeManager() as IObjectType).ToList());
             }
             else
             {
@@ -218,7 +222,7 @@ namespace MetadataUtilities.Models
             }
         }
 
-        private void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames, IObjectType typeManager = null, bool onlyMergeAble = true)
+        private void UpdateGameCounts(IEnumerable<MetadataObject> itemList, bool ignoreHiddenGames, IMetadataFieldType typeManager = null, bool onlyMergeAble = true)
         {
             if (Settings.WriteDebugLog)
             {

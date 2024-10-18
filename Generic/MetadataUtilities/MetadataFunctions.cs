@@ -185,7 +185,7 @@ namespace MetadataUtilities
                 return temporaryList;
             }
 
-            var types = FieldTypeHelper.GetItemListTypes().ToList();
+            var types = settings.TypeConfigs.Where(x => x.RemoveUnusedItems).ToList();
 
             var globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
@@ -201,11 +201,15 @@ namespace MetadataUtilities
                 {
                     foreach (var type in types)
                     {
-                        temporaryList.AddRange(type.LoadUnusedMetadata(settings.IgnoreHiddenGamesInRemoveUnused).Select(x
-                            => new MetadataObject(settings, type.Type, x.Name)
-                            {
-                                Id = x.Id
-                            }));
+                        if (type.Type.GetTypeManager() is IObjectType objectType)
+                        {
+                            temporaryList.AddRange(objectType.LoadUnusedMetadata(type.HiddenAsUnused)
+                                .Select(x
+                                    => new MetadataObject(settings, type.Type, x.Name)
+                                    {
+                                        Id = x.Id
+                                    }));
+                        }
                     }
 
                     if (temporaryList.Count > 0 && (settings.UnusedItemsWhiteList?.Count ?? 0) > 0)
@@ -216,7 +220,7 @@ namespace MetadataUtilities
 
                     foreach (var item in temporaryList)
                     {
-                        item.RemoveFromDb(settings.IgnoreHiddenGamesInRemoveUnused);
+                        item.RemoveFromDb(types.FirstOrDefault(x => x.Type == item.Type)?.HiddenAsUnused ?? false);
                     }
                 }
                 catch (Exception ex)

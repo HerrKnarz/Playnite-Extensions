@@ -93,8 +93,8 @@ namespace MetadataUtilities.ViewModels
 
                     // We copy the settings, so we won't overwrite them when closing the window
                     // without using the close command
-                    _filterTypes = plugin.Settings.Settings.FilterTypes
-                        .Select(x => new FilterType() { Selected = x.Selected, Type = x.Type }).OrderBy(x => x.Label).ToObservable();
+                    _filterTypes = plugin.Settings.Settings.TypeConfigs.Where(x => x.Selected)
+                        .Select(x => new FilterType() { Selected = false, Type = x.Type }).OrderBy(x => x.Label).ToObservable();
 
                     foreach (var filterType in FilterTypes)
                     {
@@ -104,6 +104,8 @@ namespace MetadataUtilities.ViewModels
                             UpdateGroupDisplay();
                             MetadataViewSource.View.Filter = Filter;
                         };
+
+                        filterType.Selected = plugin.Settings.Settings.FilterTypes.Any(x => x.Selected && x.Type == filterType.Type);
 
                         filterType.UpdateCount();
                     }
@@ -720,6 +722,7 @@ namespace MetadataUtilities.ViewModels
                 if (games != null)
                 {
                     metadataObjects.LoadGameMetadata(games);
+
                     windowTitle = "LOCMetadataUtilitiesEditorForGames";
                 }
                 else

@@ -330,7 +330,7 @@ namespace MetadataUtilities
         {
             base.OnApplicationStarted(args);
 
-            if (!Settings.Settings.RemoveUnusedOnStartup)
+            if (!Settings.Settings.TypeConfigs.Any(x => x.RemoveUnusedItems))
             {
                 return;
             }

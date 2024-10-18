@@ -256,6 +256,7 @@
     <Compile Include="Models\MyGame.cs" />
     <Compile Include="Models\PrefixItemList.cs" />
     <Compile Include="Models\QuickAddObject.cs" />
+    <Compile Include="Models\TypeConfig.cs" />
     <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
     <Compile Include="ViewModels\ChangeTypeViewModel.cs" />
     <Compile Include="ViewModels\ConditionalActionEditorViewModel.cs" />

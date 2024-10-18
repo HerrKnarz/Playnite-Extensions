@@ -29,7 +29,6 @@ namespace MetadataUtilities.Models
         private int _gameSearchWindowHeight = 700;
         private int _gameSearchWindowWidth = 700;
         private bool _ignoreHiddenGamesInGameCount;
-        private bool _ignoreHiddenGamesInRemoveUnused;
         private DateTime _lastAutoConditionCheck = DateTime.Now;
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
@@ -39,7 +38,6 @@ namespace MetadataUtilities.Models
         private ObservableCollection<QuickAddObject> _quickAddObjects = new ObservableCollection<QuickAddObject>();
         private bool _quickAddShowDialog = true;
         private bool _quickAddSingleMenuEntry;
-        private bool _removeUnusedOnStartup;
         private bool _removeUnwantedOnMetadataUpdate = true;
         private bool _renameConditionalActions = true;
         private bool _renameMergeRules = true;
@@ -47,6 +45,7 @@ namespace MetadataUtilities.Models
         private bool _renameWhitelist = true;
         private bool _showTopPanelButton = true;
         private bool _showTopPanelSettingsButton;
+        private ObservableCollection<TypeConfig> _typeConfigs = new ObservableCollection<TypeConfig>();
         private MetadataObjects _unusedItemsWhiteList;
         private MetadataObjects _unwantedItems;
         private bool _writeDebugLog;
@@ -147,12 +146,6 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _ignoreHiddenGamesInGameCount, value);
         }
 
-        public bool IgnoreHiddenGamesInRemoveUnused
-        {
-            get => _ignoreHiddenGamesInRemoveUnused;
-            set => SetValue(ref _ignoreHiddenGamesInRemoveUnused, value);
-        }
-
         public DateTime LastAutoConditionCheck
         {
             get => _lastAutoConditionCheck;
@@ -207,12 +200,6 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _quickAddSingleMenuEntry, value);
         }
 
-        public bool RemoveUnusedOnStartup
-        {
-            get => _removeUnusedOnStartup;
-            set => SetValue(ref _removeUnusedOnStartup, value);
-        }
-
         public bool RemoveUnwantedOnMetadataUpdate
         {
             get => _removeUnwantedOnMetadataUpdate;
@@ -253,6 +240,12 @@ namespace MetadataUtilities.Models
         {
             get => _showTopPanelSettingsButton;
             set => SetValue(ref _showTopPanelSettingsButton, value);
+        }
+
+        public ObservableCollection<TypeConfig> TypeConfigs
+        {
+            get => _typeConfigs;
+            set => SetValue(ref _typeConfigs, value);
         }
 
         public MetadataObjects UnusedItemsWhiteList
@@ -296,6 +289,16 @@ namespace MetadataUtilities.Models
                          .Where(item => _filterTypes.All(x => x.Type != item)))
             {
                 _filterTypes.Add(new FilterType()
+                {
+                    Type = item,
+                    Selected = true,
+                });
+            }
+
+            foreach (var item in FieldTypeHelper.ItemListFieldValues().Keys
+                         .Where(item => _typeConfigs.All(x => x.Type != item)))
+            {
+                _typeConfigs.Add(new TypeConfig()
                 {
                     Type = item,
                     Selected = true,
