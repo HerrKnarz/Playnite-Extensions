@@ -283,13 +283,13 @@ namespace MetadataUtilities
             return temporaryList;
         }
 
-        public static void RenameObject(MetadataUtilities plugin, IMetadataFieldType type, string oldName, string newName)
+        public static bool RenameObject(MetadataUtilities plugin, IMetadataFieldType type, string oldName, string newName)
         {
             var mustSave = false;
 
             if (oldName == newName || oldName == string.Empty)
             {
-                return;
+                return true;
             }
 
             if (plugin.Settings.Settings.RenameMergeRules && FieldTypeHelper.ItemListFieldValues().ContainsKey(type.Type))
@@ -358,6 +358,8 @@ namespace MetadataUtilities
             {
                 plugin.SavePluginSettings(plugin.Settings.Settings);
             }
+
+            return true;
         }
 
         public static void UpdateGames<T>(List<T> games, Settings settings)

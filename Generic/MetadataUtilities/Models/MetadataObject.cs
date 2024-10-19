@@ -302,6 +302,8 @@ namespace MetadataUtilities.Models
 
         public bool RemoveFromGame(Game game) => TypeManager is IEditableObjectType type && type.RemoveObjectFromGame(game, Id);
 
+        public event RenameObjectEventHandler RenameObject;
+
         public IEnumerable<Guid> ReplaceInDb(List<Game> games, FieldType? newType = null, Guid? newId = null)
         {
             IEnumerable<Guid> gameIds = new List<Guid>();
@@ -326,15 +328,7 @@ namespace MetadataUtilities.Models
                 return true;
             }
 
-            var res = UpdateName(newName);
-
-            if (res == DbInteractionResult.IsDuplicate)
-            {
-                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
-                    TypeLabel));
-            }
-
-            return res == DbInteractionResult.Updated;
+            return (RenameObject == null) || (RenameObject?.Invoke(this, Name, newName) ?? true);
         }
 
         public DbInteractionResult UpdateName(string newName) =>

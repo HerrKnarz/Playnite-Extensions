@@ -21,7 +21,6 @@ namespace MetadataUtilities.ViewModels
 {
     public class MetadataEditorViewModel : ObservableObject, IEditableObject
     {
-        private readonly bool _showRelatedGames;
         private MetadataObjects _completeMetadata;
         private bool _filterHideUnused;
         private string _filterPrefix = string.Empty;
@@ -36,102 +35,26 @@ namespace MetadataUtilities.ViewModels
 
         public MetadataEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
         {
-            if (plugin.Settings.Settings.WriteDebugLog)
+            Plugin = plugin;
+
+            if (Plugin.Settings.Settings.WriteDebugLog)
             {
                 Log.Debug("=== MetadataEditorViewModel: Start ===");
             }
 
-            var ts = DateTime.Now;
-
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                Plugin = plugin;
-
-                objects.RemoveItems(objects.Where(x =>
-                    Plugin.Settings.Settings.UnusedItemsWhiteList.Any(y =>
-                        y.HideInEditor && y.TypeAndName == x.TypeAndName)).ToList());
-
-                CompleteMetadata = objects;
+                PrepareMetadata(objects);
 
                 Prefixes.Add(string.Empty);
                 Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
 
                 CalculateItemCount();
-                GamesViewSource = new CollectionViewSource
-                {
-                    Source = _games
-                };
 
-                GamesViewSource.SortDescriptions.Add(new SortDescription("RealSortingName", ListSortDirection.Ascending));
-                GamesViewSource.IsLiveSortingRequested = true;
+                PrepareGamesViewSource();
 
-                if (plugin.Settings.Settings.WriteDebugLog)
-                {
-                    Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                    ts = DateTime.Now;
-                }
-
-                MetadataViewSource = new CollectionViewSource
-                {
-                    Source = _completeMetadata
-                };
-
-                if (plugin.Settings.Settings.WriteDebugLog)
-                {
-                    Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                    ts = DateTime.Now;
-                }
-
-                using (MetadataViewSource.DeferRefresh())
-                {
-                    MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeLabel", ListSortDirection.Ascending));
-                    MetadataViewSource.SortDescriptions.Add(new SortDescription("Prefix", ListSortDirection.Ascending));
-                    MetadataViewSource.SortDescriptions.Add(new SortDescription("EditName", ListSortDirection.Ascending));
-                    MetadataViewSource.IsLiveSortingRequested = true;
-
-                    if (plugin.Settings.Settings.WriteDebugLog)
-                    {
-                        Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                        ts = DateTime.Now;
-                    }
-
-                    // We copy the settings, so we won't overwrite them when closing the window
-                    // without using the close command
-                    _filterTypes = plugin.Settings.Settings.TypeConfigs.Where(x => x.Selected)
-                        .Select(x => new FilterType() { Selected = false, Type = x.Type }).OrderBy(x => x.Label).ToObservable();
-
-                    foreach (var filterType in FilterTypes)
-                    {
-                        filterType.PropertyChanged += (x, y) =>
-                        {
-                            ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
-                            UpdateGroupDisplay();
-                            MetadataViewSource.View.Filter = Filter;
-                        };
-
-                        filterType.Selected = plugin.Settings.Settings.FilterTypes.Any(x => x.Selected && x.Type == filterType.Type);
-
-                        filterType.UpdateCount();
-                    }
-                }
-
-                _showRelatedGames = true;
-
-                MetadataViewSource.View.Filter = Filter;
-
-                if (plugin.Settings.Settings.WriteDebugLog)
-                {
-                    Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                    ts = DateTime.Now;
-                }
-
-                MetadataViewSource.View.MoveCurrentToFirst();
-
-                if (plugin.Settings.Settings.WriteDebugLog)
-                {
-                    Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                }
+                PrepareMetadataViewSource();
             }
             finally
             {
@@ -160,6 +83,8 @@ namespace MetadataUtilities.ViewModels
                 {
                     return;
                 }
+
+                newItem.RenameObject += OnRenameObject;
 
                 Cursor.Current = Cursors.WaitCursor;
 
@@ -255,6 +180,7 @@ namespace MetadataUtilities.ViewModels
                     foreach (var itemToAdd in viewModel.NewObjects)
                     {
                         itemToAdd.GetGameCount();
+                        itemToAdd.RenameObject += OnRenameObject;
                     }
 
                     CompleteMetadata.AddMissing(viewModel.NewObjects);
@@ -775,6 +701,24 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
+        private static bool OnRenameObject(object sender, string oldName, string newName)
+        {
+            if (!(sender is MetadataObject item))
+            {
+                return false;
+            }
+
+            var res = item.UpdateName(newName);
+
+            if (res == DbInteractionResult.IsDuplicate)
+            {
+                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
+                    item.TypeLabel));
+            }
+
+            return res == DbInteractionResult.Updated;
+        }
+
         private bool Filter(object item) =>
             item is MetadataObject metadataObject &&
             (!GroupMatches || metadataObject.ShowGrouped) &&
@@ -785,11 +729,6 @@ namespace MetadataUtilities.ViewModels
 
         private void LoadRelatedGames()
         {
-            if (!_showRelatedGames)
-            {
-                return;
-            }
-
             Games.Clear();
 
             if (SelectedItems?.Count == 0)
@@ -819,6 +758,105 @@ namespace MetadataUtilities.ViewModels
             finally
             {
                 Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private void PrepareFilterTypes()
+        {
+            // We copy the settings, so we won't overwrite them when closing the window
+            // without using the close command
+            _filterTypes = Plugin.Settings.Settings.TypeConfigs.Where(x => x.Selected)
+                .Select(x => new FilterType() { Selected = false, Type = x.Type }).OrderBy(x => x.Label).ToObservable();
+
+            foreach (var filterType in FilterTypes)
+            {
+                filterType.PropertyChanged += (x, y) =>
+                {
+                    ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
+                    UpdateGroupDisplay();
+                    MetadataViewSource.View.Filter = Filter;
+                };
+
+                filterType.Selected = Plugin.Settings.Settings.FilterTypes.Any(x => x.Selected && x.Type == filterType.Type);
+
+                filterType.UpdateCount();
+            }
+        }
+
+        private void PrepareGamesViewSource()
+        {
+            GamesViewSource = new CollectionViewSource
+            {
+                Source = _games
+            };
+
+            GamesViewSource.SortDescriptions.Add(new SortDescription("RealSortingName", ListSortDirection.Ascending));
+            GamesViewSource.IsLiveSortingRequested = true;
+        }
+
+        private void PrepareMetadata(MetadataObjects objects)
+        {
+            objects.RemoveItems(objects.Where(x =>
+                Plugin.Settings.Settings.UnusedItemsWhiteList.Any(y =>
+                    y.HideInEditor && y.TypeAndName == x.TypeAndName)).ToList());
+
+            CompleteMetadata = objects;
+
+            foreach (var item in CompleteMetadata)
+            {
+                item.RenameObject += OnRenameObject;
+            }
+        }
+
+        private void PrepareMetadataViewSource()
+        {
+            var ts = DateTime.Now;
+
+            if (Plugin.Settings.Settings.WriteDebugLog)
+            {
+                Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            }
+
+            MetadataViewSource = new CollectionViewSource
+            {
+                Source = _completeMetadata
+            };
+
+            using (MetadataViewSource.DeferRefresh())
+            {
+                MetadataViewSource.SortDescriptions.Add(new SortDescription("TypeLabel", ListSortDirection.Ascending));
+                MetadataViewSource.SortDescriptions.Add(new SortDescription("Prefix", ListSortDirection.Ascending));
+                MetadataViewSource.SortDescriptions.Add(new SortDescription("EditName", ListSortDirection.Ascending));
+                MetadataViewSource.IsLiveSortingRequested = true;
+
+                if (Plugin.Settings.Settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+                }
+
+                PrepareFilterTypes();
+            }
+
+            if (Plugin.Settings.Settings.WriteDebugLog)
+            {
+                Log.Debug($"=== MetadataEditorViewModel: Finished MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+            }
+
+            MetadataViewSource.View.Filter = Filter;
+
+            if (Plugin.Settings.Settings.WriteDebugLog)
+            {
+                Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+            }
+
+            MetadataViewSource.View.MoveCurrentToFirst();
+
+            if (Plugin.Settings.Settings.WriteDebugLog)
+            {
+                Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             }
         }
 

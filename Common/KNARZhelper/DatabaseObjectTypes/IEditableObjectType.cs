@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public delegate void RenameObjectEventHandler(object sender, string oldName, string newName);
+    public delegate bool RenameObjectEventHandler(object sender, string oldName, string newName);
 
     public interface IEditableObjectType : IObjectType, IValueType
     {
