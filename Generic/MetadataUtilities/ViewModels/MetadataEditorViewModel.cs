@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace MetadataUtilities.ViewModels
 {
-    public class MetadataEditorViewModel : ObservableObject, IEditableObject
+    public class MetadataEditorViewModel : ObservableObject
     {
         private MetadataObjects _completeMetadata;
         private bool _filterHideUnused;
@@ -625,15 +625,6 @@ namespace MetadataUtilities.ViewModels
                 LoadRelatedGames();
             }
         }
-
-        public void BeginEdit()
-        { }
-
-        public void CancelEdit()
-        { }
-
-        public void EndEdit()
-        { }
 
         public static void ShowEditor(MetadataUtilities plugin, List<Game> games = null)
         {
