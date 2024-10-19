@@ -28,7 +28,7 @@ namespace MetadataUtilities
     public class MetadataUtilities : GenericPlugin
     {
         private readonly Dictionary<string, FieldType> _controlTypes = FieldTypeHelper.ItemListFieldValues()
-            .ToDictionary(type => $"{type.Value.Replace(" ", "")}PrefixItemControl", type => type.Key);
+            .ToDictionary(type => $"{Enum.GetName(typeof(FieldType), type.Key)}PrefixItemControl", type => type.Key);
 
         private readonly List<IEditableObjectType> _fieldTypes = FieldTypeHelper.GetAllTypes<IEditableObjectType>(true).ToList();
 
