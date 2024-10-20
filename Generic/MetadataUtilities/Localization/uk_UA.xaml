@@ -22,8 +22,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">елемент перемкнуто в {0} грі</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Введений рядок може бути регулярним виразом.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Прибрано небажані метадані з {0} ігор!</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Rename company</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">You are renaming a {0}. Do you want to rename the corresponding {1}, too?</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Перейменувати компанію</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Ви перейменовуєте {0}. Хочете перейменувати {1} відповідно?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Зберегти як правило об’єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Оберіть новий тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Встановлено рахунок користувача в {0} іграх!</sys:String>
