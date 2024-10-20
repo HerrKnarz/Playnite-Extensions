@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
@@ -13,9 +14,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
-
-// ReSharper disable ExpressionIsAlwaysNull
-// ReSharper disable PossibleNullReferenceException
 
 namespace MetadataUtilities.ViewModels
 {
@@ -86,25 +84,11 @@ namespace MetadataUtilities.ViewModels
 
                 newItem.RenameObject += OnRenameObject;
 
-                Cursor.Current = Cursors.WaitCursor;
-
-                using (MetadataViewSource.DeferRefresh())
-                {
-                    UpdateGroupDisplay();
-
-                    CalculateItemCount();
-                }
-
-                MetadataViewSource.View.Filter = Filter;
-                MetadataViewSource.View.MoveCurrentTo(newItem);
+                RefreshView(newItem);
             }
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during initializing merge dialog", true);
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
             }
         });
 
@@ -185,8 +169,7 @@ namespace MetadataUtilities.ViewModels
 
                     CompleteMetadata.AddMissing(viewModel.NewObjects);
 
-                    UpdateGroupDisplay();
-                    CalculateItemCount();
+                    RefreshView();
                 }
             }
             catch (Exception exception)
@@ -412,17 +395,11 @@ namespace MetadataUtilities.ViewModels
                 Plugin.Settings.Settings.MergeRules.AddRule(newRule);
                 Plugin.SavePluginSettings(_plugin.Settings.Settings);
 
-                Cursor.Current = Cursors.WaitCursor;
-
-                UpdateGroupDisplay();
+                RefreshView();
             }
             catch (Exception exception)
             {
                 Log.Error(exception, "Error during initializing rename dialog", true);
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
             }
         }, items => items?.Count == 1);
 
@@ -692,22 +669,17 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        private static bool OnRenameObject(object sender, string oldName, string newName)
+        private void AddNewItem(FieldType type, string name, Guid id)
         {
-            if (!(sender is MetadataObject item))
+            var newItem = new MetadataObject(Plugin.Settings.Settings, type, name)
             {
-                return false;
-            }
+                Id = id
+            };
 
-            var res = item.UpdateName(newName);
+            newItem.RenameObject += OnRenameObject;
+            newItem.GetGameCount();
 
-            if (res == DbInteractionResult.IsDuplicate)
-            {
-                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
-                    item.TypeLabel));
-            }
-
-            return res == DbInteractionResult.Updated;
+            CompleteMetadata.Add(newItem);
         }
 
         private bool Filter(object item) =>
@@ -749,6 +721,106 @@ namespace MetadataUtilities.ViewModels
             finally
             {
                 Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private bool OnRenameObject(object sender, string oldName, string newName)
+        {
+            if (!(sender is MetadataObject item))
+            {
+                return false;
+            }
+
+            var renameOther = false;
+            var splitCompany = false;
+            MetadataObject otherItem = null;
+            IMetadataFieldType otherType = null;
+
+            if (item.TypeManager is BaseCompanyType)
+            {
+                otherType = item.Type == FieldType.Developer ? FieldType.Publisher.GetTypeManager() : FieldType.Developer.GetTypeManager();
+                otherItem = CompleteMetadata.FirstOrDefault(x => x.Type == otherType.Type && x.Name == item.Name);
+
+                switch (API.Instance.Dialogs.ShowMessage(
+                            $"You are renaming a {item.TypeLabel}. Do you want to rename the corresponding {otherType.LabelSingular}, too?",
+                            "Renaming company", MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
+                {
+                    case MessageBoxResult.Cancel:
+                        return false;
+                    case MessageBoxResult.Yes:
+                        renameOther = true;
+
+                        break;
+                    case MessageBoxResult.No:
+                        splitCompany = true;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            var res = item.UpdateName(newName);
+
+            switch (res)
+            {
+                case DbInteractionResult.IsDuplicate:
+                    API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAlreadyExists"),
+                        item.TypeLabel));
+
+                    return false;
+                case DbInteractionResult.Updated:
+                {
+                    // We simply rename the object in the editor, since its original was already renamed.
+                    if (renameOther)
+                    {
+                        if (otherItem == null)
+                        {
+                            return true;
+                        }
+
+                        CompleteMetadata.Remove(otherItem);
+
+                        AddNewItem(otherType.Type, newName, item.Id);
+
+                        RefreshView();
+                    }
+                    // If the other company type's name is supposed to stay the same, we create a new one with the old name and change all games to it.
+                    else if (splitCompany && (otherType is IEditableObjectType objectType))
+                    {
+                        var newId = objectType.AddDbObject(oldName);
+
+                        var itemToDelete = new MetadataObject(Plugin.Settings.Settings, objectType.Type, newName);
+
+                        var gamesAffected = itemToDelete.ReplaceInDb(API.Instance.Database.Games.ToList(),
+                            objectType.Type, newId);
+
+                        MetadataFunctions.UpdateGames(gamesAffected.ToList(), Plugin.Settings.Settings);
+
+                        // We now have the renamed company and the other type with the old name still. We need to remove the other
+                        // and add three new ones: A renamed other type and a developer and publisher with the old name.
+
+                        AddNewItem(item.Type, oldName, newId);
+
+                        //If we didn't have the other item in the view, we also don't need to add a new one.
+                        if (otherItem == null)
+                        {
+                            return true;
+                        }
+
+                        CompleteMetadata.Remove(otherItem);
+
+                        AddNewItem(otherType.Type, oldName, newId);
+                        AddNewItem(otherType.Type, newName, item.Id);
+
+                        RefreshView();
+
+                        MetadataFunctions.RenameObject(Plugin, otherType, newName, oldName);
+                    }
+
+                    return true;
+                }
+                default:
+                    return false;
             }
         }
 
@@ -848,6 +920,31 @@ namespace MetadataUtilities.ViewModels
             if (Plugin.Settings.Settings.WriteDebugLog)
             {
                 Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+            }
+        }
+
+        private void RefreshView(MetadataObject focusedItem = null)
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                using (MetadataViewSource.DeferRefresh())
+                {
+                    UpdateGroupDisplay();
+
+                    CalculateItemCount();
+                }
+
+                MetadataViewSource.View.Filter = Filter;
+
+                if (focusedItem != null)
+                {
+                    MetadataViewSource.View.MoveCurrentTo(focusedItem);
+                }
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
             }
         }
 

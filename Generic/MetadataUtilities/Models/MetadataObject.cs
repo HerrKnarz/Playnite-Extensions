@@ -200,6 +200,11 @@ namespace MetadataUtilities.Models
 
         public string GetCleanedUpName()
         {
+            if (Settings == null)
+            {
+                return EditName;
+            }
+
             switch (Type)
             {
                 case FieldType.Developer:
@@ -320,16 +325,8 @@ namespace MetadataUtilities.Models
             return gameIds;
         }
 
-        public bool UpdateItem(string newName)
-        {
-            // If we don't have an id, the item is new and doesn't need to be updated.
-            if (Id == default)
-            {
-                return true;
-            }
-
-            return (RenameObject == null) || (RenameObject?.Invoke(this, Name, newName) ?? true);
-        }
+        public bool UpdateItem(string newName) =>
+            Id == default || (RenameObject == null) || (RenameObject?.Invoke(this, Name, newName) ?? true);
 
         public DbInteractionResult UpdateName(string newName) =>
             TypeManager is IEditableObjectType type
