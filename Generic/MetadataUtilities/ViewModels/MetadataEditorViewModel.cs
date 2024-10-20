@@ -742,8 +742,10 @@ namespace MetadataUtilities.ViewModels
                 otherItem = CompleteMetadata.FirstOrDefault(x => x.Type == otherType.Type && x.Name == item.Name);
 
                 switch (API.Instance.Dialogs.ShowMessage(
-                            $"You are renaming a {item.TypeLabel}. Do you want to rename the corresponding {otherType.LabelSingular}, too?",
-                            "Renaming company", MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
+                            string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogRenameCompanyQuestion"),
+                                item.TypeLabel, otherType.LabelSingular),
+                            ResourceProvider.GetString("LOCMetadataUtilitiesDialogRenameCompany"),
+                            MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
                 {
                     case MessageBoxResult.Cancel:
                         return false;
