@@ -158,6 +158,7 @@ namespace MetadataUtilities.ViewModels
                         else
                         {
                             itemToRemove.GetGameCount();
+                            CompleteMetadata.GetSibling(itemToRemove)?.GetGameCount();
                         }
                     }
 
@@ -326,11 +327,13 @@ namespace MetadataUtilities.ViewModels
                     {
                         if (!itemToRemove.ExistsInDb())
                         {
-                            CompleteMetadata.Remove(itemToRemove);
+                            CompleteMetadata.Remove(itemToRemove, true);
                         }
                         else
                         {
                             itemToRemove.GetGameCount();
+
+                            CompleteMetadata.GetSibling(itemToRemove)?.GetGameCount();
                         }
                     }
 
@@ -943,6 +946,8 @@ namespace MetadataUtilities.ViewModels
                 {
                     MetadataViewSource.View.MoveCurrentTo(focusedItem);
                 }
+
+                LoadRelatedGames();
             }
             finally
             {

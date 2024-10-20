@@ -80,6 +80,20 @@ namespace MetadataUtilities.Models
             return newItem;
         }
 
+        public MetadataObject GetSibling(MetadataObject item)
+        {
+            if (!(item.TypeManager is BaseCompanyType))
+            {
+                return null;
+            }
+
+            var otherType = item.Type == FieldType.Developer
+                ? FieldType.Publisher
+                : FieldType.Developer;
+
+            return this.FirstOrDefault(x => x.Name == item.Name && x.Type == otherType);
+        }
+
         public void LoadGameMetadata(List<Game> games)
         {
             var temporaryList = new List<MetadataObject>();
@@ -191,6 +205,30 @@ namespace MetadataUtilities.Models
             {
                 Log.Debug($"=== LoadMetadata: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             }
+        }
+
+        public bool Remove(MetadataObject item, bool removeSibling)
+        {
+            var result = Remove(item);
+
+            if (!removeSibling)
+            {
+                return result;
+            }
+
+            if (!result || !(item.TypeManager is BaseCompanyType))
+            {
+                return result;
+            }
+
+            var sibling = GetSibling(item);
+
+            if (sibling != null)
+            {
+                Remove(sibling);
+            }
+
+            return true;
         }
 
         public void RemoveItems(IEnumerable<MetadataObject> items)
