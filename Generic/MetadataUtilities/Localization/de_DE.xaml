@@ -21,8 +21,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">Element aus {0} Spielen entfernt</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">Element in {1} Spielen umgeschaltet</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Der eingegebene Text kann ein regulärer Ausdruck sein.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">{0} aus {1} Spielen entfernt!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Unerwünschte Metadaten aus {0} Spielen entfernt!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Firma umbenennen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Sie benennen eine {0}um. Möchten Sie auch die entsprechende {1}umbenennen?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Als Zusammenführungsregel speichern</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Neuen Typ wählen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Nutzerwertung in {0} Spielen gesetzt!</sys:String>
