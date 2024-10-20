@@ -21,8 +21,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">item removido de {0} jogos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">item alternado em {0} jogos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">The entered string can be a regular expression.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Removido {0} dos jogos {1}!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Removido itens de metadados indesejados dos jogos {0}!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Rename company</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">You are renaming a {0}. Do you want to rename the corresponding {1}, too?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Salvar como regra de mesclagem</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Selecionar novo tipo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Set user score in {0} games!</sys:String>
