@@ -29,6 +29,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Встановлено рахунок користувача в {0} іграх!</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Редактор Метаданих</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorAddToWhitelist">Add to whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Змінити тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Тільки вибране</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Редактор Метаданих для вибраних ігор</sys:String>
