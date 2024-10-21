@@ -42,6 +42,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Clean up links (rename, remove, sort)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">Filtered games</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">Remove duplicate links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuRemoveSpecificLinks">Remove links from selected games...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">Remove unwanted links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">Rename links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">Review duplicate links...</sys:String>

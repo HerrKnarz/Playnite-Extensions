@@ -21,13 +21,15 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">item removed from {0} games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">item toggled in {0} games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">The entered string can be a regular expression.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Removed {0} from {1} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Removed unwanted metadata items from {0} games!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Rename company</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">You are renaming a {0}. Do you want to rename the corresponding {1}, too?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Save as merge rule</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Select new type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Set user score in {0} games!</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Metadata Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorAddToWhitelist">Add to whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Change type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Only selected</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Metadata Editor for selected games</sys:String>
@@ -83,15 +85,21 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Removing unwanted metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Setting user score...</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Add defaults</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Add existing items</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Always add items you remove in the Metadata Editor to the unwanted list without asking.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Always save manual merges as merge rules.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Can be executed manually</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Columns in the Metadata Editor game grid</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Conditions</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">Confirm deletion</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Custom menu path</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Default custom menu path</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Show add button</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Show delete button</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Edit</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Hide in details</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Hide in editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignore conditions when executing manually</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignore hidden games in game count</sys:String>
@@ -106,6 +114,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Automatically rename quick add items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Automatically rename whitelist items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Show result dialog after setting a value for more than one game</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Show in Metadata Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Show Settings button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Show Metadata Editor button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Put the sub menus under the Metadata Utilities menu entry</sys:String>
@@ -114,10 +123,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Merging</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefixes</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Quick Add</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Remove unwanted</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Toggle</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Whitelist (These items won't be removed when unused)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Values to merge</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Write debug log messages (only use in case of suspected error!)</sys:String>
 </ResourceDictionary>

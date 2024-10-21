@@ -21,13 +21,15 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">елемент прибрано з {0} ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">елемент перемкнуто в {0} грі</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Введений рядок може бути регулярним виразом.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Прибрано {0} з {1} ігор!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Прибрано небажані метадані з {0} ігор!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Перейменувати компанію</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Ви перейменовуєте {0}. Хочете перейменувати {1} відповідно?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Зберегти як правило об’єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Оберіть новий тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Встановлено рахунок користувача в {0} іграх!</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Редактор Метаданих</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorAddToWhitelist">Add to whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Змінити тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Тільки вибране</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Редактор Метаданих для вибраних ігор</sys:String>
@@ -67,7 +69,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Прибрати невикористані метадані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Прибрати небажані метадані</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Game is new</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Нова гра</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Редактор правил об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Прибрано наступні невикористані елементи метаданих:</sys:String>
@@ -83,15 +85,21 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Прибирання небажаних елементів метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Встановлення рахунку користувача...</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Додати типові</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Додати наявні елементи</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Завжди додавати елементи які ви прибираєте в Редакторі Метаданих до списку небажаного не питаючи.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Завжди зберігати ручні об'єднання як правила об'єднання.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Можна виконати вручну</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Стовпці в ігровій сітці Редактора Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Умови</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">Confirm deletion</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Користувацький шлях меню</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Стандартний шлях меню</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Show add button</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Show delete button</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Змінити</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Сховати в подробицях</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Сховати в редакторі</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ігнорувати умови</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ігнорувати умови при виконанні вручну</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ігнорувати приховані ігри в при підрахунку</sys:String>
@@ -106,6 +114,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Автоматично перейменовувати елементи швидкого додавання під час перейменування відповідного оригінального елемента.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Автоматично перейменовувати елементи білого списку, коли перейменовано відповідний вихідний елемент.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Після встановлення значення для кількох ігор одночасно показувати діалогове вікно з результатами</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Показати в Редакторі Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Показувати кнопку Налаштування у верхній панелі (потрібен перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Показувати кнопку Редактора Метаданих у верхній панелі (потрібен перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Помістити підменю під елементом меню Metadata Utilities</sys:String>
@@ -114,10 +123,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Префікси</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Швидке додавання</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Прибрати невикористані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Прибрати небажані</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Типи полів</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Білий список</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Перемкнути</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Білий список (Ці елементи не будуть прибрані навіть якщо не використовуються)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Значення для об'єднання</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">Ці елементи не будуть видалятися під час видалення невикористаних елементів.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Записувати повідомлення журналу налагодження (використовуйте тільки якщо підозрюєте помилки!)</sys:String>
 </ResourceDictionary>
