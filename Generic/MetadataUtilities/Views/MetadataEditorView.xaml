@@ -189,6 +189,9 @@
                             <MenuItem Header="{DynamicResource LOCRemoveTitle}"
                                       CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}}"
                                       Command="{Binding RemoveItemsCommand}" />
+                            <MenuItem Header="{DynamicResource LOCMetadataUtilitiesEditorAddToWhitelist}"
+                                      CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}}"
+                                      Command="{Binding AddToWhiteListCommand}" />
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>
