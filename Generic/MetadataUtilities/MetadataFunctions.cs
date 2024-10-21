@@ -142,13 +142,22 @@ namespace MetadataUtilities
             }
         }
 
-        public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, Settings settings)
+        public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, Settings settings, string prefix = default, bool ignoreEmptyPrefix = true)
         {
             var label = type.GetTypeManager().LabelPlural;
 
             var items = new MetadataObjects(settings, type);
 
             items.LoadMetadata(false);
+
+            if (prefix != default)
+            {
+                items.RemoveAll(x => x.Prefix != prefix);
+            }
+            else if (!ignoreEmptyPrefix)
+            {
+                items.RemoveAll(x => !string.IsNullOrEmpty(x.Prefix));
+            }
 
             var window = SelectMetadataViewModel.GetWindow(items, label);
 

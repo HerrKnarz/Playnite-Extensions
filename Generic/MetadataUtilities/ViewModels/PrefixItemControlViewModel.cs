@@ -1,4 +1,6 @@
-﻿using KNARZhelper.Enum;
+﻿using KNARZhelper;
+using KNARZhelper.DatabaseObjectTypes;
+using KNARZhelper.Enum;
 using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -24,6 +26,37 @@ namespace MetadataUtilities.ViewModels
             _fieldType = type;
         }
 
+        public RelayCommand<object> AddItemCommand => new RelayCommand<object>(item =>
+        {
+            if (!(item is PrefixItemList itemList) || _game == null)
+            {
+                return;
+            }
+
+            var items = MetadataFunctions.GetItemsFromAddDialog(itemList.FieldType, _plugin.Settings.Settings, itemList.Prefix, false);
+
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            var refreshNeeded = false;
+
+            if (itemList.FieldType.GetTypeManager() is IEditableObjectType type)
+            {
+                if (type.AddValueToGame(_game, items.Select(x => x.Id).ToList()))
+                {
+                    refreshNeeded = true;
+                    MetadataFunctions.UpdateGames(new List<Game> { _game }, _plugin.Settings.Settings);
+                }
+            }
+
+            if (refreshNeeded)
+            {
+                RefreshData();
+            }
+        });
+
         public string DefaultIcon
         {
             get => _defaultIcon;
@@ -46,6 +79,32 @@ namespace MetadataUtilities.ViewModels
             get => _itemLists;
             set => SetValue(ref _itemLists, value);
         }
+
+        public RelayCommand<object> RemoveItemCommand => new RelayCommand<object>(item =>
+        {
+            if (!(item is MetadataObject metadataItem))
+            {
+                return;
+            }
+
+            if (!(metadataItem.TypeManager is IEditableObjectType type))
+            {
+                return;
+            }
+
+            var refreshNeeded = false;
+
+            if (type.RemoveObjectFromGame(_game, metadataItem.Id))
+            {
+                refreshNeeded = true;
+                MetadataFunctions.UpdateGames(new List<Game> { _game }, _plugin.Settings.Settings);
+            }
+
+            if (refreshNeeded)
+            {
+                RefreshData();
+            }
+        });
 
         public RelayCommand<object> SetFilterCommand => new RelayCommand<object>(item =>
         {
