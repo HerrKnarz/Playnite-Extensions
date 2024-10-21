@@ -29,6 +29,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Nutzerwertung in {0} Spielen gesetzt!</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Metadaten-Editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorAddToWhitelist">Zur Whitelist hinzufügen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Typ ändern</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Nur ausgewählte</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Metadaten-Editor für ausgewählte Spiele</sys:String>
