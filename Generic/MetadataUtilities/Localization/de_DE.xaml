@@ -91,8 +91,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Kann manuell ausgeführt werden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Spalten im Spiele-Grid des Metadaten-Editors</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Bedingungen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">Löschen bestätigen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Eigener Menüpfad</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Standard-Menüpfad</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Hinzufügen-Schaltfläche anzeigen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Löschen-Schaltfläche anzeigen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editieren</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">In Details ausblenden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Im Editor ausblenden</sys:String>
