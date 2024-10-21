@@ -117,6 +117,40 @@ namespace MetadataUtilities.ViewModels
             }
         });
 
+        public RelayCommand<IList<object>> AddToWhiteListCommand => new RelayCommand<IList<object>>(items =>
+        {
+            if (items == null || items.Count < 1)
+            {
+                return;
+            }
+
+            var mustUpdate = false;
+
+            foreach (var item in items.Cast<MetadataObject>())
+            {
+                if (Plugin.Settings.Settings.UnusedItemsWhiteList.Any(x => x.TypeAndName == item.TypeAndName))
+                {
+                    continue;
+                }
+
+                Plugin.Settings.Settings.UnusedItemsWhiteList.Add(new WhiteListItem(Plugin.Settings.Settings,
+                    item.Type, item.Name));
+
+                mustUpdate = true;
+            }
+
+            if (!mustUpdate)
+            {
+                return;
+            }
+
+            {
+                Plugin.Settings.Settings.UnusedItemsWhiteList.Sort(x => x.TypeAndName);
+
+                Plugin.SavePluginSettings(Plugin.Settings.Settings);
+            }
+        }, items => items != null && items.Count > 0);
+
         public RelayCommand<IList<object>> ChangeTypeCommand => new RelayCommand<IList<object>>(items =>
         {
             if (items == null || items.Count < 1)
