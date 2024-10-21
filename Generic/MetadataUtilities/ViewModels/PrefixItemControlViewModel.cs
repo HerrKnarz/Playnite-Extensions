@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace MetadataUtilities.ViewModels
 {
@@ -25,6 +26,10 @@ namespace MetadataUtilities.ViewModels
             _plugin = plugin;
             _fieldType = type;
         }
+
+        public Visibility AddButtonVisibility => _plugin.Settings.Settings.PrefixControlDisplayAddButton
+            ? Visibility.Visible
+            : Visibility.Collapsed;
 
         public RelayCommand<object> AddItemCommand => new RelayCommand<object>(item =>
         {
@@ -63,6 +68,10 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _defaultIcon, value);
         }
 
+        public Visibility DeleteButtonVisibility => _plugin.Settings.Settings.PrefixControlDisplayDeleteButton
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+
         public Guid GameId
         {
             get => _gameId;
@@ -82,6 +91,14 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<object> RemoveItemCommand => new RelayCommand<object>(item =>
         {
+            if (_plugin.Settings.Settings.PrefixControlConfirmDeletion &&
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCAskRemoveItemMessage"),
+                    ResourceProvider.GetString("LOCAskRemoveItemTitle"),
+                    MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
+
             if (!(item is MetadataObject metadataItem))
             {
                 return;

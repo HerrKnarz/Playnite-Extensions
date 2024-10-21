@@ -32,6 +32,9 @@ namespace MetadataUtilities.Models
         private DateTime _lastAutoConditionCheck = DateTime.Now;
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
+        private bool _prefixControlConfirmDeletion = true;
+        private bool _prefixControlShowAddButton = true;
+        private bool _prefixControlShowDeleteButton = true;
         private ObservableCollection<string> _prefixes = new ObservableCollection<string>();
         private ObservableCollection<PrefixItemList> _prefixItemTypes = new ObservableCollection<PrefixItemList>();
         private string _quickAddCustomPath = string.Empty;
@@ -162,6 +165,24 @@ namespace MetadataUtilities.Models
         {
             get => _mergeRules;
             set => SetValue(ref _mergeRules, value);
+        }
+
+        public bool PrefixControlConfirmDeletion
+        {
+            get => _prefixControlConfirmDeletion;
+            set => SetValue(ref _prefixControlConfirmDeletion, value);
+        }
+
+        public bool PrefixControlDisplayAddButton
+        {
+            get => _prefixControlShowAddButton;
+            set => SetValue(ref _prefixControlShowAddButton, value);
+        }
+
+        public bool PrefixControlDisplayDeleteButton
+        {
+            get => _prefixControlShowDeleteButton;
+            set => SetValue(ref _prefixControlShowDeleteButton, value);
         }
 
         public ObservableCollection<string> Prefixes

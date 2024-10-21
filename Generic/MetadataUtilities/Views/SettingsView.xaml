@@ -349,7 +349,16 @@
                     <Button Content="&#xEFCA;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMenuHelpTitle}"
                             Command="{Binding HelpPrefixesCommand}" Margin="10,0,0,0" />
                 </DockPanel>
-                <ListView Name="LvPrefixes" SelectionMode="Extended" DockPanel.Dock="Top"
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.PrefixControlDisplayAddButton}">
+                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsDisplayAddButton}" TextWrapping="Wrap" />
+                </CheckBox>
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.PrefixControlDisplayDeleteButton}" Margin="0,10,0,0">
+                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsDisplayDeleteButton}" TextWrapping="Wrap" />
+                </CheckBox>
+                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.PrefixControlConfirmDeletion}" Margin="0,10,0,0">
+                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsConfirmDeletion}" TextWrapping="Wrap" />
+                </CheckBox>
+                <ListView Name="LvPrefixes" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0"
                           ItemsSource="{Binding Settings.PrefixItemTypes}" HorizontalContentAlignment="Stretch"
                           VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
                     <ListView.View>

@@ -28,7 +28,7 @@
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Label}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Visibility" Value="Visible" />
+                                                    <Setter Property="Visibility" Value="{Binding RelativeSource={RelativeSource AncestorType=DockPanel, AncestorLevel=2}, Path=DataContext.AddButtonVisibility}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -64,7 +64,7 @@
                                                 <Setter Property="Visibility" Value="Collapsed" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
-                                                        <Setter Property="Visibility" Value="Visible" />
+                                                            <Setter Property="Visibility" Value="{Binding RelativeSource={RelativeSource AncestorType=DockPanel, AncestorLevel=1}, Path=DataContext.DeleteButtonVisibility}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
