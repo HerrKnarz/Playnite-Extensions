@@ -21,13 +21,15 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">elemento eliminado de {0} juegos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">elemento alternado en {0} juegos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">The entered string can be a regular expression.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedMetadataMessage">Eliminado {0} de {1} juegos!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Se han eliminado los metadatos no deseados de {0} juegos!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Rename company</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">You are renaming a {0}. Do you want to rename the corresponding {1}, too?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Guardar como regla de fusión</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Seleccionar nuevo tipo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Set user score in {0} games!</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Editor de metadatos</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorAddToWhitelist">Add to whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Cambiar tipo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Sólo seleccionados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Editor de metadatos para los juegos seleccionados</sys:String>
@@ -83,15 +85,21 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Eliminando elementos de metadatos no deseados...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Setting user score...</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Add defaults</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Añadir elementos existentes</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Añada siempre elementos que elimines en el Editor de Metadatos a la lista no deseada sin preguntar.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Guarda siempre las fusiones manuales como reglas de fusión.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Can be executed manually</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Columnas en la cuadrícula del editor de metadatos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Conditions</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">Confirm deletion</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Ruta de menú personalizada</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Ruta de menú personalizada por defecto</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Show add button</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Show delete button</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editar</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Hide in details</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Hide in editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignore conditions when executing manually</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignorar juegos ocultos en el recuento de juegos</sys:String>
@@ -106,6 +114,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Automatically rename quick add items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Automatically rename whitelist items when the corresponding original item is renamed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Mostrar diálogo de resultados después de establecer un valor para más de un juego</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Show in Metadata Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Show Settings button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Mostrar botón del editor de metadatos en el panel superior (requiere reiniciar)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Poner los submenús en la entrada del menú Metadata Utilities</sys:String>
@@ -114,10 +123,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Fusiones</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefijos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Adición rápida</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Remove unwanted</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Alternar</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsUnusedWhiteList">Whitelist (These items won't be removed when unused)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valores a combinar</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Escribir mensajes de registro de depuración (¡sólo usar en caso de sospecha de error!)</sys:String>
 </ResourceDictionary>
