@@ -1,5 +1,18 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 1.4.0
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-10-22
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-10-22/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_1_4_0.pext
+    Changelog:
+      - Developers, publishers, regions and platforms can now be edited in Metadata Editor and used in merge rules. Developers and publishers are a bit unwieldy yet, since they are basically the same field in the database.
+      - Added buttons to add and remove items from the different fields to the custom controls. They are already integrated in my KNARZwerk theme. Can be disabled.
+      - What fields are visible in the Metadata Editor can now be configured.
+      - Removal of unused fields can now be configured per field type. That now also includes developers, publishers, regions and platforms.
+      - Whitelist items can now optionally be hidden in Metadata Editor and details view.
+      - Added option to import some default tags from Duplicate Hider and Game Media Tools to the whitelist.
+      - Added option to add an item to the whitelist in Metadata Editor.
+      - Fixed bug with the theme integration when Playnite is translated.
   - Version: 1.3.1
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-10-08
