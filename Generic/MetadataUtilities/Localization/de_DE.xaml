@@ -22,8 +22,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">Element in {1} Spielen umgeschaltet</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Der eingegebene Text kann ein regulärer Ausdruck sein.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Unerwünschte Metadaten aus {0} Spielen entfernt!</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Firma umbenennen</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Sie benennen eine {0}um. Möchten Sie auch die entsprechende {1}umbenennen?</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Unternehmen umbenennen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Du benennst einen {0} um. Möchtest du auch den entsprechenden {1} umbenennen?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Als Zusammenführungsregel speichern</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Neuen Typ wählen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Nutzerwertung in {0} Spielen gesetzt!</sys:String>
@@ -85,7 +85,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Entferne unerwünschte Metadaten-Elemente...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Setze Nutzerwertung...</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Standard hinzufügen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Standardwerte hinzufügen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Existierende Elemente hinzufügen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Füge Elemente, die du im Metadaten-Editor entfernst, ohne Nachfrage immer zur unerwünschten Liste hinzu.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Manuelle Zusammenführungen immer als Zusammenführungsregeln speichern.</sys:String>
@@ -95,8 +95,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">Löschen bestätigen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Eigener Menüpfad</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Standard-Menüpfad</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Hinzufügen-Schaltfläche anzeigen</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Löschen-Schaltfläche anzeigen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Hinzufügen-Button anzeigen</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Löschen-Button anzeigen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editieren</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">In Details ausblenden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Im Editor ausblenden</sys:String>
