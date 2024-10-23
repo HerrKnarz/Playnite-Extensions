@@ -145,11 +145,23 @@ namespace MetadataUtilities.ViewModels
                 case FieldType.Category:
                     preset.Settings.Category = filterField;
                     break;
+                case FieldType.Developer:
+                    preset.Settings.Developer = filterField;
+                    break;
                 case FieldType.Feature:
                     preset.Settings.Feature = filterField;
                     break;
                 case FieldType.Genre:
                     preset.Settings.Genre = filterField;
+                    break;
+                case FieldType.Platform:
+                    preset.Settings.Platform = filterField;
+                    break;
+                case FieldType.Publisher:
+                    preset.Settings.Publisher = filterField;
+                    break;
+                case FieldType.Region:
+                    preset.Settings.Region = filterField;
                     break;
                 case FieldType.Series:
                     preset.Settings.Series = filterField;
@@ -157,35 +169,6 @@ namespace MetadataUtilities.ViewModels
                 case FieldType.Tag:
                     preset.Settings.Tag = filterField;
                     break;
-                case FieldType.Empty:
-                case FieldType.Background:
-                case FieldType.CompletionStatus:
-                case FieldType.CommunityScore:
-                case FieldType.Cover:
-                case FieldType.CriticScore:
-                case FieldType.DateAdded:
-                case FieldType.Description:
-                case FieldType.Developer:
-                case FieldType.Favorite:
-                case FieldType.Hdr:
-                case FieldType.Hidden:
-                case FieldType.Icon:
-                case FieldType.InstallSize:
-                case FieldType.IsInstalled:
-                case FieldType.LastPlayed:
-                case FieldType.Library:
-                case FieldType.Name:
-                case FieldType.Notes:
-                case FieldType.Platform:
-                case FieldType.PlayCount:
-                case FieldType.Publisher:
-                case FieldType.OverrideInstallState:
-                case FieldType.Region:
-                case FieldType.ReleaseDate:
-                case FieldType.SortingName:
-                case FieldType.Source:
-                case FieldType.TimePlayed:
-                case FieldType.UserScore:
                 default:
                     throw new ArgumentOutOfRangeException();
             }
