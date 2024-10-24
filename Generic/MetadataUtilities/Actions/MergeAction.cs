@@ -14,7 +14,7 @@ namespace MetadataUtilities.Actions
 
         private readonly List<MergeRule> _rules = new List<MergeRule>();
 
-        private MergeAction(Settings settings) : base(settings)
+        private MergeAction()
         {
         }
 
@@ -22,7 +22,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogMergedMetadataMessage";
 
-        public static MergeAction Instance(Settings settings) => _instance ?? (_instance = new MergeAction(settings));
+        public static MergeAction Instance() => _instance ?? (_instance = new MergeAction());
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None,
             object item = null, bool isBulkAction = true)

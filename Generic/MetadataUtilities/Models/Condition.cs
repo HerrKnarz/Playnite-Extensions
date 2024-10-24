@@ -16,7 +16,7 @@ namespace MetadataUtilities.Models
         private int? _intValue;
         private string _stringValue;
 
-        public Condition(Settings settings, FieldType type, string name = default) : base(settings, type, name)
+        public Condition(FieldType type, string name = default) : base(type, name)
         {
         }
 

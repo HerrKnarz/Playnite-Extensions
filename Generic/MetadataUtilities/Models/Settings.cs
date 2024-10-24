@@ -49,15 +49,9 @@ namespace MetadataUtilities.Models
         private bool _showTopPanelButton = true;
         private bool _showTopPanelSettingsButton;
         private ObservableCollection<TypeConfig> _typeConfigs = new ObservableCollection<TypeConfig>();
-        private ObservableCollection<WhiteListItem> _unusedItemsWhiteList;
-        private MetadataObjects _unwantedItems;
+        private ObservableCollection<WhiteListItem> _unusedItemsWhiteList = new ObservableCollection<WhiteListItem>();
+        private MetadataObjects _unwantedItems = new MetadataObjects();
         private bool _writeDebugLog;
-
-        public Settings()
-        {
-            _unusedItemsWhiteList = new ObservableCollection<WhiteListItem>();
-            _unwantedItems = new MetadataObjects(this);
-        }
 
         public bool AddRemovedToUnwanted
         {
@@ -287,29 +281,8 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _writeDebugLog, value);
         }
 
-        /// <summary>
-        /// Resets the settings in the MetadataObjects classes, if these were created using
-        /// deserializing from JSON.
-        /// </summary>
-        public void ResetReferences()
+        public void SetMissingTypes()
         {
-            foreach (var item in UnusedItemsWhiteList)
-            {
-                item.Settings = this;
-            }
-
-            UnwantedItems.Settings = this;
-
-            foreach (var rule in MergeRules)
-            {
-                rule.SourceObjects.Settings = this;
-            }
-
-            foreach (var condAction in ConditionalActions)
-            {
-                condAction.ResetSettings(this);
-            }
-
             foreach (var item in FieldTypeHelper.ItemListFieldValues().Keys
                          .Where(item => _filterTypes.All(x => x.Type != item)))
             {

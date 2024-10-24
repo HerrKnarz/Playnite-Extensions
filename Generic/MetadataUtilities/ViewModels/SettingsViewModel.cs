@@ -46,7 +46,7 @@ namespace MetadataUtilities.ViewModels
                 Settings.PrefixItemTypes.AddMissing(Settings.Prefixes.Select(p => new PrefixItemList { Prefix = p, FieldType = FieldType.Empty }));
             }
 
-            Settings.ResetReferences();
+            Settings.SetMissingTypes();
 
             FieldTypeButtons.AddMissing(_fieldTypes
                 .Select(x =>
@@ -92,7 +92,7 @@ namespace MetadataUtilities.ViewModels
         {
             var conditionalAction = new ConditionalAction();
 
-            var window = ConditionalActionEditorViewModel.GetWindow(Settings, conditionalAction);
+            var window = ConditionalActionEditorViewModel.GetWindow(conditionalAction);
 
             if (window == null)
             {
@@ -157,9 +157,7 @@ namespace MetadataUtilities.ViewModels
             var conditionalActionOriginal = (ConditionalAction)conAction;
             var conditionalActionToEdit = conditionalActionOriginal.DeepClone();
 
-            conditionalActionToEdit.ResetSettings(Settings);
-
-            var window = ConditionalActionEditorViewModel.GetWindow(Settings, conditionalActionToEdit);
+            var window = ConditionalActionEditorViewModel.GetWindow(conditionalActionToEdit);
 
             if (window == null)
             {
@@ -210,7 +208,7 @@ namespace MetadataUtilities.ViewModels
                 => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/quick-add/")));
 
         public RelayCommand<object> MergeItemsCommand
-                    => new RelayCommand<object>(rule => MetadataFunctions.MergeItems(_plugin, (MergeRule)rule), rule => rule != null);
+                    => new RelayCommand<object>(rule => MetadataFunctions.MergeItems((MergeRule)rule), rule => rule != null);
 
         public MergeRules MergeRules
         {
@@ -311,7 +309,7 @@ namespace MetadataUtilities.ViewModels
                 SetValue(ref _selectedMergeRule, value);
 
                 SourceObjectsViewSource.Source = _selectedMergeRule == null
-                    ? new MetadataObjects(Settings)
+                    ? new MetadataObjects()
                     : _selectedMergeRule.SourceObjects;
 
                 SourceObjectsViewSource.View.Refresh();
@@ -358,7 +356,7 @@ namespace MetadataUtilities.ViewModels
         public void CancelEdit()
         {
             Settings = EditingClone;
-            Settings.ResetReferences();
+            Settings.SetMissingTypes();
         }
 
         public void EndEdit()
@@ -404,7 +402,7 @@ namespace MetadataUtilities.ViewModels
 
             foreach (var item in items.Where(item => Settings.QuickAddObjects.All(x => x.TypeAndName != item.TypeAndName)))
             {
-                Settings.QuickAddObjects.Add(new QuickAddObject(_settings, item.Type, item.Name));
+                Settings.QuickAddObjects.Add(new QuickAddObject(item.Type, item.Name));
             }
 
             Settings.QuickAddObjects.Sort(x => x.TypeAndName);
@@ -419,7 +417,7 @@ namespace MetadataUtilities.ViewModels
 
             foreach (var item in items.Where(item => Settings.UnusedItemsWhiteList.All(x => x.TypeAndName != item.TypeAndName)))
             {
-                Settings.UnusedItemsWhiteList.Add(new WhiteListItem(_settings, item.Type, item.Name));
+                Settings.UnusedItemsWhiteList.Add(new WhiteListItem(item.Type, item.Name));
             }
 
             Settings.UnusedItemsWhiteList.Sort(x => x.TypeAndName);
@@ -427,21 +425,21 @@ namespace MetadataUtilities.ViewModels
 
         public void AddNewWhiteListItem(FieldType type)
         {
-            var newItem = MetadataFunctions.AddNewItem(Settings, type);
+            var newItem = MetadataFunctions.AddNewItem(type);
 
             if (Settings.UnusedItemsWhiteList.Any(x => x.TypeAndName == newItem.TypeAndName))
             {
                 return;
             }
 
-            Settings.UnusedItemsWhiteList.Add(new WhiteListItem(Settings, newItem.Type, newItem.Name));
+            Settings.UnusedItemsWhiteList.Add(new WhiteListItem(newItem.Type, newItem.Name));
 
             Settings.UnusedItemsWhiteList.Sort(x => x.TypeAndName);
         }
 
         public void AddQuickAddItems(FieldType type)
         {
-            var items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
+            var items = MetadataFunctions.GetItemsFromAddDialog(type);
 
             if (items.Count == 0)
             {
@@ -453,7 +451,7 @@ namespace MetadataUtilities.ViewModels
 
         public void AddWhiteListItems(FieldType type)
         {
-            var items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
+            var items = MetadataFunctions.GetItemsFromAddDialog(type);
 
             if (items.Count == 0)
             {
@@ -472,7 +470,7 @@ namespace MetadataUtilities.ViewModels
             {
                 var isNewRule = rule == null;
 
-                var ruleToEdit = new MergeRule(_settings, FieldType.Category);
+                var ruleToEdit = new MergeRule(FieldType.Category);
 
                 if (rule != null)
                 {
@@ -481,14 +479,14 @@ namespace MetadataUtilities.ViewModels
 
                     foreach (var sourceItem in rule.SourceObjects)
                     {
-                        ruleToEdit.SourceObjects.Add(new MetadataObject(_settings, sourceItem.Type, sourceItem.Name)
+                        ruleToEdit.SourceObjects.Add(new MetadataObject(sourceItem.Type, sourceItem.Name)
                         {
                             GameCount = 0
                         });
                     }
                 }
 
-                var metadataObjects = new MetadataObjects(Settings);
+                var metadataObjects = new MetadataObjects();
 
                 if (isNewRule)
                 {
@@ -496,7 +494,7 @@ namespace MetadataUtilities.ViewModels
                 }
                 else
                 {
-                    var temp = new MetadataObjects(Settings);
+                    var temp = new MetadataObjects();
                     temp.LoadMetadata();
 
                     foreach (var item in ruleToEdit.SourceObjects)
@@ -518,7 +516,7 @@ namespace MetadataUtilities.ViewModels
                     metadataObjects.AddMissing(temp.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
                 }
 
-                var viewModel = new MergeRuleEditorViewModel(_plugin, metadataObjects)
+                var viewModel = new MergeRuleEditorViewModel(metadataObjects)
                 {
                     RuleName = ruleToEdit.Name,
                     RuleType = ruleToEdit.Type
@@ -544,7 +542,7 @@ namespace MetadataUtilities.ViewModels
 
                 foreach (var item in metadataObjects.Where(x => x.Selected).ToList())
                 {
-                    ruleToEdit.SourceObjects.Add(new MetadataObject(_settings, item.Type, item.Name)
+                    ruleToEdit.SourceObjects.Add(new MetadataObject(item.Type, item.Name)
                     {
                         Id = item.Id,
                         Selected = item.Selected

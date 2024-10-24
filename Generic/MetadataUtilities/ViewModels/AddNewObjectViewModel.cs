@@ -12,17 +12,15 @@ namespace MetadataUtilities.ViewModels
 {
     public class AddNewObjectViewModel : ObservableObject
     {
-        private readonly Settings _settings;
         private bool _enableTypeSelection = true;
         private MetadataObject _newObject;
 
-        public AddNewObjectViewModel(Settings settings, MetadataObject newObject, bool enableTypeSelection = true)
+        public AddNewObjectViewModel(MetadataObject newObject, bool enableTypeSelection = true)
         {
-            _settings = settings;
             NewObject = newObject;
             EnableTypeSelection = enableTypeSelection;
             Prefixes.Add(string.Empty);
-            Prefixes.AddMissing(settings.Prefixes);
+            Prefixes.AddMissing(ControlCenter.Instance.Settings.Prefixes);
         }
 
         public bool EnableTypeSelection
@@ -47,13 +45,13 @@ namespace MetadataUtilities.ViewModels
 
         public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
 
-        public Visibility PrefixVisibility => _settings.Prefixes.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility PrefixVisibility => ControlCenter.Instance.Settings.Prefixes.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
-        public static Window GetWindow(Settings settings, MetadataObject newObject, bool enableTypeSelection = true, string caption = "")
+        public static Window GetWindow(MetadataObject newObject, bool enableTypeSelection = true, string caption = "")
         {
             try
             {
-                var viewModel = new AddNewObjectViewModel(settings, newObject, enableTypeSelection);
+                var viewModel = new AddNewObjectViewModel(newObject, enableTypeSelection);
 
                 var newObjectViewView = new AddNewObjectView();
 

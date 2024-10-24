@@ -23,9 +23,8 @@ namespace MetadataUtilities.Models
         private FieldType _type;
         private IMetadataFieldType _typeManager;
 
-        public MetadataObject(Settings settings, FieldType type, string name = default)
+        public MetadataObject(FieldType type, string name = default)
         {
-            Settings = settings;
             Type = type;
             Name = name;
         }
@@ -143,8 +142,7 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _selected, value);
         }
 
-        [DontSerialize]
-        public Settings Settings { get; set; }
+        [DontSerialize] public Settings Settings => ControlCenter.Instance.Settings;
 
         [DontSerialize]
         public bool ShowGrouped
@@ -292,7 +290,7 @@ namespace MetadataUtilities.Models
             {
                 var gamesAffected = type.RemoveObjectFromGames(API.Instance.Database.Games.ToList(), Id);
 
-                MetadataFunctions.UpdateGames(gamesAffected.ToList(), Settings);
+                MetadataFunctions.UpdateGames(gamesAffected.ToList());
             }
 
             if (!type.RemoveDbObject(Id))

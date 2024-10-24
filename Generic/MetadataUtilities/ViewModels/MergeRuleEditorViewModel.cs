@@ -15,35 +15,34 @@ namespace MetadataUtilities.ViewModels
 {
     public class MergeRuleEditorViewModel : ObservableObject
     {
+        private readonly Settings _settings = ControlCenter.Instance.Settings;
         private MetadataObjects _completeMetadata;
         private string _filterPrefix = string.Empty;
         private bool _filterSelected;
         private ObservableCollection<FilterType> _filterTypes;
         private CollectionViewSource _metadataViewSource;
-        private MetadataUtilities _plugin;
         private string _ruleName = string.Empty;
         private FieldType _ruleType = FieldType.Category;
         private string _searchTerm = string.Empty;
 
-        public MergeRuleEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
+        public MergeRuleEditorViewModel(MetadataObjects objects)
         {
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                if (plugin.Settings.Settings.WriteDebugLog)
+                if (_settings.WriteDebugLog)
                 {
                     Log.Debug("=== MetadataEditorViewModel: Start ===");
                 }
 
                 var ts = DateTime.Now;
 
-                Plugin = plugin;
                 CompleteMetadata = objects;
 
                 Prefixes.Add(string.Empty);
-                Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
+                Prefixes.AddMissing(_settings.Prefixes);
 
-                if (plugin.Settings.Settings.WriteDebugLog)
+                if (_settings.WriteDebugLog)
                 {
                     Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                     ts = DateTime.Now;
@@ -56,7 +55,7 @@ namespace MetadataUtilities.ViewModels
                 };
 
                 // ReSharper disable once PossibleNullReferenceException
-                if (plugin.Settings.Settings.WriteDebugLog)
+                if (_settings.WriteDebugLog)
                 {
                     Log.Debug($"=== MetadataEditorViewModel: Source set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                     ts = DateTime.Now;
@@ -64,7 +63,7 @@ namespace MetadataUtilities.ViewModels
 
                 using (MetadataViewSource.DeferRefresh())
                 {
-                    _filterTypes = plugin.Settings.Settings.FilterTypes
+                    _filterTypes = _settings.FilterTypes
                         .Select(x => new FilterType() { Type = x.Type }).ToObservable();
 
                     foreach (var filterType in FilterTypes)
@@ -80,7 +79,7 @@ namespace MetadataUtilities.ViewModels
 
                 MetadataViewSource.View.Filter = Filter;
 
-                if (plugin.Settings.Settings.WriteDebugLog)
+                if (_settings.WriteDebugLog)
                 {
                     Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                     ts = DateTime.Now;
@@ -88,7 +87,7 @@ namespace MetadataUtilities.ViewModels
 
                 MetadataViewSource.View.MoveCurrentToFirst();
 
-                if (plugin.Settings.Settings.WriteDebugLog)
+                if (_settings.WriteDebugLog)
                 {
                     Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                 }
@@ -179,15 +178,9 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _metadataViewSource, value);
         }
 
-        public MetadataUtilities Plugin
-        {
-            get => _plugin;
-            set => SetValue(ref _plugin, value);
-        }
-
         public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
 
-        public Visibility PrefixVisibility => (_plugin.Settings.Settings.Prefixes?.Count ?? 0) > 0
+        public Visibility PrefixVisibility => (_settings.Prefixes?.Count ?? 0) > 0
             ? Visibility.Visible
             : Visibility.Collapsed;
 

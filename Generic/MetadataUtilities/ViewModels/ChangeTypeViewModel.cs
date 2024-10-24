@@ -15,14 +15,13 @@ namespace MetadataUtilities.ViewModels
         private MetadataObjects _newObjects;
 
         private FieldType _newType = FieldType.Category;
-        private MetadataUtilities _plugin;
         private bool _saveAsRule;
 
-        public ChangeTypeViewModel(MetadataUtilities plugin, MetadataObjects items)
+        public ChangeTypeViewModel(MetadataObjects items)
         {
-            Plugin = plugin;
             _metadataObjects = items;
-            _newObjects = new MetadataObjects(plugin.Settings.Settings);
+            _newObjects = new MetadataObjects();
+            SaveAsRule = ControlCenter.Instance.Settings.AlwaysSaveManualMergeRules;
         }
 
         public Dictionary<FieldType, string> FieldValuePairs => FieldTypeHelper.ItemListFieldValues();
@@ -51,11 +50,11 @@ namespace MetadataUtilities.ViewModels
                         continue;
                     }
 
-                    var rule = new MergeRule(_plugin.Settings.Settings, NewType, item.Name)
+                    var rule = new MergeRule(NewType, item.Name)
                     {
-                        SourceObjects = new MetadataObjects(_plugin.Settings.Settings)
+                        SourceObjects = new MetadataObjects()
                         {
-                            new MetadataObject(_plugin.Settings.Settings, item.Type, item.Name)
+                            new MetadataObject(item.Type, item.Name)
                             {
                                 Id = item.Id
                             }
@@ -64,7 +63,7 @@ namespace MetadataUtilities.ViewModels
 
                     rule.Merge();
 
-                    NewObjects.Add(new MetadataObject(_plugin.Settings.Settings, NewType, item.Name)
+                    NewObjects.Add(new MetadataObject(NewType, item.Name)
                     {
                         Id = rule.Id
                     });
@@ -74,10 +73,10 @@ namespace MetadataUtilities.ViewModels
                         continue;
                     }
 
-                    _plugin.Settings.Settings.MergeRules.AddRule(rule);
+                    ControlCenter.Instance.Settings.MergeRules.AddRule(rule);
                 }
 
-                _plugin.SavePluginSettings(_plugin.Settings.Settings);
+                ControlCenter.Instance.SavePluginSettings();
             }
             finally
             {
@@ -87,16 +86,6 @@ namespace MetadataUtilities.ViewModels
             win.DialogResult = true;
             win.Close();
         }, win => win != null);
-
-        public MetadataUtilities Plugin
-        {
-            get => _plugin;
-            set
-            {
-                SetValue(ref _plugin, value);
-                SaveAsRule = _plugin.Settings.Settings.AlwaysSaveManualMergeRules;
-            }
-        }
 
         public bool SaveAsRule
         {

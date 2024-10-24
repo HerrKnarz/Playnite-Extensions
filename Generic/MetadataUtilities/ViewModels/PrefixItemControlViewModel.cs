@@ -15,19 +15,14 @@ namespace MetadataUtilities.ViewModels
     public class PrefixItemControlViewModel : ObservableObject
     {
         private readonly FieldType _fieldType;
-        private readonly MetadataUtilities _plugin;
         private string _defaultIcon;
         private Game _game;
         private Guid _gameId = Guid.Empty;
         private ObservableCollection<PrefixItemList> _itemLists = new ObservableCollection<PrefixItemList>();
 
-        public PrefixItemControlViewModel(MetadataUtilities plugin, FieldType type)
-        {
-            _plugin = plugin;
-            _fieldType = type;
-        }
+        public PrefixItemControlViewModel(FieldType type) => _fieldType = type;
 
-        public Visibility AddButtonVisibility => _plugin.Settings.Settings.PrefixControlDisplayAddButton
+        public Visibility AddButtonVisibility => ControlCenter.Instance.Settings.PrefixControlDisplayAddButton
             ? Visibility.Visible
             : Visibility.Collapsed;
 
@@ -38,7 +33,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            var items = MetadataFunctions.GetItemsFromAddDialog(itemList.FieldType, _plugin.Settings.Settings, itemList.Prefix, false);
+            var items = MetadataFunctions.GetItemsFromAddDialog(itemList.FieldType, itemList.Prefix, false);
 
             if (items.Count == 0)
             {
@@ -52,7 +47,7 @@ namespace MetadataUtilities.ViewModels
                 if (type.AddValueToGame(_game, items.Select(x => x.Id).ToList()))
                 {
                     refreshNeeded = true;
-                    MetadataFunctions.UpdateGames(new List<Game> { _game }, _plugin.Settings.Settings);
+                    MetadataFunctions.UpdateGames(new List<Game> { _game });
                 }
             }
 
@@ -68,7 +63,7 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _defaultIcon, value);
         }
 
-        public Visibility DeleteButtonVisibility => _plugin.Settings.Settings.PrefixControlDisplayDeleteButton
+        public Visibility DeleteButtonVisibility => ControlCenter.Instance.Settings.PrefixControlDisplayDeleteButton
             ? Visibility.Visible
             : Visibility.Collapsed;
 
@@ -91,7 +86,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<object> RemoveItemCommand => new RelayCommand<object>(item =>
         {
-            if (_plugin.Settings.Settings.PrefixControlConfirmDeletion &&
+            if (ControlCenter.Instance.Settings.PrefixControlConfirmDeletion &&
                 API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCAskRemoveItemMessage"),
                     ResourceProvider.GetString("LOCAskRemoveItemTitle"),
                     MessageBoxButton.YesNo) == MessageBoxResult.No)
@@ -114,7 +109,7 @@ namespace MetadataUtilities.ViewModels
             if (type.RemoveObjectFromGame(_game, metadataItem.Id))
             {
                 refreshNeeded = true;
-                MetadataFunctions.UpdateGames(new List<Game> { _game }, _plugin.Settings.Settings);
+                MetadataFunctions.UpdateGames(new List<Game> { _game });
             }
 
             if (refreshNeeded)
@@ -194,13 +189,13 @@ namespace MetadataUtilities.ViewModels
 
             ItemLists.Clear();
 
-            foreach (var itemList in _plugin.Settings.Settings.PrefixItemTypes.Where(x =>
+            foreach (var itemList in ControlCenter.Instance.Settings.PrefixItemTypes.Where(x =>
                          x.FieldType == _fieldType && x.Name != default))
             {
-                ItemLists.Add(new PrefixItemList(_plugin, _game, itemList));
+                ItemLists.Add(new PrefixItemList(_game, itemList));
             }
 
-            ItemLists.Add(new PrefixItemList(_plugin, _game, _fieldType, _defaultIcon));
+            ItemLists.Add(new PrefixItemList(_game, _fieldType, _defaultIcon));
 
             ItemLists = ItemLists.Where(x => x.Items.Count > 0).OrderBy(x => x.Position).ThenBy(x => x.Name)
                 .ToObservable();

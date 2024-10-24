@@ -225,8 +225,9 @@
     <Compile Include="..\..\Common\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
-    <Compile Include="Actions\AfterMetadataUpdateAction.cs" />
+    <Compile Include="Actions\AfterGameUpdateAction.cs" />
     <Compile Include="Actions\MergeAction.cs" />
+    <Compile Include="ControlCenter.cs" />
     <Compile Include="Controls\PrefixItemControl.xaml.cs">
       <DependentUpon>PrefixItemControl.xaml</DependentUpon>
     </Compile>

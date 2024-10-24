@@ -8,7 +8,7 @@ namespace MetadataUtilities.Actions
     {
         private static SetUserScoreAction _instance;
 
-        private SetUserScoreAction(Settings settings) : base(settings)
+        private SetUserScoreAction()
         {
         }
 
@@ -16,7 +16,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogSetUserScoreMessage";
 
-        public static SetUserScoreAction Instance(Settings settings) => _instance ?? (_instance = new SetUserScoreAction(settings));
+        public static SetUserScoreAction Instance() => _instance ?? (_instance = new SetUserScoreAction());
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {

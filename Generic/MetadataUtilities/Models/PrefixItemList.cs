@@ -16,19 +16,19 @@ namespace MetadataUtilities.Models
         private int _position;
         private string _prefix;
 
-        public PrefixItemList(MetadataUtilities plugin, Game game, FieldType fieldType, string icon)
+        public PrefixItemList(Game game, FieldType fieldType, string icon)
         {
             _fieldType = fieldType;
             _icon = icon;
             _name = fieldType.GetTypeManager().LabelPlural;
             _prefix = default;
 
-            PrepareData(plugin, game);
+            PrepareData(game);
 
             _name = _items.Count > 1 ? fieldType.GetTypeManager().LabelPlural : fieldType.GetTypeManager().LabelSingular;
         }
 
-        public PrefixItemList(MetadataUtilities plugin, Game game, PrefixItemList itemList)
+        public PrefixItemList(Game game, PrefixItemList itemList)
         {
             _fieldType = itemList.FieldType;
             _icon = itemList.Icon;
@@ -36,7 +36,7 @@ namespace MetadataUtilities.Models
             _prefix = itemList.Prefix;
             _position = itemList.Position;
 
-            PrepareData(plugin, game);
+            PrepareData(game);
         }
 
         public PrefixItemList()
@@ -79,9 +79,9 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _prefix, value);
         }
 
-        public void PrepareData(MetadataUtilities plugin, Game game)
+        public void PrepareData(Game game)
         {
-            _items = new MetadataObjects(plugin.Settings.Settings);
+            _items = new MetadataObjects();
 
             if (!(_fieldType.GetTypeManager() is IEditableObjectType type))
             {
@@ -93,13 +93,13 @@ namespace MetadataUtilities.Models
             if (_prefix == default)
             {
                 prefixes.Add(string.Empty);
-                prefixes.AddMissing(plugin.Settings.Settings.PrefixItemTypes.Where(p => p.Name == default).Select(p => p.Prefix));
+                prefixes.AddMissing(ControlCenter.Instance.Settings.PrefixItemTypes.Where(p => p.Name == default).Select(p => p.Prefix));
             }
 
             _items.AddMissing(type.LoadGameMetadata(game)
-                .Where(x => !plugin.Settings.Settings.UnusedItemsWhiteList.Any(y => y.HideInDetails && y.Type == type.Type && y.Name == x.Name))
+                .Where(x => !ControlCenter.Instance.Settings.UnusedItemsWhiteList.Any(y => y.HideInDetails && y.Type == type.Type && y.Name == x.Name))
                 .Select(x =>
-                    new MetadataObject(plugin.Settings.Settings, type.Type, x.Name)
+                    new MetadataObject(type.Type, x.Name)
                     {
                         Id = x.Id
                     }).Where(x => prefixes.Contains(x.Prefix)).OrderBy(x => x.DisplayName));

@@ -12,8 +12,8 @@ namespace MetadataUtilities.Models
     {
         private MetadataObjects _sourceObjects;
 
-        public MergeRule(Settings settings, FieldType type, string name = default) : base(settings, type, name) =>
-            _sourceObjects = new MetadataObjects(settings);
+        public MergeRule(FieldType type, string name = default) : base(type, name) =>
+            _sourceObjects = new MetadataObjects();
 
         public MetadataObjects SourceObjects
         {
@@ -48,7 +48,7 @@ namespace MetadataUtilities.Models
                     result.AddMissing(item.ReplaceInDb(games, Type, Id));
                 }
 
-                MetadataFunctions.UpdateGames(result, Settings);
+                MetadataFunctions.UpdateGames(result);
 
                 if (removeAfter)
                 {

@@ -19,6 +19,7 @@ namespace MetadataUtilities.ViewModels
 {
     public class MetadataEditorViewModel : ObservableObject
     {
+        private readonly Settings _settings = ControlCenter.Instance.Settings;
         private MetadataObjects _completeMetadata;
         private bool _filterHideUnused;
         private string _filterPrefix = string.Empty;
@@ -27,15 +28,12 @@ namespace MetadataUtilities.ViewModels
         private CollectionViewSource _gamesViewSource;
         private bool _groupMatches;
         private CollectionViewSource _metadataViewSource;
-        private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
         private List<MetadataObject> _selectedItems;
 
-        public MetadataEditorViewModel(MetadataUtilities plugin, MetadataObjects objects)
+        public MetadataEditorViewModel(MetadataObjects objects)
         {
-            Plugin = plugin;
-
-            if (Plugin.Settings.Settings.WriteDebugLog)
+            if (_settings.WriteDebugLog)
             {
                 Log.Debug("=== MetadataEditorViewModel: Start ===");
             }
@@ -46,7 +44,7 @@ namespace MetadataUtilities.ViewModels
                 PrepareMetadata(objects);
 
                 Prefixes.Add(string.Empty);
-                Prefixes.AddMissing(Plugin.Settings.Settings.Prefixes);
+                Prefixes.AddMissing(_settings.Prefixes);
 
                 CalculateItemCount();
 
@@ -99,12 +97,12 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            var viewModel = new SearchGameViewModel(Plugin, SelectedItems);
+            var viewModel = new SearchGameViewModel(SelectedItems);
 
             var searchGameView = new SearchGameView();
 
             var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
-                Plugin.Settings.Settings.GameSearchWindowWidth, Plugin.Settings.Settings.GameSearchWindowHeight);
+                _settings.GameSearchWindowWidth, _settings.GameSearchWindowHeight);
             window.Content = searchGameView;
             window.DataContext = viewModel;
 
@@ -128,13 +126,12 @@ namespace MetadataUtilities.ViewModels
 
             foreach (var item in items.Cast<MetadataObject>())
             {
-                if (Plugin.Settings.Settings.UnusedItemsWhiteList.Any(x => x.TypeAndName == item.TypeAndName))
+                if (_settings.UnusedItemsWhiteList.Any(x => x.TypeAndName == item.TypeAndName))
                 {
                     continue;
                 }
 
-                Plugin.Settings.Settings.UnusedItemsWhiteList.Add(new WhiteListItem(Plugin.Settings.Settings,
-                    item.Type, item.Name));
+                _settings.UnusedItemsWhiteList.Add(new WhiteListItem(item.Type, item.Name));
 
                 mustUpdate = true;
             }
@@ -145,9 +142,9 @@ namespace MetadataUtilities.ViewModels
             }
 
             {
-                Plugin.Settings.Settings.UnusedItemsWhiteList.Sort(x => x.TypeAndName);
+                _settings.UnusedItemsWhiteList.Sort(x => x.TypeAndName);
 
-                Plugin.SavePluginSettings(Plugin.Settings.Settings);
+                ControlCenter.Instance.SavePluginSettings();
             }
         }, items => items != null && items.Count > 0);
 
@@ -160,13 +157,13 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                Plugin.IsUpdating = true;
+                ControlCenter.Instance.IsUpdating = true;
 
-                var changeItems = new MetadataObjects(Plugin.Settings.Settings);
+                var changeItems = new MetadataObjects();
 
                 changeItems.AddMissing(items.ToList().Cast<MetadataObject>());
 
-                var viewModel = new ChangeTypeViewModel(Plugin, changeItems);
+                var viewModel = new ChangeTypeViewModel(changeItems);
 
                 var view = new ChangeTypeView();
 
@@ -213,17 +210,17 @@ namespace MetadataUtilities.ViewModels
             }
             finally
             {
-                Plugin.IsUpdating = false;
+                ControlCenter.Instance.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
         }, items => items?.Count > 0);
 
         public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
         {
-            Plugin.Settings.Settings.FilterTypes = FilterTypes;
-            Plugin.Settings.Settings.EditorWindowHeight = Convert.ToInt32(win.Height);
-            Plugin.Settings.Settings.EditorWindowWidth = Convert.ToInt32(win.Width);
-            Plugin.SavePluginSettings(Plugin.Settings.Settings);
+            _settings.FilterTypes = FilterTypes;
+            _settings.EditorWindowHeight = Convert.ToInt32(win.Height);
+            _settings.EditorWindowWidth = Convert.ToInt32(win.Width);
+            ControlCenter.Instance.SavePluginSettings();
 
             win.DialogResult = true;
             win.Close();
@@ -265,19 +262,19 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _filterTypes, value);
         }
 
-        public Visibility GameGridCompletionStatusVisibility => _plugin.Settings.Settings.GameGridShowCompletionStatus
+        public Visibility GameGridCompletionStatusVisibility => _settings.GameGridShowCompletionStatus
             ? Visibility.Visible
             : Visibility.Collapsed;
 
-        public Visibility GameGridHiddenVisibility => _plugin.Settings.Settings.GameGridShowHidden
+        public Visibility GameGridHiddenVisibility => _settings.GameGridShowHidden
             ? Visibility.Visible
             : Visibility.Collapsed;
 
-        public Visibility GameGridPlatformVisibility => _plugin.Settings.Settings.GameGridShowPlatform
+        public Visibility GameGridPlatformVisibility => _settings.GameGridShowPlatform
                     ? Visibility.Visible
             : Visibility.Collapsed;
 
-        public Visibility GameGridReleaseVisibility => _plugin.Settings.Settings.GameGridShowReleaseYear
+        public Visibility GameGridReleaseVisibility => _settings.GameGridShowReleaseYear
             ? Visibility.Visible
             : Visibility.Collapsed;
 
@@ -334,13 +331,13 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                Plugin.IsUpdating = true;
+                ControlCenter.Instance.IsUpdating = true;
 
-                var mergeItems = new MetadataObjects(Plugin.Settings.Settings);
+                var mergeItems = new MetadataObjects();
 
                 mergeItems.AddMissing(items.ToList().Cast<MetadataObject>());
 
-                var viewModel = new MergeDialogViewModel(Plugin, mergeItems);
+                var viewModel = new MergeDialogViewModel(mergeItems);
 
                 var mergeView = new MergeDialogView();
 
@@ -383,7 +380,7 @@ namespace MetadataUtilities.ViewModels
             }
             finally
             {
-                Plugin.IsUpdating = false;
+                ControlCenter.Instance.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
         }, items => items?.Count > 1);
@@ -400,12 +397,12 @@ namespace MetadataUtilities.ViewModels
                 // We prepare the original item, save the old values and create a new one to edit.
                 var templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
-                var oldItem = new MetadataObject(Plugin.Settings.Settings, templateItem.Type, templateItem.Name);
+                var oldItem = new MetadataObject(templateItem.Type, templateItem.Name);
 
-                var newItem = new MetadataObject(Plugin.Settings.Settings, templateItem.Type, templateItem.Name);
+                var newItem = new MetadataObject(templateItem.Type, templateItem.Name);
 
                 // Using the Add New dialog we rename the item
-                var window = AddNewObjectViewModel.GetWindow(Plugin.Settings.Settings, newItem, false,
+                var window = AddNewObjectViewModel.GetWindow(newItem, false,
                     ResourceProvider.GetString("LOCMetadataUtilitiesEditorMergeRename"));
 
                 // return if the dialog was canceled or the name remained the same.
@@ -424,13 +421,13 @@ namespace MetadataUtilities.ViewModels
                 }
 
                 // Finally we create a new merge rule and add it to the list.
-                var newRule = new MergeRule(Plugin.Settings.Settings, newItem.Type, newItem.Name)
+                var newRule = new MergeRule(newItem.Type, newItem.Name)
                 {
-                    SourceObjects = new MetadataObjects(Plugin.Settings.Settings) { oldItem }
+                    SourceObjects = new MetadataObjects() { oldItem }
                 };
 
-                Plugin.Settings.Settings.MergeRules.AddRule(newRule);
-                Plugin.SavePluginSettings(_plugin.Settings.Settings);
+                _settings.MergeRules.AddRule(newRule);
+                ControlCenter.Instance.SavePluginSettings();
 
                 RefreshView();
             }
@@ -446,15 +443,9 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _metadataViewSource, value);
         }
 
-        public MetadataUtilities Plugin
-        {
-            get => _plugin;
-            set => SetValue(ref _plugin, value);
-        }
-
         public ObservableCollection<string> Prefixes { get; } = new ObservableCollection<string>();
 
-        public Visibility PrefixVisibility => (_plugin.Settings.Settings.Prefixes?.Count ?? 0) > 0
+        public Visibility PrefixVisibility => (_settings.Prefixes?.Count ?? 0) > 0
             ? Visibility.Visible
             : Visibility.Collapsed;
 
@@ -488,7 +479,7 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                MetadataFunctions.UpdateGames(gamesAffected, Plugin.Settings.Settings);
+                MetadataFunctions.UpdateGames(gamesAffected);
 
                 LoadRelatedGames();
 
@@ -512,7 +503,7 @@ namespace MetadataUtilities.ViewModels
 
             var response = MessageBoxResult.Yes;
 
-            if (!Plugin.Settings.Settings.AddRemovedToUnwanted)
+            if (!_settings.AddRemovedToUnwanted)
             {
                 response = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogAddToUnwanted"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
             }
@@ -522,7 +513,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            Plugin.IsUpdating = true;
+            ControlCenter.Instance.IsUpdating = true;
             Cursor.Current = Cursors.WaitCursor;
 
             try
@@ -570,7 +561,7 @@ namespace MetadataUtilities.ViewModels
 
                     if (response == MessageBoxResult.Yes)
                     {
-                        Plugin.Settings.Settings.UnwantedItems.AddItems(unwantedItems);
+                        _settings.UnwantedItems.AddItems(unwantedItems);
                     }
 
                     UpdateGroupDisplay();
@@ -579,7 +570,7 @@ namespace MetadataUtilities.ViewModels
             }
             finally
             {
-                Plugin.IsUpdating = false;
+                ControlCenter.Instance.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
         }, items => items != null && items.Count > 0);
@@ -587,11 +578,11 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand RemoveUnusedCommand => new RelayCommand(() =>
         {
             Cursor.Current = Cursors.WaitCursor;
-            Plugin.IsUpdating = true;
+            ControlCenter.Instance.IsUpdating = true;
 
             try
             {
-                var removedItems = MetadataFunctions.RemoveUnusedMetadata(_plugin.Settings.Settings);
+                var removedItems = MetadataFunctions.RemoveUnusedMetadata();
 
                 if (removedItems.Count == 0)
                 {
@@ -615,7 +606,7 @@ namespace MetadataUtilities.ViewModels
             finally
             {
                 Cursor.Current = Cursors.Default;
-                Plugin.IsUpdating = false;
+                ControlCenter.Instance.IsUpdating = false;
             }
         });
 
@@ -640,9 +631,11 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public static void ShowEditor(MetadataUtilities plugin, List<Game> games = null)
+        public static void ShowEditor(List<Game> games = null)
         {
-            if (plugin.Settings.Settings.WriteDebugLog)
+            var settings = ControlCenter.Instance.Settings;
+
+            if (settings.WriteDebugLog)
             {
                 Log.Debug("=== ShowEditor: Start ===");
             }
@@ -652,7 +645,7 @@ namespace MetadataUtilities.ViewModels
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                var metadataObjects = new MetadataObjects(plugin.Settings.Settings);
+                var metadataObjects = new MetadataObjects();
                 var windowTitle = "LOCMetadataUtilitiesEditor";
 
                 if (games != null)
@@ -666,17 +659,17 @@ namespace MetadataUtilities.ViewModels
                     metadataObjects.LoadMetadata();
                 }
 
-                var viewModel = new MetadataEditorViewModel(plugin, metadataObjects);
+                var viewModel = new MetadataEditorViewModel(metadataObjects);
 
                 var editorView = new MetadataEditorView();
 
                 var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString(windowTitle),
-                    plugin.Settings.Settings.EditorWindowWidth, plugin.Settings.Settings.EditorWindowHeight);
+                    settings.EditorWindowWidth, settings.EditorWindowHeight);
 
                 window.Content = editorView;
                 window.DataContext = viewModel;
 
-                if (plugin.Settings.Settings.WriteDebugLog)
+                if (settings.WriteDebugLog)
                 {
                     Log.Debug($"=== ShowEditor: Show Dialog ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                 }
@@ -708,7 +701,7 @@ namespace MetadataUtilities.ViewModels
 
         private void AddNewItem(FieldType type, string name, Guid id)
         {
-            var newItem = new MetadataObject(Plugin.Settings.Settings, type, name)
+            var newItem = new MetadataObject(type, name)
             {
                 Id = id
             };
@@ -740,7 +733,7 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                foreach (var game in API.Instance.Database.Games.Where(g => !g.Hidden || !Plugin.Settings.Settings.IgnoreHiddenGamesInGameCount).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName))
+                foreach (var game in API.Instance.Database.Games.Where(g => !g.Hidden || !_settings.IgnoreHiddenGamesInGameCount).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName))
                 {
                     var addGame = SelectedItems?.All(item => item.IsInGame(game)) ?? false;
 
@@ -828,12 +821,12 @@ namespace MetadataUtilities.ViewModels
                     {
                         var newId = objectType.AddDbObject(oldName);
 
-                        var itemToDelete = new MetadataObject(Plugin.Settings.Settings, objectType.Type, newName);
+                        var itemToDelete = new MetadataObject(objectType.Type, newName);
 
                         var gamesAffected = itemToDelete.ReplaceInDb(API.Instance.Database.Games.ToList(),
                             objectType.Type, newId);
 
-                        MetadataFunctions.UpdateGames(gamesAffected.ToList(), Plugin.Settings.Settings);
+                        MetadataFunctions.UpdateGames(gamesAffected.ToList());
 
                         // We now have the renamed company and the other type with the old name still. We need to remove the other
                         // and add three new ones: A renamed other type and a developer and publisher with the old name.
@@ -853,7 +846,7 @@ namespace MetadataUtilities.ViewModels
 
                         RefreshView();
 
-                        MetadataFunctions.RenameObject(Plugin, otherType, newName, oldName);
+                        MetadataFunctions.RenameObject(otherType, newName, oldName);
                     }
 
                     return true;
@@ -867,7 +860,7 @@ namespace MetadataUtilities.ViewModels
         {
             // We copy the settings, so we won't overwrite them when closing the window
             // without using the close command
-            _filterTypes = Plugin.Settings.Settings.TypeConfigs.Where(x => x.Selected)
+            _filterTypes = _settings.TypeConfigs.Where(x => x.Selected)
                 .Select(x => new FilterType() { Selected = false, Type = x.Type }).OrderBy(x => x.Label).ToObservable();
 
             foreach (var filterType in FilterTypes)
@@ -879,7 +872,7 @@ namespace MetadataUtilities.ViewModels
                     MetadataViewSource.View.Filter = Filter;
                 };
 
-                filterType.Selected = Plugin.Settings.Settings.FilterTypes.Any(x => x.Selected && x.Type == filterType.Type);
+                filterType.Selected = _settings.FilterTypes.Any(x => x.Selected && x.Type == filterType.Type);
 
                 filterType.UpdateCount();
             }
@@ -899,7 +892,7 @@ namespace MetadataUtilities.ViewModels
         private void PrepareMetadata(MetadataObjects objects)
         {
             objects.RemoveItems(objects.Where(x =>
-                Plugin.Settings.Settings.UnusedItemsWhiteList.Any(y =>
+                _settings.UnusedItemsWhiteList.Any(y =>
                     y.HideInEditor && y.TypeAndName == x.TypeAndName)).ToList());
 
             CompleteMetadata = objects;
@@ -914,7 +907,7 @@ namespace MetadataUtilities.ViewModels
         {
             var ts = DateTime.Now;
 
-            if (Plugin.Settings.Settings.WriteDebugLog)
+            if (_settings.WriteDebugLog)
             {
                 Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             }
@@ -931,7 +924,7 @@ namespace MetadataUtilities.ViewModels
                 MetadataViewSource.SortDescriptions.Add(new SortDescription("EditName", ListSortDirection.Ascending));
                 MetadataViewSource.IsLiveSortingRequested = true;
 
-                if (Plugin.Settings.Settings.WriteDebugLog)
+                if (_settings.WriteDebugLog)
                 {
                     Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                     ts = DateTime.Now;
@@ -940,7 +933,7 @@ namespace MetadataUtilities.ViewModels
                 PrepareFilterTypes();
             }
 
-            if (Plugin.Settings.Settings.WriteDebugLog)
+            if (_settings.WriteDebugLog)
             {
                 Log.Debug($"=== MetadataEditorViewModel: Finished MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                 ts = DateTime.Now;
@@ -948,7 +941,7 @@ namespace MetadataUtilities.ViewModels
 
             MetadataViewSource.View.Filter = Filter;
 
-            if (Plugin.Settings.Settings.WriteDebugLog)
+            if (_settings.WriteDebugLog)
             {
                 Log.Debug($"=== MetadataEditorViewModel: Filter set ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                 ts = DateTime.Now;
@@ -956,7 +949,7 @@ namespace MetadataUtilities.ViewModels
 
             MetadataViewSource.View.MoveCurrentToFirst();
 
-            if (Plugin.Settings.Settings.WriteDebugLog)
+            if (_settings.WriteDebugLog)
             {
                 Log.Debug($"=== MetadataEditorViewModel: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             }
@@ -991,7 +984,7 @@ namespace MetadataUtilities.ViewModels
 
         private void UpdateGroupDisplay()
         {
-            if (_plugin.Settings.Settings.WriteDebugLog)
+            if (_settings.WriteDebugLog)
             {
                 Log.Debug("=== UpdateGroupDisplay: Start ===");
             }
@@ -1011,7 +1004,7 @@ namespace MetadataUtilities.ViewModels
                 Parallel.ForEach(tempList, opts, item => item.CheckGroup(groups));
             }
 
-            if (_plugin.Settings.Settings.WriteDebugLog)
+            if (_settings.WriteDebugLog)
             {
                 Log.Debug($"=== UpdateGroupDisplay: End ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             }

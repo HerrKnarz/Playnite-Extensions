@@ -10,13 +10,12 @@ namespace MetadataUtilities.ViewModels
     {
         private MetadataObject _mergeTarget;
         private MetadataObjects _metadataObjects;
-        private MetadataUtilities _plugin;
         private bool _saveAsRule;
 
-        public MergeDialogViewModel(MetadataUtilities plugin, MetadataObjects items)
+        public MergeDialogViewModel(MetadataObjects items)
         {
-            Plugin = plugin;
             MetadataObjects = items;
+            SaveAsRule = ControlCenter.Instance.Settings.AlwaysSaveManualMergeRules;
         }
 
         public MetadataObject MergeTarget
@@ -37,7 +36,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
-            var rule = new MergeRule(_plugin.Settings.Settings, _mergeTarget.Type, _mergeTarget.Name)
+            var rule = new MergeRule(_mergeTarget.Type, _mergeTarget.Name)
             {
                 Id = _mergeTarget.Id,
                 SourceObjects = _metadataObjects
@@ -45,25 +44,15 @@ namespace MetadataUtilities.ViewModels
 
             if (SaveAsRule)
             {
-                _plugin.Settings.Settings.MergeRules.AddRule(rule);
-                _plugin.SavePluginSettings(_plugin.Settings.Settings);
+                ControlCenter.Instance.Settings.MergeRules.AddRule(rule);
+                ControlCenter.Instance.SavePluginSettings();
             }
 
-            MetadataFunctions.MergeItems(Plugin, rule);
+            MetadataFunctions.MergeItems(rule);
 
             win.DialogResult = true;
             win.Close();
         }, win => win != null);
-
-        public MetadataUtilities Plugin
-        {
-            get => _plugin;
-            set
-            {
-                SetValue(ref _plugin, value);
-                SaveAsRule = _plugin.Settings.Settings.AlwaysSaveManualMergeRules;
-            }
-        }
 
         public bool SaveAsRule
         {

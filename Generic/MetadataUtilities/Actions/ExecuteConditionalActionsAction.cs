@@ -14,7 +14,7 @@ namespace MetadataUtilities.Actions
 
         private readonly List<ConditionalAction> _actions = new List<ConditionalAction>();
 
-        private ExecuteConditionalActionsAction(Settings settings) : base(settings)
+        private ExecuteConditionalActionsAction()
         {
         }
 
@@ -22,7 +22,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogExecutedConditionalActions";
 
-        public static ExecuteConditionalActionsAction Instance(Settings settings) => _instance ?? (_instance = new ExecuteConditionalActionsAction(settings));
+        public static ExecuteConditionalActionsAction Instance() => _instance ?? (_instance = new ExecuteConditionalActionsAction());
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {

@@ -18,16 +18,13 @@ namespace MetadataUtilities.Models
         private readonly IObjectType _typeManager;
 
         /// <summary>
-        /// Only used for deserializing the settings. Needs to use the "ResetReferences" method of
-        /// the settings afterward!
+        /// needed for deserializing the settings.
         /// </summary>
         public MetadataObjects()
         { }
 
-        public MetadataObjects(Settings settings, FieldType? type = null)
+        public MetadataObjects(FieldType? type = null)
         {
-            Settings = settings;
-
             if (type?.GetTypeManager() is IObjectType objectType)
             {
                 _typeManager = objectType;
@@ -35,11 +32,11 @@ namespace MetadataUtilities.Models
         }
 
         [DontSerialize]
-        public Settings Settings { get; set; }
+        public Settings Settings => ControlCenter.Instance.Settings;
 
         public void AddItems(FieldType type)
         {
-            var items = MetadataFunctions.GetItemsFromAddDialog(type, Settings);
+            var items = MetadataFunctions.GetItemsFromAddDialog(type);
 
             if (items.Count == 0)
             {
@@ -58,7 +55,7 @@ namespace MetadataUtilities.Models
 
             foreach (var item in items.Where(item => this.All(x => x.TypeAndName != item.TypeAndName)))
             {
-                Add(new MetadataObject(Settings, item.Type, item.Name));
+                Add(new MetadataObject(item.Type, item.Name));
             }
 
             this.Sort(x => x.TypeAndName);
@@ -66,7 +63,7 @@ namespace MetadataUtilities.Models
 
         public MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
         {
-            var newItem = MetadataFunctions.AddNewItem(Settings, type, prefix, enableTypeSelection, addToDb);
+            var newItem = MetadataFunctions.AddNewItem(type, prefix, enableTypeSelection, addToDb);
 
             if (this.Any(x => x.TypeAndName == newItem.TypeAndName))
             {
@@ -119,7 +116,7 @@ namespace MetadataUtilities.Models
                             if (type.Type.GetTypeManager() is IObjectType objectType)
                             {
                                 temporaryList.AddMissing(objectType.LoadGameMetadata(game).Select(x =>
-                                    new MetadataObject(Settings, type.Type, x.Name)
+                                    new MetadataObject(type.Type, x.Name)
                                     {
                                         Id = x.Id
                                     }));
@@ -181,7 +178,7 @@ namespace MetadataUtilities.Models
                 {
                     foreach (var typeManager in types)
                     {
-                        temporaryList.AddRange(typeManager.LoadAllMetadata().Select(x => new MetadataObject(Settings, typeManager.Type, x.Name)
+                        temporaryList.AddRange(typeManager.LoadAllMetadata().Select(x => new MetadataObject(typeManager.Type, x.Name)
                         {
                             Id = x.Id
                         }));

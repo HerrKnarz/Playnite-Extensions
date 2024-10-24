@@ -12,10 +12,10 @@ namespace MetadataUtilities.Controls
     /// </summary>
     public partial class PrefixItemControl
     {
-        public PrefixItemControl(MetadataUtilities plugin, FieldType type)
+        public PrefixItemControl(FieldType type)
         {
             InitializeComponent();
-            DataContext = new PrefixItemControlViewModel(plugin, type);
+            DataContext = new PrefixItemControlViewModel(type);
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)

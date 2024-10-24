@@ -4,7 +4,7 @@ namespace MetadataUtilities.Models
 {
     public class QuickAddObject : MetadataObject
     {
-        public QuickAddObject(Settings settings, FieldType type, string name = default) : base(settings, type, name)
+        public QuickAddObject(FieldType type, string name = default) : base(type, name)
         {
         }
 

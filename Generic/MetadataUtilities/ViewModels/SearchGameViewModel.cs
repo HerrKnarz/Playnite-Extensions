@@ -15,16 +15,15 @@ namespace MetadataUtilities.ViewModels
     public class SearchGameViewModel : ObservableObject, IEditableObject
     {
         private readonly List<MetadataObject> _metadataObjects;
+        private readonly Settings _settings = ControlCenter.Instance.Settings;
         private FilterPreset _currentPreset;
         private ObservableCollection<FilterPreset> _filterPresets;
         private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
         private CollectionViewSource _gamesViewSource;
-        private MetadataUtilities _plugin;
         private string _searchTerm = string.Empty;
 
-        public SearchGameViewModel(MetadataUtilities plugin, List<MetadataObject> metadataObjects)
+        public SearchGameViewModel(List<MetadataObject> metadataObjects)
         {
-            Plugin = plugin;
             _metadataObjects = metadataObjects;
 
             _filterPresets = API.Instance.Database.FilterPresets.OrderBy(x => x.Name).ToObservable();
@@ -72,7 +71,7 @@ namespace MetadataUtilities.ViewModels
                     gamesAffected.AddMissing(game);
                 }
 
-                MetadataFunctions.UpdateGames(gamesAffected, Plugin.Settings.Settings);
+                MetadataFunctions.UpdateGames(gamesAffected);
             }
             finally
             {
@@ -82,9 +81,9 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
                 {
-                    Plugin.Settings.Settings.GameSearchWindowHeight = Convert.ToInt32(win.Height);
-                    Plugin.Settings.Settings.GameSearchWindowWidth = Convert.ToInt32(win.Width);
-                    Plugin.SavePluginSettings(Plugin.Settings.Settings);
+                    _settings.GameSearchWindowHeight = Convert.ToInt32(win.Height);
+                    _settings.GameSearchWindowWidth = Convert.ToInt32(win.Width);
+                    ControlCenter.Instance.SavePluginSettings();
 
                     win.DialogResult = true;
                     win.Close();
@@ -106,19 +105,19 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _filterPresets, value);
         }
 
-        public Visibility GameGridCompletionStatusVisibility => _plugin.Settings.Settings.GameGridShowCompletionStatus
+        public Visibility GameGridCompletionStatusVisibility => _settings.GameGridShowCompletionStatus
             ? Visibility.Visible
             : Visibility.Collapsed;
 
-        public Visibility GameGridHiddenVisibility => _plugin.Settings.Settings.GameGridShowHidden
+        public Visibility GameGridHiddenVisibility => _settings.GameGridShowHidden
             ? Visibility.Visible
             : Visibility.Collapsed;
 
-        public Visibility GameGridPlatformVisibility => _plugin.Settings.Settings.GameGridShowPlatform
+        public Visibility GameGridPlatformVisibility => _settings.GameGridShowPlatform
             ? Visibility.Visible
             : Visibility.Collapsed;
 
-        public Visibility GameGridReleaseVisibility => _plugin.Settings.Settings.GameGridShowReleaseYear
+        public Visibility GameGridReleaseVisibility => _settings.GameGridShowReleaseYear
             ? Visibility.Visible
             : Visibility.Collapsed;
 
@@ -132,12 +131,6 @@ namespace MetadataUtilities.ViewModels
         {
             get => _gamesViewSource;
             set => SetValue(ref _gamesViewSource, value);
-        }
-
-        public MetadataUtilities Plugin
-        {
-            get => _plugin;
-            set => SetValue(ref _plugin, value);
         }
 
         public string SearchTerm

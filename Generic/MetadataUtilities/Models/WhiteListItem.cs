@@ -4,7 +4,7 @@ namespace MetadataUtilities.Models
 {
     public class WhiteListItem : MetadataObject
     {
-        public WhiteListItem(Settings settings, FieldType type, string name = default) : base(settings, type, name) { }
+        public WhiteListItem(FieldType type, string name = default) : base(type, name) { }
 
         public bool HideInDetails { get; set; }
 

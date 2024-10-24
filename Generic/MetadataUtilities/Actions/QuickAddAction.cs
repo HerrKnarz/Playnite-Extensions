@@ -12,7 +12,7 @@ namespace MetadataUtilities.Actions
         private ActionModifierType _action = ActionModifierType.Add;
         private FieldType _type = FieldType.Category;
 
-        private QuickAddAction(Settings settings) : base(settings)
+        private QuickAddAction()
         {
         }
 
@@ -20,7 +20,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => $"LOCMetadataUtilitiesDialogQuickAddSuccess{_action}";
 
-        public static QuickAddAction Instance(Settings settings) => _instance ?? (_instance = new QuickAddAction(settings));
+        public static QuickAddAction Instance() => _instance ?? (_instance = new QuickAddAction());
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {

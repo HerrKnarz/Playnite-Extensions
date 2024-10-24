@@ -18,12 +18,10 @@ namespace MetadataUtilities.ViewModels
     public class ConditionalActionEditorViewModel : ObservableObject
     {
         private readonly List<IMetadataFieldType> _fieldTypes = FieldTypeHelper.GetAllTypes();
-        private readonly Settings _settings;
         private ConditionalAction _conditionalAction;
 
-        public ConditionalActionEditorViewModel(Settings settings, ConditionalAction conditionalAction)
+        public ConditionalActionEditorViewModel(ConditionalAction conditionalAction)
         {
-            _settings = settings;
             _conditionalAction = conditionalAction;
 
             ContextMenuActionsAdd.AddMissing(_fieldTypes
@@ -230,25 +228,25 @@ namespace MetadataUtilities.ViewModels
                 }
             }
 
-            _settings.ConditionActionWindowHeight = Convert.ToInt32(win.Height);
-            _settings.ConditionActionWindowWidth = Convert.ToInt32(win.Width);
+            ControlCenter.Instance.Settings.ConditionActionWindowHeight = Convert.ToInt32(win.Height);
+            ControlCenter.Instance.Settings.ConditionActionWindowWidth = Convert.ToInt32(win.Width);
 
             win.DialogResult = true;
             win.Close();
         });
 
-        public static Window GetWindow(Settings settings, ConditionalAction conditionalAction)
+        public static Window GetWindow(ConditionalAction conditionalAction)
         {
             try
             {
                 var viewModel =
-                    new ConditionalActionEditorViewModel(settings, conditionalAction);
+                    new ConditionalActionEditorViewModel(conditionalAction);
 
                 var conditionalActionEditorView = new ConditionalActionEditorView();
 
                 var window = WindowHelper.CreateSizedWindow(
                     ResourceProvider.GetString("LOCMetadataUtilitiesDialogConditionalActionEditor"),
-                    settings.ConditionActionWindowWidth, settings.ConditionActionWindowHeight);
+                    ControlCenter.Instance.Settings.ConditionActionWindowWidth, ControlCenter.Instance.Settings.ConditionActionWindowHeight);
 
                 window.Content = conditionalActionEditorView;
                 window.DataContext = viewModel;
@@ -269,7 +267,7 @@ namespace MetadataUtilities.ViewModels
             {
                 if (!ConditionalAction.Actions.Any(x => x.ActionType == actionType && x.Type == fieldType))
                 {
-                    ConditionalAction.Actions.Add(new Action(_settings, fieldType)
+                    ConditionalAction.Actions.Add(new Action(fieldType)
                     {
                         ActionType = actionType
                     });
@@ -281,7 +279,7 @@ namespace MetadataUtilities.ViewModels
             switch (fieldType.GetTypeManager().ValueType)
             {
                 case ItemValueType.ItemList:
-                    var items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
+                    var items = MetadataFunctions.GetItemsFromAddDialog(fieldType);
 
                     if (items.Count == 0)
                     {
@@ -292,7 +290,7 @@ namespace MetadataUtilities.ViewModels
                                  ConditionalAction.Actions.All(x =>
                                      x.TypeAndName != item.TypeAndName || x.ActionType != actionType)))
                     {
-                        ConditionalAction.Actions.Add(new Action(_settings, item.Type, item.Name)
+                        ConditionalAction.Actions.Add(new Action(item.Type, item.Name)
                         {
                             ActionType = actionType
                         });
@@ -305,7 +303,7 @@ namespace MetadataUtilities.ViewModels
                             x => x.ActionType == actionType &&
                                  x.Type == fieldType))
                     {
-                        ConditionalAction.Actions.Add(new Action(_settings, fieldType)
+                        ConditionalAction.Actions.Add(new Action(fieldType)
                         {
                             ActionType = actionType
                         });
@@ -325,7 +323,7 @@ namespace MetadataUtilities.ViewModels
                             x => x.ActionType == actionType &&
                                  x.Type == fieldType && x.IntValue == intValue))
                     {
-                        ConditionalAction.Actions.Add(new Action(_settings, fieldType)
+                        ConditionalAction.Actions.Add(new Action(fieldType)
                         {
                             IntValue = intValue,
                             ActionType = actionType
@@ -346,7 +344,7 @@ namespace MetadataUtilities.ViewModels
                             x => x.ActionType == actionType &&
                                  x.Type == fieldType && x.DateValue == dateValue))
                     {
-                        ConditionalAction.Actions.Add(new Action(_settings, fieldType)
+                        ConditionalAction.Actions.Add(new Action(fieldType)
                         {
                             DateValue = dateValue,
                             ActionType = actionType
@@ -375,7 +373,7 @@ namespace MetadataUtilities.ViewModels
                 {
                     if (!ConditionalAction.Conditions.Any(x => x.Comparator == comparatorType && x.Type == fieldType))
                     {
-                        ConditionalAction.Conditions.Add(new Condition(_settings, fieldType)
+                        ConditionalAction.Conditions.Add(new Condition(fieldType)
                         {
                             Comparator = comparatorType
                         });
@@ -433,7 +431,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            var items = MetadataFunctions.GetItemsFromAddDialog(fieldType, _settings);
+            var items = MetadataFunctions.GetItemsFromAddDialog(fieldType);
 
             if (items.Count == 0)
             {
@@ -444,7 +442,7 @@ namespace MetadataUtilities.ViewModels
                          ConditionalAction.Conditions.All(x =>
                              x.TypeAndName != item.TypeAndName || x.Comparator != comparatorType)))
             {
-                ConditionalAction.Conditions.Add(new Condition(_settings, item.Type, item.Name)
+                ConditionalAction.Conditions.Add(new Condition(item.Type, item.Name)
                 {
                     Comparator = comparatorType
                 });
@@ -466,7 +464,7 @@ namespace MetadataUtilities.ViewModels
                     x => x.Comparator == comparatorType &&
                          x.Type == fieldType && x.DateValue == dateValue))
             {
-                ConditionalAction.Conditions.Add(new Condition(_settings, fieldType)
+                ConditionalAction.Conditions.Add(new Condition(fieldType)
                 {
                     DateValue = dateValue,
                     Comparator = comparatorType
@@ -487,7 +485,7 @@ namespace MetadataUtilities.ViewModels
                     x => x.Comparator == comparatorType &&
                          x.Type == fieldType && x.IntValue == intValue))
             {
-                ConditionalAction.Conditions.Add(new Condition(_settings, fieldType)
+                ConditionalAction.Conditions.Add(new Condition(fieldType)
                 {
                     IntValue = intValue,
                     Comparator = comparatorType
@@ -510,7 +508,7 @@ namespace MetadataUtilities.ViewModels
                     x => x.Comparator == comparatorType &&
                          x.Type == fieldType && x.StringValue == dialogResult.SelectedString))
             {
-                ConditionalAction.Conditions.Add(new Condition(_settings, fieldType)
+                ConditionalAction.Conditions.Add(new Condition(fieldType)
                 {
                     StringValue = dialogResult.SelectedString,
                     Comparator = comparatorType

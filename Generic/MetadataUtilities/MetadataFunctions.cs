@@ -12,20 +12,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
-using MergeAction = MetadataUtilities.Actions.MergeAction;
 
 namespace MetadataUtilities
 {
     public static class MetadataFunctions
     {
-        public static MetadataObject AddNewItem(Settings settings, FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
+        public static MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
         {
-            var newItem = new MetadataObject(settings, type)
+            var newItem = new MetadataObject(type)
             {
                 Prefix = prefix
             };
 
-            var window = AddNewObjectViewModel.GetWindow(settings, newItem, enableTypeSelection);
+            var window = AddNewObjectViewModel.GetWindow(newItem, enableTypeSelection);
 
             if (window == null)
             {
@@ -45,13 +44,13 @@ namespace MetadataUtilities
             return newItem;
         }
 
-        public static void DoForAll(MetadataUtilities plugin, List<MyGame> games, IBaseAction action,
+        public static void DoForAll(List<MyGame> games, IBaseAction action,
             bool showDialog = false, ActionModifierType actionModifier = ActionModifierType.None, object item = null)
         {
-            plugin.IsUpdating = true;
+            ControlCenter.Instance.IsUpdating = true;
             var gamesAffected = 0;
 
-            if (plugin.Settings.Settings.WriteDebugLog)
+            if (ControlCenter.Instance.Settings.WriteDebugLog)
             {
                 Log.Debug($"===> Started {action.GetType()} for {games.Count} games. =======================");
             }
@@ -72,7 +71,7 @@ namespace MetadataUtilities
                 // show a progress bar.
                 else if (games.Count > 1)
                 {
-                    using (plugin.PlayniteApi.Database.BufferedUpdate())
+                    using (API.Instance.Database.BufferedUpdate())
                     {
                         if (!action.Prepare(actionModifier, item))
                         {
@@ -87,7 +86,7 @@ namespace MetadataUtilities
                             IsIndeterminate = false
                         };
 
-                        plugin.PlayniteApi.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                        API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
                         {
                             try
                             {
@@ -127,26 +126,26 @@ namespace MetadataUtilities
                     }
 
                     Cursor.Current = Cursors.Default;
-                    plugin.PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(action.ResultMessage), gamesAffected));
+                    API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(action.ResultMessage), gamesAffected));
                 }
             }
             finally
             {
-                if (plugin.Settings.Settings.WriteDebugLog)
+                if (ControlCenter.Instance.Settings.WriteDebugLog)
                 {
                     Log.Debug($"===> Finished {action.GetType()} with {gamesAffected} games affected. =======================");
                 }
 
-                plugin.IsUpdating = false;
+                ControlCenter.Instance.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
         }
 
-        public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, Settings settings, string prefix = default, bool ignoreEmptyPrefix = true)
+        public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, string prefix = default, bool ignoreEmptyPrefix = true)
         {
             var label = type.GetTypeManager().LabelPlural;
 
-            var items = new MetadataObjects(settings, type);
+            var items = new MetadataObjects(type);
 
             items.LoadMetadata(false);
 
@@ -166,9 +165,9 @@ namespace MetadataUtilities
                 : new List<MetadataObject>();
         }
 
-        public static void MergeItems(MetadataUtilities plugin, MergeRule rule, bool showDialog = true)
+        public static void MergeItems(MergeRule rule, bool showDialog = true)
         {
-            plugin.IsUpdating = true;
+            ControlCenter.Instance.IsUpdating = true;
             Cursor.Current = Cursors.WaitCursor;
             var gamesAffected = new List<Guid>();
             try
@@ -198,7 +197,7 @@ namespace MetadataUtilities
             }
             finally
             {
-                plugin.IsUpdating = false;
+                ControlCenter.Instance.IsUpdating = false;
                 Cursor.Current = Cursors.Default;
             }
 
@@ -211,7 +210,7 @@ namespace MetadataUtilities
             API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergedMetadataMessage"), gamesAffected.Distinct().Count()));
         }
 
-        public static List<MetadataObject> RemoveUnusedMetadata(Settings settings, bool autoMode = false)
+        public static List<MetadataObject> RemoveUnusedMetadata(bool autoMode = false)
         {
             var temporaryList = new List<MetadataObject>();
 
@@ -221,7 +220,7 @@ namespace MetadataUtilities
                 return temporaryList;
             }
 
-            var types = settings.TypeConfigs.Where(x => x.RemoveUnusedItems).ToList();
+            var types = ControlCenter.Instance.Settings.TypeConfigs.Where(x => x.RemoveUnusedItems).ToList();
 
             var globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
@@ -241,17 +240,17 @@ namespace MetadataUtilities
                         {
                             temporaryList.AddRange(objectType.LoadUnusedMetadata(type.HiddenAsUnused)
                                 .Select(x
-                                    => new MetadataObject(settings, type.Type, x.Name)
+                                    => new MetadataObject(type.Type, x.Name)
                                     {
                                         Id = x.Id
                                     }));
                         }
                     }
 
-                    if (temporaryList.Count > 0 && (settings.UnusedItemsWhiteList?.Count ?? 0) > 0)
+                    if (temporaryList.Count > 0 && (ControlCenter.Instance.Settings.UnusedItemsWhiteList?.Count ?? 0) > 0)
                     {
                         temporaryList = temporaryList.Where(x =>
-                            settings.UnusedItemsWhiteList.All(y => y.TypeAndName != x.TypeAndName)).ToList();
+                            ControlCenter.Instance.Settings.UnusedItemsWhiteList.All(y => y.TypeAndName != x.TypeAndName)).ToList();
                     }
 
                     foreach (var item in temporaryList)
@@ -292,7 +291,7 @@ namespace MetadataUtilities
             return temporaryList;
         }
 
-        public static bool RenameObject(MetadataUtilities plugin, IMetadataFieldType type, string oldName, string newName)
+        public static bool RenameObject(IMetadataFieldType type, string oldName, string newName)
         {
             var mustSave = false;
 
@@ -301,15 +300,15 @@ namespace MetadataUtilities
                 return true;
             }
 
-            if (plugin.Settings.Settings.RenameMergeRules && FieldTypeHelper.ItemListFieldValues().ContainsKey(type.Type))
+            if (ControlCenter.Instance.Settings.RenameMergeRules && FieldTypeHelper.ItemListFieldValues().ContainsKey(type.Type))
             {
-                mustSave = plugin.Settings.Settings.MergeRules.FindAndRenameRule(type.Type, oldName,
+                mustSave = ControlCenter.Instance.Settings.MergeRules.FindAndRenameRule(type.Type, oldName,
                     newName);
             }
 
-            if (plugin.Settings.Settings.RenameConditionalActions)
+            if (ControlCenter.Instance.Settings.RenameConditionalActions)
             {
-                foreach (var condAction in plugin.Settings.Settings.ConditionalActions)
+                foreach (var condAction in ControlCenter.Instance.Settings.ConditionalActions)
                 {
                     foreach (var item in condAction.Conditions)
                     {
@@ -335,9 +334,9 @@ namespace MetadataUtilities
                 }
             }
 
-            if (plugin.Settings.Settings.RenameQuickAdd && type.ValueType == ItemValueType.ItemList)
+            if (ControlCenter.Instance.Settings.RenameQuickAdd && type.ValueType == ItemValueType.ItemList)
             {
-                foreach (var item in plugin.Settings.Settings.QuickAddObjects)
+                foreach (var item in ControlCenter.Instance.Settings.QuickAddObjects)
                 {
                     if (item.Type != type.Type || item.Name != oldName)
                     {
@@ -349,9 +348,9 @@ namespace MetadataUtilities
                 }
             }
 
-            if (plugin.Settings.Settings.RenameWhiteList && type.ValueType == ItemValueType.ItemList)
+            if (ControlCenter.Instance.Settings.RenameWhiteList && type.ValueType == ItemValueType.ItemList)
             {
-                foreach (var item in plugin.Settings.Settings.UnusedItemsWhiteList)
+                foreach (var item in ControlCenter.Instance.Settings.UnusedItemsWhiteList)
                 {
                     if (item.Type != type.Type || item.Name != oldName)
                     {
@@ -365,13 +364,13 @@ namespace MetadataUtilities
 
             if (mustSave)
             {
-                plugin.SavePluginSettings(plugin.Settings.Settings);
+                ControlCenter.Instance.SavePluginSettings();
             }
 
             return true;
         }
 
-        public static void UpdateGames<T>(List<T> games, Settings settings)
+        public static void UpdateGames<T>(List<T> games)
         {
             if (games == null || games.Count == 0)
             {
@@ -396,7 +395,7 @@ namespace MetadataUtilities
                 }
             }
 
-            if (MergeAction.Instance(settings).Settings?.WriteDebugLog ?? false)
+            if (ControlCenter.Instance.Settings?.WriteDebugLog ?? false)
             {
                 Log.Debug($"Updating {gamesToUpdate.Count} games:\n{string.Join("\n", gamesToUpdate.Select(g => g.Name))}");
             }

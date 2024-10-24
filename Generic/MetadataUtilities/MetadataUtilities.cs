@@ -34,13 +34,13 @@ namespace MetadataUtilities
 
         public MetadataUtilities(IPlayniteAPI api) : base(api)
         {
+            ControlCenter.Instance = new ControlCenter(this);
+
             Settings = new SettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
             };
-
-            IsUpdating = false;
 
             foreach (var type in _fieldTypes)
             {
@@ -73,8 +73,6 @@ namespace MetadataUtilities
 
         public override Guid Id { get; } = Guid.Parse("485ab5f0-bfb1-4c17-93cc-20d8338673be");
 
-        internal bool IsUpdating { get; set; }
-
         public List<PrefixItemControl> PrefixItemControls { get; set; } = new List<PrefixItemControl>();
 
         public SettingsViewModel Settings { get; }
@@ -83,10 +81,10 @@ namespace MetadataUtilities
         {
             if (Settings.Settings.WriteDebugLog)
             {
-                Log.Debug($"IsUpdating: {IsUpdating}");
+                Log.Debug($"IsUpdating: {ControlCenter.Instance.IsUpdating}");
             }
 
-            if (IsUpdating)
+            if (ControlCenter.Instance.IsUpdating)
             {
                 return;
             }
@@ -123,7 +121,7 @@ namespace MetadataUtilities
                 ExecuteRemoveUnwanted = games.Contains(x.NewData.Id)
             }).ToList();
 
-            MetadataFunctions.DoForAll(this, myGames, AfterMetadataUpdateAction.Instance(Settings.Settings), false, ActionModifierType.IsCombi);
+            MetadataFunctions.DoForAll(myGames, AfterGameUpdateAction.Instance(), false, ActionModifierType.IsCombi);
 
             Settings.Settings.LastAutoConditionCheck = DateTime.Now;
 
@@ -152,7 +150,7 @@ namespace MetadataUtilities
                 Description = "",
                 MenuSection = ResourceProvider.GetString("LOCUserScore"),
                 Action = a =>
-                    MetadataFunctions.DoForAll(this, myGames, SetUserScoreAction.Instance(Settings.Settings), true, ActionModifierType.None, 0)
+                    MetadataFunctions.DoForAll(myGames, SetUserScoreAction.Instance(), true, ActionModifierType.None, 0)
             };
             menuItems.Add(item);
 
@@ -164,7 +162,7 @@ namespace MetadataUtilities
                     Description = new string('\u2605', i),
                     MenuSection = ResourceProvider.GetString("LOCUserScore"),
                     Action = a =>
-                        MetadataFunctions.DoForAll(this, myGames, SetUserScoreAction.Instance(Settings.Settings), true, ActionModifierType.None, rating)
+                        MetadataFunctions.DoForAll(myGames, SetUserScoreAction.Instance(), true, ActionModifierType.None, rating)
                 };
                 menuItems.Add(menuItem);
             }
@@ -176,21 +174,21 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
                     MenuSection = menuSection,
                     Icon = "muEditorIcon",
-                    Action = a => MetadataEditorViewModel.ShowEditor(this, games)
+                    Action = a => MetadataEditorViewModel.ShowEditor(games)
                 },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnwanted"),
                     MenuSection = menuSection,
                     Icon = "muRemoveIcon",
-                    Action = a => MetadataFunctions.DoForAll(this, myGames, RemoveUnwantedAction.Instance(Settings.Settings), true)
+                    Action = a => MetadataFunctions.DoForAll(myGames, RemoveUnwantedAction.Instance(), true)
                 },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuMergeMetadata"),
                     MenuSection = menuSection,
                     Icon = "muMergeIcon",
-                    Action = a => MetadataFunctions.DoForAll(this, myGames, MergeAction.Instance(Settings.Settings), true)
+                    Action = a => MetadataFunctions.DoForAll(myGames, MergeAction.Instance(), true)
                 }
             });
 
@@ -198,7 +196,7 @@ namespace MetadataUtilities
             {
                 Description = rule.TypeAndName,
                 MenuSection = $"{menuSection}|{mergeSection}",
-                Action = a => MetadataFunctions.DoForAll(this, myGames, MergeAction.Instance(Settings.Settings), true,
+                Action = a => MetadataFunctions.DoForAll(myGames, MergeAction.Instance(), true,
                     ActionModifierType.None, rule)
             }));
 
@@ -206,7 +204,7 @@ namespace MetadataUtilities
             {
                 Description = action.Name,
                 MenuSection = $"{menuSection}|{conditionalSection}",
-                Action = a => MetadataFunctions.DoForAll(this, myGames, ExecuteConditionalActionsAction.Instance(Settings.Settings), true,
+                Action = a => MetadataFunctions.DoForAll(myGames, ExecuteConditionalActionsAction.Instance(), true,
                     ActionModifierType.IsManual, action)
             }));
 
@@ -252,7 +250,7 @@ namespace MetadataUtilities
                 return null;
             }
 
-            var newControl = new PrefixItemControl(this, type);
+            var newControl = new PrefixItemControl(type);
 
             PrefixItemControls.Add(newControl);
 
@@ -271,7 +269,7 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuEditor"),
                     MenuSection = $"@{menuSection}",
                     Icon = "muEditorIcon",
-                    Action = a => MetadataEditorViewModel.ShowEditor(this)
+                    Action = a => MetadataEditorViewModel.ShowEditor()
                 },
                 new MainMenuItem
                 {
@@ -341,18 +339,20 @@ namespace MetadataUtilities
         public void RemoveUnused()
         {
             Cursor.Current = Cursors.WaitCursor;
-            IsUpdating = true;
+            ControlCenter.Instance.IsUpdating = true;
 
             try
             {
-                MetadataFunctions.RemoveUnusedMetadata(Settings.Settings, true);
+                MetadataFunctions.RemoveUnusedMetadata(true);
             }
             finally
             {
                 Cursor.Current = Cursors.Default;
-                IsUpdating = false;
+                ControlCenter.Instance.IsUpdating = false;
             }
         }
+
+        private static void ShowEditor() => MetadataEditorViewModel.ShowEditor();
 
         private IEnumerable<GameMenuItem> CreateMenuItems(string baseMenu, List<Game> games, IReadOnlyCollection<QuickAddObject> dbObjects, ActionModifierType action = ActionModifierType.Add)
         {
@@ -389,16 +389,14 @@ namespace MetadataUtilities
                     Icon = checkedCount == games.Count ? "muAllCheckedIcon" : checkedCount > 0 ? "muSomeCheckedIcon" : "",
                     Description = dbObject.Name,
                     MenuSection = baseMenu + customMenu,
-                    Action = a => MetadataFunctions.DoForAll(this, myGames, QuickAddAction.Instance(Settings.Settings), true, action, dbObject)
+                    Action = a => MetadataFunctions.DoForAll(myGames, QuickAddAction.Instance(), true, action, dbObject)
                 });
             }
 
             return menuItems;
         }
 
-        private bool OnRenameObject(object sender, string oldName, string newName) => MetadataFunctions.RenameObject(this, (IMetadataFieldType)sender, oldName, newName);
-
-        private void ShowEditor() => MetadataEditorViewModel.ShowEditor(this);
+        private bool OnRenameObject(object sender, string oldName, string newName) => MetadataFunctions.RenameObject((IMetadataFieldType)sender, oldName, newName);
 
         private void ShowSettings() => OpenSettingsView();
     }

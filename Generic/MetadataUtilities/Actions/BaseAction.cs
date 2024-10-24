@@ -9,9 +9,7 @@ namespace MetadataUtilities.Actions
     {
         internal readonly List<Game> _gamesAffected = new List<Game>();
 
-        protected BaseAction(Settings settings) => Settings = settings;
-
-        public Settings Settings { get; set; }
+        public Settings Settings => ControlCenter.Instance.Settings;
 
         public virtual bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null,
             bool isBulkAction = true) => isBulkAction || Prepare(actionModifier, item, false);
@@ -21,7 +19,7 @@ namespace MetadataUtilities.Actions
         {
             if (actionModifier != ActionModifierType.IsCombi)
             {
-                MetadataFunctions.UpdateGames(_gamesAffected, Settings);
+                MetadataFunctions.UpdateGames(_gamesAffected);
             }
 
             _gamesAffected.Clear();

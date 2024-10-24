@@ -12,11 +12,10 @@ namespace MetadataUtilities.Actions
     internal class RemoveUnwantedAction : BaseAction
     {
         private static RemoveUnwantedAction _instance;
-        private static readonly object _mutex = new object();
 
         private readonly Dictionary<FieldType, ItemList> _types = new Dictionary<FieldType, ItemList>();
 
-        private RemoveUnwantedAction(Settings settings) : base(settings)
+        private RemoveUnwantedAction()
         {
             foreach (var type in FieldTypeHelper.GetItemListTypes())
             {
@@ -32,23 +31,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogRemovedUnwantedMessage";
 
-        public static RemoveUnwantedAction Instance(Settings settings)
-        {
-            if (_instance != null)
-            {
-                return _instance;
-            }
-
-            lock (_mutex)
-            {
-                if (_instance == null)
-                {
-                    _instance = new RemoveUnwantedAction(settings);
-                }
-            }
-
-            return _instance;
-        }
+        public static RemoveUnwantedAction Instance() => _instance ?? (_instance = new RemoveUnwantedAction());
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
