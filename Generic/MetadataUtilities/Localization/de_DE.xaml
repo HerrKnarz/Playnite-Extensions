@@ -68,7 +68,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddToggle">{0} umschalten</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Nicht verwendete Metadaten entfernen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Unerwünschte Metadaten entfernen</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">Reset new games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">Neue Spiele zurücksetzen</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Spiel ist neu</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Zusammenführungsregel-Editor</sys:String>
@@ -99,7 +99,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Hinzufügen-Button anzeigen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Löschen-Button anzeigen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editieren</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Execute only on new games before metadata download</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Nur bei neuen Spielen vor dem Download von Metadaten ausführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">In Details ausblenden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Im Editor ausblenden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Bedingungen ignorieren</sys:String>
@@ -108,7 +108,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Versteckte Spiele ignorieren, wenn nicht verwendete Metadaten entfernt werden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Zusammenführungsregeln beim Metadaten-Update automatisch ausführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Zusammenführungsregeln</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsOnNewGame">Only on new games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsOnNewGame">Nur bei neuen Spielen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Position</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Nicht verwendete Metadaten beim Start entfernen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Unerwünschte Elemente bei Metadatenaktualisierung entfernen</sys:String>
