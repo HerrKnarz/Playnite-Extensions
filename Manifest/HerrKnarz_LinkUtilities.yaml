@@ -1,5 +1,11 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 4.1.2
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-10-27
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-10-27/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_1_2.pext
+    Changelog:
+      - Changed PCGamingWiki to use the API when searching a game to avoid possible JavaScript errorsf ro some users.
   - Version: 4.1.1
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-10-11
