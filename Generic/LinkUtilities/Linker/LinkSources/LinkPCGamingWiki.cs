@@ -15,7 +15,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => $"{_websiteUrl}/wiki/";
         public override string BrowserSearchUrl => $"{_websiteUrl}/w/index.php?search=";
         public override string LinkName => "PCGamingWiki";
-        public override string SearchUrl => _websiteUrl + "/w/index.php?search={0}&fulltext=1";
+        public override string SearchUrl => _websiteUrl + "/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
@@ -66,6 +66,6 @@ namespace LinkUtilities.Linker.LinkSources
                 .EscapeDataString();
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
-            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName));
+            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromApi(SearchUrl, searchTerm, LinkName));
     }
 }
