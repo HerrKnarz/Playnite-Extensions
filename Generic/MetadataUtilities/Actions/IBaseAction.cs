@@ -1,4 +1,5 @@
-﻿using MetadataUtilities.Enums;
+﻿using System.Collections.Generic;
+using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 
 namespace MetadataUtilities.Actions
@@ -15,6 +16,9 @@ namespace MetadataUtilities.Actions
         /// number of affected games.
         /// </summary>
         string ResultMessage { get; }
+
+        void DoForAll(List<MyGame> games,
+            bool showDialog = false, ActionModifierType actionModifier = ActionModifierType.None, object item = null);
 
         /// <summary>
         /// Executes the action on a game.

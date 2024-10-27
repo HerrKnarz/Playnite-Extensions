@@ -498,7 +498,7 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                MetadataFunctions.UpdateGames(gamesAffected);
+                ControlCenter.UpdateGames(gamesAffected);
 
                 LoadRelatedGames();
 
@@ -601,7 +601,7 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                var removedItems = MetadataFunctions.RemoveUnusedMetadata();
+                var removedItems = ControlCenter.RemoveUnusedMetadata();
 
                 if (removedItems.Count == 0)
                 {
@@ -845,7 +845,7 @@ namespace MetadataUtilities.ViewModels
                         var gamesAffected = itemToDelete.ReplaceInDb(API.Instance.Database.Games.ToList(),
                             objectType.Type, newId);
 
-                        MetadataFunctions.UpdateGames(gamesAffected.ToList());
+                        ControlCenter.UpdateGames(gamesAffected.ToList());
 
                         // We now have the renamed company and the other type with the old name still. We need to remove the other
                         // and add three new ones: A renamed other type and a developer and publisher with the old name.
@@ -865,7 +865,7 @@ namespace MetadataUtilities.ViewModels
 
                         RefreshView();
 
-                        MetadataFunctions.RenameObject(otherType, newName, oldName);
+                        ControlCenter.RenameObject(otherType, newName, oldName);
                     }
 
                     return true;

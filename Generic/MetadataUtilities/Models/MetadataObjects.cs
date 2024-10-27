@@ -36,7 +36,7 @@ namespace MetadataUtilities.Models
 
         public void AddItems(FieldType type)
         {
-            var items = MetadataFunctions.GetItemsFromAddDialog(type);
+            var items = ControlCenter.GetItemsFromAddDialog(type);
 
             if (items.Count == 0)
             {
@@ -63,7 +63,7 @@ namespace MetadataUtilities.Models
 
         public MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
         {
-            var newItem = MetadataFunctions.AddNewItem(type, prefix, enableTypeSelection, addToDb);
+            var newItem = ControlCenter.AddNewItem(type, prefix, enableTypeSelection, addToDb);
 
             if (this.Any(x => x.TypeAndName == newItem.TypeAndName))
             {

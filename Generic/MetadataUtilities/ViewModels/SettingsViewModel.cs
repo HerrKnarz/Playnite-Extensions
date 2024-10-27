@@ -208,7 +208,7 @@ namespace MetadataUtilities.ViewModels
                 => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/quick-add/")));
 
         public RelayCommand<object> MergeItemsCommand
-                    => new RelayCommand<object>(rule => MetadataFunctions.MergeItems((MergeRule)rule), rule => rule != null);
+                    => new RelayCommand<object>(rule => ControlCenter.MergeItems((MergeRule)rule), rule => rule != null);
 
         public MergeRules MergeRules
         {
@@ -425,7 +425,7 @@ namespace MetadataUtilities.ViewModels
 
         public void AddNewWhiteListItem(FieldType type)
         {
-            var newItem = MetadataFunctions.AddNewItem(type);
+            var newItem = ControlCenter.AddNewItem(type);
 
             if (Settings.UnusedItemsWhiteList.Any(x => x.TypeAndName == newItem.TypeAndName))
             {
@@ -439,7 +439,7 @@ namespace MetadataUtilities.ViewModels
 
         public void AddQuickAddItems(FieldType type)
         {
-            var items = MetadataFunctions.GetItemsFromAddDialog(type);
+            var items = ControlCenter.GetItemsFromAddDialog(type);
 
             if (items.Count == 0)
             {
@@ -451,7 +451,7 @@ namespace MetadataUtilities.ViewModels
 
         public void AddWhiteListItems(FieldType type)
         {
-            var items = MetadataFunctions.GetItemsFromAddDialog(type);
+            var items = ControlCenter.GetItemsFromAddDialog(type);
 
             if (items.Count == 0)
             {

@@ -290,7 +290,7 @@ namespace MetadataUtilities.Models
             {
                 var gamesAffected = type.RemoveObjectFromGames(API.Instance.Database.Games.ToList(), Id);
 
-                MetadataFunctions.UpdateGames(gamesAffected.ToList());
+                ControlCenter.UpdateGames(gamesAffected.ToList());
             }
 
             if (!type.RemoveDbObject(Id))

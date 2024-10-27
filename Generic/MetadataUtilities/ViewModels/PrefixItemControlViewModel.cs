@@ -33,7 +33,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            var items = MetadataFunctions.GetItemsFromAddDialog(itemList.FieldType, itemList.Prefix, false);
+            var items = ControlCenter.GetItemsFromAddDialog(itemList.FieldType, itemList.Prefix, false);
 
             if (items.Count == 0)
             {
@@ -47,7 +47,7 @@ namespace MetadataUtilities.ViewModels
                 if (type.AddValueToGame(_game, items.Select(x => x.Id).ToList()))
                 {
                     refreshNeeded = true;
-                    MetadataFunctions.UpdateGames(new List<Game> { _game });
+                    ControlCenter.UpdateGames(new List<Game> { _game });
                 }
             }
 
@@ -109,7 +109,7 @@ namespace MetadataUtilities.ViewModels
             if (type.RemoveObjectFromGame(_game, metadataItem.Id))
             {
                 refreshNeeded = true;
-                MetadataFunctions.UpdateGames(new List<Game> { _game });
+                ControlCenter.UpdateGames(new List<Game> { _game });
             }
 
             if (refreshNeeded)

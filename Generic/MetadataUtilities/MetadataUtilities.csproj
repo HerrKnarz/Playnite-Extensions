@@ -240,7 +240,6 @@
     <Compile Include="Actions\SetUserScoreAction.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="MetadataFunctions.cs" />
     <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\Action.cs" />
     <Compile Include="Enums\ActionType.cs" />

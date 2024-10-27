@@ -48,7 +48,7 @@ namespace MetadataUtilities.ViewModels
                 ControlCenter.Instance.SavePluginSettings();
             }
 
-            MetadataFunctions.MergeItems(rule);
+            ControlCenter.MergeItems(rule);
 
             win.DialogResult = true;
             win.Close();

@@ -71,7 +71,7 @@ namespace MetadataUtilities.ViewModels
                     gamesAffected.AddMissing(game);
                 }
 
-                MetadataFunctions.UpdateGames(gamesAffected);
+                ControlCenter.UpdateGames(gamesAffected);
             }
             finally
             {

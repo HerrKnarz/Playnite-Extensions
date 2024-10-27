@@ -279,7 +279,7 @@ namespace MetadataUtilities.ViewModels
             switch (fieldType.GetTypeManager().ValueType)
             {
                 case ItemValueType.ItemList:
-                    var items = MetadataFunctions.GetItemsFromAddDialog(fieldType);
+                    var items = ControlCenter.GetItemsFromAddDialog(fieldType);
 
                     if (items.Count == 0)
                     {
@@ -431,7 +431,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            var items = MetadataFunctions.GetItemsFromAddDialog(fieldType);
+            var items = ControlCenter.GetItemsFromAddDialog(fieldType);
 
             if (items.Count == 0)
             {
