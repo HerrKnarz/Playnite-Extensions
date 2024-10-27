@@ -19,9 +19,9 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         Guid GetDbObjectId(string name);
 
-        List<DatabaseObject> LoadAllMetadata();
+        List<DatabaseObject> LoadAllMetadata(HashSet<Guid> itemsToIgnore);
 
-        List<DatabaseObject> LoadGameMetadata(Game game);
+        List<DatabaseObject> LoadGameMetadata(Game game, HashSet<Guid> itemsToIgnore = null);
 
         List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames);
 

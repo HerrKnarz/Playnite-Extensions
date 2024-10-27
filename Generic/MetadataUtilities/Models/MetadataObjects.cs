@@ -107,6 +107,9 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
+                    var itemsToIgnore = Settings.UnusedItemsWhiteList.Where(x => x.HideInEditor).Select(x => x.Id)
+                        .Distinct().ToHashSet();
+
                     var types = Settings.TypeConfigs.Where(x => x.Selected).ToList();
 
                     foreach (var game in games)
@@ -115,7 +118,7 @@ namespace MetadataUtilities.Models
                         {
                             if (type.Type.GetTypeManager() is IObjectType objectType)
                             {
-                                temporaryList.AddMissing(objectType.LoadGameMetadata(game).Select(x =>
+                                temporaryList.AddMissing(objectType.LoadGameMetadata(game, itemsToIgnore).Select(x =>
                                     new MetadataObject(type.Type, x.Name)
                                     {
                                         Id = x.Id
@@ -146,7 +149,7 @@ namespace MetadataUtilities.Models
 
             var ts = DateTime.Now;
 
-            var temporaryList = new List<MetadataObject>();
+            var temporaryList = new ConcurrentQueue<MetadataObject>();
 
             var types = new List<IObjectType>();
 
@@ -176,13 +179,19 @@ namespace MetadataUtilities.Models
             {
                 try
                 {
-                    foreach (var typeManager in types)
+                    var itemsToIgnore = Settings.UnusedItemsWhiteList.Where(x => x.HideInEditor).Select(x => x.Id)
+                        .Distinct().ToHashSet();
+
+                    var opts = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+
+                    Parallel.ForEach(types, opts, typeManager =>
                     {
-                        temporaryList.AddRange(typeManager.LoadAllMetadata().Select(x => new MetadataObject(typeManager.Type, x.Name)
-                        {
-                            Id = x.Id
-                        }));
-                    }
+                        typeManager.LoadAllMetadata(itemsToIgnore).ForEach(item => temporaryList.Enqueue(
+                            new MetadataObject(typeManager.Type, item.Name)
+                            {
+                                Id = item.Id
+                            }));
+                    });
 
                     if (showGameNumber)
                     {

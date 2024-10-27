@@ -68,9 +68,9 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract List<Game> GetGames(Guid id, bool ignoreHiddenGames = false);
 
-        public abstract List<DatabaseObject> LoadAllMetadata();
+        public abstract List<DatabaseObject> LoadAllMetadata(HashSet<Guid> itemsToIgnore);
 
-        public abstract List<DatabaseObject> LoadGameMetadata(Game game);
+        public abstract List<DatabaseObject> LoadGameMetadata(Game game, HashSet<Guid> itemsToIgnore = null);
 
         public abstract List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames);
 
@@ -111,8 +111,8 @@ namespace KNARZhelper.DatabaseObjectTypes
         internal Guid GetDbObjectId<T>(string name, IItemCollection<T> collection) where T : DatabaseObject =>
             collection?.FirstOrDefault(x => x.Name == name)?.Id ?? Guid.Empty;
 
-        internal List<DatabaseObject> LoadAllMetadata<T>(IItemCollection<T> collection) where T : DatabaseObject =>
-            collection.Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList();
+        internal List<DatabaseObject> LoadAllMetadata<T>(IItemCollection<T> collection, HashSet<Guid> itemsToIgnore) where T : DatabaseObject =>
+            collection.Where(x => !itemsToIgnore.Contains(x.Id)).Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList();
 
         internal bool NameExists<T>(string name, Guid id, IItemCollection<T> collection) where T : DatabaseObject =>
             collection?.Any(x => x.Name == name && x.Id != id) ?? false;

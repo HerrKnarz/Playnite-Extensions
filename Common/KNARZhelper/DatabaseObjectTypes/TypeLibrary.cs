@@ -59,11 +59,16 @@ namespace KNARZhelper.DatabaseObjectTypes
         public List<Game> GetGames(Guid id, bool ignoreHiddenGames = false) =>
             API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden) && (g.PluginId == id)).ToList();
 
-        public List<DatabaseObject> LoadAllMetadata() => _libraries;
+        public List<DatabaseObject> LoadAllMetadata(HashSet<Guid> itemsToIgnore) => _libraries.Where(x => !itemsToIgnore.Contains(x.Id)).ToList();
 
-        public List<DatabaseObject> LoadGameMetadata(Game game)
+        public List<DatabaseObject> LoadGameMetadata(Game game, HashSet<Guid> itemsToIgnore)
         {
-            var library = _libraries.FirstOrDefault(x => x.Id == game.PluginId);
+            DatabaseObject library = null;
+
+            if (!itemsToIgnore.Contains(game.PluginId))
+            {
+                library = _libraries.FirstOrDefault(x => x.Id == game.PluginId);
+            }
 
             return library == null
                 ? new List<DatabaseObject>()

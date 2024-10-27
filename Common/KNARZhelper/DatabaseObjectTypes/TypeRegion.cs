@@ -39,9 +39,9 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override Guid GetDbObjectId(string name) => GetDbObjectId(name, _collection);
 
-        public override List<DatabaseObject> LoadAllMetadata() => LoadAllMetadata(_collection);
+        public override List<DatabaseObject> LoadAllMetadata(HashSet<Guid> itemsToIgnore) => LoadAllMetadata(_collection, itemsToIgnore);
 
-        public override List<DatabaseObject> LoadGameMetadata(Game game) => LoadGameMetadata(game.Regions);
+        public override List<DatabaseObject> LoadGameMetadata(Game game, HashSet<Guid> itemsToIgnore = null) => LoadGameMetadata(game.Regions, itemsToIgnore);
 
         public override List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) => LoadUnusedMetadata(ignoreHiddenGames, _collection);
 

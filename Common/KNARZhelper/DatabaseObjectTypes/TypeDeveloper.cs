@@ -18,7 +18,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override FieldType Type => FieldType.Developer;
 
-        public override List<DatabaseObject> LoadGameMetadata(Game game) => LoadGameMetadata(game.Developers);
+        public override List<DatabaseObject> LoadGameMetadata(Game game, HashSet<Guid> itemsToIgnore = null) => LoadGameMetadata(game.Developers, itemsToIgnore);
 
         internal override List<Guid> GameGuids(Game game, bool writeable = false) =>
             writeable

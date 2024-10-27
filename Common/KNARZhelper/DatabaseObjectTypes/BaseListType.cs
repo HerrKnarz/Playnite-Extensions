@@ -89,8 +89,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         internal abstract List<Guid> GameGuids(Game game, bool writeable = false);
 
-        internal List<DatabaseObject> LoadGameMetadata<T>(List<T> items) where T : DatabaseObject =>
-            items?.Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList() ?? new List<DatabaseObject>();
+        internal List<DatabaseObject> LoadGameMetadata<T>(List<T> items, HashSet<Guid> itemsToIgnore) where T : DatabaseObject =>
+            items?.Where(x => !itemsToIgnore?.Contains(x.Id) ?? true).Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList() ?? new List<DatabaseObject>();
 
         internal List<DatabaseObject> LoadUnusedMetadata<T>(bool ignoreHiddenGames, IItemCollection<T> collection) where T : DatabaseObject =>
             collection.Where(x => !DbObjectInUse(x.Id, ignoreHiddenGames)).Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();

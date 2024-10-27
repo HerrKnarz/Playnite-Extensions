@@ -917,16 +917,6 @@ namespace MetadataUtilities.ViewModels
         {
             var ts = DateTime.Now;
 
-            objects.RemoveItems(objects.Where(x =>
-                _settings.UnusedItemsWhiteList.Any(y =>
-                    y.HideInEditor && y.TypeAndName == x.TypeAndName)).ToList());
-
-            if (_settings.WriteDebugLog)
-            {
-                Log.Debug($"=== MetadataEditorViewModel: PrepareMetadata: Removed whitelist ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
-                ts = DateTime.Now;
-            }
-
             CompleteMetadata = objects;
 
             if (_settings.WriteDebugLog)
