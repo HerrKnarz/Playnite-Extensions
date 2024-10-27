@@ -68,6 +68,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddToggle">Alternar {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Eliminar metadatos no usados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Eliminar metadatos no deseados</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">Reset new games</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Game is new</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Editor de reglas de fusión</sys:String>
@@ -98,6 +99,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Show add button</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Show delete button</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editar</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Execute only on new games before metadata download</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Hide in details</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Hide in editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
@@ -106,6 +108,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignorar juegos ocultos al eliminar metadatos no usados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Ejecutar automáticamente reglas de fusión al actualizar metadatos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Reglas de Fusión</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsOnNewGame">Only on new games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Position</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Eliminar metadatos no usados al iniciar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Eliminar elementos no deseados al actualizar metadatos</sys:String>
