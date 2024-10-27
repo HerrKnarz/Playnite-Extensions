@@ -49,17 +49,19 @@ namespace MetadataUtilities.Actions
                 result |= MergeAction.Instance().Execute(game, ActionModifierType.IsCombi, item, isBulkAction);
             }
 
-            var gameIsKnown = ControlCenter.Instance.KnownGames.Contains(game.Game.Id);
-            var beforeMetadataDownload = !gameIsKnown && !ControlCenter.Instance.NewGames.Contains(game.Game.Id);
+            var modifier = ActionModifierType.IsAfterMetadata;
 
-            if (beforeMetadataDownload)
+            if (!ControlCenter.Instance.KnownGames.Contains(game.Game.Id))
             {
-                ControlCenter.Instance.NewGames.Add(game.Game.Id);
+                if (ControlCenter.Instance.AddNewGame(game.Game.Id))
+                {
+                    modifier = ActionModifierType.IsBeforeMetadata;
+                }
             }
 
             if (game.ExecuteConditionalActions && _haveToExecActions)
             {
-                result |= ExecuteConditionalActionsAction.Instance().Execute(game, ActionModifierType.IsCombi, item, isBulkAction);
+                result |= ExecuteConditionalActionsAction.Instance().Execute(game, modifier, item, isBulkAction);
             }
 
             if (result)

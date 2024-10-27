@@ -230,6 +230,14 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsOnNewGame}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding ExecuteOnNewBeforeMetadata, UpdateSourceTrigger=PropertyChanged}"
+                                                  Margin="0,0,-15,0" HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCGameManualTitle}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>

@@ -43,12 +43,31 @@ namespace MetadataUtilities.ViewModels
             {
                 PrepareMetadata(objects);
 
+                var ts = DateTime.Now;
+
                 Prefixes.Add(string.Empty);
                 Prefixes.AddMissing(_settings.Prefixes);
 
+                if (_settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: Added prefixex ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+                }
+
                 CalculateItemCount();
 
+                if (_settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: calculated item count ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                    ts = DateTime.Now;
+                }
+
                 PrepareGamesViewSource();
+
+                if (_settings.WriteDebugLog)
+                {
+                    Log.Debug($"=== MetadataEditorViewModel: prepared games view source ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                }
 
                 PrepareMetadataViewSource();
             }
@@ -867,6 +886,11 @@ namespace MetadataUtilities.ViewModels
             {
                 filterType.PropertyChanged += (x, y) =>
                 {
+                    if (MetadataViewSource is null)
+                    {
+                        return;
+                    }
+
                     ((IEditableCollectionView)MetadataViewSource.View).CommitEdit();
                     UpdateGroupDisplay();
                     MetadataViewSource.View.Filter = Filter;
@@ -891,15 +915,34 @@ namespace MetadataUtilities.ViewModels
 
         private void PrepareMetadata(MetadataObjects objects)
         {
+            var ts = DateTime.Now;
+
             objects.RemoveItems(objects.Where(x =>
                 _settings.UnusedItemsWhiteList.Any(y =>
                     y.HideInEditor && y.TypeAndName == x.TypeAndName)).ToList());
 
+            if (_settings.WriteDebugLog)
+            {
+                Log.Debug($"=== MetadataEditorViewModel: PrepareMetadata: Removed whitelist ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+            }
+
             CompleteMetadata = objects;
+
+            if (_settings.WriteDebugLog)
+            {
+                Log.Debug($"=== MetadataEditorViewModel: PrepareMetadata: Set CompleteMetadata ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
+                ts = DateTime.Now;
+            }
 
             foreach (var item in CompleteMetadata)
             {
                 item.RenameObject += OnRenameObject;
+            }
+
+            if (_settings.WriteDebugLog)
+            {
+                Log.Debug($"=== MetadataEditorViewModel: PrepareMetadata: set OnRenameObject ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             }
         }
 
@@ -911,6 +954,8 @@ namespace MetadataUtilities.ViewModels
             {
                 Log.Debug($"=== MetadataEditorViewModel: Start MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
             }
+
+            PrepareFilterTypes();
 
             MetadataViewSource = new CollectionViewSource
             {
@@ -929,8 +974,6 @@ namespace MetadataUtilities.ViewModels
                     Log.Debug($"=== MetadataEditorViewModel: Sort set ({_completeMetadata.Count} rows, {(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                     ts = DateTime.Now;
                 }
-
-                PrepareFilterTypes();
             }
 
             if (_settings.WriteDebugLog)
@@ -938,6 +981,8 @@ namespace MetadataUtilities.ViewModels
                 Log.Debug($"=== MetadataEditorViewModel: Finished MetadataViewSource ({(DateTime.Now - ts).TotalMilliseconds} ms) ===");
                 ts = DateTime.Now;
             }
+
+            UpdateGroupDisplay();
 
             MetadataViewSource.View.Filter = Filter;
 

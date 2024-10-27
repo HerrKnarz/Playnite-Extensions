@@ -121,7 +121,7 @@
             </StackPanel>
         </Border>
 
-        <Grid DockPanel.Dock="Top" Margin="10,10, 10, 0">
+        <Grid DockPanel.Dock="Top" Margin="10,10, 10, 5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -132,7 +132,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Column="0" Grid.Row="0" Margin="0, 0, 10, 10">
+            <Grid Grid.Column="0" Grid.Row="0" Margin="0, 0, 5, 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -160,15 +160,20 @@
                 <TextBox Grid.Column="1" Grid.Row="2" Margin="0, 0, 0, 10"
                          Text="{Binding ConditionalAction.SortNo, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
-            <Grid Grid.Column="1" Grid.Row="0" Margin="10, 0, 0, 10">
+            <Grid Grid.Column="1" Grid.Row="0" Margin="5, 0, 0, 10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <CheckBox Grid.Row="0"  IsChecked="{Binding ConditionalAction.Enabled}" Margin="0, 0, 0, 10">
-                    <TextBlock Text="{DynamicResource LOCEnabledTitle}" TextWrapping="Wrap" />
-                </CheckBox>
+                <WrapPanel VerticalAlignment="Center">
+                    <CheckBox Grid.Row="0"  IsChecked="{Binding ConditionalAction.Enabled}" Margin="0, 0, 20, 10">
+                        <TextBlock Text="{DynamicResource LOCEnabledTitle}" TextWrapping="Wrap" />
+                    </CheckBox>
+                    <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding ConditionalAction.ExecuteOnNewBeforeMetadata}" Margin="0, 0, 0, 10">
+                        <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata}" TextWrapping="Wrap" />
+                    </CheckBox>
+                </WrapPanel>
                 <CheckBox Grid.Row="1" IsChecked="{Binding ConditionalAction.CanBeExecutedManually}" Margin="0, 0, 0, 10">
                     <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsCanBeExecutedManually}" TextWrapping="Wrap" />
                 </CheckBox>
@@ -178,7 +183,7 @@
             </Grid>
 
             <GroupBox Grid.Column="0" Grid.Row="1" Header="{DynamicResource LOCMetadataUtilitiesSettingsConditions}"
-                      Padding="10, 10, 10, 0" Margin="0,0,10,0">
+                      Padding="10, 10, 10, 0" Margin="0,0,5,0">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="0,10,0,0">
                         <Button Content="&#xec53;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}"
@@ -218,7 +223,7 @@
             </GroupBox>
 
             <GroupBox Grid.Column="1" Grid.Row="1" Header="{DynamicResource LOCActionsLabel}"
-                      Padding="10, 10, 10, 0" Margin="10,0,0,0">
+                      Padding="10, 10, 10, 0" Margin="5,0,0,0">
                 <DockPanel>
                     <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="0,10,0,0">
                         <Button Content="&#xec53;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}"

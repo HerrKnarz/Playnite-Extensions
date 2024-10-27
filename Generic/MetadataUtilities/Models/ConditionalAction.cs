@@ -14,6 +14,7 @@ namespace MetadataUtilities.Models
         private bool _canBeExecutedManually;
         private ObservableCollection<Condition> _conditions = new ObservableCollection<Condition>();
         private bool _enabled = true;
+        private bool _executeOnNewBeforeMetadata;
         private bool _ignoreConditionOnManual;
         private string _name = string.Empty;
         private int _sortNo;
@@ -47,6 +48,12 @@ namespace MetadataUtilities.Models
         {
             get => _enabled;
             set => SetValue(ref _enabled, value);
+        }
+
+        public bool ExecuteOnNewBeforeMetadata
+        {
+            get => _executeOnNewBeforeMetadata;
+            set => SetValue(ref _executeOnNewBeforeMetadata, value);
         }
 
         public bool IgnoreConditionOnManual

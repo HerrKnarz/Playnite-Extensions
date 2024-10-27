@@ -48,6 +48,7 @@ namespace MetadataUtilities
             }
 
             api.Database.Games.ItemUpdated += Games_ItemUpdated;
+            api.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
@@ -62,7 +63,8 @@ namespace MetadataUtilities
                 { "muRemoveIcon", "\xee09" },
                 { "muTagIcon", "\xf004" },
                 { "muAllCheckedIcon", "\xeed8" },
-                { "muSomeCheckedIcon", "\xeed7" }
+                { "muSomeCheckedIcon", "\xeed7" },
+                { "muUndoIcon", "\xee0b" }
             };
 
             foreach (var iconResource in iconResourcesToAdd)
@@ -76,6 +78,9 @@ namespace MetadataUtilities
         public List<PrefixItemControl> PrefixItemControls { get; set; } = new List<PrefixItemControl>();
 
         public SettingsViewModel Settings { get; }
+
+        public void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> args) =>
+            ControlCenter.Instance.KnownGames.RemoveWhere(x => args.RemovedItems.Any(y => y.Id == x));
 
         public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
         {
@@ -122,8 +127,6 @@ namespace MetadataUtilities
             }).ToList();
 
             MetadataFunctions.DoForAll(myGames, AfterGameUpdateAction.Instance(), false, ActionModifierType.IsCombi);
-
-            Settings.Settings.LastAutoConditionCheck = DateTime.Now;
 
             SavePluginSettings(Settings.Settings);
 
@@ -282,6 +285,13 @@ namespace MetadataUtilities
                     MenuSection = $"@{menuSection}",
                     Icon = "muRemoveIcon",
                     Action = a => RemoveUnused()
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuResetNewGames"),
+                    MenuSection = $"@{menuSection}",
+                    Icon = "muUndoIcon",
+                    Action = a => ControlCenter.Instance.ResetNewGames()
                 }
             };
 
@@ -327,6 +337,8 @@ namespace MetadataUtilities
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             base.OnApplicationStarted(args);
+
+            ControlCenter.Instance.GetKnownGames();
 
             if (!Settings.Settings.TypeConfigs.Any(x => x.RemoveUnusedItems))
             {

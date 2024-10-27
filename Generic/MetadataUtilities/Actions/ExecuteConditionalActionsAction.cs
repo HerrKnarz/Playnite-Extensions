@@ -31,12 +31,11 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            var mustUpdate = _actions.Where(x => x.Enabled).Aggregate(false,
-                (current, conditionalAction) => current |
-                                                conditionalAction.CheckAndExecute(game.Game,
-                                                    actionModifier == ActionModifierType.IsManual));
+            var mustUpdate = _actions
+                .Where(x => x.Enabled && x.ExecuteOnNewBeforeMetadata == (actionModifier != ActionModifierType.IsAfterMetadata))
+                .Aggregate(false, (current, conditionalAction) => current | conditionalAction.CheckAndExecute(game.Game, actionModifier == ActionModifierType.IsManual));
 
-            if (mustUpdate && actionModifier != ActionModifierType.IsCombi)
+            if (mustUpdate && actionModifier == ActionModifierType.IsManual)
             {
                 _gamesAffected.Add(game.Game);
             }

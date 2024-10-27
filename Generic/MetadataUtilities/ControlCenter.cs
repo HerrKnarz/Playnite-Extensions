@@ -14,7 +14,6 @@ namespace MetadataUtilities
         public ControlCenter(MetadataUtilities plugin)
         {
             _plugin = plugin;
-            KnownGames = API.Instance.Database.Games.Select(x => x.Id).ToHashSet();
             Instance = this;
         }
 
@@ -28,10 +27,23 @@ namespace MetadataUtilities
 
         public bool IsUpdating { get; set; } = false;
 
-        public HashSet<Guid> KnownGames { get; }
-        public HashSet<Guid> NewGames { get; set; }
+        public HashSet<Guid> KnownGames { get; private set; }
+
+        public HashSet<Guid> NewGames { get; } = new HashSet<Guid>();
 
         public Settings Settings => _plugin?.Settings?.Settings ?? _settings;
+
+        public bool AddNewGame(Guid id) => NewGames.Add(id);
+
+        public void GetKnownGames()
+        {
+            if (KnownGames != null)
+            {
+                return;
+            }
+
+            KnownGames = API.Instance.Database.Games.Select(x => x.Id).Distinct().ToHashSet();
+        }
 
         public void ResetNewGames()
         {

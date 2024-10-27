@@ -1,6 +1,5 @@
 ﻿using KNARZhelper;
 using Playnite.SDK.Data;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -29,7 +28,6 @@ namespace MetadataUtilities.Models
         private int _gameSearchWindowHeight = 700;
         private int _gameSearchWindowWidth = 700;
         private bool _ignoreHiddenGamesInGameCount;
-        private DateTime _lastAutoConditionCheck = DateTime.Now;
         private bool _mergeMetadataOnMetadataUpdate;
         private MergeRules _mergeRules = new MergeRules();
         private bool _prefixControlConfirmDeletion = true;
@@ -141,12 +139,6 @@ namespace MetadataUtilities.Models
         {
             get => _ignoreHiddenGamesInGameCount;
             set => SetValue(ref _ignoreHiddenGamesInGameCount, value);
-        }
-
-        public DateTime LastAutoConditionCheck
-        {
-            get => _lastAutoConditionCheck;
-            set => SetValue(ref _lastAutoConditionCheck, value);
         }
 
         public bool MergeMetadataOnMetadataUpdate

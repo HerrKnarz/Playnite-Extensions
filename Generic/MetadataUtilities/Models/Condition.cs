@@ -156,7 +156,7 @@ namespace MetadataUtilities.Models
                         : smallerType.IsSmallerThan(game, DateValue));
 
                 case ComparatorType.GameIsNew:
-                    return game.Added > Settings.LastAutoConditionCheck;
+                    return ControlCenter.Instance.NewGames.Contains(game.Id);
                 default:
                     throw new ArgumentOutOfRangeException();
             }

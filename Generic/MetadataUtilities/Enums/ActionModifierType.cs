@@ -7,6 +7,8 @@
         Remove,
         Toggle,
         IsManual,
-        IsCombi
+        IsCombi,
+        IsBeforeMetadata,
+        IsAfterMetadata
     }
 }
