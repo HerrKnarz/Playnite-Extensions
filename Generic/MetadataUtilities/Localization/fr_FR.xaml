@@ -68,6 +68,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddToggle">Inverser {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Supprimer les métadonnées inutilisées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Supprimer les métadonnées indésirables</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">Reset new games</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Le jeu est nouveau</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Fusionner l'éditeur de règles</sys:String>
@@ -98,6 +99,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Show add button</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Show delete button</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Éditer</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Execute only on new games before metadata download</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Hide in details</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Hide in editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
@@ -106,6 +108,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignorer les jeux cachés lors de la suppression de métadonnées inutilisées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Exécuter automatiquement les règles de fusion lors de la mise à jour des métadonnées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Règles de fusion</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsOnNewGame">Only on new games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Position</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Supprimer les métadonnées inutilisées au démarrage</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Supprimer les éléments indésirables lors de la mise à jour des métadonnées</sys:String>

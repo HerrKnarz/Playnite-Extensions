@@ -29,7 +29,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Встановлено рахунок користувача в {0} іграх!</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Редактор Метаданих</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorAddToWhitelist">Add to whitelist</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorAddToWhitelist">Додати до білого списку</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Змінити тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Тільки вибране</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Редактор Метаданих для вибраних ігор</sys:String>
@@ -68,6 +68,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddToggle">Перемкнути {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Прибрати невикористані метадані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Прибрати небажані метадані</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">Reset new games</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Нова гра</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Редактор правил об'єднання</sys:String>
@@ -92,12 +93,13 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Можна виконати вручну</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Стовпці в ігровій сітці Редактора Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Умови</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">Confirm deletion</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">Підтвердити видалення</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Користувацький шлях меню</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Стандартний шлях меню</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Show add button</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Show delete button</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Показувати кнопку &quot;Додати&quot;</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Показати кнопку &quot;Видалити&quot;</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Змінити</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Execute only on new games before metadata download</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Сховати в подробицях</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Сховати в редакторі</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ігнорувати умови</sys:String>
@@ -106,6 +108,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ігнорувати приховані ігри при прибиранні невикористаних метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Автоматично виконувати правила об'єднання при оновленні метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Об’єднати Ролі</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsOnNewGame">Only on new games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Розташування</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Прибирати невикористані метадані під час запуску</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Прибирати небажані елементи при оновленні метаданих</sys:String>
