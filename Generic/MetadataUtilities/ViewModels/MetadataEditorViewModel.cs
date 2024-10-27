@@ -601,7 +601,7 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                var removedItems = ControlCenter.RemoveUnusedMetadata();
+                var removedItems = ControlCenter.Instance.RemoveUnusedMetadata();
 
                 if (removedItems.Count == 0)
                 {
@@ -865,7 +865,7 @@ namespace MetadataUtilities.ViewModels
 
                         RefreshView();
 
-                        ControlCenter.RenameObject(otherType, newName, oldName);
+                        ControlCenter.Instance.RenameObject(otherType, newName, oldName);
                     }
 
                     return true;

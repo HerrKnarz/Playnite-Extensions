@@ -208,7 +208,7 @@ namespace MetadataUtilities.ViewModels
                 => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/quick-add/")));
 
         public RelayCommand<object> MergeItemsCommand
-                    => new RelayCommand<object>(rule => ControlCenter.MergeItems((MergeRule)rule), rule => rule != null);
+                    => new RelayCommand<object>(rule => ((MergeRule)rule).MergeItems(), rule => rule != null);
 
         public MergeRules MergeRules
         {

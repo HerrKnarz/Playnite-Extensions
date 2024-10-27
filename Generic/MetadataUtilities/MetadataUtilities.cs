@@ -355,7 +355,7 @@ namespace MetadataUtilities
 
             try
             {
-                ControlCenter.RemoveUnusedMetadata(true);
+                ControlCenter.Instance.RemoveUnusedMetadata(true);
             }
             finally
             {
@@ -364,7 +364,7 @@ namespace MetadataUtilities
             }
         }
 
-        private static bool OnRenameObject(object sender, string oldName, string newName) => ControlCenter.RenameObject((IMetadataFieldType)sender, oldName, newName);
+        private static bool OnRenameObject(object sender, string oldName, string newName) => ControlCenter.Instance.RenameObject((IMetadataFieldType)sender, oldName, newName);
 
         private static void ShowEditor() => MetadataEditorViewModel.ShowEditor();
 

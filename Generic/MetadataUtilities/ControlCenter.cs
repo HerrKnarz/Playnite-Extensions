@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace MetadataUtilities
 {
@@ -32,7 +31,7 @@ namespace MetadataUtilities
 
         public static ControlCenter Instance { get; set; }
 
-        public bool IsUpdating { get; set; } = false;
+        public bool IsUpdating { get; set; }
 
         public HashSet<Guid> KnownGames { get; private set; }
 
@@ -91,211 +90,6 @@ namespace MetadataUtilities
                 : new List<MetadataObject>();
         }
 
-        public static void MergeItems(MergeRule rule, bool showDialog = true)
-        {
-            Instance.IsUpdating = true;
-            Cursor.Current = Cursors.WaitCursor;
-            var gamesAffected = new List<Guid>();
-            try
-            {
-                using (API.Instance.Database.BufferedUpdate())
-                {
-                    var globalProgressOptions = new GlobalProgressOptions(
-                        ResourceProvider.GetString("LOCMetadataUtilitiesProgressMergingItems"),
-                        false
-                    )
-                    {
-                        IsIndeterminate = true
-                    };
-
-                    API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                    {
-                        try
-                        {
-                            gamesAffected.AddMissing(rule.Merge(API.Instance.Database.Games.ToList()));
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error(ex);
-                        }
-                    }, globalProgressOptions);
-                }
-            }
-            finally
-            {
-                Instance.IsUpdating = false;
-                Cursor.Current = Cursors.Default;
-            }
-
-            // Shows a dialog with the number of games actually affected.
-            if (!showDialog)
-            {
-                return;
-            }
-
-            API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergedMetadataMessage"), gamesAffected.Distinct().Count()));
-        }
-
-        public static List<MetadataObject> RemoveUnusedMetadata(bool autoMode = false)
-        {
-            var temporaryList = new List<MetadataObject>();
-
-            if (API.Instance == null || API.Instance.Dialogs == null)
-
-            {
-                return temporaryList;
-            }
-
-            var types = Instance.Settings.TypeConfigs.Where(x => x.RemoveUnusedItems).ToList();
-
-            var globalProgressOptions = new GlobalProgressOptions(
-                ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
-                false
-            )
-            {
-                IsIndeterminate = true
-            };
-
-            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-            {
-                try
-                {
-                    foreach (var type in types)
-                    {
-                        if (type.Type.GetTypeManager() is IObjectType objectType)
-                        {
-                            temporaryList.AddRange(objectType.LoadUnusedMetadata(type.HiddenAsUnused)
-                                .Select(x
-                                    => new MetadataObject(type.Type, x.Name)
-                                    {
-                                        Id = x.Id
-                                    }));
-                        }
-                    }
-
-                    if (temporaryList.Count > 0 && (Instance.Settings.UnusedItemsWhiteList?.Count ?? 0) > 0)
-                    {
-                        temporaryList = temporaryList.Where(x =>
-                            Instance.Settings.UnusedItemsWhiteList.All(y => y.TypeAndName != x.TypeAndName)).ToList();
-                    }
-
-                    foreach (var item in temporaryList)
-                    {
-                        item.RemoveFromDb(types.FirstOrDefault(x => x.Type == item.Type)?.HiddenAsUnused ?? false);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                }
-            }, globalProgressOptions);
-
-            if (temporaryList.Count != 0)
-            {
-                if (autoMode)
-                {
-                    var items = string.Join(Environment.NewLine, temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
-
-                    API.Instance.Notifications.Add("MetadataUtilities",
-                        $"{ResourceProvider.GetString("LOCMetadataUtilitiesNotificationRemovedItems")}{Environment.NewLine}{Environment.NewLine}{items}",
-                        NotificationType.Info);
-                }
-                else
-                {
-                    var items = string.Join(", ", temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
-                    API.Instance.Dialogs.ShowMessage($"{ResourceProvider.GetString("LOCMetadataUtilitiesNotificationRemovedItems")}{Environment.NewLine}{Environment.NewLine}{items}",
-                        ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            }
-            else if (!autoMode)
-            {
-                API.Instance.Dialogs.ShowMessage(
-                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoUnusedItemsFound"),
-                    ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-
-            return temporaryList;
-        }
-
-        public static bool RenameObject(IMetadataFieldType type, string oldName, string newName)
-        {
-            var mustSave = false;
-
-            if (oldName == newName || oldName == string.Empty)
-            {
-                return true;
-            }
-
-            if (Instance.Settings.RenameMergeRules && FieldTypeHelper.ItemListFieldValues().ContainsKey(type.Type))
-            {
-                mustSave = Instance.Settings.MergeRules.FindAndRenameRule(type.Type, oldName,
-                    newName);
-            }
-
-            if (Instance.Settings.RenameConditionalActions)
-            {
-                foreach (var condAction in Instance.Settings.ConditionalActions)
-                {
-                    foreach (var item in condAction.Conditions)
-                    {
-                        if (item.Type != type.Type || item.Name != oldName)
-                        {
-                            continue;
-                        }
-
-                        item.Name = newName;
-                        mustSave = true;
-                    }
-
-                    foreach (var item in condAction.Actions)
-                    {
-                        if (item.Type != type.Type || item.Name != oldName)
-                        {
-                            continue;
-                        }
-
-                        item.Name = newName;
-                        mustSave = true;
-                    }
-                }
-            }
-
-            if (Instance.Settings.RenameQuickAdd && type.ValueType == ItemValueType.ItemList)
-            {
-                foreach (var item in Instance.Settings.QuickAddObjects)
-                {
-                    if (item.Type != type.Type || item.Name != oldName)
-                    {
-                        continue;
-                    }
-
-                    item.Name = newName;
-                    mustSave = true;
-                }
-            }
-
-            if (Instance.Settings.RenameWhiteList && type.ValueType == ItemValueType.ItemList)
-            {
-                foreach (var item in Instance.Settings.UnusedItemsWhiteList)
-                {
-                    if (item.Type != type.Type || item.Name != oldName)
-                    {
-                        continue;
-                    }
-
-                    item.Name = newName;
-                    mustSave = true;
-                }
-            }
-
-            if (mustSave)
-            {
-                Instance.SavePluginSettings();
-            }
-
-            return true;
-        }
-
         public static void UpdateGames<T>(List<T> games)
         {
             if (games == null || games.Count == 0)
@@ -347,6 +141,160 @@ namespace MetadataUtilities
             }
 
             KnownGames = API.Instance.Database.Games.Select(x => x.Id).Distinct().ToHashSet();
+        }
+
+        public List<MetadataObject> RemoveUnusedMetadata(bool autoMode = false)
+        {
+            var temporaryList = new List<MetadataObject>();
+
+            var types = Settings.TypeConfigs.Where(x => x.RemoveUnusedItems).ToList();
+
+            var globalProgressOptions = new GlobalProgressOptions(
+                ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
+                false
+            )
+            {
+                IsIndeterminate = true
+            };
+
+            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            {
+                try
+                {
+                    foreach (var type in types)
+                    {
+                        if (type.Type.GetTypeManager() is IObjectType objectType)
+                        {
+                            temporaryList.AddRange(objectType.LoadUnusedMetadata(type.HiddenAsUnused)
+                                .Select(x
+                                    => new MetadataObject(type.Type, x.Name)
+                                    {
+                                        Id = x.Id
+                                    }));
+                        }
+                    }
+
+                    if (temporaryList.Count > 0 && (Settings.UnusedItemsWhiteList?.Count ?? 0) > 0)
+                    {
+                        temporaryList = temporaryList.Where(x =>
+                            Settings.UnusedItemsWhiteList.All(y => y.TypeAndName != x.TypeAndName)).ToList();
+                    }
+
+                    foreach (var item in temporaryList)
+                    {
+                        item.RemoveFromDb(types.FirstOrDefault(x => x.Type == item.Type)?.HiddenAsUnused ?? false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            }, globalProgressOptions);
+
+            if (temporaryList.Count != 0)
+            {
+                if (autoMode)
+                {
+                    var items = string.Join(Environment.NewLine, temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
+
+                    API.Instance.Notifications.Add("MetadataUtilities",
+                        $"{ResourceProvider.GetString("LOCMetadataUtilitiesNotificationRemovedItems")}{Environment.NewLine}{Environment.NewLine}{items}",
+                        NotificationType.Info);
+                }
+                else
+                {
+                    var items = string.Join(", ", temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
+                    API.Instance.Dialogs.ShowMessage($"{ResourceProvider.GetString("LOCMetadataUtilitiesNotificationRemovedItems")}{Environment.NewLine}{Environment.NewLine}{items}",
+                        ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else if (!autoMode)
+            {
+                API.Instance.Dialogs.ShowMessage(
+                    ResourceProvider.GetString("LOCMetadataUtilitiesDialogNoUnusedItemsFound"),
+                    ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            return temporaryList;
+        }
+
+        public bool RenameObject(IMetadataFieldType type, string oldName, string newName)
+        {
+            var mustSave = false;
+
+            if (oldName == newName || oldName == string.Empty)
+            {
+                return true;
+            }
+
+            if (Settings.RenameMergeRules && FieldTypeHelper.ItemListFieldValues().ContainsKey(type.Type))
+            {
+                mustSave = Settings.MergeRules.FindAndRenameRule(type.Type, oldName,
+                    newName);
+            }
+
+            if (Settings.RenameConditionalActions)
+            {
+                foreach (var condAction in Settings.ConditionalActions)
+                {
+                    foreach (var item in condAction.Conditions)
+                    {
+                        if (item.Type != type.Type || item.Name != oldName)
+                        {
+                            continue;
+                        }
+
+                        item.Name = newName;
+                        mustSave = true;
+                    }
+
+                    foreach (var item in condAction.Actions)
+                    {
+                        if (item.Type != type.Type || item.Name != oldName)
+                        {
+                            continue;
+                        }
+
+                        item.Name = newName;
+                        mustSave = true;
+                    }
+                }
+            }
+
+            if (Settings.RenameQuickAdd && type.ValueType == ItemValueType.ItemList)
+            {
+                foreach (var item in Settings.QuickAddObjects)
+                {
+                    if (item.Type != type.Type || item.Name != oldName)
+                    {
+                        continue;
+                    }
+
+                    item.Name = newName;
+                    mustSave = true;
+                }
+            }
+
+            if (Settings.RenameWhiteList && type.ValueType == ItemValueType.ItemList)
+            {
+                foreach (var item in Settings.UnusedItemsWhiteList)
+                {
+                    if (item.Type != type.Type || item.Name != oldName)
+                    {
+                        continue;
+                    }
+
+                    item.Name = newName;
+                    mustSave = true;
+                }
+            }
+
+            if (mustSave)
+            {
+                Instance.SavePluginSettings();
+            }
+
+            return true;
         }
 
         public void ResetNewGames()

@@ -5,6 +5,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace MetadataUtilities.Models
 {
@@ -92,6 +93,51 @@ namespace MetadataUtilities.Models
             }
 
             return result;
+        }
+
+        public void MergeItems(bool showDialog = true)
+        {
+            ControlCenter.Instance.IsUpdating = true;
+            Cursor.Current = Cursors.WaitCursor;
+            var gamesAffected = new List<Guid>();
+            try
+            {
+                using (API.Instance.Database.BufferedUpdate())
+                {
+                    var globalProgressOptions = new GlobalProgressOptions(
+                        ResourceProvider.GetString("LOCMetadataUtilitiesProgressMergingItems"),
+                        false
+                    )
+                    {
+                        IsIndeterminate = true
+                    };
+
+                    API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                    {
+                        try
+                        {
+                            gamesAffected.AddMissing(Merge(API.Instance.Database.Games.ToList()));
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex);
+                        }
+                    }, globalProgressOptions);
+                }
+            }
+            finally
+            {
+                ControlCenter.Instance.IsUpdating = false;
+                Cursor.Current = Cursors.Default;
+            }
+
+            // Shows a dialog with the number of games actually affected.
+            if (!showDialog)
+            {
+                return;
+            }
+
+            API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergedMetadataMessage"), gamesAffected.Distinct().Count()));
         }
     }
 }
