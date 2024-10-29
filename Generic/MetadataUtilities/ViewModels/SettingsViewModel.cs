@@ -201,7 +201,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand HelpPrefixesCommand
             => new RelayCommand(()
-                => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/other-functionality/#prefixes")));
+                => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/metadata-utilities/prefixes")));
 
         public RelayCommand HelpQuickAddCommand
             => new RelayCommand(()

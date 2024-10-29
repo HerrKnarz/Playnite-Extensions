@@ -126,7 +126,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <DockPanel Margin="0,0,5,0" VerticalAlignment="Stretch">
-                        <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsMergeRules}" />
+                        <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsMergeRules}" Margin="0,0,0,5" />
                         <DockPanel VerticalAlignment="Center" DockPanel.Dock="Top" Margin="0,10,0,0">
                             <Button Content="&#xef00;" FontFamily="{DynamicResource FontIcoFont}" Click="ClearSearchBox" DockPanel.Dock="Right"
                                     Margin="5,0,0,0" Padding="5,5,8,5" />
@@ -160,7 +160,7 @@
                     </StackPanel>
 
                     <DockPanel Grid.Column="1" Grid.Row="0" Margin="5,0,0,0" VerticalAlignment="Stretch">
-                        <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsValuesToMerge}" />
+                        <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsValuesToMerge}" Margin="0,0,0,5" />
                         <DataGrid Name="DgSources" ItemsSource="{Binding SourceObjectsViewSource.View}" AutoGenerateColumns="False"
                                 DockPanel.Dock="Top" Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column"
                                 HorizontalContentAlignment="Stretch"  VerticalAlignment="Stretch" ColumnWidth="*">
@@ -354,18 +354,26 @@
                             CommandParameter="{Binding SelectedItems, ElementName=LvPrefixes}" />
                     <Button Content="&#xEFEE;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" 
                             Command="{Binding SortPrefixesCommand}" Margin="10,0,0,0" />
-                    <Button Content="&#xEFCA;" DockPanel.Dock="Right" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMenuHelpTitle}"
-                            Command="{Binding HelpPrefixesCommand}" Margin="10,0,0,0" />
                 </DockPanel>
-                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.PrefixControlDisplayAddButton}">
-                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsDisplayAddButton}" TextWrapping="Wrap" />
-                </CheckBox>
-                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.PrefixControlDisplayDeleteButton}" Margin="0,10,0,0">
-                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsDisplayDeleteButton}" TextWrapping="Wrap" />
-                </CheckBox>
-                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.PrefixControlConfirmDeletion}" Margin="0,10,0,0">
-                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsConfirmDeletion}" TextWrapping="Wrap" />
-                </CheckBox>
+                <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <CheckBox IsChecked="{Binding Settings.PrefixControlDisplayAddButton}">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsDisplayAddButton}" TextWrapping="Wrap" />
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding Settings.PrefixControlDisplayDeleteButton}" Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsDisplayDeleteButton}" TextWrapping="Wrap" />
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding Settings.PrefixControlConfirmDeletion}" Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsConfirmDeletion}" TextWrapping="Wrap" />
+                        </CheckBox>
+                    </StackPanel>
+                    <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
+                            Command="{Binding HelpPrefixesCommand}" Margin="10,0,0,0" ToolTip="{DynamicResource LOCMenuHelpTitle}" />
+                </Grid>
                 <ListView Name="LvPrefixes" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0"
                           ItemsSource="{Binding Settings.PrefixItemTypes}" HorizontalContentAlignment="Stretch"
                           VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">

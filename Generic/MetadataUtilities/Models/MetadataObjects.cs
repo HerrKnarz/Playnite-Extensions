@@ -65,6 +65,11 @@ namespace MetadataUtilities.Models
         {
             var newItem = ControlCenter.AddNewItem(type, prefix, enableTypeSelection, addToDb);
 
+            if (newItem == null)
+            {
+                return null;
+            }
+
             if (this.Any(x => x.TypeAndName == newItem.TypeAndName))
             {
                 return null;

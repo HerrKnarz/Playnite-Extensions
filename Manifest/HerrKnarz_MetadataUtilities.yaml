@@ -1,5 +1,13 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 1.5.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-10-29
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-10-29/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_1_5_1.pext
+    Changelog:
+      - Fixed error message when closing the "add new item" dialog in the metadata editor with cancel.
+      - Changed link to the help page for prefixes, after the documentation was updated for all the changes from the last weeks.
+      - Fixed formatting of some settings
   - Version: 1.5.0
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-10-27
