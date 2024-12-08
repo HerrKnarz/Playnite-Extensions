@@ -65,7 +65,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         {
             DatabaseObject library = null;
 
-            if (!itemsToIgnore.Contains(game.PluginId))
+            if (!itemsToIgnore?.Contains(game.PluginId) ?? true)
             {
                 library = _libraries.FirstOrDefault(x => x.Id == game.PluginId);
             }

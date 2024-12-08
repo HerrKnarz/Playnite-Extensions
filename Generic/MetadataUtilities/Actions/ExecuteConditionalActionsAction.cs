@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.DatabaseObjectTypes;
 using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;
@@ -31,11 +32,33 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
+            var types = FieldTypeHelper.GetAllTypes<IObjectType>().ToList();
+
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug($"==== Started executing Conditional Actions on Game \"{game.Game.Name}\" ======================================");
+
+                foreach (var type in types)
+                {
+                    Log.Debug($"{type.LabelPlural} before: {string.Join(", ", type.LoadGameMetadata(game.Game).Select(x => x.Name))}");
+                }
+            }
+
             var mustUpdate = _actions
                 .Where(x =>
                     actionModifier == ActionModifierType.IsManual || (x.Enabled && x.ExecuteOnNewBeforeMetadata == (actionModifier != ActionModifierType.IsAfterMetadata)))
                 .Aggregate(false, (current, conditionalAction) =>
                     current | conditionalAction.CheckAndExecute(game.Game, actionModifier == ActionModifierType.IsManual));
+
+            if (Settings.WriteDebugLog)
+            {
+                Log.Debug($"==== Finished executing Conditional Actions on Game \"{game.Game.Name}\" ({mustUpdate}) ============================");
+
+                foreach (var type in types)
+                {
+                    Log.Debug($"{type.LabelPlural} after: {string.Join(", ", type.LoadGameMetadata(game.Game).Select(x => x.Name))}");
+                }
+            }
 
             if (mustUpdate && actionModifier == ActionModifierType.IsManual)
             {
