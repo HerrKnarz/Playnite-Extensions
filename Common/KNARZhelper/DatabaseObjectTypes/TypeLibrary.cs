@@ -10,15 +10,26 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeLibrary : IObjectType, IValueType
     {
-        private readonly List<DatabaseObject> _libraries = new List<DatabaseObject>();
+        private List<DatabaseObject> _libraries;
 
-        public TypeLibrary()
+        private List<DatabaseObject> Libraries
         {
-            _libraries.AddRange(API.Instance.Addons.Plugins
-                .Where(x => x is LibraryPlugin)
-                .Select(x => new DatabaseObject() { Name = ((LibraryPlugin)x).Name, Id = x.Id }));
+            get
+            {
+                if (_libraries == null)
+                {
+                    _libraries = new List<DatabaseObject>
+                    {
+                        new DatabaseObject() { Id = default, Name = "Playnite" }
+                    };
 
-            _libraries.Add(new DatabaseObject() { Id = default, Name = "Playnite" });
+                    _libraries.AddRange(API.Instance.Addons.Plugins
+                        .Where(x => x is LibraryPlugin)
+                        .Select(x => new DatabaseObject() { Name = ((LibraryPlugin)x).Name, Id = x.Id }));
+                }
+
+                return _libraries;
+            }
         }
 
         public bool CanBeAdded => false;
@@ -28,7 +39,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public bool CanBeModified => false;
         public bool CanBeSetByMetadataAddOn => false;
         public bool CanBeSetInGame => false;
-        public int Count => _libraries.Count;
+        public int Count => Libraries.Count;
         public bool IsList => false;
         public string LabelPlural => ResourceProvider.GetString("LOCLibraries");
         public string LabelSingular => ResourceProvider.GetString("LOCLibrary");
@@ -37,9 +48,9 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public bool AddValueToGame<T>(Game game, T value) => false;
 
-        public bool DbObjectExists(string name) => _libraries?.Any(x => x.Name == name) ?? false;
+        public bool DbObjectExists(string name) => Libraries?.Any(x => x.Name == name) ?? false;
 
-        public bool DbObjectExists(Guid id) => _libraries?.Any(x => x.Id == id) ?? false;
+        public bool DbObjectExists(Guid id) => Libraries?.Any(x => x.Id == id) ?? false;
 
         public bool DbObjectInGame(Game game, Guid id) => game.PluginId == id;
 
@@ -48,7 +59,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public bool GameContainsValue<T>(Game game, T value) => value is Guid id && game.PluginId == id;
 
         public Guid GetDbObjectId(string name) =>
-            _libraries?.FirstOrDefault(x => x.Name == name)?.Id ?? default;
+            Libraries?.FirstOrDefault(x => x.Name == name)?.Id ?? default;
 
         public int GetGameCount(Guid id, bool ignoreHiddenGames = false) =>
             API.Instance.Database.Games.Count(g => !(ignoreHiddenGames && g.Hidden) && (g.PluginId == id));
@@ -59,7 +70,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public List<Game> GetGames(Guid id, bool ignoreHiddenGames = false) =>
             API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden) && (g.PluginId == id)).ToList();
 
-        public List<DatabaseObject> LoadAllMetadata(HashSet<Guid> itemsToIgnore) => _libraries.Where(x => !itemsToIgnore.Contains(x.Id)).ToList();
+        public List<DatabaseObject> LoadAllMetadata(HashSet<Guid> itemsToIgnore) => Libraries.Where(x => !itemsToIgnore.Contains(x.Id)).ToList();
 
         public List<DatabaseObject> LoadGameMetadata(Game game, HashSet<Guid> itemsToIgnore)
         {
@@ -67,7 +78,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
             if (!itemsToIgnore?.Contains(game.PluginId) ?? true)
             {
-                library = _libraries.FirstOrDefault(x => x.Id == game.PluginId);
+                library = Libraries.FirstOrDefault(x => x.Id == game.PluginId);
             }
 
             return library == null
@@ -82,7 +93,7 @@ namespace KNARZhelper.DatabaseObjectTypes
                 };
         }
 
-        public List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) => _libraries.Where(x =>
+        public List<DatabaseObject> LoadUnusedMetadata(bool ignoreHiddenGames) => Libraries.Where(x =>
             !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.PluginId == x.Id))).ToList();
 
         public bool NameExists(string name, Guid id) => true;
