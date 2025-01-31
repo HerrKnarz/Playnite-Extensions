@@ -74,10 +74,14 @@ namespace MetadataUtilities.Models
         {
             get
             {
-                if (_id == default && TypeManager is IObjectType type)
+                if (_id != default || !(TypeManager is IObjectType type))
                 {
-                    _id = type.GetDbObjectId(Name);
+                    return _id;
                 }
+
+                _id = type.GetDbObjectId(Name);
+
+                NotifyMissingItem();
 
                 return _id;
             }
@@ -273,10 +277,14 @@ namespace MetadataUtilities.Models
 
         public void RefreshId()
         {
-            if (TypeManager is IObjectType type)
+            if (!(TypeManager is IObjectType type))
             {
-                Id = type.GetDbObjectId(Name);
+                return;
             }
+
+            Id = type.GetDbObjectId(Name);
+
+            NotifyMissingItem();
         }
 
         public bool RemoveFromDb(bool checkIfUsed = true)
@@ -330,6 +338,16 @@ namespace MetadataUtilities.Models
             TypeManager is IEditableObjectType type
                 ? type.UpdateName(Id, Name, newName)
                 : DbInteractionResult.Error;
+
+        private void NotifyMissingItem()
+        {
+            if (_id == default && TypeManager is TypeLibrary && Name != "Playnite")
+            {
+                API.Instance.Notifications.Add("MetadataUtilities",
+                    $"{ResourceProvider.GetString("LOCMetadataUtilitiesNotificationLibraryNotFound")} {Name}",
+                    NotificationType.Info);
+            }
+        }
     }
 
     public class MetadataObjectEqualityComparer : IEqualityComparer<MetadataObject>
