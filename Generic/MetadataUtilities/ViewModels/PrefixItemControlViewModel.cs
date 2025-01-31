@@ -26,14 +26,24 @@ namespace MetadataUtilities.ViewModels
             ? Visibility.Visible
             : Visibility.Collapsed;
 
-        public RelayCommand<object> AddItemCommand => new RelayCommand<object>(item =>
+        public string DefaultIcon
+        {
+            get => _defaultIcon;
+            set => SetValue(ref _defaultIcon, value);
+        }
+
+        public Visibility DeleteButtonVisibility => ControlCenter.Instance.Settings.PrefixControlDisplayDeleteButton
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+
+        public RelayCommand<object> EditItemsCommand => new RelayCommand<object>(item =>
         {
             if (!(item is PrefixItemList itemList) || _game == null)
             {
                 return;
             }
 
-            var items = ControlCenter.GetItemsFromAddDialog(itemList.FieldType, itemList.Prefix, false);
+            var items = ControlCenter.GetItemsFromAddDialog(itemList.FieldType, itemList.Prefix, false, itemList.Items.ToList());
 
             if (items.Count == 0)
             {
@@ -44,28 +54,30 @@ namespace MetadataUtilities.ViewModels
 
             if (itemList.FieldType.GetTypeManager() is IEditableObjectType type)
             {
-                if (type.AddValueToGame(_game, items.Select(x => x.Id).ToList()))
+                var idsToAdd = items.Select(x => x.Id).ToList();
+
+                var itemsToDelete = itemList.Items.Where(x => !idsToAdd.Contains(x.Id)).ToList();
+
+                if (itemsToDelete.Count > 0)
                 {
                     refreshNeeded = true;
-                    ControlCenter.UpdateGames(new List<Game> { _game });
+                    type.RemoveObjectFromGame(_game, itemsToDelete.Select(x => x.Id).ToList());
+                }
+
+                if (type.AddValueToGame(_game, idsToAdd))
+                {
+                    refreshNeeded = true;
                 }
             }
 
-            if (refreshNeeded)
+            if (!refreshNeeded)
             {
-                RefreshData();
+                return;
             }
+
+            ControlCenter.UpdateGames(new List<Game> { _game });
+            RefreshData();
         });
-
-        public string DefaultIcon
-        {
-            get => _defaultIcon;
-            set => SetValue(ref _defaultIcon, value);
-        }
-
-        public Visibility DeleteButtonVisibility => ControlCenter.Instance.Settings.PrefixControlDisplayDeleteButton
-            ? Visibility.Visible
-            : Visibility.Collapsed;
 
         public Guid GameId
         {

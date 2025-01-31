@@ -18,10 +18,10 @@
                         </Grid.ColumnDefinitions>
                         <Label Style="{DynamicResource MdStyleLabel}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                             <DockPanel HorizontalAlignment="Stretch" >
-                                <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,5,0"
-                                        Command="{Binding RelativeSource={RelativeSource AncestorType=DockPanel, AncestorLevel=2}, Path=DataContext.AddItemCommand}"
+                                <Button Content="&#xec55;" FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,5,0"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=DockPanel, AncestorLevel=2}, Path=DataContext.EditItemsCommand}"
                                         CommandParameter="{Binding}"
-                                        ToolTip="{DynamicResource LOCAddNewItem}" FontSize="{DynamicResource FontSizeSmall}" DockPanel.Dock="Right">
+                                        ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsEdit}" FontSize="{DynamicResource FontSizeSmall}" DockPanel.Dock="Right">
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource PropertyItemButton}">
                                             <Setter Property="VerticalAlignment" Value="Center" />

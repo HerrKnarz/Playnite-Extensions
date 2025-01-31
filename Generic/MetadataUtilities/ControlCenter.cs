@@ -66,7 +66,7 @@ namespace MetadataUtilities
             return newItem;
         }
 
-        public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, string prefix = default, bool ignoreEmptyPrefix = true)
+        public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, string prefix = default, bool ignoreEmptyPrefix = true, List<MetadataObject> selectedItems = null)
         {
             var label = type.GetTypeManager().LabelPlural;
 
@@ -81,6 +81,16 @@ namespace MetadataUtilities
             else if (!ignoreEmptyPrefix)
             {
                 items.RemoveAll(x => !string.IsNullOrEmpty(x.Prefix));
+            }
+
+            if (selectedItems?.Count > 0)
+            {
+                foreach (var itemToSelect in selectedItems
+                             .Select(item => items.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type))
+                             .Where(itemToSelect => itemToSelect != null))
+                {
+                    itemToSelect.Selected = true;
+                }
             }
 
             var window = SelectMetadataViewModel.GetWindow(items, label);
