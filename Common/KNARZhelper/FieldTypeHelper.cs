@@ -42,6 +42,7 @@ namespace KNARZhelper
                         new TypeIsInstalled(),
                         new TypeLastPlayed(),
                         new TypeLibrary(),
+                        new TypeManual(),
                         new TypeName(),
                         new TypeNotes(),
                         new TypeOverrideInstallState(),
@@ -56,6 +57,7 @@ namespace KNARZhelper
                         new TypeTag(adoptEvents),
                         new TypeTimePlayed(),
                         new TypeUserScore(),
+                        new TypeVersion(),
             };
 
         public static IEnumerable<IEditableObjectType> GetItemListTypes() => GetAllTypes<IEditableObjectType>()
@@ -126,6 +128,9 @@ namespace KNARZhelper
                 case FieldType.Library:
                     return new TypeLibrary();
 
+                case FieldType.Manual:
+                    return new TypeManual();
+
                 case FieldType.Name:
                     return new TypeName();
 
@@ -167,6 +172,9 @@ namespace KNARZhelper
 
                 case FieldType.UserScore:
                     return new TypeUserScore();
+
+                case FieldType.Version:
+                    return new TypeVersion();
 
                 case FieldType.Empty:
                     return null;

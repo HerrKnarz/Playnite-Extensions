@@ -23,6 +23,7 @@
         IsInstalled = 26,
         LastPlayed = 23,
         Library = 11,
+        Manual = 34,
         Name = 32,
         Notes = 22,
         Platform = 7,
@@ -37,5 +38,6 @@
         Tag = 4,
         TimePlayed = 28,
         UserScore = 18,
+        Version = 35,
     }
 }
