@@ -28,6 +28,7 @@ namespace MetadataUtilities.ViewModels
         private CollectionViewSource _mergeRuleViewSource;
         private string _searchTerm = string.Empty;
         private MergeRule _selectedMergeRule;
+        private QuickAddObject _selectedQuickAddObject;
         private Settings _settings;
         private CollectionViewSource _sourceObjectsViewSource;
 
@@ -316,6 +317,12 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
+        public QuickAddObject SelectedQuickAddItem
+        {
+            get => _selectedQuickAddObject;
+            set => SetValue(ref _selectedQuickAddObject, value);
+        }
+
         public Settings Settings
         {
             get => _settings;
@@ -400,12 +407,21 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
+            QuickAddObject itemToSelect = null;
+
             foreach (var item in items.Where(item => Settings.QuickAddObjects.All(x => x.TypeAndName != item.TypeAndName)))
             {
-                Settings.QuickAddObjects.Add(new QuickAddObject(item.Type, item.Name));
+                itemToSelect = new QuickAddObject(item.Type, item.Name);
+
+                Settings.QuickAddObjects.Add(itemToSelect);
             }
 
             Settings.QuickAddObjects.Sort(x => x.TypeAndName);
+
+            if (itemToSelect != null)
+            {
+                SelectedQuickAddItem = itemToSelect;
+            }
         }
 
         public void AddItemsToWhiteList(List<MetadataObject> items)

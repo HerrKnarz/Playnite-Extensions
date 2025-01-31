@@ -19,5 +19,12 @@ namespace MetadataUtilities.Views
         }
 
         private void ClearSearchBox(object sender, RoutedEventArgs e) => SearchBox.Clear();
+
+        private void LvQuickAdd_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var lv = (ListView)sender;
+
+            lv.ScrollIntoView(lv.SelectedItem);
+        }
     }
 }

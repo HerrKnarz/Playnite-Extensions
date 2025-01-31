@@ -16,17 +16,18 @@ namespace KNARZhelper.DatabaseObjectTypes
         {
             get
             {
-                if (_libraries == null)
-                {
-                    _libraries = new List<DatabaseObject>
-                    {
-                        new DatabaseObject() { Id = default, Name = "Playnite" }
-                    };
+                if (_libraries != null)
+                    return _libraries;
 
-                    _libraries.AddRange(API.Instance.Addons.Plugins
-                        .Where(x => x is LibraryPlugin)
-                        .Select(x => new DatabaseObject() { Name = ((LibraryPlugin)x).Name, Id = x.Id }));
-                }
+                _libraries = new List<DatabaseObject>
+
+                {
+                    new DatabaseObject() { Id = default, Name = "Playnite" }
+                };
+
+                _libraries.AddRange(API.Instance.Addons.Plugins
+                    .Where(x => x is LibraryPlugin)
+                    .Select(x => new DatabaseObject() { Name = ((LibraryPlugin)x).Name, Id = x.Id }));
 
                 return _libraries;
             }

@@ -460,7 +460,8 @@
                 </Grid>
                 <ListView Name="LvQuickAdd" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0"
                           ItemsSource="{Binding Settings.QuickAddObjects}" HorizontalContentAlignment="Stretch"
-                          VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                          VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedQuickAddItem}"
+                          SelectionChanged="LvQuickAdd_OnSelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="Auto" Header="{DynamicResource LOCNameLabel}"
