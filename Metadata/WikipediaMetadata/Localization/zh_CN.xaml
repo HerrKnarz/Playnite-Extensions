@@ -10,19 +10,19 @@
     <sys:String x:Key="LOCWikipediaMetadataSettingsMetacritic">使用的 Metacritic 评分</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionOverviewOnly">仅使用维基页面的概述作为描述。</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsRemoveDescriptionLinks">从描述中删除链接。</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionText">Here you can define sections from the wikipedia page you want to remove when fetching the description. Just add the names of the headings you don't want.</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionAdd">Add</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionRemove">Remove</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsText">Here you can define which values you want to add as tags and specify a prefix for the tag.</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsName">Name</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsPrefix">Prefix</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDateEarliest">Earliest date</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDateLatest">Latest date</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDateFirst">First date in the list</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingLowest">Lowest rating</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingHighest">Highest rating</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingAverage">Average of all ratings</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsAddValue">Add value</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionText">在这里，您可以定义在获取描述时要从维基百科页面中删除的部分。只需添加您不想要的标题名称即可。</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionAdd">添加</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionRemove">删除</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsText">在这里，您可以定义要添加为标签的值，并为标签指定一个前缀。</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsName">值</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsTagsPrefix">前缀</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateEarliest">最早日期</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateLatest">最晚日期</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDateFirst">列表中的第一个日期</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingLowest">最低评分</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingHighest">最高评分</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsRatingAverage">所有评分的均值</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsAddValue">添加值</sys:String>
 
-    <sys:String x:Key="LOCWikipediaMetadataSearchDialog">select game</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSearchDialog">选择游戏</sys:String>
 </ResourceDictionary>
