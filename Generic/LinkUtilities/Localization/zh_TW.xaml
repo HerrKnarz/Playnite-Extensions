@@ -9,7 +9,7 @@
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Check links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filter by link name:</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Game</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCommonGameName">遊戲</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">URL</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Added links to {0} games!</sys:String>
@@ -34,7 +34,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">Add link to...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">All configured websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">All missing websites</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">All games</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">所有遊戲</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Open browser search on...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">Convert steam web links to client</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">Convert steam client links to web</sys:String>
@@ -73,17 +73,17 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API-Key</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Using a bookmarklet you can add the active website in your browser directly to the selected games in Playnite. To find a suiting link name, you can define patterns for the URL and link title here. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">Browser search URL</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">Add</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">添加</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">Add defaults</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">Cancel</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">Check all</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">Help</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">OK</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">Remove</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">Replace</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">取消</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCheckAll">全選</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonHelp">幫助</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonOk">確認</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonRemove">刪除</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReplace">替換</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">Reverse check</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">Sort</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">Uncheck all</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">排序</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">取消全選</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">Configure websites</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Here you can add your own links for websites with urls, that contain either the game name, rom name, steam ID or GOG ID and have no variable parts. In the Game URL field you can use the placeholders {GameName}, {RomName}, {SteamId} and {GogId} for that. The following checkboxes define, how the game name will be modified to fit the url scheme and how to check for link validity. You can also add a Browser search url that then can be opened in a browser to search for the game. This field only supports the {GameName} placeholder. For further information on custom link profiles click the questionmark button.</sys:String>
@@ -138,10 +138,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortPosition">Position</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">Bookmarklet/Clipboard</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabCustomLinks">Custom link profiles</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">General settings</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">Remove links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">常規設置</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">刪除連結</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">Rename links</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Sorting</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">排序</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Tag missing links</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">To keep track which games are missing links to specific websites, you can add link names and url patterns here. If no link of a game matches the pattern, a tag with the name of the pattern will be added to the game. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Tag missing links to game library</sys:String>
