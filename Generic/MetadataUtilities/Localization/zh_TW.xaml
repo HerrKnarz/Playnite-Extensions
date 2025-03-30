@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Add new object</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">新增物件</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">Do you want to add the item(s) to unwanted list?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">A {0} with that name already exists.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Change metadata type</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">變更元數據類型</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Conditional action editor</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Please enter a value</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">請輸入一個值</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Conditional actions changed {0} games!</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Merge as</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">合併爲</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Merged metadata in {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Another rule for that target already exists. Do you want to replace it (yes), merge them (no) or cancel the operation?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMultipleSelected">You need to have at least two selected items to merge.</sys:String>
@@ -29,20 +29,20 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Set user score in {0} games!</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Metadata Editor</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorAddToWhitelist">Add to whitelist</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Change type</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorAddToWhitelist">新增至白名單</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">變更類型</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Only selected</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Metadata Editor for selected games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Game Count</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Group matching items</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorHideUnused">Hide unused items</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">Merge</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorMerge">合併</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorMergeRename">Merge rename</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Related games</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Remove unused</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Rule target</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Set as target</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Statistics</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">統計</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_And">All conditions are true</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Two">At least two conditions are true</sys:String>
@@ -50,24 +50,24 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nand">Any condition is false</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">All conditions are false</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">contains</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">包含</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">doesn't contain</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">is empty</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">is not empty</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">為空</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">不為空</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsBiggerThan">is bigger than</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsSmallerThan">is smaller than</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">add</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">remove</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">clear field</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">添加</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">刪除</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">清除欄位</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Open Metadata Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Merge metadata</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">Add {0}</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddRemove">Remove {0}</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddToggle">Toggle {0}</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">Remove unused metadata</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Remove unwanted metadata</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">添加 {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddRemove">刪除 {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddToggle">切換 {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">刪除未使用的元數據</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">刪除不需要的元數據</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">Reset new games</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Game is new</sys:String>
@@ -75,13 +75,13 @@
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationLibraryNotFound">The following library you use in a conditional action wasn't found:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removed the following unused metadata items:</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefix</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">前綴</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Executing conditional actions...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Merging metadata...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Adding {0}</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddRemove">Removing {0}</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddToggle">Toggling {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">添加 {0} 中</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddRemove">刪除 {0} 中</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddToggle">切換 {0} 中</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingItems">Removing metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Removing unused metadata items...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Removing unwanted metadata items...</sys:String>
@@ -93,13 +93,13 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Always save manual merges as merge rules.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Can be executed manually</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Columns in the Metadata Editor game grid</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Conditions</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">Confirm deletion</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">條件</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">確認刪除</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCustomPath">Custom menu path</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDefaultCustomPath">Default custom menu path</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Show add button</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Show delete button</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Edit</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">編輯</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Execute only on new games before metadata download</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Hide in details</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Hide in editor</sys:String>
@@ -110,7 +110,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Automatically execute merge rules on metadata update</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Merge rules</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsOnNewGame">Only on new games</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Position</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">位置</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Remove unused metadata on start up</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Remove unwanted items on metadata update</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameConditionalActions">Automatically rename items in conditional actions when the corresponding original item is renamed.</sys:String>
@@ -123,14 +123,14 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Show Metadata Editor button in top panel (requires restart)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Put the sub menus under the Metadata Utilities menu entry</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Conditional actions</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">General</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Merging</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Prefixes</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Quick Add</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">一般</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">合併</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">前綴</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">快速添加</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Remove unwanted</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Whitelist</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Toggle</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">欄位類型</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">白名單</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">切換</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Values to merge</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Write debug log messages (only use in case of suspected error!)</sys:String>
