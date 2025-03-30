@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCQuickAddName">Quick Add</sys:String>
-    <sys:String x:Key="LOCQuickAddAdd">Add</sys:String>
-    <sys:String x:Key="LOCQuickAddRemove">Remove</sys:String>
-    <sys:String x:Key="LOCQuickAddToggle">Toggle</sys:String>
+    <sys:String x:Key="LOCQuickAddName">快速添加</sys:String>
+    <sys:String x:Key="LOCQuickAddAdd">添加</sys:String>
+    <sys:String x:Key="LOCQuickAddRemove">移除</sys:String>
+    <sys:String x:Key="LOCQuickAddToggle">切换</sys:String>
 
-    <sys:String x:Key="LOCQuickAddMenuAdd">Add {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddProgressAdd">Adding {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddSuccessAdd">{0} added to {1} games</sys:String>
+    <sys:String x:Key="LOCQuickAddMenuAdd">添加 {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressAdd">正在添加 {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddSuccessAdd">{0} 已添加到 {1} 游戏</sys:String>
 
-    <sys:String x:Key="LOCQuickAddMenuRemove">Remove {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddProgressRemove">Removing {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddSuccessRemove">{0} removed from {1} games</sys:String>
+    <sys:String x:Key="LOCQuickAddMenuRemove">移除 {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressRemove">正在移除 {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddSuccessRemove">{0} 已从 {1} 游戏移除</sys:String>
 
-    <sys:String x:Key="LOCQuickAddMenuToggle">Toggle {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddProgressToggle">Toggling {0}</sys:String>
-    <sys:String x:Key="LOCQuickAddSuccessToggle">{0} toggled in {1} games</sys:String>
+    <sys:String x:Key="LOCQuickAddMenuToggle">切换 {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddProgressToggle">正在切换 {0}</sys:String>
+    <sys:String x:Key="LOCQuickAddSuccessToggle">{0} 在 {1} 游戏中切换</sys:String>
 
-    <sys:String x:Key="LOCQuickAddSettingsCustomPath">Custom menu path</sys:String>
-    <sys:String x:Key="LOCQuickAddSettingsCustomPathDescription">Using custom menu paths you can change how your buttons in the context menu will show up, so you can group them or simply change the layout. You can add sub menus by adding a &quot;|&quot;, so &quot;test|menu&quot; will add the menu &quot;test&quot; with the sub menu &quot;menu&quot;. You can also add the action (add, toggle, remove) and type (category, feature, tag) to your menu entry by adding the placeholder &quot;{action}&quot; or &quot;{type}&quot; respectively. This works for the default and separate custom paths for each value.</sys:String>
-    <sys:String x:Key="LOCQuickAddSettingsDefaultCustomPath">Default custom menu path</sys:String>
-    <sys:String x:Key="LOCQuickAddSettingsShowDialog">Show result dialog after setting a value for more than one game</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsCustomPath">自定义菜单路径</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsCustomPathDescription">通过自定义菜单路径，您可以调整上下文菜单中按钮的显示方式，例如进行分组或直接修改布局。使用竖线符号&quot;|&quot;可添加子菜单，如输入&quot;test|menu&quot;将创建包含子菜单&quot;menu&quot;的父菜单&quot;test&quot;。您还可以在菜单项中通过占位符&quot;{action}&quot;或&quot;{type}&quot;分别添加操作类型（添加、切换、移除）和分类标签（类别、功能、标签）。此功能同时适用于默认配置及各参数值的独立自定义路径设置。</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsDefaultCustomPath">默认自定义菜单路径</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsShowDialog">在为多个游戏设置值后显示结果对话框</sys:String>
     <sys:String x:Key="LOCQuickAddSettingsSingleMenuEntry">Put the sub menus under a single &quot;Quick Add&quot; menu entry</sys:String>
 </ResourceDictionary>
