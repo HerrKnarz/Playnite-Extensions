@@ -109,7 +109,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignorer les jeux cachés lors de la suppression de métadonnées inutilisées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Exécuter automatiquement les règles de fusion lors de la mise à jour des métadonnées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Règles de fusion</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsOnNewGame">Only on new games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsOnNewGame">Uniquement pour les nouveaux jeux</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Position</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Supprimer les métadonnées inutilisées au démarrage</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Supprimer les éléments indésirables lors de la mise à jour des métadonnées</sys:String>
@@ -132,6 +132,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Inverser</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valeurs à fusionner</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">Ces éléments ne seront jamais supprimés lors de la suppression des objets inutilisés.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Écrire les messages de débogage (utiliser uniquement en cas d'erreur suspecte !)</sys:String>
 </ResourceDictionary>
