@@ -22,7 +22,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">élément basculé dans {0} jeux</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">La chaîne entrée peut être une expression régulière.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Suppression des éléments de métadonnée indésirable dans {0} jeux !</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Rename company</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Renommer l'entreprise</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">You are renaming a {0}. Do you want to rename the corresponding {1}, too?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Enregistrer en tant que règle de fusion</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Sélectionner un nouveau type</sys:String>
