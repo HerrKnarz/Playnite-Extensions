@@ -35,7 +35,7 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">所有已配置的网站</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">所有缺失的网站</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">所有游戏</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">Open browser search on...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuBrowserSearchLinkTo">打开浏览器搜索...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">将 Steam 网页链接转换为客户端链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">将 Steam 客户端链接转换为网络链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">检查链接...</sys:String>
