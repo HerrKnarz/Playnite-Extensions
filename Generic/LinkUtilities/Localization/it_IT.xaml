@@ -6,20 +6,20 @@
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksStatusCode">Status code</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Response page title</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">equal?</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Check links</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filter by link name:</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Controlla i link</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filtra per nome del link:</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Game</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCommonGameName">Gioco</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCommonLinkUrl">URL</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Added links to {0} games!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Name the link</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Please enter a name for the link!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">No duplicates found!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogNoLinksFound">No links found!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Unwanted links of {0} games removed!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Duplicate links of {0} games removed!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Links of {0} games renamed!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogAddedMessage">Link aggiunti a {0} giochi!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkCaption">Nome del link</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNameLinkText">Inserisci un nome per il link!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoDuplicatesFound">Nessun duplicato trovato!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogNoLinksFound">Nessun link trovato!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Link indesiderati di {0} giochi rimossi!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Link duplicati di {0} giochi rimossi!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Link di {0} giochi rinominati!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">A link to {0} already exists. You can replace the existing link or add a new one by entering a new link name.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Search game</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Select option</sys:String>
