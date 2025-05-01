@@ -2,10 +2,10 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCLinkUtilitiesName">Link Utilities</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseUrl">Response URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseUrl">Risposta URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksStatusCode">Status code</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Response page title</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">equal?</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseTitle">Risposta titolo pagina</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesCheckLinksUrlIsEqual">uguale?</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksWindowName">Controlla i link</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksFilter">Filtra per nome del link:</sys:String>
 
@@ -20,12 +20,12 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">Link indesiderati di {0} giochi rimossi!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">Link duplicati di {0} giochi rimossi!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">Link di {0} giochi rinominati!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">A link to {0} already exists. You can replace the existing link or add a new one by entering a new link name.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Search game</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Select option</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Links of {0} games sorted!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Steam links of {0} games converted!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Missing links of {0} games tagged!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">Esiste già un link a {0}. Puoi sostituire il link esistente o aggiungerne uno nuovo inserendo un nuovo nome.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">Cerca gioco</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Seleziona opzione</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Link di {0} giochi ordinati!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Link di Steam in {0} giochi convertiti!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Link mancanti in {0} giochi taggati!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">You have duplicates in your sort order. Please make sure every link name is unique.</sys:String>
 
