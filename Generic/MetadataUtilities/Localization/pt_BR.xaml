@@ -6,7 +6,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Alterar tipo de metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Editor de ações condicionais</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Insira um valor</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Conditional actions changed {0} games!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Ações condicionais alteradas em {0} jogos!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Mesclar como</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">Metadados mesclados em {0} jogos!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeOrReplace">Outra regra para esse alvo já existe. Você deseja substituí-la (sim), mesclá-las (não) ou cancelar a operação?</sys:String>
@@ -132,6 +132,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Lista de permissões</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Alternar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valores a serem mesclados</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">Estes itens nunca serão removidos quando remover itens não usados.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Escrever mensagens de log de depuração (use somente em caso de suspeita de erro!)</sys:String>
 </ResourceDictionary>
