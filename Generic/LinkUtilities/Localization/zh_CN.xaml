@@ -104,7 +104,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksNeedsToBeChecked">Needs to be checked</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveSpecialChars">删除所有不是字母、数字、空格或连字符的字符。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveEditionSuffix">将游戏名称末尾的诸如“特别版”或高清（HD）之类的内容去除。</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionEscapeDataString">Escapes a string to be used in a URL.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionEscapeDataString">对字符串进行转义，使其可以在 URL 中安全使用。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionUrlEncode">编码游戏名称为有效的 URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionToTitleCase">更改游戏名称使得每个单词都首字母大写。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionAllowRedirects">链接是有效的，即使网站重定向到另一页 (或至少发送一个重定向信号)</sys:String>
