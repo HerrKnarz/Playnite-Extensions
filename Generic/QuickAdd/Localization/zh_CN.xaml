@@ -22,5 +22,5 @@
     <sys:String x:Key="LOCQuickAddSettingsCustomPathDescription">通过自定义菜单路径，您可以调整上下文菜单中按钮的显示方式，例如进行分组或直接修改布局。使用竖线符号&quot;|&quot;可添加子菜单，如输入&quot;test|menu&quot;将创建包含子菜单&quot;menu&quot;的父菜单&quot;test&quot;。您还可以在菜单项中通过占位符&quot;{action}&quot;或&quot;{type}&quot;分别添加操作类型（添加、切换、移除）和分类标签（类别、功能、标签）。此功能同时适用于默认配置及各参数值的独立自定义路径设置。</sys:String>
     <sys:String x:Key="LOCQuickAddSettingsDefaultCustomPath">默认自定义菜单路径</sys:String>
     <sys:String x:Key="LOCQuickAddSettingsShowDialog">在为多个游戏设置值后显示结果对话框</sys:String>
-    <sys:String x:Key="LOCQuickAddSettingsSingleMenuEntry">Put the sub menus under a single &quot;Quick Add&quot; menu entry</sys:String>
+    <sys:String x:Key="LOCQuickAddSettingsSingleMenuEntry">将子菜单放在单个“快速添加”菜单项下</sys:String>
 </ResourceDictionary>
