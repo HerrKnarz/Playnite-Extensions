@@ -8,7 +8,7 @@
     <sys:String x:Key="LOCWikipediaMetadataSettingsArcadeSystem">Додати аркадну систему як платформу.</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsReleaseDate">Дата релізу для використання</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsMetacritic">Оцінка Metacritic для використання</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionOverviewOnly">Використовуйте лише огляд вікі-сторінки як опис.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionOverviewOnly">Використовувати лише огляд вікі-сторінки як опис.</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsRemoveDescriptionLinks">Прибрати посилання з опису.</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionText">Тут ви можете визначити розділи сторінки Вікіпедії, які потрібно прибрати під час отримання опису. Просто додайте назви заголовків, які вам не потрібні.</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsDescriptionAdd">Додати</sys:String>
