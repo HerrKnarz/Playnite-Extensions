@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCLinkUtilitiesName">Link Utilities</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesName">Link Utili</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksResponseUrl">Risposta URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesCheckLinksStatusCode">Status code</sys:String>
@@ -25,7 +25,7 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">Seleziona opzione</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">Link di {0} giochi ordinati!</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Link di Steam in {0} giochi convertiti!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Link mancanti in {0} giochi taggati!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Link mancanti in {0} giochi etichettati!</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">Hai dei duplicati nel tuo ordine. Assicurati che ogni nome link sia univoco.</sys:String>
 
@@ -146,14 +146,14 @@ Le caselle di controllo seguenti definiscono, come il nome del gioco verrà modi
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">Ordinamento</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Etichetta link mancanti</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">To keep track which games are missing links to specific websites, you can add link names and url patterns here. If no link of a game matches the pattern, a tag with the name of the pattern will be added to the game. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Tag missing links to game library</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Etichetta i link mancanti alla libreria di gioco</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Tag missing links after the game meta data was updated</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">Pattern dell'URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">Usa ordinamento personalizzato in ordinamento automatico</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamUseAppLinks">Add links for the steam client instead of the website.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Automatically change steam web links to steam client links on library update.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">If none of the check boxes below are ticked, adding or searching for a steam link will add the usual store page link with &quot;Steam&quot; as link name.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAutoAppLinks">Cambia automaticamente i collegamenti web di Steam in link dell'app di Steam all'aggiornamento della libreria.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsSteamLinkDescription">Se nessuna delle caselle di controllo sottostanti è selezionata, l'aggiunta o la ricerca di un link di Steam aggiungerà il solito link di pagina del negozio con &quot;Steam&quot; come nome del collegamento.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamAchievement">Obiettivi</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamCommunity">Hub della comunità</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSteamDiscussion">Discussione</sys:String>
