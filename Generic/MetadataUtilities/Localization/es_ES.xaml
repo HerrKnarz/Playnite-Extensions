@@ -4,8 +4,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">¿Quieres añadir el/los elemento(s) a la lista no deseada?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Ya existe un {0} con ese nombre.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Cambiar tipo de metadatos</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Conditional action editor</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Please enter a value</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor"></sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue"></sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Conditional actions changed {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Combinar como</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergedMetadataMessage">¡Metadatos fusionados en {0} juegos!</sys:String>
