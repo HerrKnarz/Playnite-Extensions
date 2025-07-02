@@ -20,18 +20,18 @@
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedMessage">{0} 游戏的不需要的链接已删除！</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRemovedDuplicatesMessage">{0} 游戏的重复链接已删除！</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogRenamedMessage">重命名了 {0} 游戏的链接！</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">A link to {0} already exists. You can replace the existing link or add a new one by entering a new link name.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogReplaceLink">名为 {0} 的链接已经存在。您可以通过输入一个新的链接名替换现有的链接或添加一个新链接。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSearchGame">搜索游戏</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSelectOption">选择选项</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesDialogSortedMessage">排序了 {0} 游戏的链接！</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">Steam links of {0} games converted!</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">Missing links of {0} games tagged!</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogSteamChangedMessage">已转换了 {0} 个游戏的 Steam 链接！</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesDialogTaggedMissingLinksMessage">{0} 个游戏缺少链接标记！</sys:String>
 
-    <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">You have duplicates in your sort order. Please make sure every link name is unique.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesErrorDuplicates">您有重复的排序顺序。请确保每个链接名称都是唯一的。</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLibraryLink">添加库链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkFromClipboard">从剪贴板添加链接</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">添加链接到...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuAddLinkTo">添加链接...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllConfiguredWebsites">所有已配置的网站</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllMissingWebsites">所有缺失的网站</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuAllGames">所有游戏</sys:String>
@@ -39,18 +39,18 @@
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToApp">将 Steam 网页链接转换为客户端链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuChangeSteamLinksToWeb">将 Steam 客户端链接转换为网络链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuCheckLinks">检查链接...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">Clean up links (rename, remove, sort)</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuCleanUp">清理链接 (重命名、移除、排序)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuFilteredGames">过滤的游戏</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveDuplicateLinks">删除重复的链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveSpecificLinks">从所选游戏中删除链接...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRemoveUnwantedLinks">移除不需要的链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuRenameLinks">重命名链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuReviewDuplicateLinks">检查重复链接...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">Search link to...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">selected websites...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSearchLinkTo">搜索链接...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuSelectedWebsites">选择网站...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksByName">按名称排序链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesMenuSortLinksBySortOrder">按排序顺序排序链接</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">Tag missing links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesMenuTagMissingLinks">标记缺失链接</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesProgressChangeSteamLinks">正在转换 Steam 链接...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressCheckingLinks">正在检查链接...</sys:String>
@@ -60,8 +60,8 @@
     <sys:String x:Key="LOCLinkUtilitiesProgressRemoveDuplicates">正在删除重复链接...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressRenameLinks">正在重命名链接...</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesProgressSortLinks">正在排序链接...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">Tagging missing links...</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">Adding links to configured websites...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressTagMissingLinks">正在标记缺失链接...</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesProgressWebsiteLink">正在添加链接到配置的网站...</sys:String>
 
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesRefresh">刷新</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesReviewDuplicatesWindowName">检查重复链接</sys:String>
@@ -71,8 +71,8 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLink">添加链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsAddLinksToNewGames">自动添加链接到新添加的游戏</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsApiKey">API 密钥</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">Using a bookmarklet you can add the active website in your browser directly to the selected games in Playnite. To find a suiting link name, you can define patterns for the URL and link title here. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">Browser search URL</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBookmarkletDescription">使用书签，您可以在您的浏览器中直接将活动网站添加到所选游戏中。 要查找粘贴链接名称，您可以在此定义URL和链接标题的模式。 模式可以包含通配符。一个*可以是零或多个字符，一个?必须是一个字符。</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsBrowserSearchUrl">浏览器搜索 URL</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAdd">添加</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonAddDefaults">添加默认值</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonCancel">取消</sys:String>
@@ -84,7 +84,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonReverseCheck">反转勾选</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonSort">排序</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">全部取消勾选</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">配置链接名称模式(只有剪贴板链接将被检查以查找名称) 因为我们没有名字开头。)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">配置网站</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">在这里，您可以为包含游戏名称、ROM 名称、Steam ID 或 GOG ID 且没有可变部分的网址的网站添加您自己的链接。在“游戏网址”字段中，您可以为此使用占位符{GameName}、{RomName}、{SteamId}和{GogId}。以下复选框定义了如何修改游戏名称以适应网址方案以及如何检查链接的有效性。您还可以添加一个浏览器搜索网址，然后可以在浏览器中打开以搜索游戏。此字段仅支持{GameName}占位符。有关自定义链接配置文件的更多信息，请单击问号按钮。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">删除特殊字符</sys:String>
@@ -101,7 +101,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksToTitleCase">转为标题大小写</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksAllowRedirects">允许重定向</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksReturnsSameUrl">返回相同的 URL</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksNeedsToBeChecked">Needs to be checked</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksNeedsToBeChecked">需要检查</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveSpecialChars">删除所有不是字母、数字、空格或连字符的字符。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionRemoveEditionSuffix">将游戏名称末尾的诸如“特别版”或高清（HD）之类的内容去除。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionEscapeDataString">对字符串进行转义，使其可以在 URL 中安全使用。</sys:String>
@@ -110,7 +110,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionAllowRedirects">链接是有效的，即使网站重定向到另一页 (或至少发送一个重定向信号)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl">如果网站返回完全相同的 URL 且不更改，链接才是有效的。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked">当未勾选时，链接将不会被检查且始终被视为有效。这仅对某些网站有用，在这些网站上您可以确定该 URL 是存在的。SteamDB 就是一个很好的例子，因为它通过 Steam ID 为所有 Steam 游戏提供链接。</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">Try out game name formatting</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">尝试使用游戏名称格式</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">自定义排序顺序</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">不要重命名，如果链接名称包含：</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">游戏元数据更新后删除重复链接</sys:String>
@@ -124,10 +124,10 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsLinkSource">链接来源</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsMissingLinkPrefixDefaultValue">[缺少链接]</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">名称模式匹配</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsOnlyUsedToSort">Only used as a description and to sort this grid.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsOnlyUsedToSort">仅作为描述使用并排序此网格。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatch">部分匹配</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">When checked only one of both patterns has to match.</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsPrefixMissingLinkTag">Prefix for missing link tags</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsPrefixMissingLinkTag">缺少链接标签的前缀</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksAfterChange">游戏元数据更新后删除不需要的链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">元数据提供者通常会自动添加一些您不想要的网站链接。在这里，您可以为那些您想要删除的链接定义模式匹配。这些模式可以包含通配符。* 可以表示零个或多个字符，? 必须恰好是一个字符。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRenameLinksAfterChange">游戏元数据更新后重命名链接</sys:String>
@@ -136,16 +136,16 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsShowInMenus">在菜单中显示</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortAfterChange">在游戏元数据更新后排序链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsSortPosition">位置</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">Bookmarklet/Clipboard</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabCustomLinks">Custom link profiles</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabBookmarkletClipboard">书签/剪切板</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabCustomLinks">自定义链接配置文件</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabGeneral">常规设置</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRemoveLinks">删除链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabRenameLinks">重命名链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTabSorting">排序</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">Tag missing links</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTabTagMissingLinks">标签缺失链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksDescription">为了跟踪哪些游戏缺少指向特定网站的链接，您可以在此处添加链接名称和 URL 模式。如果游戏的任何链接都与该模式不匹配，则会将具有该模式名称的标签添加到游戏中。这些模式可以包含通配符。* 可以表示零个或多个字符，? 必须恰好表示一个字符。</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">Tag missing links to game library</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">Tag missing links after the game meta data was updated</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLibraryLinks">标记缺失的链接到游戏库</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsTagMissingLinksAfterChange">游戏元数据更新后标记缺失链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUrlPattern">URL 模式匹配</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsUseCustomSortOrder">自动排序时使用自定义排序顺序</sys:String>
 
