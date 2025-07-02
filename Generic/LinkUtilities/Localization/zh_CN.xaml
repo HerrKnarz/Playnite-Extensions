@@ -126,7 +126,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsNamePattern">名称模式匹配</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsOnlyUsedToSort">仅作为描述使用并排序此网格。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatch">部分匹配</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">When checked only one of both patterns has to match.</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsPartialMatchHint">如果选中此项，只需匹配其中一个模式。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsPrefixMissingLinkTag">缺少链接标签的前缀</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksAfterChange">游戏元数据更新后删除不需要的链接</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsRemoveLinksDescription">元数据提供者通常会自动添加一些您不想要的网站链接。在这里，您可以为那些您想要删除的链接定义模式匹配。这些模式可以包含通配符。* 可以表示零个或多个字符，? 必须恰好是一个字符。</sys:String>
