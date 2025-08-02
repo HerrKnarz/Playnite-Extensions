@@ -100,6 +100,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Hinzufügen-Button anzeigen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Löschen-Button anzeigen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editieren</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Präfixe dürfen nicht leer sein!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Nur bei neuen Spielen vor dem Download von Metadaten ausführen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">In Details ausblenden</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Im Editor ausblenden</sys:String>
