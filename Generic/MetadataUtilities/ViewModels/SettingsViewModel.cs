@@ -38,7 +38,7 @@ namespace MetadataUtilities.ViewModels
 
             _mergeRules = Settings?.MergeRules;
 
-            var savedSettings = plugin.LoadPluginSettings<Settings>();
+            Settings savedSettings = plugin.LoadPluginSettings<Settings>();
 
             Settings = savedSettings ?? new Settings();
 
@@ -91,9 +91,9 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand AddConActionCommand => new RelayCommand(() =>
         {
-            var conditionalAction = new ConditionalAction();
+            ConditionalAction conditionalAction = new ConditionalAction();
 
-            var window = ConditionalActionEditorViewModel.GetWindow(conditionalAction);
+            Window window = ConditionalActionEditorViewModel.GetWindow(conditionalAction);
 
             if (window == null)
             {
@@ -115,18 +115,18 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<object> AddNewMergeSourceCommand => new RelayCommand<object>(rule =>
         {
-            var type = FieldType.Tag;
-            var prefix = string.Empty;
+            FieldType type = FieldType.Tag;
+            string prefix = string.Empty;
 
             if (SourceObjectsViewSource.View?.CurrentItem != null)
             {
-                var templateItem = (MetadataObject)SourceObjectsViewSource.View.CurrentItem;
+                MetadataObject templateItem = (MetadataObject)SourceObjectsViewSource.View.CurrentItem;
 
                 type = templateItem.Type;
                 prefix = templateItem.Prefix;
             }
 
-            var newItem = ((MergeRule)rule).SourceObjects.AddNewItem(type, prefix);
+            MetadataObject newItem = ((MergeRule)rule).SourceObjects.AddNewItem(type, prefix);
 
             if (newItem != null)
             {
@@ -153,12 +153,14 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand<object> EditConActionCommand => new RelayCommand<object>(conAction =>
         {
             if (conAction == null)
+            {
                 return;
+            }
 
-            var conditionalActionOriginal = (ConditionalAction)conAction;
-            var conditionalActionToEdit = conditionalActionOriginal.DeepClone();
+            ConditionalAction conditionalActionOriginal = (ConditionalAction)conAction;
+            ConditionalAction conditionalActionToEdit = conditionalActionOriginal.DeepClone();
 
-            var window = ConditionalActionEditorViewModel.GetWindow(conditionalActionToEdit);
+            Window window = ConditionalActionEditorViewModel.GetWindow(conditionalActionToEdit);
 
             if (window == null)
             {
@@ -229,7 +231,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<IList<object>> RemoveConActionCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (var conAction in items.ToList().Cast<ConditionalAction>())
+            foreach (ConditionalAction conAction in items.ToList().Cast<ConditionalAction>())
             {
                 Settings.ConditionalActions.Remove(conAction);
             }
@@ -244,7 +246,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<IList<object>> RemovePrefixCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (var item in items.ToList().Cast<PrefixItemList>())
+            foreach (PrefixItemList item in items.ToList().Cast<PrefixItemList>())
             {
                 Settings.PrefixItemTypes.Remove(item);
             }
@@ -252,7 +254,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<IList<object>> RemoveQuickAddFromListCommand => new RelayCommand<IList<object>>(items =>
         {
-            foreach (var item in items.ToList().Cast<QuickAddObject>())
+            foreach (QuickAddObject item in items.ToList().Cast<QuickAddObject>())
             {
                 Settings.QuickAddObjects.Remove(item);
             }
@@ -261,7 +263,7 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand<IList<object>> RemoveUnusedFromListCommand =>
             new RelayCommand<IList<object>>(items =>
                 {
-                    foreach (var item in items.ToList())
+                    foreach (object item in items.ToList())
                     {
                         if (item is WhiteListItem whiteListItem)
                         {
@@ -279,7 +281,7 @@ namespace MetadataUtilities.ViewModels
                 {
                     try
                     {
-                        var winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
+                        Window winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
 
                         if (winParent.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
                         {
@@ -383,7 +385,7 @@ namespace MetadataUtilities.ViewModels
 
         public void AddDefaultWhiteListItems()
         {
-            var defaults = Serialization.FromJsonFile<List<WhiteListItem>>(Path.Combine(
+            List<WhiteListItem> defaults = Serialization.FromJsonFile<List<WhiteListItem>>(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Resources",
                 "WhiteListDefaults.json"));
 
@@ -392,7 +394,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            foreach (var item in defaults.Where(item => Settings.UnusedItemsWhiteList.All(x => x.TypeAndName != item.TypeAndName)))
+            foreach (WhiteListItem item in defaults.Where(item => Settings.UnusedItemsWhiteList.All(x => x.TypeAndName != item.TypeAndName)))
             {
                 Settings.UnusedItemsWhiteList.Add(item);
             }
@@ -409,7 +411,7 @@ namespace MetadataUtilities.ViewModels
 
             QuickAddObject itemToSelect = null;
 
-            foreach (var item in items.Where(item => Settings.QuickAddObjects.All(x => x.TypeAndName != item.TypeAndName)))
+            foreach (MetadataObject item in items.Where(item => Settings.QuickAddObjects.All(x => x.TypeAndName != item.TypeAndName)))
             {
                 itemToSelect = new QuickAddObject(item.Type, item.Name);
 
@@ -431,7 +433,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            foreach (var item in items.Where(item => Settings.UnusedItemsWhiteList.All(x => x.TypeAndName != item.TypeAndName)))
+            foreach (MetadataObject item in items.Where(item => Settings.UnusedItemsWhiteList.All(x => x.TypeAndName != item.TypeAndName)))
             {
                 Settings.UnusedItemsWhiteList.Add(new WhiteListItem(item.Type, item.Name));
             }
@@ -441,7 +443,12 @@ namespace MetadataUtilities.ViewModels
 
         public void AddNewWhiteListItem(FieldType type)
         {
-            var newItem = ControlCenter.AddNewItem(type);
+            MetadataObject newItem = ControlCenter.AddNewItem(type);
+
+            if (newItem == null)
+            {
+                return;
+            }
 
             if (Settings.UnusedItemsWhiteList.Any(x => x.TypeAndName == newItem.TypeAndName))
             {
@@ -455,7 +462,7 @@ namespace MetadataUtilities.ViewModels
 
         public void AddQuickAddItems(FieldType type)
         {
-            var items = ControlCenter.GetItemsFromAddDialog(type);
+            List<MetadataObject> items = ControlCenter.GetItemsFromAddDialog(type);
 
             if (items.Count == 0)
             {
@@ -467,7 +474,7 @@ namespace MetadataUtilities.ViewModels
 
         public void AddWhiteListItems(FieldType type)
         {
-            var items = ControlCenter.GetItemsFromAddDialog(type);
+            List<MetadataObject> items = ControlCenter.GetItemsFromAddDialog(type);
 
             if (items.Count == 0)
             {
@@ -477,23 +484,26 @@ namespace MetadataUtilities.ViewModels
             AddItemsToWhiteList(items);
         }
 
-        public void RemoveFromList(IList<object> items, MetadataObjects list) => list.RemoveItems(items.ToList().Cast<MetadataObject>());
+        public void RemoveFromList(IList<object> items, MetadataObjects list)
+        {
+            list.RemoveItems(items.ToList().Cast<MetadataObject>());
+        }
 
         private void EditMergeRule(MergeRule rule = null)
         {
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                var isNewRule = rule == null;
+                bool isNewRule = rule == null;
 
-                var ruleToEdit = new MergeRule(FieldType.Category);
+                MergeRule ruleToEdit = new MergeRule(FieldType.Category);
 
                 if (rule != null)
                 {
                     ruleToEdit.Type = rule.Type;
                     ruleToEdit.Name = rule.Name;
 
-                    foreach (var sourceItem in rule.SourceObjects)
+                    foreach (MetadataObject sourceItem in rule.SourceObjects)
                     {
                         ruleToEdit.SourceObjects.Add(new MetadataObject(sourceItem.Type, sourceItem.Name)
                         {
@@ -502,7 +512,7 @@ namespace MetadataUtilities.ViewModels
                     }
                 }
 
-                var metadataObjects = new MetadataObjects();
+                MetadataObjects metadataObjects = new MetadataObjects();
 
                 if (isNewRule)
                 {
@@ -510,12 +520,12 @@ namespace MetadataUtilities.ViewModels
                 }
                 else
                 {
-                    var temp = new MetadataObjects();
+                    MetadataObjects temp = new MetadataObjects();
                     temp.LoadMetadata();
 
-                    foreach (var item in ruleToEdit.SourceObjects)
+                    foreach (MetadataObject item in ruleToEdit.SourceObjects)
                     {
-                        var foundItem = temp.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
+                        MetadataObject foundItem = temp.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type);
 
                         if (foundItem != null)
                         {
@@ -532,15 +542,15 @@ namespace MetadataUtilities.ViewModels
                     metadataObjects.AddMissing(temp.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name));
                 }
 
-                var viewModel = new MergeRuleEditorViewModel(metadataObjects)
+                MergeRuleEditorViewModel viewModel = new MergeRuleEditorViewModel(metadataObjects)
                 {
                     RuleName = ruleToEdit.Name,
                     RuleType = ruleToEdit.Type
                 };
 
-                var editorView = new MergeRuleEditorView();
+                MergeRuleEditorView editorView = new MergeRuleEditorView();
 
-                var window = WindowHelper.CreateSizedWindow(
+                Window window = WindowHelper.CreateSizedWindow(
                     ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 700, 700, false, true);
                 window.Content = editorView;
                 window.DataContext = viewModel;
@@ -556,7 +566,7 @@ namespace MetadataUtilities.ViewModels
                 ruleToEdit.Type = viewModel.RuleType;
                 ruleToEdit.SourceObjects.Clear();
 
-                foreach (var item in metadataObjects.Where(x => x.Selected).ToList())
+                foreach (MetadataObject item in metadataObjects.Where(x => x.Selected).ToList())
                 {
                     ruleToEdit.SourceObjects.Add(new MetadataObject(item.Type, item.Name)
                     {
@@ -579,7 +589,7 @@ namespace MetadataUtilities.ViewModels
                 if (Settings.MergeRules.Any(x => x.Name == ruleToEdit.Name && x.Type == ruleToEdit.Type))
                 {
                     Cursor.Current = Cursors.Default;
-                    var response = API.Instance.Dialogs.ShowMessage(
+                    MessageBoxResult response = API.Instance.Dialogs.ShowMessage(
                         ResourceProvider.GetString("LOCMetadataUtilitiesDialogMergeOrReplace"),
                         ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.YesNoCancel,
                         MessageBoxImage.Question);
@@ -637,8 +647,11 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        private bool Filter(object item) => item is MergeRule rule && (rule.Name.RegExIsMatch(SearchTerm) ||
+        private bool Filter(object item)
+        {
+            return item is MergeRule rule && (rule.Name.RegExIsMatch(SearchTerm) ||
                                                                        rule.SourceObjects.Any(x =>
                                                                            x.Name.RegExIsMatch(SearchTerm)));
+        }
     }
 }
