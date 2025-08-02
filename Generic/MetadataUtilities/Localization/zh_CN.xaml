@@ -100,6 +100,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">显示添加按钮</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">显示删除按钮</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">编辑</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Prefixes can't be empty!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">仅在元数据下载前在新游戏中执行</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">在详细信息中隐藏</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">在编辑器中隐藏</sys:String>
