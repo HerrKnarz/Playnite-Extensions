@@ -100,6 +100,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Ekle düğmesini göster</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Sil düğmesini göster</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Düzenle</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Prefixes can't be empty!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Yalnızca meta veri indirilmeden önce yeni oyunlarda çalıştır</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Detaylarda gizle</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Düzenleyicide gizle</sys:String>
