@@ -100,7 +100,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Показувати кнопку &quot;Додати&quot;</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Показати кнопку &quot;Видалити&quot;</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Змінити</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Prefixes can't be empty!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Префікси не можуть бути порожніми!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Виконувати тільки з новими іграми перед завантаженням метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Сховати в подробицях</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Сховати в редакторі</sys:String>
