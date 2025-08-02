@@ -178,6 +178,11 @@ namespace MetadataUtilities.Models
 
         public Guid AddToDb()
         {
+            if (Name == null || Name == string.Empty)
+            {
+                return Guid.Empty;
+            }
+
             if (TypeManager is IEditableObjectType editableType)
             {
                 Id = editableType.AddDbObject(Name);
@@ -191,14 +196,25 @@ namespace MetadataUtilities.Models
             return Id;
         }
 
-        public bool AddToGame(Game game) => TypeManager is IEditableObjectType type && type.AddValueToGame(game, Id);
+        public bool AddToGame(Game game)
+        {
+            return TypeManager is IEditableObjectType type && type.AddValueToGame(game, Id);
+        }
 
-        public void CheckGroup(Dictionary<string, int> groups) =>
-            ShowGrouped = groups.TryGetValue(CleanedUpName, out var count) && count > 1;
+        public void CheckGroup(Dictionary<string, int> groups)
+        {
+            ShowGrouped = groups.TryGetValue(CleanedUpName, out int count) && count > 1;
+        }
 
-        public bool ExistsInDb() => TypeManager is IObjectType type && type.DbObjectExists(Name);
+        public bool ExistsInDb()
+        {
+            return TypeManager is IObjectType type && type.DbObjectExists(Name);
+        }
 
-        public bool ExistsInGame(Game game) => TypeManager is IValueType type && type.GameContainsValue(game, Id);
+        public bool ExistsInGame(Game game)
+        {
+            return TypeManager is IValueType type && type.GameContainsValue(game, Id);
+        }
 
         public string GetCleanedUpName()
         {
@@ -216,7 +232,7 @@ namespace MetadataUtilities.Models
                         return EditName;
                     }
 
-                    var newName = EditName;
+                    string newName = EditName;
 
                     if (newName.EndsWith(")"))
                     {
@@ -236,9 +252,12 @@ namespace MetadataUtilities.Models
             }
         }
 
-        public string GetDisplayName() => Settings?.PrefixItemTypes?.Any(x => (x.Name != default || x.FieldType != FieldType.Empty) && x.Prefix == Prefix) ?? false
+        public string GetDisplayName()
+        {
+            return Settings?.PrefixItemTypes?.Any(x => (x.Name != default || x.FieldType != FieldType.Empty) && x.Prefix == Prefix) ?? false
             ? EditName
             : Name;
+        }
 
         public void GetGameCount()
         {
@@ -248,10 +267,12 @@ namespace MetadataUtilities.Models
             }
         }
 
-        public List<Game> GetGames() =>
-            TypeManager is IObjectType type
+        public List<Game> GetGames()
+        {
+            return TypeManager is IObjectType type
                 ? type.GetGames(Id, Settings.IgnoreHiddenGamesInGameCount)
                 : new List<Game>();
+        }
 
         public string GetPrefix()
         {
@@ -260,7 +281,7 @@ namespace MetadataUtilities.Models
                 return string.Empty;
             }
 
-            foreach (var prefix in Settings.Prefixes)
+            foreach (string prefix in Settings.Prefixes)
             {
                 if (Name?.StartsWith(prefix) ?? false)
                 {
@@ -271,9 +292,15 @@ namespace MetadataUtilities.Models
             return string.Empty;
         }
 
-        public bool IsInGame(Game game) => TypeManager is IObjectType type && type.DbObjectInGame(game, Id);
+        public bool IsInGame(Game game)
+        {
+            return TypeManager is IObjectType type && type.DbObjectInGame(game, Id);
+        }
 
-        public bool IsUsed(bool ignoreHiddenGames = false) => TypeManager is IObjectType type && type.DbObjectInUse(Id, ignoreHiddenGames);
+        public bool IsUsed(bool ignoreHiddenGames = false)
+        {
+            return TypeManager is IObjectType type && type.DbObjectInUse(Id, ignoreHiddenGames);
+        }
 
         public void RefreshId()
         {
@@ -296,7 +323,7 @@ namespace MetadataUtilities.Models
 
             if (checkIfUsed)
             {
-                var gamesAffected = type.RemoveObjectFromGames(API.Instance.Database.Games.ToList(), Id);
+                IEnumerable<Guid> gamesAffected = type.RemoveObjectFromGames(API.Instance.Database.Games.ToList(), Id);
 
                 ControlCenter.UpdateGames(gamesAffected.ToList());
             }
@@ -311,7 +338,10 @@ namespace MetadataUtilities.Models
             return true;
         }
 
-        public bool RemoveFromGame(Game game) => TypeManager is IEditableObjectType type && type.RemoveObjectFromGame(game, Id);
+        public bool RemoveFromGame(Game game)
+        {
+            return TypeManager is IEditableObjectType type && type.RemoveObjectFromGame(game, Id);
+        }
 
         public event RenameObjectEventHandler RenameObject;
 
@@ -331,13 +361,17 @@ namespace MetadataUtilities.Models
             return gameIds;
         }
 
-        public bool UpdateItem(string newName) =>
-            Id == default || (RenameObject == null) || (RenameObject?.Invoke(this, Name, newName) ?? true);
+        public bool UpdateItem(string newName)
+        {
+            return Id == default || (RenameObject == null) || (RenameObject?.Invoke(this, Name, newName) ?? true);
+        }
 
-        public DbInteractionResult UpdateName(string newName) =>
-            TypeManager is IEditableObjectType type
+        public DbInteractionResult UpdateName(string newName)
+        {
+            return TypeManager is IEditableObjectType type
                 ? type.UpdateName(Id, Name, newName)
                 : DbInteractionResult.Error;
+        }
 
         private void NotifyMissingItem()
         {
@@ -352,8 +386,14 @@ namespace MetadataUtilities.Models
 
     public class MetadataObjectEqualityComparer : IEqualityComparer<MetadataObject>
     {
-        public bool Equals(MetadataObject x, MetadataObject y) => x?.TypeAndName.Equals(y?.TypeAndName) ?? false;
+        public bool Equals(MetadataObject x, MetadataObject y)
+        {
+            return x?.TypeAndName.Equals(y?.TypeAndName) ?? false;
+        }
 
-        public int GetHashCode(MetadataObject obj) => obj.TypeAndName.GetHashCode();
+        public int GetHashCode(MetadataObject obj)
+        {
+            return obj.TypeAndName.GetHashCode();
+        }
     }
 }
