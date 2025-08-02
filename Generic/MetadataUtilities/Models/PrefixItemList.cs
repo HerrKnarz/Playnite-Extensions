@@ -12,9 +12,9 @@ namespace MetadataUtilities.Models
         private FieldType _fieldType;
         private string _icon;
         private MetadataObjects _items;
-        private string _name;
+        private string _name = string.Empty;
         private int _position;
-        private string _prefix;
+        private string _prefix = string.Empty;
 
         public PrefixItemList(Game game, FieldType fieldType, string icon)
         {
@@ -88,7 +88,7 @@ namespace MetadataUtilities.Models
                 return;
             }
 
-            var prefixes = new List<string> { _prefix };
+            List<string> prefixes = new List<string> { _prefix };
 
             if (_prefix == default)
             {

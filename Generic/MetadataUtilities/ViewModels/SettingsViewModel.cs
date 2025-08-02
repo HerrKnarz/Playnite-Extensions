@@ -380,7 +380,13 @@ namespace MetadataUtilities.ViewModels
         public bool VerifySettings(out List<string> errors)
         {
             errors = new List<string>();
-            return true;
+
+            if (Settings.PrefixItemTypes.Any(p => p.Prefix?.Length == 0 || p.Name?.Length == 0))
+            {
+                errors.Add(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsErrorEmptyPrefix"));
+            }
+
+            return errors.Count == 0;
         }
 
         public void AddDefaultWhiteListItems()
