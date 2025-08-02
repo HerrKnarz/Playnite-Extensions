@@ -100,6 +100,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Exibir botão adicionar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Exibir botão excluir</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editar</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Prefixes can't be empty!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Executar somente em novos jogos antes de baixar os metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Ocultar nos detalhes</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Ocultar no editor</sys:String>
