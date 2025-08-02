@@ -84,8 +84,8 @@
                                     <DataTemplate>
                                         <StackPanel Margin="0,5">
                                             <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsShowInEditor}" Margin="0,0,0,3"/>
-                                            <CheckBox IsChecked="{Binding HiddenAsUnused, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}" Margin="0,0,0,3"/>
-                                            <CheckBox IsChecked="{Binding RemoveUnusedItems, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}"/>
+                                            <CheckBox IsChecked="{Binding RemoveUnusedItems, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}" Margin="0,0,0,3"/>
+                                            <CheckBox IsChecked="{Binding HiddenAsUnused, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
