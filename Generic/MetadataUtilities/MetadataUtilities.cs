@@ -42,7 +42,7 @@ namespace MetadataUtilities
                 HasSettings = true
             };
 
-            foreach (var type in _fieldTypes)
+            foreach (IEditableObjectType type in _fieldTypes)
             {
                 type.RenameObject += OnRenameObject;
             }
@@ -56,7 +56,7 @@ namespace MetadataUtilities
                 SourceName = "MetadataUtilities"
             });
 
-            var iconResourcesToAdd = new Dictionary<string, string>
+            Dictionary<string, string> iconResourcesToAdd = new Dictionary<string, string>
             {
                 { "muEditorIcon", "\xf005" },
                 { "muMergeIcon", "\xef29" },
@@ -67,7 +67,7 @@ namespace MetadataUtilities
                 { "muUndoIcon", "\xee0b" }
             };
 
-            foreach (var iconResource in iconResourcesToAdd)
+            foreach (KeyValuePair<string, string> iconResource in iconResourcesToAdd)
             {
                 MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
             }
@@ -79,8 +79,10 @@ namespace MetadataUtilities
 
         public SettingsViewModel Settings { get; }
 
-        public void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> args) =>
+        public void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> args)
+        {
             ControlCenter.Instance.KnownGames.RemoveWhere(x => args.RemovedItems.Any(y => y.Id == x));
+        }
 
         public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
         {
@@ -96,7 +98,7 @@ namespace MetadataUtilities
 
             // some actions only run for games, that have values in one of the supported fields and
             // those differ from the ones before.
-            var games = args.UpdatedItems.Where(item =>
+            HashSet<Guid> games = args.UpdatedItems.Where(item =>
                 item.OldData == null ||
                 (item.NewData.AgeRatingIds != null &&
                  (item.OldData.AgeRatingIds == null ||
@@ -118,7 +120,7 @@ namespace MetadataUtilities
                   !new HashSet<Guid>(item.OldData.TagIds).SetEquals(item.NewData.TagIds))))
                 .Select(item => item.NewData.Id).Distinct().ToHashSet();
 
-            var myGames = args.UpdatedItems.Select(x => new MyGame()
+            List<MyGame> myGames = args.UpdatedItems.Select(x => new MyGame()
             {
                 Game = x.NewData,
                 ExecuteConditionalActions = true,
@@ -132,7 +134,7 @@ namespace MetadataUtilities
 
             API.Instance.MainView.UIDispatcher.Invoke(delegate
             {
-                foreach (var control in PrefixItemControls)
+                foreach (PrefixItemControl control in PrefixItemControls)
                 {
                     control.RefreshData();
                 }
@@ -141,14 +143,14 @@ namespace MetadataUtilities
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            var menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
-            var mergeSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsMergeRules");
-            var conditionalSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsTabConditionalActions");
-            var menuItems = new List<GameMenuItem>();
-            var games = args.Games.Distinct().ToList();
-            var myGames = games.Select(x => new MyGame() { Game = x }).ToList();
+            string menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
+            string mergeSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsMergeRules");
+            string conditionalSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsTabConditionalActions");
+            List<GameMenuItem> menuItems = new List<GameMenuItem>();
+            List<Game> games = args.Games.Distinct().ToList();
+            List<MyGame> myGames = games.Select(x => new MyGame() { Game = x }).ToList();
 
-            var item = new GameMenuItem
+            GameMenuItem item = new GameMenuItem
             {
                 Description = "",
                 MenuSection = ResourceProvider.GetString("LOCUserScore"),
@@ -157,10 +159,10 @@ namespace MetadataUtilities
             };
             menuItems.Add(item);
 
-            for (var i = 1; i <= 10; i++)
+            for (int i = 1; i <= 10; i++)
             {
-                var rating = i * 10;
-                var menuItem = new GameMenuItem
+                int rating = i * 10;
+                GameMenuItem menuItem = new GameMenuItem
                 {
                     Description = new string('\u2605', i),
                     MenuSection = ResourceProvider.GetString("LOCUserScore"),
@@ -195,13 +197,13 @@ namespace MetadataUtilities
                 }
             });
 
-            menuItems.AddRange(Settings.Settings.MergeRules.OrderBy(x => x.TypeAndName).Select(rule => new GameMenuItem
+            /*menuItems.AddRange(Settings.Settings.MergeRules.OrderBy(x => x.TypeAndName).Select(rule => new GameMenuItem
             {
                 Description = rule.TypeAndName,
                 MenuSection = $"{menuSection}|{mergeSection}",
                 Action = a => MergeAction.Instance().DoForAll(myGames, true,
                     ActionModifierType.None, rule)
-            }));
+            })); */
 
             menuItems.AddRange(Settings.Settings.ConditionalActions.OrderBy(x => x.Name).Select(action => new GameMenuItem
             {
@@ -211,9 +213,9 @@ namespace MetadataUtilities
                     ActionModifierType.IsManual, action)
             }));
 
-            var quickAddItems = new List<GameMenuItem>();
+            List<GameMenuItem> quickAddItems = new List<GameMenuItem>();
 
-            var baseMenu = Settings.Settings.QuickAddSingleMenuEntry
+            string baseMenu = Settings.Settings.QuickAddSingleMenuEntry
                 ? ResourceProvider.GetString("LOCMetadataUtilitiesName") + "|"
                 : "";
 
@@ -248,12 +250,12 @@ namespace MetadataUtilities
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
-            if (!_controlTypes.TryGetValue(args.Name, out var type))
+            if (!_controlTypes.TryGetValue(args.Name, out FieldType type))
             {
                 return null;
             }
 
-            var newControl = new PrefixItemControl(type);
+            PrefixItemControl newControl = new PrefixItemControl(type);
 
             PrefixItemControls.Add(newControl);
 
@@ -263,9 +265,9 @@ namespace MetadataUtilities
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            var menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
+            string menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
 
-            var menuItems = new List<MainMenuItem>
+            List<MainMenuItem> menuItems = new List<MainMenuItem>
             {
                 new MainMenuItem
                 {
@@ -298,9 +300,15 @@ namespace MetadataUtilities
             return menuItems;
         }
 
-        public override ISettings GetSettings(bool firstRunSettings) => Settings;
+        public override ISettings GetSettings(bool firstRunSettings)
+        {
+            return Settings;
+        }
 
-        public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
+        public override UserControl GetSettingsView(bool firstRunSettings)
+        {
+            return new SettingsView();
+        }
 
         public override IEnumerable<TopPanelItem> GetTopPanelItems()
         {
@@ -364,34 +372,40 @@ namespace MetadataUtilities
             }
         }
 
-        private static bool OnRenameObject(object sender, string oldName, string newName) => ControlCenter.Instance.RenameObject((IMetadataFieldType)sender, oldName, newName);
+        private static bool OnRenameObject(object sender, string oldName, string newName)
+        {
+            return ControlCenter.Instance.RenameObject((IMetadataFieldType)sender, oldName, newName);
+        }
 
-        private static void ShowEditor() => MetadataEditorViewModel.ShowEditor();
+        private static void ShowEditor()
+        {
+            MetadataEditorViewModel.ShowEditor();
+        }
 
         private IEnumerable<GameMenuItem> CreateMenuItems(string baseMenu, List<Game> games, IReadOnlyCollection<QuickAddObject> dbObjects, ActionModifierType action = ActionModifierType.Add)
         {
-            var menuItems = new List<GameMenuItem>();
+            List<GameMenuItem> menuItems = new List<GameMenuItem>();
 
             if (dbObjects.Count == 0)
             {
                 return menuItems;
             }
 
-            var myGames = games.Select(x => new MyGame() { Game = x }).ToList();
+            List<MyGame> myGames = games.Select(x => new MyGame() { Game = x }).ToList();
 
             // ReSharper disable once LoopCanBeConvertedToQuery
-            foreach (var dbObject in dbObjects
+            foreach (QuickAddObject dbObject in dbObjects
                          .Where(x => (action == ActionModifierType.Add && x.Add) ||
                                      (action == ActionModifierType.Remove && x.Remove) ||
                                      (action == ActionModifierType.Toggle && x.Toggle)))
             {
-                var customMenu = dbObject.CustomPath?.Trim().Length > 0
+                string customMenu = dbObject.CustomPath?.Trim().Length > 0
                     ? dbObject.CustomPath.Replace("{type}", dbObject.Type.ToString()).Replace("{action}", action.ToString())
                     : Settings.Settings.QuickAddCustomPath?.Trim().Length > 0
                         ? Settings.Settings.QuickAddCustomPath.Replace("{type}", dbObject.Type.ToString()).Replace("{action}", action.ToString())
                         : string.Format(ResourceProvider.GetString($"LOCMetadataUtilitiesMenuQuickAdd{action}"), ResourceProvider.GetString($"LOC{dbObject.Type}Label"));
 
-                var checkedCount = 0;
+                int checkedCount = 0;
 
                 if (dbObject.Type.GetTypeManager() is IObjectType type)
                 {
@@ -410,6 +424,9 @@ namespace MetadataUtilities
             return menuItems;
         }
 
-        private void ShowSettings() => OpenSettingsView();
+        private void ShowSettings()
+        {
+            OpenSettingsView();
+        }
     }
 }
