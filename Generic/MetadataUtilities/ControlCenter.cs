@@ -156,6 +156,28 @@ namespace MetadataUtilities
             KnownGames = API.Instance.Database.Games.Select(x => x.Id).Distinct().ToHashSet();
         }
 
+        public void MergeMetadataObjects(MetadataObject mergeTarget, MetadataObjects items, bool saveAsRule = false)
+        {
+            if (items == null || items.Count == 0)
+            {
+                return;
+            }
+
+            MergeRule rule = new MergeRule(mergeTarget.Type, mergeTarget.Name)
+            {
+                Id = mergeTarget.Id,
+                SourceObjects = items
+            };
+
+            if (saveAsRule)
+            {
+                Settings.MergeRules.AddRule(rule);
+                SavePluginSettings();
+            }
+
+            rule.MergeItems();
+        }
+
         public List<MetadataObject> RemoveUnusedMetadata(bool autoMode = false)
         {
             List<MetadataObject> temporaryList = new List<MetadataObject>();

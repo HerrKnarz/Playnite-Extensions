@@ -369,27 +369,7 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                Cursor.Current = Cursors.WaitCursor;
-
-                using (MetadataViewSource.DeferRefresh())
-                {
-                    foreach (MetadataObject itemToRemove in mergeItems)
-                    {
-                        if (!itemToRemove.ExistsInDb())
-                        {
-                            CompleteMetadata.Remove(itemToRemove, true);
-                        }
-                        else
-                        {
-                            itemToRemove.GetGameCount();
-
-                            CompleteMetadata.GetSibling(itemToRemove)?.GetGameCount();
-                        }
-                    }
-
-                    UpdateGroupDisplay();
-                    CalculateItemCount();
-                }
+                RemoveItems(mergeItems);
 
                 LoadRelatedGames();
             }
@@ -406,13 +386,22 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<IList<object>> MergeRenameCommand => new RelayCommand<IList<object>>(items =>
         {
-            if (items == null || items.Count > 1 || MetadataViewSource.View.CurrentItem == null)
+            if (items == null || items.Count == 0 || MetadataViewSource.View.CurrentItem == null)
             {
                 return;
             }
 
             try
             {
+                ControlCenter.Instance.IsUpdating = true;
+
+                MetadataObjects itemsToMerge = new MetadataObjects();
+
+                // We clone the items, so we can add them to the merge rule while the originals get changed here.
+                itemsToMerge.AddMissing(items.ToList().Cast<MetadataObject>());
+
+                MetadataObjects mergeItems = itemsToMerge.DeepClone();
+
                 // We prepare the original item, save the old values and create a new one to edit.
                 MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
@@ -432,26 +421,16 @@ namespace MetadataUtilities.ViewModels
 
                 // Now we try to actually rename the item in the data grid and return, if that
                 // wasn't successful. An error message already was displayed in that case.
-                templateItem.EditName = newItem.EditName;
-                templateItem.Prefix = newItem.Prefix;
-
-                if (templateItem.Name == oldItem.Name)
+                if (!templateItem.UpdateItem(newItem.Name))
                 {
-                    templateItem.Prefix = oldItem.Prefix;
                     return;
                 }
 
-                templateItem.Prefix = newItem.Prefix;
+                templateItem.Name = newItem.Name;
 
-                // Finally we create a new merge rule and add it to the list.
-                MergeRule newRule = new MergeRule(newItem.Type, newItem.Name)
-                {
-                    Prefix = newItem.Prefix,
-                    SourceObjects = new MetadataObjects() { oldItem }
-                };
+                ControlCenter.Instance.MergeMetadataObjects(newItem, mergeItems, true);
 
-                _settings.MergeRules.AddRule(newRule);
-                ControlCenter.Instance.SavePluginSettings();
+                RemoveItems(itemsToMerge);
 
                 RefreshView();
             }
@@ -459,7 +438,37 @@ namespace MetadataUtilities.ViewModels
             {
                 Log.Error(exception, "Error during initializing rename dialog", true);
             }
-        }, items => items?.Count == 1);
+            finally
+            {
+                ControlCenter.Instance.IsUpdating = false;
+                Cursor.Current = Cursors.Default;
+            }
+        }, items => items?.Count > 0);
+
+        public void RemoveItems(MetadataObjects mergeItems)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+
+            using (MetadataViewSource.DeferRefresh())
+            {
+                foreach (MetadataObject itemToRemove in mergeItems)
+                {
+                    if (!itemToRemove.ExistsInDb())
+                    {
+                        CompleteMetadata.Remove(itemToRemove, true);
+                    }
+                    else
+                    {
+                        itemToRemove.GetGameCount();
+
+                        CompleteMetadata.GetSibling(itemToRemove)?.GetGameCount();
+                    }
+                }
+
+                UpdateGroupDisplay();
+                CalculateItemCount();
+            }
+        }
 
         public CollectionViewSource MetadataViewSource
         {

@@ -36,19 +36,7 @@ namespace MetadataUtilities.ViewModels
 
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
-            var rule = new MergeRule(_mergeTarget.Type, _mergeTarget.Name)
-            {
-                Id = _mergeTarget.Id,
-                SourceObjects = _metadataObjects
-            };
-
-            if (SaveAsRule)
-            {
-                ControlCenter.Instance.Settings.MergeRules.AddRule(rule);
-                ControlCenter.Instance.SavePluginSettings();
-            }
-
-            rule.MergeItems();
+            ControlCenter.Instance.MergeMetadataObjects(_mergeTarget, _metadataObjects, SaveAsRule);
 
             win.DialogResult = true;
             win.Close();
