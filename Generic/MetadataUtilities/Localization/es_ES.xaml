@@ -122,6 +122,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Mostrar en el editor de metadatos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Mostrar botón de ajustes en el panel superior (requiere reiniciar)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Mostrar botón del editor de metadatos en el panel superior (requiere reiniciar)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowUserScoreMenu">Show an option to quickly set the user score in the game context menu</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Poner los submenús en la entrada del menú Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Acciones condicionales</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">General</sys:String>
