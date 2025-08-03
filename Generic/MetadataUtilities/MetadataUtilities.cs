@@ -150,26 +150,30 @@ namespace MetadataUtilities
             List<Game> games = args.Games.Distinct().ToList();
             List<MyGame> myGames = games.Select(x => new MyGame() { Game = x }).ToList();
 
-            GameMenuItem item = new GameMenuItem
+            if (Settings.Settings.ShowUserScoreMenu)
             {
-                Description = "",
-                MenuSection = ResourceProvider.GetString("LOCUserScore"),
-                Action = a =>
-                    SetUserScoreAction.Instance().DoForAll(myGames, true, ActionModifierType.None, 0)
-            };
-            menuItems.Add(item);
-
-            for (int i = 1; i <= 10; i++)
-            {
-                int rating = i * 10;
-                GameMenuItem menuItem = new GameMenuItem
+                GameMenuItem item = new GameMenuItem
                 {
-                    Description = new string('\u2605', i),
+                    Description = "",
                     MenuSection = ResourceProvider.GetString("LOCUserScore"),
                     Action = a =>
-                        SetUserScoreAction.Instance().DoForAll(myGames, true, ActionModifierType.None, rating)
+                        SetUserScoreAction.Instance().DoForAll(myGames, true, ActionModifierType.None, 0)
                 };
-                menuItems.Add(menuItem);
+
+                menuItems.Add(item);
+
+                for (int i = 1; i <= 10; i++)
+                {
+                    int rating = i * 10;
+                    GameMenuItem menuItem = new GameMenuItem
+                    {
+                        Description = new string('\u2605', i),
+                        MenuSection = ResourceProvider.GetString("LOCUserScore"),
+                        Action = a =>
+                            SetUserScoreAction.Instance().DoForAll(myGames, true, ActionModifierType.None, rating)
+                    };
+                    menuItems.Add(menuItem);
+                }
             }
 
             menuItems.AddRange(new List<GameMenuItem>
@@ -180,7 +184,7 @@ namespace MetadataUtilities
                     MenuSection = menuSection,
                     Icon = "muEditorIcon",
                     Action = a => MetadataEditorViewModel.ShowEditor(games)
-                },
+    },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnwanted"),

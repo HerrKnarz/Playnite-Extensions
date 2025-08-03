@@ -46,6 +46,7 @@ namespace MetadataUtilities.Models
         private bool _renameWhitelist = true;
         private bool _showTopPanelButton = true;
         private bool _showTopPanelSettingsButton;
+        private bool _showUserScoreMenu = true;
         private ObservableCollection<TypeConfig> _typeConfigs = new ObservableCollection<TypeConfig>();
         private ObservableCollection<WhiteListItem> _unusedItemsWhiteList = new ObservableCollection<WhiteListItem>();
         private MetadataObjects _unwantedItems = new MetadataObjects();
@@ -249,6 +250,12 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _showTopPanelSettingsButton, value);
         }
 
+        public bool ShowUserScoreMenu
+        {
+            get => _showUserScoreMenu;
+            set => SetValue(ref _showUserScoreMenu, value);
+        }
+
         public ObservableCollection<TypeConfig> TypeConfigs
         {
             get => _typeConfigs;
@@ -275,7 +282,7 @@ namespace MetadataUtilities.Models
 
         public void SetMissingTypes()
         {
-            foreach (var item in FieldTypeHelper.ItemListFieldValues().Keys
+            foreach (KNARZhelper.Enum.FieldType item in FieldTypeHelper.ItemListFieldValues().Keys
                          .Where(item => _filterTypes.All(x => x.Type != item)))
             {
                 _filterTypes.Add(new FilterType()
@@ -285,7 +292,7 @@ namespace MetadataUtilities.Models
                 });
             }
 
-            foreach (var item in FieldTypeHelper.ItemListFieldValues().Keys
+            foreach (KNARZhelper.Enum.FieldType item in FieldTypeHelper.ItemListFieldValues().Keys
                          .Where(item => _typeConfigs.All(x => x.Type != item)))
             {
                 _typeConfigs.Add(new TypeConfig()
