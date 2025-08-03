@@ -122,6 +122,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">在元数据编辑器显示</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">在顶部面板显示设置按钮（需要重启）</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">在顶部面板中显示元数据编辑器按钮（需要重启）</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowUserScoreMenu">Show an option to quickly set the user score in the game context menu</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">将子菜单置于元数据工具菜单项下</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">条件操作</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">常规</sys:String>
