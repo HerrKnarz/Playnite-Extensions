@@ -122,6 +122,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Meta veri düzenleyicisini göster</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Üst panelde Ayarlar düğmesini göster (yeniden başlatma gerektirir)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Üst panelde Meta Veri Düzenleyici düğmesini göster (yeniden başlatma gerektirir)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowUserScoreMenu">Show an option to quickly set the user score in the game context menu</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Alt menüleri Meta Veri Araçları menü girişinin altına yerleştirin</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Koşullu eylemler</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Genel</sys:String>
