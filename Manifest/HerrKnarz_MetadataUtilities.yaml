@@ -1,5 +1,20 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 1.7.0
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-08-03
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2025-08-03/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_1_7_0.pext
+    Changelog:
+      - Changed the "Merge Rename" function to work with more than one item selected. That way you can merge and rename a group of items at the same time.
+      - Added an option to show or hide the user score sub menu in the game context menu.
+      - Removed "Merge Rules" sub menu from the context menu, because it got slow and unwieldy with many rules and I've never really seen it used.
+      - Fixed Merge Rename function not changing prefixes of the renamed item.
+      - Fixed conditional actions not being executed in the right order. They are now executed sorted by sort number and after that by name.
+      - fixed button "Removed unused items" in Metadata Editor. It was tied to the same setting as the remove on startup option. Now it removes unused items of all types.
+      - Fixed "ignore hidden" and "remove on startup" checkboxes in the settings being swapped, so the ignore setting triggered removal and vice versa. I switched them back now. Please check your field type settings again!
+      - Fixed crash when starting to add a new whitelist item and hitting cancel.
+      - Fixed "clear field" action, that caused all conditional actions to fail.
+      - Prefixes with an empty name or prefix can't be saved anymore. Fixes github issue 138.
   - Version: 1.6.0
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-01-31
