@@ -252,6 +252,7 @@
     <Compile Include="Enums\ComparatorType.cs" />
     <Compile Include="Models\Condition.cs" />
     <Compile Include="Models\ConditionalAction.cs" />
+    <Compile Include="Models\CopyDataSet.cs" />
     <Compile Include="Models\FilterType.cs" />
     <Compile Include="Models\ItemList.cs" />
     <Compile Include="Enums\LogicType.cs" />

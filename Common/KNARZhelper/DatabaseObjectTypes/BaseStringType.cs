@@ -18,13 +18,21 @@ namespace KNARZhelper.DatabaseObjectTypes
         public abstract FieldType Type { get; }
         public ItemValueType ValueType => ItemValueType.String;
 
-        public bool AddValueToGame<T>(Game game, T value) => false;
+        public bool AddValueToGame<T>(Game game, T value)
+        {
+            return false;
+        }
 
         public abstract void EmptyFieldInGame(Game game);
 
         public abstract bool FieldInGameIsEmpty(Game game);
 
-        public bool GameContainsValue<T>(Game game, T value) => value is string stringValue && GameContainsValue(game, stringValue);
+        public bool GameContainsValue<T>(Game game, T value)
+        {
+            return value is string stringValue && GameContainsValue(game, stringValue);
+        }
+
+        public abstract string GetValue(Game game);
 
         public abstract bool GameContainsValue(Game game, string value);
     }

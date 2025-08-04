@@ -31,6 +31,8 @@ namespace MetadataUtilities
 
         public static ControlCenter Instance { get; set; }
 
+        public CopyDataSet GameToCopy { get; set; }
+
         public bool IsUpdating { get; set; }
 
         public HashSet<Guid> KnownGames { get; private set; }
@@ -141,10 +143,7 @@ namespace MetadataUtilities
             });
         }
 
-        public bool AddNewGame(Guid id)
-        {
-            return NewGames.Add(id);
-        }
+        public bool AddNewGame(Guid id) => NewGames.Add(id);
 
         public void GetKnownGames()
         {
@@ -344,9 +343,6 @@ namespace MetadataUtilities
             NewGames.Clear();
         }
 
-        public void SavePluginSettings()
-        {
-            _plugin?.SavePluginSettings(Settings);
-        }
+        public void SavePluginSettings() => _plugin?.SavePluginSettings(Settings);
     }
 }

@@ -16,5 +16,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool FieldInGameIsEmpty(Game game) => !game.Notes.Trim().Any();
 
         public override bool GameContainsValue(Game game, string value) => game.Notes.RegExIsMatch(value);
+
+        public override string GetValue(Game game) => game.Notes;
     }
 }
