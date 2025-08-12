@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Um {0} com esse nome já existe.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Alterar tipo de metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Editor de ações condicionais</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogCopiedMetadataMessage">Copied metadata to {0} games.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Insira um valor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Ações condicionais alteradas em {0} jogos!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Mesclar como</sys:String>
@@ -61,6 +62,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">remover</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">limpar campo</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">Copy metadata</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">Paste metadata from {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Abrir Editor de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Mesclar metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">Adicionar {0}</sys:String>
@@ -77,6 +80,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removido os seguintes itens de metadados não utilizados:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefixo</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Copying metadata...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Executando ações condicionais...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Mesclando metadados...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Adicionando {0}</sys:String>
