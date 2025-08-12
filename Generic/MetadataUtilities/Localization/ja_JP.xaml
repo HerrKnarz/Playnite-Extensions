@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">A {0} with that name already exists.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Change metadata type</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Conditional action editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogCopiedMetadataMessage">Copied metadata to {0} games.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Please enter a value</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Conditional actions changed {0} games!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Merge as</sys:String>
@@ -61,6 +62,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">remove</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">clear field</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">Copy metadata</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">Paste metadata from {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Open Metadata Editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Merge metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">Add {0}</sys:String>
@@ -77,6 +80,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removed the following unused metadata items:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefix</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Copying metadata...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Executing conditional actions...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Merging metadata...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Adding {0}</sys:String>
