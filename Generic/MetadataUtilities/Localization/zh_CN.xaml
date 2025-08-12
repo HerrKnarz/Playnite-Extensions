@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">具有此名称的 {0} 已存在。</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">更改元数据类型</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">条件操作编辑器</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogCopiedMetadataMessage">Copied metadata to {0} games.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">请输入一个值</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">条件动作已更改 {0} 游戏！</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">合并为</sys:String>
@@ -61,6 +62,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">移除</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">清除字段</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">Copy metadata</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">Paste metadata from {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">打开元数据编辑器</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">合并元数据</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">添加 {0}</sys:String>
@@ -77,6 +80,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">删除了下列未使用的元数据项：</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">前缀</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Copying metadata...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">正在执行条件操作...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">正在合并元数据...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">正在添加 {0}</sys:String>
