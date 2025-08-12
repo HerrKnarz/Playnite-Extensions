@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">{0} avec ce nom existe déjà !</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Changer le type de métadonnée</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Éditeur d'action conditionnelle</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogCopiedMetadataMessage">Copied metadata to {0} games.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Veuillez saisir une valeur</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Les actions conditionnelles ont changé les jeux {0} !</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Fusionner comme</sys:String>
@@ -61,6 +62,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">supprimer</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">vider le champ</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">Copy metadata</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">Paste metadata from {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Ouvrir l'éditeur de métadonnées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Fusionner les métadonnées</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">Ajouter {0}</sys:String>
@@ -77,6 +80,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Suppression des éléments de métadonnées inutilisés suivants :</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Préfixe</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Copying metadata...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Exécution des actions conditionnelles...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Fusion des métadonnées...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Ajout de {0}</sys:String>
