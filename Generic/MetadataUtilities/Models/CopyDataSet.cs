@@ -23,17 +23,16 @@ namespace MetadataUtilities.Models
             _fieldTypes = FieldTypeHelper.GetAllTypes().Where(x => x.CanBeSetInGame).ToList();
         }
 
-        public bool CopyToGame(Game targetGame, bool replaceData = false)
+        public bool CopyToGame(Game targetGame)
         {
             bool mustUpdate = false;
 
             foreach (IMetadataFieldType fieldType in FieldTypes)
             {
-                // TODO: Use this function in an action to repeat it for all selected games
                 switch (fieldType.ValueType)
                 {
                     case ItemValueType.Integer:
-                        if (!replaceData && fieldType is BaseIntegerType intType)
+                        if (!ReplaceData && fieldType is BaseIntegerType intType)
                         {
                             mustUpdate |= intType.AddValueToGame(targetGame, intType.GetValue(SourceGame));
                         }
@@ -41,7 +40,7 @@ namespace MetadataUtilities.Models
                         break;
 
                     case ItemValueType.Date:
-                        if (!replaceData && fieldType is BaseDateType dateType)
+                        if (!ReplaceData && fieldType is BaseDateType dateType)
                         {
                             mustUpdate |= dateType.AddValueToGame(targetGame, dateType.GetValue(SourceGame));
                         }
@@ -49,7 +48,7 @@ namespace MetadataUtilities.Models
                         break;
 
                     case ItemValueType.Boolean:
-                        if (!replaceData && fieldType is BaseBooleanType boolType)
+                        if (!ReplaceData && fieldType is BaseBooleanType boolType)
                         {
                             mustUpdate |= boolType.AddValueToGame(targetGame, boolType.GetValue(SourceGame));
                         }
@@ -57,7 +56,7 @@ namespace MetadataUtilities.Models
                         break;
 
                     case ItemValueType.String:
-                        if (!replaceData && fieldType is BaseStringType stringType)
+                        if (!ReplaceData && fieldType is BaseStringType stringType)
                         {
                             mustUpdate |= stringType.AddValueToGame(targetGame, stringType.GetValue(SourceGame));
                         }
@@ -70,14 +69,26 @@ namespace MetadataUtilities.Models
                     default:
                         if (fieldType is IEditableObjectType type)
                         {
-                            if (replaceData && fieldType is IClearAbleType clearableType)
+                            IClearAbleType clearableType = null;
+
+                            if (fieldType is IClearAbleType)
+                            {
+                                clearableType = fieldType as IClearAbleType;
+                            }
+
+                            if (ReplaceData && clearableType != null)
                             {
                                 clearableType.EmptyFieldInGame(targetGame);
                             }
 
-                            if (replaceData || type.IsList)
+                            if (type.IsList)
                             {
-                                mustUpdate |= type.AddValueToGame(targetGame, type.LoadGameMetadata(SourceGame));
+                                mustUpdate |= type.AddValueToGame(targetGame, type.LoadGameMetadata(SourceGame).Select(x => x.Id).ToList());
+                            }
+                            else
+                            if (ReplaceData || (clearableType != null && clearableType.FieldInGameIsEmpty(targetGame)))
+                            {
+                                mustUpdate |= type.AddValueToGame(targetGame, type.LoadGameMetadata(SourceGame).Select(x => x.Id).FirstOrDefault());
                             }
                         }
 
@@ -87,6 +98,8 @@ namespace MetadataUtilities.Models
 
             return mustUpdate;
         }
+
+        public bool ReplaceData { get; set; }
 
         public Game SourceGame { get; set; }
 

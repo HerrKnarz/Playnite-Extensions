@@ -64,7 +64,9 @@ namespace MetadataUtilities
                 { "muTagIcon", "\xf004" },
                 { "muAllCheckedIcon", "\xeed8" },
                 { "muSomeCheckedIcon", "\xeed7" },
-                { "muUndoIcon", "\xee0b" }
+                { "muUndoIcon", "\xee0b" },
+                { "muCopyIcon", "\xedea" },
+                { "muPasteIcon", "\xede5" }
             };
 
             foreach (KeyValuePair<string, string> iconResource in iconResourcesToAdd)
@@ -79,10 +81,7 @@ namespace MetadataUtilities
 
         public SettingsViewModel Settings { get; }
 
-        public void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> args)
-        {
-            ControlCenter.Instance.KnownGames.RemoveWhere(x => args.RemovedItems.Any(y => y.Id == x));
-        }
+        public void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> args) => ControlCenter.Instance.KnownGames.RemoveWhere(x => args.RemovedItems.Any(y => y.Id == x));
 
         public void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> args)
         {
@@ -176,6 +175,28 @@ namespace MetadataUtilities
                 }
             }
 
+            if (games.Count > 0)
+            {
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuCopyMetadata"),
+                    MenuSection = menuSection,
+                    Icon = "muCopyIcon",
+                    Action = a => ControlCenter.Instance.GameToCopy = new CopyDataSet(games.First())
+                });
+
+                if (ControlCenter.Instance.GameToCopy != null)
+                {
+                    menuItems.Add(new GameMenuItem
+                    {
+                        Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuPasteMetadata"), ControlCenter.Instance.GameToCopy.SourceGame.Name),
+                        MenuSection = menuSection,
+                        Icon = "muPasteIcon",
+                        Action = a => PasteMetadataAction.Instance().DoForAll(myGames, true)
+                    });
+                }
+            }
+
             menuItems.AddRange(new List<GameMenuItem>
             {
                 new GameMenuItem
@@ -184,7 +205,7 @@ namespace MetadataUtilities
                     MenuSection = menuSection,
                     Icon = "muEditorIcon",
                     Action = a => MetadataEditorViewModel.ShowEditor(games)
-    },
+                },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuRemoveUnwanted"),
@@ -304,15 +325,9 @@ namespace MetadataUtilities
             return menuItems;
         }
 
-        public override ISettings GetSettings(bool firstRunSettings)
-        {
-            return Settings;
-        }
+        public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
-        public override UserControl GetSettingsView(bool firstRunSettings)
-        {
-            return new SettingsView();
-        }
+        public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
 
         public override IEnumerable<TopPanelItem> GetTopPanelItems()
         {
@@ -376,15 +391,9 @@ namespace MetadataUtilities
             }
         }
 
-        private static bool OnRenameObject(object sender, string oldName, string newName)
-        {
-            return ControlCenter.Instance.RenameObject((IMetadataFieldType)sender, oldName, newName);
-        }
+        private static bool OnRenameObject(object sender, string oldName, string newName) => ControlCenter.Instance.RenameObject((IMetadataFieldType)sender, oldName, newName);
 
-        private static void ShowEditor()
-        {
-            MetadataEditorViewModel.ShowEditor();
-        }
+        private static void ShowEditor() => MetadataEditorViewModel.ShowEditor();
 
         private IEnumerable<GameMenuItem> CreateMenuItems(string baseMenu, List<Game> games, IReadOnlyCollection<QuickAddObject> dbObjects, ActionModifierType action = ActionModifierType.Add)
         {
@@ -428,9 +437,6 @@ namespace MetadataUtilities
             return menuItems;
         }
 
-        private void ShowSettings()
-        {
-            OpenSettingsView();
-        }
+        private void ShowSettings() => OpenSettingsView();
     }
 }
