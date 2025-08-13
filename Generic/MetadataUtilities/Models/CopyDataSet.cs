@@ -25,9 +25,9 @@ namespace MetadataUtilities.Models
 
         public bool CopyToGame(Game targetGame)
         {
-            var mustUpdate = false;
+            bool mustUpdate = false;
 
-            foreach (var fieldType in FieldTypes)
+            foreach (IMetadataFieldType fieldType in FieldTypes)
             {
                 switch (fieldType.ValueType)
                 {
