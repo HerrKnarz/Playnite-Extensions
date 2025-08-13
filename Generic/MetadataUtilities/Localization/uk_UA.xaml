@@ -5,7 +5,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Уже є {0} з таким іменем.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Змінити тип метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Редактор умовних дій</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogCopiedMetadataMessage">Copied metadata to {0} games.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogCopiedMetadataMessage">Скопійовано метадані в {0} гру.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Будь ласка, введіть значення</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Умовні дії змінили {0} ігор!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Об'єднати як</sys:String>
@@ -62,8 +62,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">прибрати</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">чисте поле</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">Copy metadata</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">Paste metadata from {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">Копіювати метадані</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">Вставити метадані з {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Відкрити Редактор Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Об'єднати метадані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">Додати {0}</sys:String>
@@ -80,7 +80,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Прибрано наступні невикористані елементи метаданих:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Префікс</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Copying metadata...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Копіювання метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Виконання умовних дій...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Об'єднання метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Додавання {0}</sys:String>
