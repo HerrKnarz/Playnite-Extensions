@@ -23,10 +23,7 @@ namespace MetadataUtilities.Actions
 
         public override string ResultMessage => "LOCMetadataUtilitiesDialogExecutedConditionalActions";
 
-        public static ExecuteConditionalActionsAction Instance()
-        {
-            return _instance ?? (_instance = new ExecuteConditionalActionsAction());
-        }
+        public static ExecuteConditionalActionsAction Instance() => _instance ?? (_instance = new ExecuteConditionalActionsAction());
 
         public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
@@ -35,19 +32,19 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            List<IObjectType> types = FieldTypeHelper.GetAllTypes<IObjectType>().ToList();
+            var types = FieldTypeHelper.GetAllTypes<IObjectType>().ToList();
 
             if (Settings.WriteDebugLog)
             {
                 Log.Debug($"==== Started executing Conditional Actions on Game \"{game.Game.Name}\" ======================================");
 
-                foreach (IObjectType type in types)
+                foreach (var type in types)
                 {
                     Log.Debug($"{type.LabelPlural} before: {string.Join(", ", type.LoadGameMetadata(game.Game).Select(x => x.Name))}");
                 }
             }
 
-            bool mustUpdate = _actions
+            var mustUpdate = _actions
                 .Where(x =>
                     actionModifier == ActionModifierType.IsManual || (x.Enabled && x.ExecuteOnNewBeforeMetadata == (actionModifier != ActionModifierType.IsAfterMetadata)))
                 .Aggregate(false, (current, conditionalAction) =>
@@ -57,7 +54,7 @@ namespace MetadataUtilities.Actions
             {
                 Log.Debug($"==== Finished executing Conditional Actions on Game \"{game.Game.Name}\" ({mustUpdate}) ============================");
 
-                foreach (IObjectType type in types)
+                foreach (var type in types)
                 {
                     Log.Debug($"{type.LabelPlural} after: {string.Join(", ", type.LoadGameMetadata(game.Game).Select(x => x.Name))}");
                 }
@@ -104,14 +101,14 @@ namespace MetadataUtilities.Actions
                     return false;
                 }
 
-                foreach (ConditionalAction conAction in _actions)
+                foreach (var conAction in _actions)
                 {
-                    foreach (Condition condition in conAction.Conditions)
+                    foreach (var condition in conAction.Conditions)
                     {
                         condition.RefreshId();
                     }
 
-                    foreach (Models.Action action in conAction.Actions)
+                    foreach (var action in conAction.Actions)
                     {
                         action.AddToDb();
                     }

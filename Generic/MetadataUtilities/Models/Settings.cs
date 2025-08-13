@@ -282,7 +282,7 @@ namespace MetadataUtilities.Models
 
         public void SetMissingTypes()
         {
-            foreach (KNARZhelper.Enum.FieldType item in FieldTypeHelper.ItemListFieldValues().Keys
+            foreach (var item in FieldTypeHelper.ItemListFieldValues().Keys
                          .Where(item => _filterTypes.All(x => x.Type != item)))
             {
                 _filterTypes.Add(new FilterType()
@@ -292,7 +292,7 @@ namespace MetadataUtilities.Models
                 });
             }
 
-            foreach (KNARZhelper.Enum.FieldType item in FieldTypeHelper.ItemListFieldValues().Keys
+            foreach (var item in FieldTypeHelper.ItemListFieldValues().Keys
                          .Where(item => _typeConfigs.All(x => x.Type != item)))
             {
                 _typeConfigs.Add(new TypeConfig()

@@ -88,7 +88,7 @@ namespace MetadataUtilities.Models
                 return;
             }
 
-            List<string> prefixes = new List<string> { _prefix };
+            var prefixes = new List<string> { _prefix };
 
             if (_prefix == default)
             {

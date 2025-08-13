@@ -43,7 +43,7 @@ namespace MetadataUtilities.ViewModels
             {
                 PrepareMetadata(objects);
 
-                DateTime ts = DateTime.Now;
+                var ts = DateTime.Now;
 
                 Prefixes.Add(string.Empty);
                 Prefixes.AddMissing(_settings.Prefixes);
@@ -81,18 +81,18 @@ namespace MetadataUtilities.ViewModels
         {
             try
             {
-                FieldType type = FieldType.Tag;
-                string prefix = string.Empty;
+                var type = FieldType.Tag;
+                var prefix = string.Empty;
 
                 if (MetadataViewSource.View.CurrentItem != null)
                 {
-                    MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+                    var templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
                     type = templateItem.Type;
                     prefix = templateItem.Prefix;
                 }
 
-                MetadataObject newItem = CompleteMetadata.AddNewItem(type, prefix, true, true);
+                var newItem = CompleteMetadata.AddNewItem(type, prefix, true, true);
 
                 if (newItem == null)
                 {
@@ -116,11 +116,11 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            SearchGameViewModel viewModel = new SearchGameViewModel(SelectedItems);
+            var viewModel = new SearchGameViewModel(SelectedItems);
 
-            SearchGameView searchGameView = new SearchGameView();
+            var searchGameView = new SearchGameView();
 
-            Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
+            var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
                 _settings.GameSearchWindowWidth, _settings.GameSearchWindowHeight);
             window.Content = searchGameView;
             window.DataContext = viewModel;
@@ -128,7 +128,7 @@ namespace MetadataUtilities.ViewModels
             window.ShowDialog();
             LoadRelatedGames();
 
-            foreach (MetadataObject item in SelectedItems)
+            foreach (var item in SelectedItems)
             {
                 item.GetGameCount();
             }
@@ -141,9 +141,9 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            bool mustUpdate = false;
+            var mustUpdate = false;
 
-            foreach (MetadataObject item in items.Cast<MetadataObject>())
+            foreach (var item in items.Cast<MetadataObject>())
             {
                 if (_settings.UnusedItemsWhiteList.Any(x => x.TypeAndName == item.TypeAndName))
                 {
@@ -178,15 +178,15 @@ namespace MetadataUtilities.ViewModels
             {
                 ControlCenter.Instance.IsUpdating = true;
 
-                MetadataObjects changeItems = new MetadataObjects();
+                var changeItems = new MetadataObjects();
 
                 changeItems.AddMissing(items.ToList().Cast<MetadataObject>());
 
-                ChangeTypeViewModel viewModel = new ChangeTypeViewModel(changeItems);
+                var viewModel = new ChangeTypeViewModel(changeItems);
 
-                ChangeTypeView view = new ChangeTypeView();
+                var view = new ChangeTypeView();
 
-                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogChangeType"));
+                var window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogChangeType"));
                 window.Content = view;
                 window.DataContext = viewModel;
 
@@ -199,7 +199,7 @@ namespace MetadataUtilities.ViewModels
 
                 using (MetadataViewSource.DeferRefresh())
                 {
-                    foreach (MetadataObject itemToRemove in changeItems)
+                    foreach (var itemToRemove in changeItems)
                     {
                         if (!itemToRemove.ExistsInDb())
                         {
@@ -212,7 +212,7 @@ namespace MetadataUtilities.ViewModels
                         }
                     }
 
-                    foreach (MetadataObject itemToAdd in viewModel.NewObjects)
+                    foreach (var itemToAdd in viewModel.NewObjects)
                     {
                         itemToAdd.GetGameCount();
                         itemToAdd.RenameObject += OnRenameObject;
@@ -352,15 +352,15 @@ namespace MetadataUtilities.ViewModels
             {
                 ControlCenter.Instance.IsUpdating = true;
 
-                MetadataObjects mergeItems = new MetadataObjects();
+                var mergeItems = new MetadataObjects();
 
                 mergeItems.AddMissing(items.ToList().Cast<MetadataObject>());
 
-                MergeDialogViewModel viewModel = new MergeDialogViewModel(mergeItems);
+                var viewModel = new MergeDialogViewModel(mergeItems);
 
-                MergeDialogView mergeView = new MergeDialogView();
+                var mergeView = new MergeDialogView();
 
-                Window window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesEditorMerge"));
+                var window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesEditorMerge"));
                 window.Content = mergeView;
                 window.DataContext = viewModel;
 
@@ -395,22 +395,22 @@ namespace MetadataUtilities.ViewModels
             {
                 ControlCenter.Instance.IsUpdating = true;
 
-                MetadataObjects itemsToMerge = new MetadataObjects();
+                var itemsToMerge = new MetadataObjects();
 
                 // We clone the items, so we can add them to the merge rule while the originals get changed here.
                 itemsToMerge.AddMissing(items.ToList().Cast<MetadataObject>());
 
-                MetadataObjects mergeItems = itemsToMerge.DeepClone();
+                var mergeItems = itemsToMerge.DeepClone();
 
                 // We prepare the original item, save the old values and create a new one to edit.
-                MetadataObject templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
+                var templateItem = (MetadataObject)MetadataViewSource.View.CurrentItem;
 
-                MetadataObject oldItem = new MetadataObject(templateItem.Type, templateItem.Name);
+                var oldItem = new MetadataObject(templateItem.Type, templateItem.Name);
 
-                MetadataObject newItem = new MetadataObject(templateItem.Type, templateItem.Name);
+                var newItem = new MetadataObject(templateItem.Type, templateItem.Name);
 
                 // Using the Add New dialog we rename the item
-                Window window = AddNewObjectViewModel.GetWindow(newItem, false,
+                var window = AddNewObjectViewModel.GetWindow(newItem, false,
                     ResourceProvider.GetString("LOCMetadataUtilitiesEditorMergeRename"));
 
                 // return if the dialog was canceled or the name remained the same.
@@ -451,7 +451,7 @@ namespace MetadataUtilities.ViewModels
 
             using (MetadataViewSource.DeferRefresh())
             {
-                foreach (MetadataObject itemToRemove in mergeItems)
+                foreach (var itemToRemove in mergeItems)
                 {
                     if (!itemToRemove.ExistsInDb())
                     {
@@ -493,16 +493,16 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                List<Game> games = items.Cast<MyGame>().Select(x => x.Game).ToList();
+                var games = items.Cast<MyGame>().Select(x => x.Game).ToList();
 
                 if (games.Count == 0)
                 {
                     return;
                 }
 
-                List<Guid> gamesAffected = new List<Guid>();
+                var gamesAffected = new List<Guid>();
 
-                foreach (MetadataObject item in SelectedItems)
+                foreach (var item in SelectedItems)
                 {
                     gamesAffected.AddMissing(item.ReplaceInDb(games).ToList());
                 }
@@ -516,7 +516,7 @@ namespace MetadataUtilities.ViewModels
 
                 LoadRelatedGames();
 
-                foreach (MetadataObject item in SelectedItems)
+                foreach (var item in SelectedItems)
                 {
                     item.GetGameCount();
                 }
@@ -534,7 +534,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            MessageBoxResult response = MessageBoxResult.Yes;
+            var response = MessageBoxResult.Yes;
 
             if (!_settings.AddRemovedToUnwanted)
             {
@@ -553,7 +553,7 @@ namespace MetadataUtilities.ViewModels
             {
                 using (API.Instance.Database.BufferedUpdate())
                 {
-                    GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                    var globalProgressOptions = new GlobalProgressOptions(
                         ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingItems"),
                         false
                     )
@@ -567,7 +567,7 @@ namespace MetadataUtilities.ViewModels
                         {
                             activateGlobalProgress.ProgressMaxValue = items.Count;
 
-                            foreach (MetadataObject item in items.Cast<MetadataObject>())
+                            foreach (var item in items.Cast<MetadataObject>())
                             {
                                 item.RemoveFromDb();
 
@@ -581,11 +581,11 @@ namespace MetadataUtilities.ViewModels
                     }, globalProgressOptions);
                 }
 
-                List<MetadataObject> unwantedItems = new List<MetadataObject>();
+                var unwantedItems = new List<MetadataObject>();
 
                 using (MetadataViewSource.DeferRefresh())
                 {
-                    foreach (MetadataObject item in items.ToList().Cast<MetadataObject>())
+                    foreach (var item in items.ToList().Cast<MetadataObject>())
                     {
                         unwantedItems.Add(item);
 
@@ -615,7 +615,7 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                List<MetadataObject> removedItems = ControlCenter.Instance.RemoveUnusedMetadata();
+                var removedItems = ControlCenter.Instance.RemoveUnusedMetadata();
 
                 if (removedItems.Count == 0)
                 {
@@ -624,11 +624,11 @@ namespace MetadataUtilities.ViewModels
 
                 using (MetadataViewSource.DeferRefresh())
                 {
-                    List<MetadataObject> itemsToRemove = CompleteMetadata
+                    var itemsToRemove = CompleteMetadata
                         .Where(x => removedItems.Any(y => x.Type == y.Type && x.Name == y.Name)).ToList();
 
                     CalculateItemCount();
-                    foreach (MetadataObject itemToRemove in itemsToRemove)
+                    foreach (var itemToRemove in itemsToRemove)
                     {
                         CompleteMetadata.Remove(itemToRemove);
                     }
@@ -666,20 +666,20 @@ namespace MetadataUtilities.ViewModels
 
         public static void ShowEditor(List<Game> games = null)
         {
-            Settings settings = ControlCenter.Instance.Settings;
+            var settings = ControlCenter.Instance.Settings;
 
             if (settings.WriteDebugLog)
             {
                 Log.Debug("=== ShowEditor: Start ===");
             }
 
-            DateTime ts = DateTime.Now;
+            var ts = DateTime.Now;
 
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                MetadataObjects metadataObjects = new MetadataObjects();
-                string windowTitle = "LOCMetadataUtilitiesEditor";
+                var metadataObjects = new MetadataObjects();
+                var windowTitle = "LOCMetadataUtilitiesEditor";
 
                 if (games != null)
                 {
@@ -692,11 +692,11 @@ namespace MetadataUtilities.ViewModels
                     metadataObjects.LoadMetadata();
                 }
 
-                MetadataEditorViewModel viewModel = new MetadataEditorViewModel(metadataObjects);
+                var viewModel = new MetadataEditorViewModel(metadataObjects);
 
-                MetadataEditorView editorView = new MetadataEditorView();
+                var editorView = new MetadataEditorView();
 
-                Window window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString(windowTitle),
+                var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString(windowTitle),
                     settings.EditorWindowWidth, settings.EditorWindowHeight);
 
                 window.Content = editorView;
@@ -726,7 +726,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            foreach (FilterType type in FilterTypes)
+            foreach (var type in FilterTypes)
             {
                 type.UpdateCount();
             }
@@ -734,7 +734,7 @@ namespace MetadataUtilities.ViewModels
 
         private void AddNewItem(FieldType type, string name, Guid id)
         {
-            MetadataObject newItem = new MetadataObject(type, name)
+            var newItem = new MetadataObject(type, name)
             {
                 Id = id
             };
@@ -768,9 +768,9 @@ namespace MetadataUtilities.ViewModels
 
             try
             {
-                foreach (Game game in API.Instance.Database.Games.Where(g => !g.Hidden || !_settings.IgnoreHiddenGamesInGameCount).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName))
+                foreach (var game in API.Instance.Database.Games.Where(g => !g.Hidden || !_settings.IgnoreHiddenGamesInGameCount).OrderBy(g => string.IsNullOrEmpty(g.SortingName) ? g.Name : g.SortingName))
                 {
-                    bool addGame = SelectedItems?.All(item => item.IsInGame(game)) ?? false;
+                    var addGame = SelectedItems?.All(item => item.IsInGame(game)) ?? false;
 
                     if (addGame)
                     {
@@ -796,8 +796,8 @@ namespace MetadataUtilities.ViewModels
                 return false;
             }
 
-            bool renameOther = false;
-            bool splitCompany = false;
+            var renameOther = false;
+            var splitCompany = false;
             MetadataObject otherItem = null;
             IMetadataFieldType otherType = null;
 
@@ -826,7 +826,7 @@ namespace MetadataUtilities.ViewModels
                 }
             }
 
-            DbInteractionResult res = item.UpdateName(newName);
+            var res = item.UpdateName(newName);
 
             switch (res)
             {
@@ -854,11 +854,11 @@ namespace MetadataUtilities.ViewModels
                         // If the other company type's name is supposed to stay the same, we create a new one with the old name and change all games to it.
                         else if (splitCompany && (otherType is IEditableObjectType objectType))
                         {
-                            Guid newId = objectType.AddDbObject(oldName);
+                            var newId = objectType.AddDbObject(oldName);
 
-                            MetadataObject itemToDelete = new MetadataObject(objectType.Type, newName);
+                            var itemToDelete = new MetadataObject(objectType.Type, newName);
 
-                            IEnumerable<Guid> gamesAffected = itemToDelete.ReplaceInDb(API.Instance.Database.Games.ToList(),
+                            var gamesAffected = itemToDelete.ReplaceInDb(API.Instance.Database.Games.ToList(),
                             objectType.Type, newId);
 
                             ControlCenter.UpdateGames(gamesAffected.ToList());
@@ -898,7 +898,7 @@ namespace MetadataUtilities.ViewModels
             _filterTypes = _settings.TypeConfigs.Where(x => x.Selected)
                 .Select(x => new FilterType() { Selected = false, Type = x.Type }).OrderBy(x => x.Label).ToObservable();
 
-            foreach (FilterType filterType in FilterTypes)
+            foreach (var filterType in FilterTypes)
             {
                 filterType.PropertyChanged += (x, y) =>
                 {
@@ -931,7 +931,7 @@ namespace MetadataUtilities.ViewModels
 
         private void PrepareMetadata(MetadataObjects objects)
         {
-            DateTime ts = DateTime.Now;
+            var ts = DateTime.Now;
 
             CompleteMetadata = objects;
 
@@ -941,7 +941,7 @@ namespace MetadataUtilities.ViewModels
                 ts = DateTime.Now;
             }
 
-            foreach (MetadataObject item in CompleteMetadata)
+            foreach (var item in CompleteMetadata)
             {
                 item.RenameObject += OnRenameObject;
             }
@@ -954,7 +954,7 @@ namespace MetadataUtilities.ViewModels
 
         private void PrepareMetadataViewSource()
         {
-            DateTime ts = DateTime.Now;
+            var ts = DateTime.Now;
 
             if (_settings.WriteDebugLog)
             {
@@ -1040,16 +1040,16 @@ namespace MetadataUtilities.ViewModels
                 Log.Debug("=== UpdateGroupDisplay: Start ===");
             }
 
-            DateTime ts = DateTime.Now;
+            var ts = DateTime.Now;
 
             using (MetadataViewSource.DeferRefresh())
             {
-                List<MetadataObject> tempList = CompleteMetadata.Where(x => _filterTypes.Any(f => f.Selected && f.Type == x.Type)).ToList();
+                var tempList = CompleteMetadata.Where(x => _filterTypes.Any(f => f.Selected && f.Type == x.Type)).ToList();
 
-                Dictionary<string, int> groups = tempList.GroupBy(x => x.CleanedUpName)
+                var groups = tempList.GroupBy(x => x.CleanedUpName)
                     .ToDictionary(group => group.Key, group => group.Count());
 
-                ParallelOptions opts = new ParallelOptions
+                var opts = new ParallelOptions
                 { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
 
                 Parallel.ForEach(tempList, opts, item => item.CheckGroup(groups));

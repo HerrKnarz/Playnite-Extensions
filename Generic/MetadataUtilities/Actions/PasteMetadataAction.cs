@@ -26,7 +26,7 @@ namespace MetadataUtilities.Actions
                 return false;
             }
 
-            bool result = ControlCenter.Instance.GameToCopy.CopyToGame(game.Game);
+            var result = ControlCenter.Instance.GameToCopy.CopyToGame(game.Game);
 
             if (result)
             {
