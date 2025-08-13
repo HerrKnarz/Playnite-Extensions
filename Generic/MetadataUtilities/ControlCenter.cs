@@ -43,12 +43,12 @@ namespace MetadataUtilities
 
         public static MetadataObject AddNewItem(FieldType type, string prefix = "", bool enableTypeSelection = true, bool addToDb = false)
         {
-            MetadataObject newItem = new MetadataObject(type)
+            var newItem = new MetadataObject(type)
             {
                 Prefix = prefix
             };
 
-            Window window = AddNewObjectViewModel.GetWindow(newItem, enableTypeSelection);
+            var window = AddNewObjectViewModel.GetWindow(newItem, enableTypeSelection);
 
             if (window == null)
             {
@@ -70,9 +70,9 @@ namespace MetadataUtilities
 
         public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, string prefix = default, bool ignoreEmptyPrefix = true, List<MetadataObject> selectedItems = null)
         {
-            string label = type.GetTypeManager().LabelPlural;
+            var label = type.GetTypeManager().LabelPlural;
 
-            MetadataObjects items = new MetadataObjects(type);
+            var items = new MetadataObjects(type);
 
             items.LoadMetadata(false);
 
@@ -87,7 +87,7 @@ namespace MetadataUtilities
 
             if (selectedItems?.Count > 0)
             {
-                foreach (MetadataObject itemToSelect in selectedItems
+                foreach (var itemToSelect in selectedItems
                              .Select(item => items.FirstOrDefault(x => x.Name == item.Name && x.Type == item.Type))
                              .Where(itemToSelect => itemToSelect != null))
                 {
@@ -95,7 +95,7 @@ namespace MetadataUtilities
                 }
             }
 
-            Window window = SelectMetadataViewModel.GetWindow(items, label);
+            var window = SelectMetadataViewModel.GetWindow(items, label);
 
             return (window?.ShowDialog() ?? false)
                 ? items.Where(x => x.Selected).ToList()
@@ -109,7 +109,7 @@ namespace MetadataUtilities
                 return;
             }
 
-            List<Game> gamesToUpdate = new List<Game>();
+            var gamesToUpdate = new List<Game>();
 
             switch (games)
             {
@@ -118,7 +118,7 @@ namespace MetadataUtilities
                     break;
                 case List<Guid> gameIds:
                     {
-                        foreach (Guid gameId in gameIds)
+                        foreach (var gameId in gameIds)
                         {
                             gamesToUpdate.AddMissing(API.Instance.Database.Games[gameId]);
                         }
@@ -162,7 +162,7 @@ namespace MetadataUtilities
                 return;
             }
 
-            MergeRule rule = new MergeRule(mergeTarget.Type, mergeTarget.Name)
+            var rule = new MergeRule(mergeTarget.Type, mergeTarget.Name)
             {
                 Id = mergeTarget.Id,
                 SourceObjects = items
@@ -179,16 +179,16 @@ namespace MetadataUtilities
 
         public List<MetadataObject> RemoveUnusedMetadata(bool autoMode = false)
         {
-            List<MetadataObject> temporaryList = new List<MetadataObject>();
+            var temporaryList = new List<MetadataObject>();
 
-            List<TypeConfig> types = Settings.TypeConfigs.Where(x => !autoMode || x.RemoveUnusedItems).ToList();
+            var types = Settings.TypeConfigs.Where(x => !autoMode || x.RemoveUnusedItems).ToList();
 
             if (types.Count == 0)
             {
                 return temporaryList;
             }
 
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+            var globalProgressOptions = new GlobalProgressOptions(
                 ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
                 false
             )
@@ -200,7 +200,7 @@ namespace MetadataUtilities
             {
                 try
                 {
-                    foreach (TypeConfig type in types)
+                    foreach (var type in types)
                     {
                         if (type.Type.GetTypeManager() is IObjectType objectType)
                         {
@@ -219,7 +219,7 @@ namespace MetadataUtilities
                             Settings.UnusedItemsWhiteList.All(y => y.TypeAndName != x.TypeAndName)).ToList();
                     }
 
-                    foreach (MetadataObject item in temporaryList)
+                    foreach (var item in temporaryList)
                     {
                         item.RemoveFromDb(types.FirstOrDefault(x => x.Type == item.Type)?.HiddenAsUnused ?? false);
                     }
@@ -234,7 +234,7 @@ namespace MetadataUtilities
             {
                 if (autoMode)
                 {
-                    string items = string.Join(Environment.NewLine, temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
+                    var items = string.Join(Environment.NewLine, temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
 
                     API.Instance.Notifications.Add("MetadataUtilities",
                         $"{ResourceProvider.GetString("LOCMetadataUtilitiesNotificationRemovedItems")}{Environment.NewLine}{Environment.NewLine}{items}",
@@ -242,7 +242,7 @@ namespace MetadataUtilities
                 }
                 else
                 {
-                    string items = string.Join(", ", temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
+                    var items = string.Join(", ", temporaryList.OrderBy(x => x.TypeLabel).ThenBy(x => x.Name).Select(x => x.TypeAndName));
 
                     API.Instance.Dialogs.ShowMessage($"{ResourceProvider.GetString("LOCMetadataUtilitiesNotificationRemovedItems")}{Environment.NewLine}{Environment.NewLine}{items}",
                         ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
@@ -260,7 +260,7 @@ namespace MetadataUtilities
 
         public bool RenameObject(IMetadataFieldType type, string oldName, string newName)
         {
-            bool mustSave = false;
+            var mustSave = false;
 
             if (oldName == newName || oldName == string.Empty)
             {
@@ -275,9 +275,9 @@ namespace MetadataUtilities
 
             if (Settings.RenameConditionalActions)
             {
-                foreach (ConditionalAction condAction in Settings.ConditionalActions)
+                foreach (var condAction in Settings.ConditionalActions)
                 {
-                    foreach (Models.Condition item in condAction.Conditions)
+                    foreach (var item in condAction.Conditions)
                     {
                         if (item.Type != type.Type || item.Name != oldName)
                         {
@@ -288,7 +288,7 @@ namespace MetadataUtilities
                         mustSave = true;
                     }
 
-                    foreach (Models.Action item in condAction.Actions)
+                    foreach (var item in condAction.Actions)
                     {
                         if (item.Type != type.Type || item.Name != oldName)
                         {
@@ -303,7 +303,7 @@ namespace MetadataUtilities
 
             if (Settings.RenameQuickAdd && type.ValueType == ItemValueType.ItemList)
             {
-                foreach (QuickAddObject item in Settings.QuickAddObjects)
+                foreach (var item in Settings.QuickAddObjects)
                 {
                     if (item.Type != type.Type || item.Name != oldName)
                     {
@@ -317,7 +317,7 @@ namespace MetadataUtilities
 
             if (Settings.RenameWhiteList && type.ValueType == ItemValueType.ItemList)
             {
-                foreach (WhiteListItem item in Settings.UnusedItemsWhiteList)
+                foreach (var item in Settings.UnusedItemsWhiteList)
                 {
                     if (item.Type != type.Type || item.Name != oldName)
                     {
@@ -341,6 +341,13 @@ namespace MetadataUtilities
         {
             KnownGames.UnionWith(NewGames);
             NewGames.Clear();
+        }
+
+        public void OpenCopyMetadataWindow()
+        {
+            var window = CopyMetadataViewModel.GetWindow();
+
+            window?.ShowDialog();
         }
 
         public void SavePluginSettings() => _plugin?.SavePluginSettings(Settings);

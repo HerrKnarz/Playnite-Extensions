@@ -254,6 +254,7 @@
     <Compile Include="Models\Condition.cs" />
     <Compile Include="Models\ConditionalAction.cs" />
     <Compile Include="Models\CopyDataSet.cs" />
+    <Compile Include="Models\CopyField.cs" />
     <Compile Include="Models\FilterType.cs" />
     <Compile Include="Models\ItemList.cs" />
     <Compile Include="Enums\LogicType.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="ViewModels\AddNewObjectViewModel.cs" />
     <Compile Include="ViewModels\ChangeTypeViewModel.cs" />
     <Compile Include="ViewModels\ConditionalActionEditorViewModel.cs" />
+    <Compile Include="ViewModels\CopyMetadataViewModel.cs" />
     <Compile Include="ViewModels\FieldTypeContextAction.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\MergeRuleEditorViewModel.cs" />
@@ -278,6 +280,9 @@
     <Compile Include="ViewModels\SelectIntViewModel.cs" />
     <Compile Include="Views\ConditionalActionEditorView.xaml.cs">
       <DependentUpon>ConditionalActionEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CopyMetadataView.xaml.cs">
+      <DependentUpon>CopyMetadataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SearchGameView.xaml.cs">
       <DependentUpon>SearchGameView.xaml</DependentUpon>
@@ -334,6 +339,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConditionalActionEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CopyMetadataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

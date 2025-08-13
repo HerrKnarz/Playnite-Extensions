@@ -8,3 +8,9 @@ dotnet_diagnostic.IDE0058.severity = none
 
 # VSSpell001: Spell Check
 dotnet_diagnostic.VSSpell001.severity = suggestion
+
+# IDE0008: Use explicit type
+csharp_style_var_when_type_is_apparent = true
+
+# IDE0008: Use explicit type
+csharp_style_var_for_built_in_types = true
