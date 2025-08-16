@@ -18,6 +18,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">您必须输入一个名称。</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">您需要为规则目标添加一个名称。</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">未找到未使用的元数据项。</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogOnlyIfEmpty">Only if empty</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">项已添加到 {0} 游戏</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">项已从 {0} 游戏中删除</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">项已在 {0} 游戏中切换</sys:String>
@@ -25,6 +26,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">从 {0} 游戏中删除了不需要的元数据项目！</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">重命名公司</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">您正在重命名一个 {0}。您想要同时重命名相应的 {1} 吗？</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogReplace">Replace</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">保存为合并规则</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">选择新的类型</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">在 {0} 游戏中设置用户评分！</sys:String>
