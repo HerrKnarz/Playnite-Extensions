@@ -1,31 +1,27 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 
 namespace MetadataUtilities.ViewModels
 {
     public class CopyMetadataViewModel : ObservableObject
     {
-        private ObservableCollection<CopyField> _fields = new ObservableCollection<CopyField>();
+        private CopyDataSet _copyDataSet;
 
-        public CopyMetadataViewModel()
+        public CopyMetadataViewModel(Game sourceGame)
         {
-            foreach (var fieldType in FieldTypeHelper.GetAllTypes().Where(x => x.CanBeSetInGame).ToList())
-            {
-                Fields.Add(new CopyField(fieldType));
-            }
+            _copyDataSet = new CopyDataSet(sourceGame);
         }
 
-        public static Window GetWindow()
+        public static Window GetWindow(Game sourceGame)
         {
             try
             {
-                var viewModel = new CopyMetadataViewModel();
+                var viewModel = new CopyMetadataViewModel(sourceGame);
 
                 var copyMetadataView = new CopyMetadataView();
 
@@ -44,10 +40,10 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public ObservableCollection<CopyField> Fields
+        public CopyDataSet CopyDataSet
         {
-            get => _fields;
-            set => SetValue(ref _fields, value);
+            get => _copyDataSet;
+            set => SetValue(ref _copyDataSet, value);
         }
     }
 }

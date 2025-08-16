@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="10">
-        <ListView Name="LvConfig" ItemsSource="{Binding Fields}"
+        <ListView Name="LvConfig" ItemsSource="{Binding CopyDataSet.Fields}"
                   VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
@@ -16,7 +16,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding CopyData, UpdateSourceTrigger=PropertyChanged}"
-                                          Content="{Binding FieldType.LabelPlural}"
+                                          Content="{Binding Label}"
                                           Margin="0,0,0,0" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

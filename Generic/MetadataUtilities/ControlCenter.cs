@@ -343,9 +343,9 @@ namespace MetadataUtilities
             NewGames.Clear();
         }
 
-        public void OpenCopyMetadataWindow()
+        public void OpenCopyMetadataWindow(Game sourceGame)
         {
-            var window = CopyMetadataViewModel.GetWindow();
+            var window = CopyMetadataViewModel.GetWindow(sourceGame);
 
             window?.ShowDialog();
         }

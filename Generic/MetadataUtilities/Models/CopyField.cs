@@ -1,4 +1,6 @@
-﻿using KNARZhelper.DatabaseObjectTypes;
+﻿using KNARZhelper;
+using KNARZhelper.DatabaseObjectTypes;
+using KNARZhelper.Enum;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
@@ -7,18 +9,18 @@ namespace MetadataUtilities.Models
 {
     public class CopyField : ObservableObject
     {
-        private IMetadataFieldType _fieldType;
+        private FieldType _fieldType;
         private bool _copyData = true;
         private bool _replaceData = false;
         private bool _onlyIfEmpty = false;
         private List<Guid> _items = new List<Guid>();
 
-        public CopyField(IMetadataFieldType fieldType)
+        public CopyField(FieldType fieldType)
         {
-            _fieldType = fieldType ?? throw new ArgumentNullException(nameof(fieldType));
+            _fieldType = fieldType;
         }
 
-        public IMetadataFieldType FieldType
+        public FieldType FieldType
         {
             get => _fieldType;
             set => SetValue(ref _fieldType, value);
@@ -47,6 +49,18 @@ namespace MetadataUtilities.Models
         {
             get => _items;
             set => SetValue(ref _items, value ?? new List<Guid>());
+        }
+
+        [DontSerialize]
+
+        public string Label
+        {
+            get
+            {
+                var typeManager = FieldType.GetTypeManager();
+
+                return typeManager is BaseListType listType ? listType.LabelPlural : typeManager.LabelSingular;
+            }
         }
     }
 }

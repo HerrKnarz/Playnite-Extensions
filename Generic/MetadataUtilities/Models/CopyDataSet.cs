@@ -1,38 +1,46 @@
 ﻿using KNARZhelper;
 using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace MetadataUtilities.Models
 {
-    public class CopyDataSet
+    public class CopyDataSet : ObservableObject
     {
-        private List<IMetadataFieldType> _fieldTypes = new List<IMetadataFieldType>();
+        private ObservableCollection<CopyField> _fields = new ObservableCollection<CopyField>();
 
-        public CopyDataSet(Game sourceGame, params IMetadataFieldType[] metadataFieldTypes)
+        public CopyDataSet(Game sourceGame, params CopyField[] metadataFields)
         {
             SourceGame = sourceGame;
-            _fieldTypes.AddRange(metadataFieldTypes);
+            _fields.AddMissing(metadataFields);
         }
 
         public CopyDataSet(Game sourceGame)
         {
             SourceGame = sourceGame;
-            _fieldTypes = FieldTypeHelper.GetAllTypes().Where(x => x.CanBeSetInGame).ToList();
+
+            foreach (var fieldType in FieldTypeHelper.GetAllTypes().Where(x => x.CanBeSetInGame))
+            {
+                _fields.Add(new CopyField(fieldType.Type));
+            }
         }
 
         public bool CopyToGame(Game targetGame)
         {
             var mustUpdate = false;
 
-            foreach (var fieldType in FieldTypes)
+            foreach (var field in Fields.Where(x => x.CopyData))
             {
+                var fieldType = field.FieldType.GetTypeManager();
+
                 switch (fieldType.ValueType)
                 {
                     case ItemValueType.Integer:
-                        if (!ReplaceData && fieldType is BaseIntegerType intType)
+                        if (!field.ReplaceData && fieldType is BaseIntegerType intType)
                         {
                             mustUpdate |= intType.AddValueToGame(targetGame, intType.GetValue(SourceGame));
                         }
@@ -40,7 +48,7 @@ namespace MetadataUtilities.Models
                         break;
 
                     case ItemValueType.Date:
-                        if (!ReplaceData && fieldType is BaseDateType dateType)
+                        if (!field.ReplaceData && fieldType is BaseDateType dateType)
                         {
                             mustUpdate |= dateType.AddValueToGame(targetGame, dateType.GetValue(SourceGame));
                         }
@@ -48,7 +56,7 @@ namespace MetadataUtilities.Models
                         break;
 
                     case ItemValueType.Boolean:
-                        if (!ReplaceData && fieldType is BaseBooleanType boolType)
+                        if (!field.ReplaceData && fieldType is BaseBooleanType boolType)
                         {
                             mustUpdate |= boolType.AddValueToGame(targetGame, boolType.GetValue(SourceGame));
                         }
@@ -56,7 +64,7 @@ namespace MetadataUtilities.Models
                         break;
 
                     case ItemValueType.String:
-                        if (!ReplaceData && fieldType is BaseStringType stringType)
+                        if (!field.ReplaceData && fieldType is BaseStringType stringType)
                         {
                             mustUpdate |= stringType.AddValueToGame(targetGame, stringType.GetValue(SourceGame));
                         }
@@ -76,7 +84,7 @@ namespace MetadataUtilities.Models
                                 clearableType = fieldType as IClearAbleType;
                             }
 
-                            if (ReplaceData && clearableType != null)
+                            if (field.ReplaceData && clearableType != null)
                             {
                                 clearableType.EmptyFieldInGame(targetGame);
                             }
@@ -86,7 +94,7 @@ namespace MetadataUtilities.Models
                                 mustUpdate |= type.AddValueToGame(targetGame, type.LoadGameMetadata(SourceGame).Select(x => x.Id).ToList());
                             }
                             else
-                            if (ReplaceData || (clearableType != null && clearableType.FieldInGameIsEmpty(targetGame)))
+                            if (field.ReplaceData || (clearableType != null && clearableType.FieldInGameIsEmpty(targetGame)))
                             {
                                 mustUpdate |= type.AddValueToGame(targetGame, type.LoadGameMetadata(SourceGame).Select(x => x.Id).FirstOrDefault());
                             }
@@ -99,14 +107,13 @@ namespace MetadataUtilities.Models
             return mustUpdate;
         }
 
-        public bool ReplaceData { get; set; }
-
+        [DontSerialize]
         public Game SourceGame { get; set; }
 
-        public List<IMetadataFieldType> FieldTypes
+        public ObservableCollection<CopyField> Fields
         {
-            get => _fieldTypes;
-            set => _fieldTypes = value ?? new List<IMetadataFieldType>();
+            get => _fields;
+            set => SetValue(ref _fields, value);
         }
     }
 }

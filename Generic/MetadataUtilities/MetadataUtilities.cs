@@ -190,7 +190,7 @@ namespace MetadataUtilities
                     Description = "CopyTest",
                     MenuSection = menuSection,
                     Icon = "muCopyIcon",
-                    Action = a => ControlCenter.Instance.OpenCopyMetadataWindow()
+                    Action = a => ControlCenter.Instance.OpenCopyMetadataWindow(games.First())
                 });
 
                 if (ControlCenter.Instance.GameToCopy != null)
