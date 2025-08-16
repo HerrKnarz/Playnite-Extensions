@@ -18,6 +18,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">Você precisa inserir um nome.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Você precisa adicionar um Nome para o alvo da regra.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Nenhum item de metadados não utilizado foi encontrado.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogOnlyIfEmpty">Only if empty</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">item adicionado a {0} jogos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">item removido de {0} jogos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">item alternado em {0} jogos</sys:String>
@@ -25,6 +26,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Removido itens de metadados indesejados dos jogos {0}!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Renomear empresa</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Você está renomeando {0}. Deseja renomear {1} correspondente, também?</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogReplace">Replace</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Salvar como regra de mesclagem</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Selecionar novo tipo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Defina a pontuação de usuário nos {0} jogos!</sys:String>
