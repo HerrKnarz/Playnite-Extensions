@@ -29,5 +29,10 @@ namespace KNARZhelper.DatabaseObjectTypes
         public abstract string GetValue(Game game);
 
         public abstract bool GameContainsValue(Game game, string value);
+
+        public bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false) => sourceGame != null
+                && targetGame != null
+                && (replaceValue || (onlyIfEmpty && FieldInGameIsEmpty(targetGame)))
+                && AddValueToGame(targetGame, GetValue(sourceGame));
     }
 }

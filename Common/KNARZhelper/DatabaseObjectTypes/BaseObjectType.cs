@@ -136,5 +136,31 @@ namespace KNARZhelper.DatabaseObjectTypes
                 collection.Update(item);
             });
         }
+
+        public bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false)
+        {
+            if (sourceGame == null || targetGame == null)
+            {
+                return false;
+            }
+
+            var result = false;
+
+            if (replaceValue || (onlyIfEmpty && FieldInGameIsEmpty(targetGame)))
+            {
+                var ids = LoadGameMetadata(sourceGame).Select(x => x.Id).ToList();
+
+                if (replaceValue && !FieldInGameIsEmpty(targetGame))
+                {
+                    result = true;
+
+                    EmptyFieldInGame(targetGame);
+                }
+
+                result |= AddValueToGame(targetGame, ids);
+            }
+
+            return result;
+        }
     }
 }

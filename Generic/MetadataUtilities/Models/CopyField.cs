@@ -2,6 +2,7 @@
 using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 using Playnite.SDK.Data;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 
@@ -62,5 +63,10 @@ namespace MetadataUtilities.Models
                 return typeManager is BaseListType listType ? listType.LabelPlural : typeManager.LabelSingular;
             }
         }
+
+        public bool CopyToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false) =>
+            CopyData
+            && FieldType.GetTypeManager() is IValueType valueType
+            && valueType.CopyValueToGame(sourceGame, targetGame, replaceValue, onlyIfEmpty);
     }
 }

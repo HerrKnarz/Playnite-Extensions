@@ -17,7 +17,9 @@ namespace KNARZhelper.DatabaseObjectTypes
             get
             {
                 if (_libraries != null)
+                {
                     return _libraries;
+                }
 
                 _libraries = new List<DatabaseObject>
 
@@ -98,5 +100,7 @@ namespace KNARZhelper.DatabaseObjectTypes
             !API.Instance.Database.Games.Any(g => !(ignoreHiddenGames && g.Hidden) && (g.PluginId == x.Id))).ToList();
 
         public bool NameExists(string name, Guid id) => true;
+
+        public bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false) => false;
     }
 }

@@ -1,6 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.DatabaseObjectTypes;
-using KNARZhelper.Enum;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
@@ -33,75 +31,9 @@ namespace MetadataUtilities.Models
         {
             var mustUpdate = false;
 
-            foreach (var field in Fields.Where(x => x.CopyData))
+            foreach (var field in Fields)
             {
-                var fieldType = field.FieldType.GetTypeManager();
-
-                switch (fieldType.ValueType)
-                {
-                    case ItemValueType.Integer:
-                        if (!field.ReplaceData && fieldType is BaseIntegerType intType)
-                        {
-                            mustUpdate |= intType.AddValueToGame(targetGame, intType.GetValue(SourceGame));
-                        }
-
-                        break;
-
-                    case ItemValueType.Date:
-                        if (!field.ReplaceData && fieldType is BaseDateType dateType)
-                        {
-                            mustUpdate |= dateType.AddValueToGame(targetGame, dateType.GetValue(SourceGame));
-                        }
-
-                        break;
-
-                    case ItemValueType.Boolean:
-                        if (!field.ReplaceData && fieldType is BaseBooleanType boolType)
-                        {
-                            mustUpdate |= boolType.AddValueToGame(targetGame, boolType.GetValue(SourceGame));
-                        }
-
-                        break;
-
-                    case ItemValueType.String:
-                        if (!field.ReplaceData && fieldType is BaseStringType stringType)
-                        {
-                            mustUpdate |= stringType.AddValueToGame(targetGame, stringType.GetValue(SourceGame));
-                        }
-
-                        break;
-
-                    case ItemValueType.ItemList:
-                    case ItemValueType.Media:
-                    case ItemValueType.None:
-                    default:
-                        if (fieldType is IEditableObjectType type)
-                        {
-                            IClearAbleType clearableType = null;
-
-                            if (fieldType is IClearAbleType)
-                            {
-                                clearableType = fieldType as IClearAbleType;
-                            }
-
-                            if (field.ReplaceData && clearableType != null)
-                            {
-                                clearableType.EmptyFieldInGame(targetGame);
-                            }
-
-                            if (type.IsList)
-                            {
-                                mustUpdate |= type.AddValueToGame(targetGame, type.LoadGameMetadata(SourceGame).Select(x => x.Id).ToList());
-                            }
-                            else
-                            if (field.ReplaceData || (clearableType != null && clearableType.FieldInGameIsEmpty(targetGame)))
-                            {
-                                mustUpdate |= type.AddValueToGame(targetGame, type.LoadGameMetadata(SourceGame).Select(x => x.Id).FirstOrDefault());
-                            }
-                        }
-
-                        break;
-                }
+                mustUpdate |= field.CopyToGame(SourceGame, targetGame, field.ReplaceData, field.OnlyIfEmpty);
             }
 
             return mustUpdate;

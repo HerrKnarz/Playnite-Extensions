@@ -20,6 +20,11 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract bool AddValueToGame<T>(Game game, T value);
 
+        public bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false) => sourceGame != null
+            && targetGame != null
+            && (replaceValue || (onlyIfEmpty && FieldInGameIsEmpty(targetGame)))
+            && AddValueToGame(targetGame, GetValue(sourceGame));
+
         public abstract bool FieldInGameIsEmpty(Game game);
 
         public bool GameContainsValue<T>(Game game, T value) => value is DateTime dateValue && GetValue(game) == dateValue;
