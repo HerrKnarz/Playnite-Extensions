@@ -18,7 +18,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">Введіть назву.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Треба додати назву для цілі правила.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Немає невикористаних елементів метаданих.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogOnlyIfEmpty">Only if empty</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogOnlyIfEmpty">Лише якщо порожньо</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">елемент додано до {0} ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">елемент прибрано з {0} ігор</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">елемент перемкнуто в {0} грі</sys:String>
@@ -26,7 +26,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Прибрано небажані метадані з {0} ігор!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Перейменувати компанію</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Ви перейменовуєте {0}. Хочете перейменувати {1} відповідно?</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogReplace">Replace</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogReplace">Замінити</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Зберегти як правило об’єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Оберіть новий тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Встановлено рахунок користувача в {0} іграх!</sys:String>
