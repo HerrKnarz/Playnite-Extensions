@@ -6,6 +6,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeHidden : BaseBooleanType
     {
+        public override bool IsDefaultToCopy => false;
         public override string LabelSingular => ResourceProvider.GetString("LOCGameHiddenTitle");
         public override FieldType Type => FieldType.Hidden;
 

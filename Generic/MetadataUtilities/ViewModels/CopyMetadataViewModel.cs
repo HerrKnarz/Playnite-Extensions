@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace MetadataUtilities.ViewModels
 
                 var copyMetadataView = new CopyMetadataView();
 
-                var window = WindowHelper.CreateSizeToContentWindow("Copy Metadata");
+                var window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCMetadataUtilitiesMenuCopyMetadata"), 300);
 
                 window.Content = copyMetadataView;
                 window.DataContext = viewModel;
@@ -39,6 +40,14 @@ namespace MetadataUtilities.ViewModels
                 return null;
             }
         }
+
+        public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
+        {
+            ControlCenter.Instance.GameToCopy = _copyDataSet;
+
+            win.DialogResult = true;
+            win.Close();
+        }, win => win != null);
 
         public CopyDataSet CopyDataSet
         {

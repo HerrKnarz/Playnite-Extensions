@@ -10,6 +10,16 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override string LabelSingular => ResourceProvider.GetString("LOCVersionLabel");
         public override FieldType Type => FieldType.Version;
 
+        public override bool AddValueToGame(Game game, string value)
+        {
+            API.Instance.MainView.UIDispatcher.Invoke(() =>
+            {
+                game.Version = value;
+            });
+
+            return true;
+        }
+
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.Version = default);
 
         public override bool FieldInGameIsEmpty(Game game) => !game.Version?.Trim().Any() == true;

@@ -19,6 +19,16 @@ namespace MetadataUtilities.Models
         public CopyField(FieldType fieldType)
         {
             _fieldType = fieldType;
+
+            if (fieldType.GetTypeManager() is IValueType valueType)
+            {
+                _copyData = valueType.IsDefaultToCopy;
+            }
+
+            if (_copyData && !(fieldType.GetTypeManager() is BaseListType))
+            {
+                _replaceData = true;
+            }
         }
 
         public FieldType FieldType

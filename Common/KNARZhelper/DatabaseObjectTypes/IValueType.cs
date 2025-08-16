@@ -9,5 +9,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false);
 
         bool GameContainsValue<T>(Game game, T value);
+
+        bool IsDefaultToCopy { get; }
     }
 }

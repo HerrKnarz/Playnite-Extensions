@@ -10,6 +10,16 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override string LabelSingular => ResourceProvider.GetString("LOCGameDescriptionTitle");
         public override FieldType Type => FieldType.Description;
 
+        public override bool AddValueToGame(Game game, string value)
+        {
+            API.Instance.MainView.UIDispatcher.Invoke(() =>
+            {
+                game.Description = value;
+            });
+
+            return true;
+        }
+
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.Description = default);
 
         public override bool FieldInGameIsEmpty(Game game) => !game?.Description?.Trim().Any() ?? true;

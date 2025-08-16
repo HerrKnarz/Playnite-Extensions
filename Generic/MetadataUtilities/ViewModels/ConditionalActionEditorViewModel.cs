@@ -25,7 +25,7 @@ namespace MetadataUtilities.ViewModels
             _conditionalAction = conditionalAction;
 
             ContextMenuActionsAdd.AddMissing(_fieldTypes
-                .Where(x => x.CanBeSetInGame)
+                .Where(x => x.CanBeSetInGame && x.ValueType != ItemValueType.String)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -370,36 +370,36 @@ namespace MetadataUtilities.ViewModels
                 case ComparatorType.IsEmpty:
                 case ComparatorType.IsNotEmpty:
                 case ComparatorType.GameIsNew:
-                {
-                    if (!ConditionalAction.Conditions.Any(x => x.Comparator == comparatorType && x.Type == fieldType))
                     {
-                        ConditionalAction.Conditions.Add(new Condition(fieldType)
+                        if (!ConditionalAction.Conditions.Any(x => x.Comparator == comparatorType && x.Type == fieldType))
                         {
-                            Comparator = comparatorType
-                        });
-                    }
+                            ConditionalAction.Conditions.Add(new Condition(fieldType)
+                            {
+                                Comparator = comparatorType
+                            });
+                        }
 
-                    return;
-                }
+                        return;
+                    }
                 case ComparatorType.IsBiggerThan:
                 case ComparatorType.IsSmallerThan:
-                {
-                    if (fieldType.GetTypeManager().ValueType == ItemValueType.Integer)
                     {
-                        CreateIntCondition(fieldType, comparatorType);
+                        if (fieldType.GetTypeManager().ValueType == ItemValueType.Integer)
+                        {
+                            CreateIntCondition(fieldType, comparatorType);
+
+                            return;
+                        }
+
+                        if (fieldType.GetTypeManager().ValueType != ItemValueType.Date)
+                        {
+                            return;
+                        }
+
+                        CreateDateCondition(fieldType, comparatorType);
 
                         return;
                     }
-
-                    if (fieldType.GetTypeManager().ValueType != ItemValueType.Date)
-                    {
-                        return;
-                    }
-
-                    CreateDateCondition(fieldType, comparatorType);
-
-                    return;
-                }
                 case ComparatorType.Contains:
                     break;
 

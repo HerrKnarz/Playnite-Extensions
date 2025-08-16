@@ -31,6 +31,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract int Count { get; }
 
+        public bool IsDefaultToCopy => true;
+
         public abstract bool IsList { get; }
 
         public abstract string LabelPlural { get; }
@@ -146,7 +148,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
             var result = false;
 
-            if (replaceValue || (onlyIfEmpty && FieldInGameIsEmpty(targetGame)))
+            if (replaceValue || (onlyIfEmpty && FieldInGameIsEmpty(targetGame)) || (!onlyIfEmpty && IsList))
             {
                 var ids = LoadGameMetadata(sourceGame).Select(x => x.Id).ToList();
 

@@ -8,6 +8,7 @@ namespace KNARZhelper.DatabaseObjectTypes
     public class TypeLastPlayed : BaseDateType
     {
         public override bool CanBeEmptyInGame => true;
+        public override bool IsDefaultToCopy => false;
         public override string LabelSingular => ResourceProvider.GetString("LOCLastPlayedLabel");
         public override FieldType Type => FieldType.LastPlayed;
 

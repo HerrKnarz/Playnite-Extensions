@@ -182,14 +182,6 @@ namespace MetadataUtilities
                     Description = ResourceProvider.GetString("LOCMetadataUtilitiesMenuCopyMetadata"),
                     MenuSection = menuSection,
                     Icon = "muCopyIcon",
-                    Action = a => ControlCenter.Instance.GameToCopy = new CopyDataSet(games.First())
-                });
-
-                menuItems.Add(new GameMenuItem
-                {
-                    Description = "CopyTest",
-                    MenuSection = menuSection,
-                    Icon = "muCopyIcon",
                     Action = a => ControlCenter.Instance.OpenCopyMetadataWindow(games.First())
                 });
 

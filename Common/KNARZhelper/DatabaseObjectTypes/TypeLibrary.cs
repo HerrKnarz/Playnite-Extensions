@@ -43,6 +43,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public bool CanBeSetByMetadataAddOn => false;
         public bool CanBeSetInGame => false;
         public int Count => Libraries.Count;
+        public bool IsDefaultToCopy => false;
         public bool IsList => false;
         public string LabelPlural => ResourceProvider.GetString("LOCLibraries");
         public string LabelSingular => ResourceProvider.GetString("LOCLibrary");

@@ -6,6 +6,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeIsInstalled : BaseBooleanType
     {
+        public override bool IsDefaultToCopy => false;
         public override string LabelSingular => ResourceProvider.GetString("LOCGameIsInstalledTitle");
         public override FieldType Type => FieldType.IsInstalled;
 

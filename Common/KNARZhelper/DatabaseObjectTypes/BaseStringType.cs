@@ -11,14 +11,16 @@ namespace KNARZhelper.DatabaseObjectTypes
         public bool CanBeEmptyInGame => true;
         public bool CanBeModified => false;
         public virtual bool CanBeSetByMetadataAddOn => true;
-        public bool CanBeSetInGame => false;
-        public bool IsList => false;
+        public bool CanBeSetInGame => true;
+        public virtual bool IsDefaultToCopy => true;
         public string LabelPlural => LabelSingular;
         public abstract string LabelSingular { get; }
         public abstract FieldType Type { get; }
         public ItemValueType ValueType => ItemValueType.String;
 
-        public bool AddValueToGame<T>(Game game, T value) => false;
+        public bool AddValueToGame<T>(Game game, T value) => AddValueToGame(game, value as string);
+
+        public abstract bool AddValueToGame(Game game, string value);
 
         public abstract void EmptyFieldInGame(Game game);
 

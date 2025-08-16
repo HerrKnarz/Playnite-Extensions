@@ -7,8 +7,19 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     internal class TypeSortingName : BaseStringType
     {
+        public override bool IsDefaultToCopy => false;
         public override string LabelSingular => ResourceProvider.GetString("LOCGameSortingNameTitle");
         public override FieldType Type => FieldType.SortingName;
+
+        public override bool AddValueToGame(Game game, string value)
+        {
+            API.Instance.MainView.UIDispatcher.Invoke(() =>
+            {
+                game.SortingName = value;
+            });
+
+            return true;
+        }
 
         public override void EmptyFieldInGame(Game game) => API.Instance.MainView.UIDispatcher.Invoke(() => game.SortingName = default);
 

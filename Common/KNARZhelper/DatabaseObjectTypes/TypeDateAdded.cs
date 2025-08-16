@@ -7,6 +7,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeDateAdded : BaseDateType
     {
+        public override bool IsDefaultToCopy => false;
         public override string LabelSingular => ResourceProvider.GetString("LOCDateAddedLabel");
         public override FieldType Type => FieldType.DateAdded;
 

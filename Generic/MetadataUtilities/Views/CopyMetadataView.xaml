@@ -7,8 +7,8 @@
              d:DataContext="{d:DesignInstance Type=viewModels:CopyMetadataViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="10">
-        <ListView Name="LvConfig" ItemsSource="{Binding CopyDataSet.Fields}"
+    <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=LvConfig}">
+        <ListView Name="LvConfig" ItemsSource="{Binding CopyDataSet.Fields}" DockPanel.Dock="Top"
                   VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
@@ -17,7 +17,7 @@
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding CopyData, UpdateSourceTrigger=PropertyChanged}"
                                           Content="{Binding Label}"
-                                          Margin="0,0,0,0" />
+                                          Margin="0,3,0,3" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -40,5 +40,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-    </Grid>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,15,0,0" HorizontalAlignment="Center">
+            <Button Content="{DynamicResource LOCOKLabel}" Style="{StaticResource BottomButton}" Command="{Binding OkCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            <Button Content="{DynamicResource LOCCancelLabel}" Style="{StaticResource BottomButton}" IsCancel="True" />
+        </StackPanel>
+    </DockPanel>
 </UserControl>

@@ -9,6 +9,7 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override bool CanBeClearedInGame => false;
         public override bool CanBeEmptyInGame => false;
         public override bool CanBeSetByMetadataAddOn => false;
+        public override bool IsDefaultToCopy => false;
         public override string LabelSingular => ResourceProvider.GetString("LOCPlayCountLabel");
         public override FieldType Type => FieldType.PlayCount;
 

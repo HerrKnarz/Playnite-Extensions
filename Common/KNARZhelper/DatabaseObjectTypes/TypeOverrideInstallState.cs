@@ -6,6 +6,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 {
     public class TypeOverrideInstallState : BaseBooleanType
     {
+        public override bool IsDefaultToCopy => false;
         public override string LabelSingular => ResourceProvider.GetString("LOCOverrideInstallState");
         public override FieldType Type => FieldType.OverrideInstallState;
 
