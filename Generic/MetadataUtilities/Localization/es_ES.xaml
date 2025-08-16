@@ -18,6 +18,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">Necesitas introducir un nombre.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Necesita añadir un nombre para el objetivo de la regla.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">No se encontraron metadatos sin usar.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogOnlyIfEmpty">Only if empty</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">elemento añadido a {0} juegos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">elemento eliminado de {0} juegos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">elemento alternado en {0} juegos</sys:String>
@@ -25,6 +26,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Se han eliminado los metadatos no deseados de {0} juegos!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Renombrar compañía</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Estás renombrando un {0}. ¿Quieres renombrar también el {1} correspondiente?</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogReplace">Replace</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Guardar como regla de fusión</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Seleccionar nuevo tipo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">¡Se establecio la puntuación de usuario en {0} juegos!</sys:String>
