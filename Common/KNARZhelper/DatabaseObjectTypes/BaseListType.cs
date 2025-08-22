@@ -94,5 +94,29 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         internal List<DatabaseObject> LoadUnusedMetadata<T>(bool ignoreHiddenGames, IItemCollection<T> collection) where T : DatabaseObject =>
             collection.Where(x => !DbObjectInUse(x.Id, ignoreHiddenGames)).Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();
+
+        public override bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false)
+        {
+            if (sourceGame == null || targetGame == null)
+            {
+                return false;
+            }
+
+            var result = false;
+
+            if (replaceValue || !onlyIfEmpty || FieldInGameIsEmpty(targetGame))
+            {
+                if (replaceValue && !FieldInGameIsEmpty(targetGame))
+                {
+                    result = true;
+
+                    EmptyFieldInGame(targetGame);
+                }
+
+                result |= AddValueToGame(targetGame, LoadGameMetadata(sourceGame).Select(x => x.Id).ToList());
+            }
+
+            return result;
+        }
     }
 }

@@ -117,5 +117,8 @@ namespace KNARZhelper.DatabaseObjectTypes
             collection.Where(x => !DbObjectInUse(x.Id, ignoreHiddenGames)).Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();
 
         internal abstract void SetValue(Game game, Guid id);
+
+        public override bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false) =>
+            sourceGame != null && targetGame != null && (replaceValue || (onlyIfEmpty && FieldInGameIsEmpty(targetGame))) && AddValueToGame(targetGame, GetValue(sourceGame));
     }
 }

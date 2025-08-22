@@ -25,6 +25,8 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool CanBeSetByMetadataAddOn => false;
 
+        public override bool IsDefaultToCopy => false;
+
         public override int Count => _collection?.Count ?? 0;
 
         public override bool IsList => false;
