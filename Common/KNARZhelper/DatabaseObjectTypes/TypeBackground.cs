@@ -1,7 +1,6 @@
 ﻿using KNARZhelper.Enum;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using System.Linq;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
@@ -9,7 +8,7 @@ namespace KNARZhelper.DatabaseObjectTypes
     {
         public override string LabelSingular => ResourceProvider.GetString("LOCGameBackgroundTitle");
         public override FieldType Type => FieldType.Background;
-
-        public override bool FieldInGameIsEmpty(Game game) => !game.BackgroundImage.Any();
+        internal override string GetValue(Game game) => game.BackgroundImage;
+        internal override void SetValue(Game game, string value) => game.BackgroundImage = API.Instance.Database.AddFile(value, game.Id);
     }
 }

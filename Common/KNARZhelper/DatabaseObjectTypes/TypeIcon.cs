@@ -1,7 +1,6 @@
 ﻿using KNARZhelper.Enum;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using System.Linq;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
@@ -9,7 +8,7 @@ namespace KNARZhelper.DatabaseObjectTypes
     {
         public override string LabelSingular => ResourceProvider.GetString("LOCGameIconTitle");
         public override FieldType Type => FieldType.Icon;
-
-        public override bool FieldInGameIsEmpty(Game game) => !game.Icon.Any();
+        internal override string GetValue(Game game) => game.Icon;
+        internal override void SetValue(Game game, string value) => game.Icon = API.Instance.Database.AddFile(value, game.Id);
     }
 }
