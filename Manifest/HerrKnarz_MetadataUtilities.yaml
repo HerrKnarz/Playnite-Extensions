@@ -5,7 +5,7 @@ Packages:
     ReleaseDate: 2025-08-23
     PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2025-08-23/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_1_8_0.pext
     Changelog:
-      - Added option to copy and past metadata from one game to another. You can choose which fields to copy and almost all are supported apart from links. Those will follow in a future update along with the option to save copy presets, toggle buttons in the dialog etc.
+      - Added option to copy and paste metadata from one game to another. You can choose which fields to copy and almost all are supported apart from links. Those will follow in a future update along with the option to save copy presets, toggle buttons in the dialog etc.
       - It is now possible to set string fields (description, name, sorting name, manual, notes and version) and images (background, cover and icon) via conditional actions.
       - The error message when trying to save a prefix with an empty name or prefix now displays the name of the extension.
   - Version: 1.7.0
