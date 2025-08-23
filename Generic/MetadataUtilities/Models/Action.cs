@@ -12,6 +12,7 @@ namespace MetadataUtilities.Models
         private ActionType _actionType = ActionType.AddObject;
         private DateTime _dateValue;
         private int _intValue;
+        private string _stringValue;
 
         public Action(FieldType type, string name = default) : base(type, name)
         {
@@ -43,6 +44,12 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _intValue, value);
         }
 
+        public string StringValue
+        {
+            get => _stringValue;
+            set => SetValue(ref _stringValue, value);
+        }
+
         [DontSerialize]
         public new string ToString
         {
@@ -59,10 +66,12 @@ namespace MetadataUtilities.Models
                     case ItemValueType.Date:
                         return $"{ActionType.GetEnumDisplayName()} {TypeLabel} {DateValue:yyyy-MM-dd}";
 
-                    case ItemValueType.ItemList:
                     case ItemValueType.Media:
-                    case ItemValueType.None:
                     case ItemValueType.String:
+                        return $"{ActionType.GetEnumDisplayName()} {TypeLabel} \"{StringValue}\"";
+
+                    case ItemValueType.ItemList:
+                    case ItemValueType.None:
                     default:
                         return $"{ActionType.GetEnumDisplayName()} {TypeAndName}";
                 }
@@ -85,10 +94,12 @@ namespace MetadataUtilities.Models
                         case ItemValueType.Boolean:
                             return TypeManager is IValueType boolType && boolType.AddValueToGame(game, true);
 
-                        case ItemValueType.ItemList:
                         case ItemValueType.Media:
-                        case ItemValueType.None:
                         case ItemValueType.String:
+                            return TypeManager is IValueType stringType && stringType.AddValueToGame(game, StringValue);
+
+                        case ItemValueType.ItemList:
+                        case ItemValueType.None:
                         default:
                             return AddToGame(game);
                     }

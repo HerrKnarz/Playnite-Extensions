@@ -25,7 +25,7 @@ namespace MetadataUtilities.ViewModels
             _conditionalAction = conditionalAction;
 
             ContextMenuActionsAdd.AddMissing(_fieldTypes
-                .Where(x => x.CanBeSetInGame && x.ValueType != ItemValueType.String && x.ValueType != ItemValueType.Media)
+                .Where(x => x.CanBeSetInGame)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -354,8 +354,54 @@ namespace MetadataUtilities.ViewModels
                     break;
 
                 case ItemValueType.Media:
-                case ItemValueType.None:
+                    var mediaPath = API.Instance.Dialogs.SelectImagefile();
+
+                    if (!mediaPath.Any())
+                    {
+                        return;
+                    }
+
+                    if (!ConditionalAction.Actions.Any(
+                            x => x.ActionType == actionType &&
+                                 x.Type == fieldType && x.StringValue == mediaPath))
+                    {
+                        ConditionalAction.Actions.Add(new Action(fieldType)
+                        {
+                            StringValue = mediaPath,
+                            ActionType = actionType
+                        });
+                    }
+
+                    break;
+
                 case ItemValueType.String:
+                    var dialogResult = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCMetadataUtilitiesDialogEnterValue"), default);
+
+                    if (!dialogResult.Result)
+                    {
+                        return;
+                    }
+
+                    var stringValue = dialogResult.SelectedString;
+
+                    if (!stringValue.Any())
+                    {
+                        return;
+                    }
+
+                    if (!ConditionalAction.Actions.Any(
+                            x => x.ActionType == actionType &&
+                                 x.Type == fieldType && x.StringValue == stringValue))
+                    {
+                        ConditionalAction.Actions.Add(new Action(fieldType)
+                        {
+                            StringValue = stringValue,
+                            ActionType = actionType
+                        });
+                    }
+
+                    break;
+                case ItemValueType.None:
                 default:
                     throw new ArgumentOutOfRangeException();
             }
