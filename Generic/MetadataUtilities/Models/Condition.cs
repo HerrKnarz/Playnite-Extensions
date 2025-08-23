@@ -14,6 +14,7 @@ namespace MetadataUtilities.Models
 
         private DateTime? _dateValue;
         private int? _intValue;
+        private ulong? _ulongValue;
         private string _stringValue;
 
         public Condition(FieldType type, string name = default) : base(type, name)
@@ -36,6 +37,12 @@ namespace MetadataUtilities.Models
         {
             get => _intValue;
             set => SetValue(ref _intValue, value);
+        }
+
+        public ulong? UlongValue
+        {
+            get => _ulongValue;
+            set => SetValue(ref _ulongValue, value);
         }
 
         public string StringValue
@@ -67,6 +74,9 @@ namespace MetadataUtilities.Models
 
                     case ItemValueType.String:
                         return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {StringValue}";
+
+                    case ItemValueType.Ulong:
+                        return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {UlongValue}";
 
                     case ItemValueType.ItemList:
                     case ItemValueType.Media:
@@ -104,6 +114,9 @@ namespace MetadataUtilities.Models
                         case ItemValueType.Date:
                             return containsType.GameContainsValue(game, DateValue);
 
+                        case ItemValueType.Ulong:
+                            return containsType.GameContainsValue(game, UlongValue);
+
                         case ItemValueType.Media:
                         case ItemValueType.None:
                         default:
@@ -133,6 +146,9 @@ namespace MetadataUtilities.Models
                         case ItemValueType.Date:
                             return !notContainsType.GameContainsValue(game, DateValue);
 
+                        case ItemValueType.Ulong:
+                            return !notContainsType.GameContainsValue(game, UlongValue);
+
                         case ItemValueType.Media:
                         case ItemValueType.None:
                         default:
@@ -146,14 +162,30 @@ namespace MetadataUtilities.Models
                     return TypeManager is IClearAbleType notEmptyType && !notEmptyType.FieldInGameIsEmpty(game);
 
                 case ComparatorType.IsBiggerThan:
-                    return TypeManager is INumberType biggerType && (TypeManager.ValueType == ItemValueType.Integer
-                        ? biggerType.IsBiggerThan(game, IntValue)
-                        : biggerType.IsBiggerThan(game, DateValue));
+                    switch (TypeManager.ValueType)
+                    {
+                        case ItemValueType.Integer:
+                            return TypeManager is INumberType biggerIntType && biggerIntType.IsBiggerThan(game, IntValue);
+                        case ItemValueType.Date:
+                            return TypeManager is INumberType biggerDateType && biggerDateType.IsBiggerThan(game, DateValue);
+                        case ItemValueType.Ulong:
+                            return TypeManager is INumberType biggerUlongType && biggerUlongType.IsBiggerThan(game, UlongValue);
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
 
                 case ComparatorType.IsSmallerThan:
-                    return TypeManager is INumberType smallerType && (TypeManager.ValueType == ItemValueType.Integer
-                        ? smallerType.IsSmallerThan(game, IntValue)
-                        : smallerType.IsSmallerThan(game, DateValue));
+                    switch (TypeManager.ValueType)
+                    {
+                        case ItemValueType.Integer:
+                            return TypeManager is INumberType smallerIntType && smallerIntType.IsSmallerThan(game, IntValue);
+                        case ItemValueType.Date:
+                            return TypeManager is INumberType smallerDateType && smallerDateType.IsSmallerThan(game, DateValue);
+                        case ItemValueType.Ulong:
+                            return TypeManager is INumberType smallerUlongType && smallerUlongType.IsSmallerThan(game, UlongValue);
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
 
                 case ComparatorType.GameIsNew:
                     return ControlCenter.Instance.NewGames.Contains(game.Id);

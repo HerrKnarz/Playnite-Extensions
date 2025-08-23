@@ -4,15 +4,15 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public class TypeInstallSize : BaseIntegerType
+    public class TypeInstallSize : BaseUlongType
     {
         public override string LabelSingular => ResourceProvider.GetString("LOCInstallSizeLabel");
         public override FieldType Type => FieldType.InstallSize;
 
-        public override bool AddValueToGame(Game game, int? value) =>
+        public override bool AddValueToGame(Game game, ulong? value) =>
             API.Instance.MainView.UIDispatcher.Invoke(() =>
             {
-                game.InstallSize = (ulong)(value ?? 0);
+                game.InstallSize = value ?? 0;
 
                 return true;
             });

@@ -8,6 +8,7 @@
         String,
         Date,
         Media,
-        Boolean
+        Boolean,
+        Ulong
     }
 }

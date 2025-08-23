@@ -4,7 +4,7 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public class TypePlayCount : BaseIntegerType
+    public class TypePlayCount : BaseUlongType
     {
         public override bool CanBeClearedInGame => false;
         public override bool CanBeEmptyInGame => false;
@@ -13,10 +13,10 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override string LabelSingular => ResourceProvider.GetString("LOCPlayCountLabel");
         public override FieldType Type => FieldType.PlayCount;
 
-        public override bool AddValueToGame(Game game, int? value) =>
+        public override bool AddValueToGame(Game game, ulong? value) =>
             API.Instance.MainView.UIDispatcher.Invoke(() =>
             {
-                game.PlayCount = (ulong)(value ?? 0);
+                game.PlayCount = value ?? 0;
 
                 return true;
             });

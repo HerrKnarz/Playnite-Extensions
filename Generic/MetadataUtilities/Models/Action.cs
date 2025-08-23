@@ -12,6 +12,7 @@ namespace MetadataUtilities.Models
         private ActionType _actionType = ActionType.AddObject;
         private DateTime _dateValue;
         private int _intValue;
+        private ulong _ulongValue;
         private string _stringValue;
 
         public Action(FieldType type, string name = default) : base(type, name)
@@ -44,6 +45,12 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _intValue, value);
         }
 
+        public ulong UlongValue
+        {
+            get => _ulongValue;
+            set => SetValue(ref _ulongValue, value);
+        }
+
         public string StringValue
         {
             get => _stringValue;
@@ -69,6 +76,9 @@ namespace MetadataUtilities.Models
                     case ItemValueType.Media:
                     case ItemValueType.String:
                         return $"{ActionType.GetEnumDisplayName()} {TypeLabel} \"{StringValue}\"";
+
+                    case ItemValueType.Ulong:
+                        return $"{ActionType.GetEnumDisplayName()} {TypeLabel} {UlongValue}";
 
                     case ItemValueType.ItemList:
                     case ItemValueType.None:
@@ -97,6 +107,9 @@ namespace MetadataUtilities.Models
                         case ItemValueType.Media:
                         case ItemValueType.String:
                             return TypeManager is IValueType stringType && stringType.AddValueToGame(game, StringValue);
+
+                        case ItemValueType.Ulong:
+                            return TypeManager is IValueType ulongType && ulongType.AddValueToGame(game, UlongValue);
 
                         case ItemValueType.ItemList:
                         case ItemValueType.None:

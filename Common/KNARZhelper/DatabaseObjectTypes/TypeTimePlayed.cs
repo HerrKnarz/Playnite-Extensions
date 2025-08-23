@@ -4,7 +4,7 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public class TypeTimePlayed : BaseIntegerType
+    public class TypeTimePlayed : BaseUlongType
     {
         public override bool CanBeClearedInGame => false;
         public override bool CanBeEmptyInGame => false;
@@ -13,10 +13,10 @@ namespace KNARZhelper.DatabaseObjectTypes
         public override string LabelSingular => ResourceProvider.GetString("LOCTimePlayed");
         public override FieldType Type => FieldType.TimePlayed;
 
-        public override bool AddValueToGame(Game game, int? value) =>
+        public override bool AddValueToGame(Game game, ulong? value) =>
             API.Instance.MainView.UIDispatcher.Invoke(() =>
             {
-                game.Playtime = (ulong)(value ?? 0);
+                game.Playtime = value ?? 0;
 
                 return true;
             });

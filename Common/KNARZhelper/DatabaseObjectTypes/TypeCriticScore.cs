@@ -16,6 +16,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool FieldInGameIsEmpty(Game game) => !game.CriticScore.HasValue;
 
-        public override ulong? GetValue(Game game) => (ulong?)game.CriticScore;
+        public override int? GetValue(Game game) => game.CriticScore;
     }
 }

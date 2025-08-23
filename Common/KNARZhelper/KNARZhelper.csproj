@@ -57,6 +57,7 @@
     <Compile Include="DatabaseObjectTypes\BaseObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseSingleObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseStringType.cs" />
+    <Compile Include="DatabaseObjectTypes\BaseUlongType.cs" />
     <Compile Include="DatabaseObjectTypes\IClearAbleType.cs" />
     <Compile Include="DatabaseObjectTypes\IEditableObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\IGameInfoType.cs" />

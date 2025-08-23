@@ -3,7 +3,7 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.DatabaseObjectTypes
 {
-    public abstract class BaseIntegerType : IMetadataFieldType, INumberType, IValueType, IClearAbleType
+    public abstract class BaseUlongType : IMetadataFieldType, INumberType, IValueType, IClearAbleType
     {
         public bool CanBeAdded => false;
         public virtual bool CanBeClearedInGame => true;
@@ -16,11 +16,11 @@ namespace KNARZhelper.DatabaseObjectTypes
         public string LabelPlural => LabelSingular;
         public abstract string LabelSingular { get; }
         public abstract FieldType Type { get; }
-        public ItemValueType ValueType => ItemValueType.Integer;
+        public ItemValueType ValueType => ItemValueType.Ulong;
 
-        public bool AddValueToGame<T>(Game game, T value) => AddValueToGame(game, value as int?);
+        public bool AddValueToGame<T>(Game game, T value) => AddValueToGame(game, value as ulong?);
 
-        public abstract bool AddValueToGame(Game game, int? value);
+        public abstract bool AddValueToGame(Game game, ulong? value);
 
         public bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false) => sourceGame != null
             && targetGame != null
@@ -31,12 +31,12 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public abstract bool FieldInGameIsEmpty(Game game);
 
-        public bool GameContainsValue<T>(Game game, T value) => value is int intValue && GetValue(game) == intValue;
+        public bool GameContainsValue<T>(Game game, T value) => value is ulong ulongValue && GetValue(game) == ulongValue;
 
-        public abstract int? GetValue(Game game);
+        public abstract ulong? GetValue(Game game);
 
-        public bool IsBiggerThan<T>(Game game, T value) => value is int intValue && GetValue(game) > intValue;
+        public bool IsBiggerThan<T>(Game game, T value) => value is ulong ulongValue && GetValue(game) > ulongValue;
 
-        public bool IsSmallerThan<T>(Game game, T value) => value is int intValue && GetValue(game) < intValue;
+        public bool IsSmallerThan<T>(Game game, T value) => value is ulong ulongValue && GetValue(game) < ulongValue;
     }
 }

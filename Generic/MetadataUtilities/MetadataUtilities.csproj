@@ -78,6 +78,9 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseStringType.cs">
       <Link>Shared\BaseStringType.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseUlongType.cs">
+      <Link>Shared\BaseUlongType.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IClearAbleType.cs">
       <Link>Shared\IClearAbleType.cs</Link>
     </Compile>
