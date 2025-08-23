@@ -383,7 +383,7 @@ namespace MetadataUtilities.ViewModels
 
             if (Settings.PrefixItemTypes.Any(p => p.Prefix?.Length == 0 || p.Name?.Length == 0))
             {
-                errors.Add(ResourceProvider.GetString("LOCMetadataUtilitiesSettingsErrorEmptyPrefix"));
+                errors.Add($"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}: {ResourceProvider.GetString("LOCMetadataUtilitiesSettingsErrorEmptyPrefix")}");
             }
 
             return errors.Count == 0;
