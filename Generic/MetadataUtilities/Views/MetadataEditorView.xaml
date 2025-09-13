@@ -267,6 +267,9 @@
                 <Button Content="{DynamicResource LOCRemoveTitle}" Margin="0,0,10,10"
                         Command="{Binding RemoveGamesCommand}" ToolTip="{DynamicResource LOCMetadataUtilitiesEditorRemovesGamesFromSelectedItem}"
                         CommandParameter="{Binding SelectedItems, ElementName=GamesGrid}" />
+                <Button Content="{DynamicResource LOCMetadataUtilitiesEditorJumpToGame}" Margin="0,0,10,10"
+                        Command="{Binding LoadGameCommand}" ToolTip="{DynamicResource LOCMetadataUtilitiesEditorJumpToGameHint}"
+                        CommandParameter="{Binding SelectedItems, ElementName=GamesGrid}" />
             </WrapPanel>
         </Grid>
     </DockPanel>

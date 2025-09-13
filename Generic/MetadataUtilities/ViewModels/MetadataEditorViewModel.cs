@@ -482,6 +482,23 @@ namespace MetadataUtilities.ViewModels
             ? Visibility.Visible
             : Visibility.Collapsed;
 
+        public RelayCommand<IList<object>> LoadGameCommand => new RelayCommand<IList<object>>(items =>
+        {
+            if (SelectedItems == null || SelectedItems.Count == 0)
+            {
+                return;
+            }
+
+            var game = items.Cast<MyGame>().Select(x => x.Game).First();
+
+            if (game == null)
+            {
+                return;
+            }
+
+            API.Instance.MainView.SelectGame(game.Id);
+        }, items => items != null && items.Count > 0);
+
         public RelayCommand<IList<object>> RemoveGamesCommand => new RelayCommand<IList<object>>(items =>
         {
             Cursor.Current = Cursors.WaitCursor;
