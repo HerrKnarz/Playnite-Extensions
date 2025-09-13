@@ -1,5 +1,17 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 1.8.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-09-13
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2025-09-13/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_1_8_1.pext
+    Changelog:
+      - Added links as new field type. Links can be copied between games and also be used in conditional actions. At the moment you can clear the field and check if it is empty. Further options like checking for or adding a specific link will follow later.
+      - Added buttons to check and uncheck all fields in the copy metadata dialog.
+      - Added button to switch to the selected game in Metadata Editor.
+      - Fixed number values not working in conditional actions.
+      - Fixed conditions "is empty" and "is not emtpy" and action "clear field" displaying 0 at the end for fields containing numbers.
+      - Fixed copy dialog not resizing correctly
+      - Updated localizations.
   - Version: 1.8.0
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-08-23
