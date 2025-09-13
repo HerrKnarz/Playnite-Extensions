@@ -46,6 +46,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Kural hedefi</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Hedef olarak ayarla</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">İstatistikler</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGame">Jump to game</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGameHint">Opens the details of the currently selected game in Playnite</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_And">Tüm şartlar geçerli</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Two">En az iki şart geçerli</sys:String>
