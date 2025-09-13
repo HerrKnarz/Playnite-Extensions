@@ -33,7 +33,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public bool GameContainsValue<T>(Game game, T value) => value is ulong ulongValue && GetValue(game) == ulongValue;
 
-        public abstract ulong? GetValue(Game game);
+        public abstract ulong GetValue(Game game);
 
         public bool IsBiggerThan<T>(Game game, T value) => value is ulong ulongValue && GetValue(game) > ulongValue;
 

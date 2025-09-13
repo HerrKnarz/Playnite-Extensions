@@ -21,6 +21,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool FieldInGameIsEmpty(Game game) => !game.InstallSize.HasValue;
 
-        public override ulong? GetValue(Game game) => game.InstallSize;
+        public override ulong GetValue(Game game) => game.InstallSize ?? 0;
     }
 }

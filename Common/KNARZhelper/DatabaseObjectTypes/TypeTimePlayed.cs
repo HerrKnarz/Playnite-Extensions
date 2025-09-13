@@ -27,6 +27,6 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public override bool FieldInGameIsEmpty(Game game) => false;
 
-        public override ulong? GetValue(Game game) => game.Playtime;
+        public override ulong GetValue(Game game) => game.Playtime;
     }
 }
