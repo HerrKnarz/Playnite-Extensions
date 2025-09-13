@@ -1,35 +1,35 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCCompanyCompanionName">Company Companion</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionName">Şirket Yoldaşı</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Clean up company names.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Find companies to match</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Find similar companies to match.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">game</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">games</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Merge group</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Untick, if this company shouldn't be merged with the others.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Company Merger</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">New name:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Use as name</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Şirket isimlerini temizleyin.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Eşleşen şirketleri bul</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Eşleşen benzer şirketleri bul.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">oyun</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">oyunlar</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Grupları birleştir</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Bu şirketin diğerleriyle birleştirilmesini istemiyorsanız, işareti kaldırın.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Şirket birleşmesi</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">Yeni isim:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">İsim olarak kullan</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Merge duplicates</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Remove business entity descriptors</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Show Company Merger</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Kopyaları birleştir</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Şirket varlığı tanımlayıcılarını temizle</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Şirket birleşmesini göster</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Add</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Business entity descriptors:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Words to ignore to find similar companies:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Remove</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Show group key in merge window.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Ekle</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">İşletme varlığı tanımlayıcıları:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Benzer şirketleri bulmak için görmezden gelinecek kelimeler:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Kaldır</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Birleştirme penceresinde grup tuşunu gösterin.</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">şirketlerin birleşmesi</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">birleştirmek için şirketleri aramak</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">oyunları güncelleme</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Add value</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">No companies with business entity descriptors found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">No duplicate companies were found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Updated companies in {0} games and merged {1} companies</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Değer ekle</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">İş varlık tanımlayıcıları olan hiçbir şirket bulunamadı.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">Yinelenen şirket bulunmadı.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">{0} oyundaki şirketler güncellendi ve {1} şirket birleştirildi</sys:String>
 </ResourceDictionary>
