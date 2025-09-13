@@ -62,6 +62,11 @@ namespace MetadataUtilities.Models
         {
             get
             {
+                if (ActionType == ActionType.ClearField)
+                {
+                    return $"{ActionType.GetEnumDisplayName()} {TypeLabel}";
+                }
+
                 switch (TypeManager.ValueType)
                 {
                     case ItemValueType.Boolean:

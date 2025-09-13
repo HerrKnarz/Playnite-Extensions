@@ -61,6 +61,11 @@ namespace MetadataUtilities.Models
                     return ResourceProvider.GetString("LOCMetadataUtilitiesGameIsNew");
                 }
 
+                if (Comparator == ComparatorType.IsEmpty || Comparator == ComparatorType.IsNotEmpty)
+                {
+                    return $"{TypeLabel} {Comparator.GetEnumDisplayName()}";
+                }
+
                 switch (TypeManager.ValueType)
                 {
                     case ItemValueType.Boolean:
