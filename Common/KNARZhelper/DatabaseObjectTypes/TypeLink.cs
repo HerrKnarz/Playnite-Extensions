@@ -49,7 +49,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false)
         {
-            if (sourceGame?.Links == null || sourceGame.Links.Count == 0)
+            if (!replaceValue && FieldInGameIsEmpty(sourceGame))
             {
                 return false;
             }
