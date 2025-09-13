@@ -41,6 +41,54 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
+        public RelayCommand CheckAllCommand => new RelayCommand(() =>
+        {
+            foreach (var item in _copyDataSet.Fields)
+            {
+                item.CopyData = true;
+            }
+        });
+
+        public RelayCommand UnCheckAllCommand => new RelayCommand(() =>
+        {
+            foreach (var item in _copyDataSet.Fields)
+            {
+                item.CopyData = false;
+            }
+        });
+
+        public RelayCommand CheckAllReplaceCommand => new RelayCommand(() =>
+        {
+            foreach (var item in _copyDataSet.Fields)
+            {
+                item.ReplaceData = true;
+            }
+        });
+
+        public RelayCommand UnCheckAllReplaceCommand => new RelayCommand(() =>
+        {
+            foreach (var item in _copyDataSet.Fields)
+            {
+                item.ReplaceData = false;
+            }
+        });
+
+        public RelayCommand CheckAllEmptyCommand => new RelayCommand(() =>
+        {
+            foreach (var item in _copyDataSet.Fields)
+            {
+                item.OnlyIfEmpty = true;
+            }
+        });
+
+        public RelayCommand UnCheckAllEmptyCommand => new RelayCommand(() =>
+        {
+            foreach (var item in _copyDataSet.Fields)
+            {
+                item.OnlyIfEmpty = false;
+            }
+        });
+
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
             ControlCenter.Instance.GameToCopy = _copyDataSet;

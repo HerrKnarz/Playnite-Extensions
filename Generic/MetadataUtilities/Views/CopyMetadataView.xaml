@@ -17,7 +17,16 @@
                   VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCTypeLabel}">
+                    <GridViewColumn Width="Auto">
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource LOCTypeLabel}" Margin="5" />
+                                    <Button FontFamily="Wingdings" FontSize="18" Content="þ" Command="{Binding DataContext.CheckAllCommand, RelativeSource={RelativeSource AncestorType=ListView}}" Margin="5,0" Padding="5" />
+                                    <Button FontFamily="Wingdings" FontSize="18" Content="" Command="{Binding DataContext.UnCheckAllCommand, RelativeSource={RelativeSource AncestorType=ListView}}" Padding="5" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.HeaderTemplate>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding CopyData, UpdateSourceTrigger=PropertyChanged}"
@@ -26,7 +35,16 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesDialogReplace}">
+                    <GridViewColumn Width="Auto">
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesDialogReplace}" Margin="5" />
+                                    <Button FontFamily="Wingdings" FontSize="18" Content="þ" Command="{Binding DataContext.CheckAllReplaceCommand, RelativeSource={RelativeSource AncestorType=ListView}}" Margin="5,0" Padding="5" />
+                                    <Button FontFamily="Wingdings" FontSize="18" Content="" Command="{Binding DataContext.UnCheckAllReplaceCommand, RelativeSource={RelativeSource AncestorType=ListView}}" Padding="5" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.HeaderTemplate>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding ReplaceData, UpdateSourceTrigger=PropertyChanged}"
@@ -34,7 +52,16 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesDialogOnlyIfEmpty}">
+                    <GridViewColumn Width="Auto">
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesDialogOnlyIfEmpty}" Margin="5" />
+                                    <Button FontFamily="Wingdings" FontSize="18" Content="þ" Command="{Binding DataContext.CheckAllEmptyCommand, RelativeSource={RelativeSource AncestorType=ListView}}" Margin="5,0" Padding="5" />
+                                    <Button FontFamily="Wingdings" FontSize="18" Content="" Command="{Binding DataContext.UnCheckAllEmptyCommand, RelativeSource={RelativeSource AncestorType=ListView}}" Padding="5" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.HeaderTemplate>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding OnlyIfEmpty, UpdateSourceTrigger=PropertyChanged}"
