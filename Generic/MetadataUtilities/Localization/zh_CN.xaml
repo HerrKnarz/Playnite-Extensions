@@ -46,6 +46,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">规则目标</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">设为目标</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">统计</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGame">Jump to game</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGameHint">Opens the details of the currently selected game in Playnite</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_And">所有条件均为真</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Two">至少两个条件为真</sys:String>
