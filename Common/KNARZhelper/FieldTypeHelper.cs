@@ -42,6 +42,7 @@ namespace KNARZhelper
                         new TypeIsInstalled(),
                         new TypeLastPlayed(),
                         new TypeLibrary(),
+                        new TypeLink(),
                         new TypeManual(),
                         new TypeName(),
                         new TypeNotes(),
@@ -127,6 +128,9 @@ namespace KNARZhelper
 
                 case FieldType.Library:
                     return new TypeLibrary();
+
+                case FieldType.Link:
+                    return new TypeLink();
 
                 case FieldType.Manual:
                     return new TypeManual();

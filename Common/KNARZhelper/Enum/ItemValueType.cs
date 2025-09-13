@@ -9,6 +9,7 @@
         Date,
         Media,
         Boolean,
-        Ulong
+        Ulong,
+        LinkList
     }
 }

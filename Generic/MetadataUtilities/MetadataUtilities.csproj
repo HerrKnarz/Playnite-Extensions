@@ -162,6 +162,9 @@
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeLibrary.cs">
       <Link>Shared\TypeLibrary.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeLink.cs">
+      <Link>Shared\TypeLink.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeManual.cs">
       <Link>Shared\TypeManual.cs</Link>
     </Compile>

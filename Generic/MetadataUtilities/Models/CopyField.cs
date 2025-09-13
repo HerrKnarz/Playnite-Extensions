@@ -69,8 +69,7 @@ namespace MetadataUtilities.Models
             get
             {
                 var typeManager = FieldType.GetTypeManager();
-
-                return typeManager is BaseListType listType ? listType.LabelPlural : typeManager.LabelSingular;
+                return typeManager is BaseListType || typeManager is TypeLink ? typeManager.LabelPlural : typeManager.LabelSingular;
             }
         }
 

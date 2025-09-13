@@ -23,6 +23,7 @@
         IsInstalled = 26,
         LastPlayed = 23,
         Library = 11,
+        Link = 36,
         Manual = 34,
         Name = 32,
         Notes = 22,

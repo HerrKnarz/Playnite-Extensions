@@ -25,7 +25,7 @@ namespace MetadataUtilities.ViewModels
             _conditionalAction = conditionalAction;
 
             ContextMenuActionsAdd.AddMissing(_fieldTypes
-                .Where(x => x.CanBeSetInGame)
+                .Where(x => x.CanBeSetInGame && x.ValueType != ItemValueType.LinkList)
                 .Select(x =>
                     new FieldTypeContextAction
                     {
