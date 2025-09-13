@@ -8,6 +8,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=LvConfig}">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,15,0,0" HorizontalAlignment="Center">
+            <Button Content="{DynamicResource LOCOKLabel}" Style="{StaticResource BottomButton}" Command="{Binding OkCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            <Button Content="{DynamicResource LOCCancelLabel}" Style="{StaticResource BottomButton}" IsCancel="True" />
+        </StackPanel>
         <ListView Name="LvConfig" ItemsSource="{Binding CopyDataSet.Fields}" DockPanel.Dock="Top"
                   VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
             <ListView.View>
@@ -40,10 +45,5 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,15,0,0" HorizontalAlignment="Center">
-            <Button Content="{DynamicResource LOCOKLabel}" Style="{StaticResource BottomButton}" Command="{Binding OkCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-            <Button Content="{DynamicResource LOCCancelLabel}" Style="{StaticResource BottomButton}" IsCancel="True" />
-        </StackPanel>
     </DockPanel>
 </UserControl>
