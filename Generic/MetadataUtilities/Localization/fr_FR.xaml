@@ -46,6 +46,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Cible des règles</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Définir comme cible</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Statistiques</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGame">Jump to game</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGameHint">Opens the details of the currently selected game in Playnite</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_And">Toutes les conditions sont vraies</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Two">Au moins deux conditions sont vraies</sys:String>
