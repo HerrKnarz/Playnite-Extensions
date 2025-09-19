@@ -3,6 +3,7 @@ using KNARZhelper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,18 @@ namespace LinkUtilities.Linker.LinkSources
     /// </summary>
     internal class LinkAdventureGamers : BaseClasses.Linker
     {
-        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
-
-        public override string BaseUrl => "https://adventuregamers.com";
+        // TODO: Reimplement using Jeshibu's method, since they now return forbidden on scraping.
+        public override LinkAddTypes AddType => LinkAddTypes.None;
+        public override bool CanBeSearched => false;
+        public override string BaseUrl => "https://adventuregamers.com/games/";
         public override string LinkName => "Adventure Gamers";
         public override string SearchUrl => "https://adventuregamers.com/games/search?keywords=";
+
+        public override string GetGamePath(Game game, string gameName = null)
+            => (gameName ?? game.Name).RemoveSpecialChars()
+                .CollapseWhitespaces()
+                .Replace(" ", "-")
+                .ToLower();
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
