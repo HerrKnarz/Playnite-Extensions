@@ -12,6 +12,7 @@ namespace LinkUtilities.Linker.LinkSources
     internal class LinkSegaRetro : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://segaretro.org";
+        public override bool CanBeSearched => false;
         public override string LinkName => "Sega Retro";
         public override string BaseUrl => "https://segaretro.org/";
         public override string SearchUrl => "https://segaretro.org/index.php?search={0}&fulltext=1";
