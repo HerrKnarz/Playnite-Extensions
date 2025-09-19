@@ -15,7 +15,9 @@ namespace LinkUtilities.Linker.LinkSources
     /// </summary>
     internal class LinkCoOptimus : BaseClasses.Linker
     {
-        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
+        //TODO: Reimplement search function. I removed it because they switched to google search and that can't be scraped. Maybe I can go through the game sitemap they offer.
+        public override LinkAddTypes AddType => LinkAddTypes.None;
+        public override bool CanBeSearched => false;
         public override string BrowserSearchUrl => "https://www.co-optimus.com/search.php?q=";
         public override string LinkName => "Co-Optimus";
         public override string SearchUrl => "https://api.co-optimus.com/games.php?search=true&name=";
