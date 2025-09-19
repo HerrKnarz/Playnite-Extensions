@@ -15,8 +15,8 @@ namespace LinkUtilities.Linker.LinkSources
     /// </summary>
     internal class LinkLemonAmiga : BaseClasses.Linker
     {
-        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
-
+        public override LinkAddTypes AddType => LinkAddTypes.None;
+        public override bool CanBeSearched => false;
         public override string BaseUrl => "https://www.lemonamiga.com/games/";
         public override string LinkName => "Lemon Amiga";
         public override string SearchUrl => "https://www.lemonamiga.com/games/list.php?list_title=";
