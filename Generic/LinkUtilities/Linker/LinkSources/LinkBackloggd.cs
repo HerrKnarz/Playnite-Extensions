@@ -17,6 +17,7 @@ namespace LinkUtilities.Linker.LinkSources
     internal class LinkBackloggd : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://www.backloggd.com";
+        public override bool CanBeSearched => false;
         public override string BaseUrl => _websiteUrl + "/games/";
 
         public override string LinkName => "Backloggd";
