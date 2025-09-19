@@ -7,7 +7,6 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Game = Playnite.SDK.Models.Game;
 
@@ -30,7 +29,7 @@ namespace LinkUtilities.Linker.Libraries
         public override string LinkName => "GOG";
 
         public override bool ReturnsSameUrl { get; set; } = true;
-        public override string SearchUrl => "https://embed.gog.com/games/ajax/filtered?mediaType=game&search=";
+        public override string SearchUrl => "https://catalog.gog.com/v1/catalog?limit=100&locale=en&order=desc:score&page=1&productType=in:game,pack&query=like:";
 
         public override bool FindLibraryLink(Game game, out List<Link> links)
         {
@@ -77,23 +76,12 @@ namespace LinkUtilities.Linker.Libraries
 
             foreach (var product in gogSearchResult.Products)
             {
-                var releaseDate = string.Empty;
-
-                if (product.GlobalReleaseDate.HasValue)
-                {
-                    releaseDate = MiscHelper.UnixTimeStampToDateTime(product.GlobalReleaseDate.Value).Date.ToString(CultureInfo.CurrentUICulture);
-                }
-                else if (product.ReleaseDate.HasValue)
-                {
-                    releaseDate = MiscHelper.UnixTimeStampToDateTime(product.ReleaseDate.Value).Date.ToString(CultureInfo.CurrentUICulture);
-                }
-
                 searchResults.Add(
                     new SearchResult
                     {
                         Name = product.Title,
-                        Url = $"{BaseUrl}{product.Slug}",
-                        Description = releaseDate
+                        Url = product.StoreLink,
+                        Description = $"{product.ReleaseDate} -  ID {product.Id}"
                     });
             }
 

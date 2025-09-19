@@ -1,249 +1,306 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-// Contains all the classes needed to deserialize the JSON fetched from the gog embed URL.
+// Contains all the classes needed to deserialize the JSON fetched from the gog catalog URL.
 namespace LinkUtilities.Models.ApiResults
 {
-    public class Availability
-    {
-        [JsonProperty("isAvailable")]
-        public bool IsAvailable;
-
-        [JsonProperty("isAvailableInAccount")]
-        public bool IsAvailableInAccount;
-    }
-
-    public class FromObject
-    {
-        [JsonProperty("date")]
-        public string Date;
-
-        [JsonProperty("timezone")]
-        public string Timezone;
-
-        [JsonProperty("timezone_type")]
-        public int TimezoneType;
-    }
-
-    public class Price
+    public class BaseMoney
     {
         [JsonProperty("amount")]
         public string Amount;
 
-        [JsonProperty("baseAmount")]
-        public string BaseAmount;
-
-        [JsonProperty("bonusStoreCreditAmount")]
-        public string BonusStoreCreditAmount;
-
-        [JsonProperty("discount")]
-        public int Discount;
-
-        [JsonProperty("discountDifference")]
-        public string DiscountDifference;
-
-        [JsonProperty("discountPercentage")]
-        public int DiscountPercentage;
-
-        [JsonProperty("finalAmount")]
-        public string FinalAmount;
-
-        [JsonProperty("isBonusStoreCreditIncluded")]
-        public bool IsBonusStoreCreditIncluded;
-
-        [JsonProperty("isDiscounted")]
-        public bool IsDiscounted;
-
-        [JsonProperty("isFree")]
-        public bool IsFree;
-
-        [JsonProperty("promoId")]
-        public string PromoId;
-
-        [JsonProperty("symbol")]
-        public string Symbol;
+        [JsonProperty("currency")]
+        public string Currency;
     }
 
-    public class Product
+    public class Edition
     {
-        [JsonProperty("ageLimit")]
-        public int AgeLimit;
-
-        [JsonProperty("availability")]
-        public Availability Availability;
-
-        [JsonProperty("buyable")]
-        public bool Buyable;
-
-        [JsonProperty("category")]
-        public string Category;
-
-        [JsonProperty("customAttributes")]
-        public List<object> CustomAttributes;
-
-        [JsonProperty("developer")]
-        public string Developer;
-
-        [JsonProperty("extraInfo")]
-        public List<object> ExtraInfo;
-
-        [JsonProperty("forumUrl")]
-        public string ForumUrl;
-
-        [JsonProperty("gallery")]
-        public List<string> Gallery;
-
-        [JsonProperty("genres")]
-        public List<string> Genres;
-
-        [JsonProperty("globalReleaseDate")]
-        public int? GlobalReleaseDate;
-
         [JsonProperty("id")]
         public int Id;
 
-        [JsonProperty("image")]
-        public string Image;
+        [JsonProperty("name")]
+        public string Name;
 
-        [JsonProperty("isComingSoon")]
-        public bool IsComingSoon;
+        [JsonProperty("isRootEdition")]
+        public bool IsRootEdition;
+    }
 
-        [JsonProperty("isDiscounted")]
-        public bool IsDiscounted;
+    public class Feature
+    {
+        [JsonProperty("name")]
+        public string Name;
 
-        [JsonProperty("isGame")]
-        public bool IsGame;
+        [JsonProperty("slug")]
+        public string Slug;
+    }
 
-        [JsonProperty("isInDevelopment")]
-        public bool IsInDevelopment;
+    public class Filters
+    {
+        [JsonProperty("releaseDateRange")]
+        public ReleaseDateRange ReleaseDateRange;
 
-        [JsonProperty("isMovie")]
-        public bool IsMovie;
+        [JsonProperty("priceRange")]
+        public PriceRange PriceRange;
 
-        [JsonProperty("isPriceVisible")]
-        public bool IsPriceVisible;
+        [JsonProperty("genres")]
+        public List<Genre> Genres;
 
-        [JsonProperty("isTBA")]
-        public bool IsTba;
+        [JsonProperty("languages")]
+        public List<Language> Languages;
 
-        [JsonProperty("isWishlistable")]
-        public bool IsWishlistable;
+        [JsonProperty("systems")]
+        public List<PlaySystem> Systems;
 
-        [JsonProperty("originalCategory")]
-        public string OriginalCategory;
+        [JsonProperty("tags")]
+        public List<Tag> Tags;
 
-        [JsonProperty("price")]
-        public Price Price;
+        [JsonProperty("discounted")]
+        public bool Discounted;
 
-        [JsonProperty("publisher")]
-        public string Publisher;
+        [JsonProperty("features")]
+        public List<Feature> Features;
 
-        [JsonProperty("rating")]
-        public int Rating;
+        [JsonProperty("releaseStatuses")]
+        public List<ReleaseStatus> ReleaseStatuses;
 
-        [JsonProperty("releaseDate")]
-        public int? ReleaseDate;
+        [JsonProperty("types")]
+        public List<string> Types;
 
-        [JsonProperty("salesVisibility")]
-        public SalesVisibility SalesVisibility;
+        [JsonProperty("fullGenresList")]
+        public List<FullGenresList> FullGenresList;
+
+        [JsonProperty("fullTagsList")]
+        public List<FullTagsList> FullTagsList;
+    }
+
+    public class FinalMoney
+    {
+        [JsonProperty("amount")]
+        public string Amount;
+
+        [JsonProperty("currency")]
+        public string Currency;
+
+        [JsonProperty("discount")]
+        public string Discount;
+    }
+
+    public class FullGenresList
+    {
+        [JsonProperty("name")]
+        public string Name;
 
         [JsonProperty("slug")]
         public string Slug;
 
-        [JsonProperty("supportedOperatingSystems")]
-        public List<string> SupportedOperatingSystems;
-
-        [JsonProperty("supportUrl")]
-        public string SupportUrl;
-
-        [JsonProperty("title")]
-        public string Title;
-
-        [JsonProperty("type")]
-        public int Type;
-
-        [JsonProperty("url")]
-        public string Url;
-
-        [JsonProperty("video")]
-        public Video Video;
-
-        [JsonProperty("worksOn")]
-        public WorksOn WorksOn;
+        [JsonProperty("level")]
+        public int Level;
     }
 
-    public class GogSearchResult
+    public class FullTagsList
     {
-        [JsonProperty("page")]
-        public int Page;
+        [JsonProperty("name")]
+        public string Name;
 
-        [JsonProperty("products")]
-        public List<Product> Products;
-
-        [JsonProperty("totalGamesFound")]
-        public int TotalGamesFound;
-
-        [JsonProperty("totalMoviesFound")]
-        public int TotalMoviesFound;
-
-        [JsonProperty("totalPages")]
-        public int TotalPages;
-
-        [JsonProperty("totalResults")]
-        public string TotalResults;
-
-        [JsonProperty("ts")]
-        public object Ts;
+        [JsonProperty("slug")]
+        public string Slug;
     }
 
-    public class SalesVisibility
+    public class Genre
     {
-        [JsonProperty("from")]
-        public int From;
+        [JsonProperty("name")]
+        public string Name;
 
-        [JsonProperty("fromObject")]
-        public FromObject FromObject;
-
-        [JsonProperty("isActive")]
-        public bool IsActive;
-
-        [JsonProperty("to")]
-        public int To;
-
-        [JsonProperty("toObject")]
-        public ToObject ToObject;
+        [JsonProperty("slug")]
+        public string Slug;
     }
 
-    public class ToObject
+    public class Language
     {
-        [JsonProperty("date")]
-        public string Date;
+        [JsonProperty("slug")]
+        public string Slug;
 
-        [JsonProperty("timezone")]
-        public string Timezone;
-
-        [JsonProperty("timezone_type")]
-        public int TimezoneType;
+        [JsonProperty("name")]
+        public string Name;
     }
 
-    public class Video
+    public class Price
+    {
+        [JsonProperty("final")]
+        public string Final;
+
+        [JsonProperty("base")]
+        public string Base;
+
+        [JsonProperty("discount")]
+        public object Discount;
+
+        [JsonProperty("finalMoney")]
+        public FinalMoney FinalMoney;
+
+        [JsonProperty("baseMoney")]
+        public BaseMoney BaseMoney;
+    }
+
+    public class PriceRange
+    {
+        [JsonProperty("min")]
+        public double Min;
+
+        [JsonProperty("max")]
+        public double Max;
+
+        [JsonProperty("currency")]
+        public string Currency;
+
+        [JsonProperty("decimalPlaces")]
+        public int DecimalPlaces;
+    }
+
+    public class Product
     {
         [JsonProperty("id")]
         public string Id;
 
-        [JsonProperty("provider")]
-        public string Provider;
+        [JsonProperty("slug")]
+        public string Slug;
+
+        [JsonProperty("features")]
+        public List<Feature> Features;
+
+        [JsonProperty("screenshots")]
+        public List<string> Screenshots;
+
+        [JsonProperty("userPreferredLanguage")]
+        public UserPreferredLanguage UserPreferredLanguage;
+
+        [JsonProperty("releaseDate")]
+        public string ReleaseDate;
+
+        [JsonProperty("storeReleaseDate")]
+        public string StoreReleaseDate;
+
+        [JsonProperty("productType")]
+        public string ProductType;
+
+        [JsonProperty("title")]
+        public string Title;
+
+        [JsonProperty("coverHorizontal")]
+        public string CoverHorizontal;
+
+        [JsonProperty("coverVertical")]
+        public string CoverVertical;
+
+        [JsonProperty("developers")]
+        public List<string> Developers;
+
+        [JsonProperty("publishers")]
+        public List<string> Publishers;
+
+        [JsonProperty("operatingSystems")]
+        public List<string> OperatingSystems;
+
+        [JsonProperty("price")]
+        public Price Price;
+
+        [JsonProperty("productState")]
+        public string ProductState;
+
+        [JsonProperty("genres")]
+        public List<Genre> Genres;
+
+        [JsonProperty("tags")]
+        public List<Tag> Tags;
+
+        [JsonProperty("reviewsRating")]
+        public int ReviewsRating;
+
+        [JsonProperty("editions")]
+        public List<Edition> Editions;
+
+        [JsonProperty("ratings")]
+        public List<Rating> Ratings;
+
+        [JsonProperty("storeLink")]
+        public string StoreLink;
     }
 
-    public class WorksOn
+    public class Rating
     {
-        [JsonProperty("Linux")]
-        public bool Linux;
+        [JsonProperty("name")]
+        public string Name;
 
-        [JsonProperty("Mac")]
-        public bool Mac;
+        [JsonProperty("ageRating")]
+        public string AgeRating;
+    }
 
-        [JsonProperty("Windows")]
-        public bool Windows;
+    public class ReleaseDateRange
+    {
+        [JsonProperty("min")]
+        public int Min;
+
+        [JsonProperty("max")]
+        public int Max;
+    }
+
+    public class ReleaseStatus
+    {
+        [JsonProperty("slug")]
+        public string Slug;
+
+        [JsonProperty("name")]
+        public string Name;
+    }
+
+    public class GogSearchResult
+    {
+        [JsonProperty("pages")]
+        public int Pages;
+
+        [JsonProperty("currentlyShownProductCount")]
+        public int CurrentlyShownProductCount;
+
+        [JsonProperty("productCount")]
+        public int ProductCount;
+
+        [JsonProperty("products")]
+        public List<Product> Products;
+
+        [JsonProperty("filters")]
+        public Filters Filters;
+
+        [JsonProperty("searchAlgo")]
+        public string SearchAlgo;
+    }
+
+    public class PlaySystem
+    {
+        [JsonProperty("slug")]
+        public string Slug;
+
+        [JsonProperty("name")]
+        public string Name;
+    }
+
+    public class Tag
+    {
+        [JsonProperty("name")]
+        public string Name;
+
+        [JsonProperty("slug")]
+        public string Slug;
+    }
+
+    public class UserPreferredLanguage
+    {
+        [JsonProperty("code")]
+        public string Code;
+
+        [JsonProperty("inAudio")]
+        public bool InAudio;
+
+        [JsonProperty("inText")]
+        public bool InText;
     }
 }
