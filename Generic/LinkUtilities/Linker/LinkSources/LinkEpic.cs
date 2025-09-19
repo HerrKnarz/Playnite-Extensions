@@ -15,6 +15,8 @@ namespace LinkUtilities.Linker.LinkSources
 {
     internal class LinkEpic : BaseClasses.Linker
     {
+        // TODO: Reimplement using Jeshibu's method, since they now return forbidden on getting the JSON. Funnily checking the added link still works.
+        public override bool CanBeSearched => false;
         private const string _checkUrl = "https://store-content-ipv4.ak.epicgames.com/api/en-US/content/products/";
         public override string BaseUrl => "https://store.epicgames.com/en-US/p/";
         public override string BrowserSearchUrl => "https://store.epicgames.com/en-US/browse?q=";
