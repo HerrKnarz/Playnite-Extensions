@@ -1,5 +1,5 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
@@ -16,12 +16,10 @@ namespace LinkUtilities.Linker.LinkSources
     /// </summary>
     internal class LinkAdventureGamers : BaseClasses.Linker
     {
-        // TODO: Reimplement using Jeshibu's method, since they now return forbidden on scraping.
-        public override LinkAddTypes AddType => LinkAddTypes.None;
-        public override bool CanBeSearched => false;
+        public override LinkAddTypes AddType => LinkAddTypes.UrlMatch;
         public override string BaseUrl => "https://adventuregamers.com/games/";
         public override string LinkName => "Adventure Gamers";
-        public override string SearchUrl => "https://adventuregamers.com/games/search?keywords=";
+        public override string SearchUrl => "https://adventuregamers.com/?s=";
 
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()
@@ -31,20 +29,40 @@ namespace LinkUtilities.Linker.LinkSources
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
+            var errorResult = new List<GenericItemOption>
+            {
+                new SearchResult
+                {
+                    Name = $"Error loading data from {LinkName}",
+                    Url = string.Empty,
+                    Description = string.Empty
+                }
+            };
+
             try
             {
-                var web = new HtmlWeb();
-                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                var htmlNodes =
-                    doc.DocumentNode.SelectNodes("//div[@class='item_article']//h2//a[contains(@href,'games')]");
+                if (urlLoadResult.ErrorDetails.Any())
+                {
+                    errorResult[0].Description = urlLoadResult.ErrorDetails;
+
+                    return errorResult;
+                }
+
+                if (urlLoadResult.Document is null)
+                {
+                    return errorResult;
+                }
+
+                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectSingleNode("//div[@id='search-adgames']").SelectNodes(".//a[@class='search-title-text']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
                     return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult
                     {
                         Name = WebUtility.HtmlDecode(n.InnerText),
-                        Url = $"{BaseUrl}{n.GetAttributeValue("href", "")}",
+                        Url = n.GetAttributeValue("href", ""),
                         Description = string.Empty
                     }));
                 }
@@ -52,6 +70,10 @@ namespace LinkUtilities.Linker.LinkSources
             catch (Exception ex)
             {
                 Log.Error(ex, $"Error loading data from {LinkName}");
+
+                errorResult[0].Description = ex.Message;
+
+                return errorResult;
             }
 
             return base.GetSearchResults(searchTerm);
