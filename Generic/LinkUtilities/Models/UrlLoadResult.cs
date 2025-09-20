@@ -1,14 +1,16 @@
-﻿using Playnite.SDK;
+﻿using HtmlAgilityPack;
+using Playnite.SDK;
 using System.Net;
 using System.Windows.Media;
 
 namespace LinkUtilities.Models
 {
-    public class LinkCheckResult
+    public class UrlLoadResult
     {
         public string ErrorDetails { get; set; } = string.Empty;
         public string PageTitle { get; set; } = string.Empty;
         public string ResponseUrl { get; set; } = string.Empty;
+        public HtmlDocument Document { get; set; } = null;
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.Unused;
 
         public SolidColorBrush StatusColor => StatusCode >= HttpStatusCode.OK && StatusCode < HttpStatusCode.Ambiguous

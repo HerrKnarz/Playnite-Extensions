@@ -226,7 +226,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\LinkCheckResult.cs" />
+    <Compile Include="Models\UrlLoadResult.cs" />
     <Page Include="Views\CheckLinksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

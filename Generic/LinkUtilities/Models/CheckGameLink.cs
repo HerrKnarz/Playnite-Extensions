@@ -7,10 +7,10 @@ namespace LinkUtilities.ViewModels
 {
     internal class CheckGameLink : GameLink
     {
-        private LinkCheckResult _linkCheckResult;
+        private UrlLoadResult _linkCheckResult;
         private bool _urlIsEqual;
 
-        public LinkCheckResult LinkCheckResult
+        public UrlLoadResult LinkCheckResult
         {
             get => _linkCheckResult;
             set => SetValue(ref _linkCheckResult, value);

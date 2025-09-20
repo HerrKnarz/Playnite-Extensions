@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 
 namespace LinkUtilities.Helper
 {
@@ -194,54 +195,8 @@ namespace LinkUtilities.Helper
         /// <param name="url">URL to check</param>
         /// <param name="allowRedirects">If true, a redirect will count as ok.</param>
         /// <returns>Response infos</returns>
-        internal static LinkCheckResult CheckUrl(string url, bool allowRedirects = true)
-        {
-            _allowRedirects = allowRedirects;
-
-            var result = new LinkCheckResult();
-
-            try
-            {
-                var web = new HtmlWeb
-                {
-                    UseCookies = true,
-                    PreRequest = OnPreRequest,
-                    UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-                };
-
-                var document = web.Load(url);
-
-                result.StatusCode = web.StatusCode;
-                result.ResponseUrl = web.ResponseUri.AbsoluteUri;
-                result.PageTitle = document?.DocumentNode?.SelectSingleNode("html/head/title")?.InnerText.Trim();
-            }
-            catch (Exception ex)
-            {
-                if (ex is WebException webEx)
-                {
-                    if (webEx.Response != null)
-                    {
-                        var response = webEx.Response;
-                        var dataStream = response.GetResponseStream();
-
-                        if (dataStream != null)
-                        {
-                            var reader = new StreamReader(dataStream);
-                            result.ErrorDetails = reader.ReadToEnd();
-
-                            Log.Error(webEx, result.ErrorDetails);
-                        }
-                    }
-                }
-                else
-                {
-                    result.ErrorDetails = ex.Message;
-                    Log.Error(ex, result.ErrorDetails);
-                }
-            }
-
-            return result;
-        }
+        internal static UrlLoadResult CheckUrl(string url, bool allowRedirects = true) =>
+            LoadHtmlDocument(url, allowRedirects, false);
 
         /// <summary>
         ///     Removes the scheme of a URL and adds a missing trailing slash. Is used to compare URLs with different schemes
@@ -290,6 +245,105 @@ namespace LinkUtilities.Helper
         /// <returns>True, if a link with that name exists</returns>
         internal static bool LinkExists(Game game, string linkName) =>
             game.Links?.Any(x => x.Name == linkName) ?? false;
+
+        internal static UrlLoadResult LoadHtmlDocument(string url, bool allowRedirects = false, bool needDocument = true)
+        {
+            var result = new UrlLoadResult();
+
+            try
+            {
+                object doc = null;
+                object web = null;
+                object exception = null;
+
+                var thread = new Thread(
+                  () =>
+                  {
+                      try
+                      {
+                          var threadWeb = new HtmlWeb
+                          {
+                              UseCookies = true,
+                              UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+                          };
+
+                          if (allowRedirects)
+                          {
+                              _allowRedirects = allowRedirects;
+                              threadWeb.PreRequest = OnPreRequest;
+                          }
+
+                          doc = threadWeb.LoadFromBrowser(url);
+                          web = threadWeb;
+                      }
+                      catch (Exception ex)
+                      {
+                          exception = ex;
+                      }
+                  });
+
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+
+                if (!thread.Join(new TimeSpan(0, 0, 10)))
+                {
+                    thread.Abort();
+                }
+
+                if (exception is WebException webEx)
+                {
+                    if (webEx.Response != null)
+                    {
+                        var response = webEx.Response;
+                        var dataStream = response.GetResponseStream();
+
+                        if (dataStream != null)
+                        {
+                            var reader = new StreamReader(dataStream);
+                            result.ErrorDetails = reader.ReadToEnd();
+
+                            Log.Error(webEx, result.ErrorDetails);
+                        }
+                    }
+
+                    return result;
+                }
+                else if (exception is Exception ex)
+                {
+                    result.ErrorDetails = ex.Message;
+                    Log.Error(ex, result.ErrorDetails);
+
+                    return result;
+                }
+
+                if (doc == null || web == null)
+                {
+                    result.ErrorDetails = $"Error loading HTML document from {url}";
+                    return result;
+                }
+
+                var document = doc as HtmlDocument;
+                var htmlWeb = web as HtmlWeb;
+
+                result.StatusCode = htmlWeb.StatusCode;
+                result.ResponseUrl = htmlWeb.ResponseUri.AbsoluteUri;
+                result.PageTitle = document?.DocumentNode?.SelectSingleNode("html/head/title")?.InnerText.Trim();
+
+                if (needDocument)
+                {
+                    result.Document = document;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.ErrorDetails = ex.Message;
+                Log.Error(ex, $"Error loading HTML document from {url}");
+
+                return result;
+            }
+        }
 
         /// <summary>
         ///     Things to do after adding one or more links
