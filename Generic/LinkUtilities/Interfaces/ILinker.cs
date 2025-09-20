@@ -55,6 +55,12 @@ namespace LinkUtilities.Interfaces
         bool CanBeSearched { get; }
 
         /// <summary>
+        ///     String that has to be in the content of the page to determine, if the link is valid. Can be empty, if no check
+        ///     should be done.
+        /// </summary>
+        string CheckForContent { get; }
+
+        /// <summary>
         ///     Name the link will have in the games link collection
         /// </summary>
         string LinkName { get; }
@@ -71,9 +77,8 @@ namespace LinkUtilities.Interfaces
 
         /// <summary>
         ///     Specifies, if the returned url must be the same as the searched one while checking the URL. Some sites always
-        ///     redirect and
-        ///     then return OK, even if the link isn't valid. In that case this should be set to true, if the url needs to be the
-        ///     same.
+        ///     redirect and then return OK, even if the link isn't valid. In that case this should be set to true, if the url
+        ///     needs to be the same.
         /// </summary>
         bool ReturnsSameUrl { get; set; }
 

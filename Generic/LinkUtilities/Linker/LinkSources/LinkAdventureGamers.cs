@@ -18,9 +18,10 @@ namespace LinkUtilities.Linker.LinkSources
     {
         public override LinkAddTypes AddType => LinkAddTypes.UrlMatch;
         public override string BaseUrl => "https://adventuregamers.com/games/";
+        public override string CheckForContent => "<div class=\"game-detail-page\"";
         public override string LinkName => "Adventure Gamers";
         public override string SearchUrl => "https://adventuregamers.com/?s=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.LoadFromBrowser;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
 
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()
@@ -32,7 +33,7 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.LoadFromBrowser);
+                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
 
                 if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
                 {

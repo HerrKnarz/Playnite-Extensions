@@ -32,6 +32,22 @@ namespace LinkUtilities.BaseClasses
             };
         }
 
+        public virtual LinkAddTypes AddType => LinkAddTypes.UrlMatch;
+        public virtual bool AllowRedirects { get; set; } = true;
+        public virtual string BaseUrl => string.Empty;
+        public virtual string BrowserSearchUrl => SearchUrl;
+        public virtual bool CanBeBrowserSearched => !string.IsNullOrWhiteSpace(BrowserSearchUrl);
+        public virtual bool CanBeSearched => !string.IsNullOrWhiteSpace(SearchUrl);
+        public virtual string CheckForContent => string.Empty;
+        public abstract string LinkName { get; }
+        public virtual string LinkUrl { get; set; } = string.Empty;
+        public virtual bool NeedsToBeChecked { get; set; } = true;
+        public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
+        public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
+        public virtual bool ReturnsSameUrl { get; set; } = false;
+        public virtual string SearchUrl => string.Empty;
+        public LinkSourceSetting Settings { get; set; }
+        public virtual UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Load;
         public virtual string WrongTitle { get; set; } = string.Empty;
 
         public virtual bool AddLink(Game game) => FindLinks(game, out var links) && LinkHelper.AddLinks(game, links);
@@ -54,14 +70,7 @@ namespace LinkUtilities.BaseClasses
             return result != null && AddLinkFromSearch(game, (SearchResult)result, cleanUpAfterAdding);
         }
 
-        public virtual LinkAddTypes AddType => LinkAddTypes.UrlMatch;
-        public virtual bool AllowRedirects { get; set; } = true;
-        public virtual string BaseUrl => string.Empty;
-        public virtual string BrowserSearchUrl => SearchUrl;
-        public virtual bool CanBeBrowserSearched => !string.IsNullOrWhiteSpace(BrowserSearchUrl);
-        public virtual bool CanBeSearched => !string.IsNullOrWhiteSpace(SearchUrl);
-
-        public virtual bool CheckLink(string link) => LinkHelper.IsUrlOk(link, UrlLoadMethod, AllowRedirects, ReturnsSameUrl, WrongTitle);
+        public virtual bool CheckLink(string link) => LinkHelper.IsUrlOk(link, UrlLoadMethod, AllowRedirects, ReturnsSameUrl, WrongTitle, CheckForContent);
 
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -198,19 +207,8 @@ namespace LinkUtilities.BaseClasses
 
         public virtual List<GenericItemOption> GetSearchResults(string searchTerm) => new List<GenericItemOption>();
 
-        public abstract string LinkName { get; }
-        public virtual string LinkUrl { get; set; } = string.Empty;
-        public virtual bool NeedsToBeChecked { get; set; } = true;
-
         public virtual bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
             => true;
-
-        public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
-        public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
-        public virtual bool ReturnsSameUrl { get; set; } = false;
-        public virtual string SearchUrl => string.Empty;
-        public LinkSourceSetting Settings { get; set; }
-        public virtual UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Load;
 
         public virtual void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game.Name));
 

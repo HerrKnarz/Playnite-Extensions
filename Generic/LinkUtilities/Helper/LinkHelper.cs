@@ -44,6 +44,11 @@ namespace LinkUtilities.Helper
     {
         private static bool _allowRedirects = true;
 
+        /// <summary>
+        ///     Removes specific links from one or more games.
+        /// </summary>
+        /// <param name="games">List of games</param>
+        /// <param name="plugin">LinkUtilities plugin instance</param>
         public static void RemoveSpecificLinks(List<Game> games, LinkUtilities plugin)
         {
             var window = RemoveSpecificLinksViewModel.GetWindow(games, plugin);
@@ -214,9 +219,10 @@ namespace LinkUtilities.Helper
         /// </summary>
         /// <param name="url">URL to check</param>
         /// <param name="allowRedirects">If true, a redirect will count as ok.</param>
+        /// <param name="checkForContent">Content to check for</param>
         /// <returns>Response infos</returns>
-        internal static UrlLoadResult CheckUrl(string url, UrlLoadMethod method = UrlLoadMethod.Load, bool allowRedirects = true) =>
-            LoadHtmlDocument(url, method, allowRedirects, false);
+        internal static UrlLoadResult CheckUrl(string url, UrlLoadMethod method = UrlLoadMethod.Load, bool allowRedirects = true, string checkForContent = "") =>
+            LoadHtmlDocument(url, method, allowRedirects, false, checkForContent);
 
         /// <summary>
         ///     Removes the scheme of a URL and adds a missing trailing slash. Is used to compare URLs with different schemes
@@ -246,10 +252,11 @@ namespace LinkUtilities.Helper
         /// <param name="allowRedirects">If true, a redirect will count as ok.</param>
         /// <param name="sameUrl">When true the method only returns true, if the response url didn't change.</param>
         /// <param name="wrongTitle">Returns false, if the website has this title. Is used to detect certain redirects.</param>
+        /// <param name="checkForContent">Content to check for</param>
         /// <returns>True, if the URL is reachable</returns>
-        internal static bool IsUrlOk(string url, UrlLoadMethod method = UrlLoadMethod.Load, bool allowRedirects = true, bool sameUrl = false, string wrongTitle = "")
+        internal static bool IsUrlOk(string url, UrlLoadMethod method = UrlLoadMethod.Load, bool allowRedirects = true, bool sameUrl = false, string wrongTitle = "", string checkForContent = "")
         {
-            var linkCheckResult = CheckUrl(url, method, allowRedirects);
+            var linkCheckResult = CheckUrl(url, method, allowRedirects, checkForContent);
 
             return !linkCheckResult.ErrorDetails.Any() && (sameUrl
                        ? linkCheckResult.StatusCode == HttpStatusCode.OK && linkCheckResult.ResponseUrl == url
@@ -266,6 +273,19 @@ namespace LinkUtilities.Helper
         internal static bool LinkExists(Game game, string linkName) =>
             game.Links?.Any(x => x.Name == linkName) ?? false;
 
+        /// <summary>
+        ///     Loads an HTML document from a URL using the specified method.
+        /// </summary>
+        /// <param name="url">URL to load</param>
+        /// <param name="method">Loading method</param>
+        /// <param name="allowRedirects">If true, redirects are allowed</param>
+        /// <param name="needDocument">
+        ///     If true, the loaded document will be returned in the result. Set to false if you only want to check for validity
+        ///     and don't need the actual document</param>
+        /// <param name="checkForContent">
+        ///     Content to check for. Is used to determine if the returned document is valid. For LoadFromBrowser it also is used
+        ///     to determine if the document is fully loaded</param>
+        /// <returns>Loading result</returns>
         internal static UrlLoadResult LoadHtmlDocument(string url, UrlLoadMethod method = UrlLoadMethod.Load, bool allowRedirects = false, bool needDocument = true, string checkForContent = "")
         {
             var result = new UrlLoadResult();
@@ -433,6 +453,11 @@ namespace LinkUtilities.Helper
             }
         }
 
+        /// <summary>
+        ///     Creates a new instance of HtmlWeb with some default settings.
+        /// </summary>
+        /// <param name="allowRedirects">If true, redirects are allowed</param>
+        /// <returns>Configured HtmlWeb instance</returns>
         private static HtmlWeb GetHtmlWeb(bool allowRedirects)
         {
             var web = new HtmlWeb
