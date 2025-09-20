@@ -20,7 +20,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "https://adventuregamers.com/games/";
         public override string LinkName => "Adventure Gamers";
         public override string SearchUrl => "https://adventuregamers.com/?s=";
-
         public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.LoadFromBrowser;
 
         public override string GetGamePath(Game game, string gameName = null)

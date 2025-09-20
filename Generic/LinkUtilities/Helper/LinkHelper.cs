@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace LinkUtilities.Helper
 {
@@ -265,13 +266,13 @@ namespace LinkUtilities.Helper
         internal static bool LinkExists(Game game, string linkName) =>
             game.Links?.Any(x => x.Name == linkName) ?? false;
 
-        internal static UrlLoadResult LoadHtmlDocument(string url, UrlLoadMethod method = UrlLoadMethod.Load, bool allowRedirects = false, bool needDocument = true)
+        internal static UrlLoadResult LoadHtmlDocument(string url, UrlLoadMethod method = UrlLoadMethod.Load, bool allowRedirects = false, bool needDocument = true, string checkForContent = "")
         {
             var result = new UrlLoadResult();
 
             try
             {
-                HtmlDocument document = null;
+                HtmlAgilityPack.HtmlDocument document = null;
                 HtmlWeb htmlWeb = null;
                 object doc = null;
                 object web = null;
@@ -289,7 +290,7 @@ namespace LinkUtilities.Helper
                         exception = ex;
                     }
                 }
-                else
+                else if (method == UrlLoadMethod.LoadFromBrowser)
                 {
                     var thread = new Thread(
                       () =>
@@ -300,7 +301,14 @@ namespace LinkUtilities.Helper
 
                               web = threadWeb;
 
-                              doc = threadWeb.LoadFromBrowser(url);
+                              doc = checkForContent.Any()
+                                  ? threadWeb.LoadFromBrowser(url, o =>
+                                  {
+                                      var webBrowser = (WebBrowser)o;
+
+                                      return webBrowser.Document.Body.InnerHtml.Contains(checkForContent);
+                                  })
+                                  : threadWeb.LoadFromBrowser(url);
                           }
                           catch (Exception ex)
                           {
@@ -316,8 +324,38 @@ namespace LinkUtilities.Helper
                         thread.Abort();
                     }
 
-                    document = doc as HtmlDocument;
+                    document = doc as HtmlAgilityPack.HtmlDocument;
                     htmlWeb = web as HtmlWeb;
+                }
+                else
+                {
+                    try
+                    {
+                        var webView = API.Instance.WebViews.CreateOffscreenView();
+
+                        webView.NavigateAndWait(url);
+
+                        result.ResponseUrl = webView.GetCurrentAddress();
+
+                        var htmlSource = webView.GetPageSource();
+
+                        htmlWeb = GetHtmlWeb(allowRedirects);
+
+                        if (!checkForContent.Any() || htmlSource.Contains(checkForContent))
+                        {
+                            result.StatusCode = HttpStatusCode.OK;
+                            document = new HtmlAgilityPack.HtmlDocument();
+                            document.LoadHtml(htmlSource);
+                        }
+                        else
+                        {
+                            result.StatusCode = HttpStatusCode.NotFound;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        exception = ex;
+                    }
                 }
 
                 if (exception is WebException webEx)
@@ -346,14 +384,18 @@ namespace LinkUtilities.Helper
                     return result;
                 }
 
-                if (document == null || htmlWeb == null)
+                if (document == null)
                 {
                     result.ErrorDetails = $"Error loading HTML document from {url}";
                     return result;
                 }
 
-                result.StatusCode = htmlWeb.StatusCode;
-                result.ResponseUrl = htmlWeb.ResponseUri.AbsoluteUri;
+                if (method != UrlLoadMethod.OffscreenView)
+                {
+                    result.StatusCode = htmlWeb.StatusCode;
+                    result.ResponseUrl = htmlWeb.ResponseUri.AbsoluteUri;
+                }
+
                 result.PageTitle = document?.DocumentNode?.SelectSingleNode("html/head/title")?.InnerText.Trim();
 
                 if (needDocument)

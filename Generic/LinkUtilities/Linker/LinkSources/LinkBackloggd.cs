@@ -1,5 +1,5 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -17,9 +17,7 @@ namespace LinkUtilities.Linker.LinkSources
     internal class LinkBackloggd : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://www.backloggd.com";
-        public override bool CanBeSearched => false;
         public override string BaseUrl => _websiteUrl + "/games/";
-
         public override string LinkName => "Backloggd";
         public override string SearchUrl => _websiteUrl + "/search/games/";
 
@@ -38,10 +36,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var web = new HtmlWeb();
-                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView, false, true, "<div class=\"col-12 result\"");
 
-                var htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'result')]");
+                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
+                {
+                    return null;
+                }
+
+                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//div[contains(@class, 'result')]");
 
                 if (htmlNodes?.Any() ?? false)
                 {
