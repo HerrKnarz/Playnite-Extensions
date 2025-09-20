@@ -31,30 +31,13 @@ namespace LinkUtilities.Linker.LinkSources
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            var errorResult = new List<GenericItemOption>
-            {
-                new SearchResult
-                {
-                    Name = $"Error loading data from {LinkName}",
-                    Url = string.Empty,
-                    Description = string.Empty
-                }
-            };
-
             try
             {
                 var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.LoadFromBrowser);
 
-                if (urlLoadResult.ErrorDetails.Any())
+                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
                 {
-                    errorResult[0].Description = urlLoadResult.ErrorDetails;
-
-                    return errorResult;
-                }
-
-                if (urlLoadResult.Document is null)
-                {
-                    return errorResult;
+                    return null;
                 }
 
                 var htmlNodes = urlLoadResult.Document.DocumentNode.SelectSingleNode("//div[@id='search-adgames']").SelectNodes(".//a[@class='search-title-text']");
@@ -72,10 +55,6 @@ namespace LinkUtilities.Linker.LinkSources
             catch (Exception ex)
             {
                 Log.Error(ex, $"Error loading data from {LinkName}");
-
-                errorResult[0].Description = ex.Message;
-
-                return errorResult;
             }
 
             return base.GetSearchResults(searchTerm);

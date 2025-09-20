@@ -25,7 +25,7 @@ namespace LinkUtilities.Helper
         Load,
         /// <summary>
         /// Loads the URL using HtmlAgilityPack via a browser instance. This is slower, but can handle
-        /// more complex sites.
+        /// more complex sites. It causes some websites to time out though.
         /// </summary>
         LoadFromBrowser,
         /// <summary>
@@ -271,45 +271,53 @@ namespace LinkUtilities.Helper
 
             try
             {
+                HtmlDocument document = null;
+                HtmlWeb htmlWeb = null;
                 object doc = null;
                 object web = null;
                 object exception = null;
 
-                var thread = new Thread(
-                  () =>
-                  {
-                      try
-                      {
-                          var threadWeb = new HtmlWeb
-                          {
-                              UseCookies = true,
-                              UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-                          };
-
-                          if (allowRedirects)
-                          {
-                              _allowRedirects = allowRedirects;
-                              threadWeb.PreRequest = OnPreRequest;
-                          }
-
-                          web = threadWeb;
-
-                          doc = method == UrlLoadMethod.Load ?
-                                threadWeb.Load(url) :
-                                threadWeb.LoadFromBrowser(url);
-                      }
-                      catch (Exception ex)
-                      {
-                          exception = ex;
-                      }
-                  });
-
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Start();
-
-                if (!thread.Join(new TimeSpan(0, 0, 10)))
+                if (method == UrlLoadMethod.Load)
                 {
-                    thread.Abort();
+                    try
+                    {
+                        htmlWeb = GetHtmlWeb(allowRedirects);
+                        document = htmlWeb.Load(url);
+                    }
+                    catch (Exception ex)
+                    {
+                        exception = ex;
+                    }
+                }
+                else
+                {
+                    var thread = new Thread(
+                      () =>
+                      {
+                          try
+                          {
+                              var threadWeb = GetHtmlWeb(allowRedirects);
+
+                              web = threadWeb;
+
+                              doc = threadWeb.LoadFromBrowser(url);
+                          }
+                          catch (Exception ex)
+                          {
+                              exception = ex;
+                          }
+                      });
+
+                    thread.SetApartmentState(ApartmentState.STA);
+                    thread.Start();
+
+                    if (!thread.Join(new TimeSpan(0, 0, 15)))
+                    {
+                        thread.Abort();
+                    }
+
+                    document = doc as HtmlDocument;
+                    htmlWeb = web as HtmlWeb;
                 }
 
                 if (exception is WebException webEx)
@@ -338,14 +346,11 @@ namespace LinkUtilities.Helper
                     return result;
                 }
 
-                if (doc == null || web == null)
+                if (document == null || htmlWeb == null)
                 {
                     result.ErrorDetails = $"Error loading HTML document from {url}";
                     return result;
                 }
-
-                var document = doc as HtmlDocument;
-                var htmlWeb = web as HtmlWeb;
 
                 result.StatusCode = htmlWeb.StatusCode;
                 result.ResponseUrl = htmlWeb.ResponseUri.AbsoluteUri;
@@ -384,6 +389,24 @@ namespace LinkUtilities.Helper
             {
                 DoAfterChange.Instance().Execute(game, renameLinks ? ActionModifierTypes.None : ActionModifierTypes.DontRename);
             }
+        }
+
+        private static HtmlWeb GetHtmlWeb(bool allowRedirects)
+        {
+            var web = new HtmlWeb
+            {
+                UseCookies = true,
+                BrowserTimeout = new TimeSpan(0, 0, 10),
+                UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            };
+
+            if (allowRedirects)
+            {
+                _allowRedirects = allowRedirects;
+                web.PreRequest = OnPreRequest;
+            }
+
+            return web;
         }
 
         /// <summary>

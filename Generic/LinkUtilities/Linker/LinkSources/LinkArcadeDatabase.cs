@@ -1,5 +1,5 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -27,9 +27,12 @@ namespace LinkUtilities.Linker.LinkSources
             try
             {
                 // Arcade Database returns code 200, if the game isn't found. So we have to check the HTML itself.
-                var web = new HtmlWeb();
-                var doc = web.Load(link);
-                return doc.DocumentNode.SelectSingleNode("//div[@id='game_not_found']") is null;
+                var urlLoadResult = LinkHelper.LoadHtmlDocument(link);
+
+                return !urlLoadResult.ErrorDetails.Any()
+                    && urlLoadResult.StatusCode == HttpStatusCode.OK
+                    && !(urlLoadResult.Document is null)
+                    && urlLoadResult.Document.DocumentNode.SelectSingleNode("//div[@id='game_not_found']") is null;
             }
             catch
             {
@@ -47,10 +50,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var web = new HtmlWeb();
-                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                var htmlNodes = doc.DocumentNode.SelectNodes("//li[@class='elenco_galleria']");
+                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
+                {
+                    return null;
+                }
+
+                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//li[@class='elenco_galleria']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
