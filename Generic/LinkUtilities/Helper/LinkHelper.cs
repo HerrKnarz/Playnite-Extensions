@@ -292,90 +292,43 @@ namespace LinkUtilities.Helper
 
             try
             {
-                HtmlAgilityPack.HtmlDocument document = null;
                 HtmlWeb htmlWeb = null;
+                HtmlAgilityPack.HtmlDocument document = null;
                 object doc = null;
                 object web = null;
                 object exception = null;
 
-                if (method == UrlLoadMethod.Load)
+                switch (method)
                 {
-                    try
-                    {
-                        htmlWeb = GetHtmlWeb(allowRedirects);
-                        document = htmlWeb.Load(url);
-                    }
-                    catch (Exception ex)
-                    {
-                        exception = ex;
-                    }
-                }
-                else if (method == UrlLoadMethod.LoadFromBrowser)
-                {
-                    var thread = new Thread(
-                      () =>
-                      {
-                          try
-                          {
-                              var threadWeb = GetHtmlWeb(allowRedirects);
-
-                              web = threadWeb;
-
-                              doc = checkForContent.Any()
-                                  ? threadWeb.LoadFromBrowser(url, o =>
-                                  {
-                                      var webBrowser = (WebBrowser)o;
-
-                                      return webBrowser.Document.Body.InnerHtml.Contains(checkForContent);
-                                  })
-                                  : threadWeb.LoadFromBrowser(url);
-                          }
-                          catch (Exception ex)
-                          {
-                              exception = ex;
-                          }
-                      });
-
-                    thread.SetApartmentState(ApartmentState.STA);
-                    thread.Start();
-
-                    if (!thread.Join(new TimeSpan(0, 0, 15)))
-                    {
-                        thread.Abort();
-                    }
-
-                    document = doc as HtmlAgilityPack.HtmlDocument;
-                    htmlWeb = web as HtmlWeb;
-                }
-                else
-                {
-                    try
-                    {
-                        var webView = API.Instance.WebViews.CreateOffscreenView();
-
-                        webView.NavigateAndWait(url);
-
-                        result.ResponseUrl = webView.GetCurrentAddress();
-
-                        var htmlSource = webView.GetPageSource();
-
-                        htmlWeb = GetHtmlWeb(allowRedirects);
-
-                        if (!checkForContent.Any() || htmlSource.Contains(checkForContent))
+                    case UrlLoadMethod.Load:
+                        (htmlWeb, document, exception) = LoadHtmlDocumentSimple(url, allowRedirects);
+                        break;
+                    case UrlLoadMethod.LoadFromBrowser:
+                        (htmlWeb, document, exception) = LoadHtmlDocumentFromBrowser(url, allowRedirects, checkForContent);
+                        break;
+                    default:
                         {
-                            result.StatusCode = HttpStatusCode.OK;
-                            document = new HtmlAgilityPack.HtmlDocument();
-                            document.LoadHtml(htmlSource);
+                            var htmlSource = string.Empty;
+
+                            (htmlSource, result.ResponseUrl, result.StatusCode, exception) = LoadHtmlDocumentFromOffscreenView(url, checkForContent);
+
+                            if (result.StatusCode != HttpStatusCode.OK)
+                            {
+                                break;
+                            }
+
+                            try
+                            {
+                                document = new HtmlAgilityPack.HtmlDocument();
+                                document.LoadHtml(htmlSource);
+                            }
+                            catch (Exception ex)
+                            {
+                                exception = ex;
+                            }
+
+                            break;
                         }
-                        else
-                        {
-                            result.StatusCode = HttpStatusCode.NotFound;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        exception = ex;
-                    }
                 }
 
                 if (exception is WebException webEx)
@@ -474,6 +427,93 @@ namespace LinkUtilities.Helper
             }
 
             return web;
+        }
+
+        private static (HtmlWeb, HtmlAgilityPack.HtmlDocument, object) LoadHtmlDocumentSimple(string url, bool allowRedirects = false)
+        {
+            HtmlWeb htmlWeb = null;
+            HtmlAgilityPack.HtmlDocument document = null;
+            object exception = null;
+
+            try
+            {
+                htmlWeb = GetHtmlWeb(allowRedirects);
+                document = htmlWeb.Load(url);
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+
+            return (htmlWeb, document, exception);
+        }
+
+        private static (HtmlWeb, HtmlAgilityPack.HtmlDocument, object) LoadHtmlDocumentFromBrowser(string url, bool allowRedirects = false, string checkForContent = "")
+        {
+            object web = null;
+            object doc = null;
+            object exception = null;
+
+            var thread = new Thread(
+                      () =>
+                      {
+                          try
+                          {
+                              var threadWeb = GetHtmlWeb(allowRedirects);
+
+                              web = threadWeb;
+
+                              doc = checkForContent.Any()
+                                  ? threadWeb.LoadFromBrowser(url, o =>
+                                  {
+                                      var webBrowser = (WebBrowser)o;
+
+                                      return webBrowser.Document.Body.InnerHtml.Contains(checkForContent);
+                                  })
+                                  : threadWeb.LoadFromBrowser(url);
+                          }
+                          catch (Exception ex)
+                          {
+                              exception = ex;
+                          }
+                      });
+
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            if (!thread.Join(new TimeSpan(0, 0, 15)))
+            {
+                thread.Abort();
+            }
+
+            return (web as HtmlWeb, doc as HtmlAgilityPack.HtmlDocument, exception);
+        }
+
+        internal static (string, string, HttpStatusCode, object) LoadHtmlDocumentFromOffscreenView(string url, string checkForContent = "")
+        {
+            string responseUrl = null;
+            string htmlSource = null;
+            var statusCode = HttpStatusCode.OK;
+            object exception = null;
+
+            try
+            {
+                var webView = API.Instance.WebViews.CreateOffscreenView();
+
+                webView.NavigateAndWait(url);
+
+                responseUrl = webView.GetCurrentAddress();
+
+                htmlSource = webView.GetPageSource();
+
+                statusCode = !checkForContent.Any() || htmlSource.Contains(checkForContent) ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+
+            return (htmlSource, responseUrl, statusCode, exception);
         }
 
         /// <summary>
