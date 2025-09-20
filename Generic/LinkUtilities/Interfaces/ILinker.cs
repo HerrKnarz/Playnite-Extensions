@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Models;
+﻿using LinkUtilities.Helper;
+using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
@@ -85,6 +86,11 @@ namespace LinkUtilities.Interfaces
         ///     represents the settings for this specific link
         /// </summary>
         LinkSourceSetting Settings { get; set; }
+
+        /// <summary>
+        ///     specifies how the url will be loaded. Default is Load.
+        /// </summary>
+        UrlLoadMethod UrlLoadMethod { get; }
 
         /// <summary>
         ///     Adds a link to the specific game page of the specified website.

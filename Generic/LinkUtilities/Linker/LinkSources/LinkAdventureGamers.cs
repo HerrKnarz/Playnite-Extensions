@@ -21,6 +21,8 @@ namespace LinkUtilities.Linker.LinkSources
         public override string LinkName => "Adventure Gamers";
         public override string SearchUrl => "https://adventuregamers.com/?s=";
 
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.LoadFromBrowser;
+
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()
                 .CollapseWhitespaces()
@@ -41,7 +43,7 @@ namespace LinkUtilities.Linker.LinkSources
 
             try
             {
-                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.LoadFromBrowser);
 
                 if (urlLoadResult.ErrorDetails.Any())
                 {

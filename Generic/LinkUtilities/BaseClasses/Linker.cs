@@ -19,15 +19,18 @@ namespace LinkUtilities.BaseClasses
     /// </summary>
     public abstract class Linker : ILinker, ILinkAction
     {
-        protected Linker() => Settings = new LinkSourceSetting
+        protected Linker()
         {
-            LinkName = LinkName,
-            IsAddable = AddType != LinkAddTypes.None ? true : (bool?)null,
-            IsSearchable = CanBeSearched ? true : (bool?)null,
-            ShowInMenus = true,
-            ApiKey = null,
-            NeedsApiKey = false
-        };
+            Settings = new LinkSourceSetting
+            {
+                LinkName = LinkName,
+                IsAddable = AddType != LinkAddTypes.None ? true : (bool?)null,
+                IsSearchable = CanBeSearched ? true : (bool?)null,
+                ShowInMenus = true,
+                ApiKey = null,
+                NeedsApiKey = false
+            };
+        }
 
         public virtual string WrongTitle { get; set; } = string.Empty;
 
@@ -58,7 +61,7 @@ namespace LinkUtilities.BaseClasses
         public virtual bool CanBeBrowserSearched => !string.IsNullOrWhiteSpace(BrowserSearchUrl);
         public virtual bool CanBeSearched => !string.IsNullOrWhiteSpace(SearchUrl);
 
-        public virtual bool CheckLink(string link) => LinkHelper.IsUrlOk(link, AllowRedirects, ReturnsSameUrl, WrongTitle);
+        public virtual bool CheckLink(string link) => LinkHelper.IsUrlOk(link, UrlLoadMethod, AllowRedirects, ReturnsSameUrl, WrongTitle);
 
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -207,6 +210,8 @@ namespace LinkUtilities.BaseClasses
         public virtual bool ReturnsSameUrl { get; set; } = false;
         public virtual string SearchUrl => string.Empty;
         public LinkSourceSetting Settings { get; set; }
+        public virtual UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Load;
+
         public virtual void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game.Name));
 
         public virtual bool AddLinkFromSearch(Game game, SearchResult result, bool cleanUpAfterAdding = true) => LinkHelper.AddLink(game, LinkName, result.Url, false, cleanUpAfterAdding);

@@ -17,6 +17,25 @@ using System.Threading;
 
 namespace LinkUtilities.Helper
 {
+    public enum UrlLoadMethod
+    {
+        /// <summary>
+        /// Loads the URL via the simple Load method of HtmlAgilityPack
+        /// </summary>
+        Load,
+        /// <summary>
+        /// Loads the URL using HtmlAgilityPack via a browser instance. This is slower, but can handle
+        /// more complex sites.
+        /// </summary>
+        LoadFromBrowser,
+        /// <summary>
+        /// Loads the URL using an offscreen browser instance. This is slower, but can handle
+        /// more complex sites. We don't get a StatusCode though, so the validity must be checked
+        /// in the document content individually.
+        /// </summary>
+        OffscreenView
+    }
+
     /// <summary>
     ///     Helper class containing functions used in the link utilities extension
     /// </summary>
@@ -195,8 +214,8 @@ namespace LinkUtilities.Helper
         /// <param name="url">URL to check</param>
         /// <param name="allowRedirects">If true, a redirect will count as ok.</param>
         /// <returns>Response infos</returns>
-        internal static UrlLoadResult CheckUrl(string url, bool allowRedirects = true) =>
-            LoadHtmlDocument(url, allowRedirects, false);
+        internal static UrlLoadResult CheckUrl(string url, UrlLoadMethod method = UrlLoadMethod.Load, bool allowRedirects = true) =>
+            LoadHtmlDocument(url, method, allowRedirects, false);
 
         /// <summary>
         ///     Removes the scheme of a URL and adds a missing trailing slash. Is used to compare URLs with different schemes
@@ -227,9 +246,9 @@ namespace LinkUtilities.Helper
         /// <param name="sameUrl">When true the method only returns true, if the response url didn't change.</param>
         /// <param name="wrongTitle">Returns false, if the website has this title. Is used to detect certain redirects.</param>
         /// <returns>True, if the URL is reachable</returns>
-        internal static bool IsUrlOk(string url, bool allowRedirects = true, bool sameUrl = false, string wrongTitle = "")
+        internal static bool IsUrlOk(string url, UrlLoadMethod method = UrlLoadMethod.Load, bool allowRedirects = true, bool sameUrl = false, string wrongTitle = "")
         {
-            var linkCheckResult = CheckUrl(url, allowRedirects);
+            var linkCheckResult = CheckUrl(url, method, allowRedirects);
 
             return !linkCheckResult.ErrorDetails.Any() && (sameUrl
                        ? linkCheckResult.StatusCode == HttpStatusCode.OK && linkCheckResult.ResponseUrl == url
@@ -246,7 +265,7 @@ namespace LinkUtilities.Helper
         internal static bool LinkExists(Game game, string linkName) =>
             game.Links?.Any(x => x.Name == linkName) ?? false;
 
-        internal static UrlLoadResult LoadHtmlDocument(string url, bool allowRedirects = false, bool needDocument = true)
+        internal static UrlLoadResult LoadHtmlDocument(string url, UrlLoadMethod method = UrlLoadMethod.Load, bool allowRedirects = false, bool needDocument = true)
         {
             var result = new UrlLoadResult();
 
@@ -273,8 +292,11 @@ namespace LinkUtilities.Helper
                               threadWeb.PreRequest = OnPreRequest;
                           }
 
-                          doc = threadWeb.LoadFromBrowser(url);
                           web = threadWeb;
+
+                          doc = method == UrlLoadMethod.Load ?
+                                threadWeb.Load(url) :
+                                threadWeb.LoadFromBrowser(url);
                       }
                       catch (Exception ex)
                       {
