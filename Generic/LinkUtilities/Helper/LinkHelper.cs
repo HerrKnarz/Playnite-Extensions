@@ -489,7 +489,7 @@ namespace LinkUtilities.Helper
             return (web as HtmlWeb, doc as HtmlAgilityPack.HtmlDocument, exception);
         }
 
-        internal static (string, string, HttpStatusCode, object) LoadHtmlDocumentFromOffscreenView(string url, string checkForContent = "")
+        private static (string, string, HttpStatusCode, object) LoadHtmlDocumentFromOffscreenView(string url, string checkForContent = "")
         {
             string responseUrl = null;
             string htmlSource = null;
@@ -505,6 +505,8 @@ namespace LinkUtilities.Helper
                 responseUrl = webView.GetCurrentAddress();
 
                 htmlSource = webView.GetPageSource();
+
+                webView.Close();
 
                 statusCode = !checkForContent.Any() || htmlSource.Contains(checkForContent) ? HttpStatusCode.OK : HttpStatusCode.NotFound;
             }

@@ -16,7 +16,6 @@ namespace LinkUtilities.Linker.LinkSources
     internal class LinkEpic : BaseClasses.Linker
     {
         // TODO: Reimplement using Jeshibu's method, since they now return forbidden on getting the JSON. Funnily checking the added link still works.
-        public override bool CanBeSearched => false;
         private const string _checkUrl = "https://store-content-ipv4.ak.epicgames.com/api/en-US/content/products/";
         public override string BaseUrl => "https://store.epicgames.com/en-US/p/";
         public override string BrowserSearchUrl => "https://store.epicgames.com/en-US/browse?q=";
@@ -68,7 +67,7 @@ namespace LinkUtilities.Linker.LinkSources
                 .Replace("{SearchString}", searchTerm.UrlEncode())
                 .Replace("{DateUntil}", DateTime.Now.AddDays(5).ToString("yyyy-MM-dd"));
 
-            var epicSearchResult = ParseHelper.GetJsonFromApi<EpicSearchResult>(url, LinkName, Encoding.UTF8);
+            var epicSearchResult = ParseHelper.GetJsonFromApi<EpicSearchResult>(url, LinkName, Encoding.UTF8, true);
 
             return epicSearchResult?.Data?.Catalog?.SearchStore?.Elements?.Any() ?? false
                 ? new List<GenericItemOption>(Enumerable.Where<Element>(epicSearchResult.Data.Catalog.SearchStore.Elements, e => !string.IsNullOrEmpty(e.UrlSlug))

@@ -3,6 +3,7 @@ using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using Newtonsoft.Json;
+using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,21 +29,38 @@ namespace LinkUtilities.Helper
         /// <param name="linkName">Link name for the error message</param>
         /// <param name="encoding">the encoding to use</param>
         /// <returns>Deserialized JSON result</returns>
-        internal static T GetJsonFromApi<T>(string apiUrl, string linkName, Encoding encoding = null)
+        internal static T GetJsonFromApi<T>(string apiUrl, string linkName, Encoding encoding = null, bool useWebView = false)
         {
             try
             {
-                if (encoding is null)
+                var pageSource = string.Empty;
+
+                if (useWebView)
                 {
-                    encoding = Encoding.Default;
+                    var webView = API.Instance.WebViews.CreateOffscreenView();
+
+                    webView.NavigateAndWait(apiUrl);
+
+                    pageSource = webView.GetPageText();
+
+                    webView.Close();
+                }
+                else
+                {
+                    if (encoding is null)
+                    {
+                        encoding = Encoding.Default;
+                    }
+
+                    var client = new WebClient { Encoding = encoding };
+
+                    client.Headers.Add("Accept", "application/json");
+                    client.Headers.Add("user-agent", "Playnite LinkUtilities AddOn");
+
+                    pageSource = client.DownloadString(apiUrl);
                 }
 
-                var client = new WebClient { Encoding = encoding };
-
-                client.Headers.Add("Accept", "application/json");
-                client.Headers.Add("user-agent", "Playnite LinkUtilities AddOn");
-
-                return JsonConvert.DeserializeObject<T>(client.DownloadString(apiUrl));
+                return JsonConvert.DeserializeObject<T>(pageSource);
             }
             catch (Exception ex)
             {
