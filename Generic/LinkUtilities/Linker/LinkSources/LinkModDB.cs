@@ -1,5 +1,5 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -17,9 +17,10 @@ namespace LinkUtilities.Linker.LinkSources
     {
         private const string _websiteUrl = "https://www.moddb.com";
         public override string BaseUrl => _websiteUrl + "/games/";
-
+        public override string CheckForContent => "<h2 itemprop=\"name\"";
         public override string LinkName => "Mod DB";
         public override string SearchUrl => _websiteUrl + "/games?filter=t&kw=";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
 
         // Mod DB Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
@@ -32,11 +33,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var web = new HtmlWeb();
+                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
 
-                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
+                {
+                    return null;
+                }
 
-                var htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'rowcontent')]/div[@class='content']");
+                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//div[contains(@class, 'rowcontent')]/div[@class='content']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
