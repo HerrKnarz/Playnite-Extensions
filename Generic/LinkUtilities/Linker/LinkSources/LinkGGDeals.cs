@@ -1,5 +1,4 @@
-﻿using LinkUtilities.Interfaces;
-using Playnite.SDK.Models;
+﻿using Playnite.SDK.Models;
 using System;
 
 namespace LinkUtilities.Linker.LinkSources
@@ -9,7 +8,6 @@ namespace LinkUtilities.Linker.LinkSources
     /// </summary>
     internal class LinkGgDeals : BaseClasses.Linker
     {
-        public override LinkAddTypes AddType => LinkAddTypes.UrlMatch;
         public override string BaseUrl => "https://gg.deals/steam/app/";
         public override string BrowserSearchUrl => "https://gg.deals/games/?title=";
         public override bool CanBeSearched => false;

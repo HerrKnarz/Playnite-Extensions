@@ -1,5 +1,5 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -16,11 +16,10 @@ namespace LinkUtilities.Linker.LinkSources
     internal class LinkLemon64 : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://www.lemon64.com";
-        //public override LinkAddTypes AddType => LinkAddTypes.None;
-        public override bool CanBeSearched => false;
         public override string BaseUrl => _websiteUrl + "/game/";
         public override string LinkName => "Lemon64";
         public override string SearchUrl => "https://www.lemon64.com/games/list.php?list_title=";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.LoadFromBrowser;
 
         // Lemon64 Links need the game name in lowercase without leading articles, special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
@@ -35,18 +34,23 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var doc = new HtmlWeb().Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
 
-                var htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]/div/div[2]");
+                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
+                {
+                    return null;
+                }
+
+                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]/div/div[2]");
 
                 if (htmlNodes?.Any() ?? false)
                 {
                     return htmlNodes.Select(node
                         => new SearchResult
                         {
-                            Name = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='game-grid-title']").InnerText.Replace("\n", " ").Remove(0, 1))}",
+                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='game-grid-title']").InnerText.Replace("\n", " ").Remove(0, 1)).Trim(),
                             Url = $"{_websiteUrl}{node.SelectSingleNode("./div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
-                            Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='grid-info']").InnerText)}{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='grid-category']").InnerText)}"
+                            Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='grid-info']").InnerText.Trim())} {WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='grid-category']").InnerText.Trim())}"
                         }).Cast<GenericItemOption>().ToList();
                 }
             }

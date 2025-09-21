@@ -1,6 +1,5 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Helper;
-using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -16,7 +15,6 @@ namespace LinkUtilities.Linker.LinkSources
     /// </summary>
     internal class LinkAdventureGamers : BaseClasses.Linker
     {
-        public override LinkAddTypes AddType => LinkAddTypes.UrlMatch;
         public override string BaseUrl => "https://adventuregamers.com/games/";
         public override string CheckForContent => "<div class=\"game-detail-page\"";
         public override string LinkName => "Adventure Gamers";
