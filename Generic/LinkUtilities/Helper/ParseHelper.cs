@@ -1,5 +1,4 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using Newtonsoft.Json;
@@ -122,10 +121,14 @@ namespace LinkUtilities.Helper
 
             try
             {
-                var web = new HtmlWeb();
-                var doc = web.Load(string.Format(searchUrl, searchTerm.UrlEncode()));
+                var urlLoadResult = LinkHelper.LoadHtmlDocument(string.Format(searchUrl, searchTerm.UrlEncode()), UrlLoadMethod.OffscreenView);
 
-                var resultNode = doc.DocumentNode.SelectSingleNode("//div[@class='searchresults']");
+                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
+                {
+                    return null;
+                }
+
+                var resultNode = urlLoadResult.Document.DocumentNode.SelectSingleNode("//div[@class='searchresults']");
 
                 if (resultNode.SelectSingleNode("./h2/span[text() = 'Page title matches']") != null)
                 {

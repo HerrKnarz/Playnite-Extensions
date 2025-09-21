@@ -1,6 +1,5 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Helper;
-using LinkUtilities.Interfaces;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
@@ -13,11 +12,7 @@ namespace LinkUtilities.Linker.LinkSources
     internal class LinkNecRetro : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://necretro.org";
-        public override LinkAddTypes AddType => LinkAddTypes.None;
-        public override bool CanBeSearched => false;
-
         public override string BaseUrl => "https://necretro.org/";
-
         public override string BrowserSearchUrl => "https://necretro.org/index.php?search=";
         public override string LinkName => "NEC Retro";
         public override string SearchUrl => "https://necretro.org/index.php?search={0}&fulltext=1";
