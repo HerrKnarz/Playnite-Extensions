@@ -1,6 +1,5 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Helper;
-using LinkUtilities.Interfaces;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
@@ -13,12 +12,12 @@ namespace LinkUtilities.Linker.LinkSources
     internal class LinkPcGamingWiki : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://www.pcgamingwiki.com";
-        public override LinkAddTypes AddType => LinkAddTypes.None;
-        public override bool CanBeSearched => false;
         public override string BaseUrl => $"{_websiteUrl}/wiki/";
         public override string BrowserSearchUrl => $"{_websiteUrl}/w/index.php?search=";
+        public override string CheckForContent => "id=\"infobox-game\"";
         public override string LinkName => "PCGamingWiki";
         public override string SearchUrl => _websiteUrl + "/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
 
         public override bool FindLinks(Game game, out List<Link> links)
         {

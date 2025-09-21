@@ -14,8 +14,10 @@ namespace LinkUtilities.Linker.LinkSources
         private const string _websiteUrl = "https://necretro.org";
         public override string BaseUrl => "https://necretro.org/";
         public override string BrowserSearchUrl => "https://necretro.org/index.php?search=";
+        public override string CheckForContent => "itemtype=\"http://schema.org/VideoGame\"";
         public override string LinkName => "NEC Retro";
         public override string SearchUrl => "https://necretro.org/index.php?search={0}&fulltext=1";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
 
         // NEC Retro Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
