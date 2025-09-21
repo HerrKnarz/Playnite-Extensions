@@ -12,11 +12,12 @@ namespace LinkUtilities.Linker.LinkSources
     internal class LinkSegaRetro : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://segaretro.org";
-        public override bool CanBeSearched => false;
         public override string LinkName => "Sega Retro";
         public override string BaseUrl => "https://segaretro.org/";
+        public override string CheckForContent => "itemtype=\"http://schema.org/VideoGame\"";
         public override string SearchUrl => "https://segaretro.org/index.php?search={0}&fulltext=1";
         public override string BrowserSearchUrl => "https://segaretro.org/index.php?search=";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
 
         // Sega Retro Links need the game with underscores instead of whitespaces and special characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
