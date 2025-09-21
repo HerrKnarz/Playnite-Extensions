@@ -19,12 +19,17 @@ namespace LinkUtilities.Linker.LinkSources
         private const string _steamUrl = "https://isthereanydeal.com/steam/app/";
         private string _baseUrl;
 
-        public LinkIsThereAnyDeal() => Settings.NeedsApiKey = true;
+        public LinkIsThereAnyDeal()
+        {
+            Settings.NeedsApiKey = true;
+        }
+
         public override string BaseUrl => _baseUrl;
         public override string BrowserSearchUrl => "https://isthereanydeal.com/search/?q=";
 
         public override string LinkName => "IsThereAnyDeal";
         public override string SearchUrl => "https://api.isthereanydeal.com/games/search/v1?key={0}&title={1}";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Header;
 
         public override string GetGamePath(Game game, string gameName = null)
         {
