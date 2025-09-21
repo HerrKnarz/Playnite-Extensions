@@ -1,6 +1,5 @@
 ﻿using HtmlAgilityPack;
 using KNARZhelper;
-using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -17,7 +16,7 @@ namespace LinkUtilities.Linker.LinkSources
     internal class LinkLemon64 : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://www.lemon64.com";
-        public override LinkAddTypes AddType => LinkAddTypes.None;
+        //public override LinkAddTypes AddType => LinkAddTypes.None;
         public override bool CanBeSearched => false;
         public override string BaseUrl => _websiteUrl + "/game/";
         public override string LinkName => "Lemon64";

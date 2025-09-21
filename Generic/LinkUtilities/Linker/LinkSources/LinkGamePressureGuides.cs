@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources
@@ -12,7 +11,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "https://www.gamepressure.com/";
         public override string LinkName => "gamepressure Guides";
         public override bool ReturnsSameUrl { get; set; } = true;
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Header;
 
         // IGN Links need the result name in lowercase without special characters and hyphens
         // instead of white spaces.

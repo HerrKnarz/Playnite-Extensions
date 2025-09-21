@@ -29,7 +29,6 @@ namespace LinkUtilities.Linker.LinkSources
 
         public override string LinkName => "IsThereAnyDeal";
         public override string SearchUrl => "https://api.isthereanydeal.com/games/search/v1?key={0}&title={1}";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Header;
 
         public override string GetGamePath(Game game, string gameName = null)
         {

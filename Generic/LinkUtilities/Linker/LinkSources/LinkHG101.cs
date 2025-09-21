@@ -19,8 +19,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string LinkName => "Hardcore Gaming 101";
         public override string SearchUrl => "http://www.hardcoregaming101.net/?s=";
 
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Header;
-
         // HG101 Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()

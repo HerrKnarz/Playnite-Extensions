@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources
@@ -11,7 +10,6 @@ namespace LinkUtilities.Linker.LinkSources
     {
         public override string BaseUrl => "https://www.ign.com/games/";
         public override string LinkName => "IGN";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Header;
 
         // IGN Links need the result name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)

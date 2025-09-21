@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources
@@ -10,6 +11,7 @@ namespace LinkUtilities.Linker.LinkSources
     {
         public override string BaseUrl => "https://www.ign.com/wikis/";
         public override string LinkName => "IGN Guide";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Load;
 
         // Since IGN Guides always returns an url, even if that leads to a non-existing guide, we also check if the title isn't the one
         // of that generic page.

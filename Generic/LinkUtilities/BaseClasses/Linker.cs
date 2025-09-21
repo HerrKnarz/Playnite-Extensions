@@ -47,7 +47,7 @@ namespace LinkUtilities.BaseClasses
         public virtual bool ReturnsSameUrl { get; set; } = false;
         public virtual string SearchUrl => string.Empty;
         public LinkSourceSetting Settings { get; set; }
-        public virtual UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Load;
+        public virtual UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Header;
         public virtual string WrongTitle { get; set; } = string.Empty;
 
         public virtual bool AddLink(Game game) => FindLinks(game, out var links) && LinkHelper.AddLinks(game, links);
