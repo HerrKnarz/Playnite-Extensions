@@ -1,5 +1,5 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
@@ -15,8 +15,7 @@ namespace LinkUtilities.Linker.LinkSources
     /// </summary>
     internal class LinkLemonAmiga : BaseClasses.Linker
     {
-        public override LinkAddTypes AddType => LinkAddTypes.None;
-        public override bool CanBeSearched => false;
+        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string BaseUrl => "https://www.lemonamiga.com/games/";
         public override string LinkName => "Lemon Amiga";
         public override string SearchUrl => "https://www.lemonamiga.com/games/list.php?list_title=";
@@ -25,10 +24,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var web = new HtmlWeb();
-                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
 
-                var htmlNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]");
+                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
+                {
+                    return null;
+                }
+
+                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]");
 
                 if (htmlNodes?.Any() ?? false)
                 {
@@ -50,7 +53,7 @@ namespace LinkUtilities.Linker.LinkSources
                             {
                                 Name = $"{WebUtility.HtmlDecode(t.t.node.SelectSingleNode("./div/div[@class='game-grid-title']/a").InnerText)}{t.suffix}",
                                 Url = $"{BaseUrl}{t.t.node.SelectSingleNode("./div/div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
-                                Description = $"{WebUtility.HtmlDecode(t.t.node.SelectSingleNode("./div/div[@class='game-grid-info']").InnerText)}{WebUtility.HtmlDecode(t.t.node.SelectSingleNode("./div/div[@class='game-grid-category']").InnerText)}"
+                                Description = $"{WebUtility.HtmlDecode(t.t.node.SelectSingleNode("./div/div[@class='game-grid-info']").InnerText.Trim())} {WebUtility.HtmlDecode(t.t.node.SelectSingleNode("./div/div[@class='game-grid-category']").InnerText.Trim())}"
                             }).Cast<GenericItemOption>()
                         .ToList();
                 }

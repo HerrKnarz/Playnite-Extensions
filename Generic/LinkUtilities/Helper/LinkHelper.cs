@@ -349,6 +349,7 @@ namespace LinkUtilities.Helper
                         {
                             var reader = new StreamReader(dataStream);
                             result.ErrorDetails = reader.ReadToEnd();
+                            result.StatusCode = ((HttpWebResponse)response).StatusCode;
 
                             Log.Error(webEx, result.ErrorDetails);
                         }
@@ -359,6 +360,7 @@ namespace LinkUtilities.Helper
                 else if (exception is Exception ex)
                 {
                     result.ErrorDetails = ex.Message;
+                    result.StatusCode = HttpStatusCode.BadRequest;
                     Log.Error(ex, result.ErrorDetails);
 
                     return result;
@@ -372,6 +374,7 @@ namespace LinkUtilities.Helper
                 if (document == null)
                 {
                     result.ErrorDetails = $"Error loading HTML document from {url}";
+                    result.StatusCode = HttpStatusCode.BadRequest;
                     return result;
                 }
 
@@ -387,6 +390,7 @@ namespace LinkUtilities.Helper
             catch (Exception ex)
             {
                 result.ErrorDetails = ex.Message;
+                result.StatusCode = HttpStatusCode.BadRequest;
                 Log.Error(ex, $"Error loading HTML document from {url}");
 
                 return result;

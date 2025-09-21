@@ -19,7 +19,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => _websiteUrl + "/game/";
         public override string LinkName => "Lemon64";
         public override string SearchUrl => "https://www.lemon64.com/games/list.php?list_title=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.LoadFromBrowser;
 
         // Lemon64 Links need the game name in lowercase without leading articles, special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
