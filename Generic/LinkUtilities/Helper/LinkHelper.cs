@@ -48,6 +48,9 @@ namespace LinkUtilities.Helper
     {
         private static bool _allowRedirects = true;
 
+        private static readonly string _agentString =
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
+
         /// <summary>
         ///     Removes specific links from one or more games.
         /// </summary>
@@ -296,7 +299,6 @@ namespace LinkUtilities.Helper
 
             try
             {
-                HtmlWeb htmlWeb = null;
                 HtmlAgilityPack.HtmlDocument document = null;
                 object exception = null;
 
@@ -306,10 +308,10 @@ namespace LinkUtilities.Helper
                         (result.ResponseUrl, result.StatusCode, exception) = CheckUrlSimple(url, allowRedirects);
                         break;
                     case UrlLoadMethod.Load:
-                        (htmlWeb, document, exception) = LoadHtmlDocumentSimple(url, allowRedirects);
+                        (document, result.ResponseUrl, result.StatusCode, exception) = LoadHtmlDocumentSimple(url, allowRedirects);
                         break;
                     case UrlLoadMethod.LoadFromBrowser:
-                        (htmlWeb, document, exception) = LoadHtmlDocumentFromBrowser(url, allowRedirects, checkForContent);
+                        (document, result.ResponseUrl, result.StatusCode, exception) = LoadHtmlDocumentFromBrowser(url, allowRedirects, checkForContent);
                         break;
                     default:
                         {
@@ -373,12 +375,6 @@ namespace LinkUtilities.Helper
                     return result;
                 }
 
-                if (method != UrlLoadMethod.OffscreenView)
-                {
-                    result.StatusCode = htmlWeb.StatusCode;
-                    result.ResponseUrl = htmlWeb.ResponseUri.AbsoluteUri;
-                }
-
                 result.PageTitle = document?.DocumentNode?.SelectSingleNode("html/head/title")?.InnerText.Trim();
 
                 if (needDocument)
@@ -427,7 +423,7 @@ namespace LinkUtilities.Helper
             {
                 UseCookies = true,
                 BrowserTimeout = new TimeSpan(0, 0, 10),
-                UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+                UserAgent = _agentString
             };
 
             if (allowRedirects)
@@ -439,29 +435,38 @@ namespace LinkUtilities.Helper
             return web;
         }
 
-        private static (HtmlWeb, HtmlAgilityPack.HtmlDocument, object) LoadHtmlDocumentSimple(string url, bool allowRedirects = false)
+        private static (HtmlAgilityPack.HtmlDocument, string, HttpStatusCode, object) LoadHtmlDocumentSimple(string url, bool allowRedirects = false, string checkForContent = "")
         {
-            HtmlWeb htmlWeb = null;
             HtmlAgilityPack.HtmlDocument document = null;
+            string responseUrl = null;
+            var statusCode = HttpStatusCode.OK;
             object exception = null;
 
             try
             {
-                htmlWeb = GetHtmlWeb(allowRedirects);
+                var htmlWeb = GetHtmlWeb(allowRedirects);
                 document = htmlWeb.Load(url);
+
+                statusCode = htmlWeb.StatusCode == HttpStatusCode.OK
+                    ? !checkForContent.Any() || document.DocumentNode.InnerHtml.Contains(checkForContent) ? htmlWeb.StatusCode : HttpStatusCode.NotFound
+                    : htmlWeb.StatusCode;
+
+                responseUrl = htmlWeb.ResponseUri.AbsoluteUri;
             }
             catch (Exception ex)
             {
                 exception = ex;
             }
 
-            return (htmlWeb, document, exception);
+            return (document, responseUrl, statusCode, exception);
         }
 
-        private static (HtmlWeb, HtmlAgilityPack.HtmlDocument, object) LoadHtmlDocumentFromBrowser(string url, bool allowRedirects = false, string checkForContent = "")
+        private static (HtmlAgilityPack.HtmlDocument, string, HttpStatusCode, object) LoadHtmlDocumentFromBrowser(string url, bool allowRedirects = false, string checkForContent = "")
         {
             object web = null;
             object doc = null;
+            string responseUrl = null;
+            var statusCode = HttpStatusCode.OK;
             object exception = null;
 
             var thread = new Thread(
@@ -481,6 +486,9 @@ namespace LinkUtilities.Helper
                                       return webBrowser.Document.Body.InnerHtml.Contains(checkForContent);
                                   })
                                   : threadWeb.LoadFromBrowser(url);
+
+                              statusCode = threadWeb.StatusCode;
+                              responseUrl = threadWeb.ResponseUri.AbsoluteUri;
                           }
                           catch (Exception ex)
                           {
@@ -496,7 +504,7 @@ namespace LinkUtilities.Helper
                 thread.Abort();
             }
 
-            return (web as HtmlWeb, doc as HtmlAgilityPack.HtmlDocument, exception);
+            return (doc as HtmlAgilityPack.HtmlDocument, responseUrl, statusCode, exception);
         }
 
         private static (string, string, HttpStatusCode, object) LoadHtmlDocumentFromOffscreenView(string url, string checkForContent = "")
@@ -511,7 +519,7 @@ namespace LinkUtilities.Helper
                 var webViewSettings = new WebViewSettings
                 {
                     JavaScriptEnabled = true,
-                    UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+                    UserAgent = _agentString
                 };
 
                 var webView = API.Instance.WebViews.CreateOffscreenView(webViewSettings);
@@ -545,7 +553,7 @@ namespace LinkUtilities.Helper
                 var request = WebRequest.Create(url) as HttpWebRequest;
                 request.Method = "HEAD";
                 request.AllowAutoRedirect = allowRedirects;
-                request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
+                request.UserAgent = _agentString;
                 request.Timeout = 10000;
                 using (var response = request.GetResponse() as HttpWebResponse)
                 {
