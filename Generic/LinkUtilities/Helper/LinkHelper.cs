@@ -21,6 +21,10 @@ namespace LinkUtilities.Helper
     public enum UrlLoadMethod
     {
         /// <summary>
+        /// Loads only the header of the URL. This is fast, but many websites return 403 without a real browser.
+        /// </summary>
+        Header,
+        /// <summary>
         /// Loads the URL via the simple Load method of HtmlAgilityPack
         /// </summary>
         Load,
@@ -294,12 +298,13 @@ namespace LinkUtilities.Helper
             {
                 HtmlWeb htmlWeb = null;
                 HtmlAgilityPack.HtmlDocument document = null;
-                object doc = null;
-                object web = null;
                 object exception = null;
 
                 switch (method)
                 {
+                    case UrlLoadMethod.Header:
+                        (result.ResponseUrl, result.StatusCode, exception) = CheckUrlSimple(url, allowRedirects);
+                        break;
                     case UrlLoadMethod.Load:
                         (htmlWeb, document, exception) = LoadHtmlDocumentSimple(url, allowRedirects);
                         break;
@@ -354,6 +359,11 @@ namespace LinkUtilities.Helper
                     result.ErrorDetails = ex.Message;
                     Log.Error(ex, result.ErrorDetails);
 
+                    return result;
+                }
+
+                if (method == UrlLoadMethod.Header)
+                {
                     return result;
                 }
 
@@ -498,7 +508,13 @@ namespace LinkUtilities.Helper
 
             try
             {
-                var webView = API.Instance.WebViews.CreateOffscreenView();
+                var webViewSettings = new WebViewSettings
+                {
+                    JavaScriptEnabled = true,
+                    UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+                };
+
+                var webView = API.Instance.WebViews.CreateOffscreenView(webViewSettings);
 
                 webView.NavigateAndWait(url);
 
@@ -516,6 +532,34 @@ namespace LinkUtilities.Helper
             }
 
             return (htmlSource, responseUrl, statusCode, exception);
+        }
+
+        private static (string, HttpStatusCode, object) CheckUrlSimple(string url, bool allowRedirects = false)
+        {
+            string responseUrl = null;
+            var statusCode = HttpStatusCode.OK;
+            object exception = null;
+
+            try
+            {
+                var request = WebRequest.Create(url) as HttpWebRequest;
+                request.Method = "HEAD";
+                request.AllowAutoRedirect = allowRedirects;
+                request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
+                request.Timeout = 10000;
+                using (var response = request.GetResponse() as HttpWebResponse)
+                {
+                    statusCode = response.StatusCode;
+                    responseUrl = response.ResponseUri.AbsoluteUri;
+                    response.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+
+            return (responseUrl, statusCode, exception);
         }
 
         /// <summary>

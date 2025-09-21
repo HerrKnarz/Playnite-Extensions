@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -18,6 +19,8 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "http://www.hardcoregaming101.net/";
         public override string LinkName => "Hardcore Gaming 101";
         public override string SearchUrl => "http://www.hardcoregaming101.net/?s=";
+
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Header;
 
         // HG101 Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)

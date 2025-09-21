@@ -1,5 +1,4 @@
-﻿using KNARZhelper;
-using LinkUtilities.Interfaces;
+﻿using LinkUtilities.Interfaces;
 using Playnite.SDK.Models;
 using System;
 
@@ -10,32 +9,15 @@ namespace LinkUtilities.Linker.LinkSources
     /// </summary>
     internal class LinkGgDeals : BaseClasses.Linker
     {
-        private const string _standardUrl = "https://gg.deals/game/";
-        private const string _steamUrl = "https://gg.deals/steam/app/";
-        private string _baseUrl;
-        public override LinkAddTypes AddType => LinkAddTypes.None;
-        public override string BaseUrl => _baseUrl;
+        public override LinkAddTypes AddType => LinkAddTypes.UrlMatch;
+        public override string BaseUrl => "https://gg.deals/steam/app/";
         public override string BrowserSearchUrl => "https://gg.deals/games/?title=";
+        public override bool CanBeSearched => false;
         public override string LinkName => "GG.deals";
+        public override bool NeedsToBeChecked => false;
 
-        // GG.deals Links need the game name in lowercase without special characters and hyphens instead of white spaces.
-        public override string GetGamePath(Game game, string gameName = null)
-        {
-            // GG.deals provides links to steam games directly via the game id.
-            if (game.PluginId == Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab"))
-            {
-                _baseUrl = _steamUrl;
-                return game.GameId;
-            }
-
-            // For all other libraries links need the result name in lowercase without special characters and white spaces with numbers translated to roman numbers.
-            _baseUrl = _standardUrl;
-
-            return (gameName ?? game.Name).RemoveSpecialChars(" ")
-                .Replace("_", " ")
-                .CollapseWhitespaces()
-                .Replace(" ", "-")
-                .ToLower();
-        }
+        // GG.deals only works with steam ids, since the website won't let us verify the links.
+        public override string GetGamePath(Game game, string gameName = null) =>
+            game.PluginId != Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab") ? string.Empty : game.GameId;
     }
 }
