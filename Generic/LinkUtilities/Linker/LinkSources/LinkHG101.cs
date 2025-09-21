@@ -1,5 +1,4 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
 using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite.SDK;
@@ -33,9 +32,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var doc = new HtmlWeb().Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                var htmlNodes = doc.DocumentNode.SelectNodes("//header[@class='entry-header']");
+                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
+                {
+                    return null;
+                }
+
+                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//header[@class='entry-header']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
