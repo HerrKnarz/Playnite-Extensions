@@ -128,11 +128,12 @@ namespace LinkUtilities.Helper
                     return null;
                 }
 
-                var resultNode = urlLoadResult.Document.DocumentNode.SelectSingleNode("//div[@class='searchresults']");
+                var resultNode = urlLoadResult.Document.DocumentNode.SelectSingleNode("//h2[text()[contains(., 'Page title matches')]]/following::ul[1]")
+                    ?? urlLoadResult.Document.DocumentNode.SelectSingleNode("//h2/span[text()[contains(., 'Page title matches')]]/following::ul[1]");
 
-                if (resultNode.SelectSingleNode("./h2/span[text() = 'Page title matches']") != null)
+                if (resultNode != null)
                 {
-                    var htmlNodes = resultNode.SelectSingleNode("./ul[@class='mw-search-results']").SelectNodes("./li[@class='mw-search-result']");
+                    var htmlNodes = resultNode.SelectNodes("./li[contains(@class, 'mw-search-result')]");
 
                     if (htmlNodes?.Any() ?? false)
                     {

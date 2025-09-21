@@ -12,7 +12,6 @@ namespace LinkUtilities.Linker.LinkSources
     internal class LinkStrategyWiki : BaseClasses.Linker
     {
         private const string _websiteUrl = "https://strategywiki.org";
-        public override bool CanBeSearched => false;
         public override string BaseUrl => "https://strategywiki.org/wiki/";
         public override string BrowserSearchUrl => "https://strategywiki.org/w/index.php?search=";
         public override string LinkName => "StrategyWiki";
