@@ -1,5 +1,5 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
+using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
@@ -23,18 +23,22 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var web = new HtmlWeb();
-                var doc = web.Load($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
 
-                var htmlNodes = doc.DocumentNode.SelectNodes("//table/tr/td[last()]");
+                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
+                {
+                    return null;
+                }
+
+                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//tbody/tr/td[last()]");
 
                 if (htmlNodes?.Any() ?? false)
                 {
                     return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult
                     {
-                        Name = WebUtility.HtmlDecode(n.SelectSingleNode("./b/a").InnerText),
-                        Url = n.SelectSingleNode("./b/a").GetAttributeValue("href", ""),
-                        Description = WebUtility.HtmlDecode(n.SelectSingleNode("./small[last()]").InnerText).CollapseWhitespaces()
+                        Name = WebUtility.HtmlDecode(n.SelectSingleNode(".//b/a").InnerText),
+                        Url = n.SelectSingleNode(".//b/a").GetAttributeValue("href", ""),
+                        Description = WebUtility.HtmlDecode(n.SelectSingleNode(".//small[last()]").InnerText).CollapseWhitespaces()
                     }));
                 }
             }
