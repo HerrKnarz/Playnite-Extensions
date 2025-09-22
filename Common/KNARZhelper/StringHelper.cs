@@ -104,7 +104,7 @@ namespace KNARZhelper
         {
             var regExOptions = RegexOptions.ExplicitCapture;
             regExOptions |= RegexOptions.Compiled;
-            var ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", regExOptions | RegexOptions.IgnoreCase);
+            var ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the|deluxe))+$", regExOptions | RegexOptions.IgnoreCase);
             var match = ignoredEndWordsRegex.Match(str);
 
             return match.Success ? str.Remove(match.Index).Trim() : str;
