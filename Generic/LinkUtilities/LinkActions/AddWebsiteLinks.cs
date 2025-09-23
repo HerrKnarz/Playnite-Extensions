@@ -27,7 +27,10 @@ namespace LinkUtilities.LinkActions
 
         private List<BaseClasses.Linker> _linkers;
 
-        private AddWebsiteLinks() => Links = new Links();
+        private AddWebsiteLinks()
+        {
+            Links = new Links();
+        }
 
         public List<CustomLinkProfile> CustomLinkProfiles
         {
@@ -82,7 +85,7 @@ namespace LinkUtilities.LinkActions
             switch (actionModifier)
             {
                 case ActionModifierTypes.Add:
-                    _linkers = Links.Where(x => x.Settings.IsAddable == true).ToList();
+                    _linkers = Links.Where(x => x.Settings.IsAddable == true || (x.Settings.IsCustomSource && x.AddType != LinkAddTypes.None)).ToList();
                     return true;
                 case ActionModifierTypes.AddSelected:
                     return SelectLinks();
