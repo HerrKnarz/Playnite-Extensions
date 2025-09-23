@@ -308,6 +308,7 @@ namespace LinkUtilities.ViewModels
 
         public void EndEdit()
         {
+            Settings.RenamePatterns.RemoveEmpty();
             Settings.RenamePatterns.SortPatterns();
 
             Settings.RemovePatterns.RemoveEmpty();
@@ -323,13 +324,12 @@ namespace LinkUtilities.ViewModels
 
             var hashset = new HashSet<string>();
 
-            if (Settings.SortOrder.All(item => hashset.Add(item.LinkName)))
+            if (!Settings.SortOrder.All(item => hashset.Add(item.LinkName)))
             {
-                return true;
+                errors.Add($"{ResourceProvider.GetString("LOCLinkUtilitiesName")}: {ResourceProvider.GetString("LOCLinkUtilitiesErrorDuplicates")}");
             }
 
-            errors.Add(ResourceProvider.GetString("LOCLinkUtilitiesErrorDuplicates"));
-            return false;
+            return errors.Count == 0;
         }
 
         public void WriteSettingsToLinkActions()
