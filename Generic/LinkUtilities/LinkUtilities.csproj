@@ -117,6 +117,7 @@
     <Compile Include="LinkActions\DoAfterChange.cs" />
     <Compile Include="LinkActions\RemoveSpecificLinks.cs" />
     <Compile Include="Linker\LinkSources\CustomLinker.cs" />
+    <Compile Include="Linker\LinkSources\LinkDoomWiki.cs" />
     <Compile Include="Linker\LinkSources\LinkGogDb.cs" />
     <Compile Include="Linker\LinkSources\LinkGrouvee.cs" />
     <Compile Include="Linker\LinkSources\LinkBackloggd.cs" />
