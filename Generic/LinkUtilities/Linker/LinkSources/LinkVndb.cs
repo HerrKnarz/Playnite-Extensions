@@ -17,7 +17,7 @@ namespace LinkUtilities.Linker.LinkSources
     {
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string BaseUrl => "https://vndb.org/";
-        public override string BrowserSearchUrl => "https://vndb.org/v?sq=";
+        public override string BrowserSearchUrl => $"{BaseUrl}v?sq=";
         public override string LinkName => "VNDB";
         public override string SearchUrl => "https://api.vndb.org/kana/vn";
 
