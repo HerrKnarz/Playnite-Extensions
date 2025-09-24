@@ -128,6 +128,9 @@
     <Compile Include="Linker\LinkSources\LinkProtonDb.cs" />
     <Compile Include="Linker\LinkSources\LinkSteamDb.cs" />
     <Compile Include="Linker\LinkSources\LinkTvTropes.cs" />
+    <Compile Include="Linker\LinkSources\LinkVndb.cs" />
+    <Compile Include="Models\ApiResults\VndbSearchRequest.cs" />
+    <Compile Include="Models\ApiResults\VndbSearchResult.cs" />
     <Compile Include="Models\SelectedLink.cs" />
     <Compile Include="Models\CustomLinkProfile.cs" />
     <Compile Include="Models\CheckGameLink.cs" />

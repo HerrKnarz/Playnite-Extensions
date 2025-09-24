@@ -50,6 +50,7 @@ namespace LinkUtilities.Linker
             Add(new LinkSteamDb());
             Add(new LinkStrategyWiki());
             Add(new LinkTvTropes());
+            Add(new LinkVndb());
             Add(new LinkWikipedia());
             Add(new LinkZopharsDomain());
         }
