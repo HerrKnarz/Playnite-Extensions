@@ -73,7 +73,7 @@ namespace LinkUtilities.Linker.Libraries
 
             LinkUrl = GetGamePath(game);
 
-            return LinkUrl.Any() && AddLinks(game, out links, LinkUrl);
+            return LinkUrl.Length > 0 && AddLinks(game, out links, LinkUrl);
         }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)

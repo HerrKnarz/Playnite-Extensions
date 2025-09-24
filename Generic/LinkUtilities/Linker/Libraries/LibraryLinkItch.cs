@@ -21,7 +21,11 @@ namespace LinkUtilities.Linker.Libraries
     {
         private const string _libraryUrl = "https://itch.io/api/1/{0}/game/{1}";
 
-        public LibraryLinkItch() => Settings.NeedsApiKey = true;
+        public LibraryLinkItch()
+        {
+            Settings.NeedsApiKey = true;
+        }
+
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string BrowserSearchUrl => "https://itch.io/search?q=";
 
@@ -47,7 +51,7 @@ namespace LinkUtilities.Linker.Libraries
 
             LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
 
-            if (!LinkUrl.Any())
+            if (LinkUrl.Length == 0)
             {
                 return false;
             }

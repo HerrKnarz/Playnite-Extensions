@@ -452,7 +452,7 @@ namespace LinkUtilities.Helper
                 document = htmlWeb.Load(url);
 
                 statusCode = htmlWeb.StatusCode == HttpStatusCode.OK
-                    ? !checkForContent.Any() || document.DocumentNode.InnerHtml.Contains(checkForContent) ? htmlWeb.StatusCode : HttpStatusCode.NotFound
+                    ? checkForContent.Length == 0 || document.DocumentNode.InnerHtml.Contains(checkForContent) ? htmlWeb.StatusCode : HttpStatusCode.NotFound
                     : htmlWeb.StatusCode;
 
                 responseUrl = htmlWeb.ResponseUri.AbsoluteUri;
@@ -482,7 +482,7 @@ namespace LinkUtilities.Helper
 
                               web = threadWeb;
 
-                              doc = checkForContent.Any()
+                              doc = checkForContent.Length > 0
                                   ? threadWeb.LoadFromBrowser(url, o =>
                                   {
                                       var webBrowser = (WebBrowser)o;
@@ -536,7 +536,7 @@ namespace LinkUtilities.Helper
 
                 webView.Close();
 
-                statusCode = !checkForContent.Any() || htmlSource.Contains(checkForContent) ? HttpStatusCode.OK : HttpStatusCode.NotFound;
+                statusCode = checkForContent.Length == 0 || htmlSource.Contains(checkForContent) ? HttpStatusCode.OK : HttpStatusCode.NotFound;
             }
             catch (Exception ex)
             {

@@ -1,7 +1,6 @@
 ﻿using KNARZhelper;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
-using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -97,7 +96,7 @@ namespace LinkUtilities.ViewModels
         {
             FilteredLinks.Clear();
 
-            FilteredLinks.AddRange(SearchString.Any() ? Links.Where(x => x.Link.Name.Contains(SearchString, StringComparison.OrdinalIgnoreCase)) : Links);
+            FilteredLinks.AddRange(SearchString.Length > 0 ? Links.Where(x => x.Link.Name.Contains(SearchString, StringComparison.OrdinalIgnoreCase)) : Links);
         }
 
         public void Remove(CheckGameLink checkGameLink)

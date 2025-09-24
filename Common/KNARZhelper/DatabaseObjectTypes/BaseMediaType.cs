@@ -23,7 +23,7 @@ namespace KNARZhelper.DatabaseObjectTypes
 
         public bool AddValueToGame<T>(Game game, T value)
         {
-            if (!(value is string filePath) || !filePath.Any())
+            if (!(value is string filePath) || filePath.Length == 0)
             {
                 return false;
             }

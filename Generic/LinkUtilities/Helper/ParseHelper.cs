@@ -28,7 +28,7 @@ namespace LinkUtilities.Helper
         /// <param name="linkName">Link name for the error message</param>
         /// <param name="encoding">the encoding to use</param>
         /// <returns>Deserialized JSON result</returns>
-        internal static T GetJsonFromApi<T>(string apiUrl, string linkName, Encoding encoding = null, bool useWebView = false)
+        internal static T GetJsonFromApi<T>(string apiUrl, string linkName, Encoding encoding = null, bool useWebView = false, string body = "")
         {
             try
             {
@@ -56,7 +56,15 @@ namespace LinkUtilities.Helper
                     client.Headers.Add("Accept", "application/json");
                     client.Headers.Add("user-agent", "Playnite LinkUtilities AddOn");
 
-                    pageSource = client.DownloadString(apiUrl);
+                    if (body.Length == 0)
+                    {
+                        pageSource = client.DownloadString(apiUrl);
+                    }
+                    else
+                    {
+                        client.Headers.Add("Content-Type", "application/json");
+                        pageSource = client.UploadString(apiUrl, body);
+                    }
                 }
 
                 return JsonConvert.DeserializeObject<T>(pageSource);
@@ -123,7 +131,7 @@ namespace LinkUtilities.Helper
             {
                 var urlLoadResult = LinkHelper.LoadHtmlDocument(string.Format(searchUrl, searchTerm.UrlEncode()), UrlLoadMethod.OffscreenView);
 
-                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
+                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
                 {
                     return null;
                 }

@@ -44,7 +44,7 @@ namespace LinkUtilities.Linker.LinkSources
             {
                 var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
 
-                if (urlLoadResult.ErrorDetails.Any() || urlLoadResult.Document is null)
+                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
                 {
                     return null;
                 }

@@ -5,7 +5,6 @@ using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
-using System.Linq;
 using System.Windows;
 
 namespace LinkUtilities.LinkActions
@@ -57,7 +56,7 @@ namespace LinkUtilities.LinkActions
             var url = Clipboard.GetText();
             var tempLinkName = string.Empty;
 
-            if (!url.Any() || !Uri.TryCreate(url, UriKind.Absolute, out _))
+            if (url.Length == 0 || !Uri.TryCreate(url, UriKind.Absolute, out _))
             {
                 return false;
             }
