@@ -56,17 +56,9 @@ namespace LinkUtilities.Linker
 
         public void RefreshCustomLinkProfiles(List<CustomLinkProfile> customLinkProfiles)
         {
-            var linksToRemove = this.Where(x => x.Settings.IsCustomSource).ToList();
+            RemoveAll(x => x.Settings.IsCustomSource);
 
-            foreach (var linker in linksToRemove)
-            {
-                Remove(linker);
-            }
-
-            foreach (var customLinkProfile in customLinkProfiles)
-            {
-                Add(new CustomLinker(customLinkProfile));
-            }
+            AddRange(customLinkProfiles.Select(x => new CustomLinker(x)));
         }
     }
 }
