@@ -3,7 +3,6 @@ using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using Playnite.SDK;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game = Playnite.SDK.Models.Game;
@@ -33,10 +32,12 @@ namespace LinkUtilities.Linker.LinkSources
         public override string GetGamePath(Game game, string gameName = null)
         {
             // IsThereAnyDeal provides links to steam games directly via the game id.
-            if (game.PluginId == Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab"))
+            var steamId = SteamHelper.GetSteamId(game);
+
+            if (steamId.Length > 0)
             {
                 _baseUrl = _steamUrl;
-                return game.GameId;
+                return steamId;
             }
 
             // For all other libraries links need the result name in lowercase without special characters and hyphens instead of white spaces.

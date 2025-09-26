@@ -1,5 +1,5 @@
-﻿using Playnite.SDK.Models;
-using System;
+﻿using LinkUtilities.Helper;
+using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources
 {
@@ -15,7 +15,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override bool NeedsToBeChecked => false;
 
         // GG.deals only works with steam ids, since the website won't let us verify the links.
-        public override string GetGamePath(Game game, string gameName = null) =>
-            game.PluginId != Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab") ? string.Empty : game.GameId;
+        public override string GetGamePath(Game game, string gameName = null) => SteamHelper.GetSteamId(game);
     }
 }
