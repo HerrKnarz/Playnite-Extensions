@@ -19,6 +19,7 @@ namespace LinkUtilities.Linker
             Add(new LinkCoOptimus());
             Add(new LinkDoomWiki());
             Add(new LinkEpic());
+            Add(new LinkFamilyGamingDatabase());
             Add(new LinkGameFaqs());
             Add(new LinkGamePressureGuides());
             Add(new LinkGamerGuides());

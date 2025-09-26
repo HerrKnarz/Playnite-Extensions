@@ -119,6 +119,7 @@
     <Compile Include="LinkActions\RemoveSpecificLinks.cs" />
     <Compile Include="Linker\LinkSources\CustomLinker.cs" />
     <Compile Include="Linker\LinkSources\LinkDoomWiki.cs" />
+    <Compile Include="Linker\LinkSources\LinkFamilyGamingDatabase.cs" />
     <Compile Include="Linker\LinkSources\LinkGameFaqs.cs" />
     <Compile Include="Linker\LinkSources\LinkGogDb.cs" />
     <Compile Include="Linker\LinkSources\LinkGrouvee.cs" />
