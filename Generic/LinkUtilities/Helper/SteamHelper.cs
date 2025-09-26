@@ -109,7 +109,5 @@ namespace LinkUtilities.Helper
                 ? url.Replace(_steamAppPrefix, string.Empty)
                 : url;
         }
-
-        // TODO: Add a similar class for GOG links.
     }
 }
