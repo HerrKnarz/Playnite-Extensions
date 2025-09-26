@@ -49,34 +49,45 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage => "LOCLinkUtilitiesProgressWebsiteLink";
         public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
+        public string SteamId { get; set; } = String.Empty;
+
         public static AddWebsiteLinks Instance() => _instance ?? (_instance = new AddWebsiteLinks());
 
         public override bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            if (!base.Execute(game, actionModifier, isBulkAction))
+            try
             {
-                return false;
-            }
+                SteamId = string.Empty;
 
-            switch (actionModifier)
+                if (!base.Execute(game, actionModifier, isBulkAction))
+                {
+                    return false;
+                }
+
+                switch (actionModifier)
+                {
+                    case ActionModifierTypes.Add:
+                    case ActionModifierTypes.AddSelected:
+                        return AddLinks(game, isBulkAction);
+                    case ActionModifierTypes.Search:
+                    case ActionModifierTypes.SearchMissing:
+                    case ActionModifierTypes.SearchSelected:
+                        return SearchLinks(game, actionModifier, isBulkAction);
+                    case ActionModifierTypes.SearchInBrowser:
+                        return SearchLinksInBrowser(game, isBulkAction);
+                    case ActionModifierTypes.AppLink:
+                    case ActionModifierTypes.DontRename:
+                    case ActionModifierTypes.Name:
+                    case ActionModifierTypes.None:
+                    case ActionModifierTypes.SortOrder:
+                    case ActionModifierTypes.WebLink:
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
+                }
+            }
+            finally
             {
-                case ActionModifierTypes.Add:
-                case ActionModifierTypes.AddSelected:
-                    return AddLinks(game, isBulkAction);
-                case ActionModifierTypes.Search:
-                case ActionModifierTypes.SearchMissing:
-                case ActionModifierTypes.SearchSelected:
-                    return SearchLinks(game, actionModifier, isBulkAction);
-                case ActionModifierTypes.SearchInBrowser:
-                    return SearchLinksInBrowser(game, isBulkAction);
-                case ActionModifierTypes.AppLink:
-                case ActionModifierTypes.DontRename:
-                case ActionModifierTypes.Name:
-                case ActionModifierTypes.None:
-                case ActionModifierTypes.SortOrder:
-                case ActionModifierTypes.WebLink:
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(actionModifier), actionModifier, null);
+                SteamId = string.Empty;
             }
         }
 
@@ -162,15 +173,17 @@ namespace LinkUtilities.LinkActions
 
             var linksQueue = new ConcurrentQueue<Link>();
 
-            Parallel.ForEach(_linkers, linker =>
+            foreach (var priorityGroup in _linkers.GroupBy(x => x.Priority).OrderBy(x => x.Key))
             {
-                linker.FindLinks(game, out var innerLinks);
-
-                foreach (var innerLink in innerLinks)
+                Parallel.ForEach(priorityGroup, linker =>
                 {
-                    linksQueue.Enqueue(innerLink);
-                }
-            });
+                    linker.FindLinks(game, out var innerLinks);
+                    foreach (var innerLink in innerLinks)
+                    {
+                        linksQueue.Enqueue(innerLink);
+                    }
+                });
+            }
 
             return links.AddMissing(linksQueue.Distinct());
         }

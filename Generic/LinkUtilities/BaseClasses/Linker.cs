@@ -49,6 +49,7 @@ namespace LinkUtilities.BaseClasses
         public LinkSourceSetting Settings { get; set; }
         public virtual UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Header;
         public virtual string WrongTitle { get; set; } = string.Empty;
+        public virtual int Priority => 10;
 
         public virtual bool AddLink(Game game) => FindLinks(game, out var links) && LinkHelper.AddLinks(game, links);
 
@@ -225,7 +226,7 @@ namespace LinkUtilities.BaseClasses
 
             var searchName = gameName.RemoveSpecialChars().Replace(" ", "");
 
-            var foundGame = (SearchResult)searchResults.FirstOrDefault(r => r.Name.RemoveSpecialChars().Replace(" ", "") == searchName);
+            var foundGame = (SearchResult)searchResults.FirstOrDefault(r => r.Name.RemoveSpecialChars().Replace(" ", "").Equals(searchName, StringComparison.OrdinalIgnoreCase));
 
             return foundGame != null ? foundGame.Url : searchResults.Count == 1 ? ((SearchResult)searchResults[0]).Url : null;
         }

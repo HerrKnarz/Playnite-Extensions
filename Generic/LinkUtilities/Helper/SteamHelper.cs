@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Settings;
+﻿using LinkUtilities.LinkActions;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -19,6 +20,11 @@ namespace LinkUtilities.Helper
             if (game.PluginId == SteamId)
             {
                 return game.GameId;
+            }
+
+            if (!string.IsNullOrEmpty(AddWebsiteLinks.Instance().SteamId))
+            {
+                return AddWebsiteLinks.Instance().SteamId;
             }
 
             if (game?.Links == null || !game.Links.Any())

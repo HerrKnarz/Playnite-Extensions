@@ -76,6 +76,11 @@ namespace LinkUtilities.Interfaces
         bool NeedsToBeChecked { get; set; }
 
         /// <summary>
+        /// Specifies the priority of the link source. Lower numbers mean higher priority and will be fetched earlier.
+        /// </summary>
+        int Priority { get; }
+
+        /// <summary>
         ///     Specifies, if the returned url must be the same as the searched one while checking the URL. Some sites always
         ///     redirect and then return OK, even if the link isn't valid. In that case this should be set to true, if the url
         ///     needs to be the same.

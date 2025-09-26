@@ -2,6 +2,7 @@
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
+using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using Playnite.SDK;
@@ -52,6 +53,7 @@ namespace LinkUtilities.Linker.Libraries
         public string NameNewsLink { get; set; } = "News";
         public string NameStorePageLink { get; set; } = "Store Page";
         public string NameWorkshopLink { get; set; } = "Workshop";
+        public override int Priority => 1;
         public override string SearchUrl => "https://steamcommunity.com/actions/SearchApps/";
 
         public bool UseAppLinks { get; set; } = false;
@@ -118,6 +120,8 @@ namespace LinkUtilities.Linker.Libraries
 
         private bool AddLinks(Game game, out List<Link> links, string gameId)
         {
+            AddWebsiteLinks.Instance().SteamId = gameId;
+
             links = new List<Link>();
 
             AddLink(game, links, AddAchievementLink, gameId, _urlAchievements, NameAchievementLink);
