@@ -14,8 +14,10 @@ namespace LinkUtilities.Linker.LinkSources
     {
         private const string _websiteUrl = "https://www.familygamingdatabase.com";
         public override string BaseUrl => _websiteUrl + "/en-gb/game/";
+        public override string CheckForContent => "<div class=\"gameTitleShare\"";
         public override string LinkName => "Family Gaming Database";
         public override string SearchUrl => _websiteUrl + "/search/text/";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Load;
 
         // Family Gaming Database Links need the game name in lowercase without special characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)

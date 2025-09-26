@@ -309,7 +309,7 @@ namespace LinkUtilities.Helper
                         (result.ResponseUrl, result.StatusCode, exception) = CheckUrlSimple(url, allowRedirects);
                         break;
                     case UrlLoadMethod.Load:
-                        (document, result.ResponseUrl, result.StatusCode, exception) = LoadHtmlDocumentSimple(url, allowRedirects);
+                        (document, result.ResponseUrl, result.StatusCode, exception) = LoadHtmlDocumentSimple(url, allowRedirects, checkForContent);
                         break;
                     case UrlLoadMethod.LoadFromBrowser:
                         (document, result.ResponseUrl, result.StatusCode, exception) = LoadHtmlDocumentFromBrowser(url, allowRedirects, checkForContent);
