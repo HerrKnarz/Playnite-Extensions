@@ -1,11 +1,29 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 4.2.0
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-09-26
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2025-09-26/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_2_0.pext
+    Changelog:
+      - Added support for DoomWiki (add/search)
+      - Added support for Family Gaming Database (add/search)
+      - Added support for GameFAQs (add/search)
+      - Added support for IGDB (add/search)
+      - Added support for VNDB (add/search). Closes issue 126
+      - Fixed broken add/search functionality for Adventure Gamers, Backloggd, Epic, gg.deals (only for steam games), GOG, Lemon 64, Lemon Amiga, MobyGames, ModDB, NEC Retro, PCGamingWiki, Sega Retro and StrategyWiki
+      - Removed Co-Optimus, since they provide no own search method anymore and just show google results.
+      - gg.deals, IsThereAnyDeal, ProtonDB and SteamDB can now get the steam id from an existing steam link, when available. That way they also work for games not from the steam library.
+      - Steam links will now always be added first, when adding links to all configured websites and steam is one of those sites, so the others already have the steam id available.
+      - Added "deluxe" as an edition suffix to remove when searching for games. Closes issue 132
+      - Made verifying links when adding faster for several sites by only loading the headers. Others unfortunately take a bit longer, since they now require java script to load properly.
+      - Fixed custom link profiles not being processed when using the "All configured websites" option. Closes issue 134
+      - Empty rename patterns will now be removed when saving the settings. That way they won't rename all links to an empty name anymore.
   - Version: 4.1.2
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-10-27
     PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2024-10-27/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_1_2.pext
     Changelog:
-      - Changed PCGamingWiki to use the API when searching a game to avoid possible JavaScript errorsf ro some users.
+      - Changed PCGamingWiki to use the API when searching a game to avoid possible JavaScript errors for some users.
   - Version: 4.1.1
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-10-11
