@@ -50,6 +50,7 @@ namespace LinkUtilities.Helper
 
         private static readonly string _agentString =
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
+        public static Guid GogId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
 
         /// <summary>
         ///     Removes specific links from one or more games.
@@ -439,6 +440,13 @@ namespace LinkUtilities.Helper
             return web;
         }
 
+        /// <summary>
+        /// Loads the HTML document via the simple Load method of HtmlAgilityPack
+        /// </summary>
+        /// <param name="url">url to load</param>
+        /// <param name="allowRedirects">If true, redirects are allowed</param>
+        /// <param name="checkForContent">Content to check for. If the document doesn't contain this content, it's considered the wrong page.</param>
+        /// <returns>The document, response url, status code and an object containing a possible exception</returns>
         private static (HtmlAgilityPack.HtmlDocument, string, HttpStatusCode, object) LoadHtmlDocumentSimple(string url, bool allowRedirects = false, string checkForContent = "")
         {
             HtmlAgilityPack.HtmlDocument document = null;
@@ -465,6 +473,13 @@ namespace LinkUtilities.Helper
             return (document, responseUrl, statusCode, exception);
         }
 
+        /// <summary>
+        /// Loads the HTML document using HtmlAgilityPack via a browser instance. This is slower, but can handle JavaScript heavy sites.
+        /// </summary>
+        /// <param name="url">url to load</param>
+        /// <param name="allowRedirects">If true, redirects are allowed</param>
+        /// <param name="checkForContent">Content to check for. If the document doesn't contain this content, it's considered the wrong page.</param>
+        /// <returns>The document, response url, status code and an object containing a possible exception</returns>
         private static (HtmlAgilityPack.HtmlDocument, string, HttpStatusCode, object) LoadHtmlDocumentFromBrowser(string url, bool allowRedirects = false, string checkForContent = "")
         {
             object web = null;
@@ -511,6 +526,13 @@ namespace LinkUtilities.Helper
             return (doc as HtmlAgilityPack.HtmlDocument, responseUrl, statusCode, exception);
         }
 
+        /// <summary>
+        /// Loads the HTML document using an offscreen browser instance. This is slower, but can handle JavaScript heavy sites and mimics a human
+        /// user best. We don't get a StatusCode though, so the validity must be checked in the document content individually.
+        /// </summary>
+        /// <param name="url">url to load</param>
+        /// <param name="checkForContent">Content to check for. If the document doesn't contain this content, it's considered the wrong page.</param>
+        /// <returns>The HTML source, response url, status code and an object containing a possible exception</returns>
         private static (string, string, HttpStatusCode, object) LoadHtmlDocumentFromOffscreenView(string url, string checkForContent = "")
         {
             string responseUrl = null;
@@ -546,6 +568,12 @@ namespace LinkUtilities.Helper
             return (htmlSource, responseUrl, statusCode, exception);
         }
 
+        /// <summary>
+        /// Checks if a URL is reachable by only requesting the header.
+        /// </summary>
+        /// <param name="url">url to check</param>
+        /// <param name="allowRedirects">If true, redirects are allowed</param>
+        /// <returns>The response url, status code and an object containing a possible exception</returns>
         private static (string, HttpStatusCode, object) CheckUrlSimple(string url, bool allowRedirects = false)
         {
             string responseUrl = null;

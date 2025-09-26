@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="BaseClasses\ObservableCollectionFast.cs" />
     <Compile Include="Helper\ParseHelper.cs" />
+    <Compile Include="Helper\SteamHelper.cs" />
     <Compile Include="Helper\WikipediaApiCaller.cs" />
     <Compile Include="LinkActions\AddLinkFromClipboard.cs" />
     <Compile Include="LinkActions\ChangeSteamLinks.cs" />

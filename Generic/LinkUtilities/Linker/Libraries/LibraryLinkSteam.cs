@@ -41,7 +41,7 @@ namespace LinkUtilities.Linker.Libraries
         /// <summary>
         ///     ID of the game library to identify it in Playnite.
         /// </summary>
-        public override Guid Id { get; } = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
+        public override Guid Id { get; } = SteamHelper.SteamId;
 
         public override string LinkName => "Steam";
 
@@ -68,8 +68,16 @@ namespace LinkUtilities.Linker.Libraries
                 return FindLibraryLink(game, out links);
             }
 
-            LinkUrl = string.Empty;
             links = new List<Link>();
+
+            var steamId = SteamHelper.GetSteamId(game);
+
+            if (!string.IsNullOrEmpty(steamId))
+            {
+                return AddLinks(game, out links, steamId);
+            }
+
+            LinkUrl = string.Empty;
 
             LinkUrl = GetGamePath(game);
 

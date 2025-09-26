@@ -1,5 +1,5 @@
-﻿using Playnite.SDK.Models;
-using System;
+﻿using LinkUtilities.Helper;
+using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources
 {
@@ -15,7 +15,7 @@ namespace LinkUtilities.Linker.LinkSources
 
         // GOG Database Links need the gog game id. Because of that the add function only works with the gog library.
         public override string GetGamePath(Game game, string gameName = null) =>
-            game.PluginId != Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e") ? string.Empty : game.GameId;
+            game.PluginId != LinkHelper.GogId ? string.Empty : game.GameId;
 
         //TODO: Maybe add a search function via GOG later.
     }
