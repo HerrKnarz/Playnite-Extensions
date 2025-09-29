@@ -113,6 +113,7 @@ Le caselle di controllo seguenti definiscono, come il nome del gioco verrà modi
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl">The link is only valid, if the website returns exactly the same url and doesn't change it.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked">When unticked, the link won't be checked and always counts as valid. This is only useful for sites, where you can be sure, that the URL exists. SteamDB is a good example, because it has links for all steam games via the steam ID.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">Try out game name formatting</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDebugMode">Log debug messages in extensions.log</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Definisci ordinamento personalizzato</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Don't rename, when the link name contains:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Rimuovi i link duplicati dopo l'aggiornamento dei metadati del gioco</sys:String>

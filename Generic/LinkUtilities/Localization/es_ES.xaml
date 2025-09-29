@@ -111,6 +111,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl">El enlace sólo es válido, si el sitio web devuelve exactamente la misma url y no la cambia.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked"></sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">Prueba el formato del nombre del juego</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDebugMode">Log debug messages in extensions.log</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Definir orden personalizado</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">No renombrar cuando el nombre del enlace contiene:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Eliminar enlaces duplicados después de que los metadatos del juego hayan sido actualizados</sys:String>
