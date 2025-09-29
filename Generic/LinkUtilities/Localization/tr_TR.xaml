@@ -111,6 +111,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl">Bağlantı yalnızca, web sitesi tam olarak aynı url'yi döndürdüğü ve değiştirmediği takdirde geçerlidir.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked">İşaretlenmediğinde, bağlantı kontrol edilmez ve her zaman geçerli sayılır. Bu, yalnızca URL'nin kesin olarak var olduğundan emin olunabilecek siteler için kullanışlıdır. SteamDB buna iyi bir örnektir, çünkü tüm Steam oyunları için Steam kimliği üzerinden bağlantılara sahiptir.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">Oyun adı formatını test et</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDebugMode">Log debug messages in extensions.log</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Özel sıralama düzeni</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Bağlantı adı şunları içerdiğinde yeniden adlandırma:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Oyunun meta verisi güncellendikten sonra tekrarlanan bağlantıları kaldır</sys:String>
