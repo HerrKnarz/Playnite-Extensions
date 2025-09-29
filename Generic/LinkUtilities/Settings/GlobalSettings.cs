@@ -7,12 +7,17 @@
     {
         private static GlobalSettings _instance;
 
-        private GlobalSettings(bool onlyATest = false) => OnlyATest = onlyATest;
+        private GlobalSettings(bool onlyATest = false)
+        {
+            OnlyATest = onlyATest;
+        }
 
         /// <summary>
         /// Used to omit certain SDK interactions to make unit tests easier.
         /// </summary>
         public bool OnlyATest { get; }
+
+        public bool DebugMode { get; set; } = false;
 
         public static GlobalSettings Instance(bool onlyATest = false) => _instance ?? (_instance = new GlobalSettings(onlyATest));
     }

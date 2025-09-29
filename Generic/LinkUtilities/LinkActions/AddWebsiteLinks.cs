@@ -4,6 +4,7 @@ using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Linker;
 using LinkUtilities.Models;
+using LinkUtilities.Settings;
 using LinkUtilities.ViewModels;
 using LinkUtilities.Views;
 using Playnite.SDK;
@@ -26,6 +27,8 @@ namespace LinkUtilities.LinkActions
         private readonly List<CustomLinkProfile> _customLinkProfiles = new List<CustomLinkProfile>();
 
         private List<BaseClasses.Linker> _linkers;
+
+        private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
 
         private AddWebsiteLinks()
         {
@@ -57,6 +60,11 @@ namespace LinkUtilities.LinkActions
         {
             try
             {
+                if (GlobalSettings.Instance().DebugMode)
+                {
+                    Log.Debug($"Starting {GetType().Name}{(isBulkAction ? " (Bulk)" : string.Empty)} with ActionModifier {actionModifier} for game {game.Name}.");
+                }
+
                 SteamId = string.Empty;
 
                 if (!base.Execute(game, actionModifier, isBulkAction))
@@ -88,6 +96,11 @@ namespace LinkUtilities.LinkActions
             finally
             {
                 SteamId = string.Empty;
+
+                if (GlobalSettings.Instance().DebugMode)
+                {
+                    Log.Debug($"Finishing {GetType().Name}{(isBulkAction ? " (Bulk)" : string.Empty)} with ActionModifier {actionModifier} for game {game.Name}.");
+                }
             }
         }
 
@@ -175,7 +188,7 @@ namespace LinkUtilities.LinkActions
 
             foreach (var priorityGroup in _linkers.GroupBy(x => x.Priority).OrderBy(x => x.Key))
             {
-                Parallel.ForEach(priorityGroup, linker =>
+                Parallel.ForEach(priorityGroup, _parallelOptions, linker =>
                 {
                     linker.FindLinks(game, out var innerLinks);
                     foreach (var innerLink in innerLinks)

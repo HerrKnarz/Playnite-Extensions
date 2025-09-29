@@ -71,7 +71,7 @@ namespace LinkUtilities.Helper
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Error loading data from {linkName}");
+                Log.Error(ex, $"Error loading data from {linkName} - {apiUrl}");
             }
 
             return default;
@@ -107,7 +107,7 @@ namespace LinkUtilities.Helper
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Error loading data from {linkName}");
+                Log.Error(ex, $"Error loading data from {linkName} - {searchUrl}");
             }
 
             return result;
@@ -174,7 +174,7 @@ namespace LinkUtilities.Helper
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Error loading data from {linkName}");
+                Log.Error(ex, $"Error loading data from {linkName} - {searchUrl}");
             }
 
             return result;

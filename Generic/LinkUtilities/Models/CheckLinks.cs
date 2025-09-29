@@ -17,6 +17,7 @@ namespace LinkUtilities.ViewModels
         private readonly List<Game> _games;
         private ObservableCollectionFast<CheckGameLink> _filteredLinks = new ObservableCollectionFast<CheckGameLink>();
         private ObservableCollectionFast<CheckGameLink> _links = new ObservableCollectionFast<CheckGameLink>();
+        private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
         private string _searchString = string.Empty;
 
         public CheckLinks(List<Game> games, bool hideOkOnLinkCheck)
@@ -118,7 +119,7 @@ namespace LinkUtilities.ViewModels
 
             var linksQueue = new ConcurrentQueue<CheckGameLink>();
 
-            Parallel.ForEach(game.Links.Where(x => !x.Url.StartsWith("steam")), link =>
+            Parallel.ForEach(game.Links.Where(x => !x.Url.StartsWith("steam")), _parallelOptions, link =>
             {
                 var linkCheckResult = LinkHelper.CheckUrl(link.Url);
 

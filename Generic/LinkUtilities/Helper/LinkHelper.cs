@@ -351,8 +351,12 @@ namespace LinkUtilities.Helper
                             var reader = new StreamReader(dataStream);
                             result.ErrorDetails = reader.ReadToEnd();
                             result.StatusCode = ((HttpWebResponse)response).StatusCode;
+                            reader.Close();
 
-                            Log.Error(webEx, result.ErrorDetails);
+                            if (GlobalSettings.Instance().DebugMode)
+                            {
+                                Log.Debug($"Error loading url {url} => status code {result.StatusCode}");
+                            }
                         }
                     }
 
@@ -362,7 +366,7 @@ namespace LinkUtilities.Helper
                 {
                     result.ErrorDetails = ex.Message;
                     result.StatusCode = HttpStatusCode.BadRequest;
-                    Log.Error(ex, result.ErrorDetails);
+                    Log.Error(ex, $"Error loading url {url} => {result.ErrorDetails}");
 
                     return result;
                 }

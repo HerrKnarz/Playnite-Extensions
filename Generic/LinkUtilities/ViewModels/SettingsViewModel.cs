@@ -352,6 +352,7 @@ namespace LinkUtilities.ViewModels
             TagMissingLinks.Instance().TagMissingLibraryLinks = Settings.TagMissingLibraryLinks;
             TagMissingLinks.Instance().MissingLinkPrefix = Settings.MissingLinkPrefix;
             ChangeSteamLinks.Instance().ChangeSteamLinksAfterChange = Settings.ChangeSteamLinksAfterChange;
+            GlobalSettings.Instance().DebugMode = Settings.DebugMode;
 
             var steamLink = (LibraryLinkSteam)AddWebsiteLinks.Instance().Links?.FirstOrDefault(x => x.LinkName == "Steam");
 

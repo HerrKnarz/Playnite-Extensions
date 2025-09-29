@@ -22,6 +22,7 @@ namespace LinkUtilities.Settings
         private bool _addSteamWorkshopLink;
         private bool _changeSteamLinksAfterChange;
         private ObservableCollection<CustomLinkProfile> _customLinkProfiles;
+        private bool _debugMode = false;
         private bool _hideOkOnLinkCheck;
         private DateTime _lastAutoLibUpdate = DateTime.Now;
         private LinkNamePatterns _linkPatterns;
@@ -107,6 +108,12 @@ namespace LinkUtilities.Settings
         {
             get => _customLinkProfiles;
             set => SetValue(ref _customLinkProfiles, value);
+        }
+
+        public bool DebugMode
+        {
+            get => _debugMode;
+            set => SetValue(ref _debugMode, value);
         }
 
         [DontSerialize]
