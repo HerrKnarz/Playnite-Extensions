@@ -36,13 +36,12 @@ namespace LinkUtilities.Helper
 
                 if (useWebView)
                 {
-                    var webView = API.Instance.WebViews.CreateOffscreenView();
-
-                    webView.NavigateAndWait(apiUrl);
-
-                    pageSource = webView.GetPageText();
-
-                    webView.Close();
+                    using (var webView = API.Instance.WebViews.CreateOffscreenView())
+                    {
+                        webView.NavigateAndWait(apiUrl);
+                        pageSource = webView.GetPageText();
+                        webView.Close();
+                    }
                 }
                 else
                 {

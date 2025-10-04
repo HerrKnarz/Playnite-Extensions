@@ -28,7 +28,7 @@ namespace LinkUtilities.LinkActions
 
         private List<BaseClasses.Linker> _linkers;
 
-        private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+        private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Environment.ProcessorCount) };
 
         private AddWebsiteLinks()
         {

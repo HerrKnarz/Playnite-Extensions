@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 
 // ReSharper disable VirtualMemberCallInConstructor
 
@@ -39,6 +40,7 @@ namespace LinkUtilities.BaseClasses
         public virtual bool CanBeBrowserSearched => !string.IsNullOrWhiteSpace(BrowserSearchUrl);
         public virtual bool CanBeSearched => !string.IsNullOrWhiteSpace(SearchUrl);
         public virtual string CheckForContent => string.Empty;
+        public virtual int Delay => 0;
         public abstract string LinkName { get; }
         public virtual string LinkUrl { get; set; } = string.Empty;
         public virtual bool NeedsToBeChecked { get; set; } = true;
@@ -87,7 +89,14 @@ namespace LinkUtilities.BaseClasses
             {
                 case ActionModifierTypes.Add:
                 case ActionModifierTypes.AddSelected:
-                    return AddLink(game);
+                    {
+                        if (isBulkAction && (Delay > 0))
+                        {
+                            Thread.Sleep(Delay);
+                        }
+
+                        return AddLink(game);
+                    }
                 case ActionModifierTypes.Search:
                 case ActionModifierTypes.SearchSelected:
                     return AddSearchedLink(game);

@@ -61,6 +61,11 @@ namespace LinkUtilities.Interfaces
         string CheckForContent { get; }
 
         /// <summary>
+        ///     Delay in milliseconds between requests to the same website. Some sites block requests, when too many come in a short time.
+        /// </summary>
+        int Delay { get; }
+
+        /// <summary>
         ///     Name the link will have in the games link collection
         /// </summary>
         string LinkName { get; }
