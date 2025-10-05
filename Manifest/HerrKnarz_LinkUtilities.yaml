@@ -1,5 +1,13 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 4.2.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-10-05
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2025-10-05/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_2_1.pext
+    Changelog:
+      - Fixed memory leak caused by not properly disposing the web views when adding links.
+      - Fixed VNDB not adding links for games with special characters in the name.
+      - Hopefully fixed Family Gaming Database blocking requests by adding a small delay between requests.
   - Version: 4.2.0
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-09-26
