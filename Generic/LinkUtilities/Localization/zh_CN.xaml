@@ -111,6 +111,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl">如果网站返回完全相同的 URL 且不更改，链接才是有效的。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked">当未勾选时，链接将不会被检查且始终被视为有效。这仅对某些网站有用，在这些网站上您可以确定该 URL 是存在的。SteamDB 就是一个很好的例子，因为它通过 Steam ID 为所有 Steam 游戏提供链接。</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">尝试使用游戏名称格式</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDebugMode">Log debug messages in extensions.log</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">自定义排序顺序</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">不要重命名，如果链接名称包含：</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">游戏元数据更新后删除重复链接</sys:String>

@@ -111,6 +111,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionReturnsSameUrl">The link is only valid, if the website returns exactly the same url and doesn't change it.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescriptionNeedsToBeChecked">When unticked, the link won't be checked and always counts as valid. This is only useful for sites, where you can be sure, that the URL exists. SteamDB is a good example, because it has links for all steam games via the steam ID.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksTryOut">Try out game name formatting</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsDebugMode">Log debug messages in extensions.log</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDefineCustomSortOrder">Определить свой порядок сортировки</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDontRenameWhenContainsChar">Не переименовать, если в названии ссылки содержатся:</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsDuplicatesCaptionAfterChange">Удалить дубликаты ссылок после обновления метаданных игры</sys:String>
