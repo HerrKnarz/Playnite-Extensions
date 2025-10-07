@@ -2,9 +2,9 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using ScreenshotUtilities.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 
@@ -27,32 +27,14 @@ namespace ScreenshotUtilities
 
         public void ShowScreenshots(Game game)
         {
-            if (game == null)
+            var window = ScreenshotViewerViewModel.GetWindow(this, game);
+
+            if (window == null)
             {
-                PlayniteApi.Dialogs.ShowMessage("No game selected");
                 return;
             }
 
-            var path = Path.Combine(GetPluginUserDataPath(), game.Id.ToString());
-
-            if (!Directory.Exists(path))
-            {
-                PlayniteApi.Dialogs.ShowMessage("No screenshots found for this game");
-                return;
-            }
-
-            var ext = new List<string> { "jpg", "jpeg", "gif", "png", "webp" };
-            var files = Directory
-                .EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                .Where(file => ext.Contains(Path.GetExtension(file).TrimStart('.').ToLowerInvariant()));
-
-            var screenshots = new List<ImageFileOption>(files.Select(file => new ImageFileOption
-            {
-                Path = file,
-                Name = Path.GetFileNameWithoutExtension(file)
-            }));
-
-            API.Instance.Dialogs.ChooseImageFile(screenshots, "Screenshots", 300, 300);
+            window.ShowDialog();
 
             return;
         }
