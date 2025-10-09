@@ -47,14 +47,14 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding Path}" 
+                        <Image Source="{Binding DisplayThumbnail}" 
                                RenderOptions.BitmapScalingMode="Fant" 
                                Stretch="Uniform"
                                Margin="2"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Image Source="{Binding SelectedGroup.SelectedScreenshot.Path}"
+            <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath}"
                    DockPanel.Dock="Top"
                    RenderOptions.BitmapScalingMode="Fant"
                    Stretch="Uniform"

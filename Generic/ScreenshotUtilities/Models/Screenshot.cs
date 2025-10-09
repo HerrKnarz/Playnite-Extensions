@@ -7,11 +7,14 @@ namespace ScreenshotUtilities.Models
     internal class Screenshot : ObservableObject
     {
         private string _description;
+        private string _downloadedPath;
+        private string _downloadedThumbnailPath;
         private Guid _id = Guid.NewGuid();
         private bool _isDownloaded = false;
         private string _name;
         private string _path;
         private int _sortOrder = 0;
+        private string _thumbnailPath;
 
         public Screenshot(string path = "", string name = "", Guid id = default)
         {
@@ -25,6 +28,23 @@ namespace ScreenshotUtilities.Models
         {
             get => _description;
             set => SetValue(ref _description, value);
+        }
+
+        [DontSerialize]
+        public string DisplayPath => IsDownloaded && !string.IsNullOrEmpty(DownloadedPath) ? DownloadedPath : Path;
+
+        [SerializationPropertyName("downloadedPath")]
+        public string DownloadedPath
+        {
+            get => _downloadedPath;
+            set => SetValue(ref _downloadedPath, value);
+        }
+
+        [SerializationPropertyName("downloadedThumbnailPath")]
+        public string DownloadedThumbnailPath
+        {
+            get => _downloadedThumbnailPath;
+            set => SetValue(ref _downloadedThumbnailPath, value);
         }
 
         [SerializationPropertyName("id")]
@@ -61,5 +81,17 @@ namespace ScreenshotUtilities.Models
             get => _sortOrder;
             set => SetValue(ref _sortOrder, value);
         }
+
+        [SerializationPropertyName("thumbnailPath")]
+        public string ThumbnailPath
+        {
+            get => _thumbnailPath;
+            set => SetValue(ref _thumbnailPath, value);
+        }
+
+        [DontSerialize]
+        public string DisplayThumbnail => IsDownloaded && !string.IsNullOrEmpty(DownloadedThumbnailPath)
+            ? DownloadedThumbnailPath : !string.IsNullOrEmpty(ThumbnailPath)
+            ? ThumbnailPath : DisplayPath;
     }
 }
