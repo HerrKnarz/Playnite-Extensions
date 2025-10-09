@@ -51,7 +51,7 @@ namespace ScreenshotUtilities
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            var menuSection = "Screenshot Utilities";
+            var menuSection = ResourceProvider.GetString("LOCScreenshotUtilitiesName");
 
             var menuItems = new List<GameMenuItem>();
 
@@ -59,7 +59,7 @@ namespace ScreenshotUtilities
             {
                 new GameMenuItem
                 {
-                    Description = "Show screenshots",
+                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuShowScreenshots"),
                     MenuSection = menuSection,
                     //Icon = "luAddIcon",
                     Action = a => ShowScreenshots(args.Games.FirstOrDefault())

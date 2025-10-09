@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using ScreenshotUtilities.Controls;
@@ -32,7 +33,7 @@ namespace ScreenshotUtilities.ViewModels
 
             if (_gameId == Guid.Empty)
             {
-                ScreenshotGroups.Add(new ScreenshotGroup("No game selected"));
+                ScreenshotGroups.Add(new ScreenshotGroup(ResourceProvider.GetString("LOCScreenshotUtilitiesMessageNoGameSelected")));
                 return;
             }
 
@@ -40,7 +41,7 @@ namespace ScreenshotUtilities.ViewModels
 
             if (!Directory.Exists(path))
             {
-                ScreenshotGroups.Add(new ScreenshotGroup("No screenshots found"));
+                ScreenshotGroups.Add(new ScreenshotGroup(ResourceProvider.GetString("LOCScreenshotUtilitiesMessageNoScreenshotsFound")));
                 return;
             }
 
@@ -48,7 +49,7 @@ namespace ScreenshotUtilities.ViewModels
 
             if (!files.Any())
             {
-                ScreenshotGroups.Add(new ScreenshotGroup("No screenshots found"));
+                ScreenshotGroups.Add(new ScreenshotGroup(ResourceProvider.GetString("LOCScreenshotUtilitiesMessageNoScreenshotsFound")));
                 return;
             }
 
