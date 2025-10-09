@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Playnite.SDK.Data;
+using System;
 using System.Collections.Generic;
 
 namespace ScreenshotUtilities.Models
@@ -19,36 +20,42 @@ namespace ScreenshotUtilities.Models
             _name = name == string.Empty ? System.IO.Path.GetFileNameWithoutExtension(path) : name;
         }
 
+        [SerializationPropertyName("description")]
         public string Description
         {
             get => _description;
             set => SetValue(ref _description, value);
         }
 
+        [SerializationPropertyName("id")]
         public Guid Id
         {
             get => _id;
             set => SetValue(ref _id, value);
         }
 
+        [SerializationPropertyName("isDownloaded")]
         public bool IsDownloaded
         {
             get => _isDownloaded;
             set => SetValue(ref _isDownloaded, value);
         }
 
+        [SerializationPropertyName("name")]
         public string Name
         {
             get => _name;
             set => SetValue(ref _name, value);
         }
 
+        [SerializationPropertyName("path")]
         public string Path
         {
             get => _path;
             set => SetValue(ref _path, value);
         }
 
+        [SerializationPropertyName("sortOrder")]
         public int SortOrder
         {
             get => _sortOrder;

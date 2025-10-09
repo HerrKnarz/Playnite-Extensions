@@ -1,8 +1,8 @@
 ﻿using KNARZhelper;
-using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
+using ScreenshotUtilities.Controls;
 using ScreenshotUtilities.Models;
-using ScreenshotUtilities.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,50 +14,62 @@ namespace ScreenshotUtilities.ViewModels
 {
     internal class ScreenshotViewerViewModel : ObservableObject
     {
-        private ObservableCollection<Screenshot> _screenshots = new ObservableCollection<Screenshot>();
+        private Guid _gameId = Guid.Empty;
         private static ScreenshotUtilities _plugin;
+        private ObservableCollection<ScreenshotGroup> _screenshotGroups = new ObservableCollection<ScreenshotGroup>();
         private Screenshot _selectedScreenshot;
+        private ScreenshotGroup _selectedGroup;
 
-        public ScreenshotViewerViewModel(ScreenshotUtilities plugin, Game game)
+        public ScreenshotViewerViewModel(ScreenshotUtilities plugin, Game game = null)
         {
             _plugin = plugin;
-
-            LoadScreenshots(game);
+            GameId = game?.Id ?? Guid.Empty;
         }
 
-        public void LoadScreenshots(Game game)
+        public void LoadScreenshots()
         {
-            Screenshots.Clear();
+            ScreenshotGroups.Clear();
 
-            if (game == null)
+            if (_gameId == Guid.Empty)
             {
-                API.Instance.Dialogs.ShowMessage("No game selected");
+                ScreenshotGroups.Add(new ScreenshotGroup("No game selected"));
                 return;
             }
 
-            var path = Path.Combine(_plugin.GetPluginUserDataPath(), game.Id.ToString());
+            var path = Path.Combine(_plugin.GetPluginUserDataPath(), _gameId.ToString());
 
             if (!Directory.Exists(path))
             {
-                API.Instance.Dialogs.ShowMessage("No screenshots found for this game");
+                ScreenshotGroups.Add(new ScreenshotGroup("No screenshots found"));
                 return;
             }
 
-            var ext = new List<string> { "jpg", "jpeg", "gif", "png", "webp" };
-            var files = Directory
-                .EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                .Where(file => ext.Contains(Path.GetExtension(file).TrimStart('.').ToLowerInvariant()));
+            var files = Directory.EnumerateFiles(path, "*.json", SearchOption.AllDirectories);
 
             if (!files.Any())
             {
-                API.Instance.Dialogs.ShowMessage("No screenshots found for this game");
+                ScreenshotGroups.Add(new ScreenshotGroup("No screenshots found"));
                 return;
             }
 
-            Screenshots.AddMissing(files.Select(file => new Screenshot(file)));
+            foreach (var file in files)
+            {
+                try
+                {
+                    ScreenshotGroups.Add(Serialization.FromJsonFile<ScreenshotGroup>(file));
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, $"Failed to load screenshots from file {file}");
+                }
+            }
 
-            // Test for loading an image from an URL
-            //Screenshots.Add(new Screenshot("https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/ss_0e64170751e1ae20ff8fdb7001a8892fd48260e7.1920x1080.jpg"));
+            if (ScreenshotGroups.Count == 0)
+            {
+                return;
+            }
+
+            SelectedGroup = ScreenshotGroups[0];
 
             return;
         }
@@ -66,17 +78,13 @@ namespace ScreenshotUtilities.ViewModels
         {
             try
             {
-                var viewModel =
-                    new ScreenshotViewerViewModel(plugin, game);
-
-                var screenshotViewerView = new ScreenshotViewerView();
+                var screenshotViewerView = new ScreenshotViewerControl(plugin, game);
 
                 var window = WindowHelper.CreateSizedWindow(
                     "Screenshots",
                     800, 600);
 
                 window.Content = screenshotViewerView;
-                window.DataContext = viewModel;
 
                 return window;
             }
@@ -88,10 +96,32 @@ namespace ScreenshotUtilities.ViewModels
             }
         }
 
-        public ObservableCollection<Screenshot> Screenshots
+        public Guid GameId
         {
-            get => _screenshots;
-            set => SetValue(ref _screenshots, value);
+            get => _gameId;
+            set
+            {
+                SetValue(ref _gameId, value);
+
+                LoadScreenshots();
+            }
+        }
+
+        public ObservableCollection<ScreenshotGroup> ScreenshotGroups
+        {
+            get => _screenshotGroups;
+            set => SetValue(ref _screenshotGroups, value);
+        }
+
+        public ScreenshotGroup SelectedGroup
+        {
+            get => _selectedGroup;
+            set
+            {
+                SetValue(ref _selectedGroup, value);
+
+                SelectedScreenshot = value != null && value.Screenshots.Count > 0 ? value.Screenshots[0] : null;
+            }
         }
 
         public Screenshot SelectedScreenshot
