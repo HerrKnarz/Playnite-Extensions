@@ -4,6 +4,8 @@
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                    xmlns:local="clr-namespace:ScreenshotUtilities.Views"
+                   xmlns:knarzHelperControls="clr-namespace:KNARZhelper.Controls"
+                   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                    xmlns:viewModels="clr-namespace:ScreenshotUtilities.ViewModels"
                    d:DataContext="{d:DesignInstance Type=viewModels:ScreenshotViewerViewModel}"
                    mc:Ignorable="d" 
@@ -27,33 +29,60 @@
                         DockPanel.Dock="Top">
             </TabControl>
 
-            <ListBox DockPanel.Dock="Bottom"
-                     ItemsSource="{Binding SelectedGroup.Screenshots}" 
-                     Height="150" 
-                     Background="Transparent"
-                     BorderBrush="Transparent"
-                     HorizontalAlignment="Stretch"
-                     SelectedItem="{Binding SelectedGroup.SelectedScreenshot}"
-                     ScrollViewer.CanContentScroll="True"
-                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                     ScrollViewer.PanningMode="HorizontalOnly"
-                     VirtualizingPanel.ScrollUnit="Pixel"
-                     VirtualizingStackPanel.VirtualizationMode="Recycling">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding DisplayThumbnail}" 
-                               RenderOptions.BitmapScalingMode="Fant" 
-                               Stretch="Uniform"
-                               Margin="2"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <DockPanel DockPanel.Dock="Bottom" Height="150">
+                <Button DockPanel.Dock="Left"
+                        Content="&#xEA68;"
+                        Height="130"
+                        VerticalAlignment="Top"
+                        FontSize="20"
+                        Padding="5, 0"
+                        FontFamily="{DynamicResource FontIcoFont}"
+                        Command="{Binding SelectPreviousScreenshotCommand}"
+                        Margin="0, 0, 5, 0" />
+
+                <Button DockPanel.Dock="Right"
+                        Content="&#xEA69;"
+                        Height="130"
+                        VerticalAlignment="Top"
+                        FontSize="20"
+                        Padding="5, 0"
+                        FontFamily="{DynamicResource FontIcoFont}"
+                        Command="{Binding SelectNextScreenshotCommand}"
+                        Margin="5, 0, 0, 0" />
+
+                <ListBox DockPanel.Dock="Left"
+                         x:Name="ScreenshotListBox"
+                         VerticalAlignment="Top"
+                         ItemsSource="{Binding SelectedGroup.Screenshots}" 
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         HorizontalAlignment="Stretch"
+                         SelectedItem="{Binding SelectedGroup.SelectedScreenshot}"
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                         ScrollViewer.PanningMode="HorizontalOnly"
+                         VirtualizingPanel.ScrollUnit="Pixel"
+                         VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding DisplayThumbnail}" 
+                                   RenderOptions.BitmapScalingMode="Fant" 
+                                   Stretch="Uniform"
+                                   Height="120"
+                                   Margin="2"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <i:Interaction.Behaviors>
+                        <knarzHelperControls:ScrollIntoViewBehavior />
+                    </i:Interaction.Behaviors>  
+                </ListBox>
+            </DockPanel>
+            
             <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath}"
                    DockPanel.Dock="Top"
                    RenderOptions.BitmapScalingMode="Fant"
