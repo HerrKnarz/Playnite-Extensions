@@ -24,7 +24,7 @@
                         SelectedItem="{Binding SelectedGroup}"
                         ItemTemplate="{StaticResource TabHeaderTemplate}"
                         ContentTemplate="{StaticResource TabContentTemplate}"
-                        DockPanel.Dock="Top" Padding="0" Margin="0,-15,0,0">
+                        DockPanel.Dock="Top">
             </TabControl>
 
             <ListBox DockPanel.Dock="Bottom"

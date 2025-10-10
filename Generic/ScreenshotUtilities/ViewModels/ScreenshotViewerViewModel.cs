@@ -27,9 +27,17 @@ namespace ScreenshotUtilities.ViewModels
             GameId = game?.Id ?? Guid.Empty;
         }
 
+        public void ResetViewModel()
+        {
+            _plugin.Settings.Settings.IsControlVisible = false;
+            ScreenshotGroups.Clear();
+            SelectedGroup = null;
+            SelectedScreenshot = null;
+        }
+
         public void LoadScreenshots()
         {
-            ScreenshotGroups.Clear();
+            ResetViewModel();
 
             if (_gameId == Guid.Empty)
             {
@@ -71,6 +79,8 @@ namespace ScreenshotUtilities.ViewModels
             }
 
             SelectedGroup = ScreenshotGroups[0];
+
+            _plugin.Settings.Settings.IsControlVisible = true;
 
             return;
         }

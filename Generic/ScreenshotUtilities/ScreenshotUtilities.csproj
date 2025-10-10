@@ -59,6 +59,7 @@
     <Compile Include="Models\ScreenshotProvider.cs" />
     <Compile Include="Models\Screenshot.cs" />
     <Compile Include="Models\ScreenshotGroup.cs" />
+    <Compile Include="Models\ScreenshotUtilitiesSettings.cs" />
     <Compile Include="ScreenshotUtilities.cs" />
     <Compile Include="ViewModels\ScreenshotUtilitiesSettings.cs" />
     <Compile Include="Views\ScreenshotUtilitiesSettingsView.xaml.cs">
@@ -74,7 +75,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-	<None Include="Localization\*.xaml">
+    <None Include="Localization\*.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

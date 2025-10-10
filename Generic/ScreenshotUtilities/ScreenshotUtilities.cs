@@ -14,9 +14,10 @@ namespace ScreenshotUtilities
 {
     public class ScreenshotUtilities : GenericPlugin
     {
-        private ScreenshotUtilitiesSettingsViewModel Settings { get; set; }
+        public ScreenshotUtilitiesSettingsViewModel Settings { get; set; }
 
         private static readonly string _controlName = "ScreenshotViewerControl";
+        private static readonly string _pluginSourceName = "ScreenshotUtilities";
 
         public override Guid Id { get; } = Guid.Parse("485d682f-73e9-4d54-b16f-b8dd49e88f90");
 
@@ -25,13 +26,19 @@ namespace ScreenshotUtilities
             Settings = new ScreenshotUtilitiesSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = true
+                HasSettings = false
             };
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
                 ElementList = new List<string> { _controlName },
-                SourceName = "ScreenshotUtilities"
+                SourceName = _pluginSourceName
+            });
+
+            AddSettingsSupport(new AddSettingsSupportArgs
+            {
+                SourceName = _pluginSourceName,
+                SettingsRoot = $"{nameof(Settings)}.{nameof(Settings.Settings)}"
             });
         }
 
@@ -69,15 +76,7 @@ namespace ScreenshotUtilities
             return menuItems;
         }
 
-        public override Control GetGameViewControl(GetGameViewControlArgs args)
-        {
-            if (args.Name == _controlName)
-            {
-                return new ScreenshotViewerControl(this);
-            }
-
-            return null;
-        }
+        public override Control GetGameViewControl(GetGameViewControlArgs args) => args.Name == _controlName ? new ScreenshotViewerControl(this) : (Control)null;
 
         public override void OnGameInstalled(OnGameInstalledEventArgs args)
         {
