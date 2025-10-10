@@ -52,8 +52,6 @@ namespace ScreenshotUtilities
             }
 
             window.ShowDialog();
-
-            return;
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)

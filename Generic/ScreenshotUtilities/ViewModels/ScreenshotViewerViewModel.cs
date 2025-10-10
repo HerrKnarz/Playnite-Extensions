@@ -7,14 +7,13 @@ using ScreenshotUtilities.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
 
 namespace ScreenshotUtilities.ViewModels
 {
-    internal class ScreenshotViewerViewModel : ObservableObject, INotifyPropertyChanged
+    internal class ScreenshotViewerViewModel : ObservableObject
     {
         private Guid _gameId = Guid.Empty;
         private static ScreenshotUtilities _plugin;
@@ -100,46 +99,32 @@ namespace ScreenshotUtilities.ViewModels
             }
             catch (Exception exception)
             {
-                Log.Error(exception, "Error during initializing edit conditional action dialog", true);
+                Log.Error(exception, "Error during initializing screenshot viewer", true);
 
                 return null;
             }
         }
 
-        private int GetCurrentSelectedIndex()
+        public RelayCommand<object> OpenInFullScreenCommand => new RelayCommand<object>(a =>
         {
-            return SelectedGroup?.Screenshots?.Count <= 1 || SelectedGroup.SelectedScreenshot is null
-                ? -1
-                : SelectedGroup.Screenshots.IndexOf(SelectedGroup.SelectedScreenshot);
-        }
-
-        public RelayCommand<object> SelectPreviousScreenshotCommand => new RelayCommand<object>(a =>
-        {
-            var currentSelectIndex = GetCurrentSelectedIndex();
-
-            if (currentSelectIndex == -1)
+            if (!(SelectedGroup?.Screenshots?.Count > 0) || SelectedGroup.SelectedScreenshot == null)
             {
                 return;
             }
 
-            SelectedGroup.SelectedScreenshot = currentSelectIndex == 0
-                ? SelectedGroup.Screenshots[SelectedGroup.Screenshots.Count - 1]
-                : SelectedGroup.Screenshots[currentSelectIndex - 1];
-        });
+            var window = FullScreenViewModel.GetWindow(_plugin, SelectedGroup);
 
-        public RelayCommand<object> SelectNextScreenshotCommand => new RelayCommand<object>(a =>
-        {
-            var currentSelectIndex = GetCurrentSelectedIndex();
-
-            if (currentSelectIndex == -1)
+            if (window == null)
             {
                 return;
             }
 
-            SelectedGroup.SelectedScreenshot = currentSelectIndex == SelectedGroup.Screenshots.Count - 1
-                ? SelectedGroup.Screenshots[0]
-                : SelectedGroup.Screenshots[currentSelectIndex + 1];
+            window?.ShowDialog();
         });
+
+        public RelayCommand<object> SelectPreviousScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectPreviousScreenshot());
+
+        public RelayCommand<object> SelectNextScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectNextScreenshot());
 
         public Guid GameId
         {

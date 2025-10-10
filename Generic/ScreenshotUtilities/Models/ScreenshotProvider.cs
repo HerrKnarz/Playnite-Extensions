@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ScreenshotUtilities.Models
 {
-    internal class ScreenshotProvider : ObservableObject
+    public class ScreenshotProvider : ObservableObject
     {
         private Guid _id = Guid.NewGuid();
         private string _name;

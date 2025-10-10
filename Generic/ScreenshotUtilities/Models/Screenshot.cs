@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ScreenshotUtilities.Models
 {
-    internal class Screenshot : ObservableObject
+    public class Screenshot : ObservableObject
     {
         private string _description;
         private string _downloadedPath;

@@ -16,6 +16,23 @@ namespace KNARZhelper
             return window;
         }
 
+        public static Window CreateFullScreenWindow()
+        {
+            var window = new Window
+            {
+                Height = 1000,
+                Width = 600,
+                Owner = API.Instance.Dialogs.GetCurrentAppWindow(),
+                ResizeMode = ResizeMode.NoResize,
+                WindowState = WindowState.Maximized,
+                WindowStyle = WindowStyle.None,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Background = new SolidColorBrush(Colors.Black)
+            };
+
+            return window;
+        }
+
         public static Window CreateSizedWindow(string title, int width, int height, bool widthToMax = false, bool heightToMax = false)
         {
             var window = CreateWindow(title);
@@ -78,9 +95,9 @@ namespace KNARZhelper
             return window;
         }
 
-        private static Window CreateWindow(string title, bool showMaximizeButton = false, bool showMinimizeButton = false)
+        private static Window CreateWindow(string title, bool showMaximizeButton = false, bool showMinimizeButton = false, bool showCloseButton = true)
         {
-            var window = API.Instance.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = showMaximizeButton, ShowMinimizeButton = showMinimizeButton });
+            var window = API.Instance.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = showCloseButton, ShowMaximizeButton = showMaximizeButton, ShowMinimizeButton = showMinimizeButton });
             window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
             window.Title = title;
 

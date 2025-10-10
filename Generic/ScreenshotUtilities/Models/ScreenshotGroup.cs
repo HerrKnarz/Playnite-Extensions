@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ScreenshotUtilities.Models
 {
-    internal class ScreenshotGroup : ObservableObject
+    public class ScreenshotGroup : ObservableObject
     {
         private string _description;
         private Guid _id = Guid.NewGuid();
@@ -18,6 +18,40 @@ namespace ScreenshotUtilities.Models
         {
             _id = id == default ? _id : id;
             _name = name;
+        }
+
+        public void SelectNextScreenshot()
+        {
+            if (Screenshots is null || Screenshots.Count == 0 || SelectedScreenshot is null)
+            {
+                return;
+            }
+
+            var index = Screenshots.IndexOf(SelectedScreenshot) + 1;
+
+            if (index >= Screenshots.Count)
+            {
+                index = 0;
+            }
+
+            SelectedScreenshot = Screenshots[index];
+        }
+
+        public void SelectPreviousScreenshot()
+        {
+            if (Screenshots is null || Screenshots.Count == 0 || SelectedScreenshot is null)
+            {
+                return;
+            }
+
+            var index = Screenshots.IndexOf(SelectedScreenshot) - 1;
+
+            if (index < 0)
+            {
+                index = Screenshots.Count - 1;
+            }
+
+            SelectedScreenshot = Screenshots[index];
         }
 
         [SerializationPropertyName("description")]
