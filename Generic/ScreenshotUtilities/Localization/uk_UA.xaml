@@ -3,7 +3,7 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesName">Screenshot Utilities</sys:String>
 
-    <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Screenshots</sys:String>
+    <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Знімки екрану</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Не вибрано жодної гри</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Знімки екрану не знайдені</sys:String>
