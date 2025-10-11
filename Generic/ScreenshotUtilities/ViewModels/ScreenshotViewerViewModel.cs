@@ -28,7 +28,7 @@ namespace ScreenshotUtilities.ViewModels
 
         public void ResetViewModel()
         {
-            _plugin.Settings.Settings.IsControlVisible = false;
+            _plugin.Settings.Settings.IsViewerControlVisible = false;
             ScreenshotGroups.Clear();
             SelectedGroup = null;
         }
@@ -80,7 +80,7 @@ namespace ScreenshotUtilities.ViewModels
 
             if (_plugin.Settings.Settings.DisplayViewerControl)
             {
-                _plugin.Settings.Settings.IsControlVisible = true;
+                _plugin.Settings.Settings.IsViewerControlVisible = true;
             }
 
             return;

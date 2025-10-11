@@ -16,7 +16,8 @@ namespace ScreenshotUtilities
     {
         public ScreenshotUtilitiesSettingsViewModel Settings { get; set; }
 
-        private static readonly string _controlName = "ScreenshotViewerControl";
+        private static readonly string _controlNameViewer = "ScreenshotViewerControl";
+        private static readonly string _controlNameButton = "ButtonControl";
         private static readonly string _pluginSourceName = "ScreenshotUtilities";
 
         public override Guid Id { get; } = Guid.Parse("485d682f-73e9-4d54-b16f-b8dd49e88f90");
@@ -31,7 +32,7 @@ namespace ScreenshotUtilities
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { _controlName },
+                ElementList = new List<string> { _controlNameViewer, _controlNameButton },
                 SourceName = _pluginSourceName
             });
 
@@ -42,7 +43,7 @@ namespace ScreenshotUtilities
             });
         }
 
-        public void ShowScreenshots(Game game)
+        public void OpenScreenshotViewer(Game game)
         {
             var window = ScreenshotViewerViewModel.GetWindow(this, game);
 
@@ -67,14 +68,21 @@ namespace ScreenshotUtilities
                     Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuShowScreenshots"),
                     MenuSection = menuSection,
                     //Icon = "luAddIcon",
-                    Action = a => ShowScreenshots(args.Games.FirstOrDefault())
+                    Action = a => OpenScreenshotViewer(args.Games.FirstOrDefault())
                 }
             });
 
             return menuItems;
         }
 
-        public override Control GetGameViewControl(GetGameViewControlArgs args) => args.Name == _controlName ? new ScreenshotViewerControl(this) : (Control)null;
+        public override Control GetGameViewControl(GetGameViewControlArgs args)
+        {
+            return args.Name == _controlNameViewer
+                ? new ScreenshotViewerControl(this)
+                : args.Name == _controlNameButton
+                ? new ButtonControl(this)
+                : (Control)null;
+        }
 
         public override void OnGameInstalled(OnGameInstalledEventArgs args)
         {

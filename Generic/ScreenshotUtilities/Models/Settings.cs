@@ -7,7 +7,8 @@ namespace ScreenshotUtilities.Models
     {
         private int _aspectHeight = 9;
         private int _aspectWidth = 16;
-        private bool _isControlVisible = false;
+        private bool _isViewerControlVisible = false;
+        private bool _isButtonControlVisible = false;
         private bool _displayButtonControl = true;
         private bool _displayViewerControl = true;
         private int _viewerWindowHeight = 700;
@@ -54,10 +55,17 @@ namespace ScreenshotUtilities.Models
         }
 
         [DontSerialize]
-        public bool IsControlVisible
+        public bool IsViewerControlVisible
         {
-            get => _isControlVisible;
-            set => SetValue(ref _isControlVisible, value);
+            get => _isViewerControlVisible;
+            set => SetValue(ref _isViewerControlVisible, value);
+        }
+
+        [DontSerialize]
+        public bool IsButtonControlVisible
+        {
+            get => _isButtonControlVisible;
+            set => SetValue(ref _isButtonControlVisible, value);
         }
 
         public int ViewerWindowWidth
