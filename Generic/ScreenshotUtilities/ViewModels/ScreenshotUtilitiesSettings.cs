@@ -8,10 +8,10 @@ namespace ScreenshotUtilities
     public class ScreenshotUtilitiesSettingsViewModel : ObservableObject, ISettings
     {
         private readonly ScreenshotUtilities plugin;
-        private ScreenshotUtilitiesSettings editingClone { get; set; }
+        private Settings editingClone { get; set; }
 
-        private ScreenshotUtilitiesSettings settings;
-        public ScreenshotUtilitiesSettings Settings
+        private Settings settings;
+        public Settings Settings
         {
             get => settings;
             set
@@ -27,7 +27,7 @@ namespace ScreenshotUtilities
             this.plugin = plugin;
 
             // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<ScreenshotUtilitiesSettings>();
+            var savedSettings = plugin.LoadPluginSettings<Settings>();
 
             // LoadPluginSettings returns null if no saved data is available.
             if (savedSettings != null)
@@ -36,7 +36,7 @@ namespace ScreenshotUtilities
             }
             else
             {
-                Settings = new ScreenshotUtilitiesSettings();
+                Settings = new Settings();
             }
         }
 

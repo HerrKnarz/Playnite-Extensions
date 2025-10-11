@@ -154,5 +154,15 @@ namespace ScreenshotUtilities.ViewModels
             get => _selectedGroup;
             set => SetValue(ref _selectedGroup, value);
         }
+
+        public double AspectRatio
+        {
+            get
+            {
+                double aspectWidth = _plugin.Settings.Settings.AspectWidth;
+                double aspectHeight = _plugin.Settings.Settings.AspectHeight;
+                return aspectWidth / aspectHeight;
+            }
+        }
     }
 }

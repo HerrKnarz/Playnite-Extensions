@@ -70,11 +70,14 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding DisplayThumbnail}" 
+                            <knarzHelperControls:AspectRatioLayoutDecorator AspectRatio="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, Path=DataContext.AspectRatio}"
+                                                                            DockPanel.Dock="Top"
+                                                                            Margin="2">
+                                <Image Source="{Binding DisplayThumbnail}" 
                                    RenderOptions.BitmapScalingMode="Fant" 
                                    Stretch="Uniform"
-                                   Height="120"
-                                   Margin="2"/>
+                                   Height="120"/>
+                            </knarzHelperControls:AspectRatioLayoutDecorator>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <i:Interaction.Behaviors>
@@ -83,7 +86,7 @@
                 </ListBox>
             </DockPanel>
 
-            <knarzHelperControls:AspectRatioLayoutDecorator AspectRatio="1.7777778"
+            <knarzHelperControls:AspectRatioLayoutDecorator AspectRatio="{Binding AspectRatio}"
                                                             DockPanel.Dock="Top"
                                                             Margin="0, 10">
 

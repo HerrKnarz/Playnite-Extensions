@@ -9,10 +9,21 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="10">
         <CheckBox IsChecked="{Binding Settings.DisplayViewerControl}"
-                  Content="Display screenshot viewer control in the theme"
+                  Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayViewerControl}"
                   Margin="5"/>
         <CheckBox IsChecked="{Binding Settings.DisplayButtonControl}"
-                  Content="Display button to open the standalone viewer in the theme"
+                  Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayButtonControl}"
                   Margin="5"/>
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatio}"
+                   Margin="0,0,10,0"/>
+            <TextBox Text="{Binding Settings.AspectWidth}"
+                     Width="40"
+                     Margin="0,0,5,0"/>
+            <Label Content=":"
+                   Margin="0,0,5,0"/>
+            <TextBox Text="{Binding Settings.AspectHeight}"
+                     Width="40"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

@@ -65,15 +65,15 @@
     <Compile Include="Models\ScreenshotProvider.cs" />
     <Compile Include="Models\Screenshot.cs" />
     <Compile Include="Models\ScreenshotGroup.cs" />
-    <Compile Include="Models\ScreenshotUtilitiesSettings.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="ScreenshotUtilities.cs" />
     <Compile Include="ViewModels\FullScreenViewModel.cs" />
     <Compile Include="ViewModels\ScreenshotUtilitiesSettings.cs" />
     <Compile Include="Views\FullScreenView.xaml.cs">
       <DependentUpon>FullScreenView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ScreenshotUtilitiesSettingsView.xaml.cs">
-      <DependentUpon>ScreenshotUtilitiesSettingsView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ScreenshotViewerViewModel.cs" />
@@ -102,7 +102,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ScreenshotUtilitiesSettingsView.xaml">
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
