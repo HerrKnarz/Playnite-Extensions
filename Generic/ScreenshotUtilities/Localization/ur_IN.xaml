@@ -8,4 +8,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">No game selected</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">No screenshots found</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Show Screenshots</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Default aspect ratio</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Display button to open the standalone viewer in the theme</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Display screenshot viewer control in the theme</sys:String>
 </ResourceDictionary>
