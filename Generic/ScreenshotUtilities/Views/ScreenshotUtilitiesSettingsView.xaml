@@ -3,12 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:screenshotutilities="clr-namespace:ScreenshotUtilities"
+             d:DataContext="{d:DesignInstance Type=screenshotutilities:ScreenshotUtilitiesSettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="Description for Option1:"/>
-        <TextBox Text="{Binding Settings.Option1}"/>
-        <TextBlock Text="Description for Option2:"/>
-        <CheckBox IsChecked="{Binding Settings.Option2}"/>
+    <StackPanel Margin="10">
+        <CheckBox IsChecked="{Binding Settings.DisplayViewerControl}"
+                  Content="Display screenshot viewer control in the theme"
+                  Margin="5"/>
+        <CheckBox IsChecked="{Binding Settings.DisplayButtonControl}"
+                  Content="Display button to open the standalone viewer in the theme"
+                  Margin="5"/>
     </StackPanel>
 </UserControl>

@@ -78,7 +78,10 @@ namespace ScreenshotUtilities.ViewModels
 
             SelectedGroup = ScreenshotGroups[0];
 
-            _plugin.Settings.Settings.IsControlVisible = true;
+            if (_plugin.Settings.Settings.DisplayViewerControl)
+            {
+                _plugin.Settings.Settings.IsControlVisible = true;
+            }
 
             return;
         }
