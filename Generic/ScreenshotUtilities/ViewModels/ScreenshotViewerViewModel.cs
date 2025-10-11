@@ -87,11 +87,14 @@ namespace ScreenshotUtilities.ViewModels
         {
             try
             {
-                var screenshotViewerView = new ScreenshotViewerControl(plugin, game);
+                var screenshotViewerView = new ScreenshotViewerControl(plugin, game)
+                {
+                    Padding = new Thickness(10)
+                };
 
                 var window = WindowHelper.CreateSizedWindow(
-                    "Screenshots",
-                    800, 600);
+                    ResourceProvider.GetString("LOC_ScreenshotUtilities_ControlLabel"),
+                    800, 700);
 
                 window.Content = screenshotViewerView;
 
