@@ -10,6 +10,8 @@ namespace ScreenshotUtilities.Models
         private bool _isControlVisible = false;
         private bool _displayButtonControl = true;
         private bool _displayViewerControl = true;
+        private int _viewerWindowHeight = 700;
+        private int _viewerWindowWidth = 800;
 
         public int AspectHeight
         {
@@ -56,6 +58,34 @@ namespace ScreenshotUtilities.Models
         {
             get => _isControlVisible;
             set => SetValue(ref _isControlVisible, value);
+        }
+
+        public int ViewerWindowWidth
+        {
+            get => _viewerWindowWidth;
+            set
+            {
+                if (value < 100)
+                {
+                    value = 100;
+                }
+
+                SetValue(ref _viewerWindowWidth, value);
+            }
+        }
+
+        public int ViewerWindowHeight
+        {
+            get => _viewerWindowHeight;
+            set
+            {
+                if (value < 100)
+                {
+                    value = 100;
+                }
+
+                SetValue(ref _viewerWindowHeight, value);
+            }
         }
     }
 }

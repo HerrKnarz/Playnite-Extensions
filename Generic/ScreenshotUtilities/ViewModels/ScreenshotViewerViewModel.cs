@@ -97,9 +97,11 @@ namespace ScreenshotUtilities.ViewModels
 
                 var window = WindowHelper.CreateSizedWindow(
                     ResourceProvider.GetString("LOC_ScreenshotUtilities_ControlLabel"),
-                    800, 700);
+                    plugin.Settings.Settings.ViewerWindowWidth,
+                    plugin.Settings.Settings.ViewerWindowHeight);
 
                 window.Content = screenshotViewerView;
+                window.Closing += OnWindowClosing;
 
                 return window;
             }
@@ -108,6 +110,16 @@ namespace ScreenshotUtilities.ViewModels
                 Log.Error(exception, "Error during initializing screenshot viewer", true);
 
                 return null;
+            }
+        }
+
+        private static void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (sender is Window window)
+            {
+                _plugin.Settings.Settings.ViewerWindowWidth = (int)window.Width;
+                _plugin.Settings.Settings.ViewerWindowHeight = (int)window.Height;
+                _plugin.SavePluginSettings(_plugin.Settings.Settings);
             }
         }
 

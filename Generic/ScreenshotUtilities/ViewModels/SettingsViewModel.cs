@@ -8,7 +8,7 @@ namespace ScreenshotUtilities
     public class ScreenshotUtilitiesSettingsViewModel : ObservableObject, ISettings
     {
         private readonly ScreenshotUtilities plugin;
-        private Settings editingClone { get; set; }
+        private Settings EditingClone { get; set; }
 
         private Settings settings;
         public Settings Settings
@@ -42,12 +42,12 @@ namespace ScreenshotUtilities
 
         public void BeginEdit() =>
             // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
+            EditingClone = Serialization.GetClone(Settings);
 
         public void CancelEdit() =>
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
+            Settings = EditingClone;
 
         public void EndEdit() =>
             // Code executed when user decides to confirm changes made since BeginEdit was called.

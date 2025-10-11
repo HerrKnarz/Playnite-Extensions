@@ -68,7 +68,7 @@
     <Compile Include="Models\Settings.cs" />
     <Compile Include="ScreenshotUtilities.cs" />
     <Compile Include="ViewModels\FullScreenViewModel.cs" />
-    <Compile Include="ViewModels\ScreenshotUtilitiesSettings.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\FullScreenView.xaml.cs">
       <DependentUpon>FullScreenView.xaml</DependentUpon>
     </Compile>
