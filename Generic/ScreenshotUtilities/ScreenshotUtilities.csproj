@@ -47,6 +47,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\KNARZhelper\Controls\AspectRatioLayoutDecorator.cs">
+      <Link>Shared\AspectRatioLayoutDecorator.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Controls\ListBoxScrollIntoViewBehavior.cs">
       <Link>Shared\ListBoxScrollIntoViewBehavior.cs</Link>
     </Compile>
