@@ -57,6 +57,9 @@
     <Compile Include="..\..\Common\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\MiscHelper.cs">
+      <Link>Shared\MiscHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
@@ -66,6 +69,9 @@
     <Compile Include="Controls\ScreenshotViewerControl.xaml.cs">
       <DependentUpon>ScreenshotViewerControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileDownloader.cs" />
+    <Compile Include="FileHelper.cs" />
+    <Compile Include="Models\ScreenshotGroups.cs" />
     <Compile Include="Models\ScreenshotProvider.cs" />
     <Compile Include="Models\Screenshot.cs" />
     <Compile Include="Models\ScreenshotGroup.cs" />
@@ -129,6 +135,5 @@
       <Version>6.13.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

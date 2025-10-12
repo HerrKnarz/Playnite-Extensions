@@ -1,8 +1,10 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using ScreenshotUtilities.Controls;
+using ScreenshotUtilities.Models;
 using ScreenshotUtilities.ViewModels;
 using ScreenshotUtilities.Views;
 using System;
@@ -41,6 +43,17 @@ namespace ScreenshotUtilities
                 SourceName = _pluginSourceName,
                 SettingsRoot = $"{nameof(Settings)}.{nameof(Settings.Settings)}"
             });
+
+            var iconResourcesToAdd = new Dictionary<string, string>
+            {
+                { "suShowScreenshotsIcon", "\xef4b" },
+                { "suDownloadIcon", "\xef08" }
+            };
+
+            foreach (var iconResource in iconResourcesToAdd)
+            {
+                MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+            }
         }
 
         public void OpenScreenshotViewer(Game game)
@@ -67,12 +80,30 @@ namespace ScreenshotUtilities
                 {
                     Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuShowScreenshots"),
                     MenuSection = menuSection,
-                    //Icon = "luAddIcon",
+                    Icon = "suShowScreenshotsIcon",
                     Action = a => OpenScreenshotViewer(args.Games.FirstOrDefault())
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadScreenshots"),
+                    MenuSection = menuSection,
+                    Icon = "suDownloadIcon",
+                    Action = a => DownloadScreenshots(args.Games.FirstOrDefault())
                 }
             });
 
             return menuItems;
+        }
+
+        private void DownloadScreenshots(Game game)
+        {
+            var groups = new ScreenshotGroups(GetPluginUserDataPath(), game.Id);
+
+            foreach (var group in groups)
+            {
+                group.Download();
+                group.Save();
+            }
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)

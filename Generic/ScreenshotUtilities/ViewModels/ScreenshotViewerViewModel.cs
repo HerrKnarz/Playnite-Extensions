@@ -1,14 +1,10 @@
 ﻿using KNARZhelper;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using ScreenshotUtilities.Controls;
 using ScreenshotUtilities.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using System.Windows;
 
 namespace ScreenshotUtilities.ViewModels
@@ -17,19 +13,25 @@ namespace ScreenshotUtilities.ViewModels
     {
         private Guid _gameId = Guid.Empty;
         private static ScreenshotUtilities _plugin;
-        private ObservableCollection<ScreenshotGroup> _screenshotGroups = new ObservableCollection<ScreenshotGroup>();
+        private ScreenshotGroups _screenshotGroups = new ScreenshotGroups();
         private ScreenshotGroup _selectedGroup;
+        private readonly bool _standaloneMode = false;
 
         public ScreenshotViewerViewModel(ScreenshotUtilities plugin, Game game = null)
         {
             _plugin = plugin;
-            GameId = game?.Id ?? Guid.Empty;
+
+            if (game != null)
+            {
+                _standaloneMode = true;
+                GameId = game.Id;
+            }
         }
 
         public void ResetViewModel()
         {
             _plugin.Settings.Settings.IsViewerControlVisible = false;
-            ScreenshotGroups.Clear();
+            ScreenshotGroups.Reset();
             SelectedGroup = null;
         }
 
@@ -37,39 +39,12 @@ namespace ScreenshotUtilities.ViewModels
         {
             ResetViewModel();
 
-            if (_gameId == Guid.Empty)
+            if (!_plugin.Settings.Settings.DisplayViewerControl && !_standaloneMode)
             {
-                ScreenshotGroups.Add(new ScreenshotGroup(ResourceProvider.GetString("LOCScreenshotUtilitiesMessageNoGameSelected")));
                 return;
             }
 
-            var path = Path.Combine(_plugin.GetPluginUserDataPath(), _gameId.ToString());
-
-            if (!Directory.Exists(path))
-            {
-                ScreenshotGroups.Add(new ScreenshotGroup(ResourceProvider.GetString("LOCScreenshotUtilitiesMessageNoScreenshotsFound")));
-                return;
-            }
-
-            var files = Directory.EnumerateFiles(path, "*.json", SearchOption.AllDirectories);
-
-            if (!files.Any())
-            {
-                ScreenshotGroups.Add(new ScreenshotGroup(ResourceProvider.GetString("LOCScreenshotUtilitiesMessageNoScreenshotsFound")));
-                return;
-            }
-
-            foreach (var file in files)
-            {
-                try
-                {
-                    ScreenshotGroups.Add(Serialization.FromJsonFile<ScreenshotGroup>(file));
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, $"Failed to load screenshots from file {file}");
-                }
-            }
+            ScreenshotGroups.CreateGroupsFromFiles(_plugin.GetPluginUserDataPath(), _gameId, false);
 
             if (ScreenshotGroups.Count == 0)
             {
@@ -78,7 +53,7 @@ namespace ScreenshotUtilities.ViewModels
 
             SelectedGroup = ScreenshotGroups[0];
 
-            if (_plugin.Settings.Settings.DisplayViewerControl)
+            if (_plugin.Settings.Settings.DisplayViewerControl && !_standaloneMode)
             {
                 _plugin.Settings.Settings.IsViewerControlVisible = true;
             }
@@ -155,7 +130,7 @@ namespace ScreenshotUtilities.ViewModels
             }
         }
 
-        public ObservableCollection<ScreenshotGroup> ScreenshotGroups
+        public ScreenshotGroups ScreenshotGroups
         {
             get => _screenshotGroups;
             set => SetValue(ref _screenshotGroups, value);

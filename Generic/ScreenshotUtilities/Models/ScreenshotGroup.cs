@@ -1,6 +1,10 @@
-﻿using Playnite.SDK.Data;
+﻿using KNARZhelper;
+using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace ScreenshotUtilities.Models
 {
@@ -13,11 +17,77 @@ namespace ScreenshotUtilities.Models
         private RangeObservableCollection<Screenshot> _screenshots = new RangeObservableCollection<Screenshot>();
         private Screenshot _selectedScreenshot;
         private int _sortOrder = 0;
+        private string _basePath;
+        private string _fileName;
 
         public ScreenshotGroup(string name = "", Guid id = default)
         {
             _id = id == default ? _id : id;
             _name = name;
+        }
+
+        public static ScreenshotGroup CreateFromFile(FileInfo file)
+        {
+            var group = Serialization.FromJsonFile<ScreenshotGroup>(file.FullName);
+            group.BasePath = file.DirectoryName;
+            group.FileName = file.FullName;
+            return group;
+        }
+
+        public void Download()
+        {
+            var globalProgressOptions = new GlobalProgressOptions(
+                $"{ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadingScreenshots")} {Name}",
+                true
+            )
+            {
+                IsIndeterminate = false
+            };
+
+            API.Instance.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+            {
+                try
+                {
+                    activateGlobalProgress.ProgressMaxValue = Screenshots.Where(s => s.PathIsUrl && !s.IsDownloaded).Count();
+
+                    foreach (var screenshot in Screenshots)
+                    {
+                        if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                        {
+                            break;
+                        }
+
+                        if (!screenshot.PathIsUrl || screenshot.IsDownloaded)
+                        {
+                            continue;
+                        }
+
+                        // Create file path and ensure directory exists
+                        var path = Path.Combine(BasePath, $"{screenshot.Id}{FileHelper.GetFileExtensionFromUrl(screenshot.Path)}");
+
+                        FileDownloader.Instance().DownloadFileAsync(path, new Uri(screenshot.Path)).Wait();
+
+                        screenshot.DownloadedPath = path;
+
+                        activateGlobalProgress.CurrentProgressValue++;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            }, globalProgressOptions);
+        }
+
+        public void Save()
+        {
+            if (string.IsNullOrEmpty(FileName))
+            {
+                return;
+            }
+
+            var serializedData = Serialization.ToJson(this);
+            FileHelper.WriteStringToFile(FileName, serializedData, true);
         }
 
         public void SelectNextScreenshot()
@@ -54,6 +124,13 @@ namespace ScreenshotUtilities.Models
             SelectedScreenshot = Screenshots[index];
         }
 
+        [DontSerialize]
+        public string BasePath
+        {
+            get => _basePath;
+            set => SetValue(ref _basePath, value);
+        }
+
         [SerializationPropertyName("description")]
         public string Description
         {
@@ -65,6 +142,13 @@ namespace ScreenshotUtilities.Models
         public string DisplayName => Provider == null || string.IsNullOrEmpty(Provider.Name) ? Name
             : string.IsNullOrEmpty(Name) ? (Provider?.Name)
             : $"{Provider?.Name}: {Name}";
+
+        [DontSerialize]
+        public string FileName
+        {
+            get => _fileName;
+            set => SetValue(ref _fileName, value);
+        }
 
         [SerializationPropertyName("id")]
         public Guid Id

@@ -10,7 +10,6 @@ namespace ScreenshotUtilities.Models
         private string _downloadedPath;
         private string _downloadedThumbnailPath;
         private Guid _id = Guid.NewGuid();
-        private bool _isDownloaded = false;
         private string _name;
         private string _path;
         private int _sortOrder = 0;
@@ -31,7 +30,7 @@ namespace ScreenshotUtilities.Models
         }
 
         [DontSerialize]
-        public string DisplayPath => IsDownloaded && !string.IsNullOrEmpty(DownloadedPath) ? DownloadedPath : Path;
+        public string DisplayPath => IsDownloaded ? DownloadedPath : Path;
 
         [SerializationPropertyName("downloadedPath")]
         public string DownloadedPath
@@ -54,12 +53,8 @@ namespace ScreenshotUtilities.Models
             set => SetValue(ref _id, value);
         }
 
-        [SerializationPropertyName("isDownloaded")]
-        public bool IsDownloaded
-        {
-            get => _isDownloaded;
-            set => SetValue(ref _isDownloaded, value);
-        }
+        [DontSerialize]
+        public bool IsDownloaded => !string.IsNullOrEmpty(DownloadedPath);
 
         [SerializationPropertyName("name")]
         public string Name
@@ -74,6 +69,9 @@ namespace ScreenshotUtilities.Models
             get => _path;
             set => SetValue(ref _path, value);
         }
+
+        [DontSerialize]
+        public bool PathIsUrl => !string.IsNullOrEmpty(Path) && (Path.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || Path.StartsWith("https://", StringComparison.OrdinalIgnoreCase));
 
         [SerializationPropertyName("sortOrder")]
         public int SortOrder
