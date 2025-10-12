@@ -29,7 +29,7 @@ namespace ScreenshotUtilities
         /// </summary>
         /// <param name="directoryPath">The relative or absolute path to the directory including the filename to be used.</param>
         /// <param name="uri">The URI for the file to download.</param>
-        public async Task DownloadFileAsync(string directoryPath, Uri uri)
+        public async Task<FileInfo> DownloadFileAsync(string directoryPath, Uri uri)
         {
             if (_disposed)
             {
@@ -37,6 +37,8 @@ namespace ScreenshotUtilities
             }
 
             File.WriteAllBytes(directoryPath, await _httpClient.GetByteArrayAsync(uri));
+
+            return new FileInfo(directoryPath);
         }
 
         public void Dispose()

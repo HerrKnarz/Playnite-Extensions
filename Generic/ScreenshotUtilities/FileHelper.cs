@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,6 +11,33 @@ namespace ScreenshotUtilities
     {
         private const string longPathPrefix = @"\\?\";
         private const string longPathUncPrefix = @"\\?\UNC\";
+
+        public static FileInfo CreateThumbnailImage(string imageFileName, string thumbnailFileName = "")
+        {
+            const int thumbnailSize = 120;
+
+            if (string.IsNullOrEmpty(thumbnailFileName))
+            {
+                var fi = new FileInfo(imageFileName);
+                thumbnailFileName = Path.Combine(fi.DirectoryName, $"{Path.GetFileNameWithoutExtension(fi.Name)}_thumb.png");
+            }
+
+            using (var image = Image.FromFile(imageFileName))
+            {
+                var imageHeight = image.Height;
+                var imageWidth = image.Width;
+
+                imageWidth = (int)(imageWidth / (float)imageHeight * thumbnailSize);
+                imageHeight = thumbnailSize;
+
+                using (var thumb = image.GetThumbnailImage(imageWidth, imageHeight, () => false, IntPtr.Zero))
+                {
+                    thumb.Save(thumbnailFileName);
+                }
+            }
+
+            return new FileInfo(thumbnailFileName);
+        }
 
         public static void DeleteFile(string path, bool includeReadonly = false)
         {

@@ -18,8 +18,6 @@ namespace ScreenshotUtilities.Models
             CreateGroupsFromFiles(basePath, gameId);
         }
 
-        public void Reset() => Clear();
-
         public void CreateGroupsFromFiles(string basePath, Guid gameId, bool createEmptyGroupOnError = true)
         {
             if (gameId == Guid.Empty)
@@ -68,5 +66,17 @@ namespace ScreenshotUtilities.Models
                 }
             }
         }
+
+        public void DownloadAll()
+        {
+            foreach (var group in this)
+            {
+                group.Download();
+                group.Save();
+            }
+        }
+
+        public void Reset() => Clear();
+
     }
 }

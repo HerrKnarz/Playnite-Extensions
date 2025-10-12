@@ -28,11 +28,31 @@ namespace ScreenshotUtilities.ViewModels
             }
         }
 
-        public void ResetViewModel()
+        public static Window GetWindow(ScreenshotUtilities plugin, Game game)
         {
-            _plugin.Settings.Settings.IsViewerControlVisible = false;
-            ScreenshotGroups.Reset();
-            SelectedGroup = null;
+            try
+            {
+                var screenshotViewerView = new ScreenshotViewerControl(plugin, game)
+                {
+                    Padding = new Thickness(10)
+                };
+
+                var window = WindowHelper.CreateSizedWindow(
+                    ResourceProvider.GetString("LOC_ScreenshotUtilities_ControlLabel"),
+                    plugin.Settings.Settings.ViewerWindowWidth,
+                    plugin.Settings.Settings.ViewerWindowHeight);
+
+                window.Content = screenshotViewerView;
+                window.Closing += OnWindowClosing;
+
+                return window;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing screenshot viewer", true);
+
+                return null;
+            }
         }
 
         public void LoadScreenshots()
@@ -61,33 +81,6 @@ namespace ScreenshotUtilities.ViewModels
             return;
         }
 
-        public static Window GetWindow(ScreenshotUtilities plugin, Game game)
-        {
-            try
-            {
-                var screenshotViewerView = new ScreenshotViewerControl(plugin, game)
-                {
-                    Padding = new Thickness(10)
-                };
-
-                var window = WindowHelper.CreateSizedWindow(
-                    ResourceProvider.GetString("LOC_ScreenshotUtilities_ControlLabel"),
-                    plugin.Settings.Settings.ViewerWindowWidth,
-                    plugin.Settings.Settings.ViewerWindowHeight);
-
-                window.Content = screenshotViewerView;
-                window.Closing += OnWindowClosing;
-
-                return window;
-            }
-            catch (Exception exception)
-            {
-                Log.Error(exception, "Error during initializing screenshot viewer", true);
-
-                return null;
-            }
-        }
-
         private static void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (sender is Window window)
@@ -96,6 +89,13 @@ namespace ScreenshotUtilities.ViewModels
                 _plugin.Settings.Settings.ViewerWindowHeight = (int)window.Height;
                 _plugin.SavePluginSettings(_plugin.Settings.Settings);
             }
+        }
+
+        public void ResetViewModel()
+        {
+            _plugin.Settings.Settings.IsViewerControlVisible = false;
+            ScreenshotGroups.Reset();
+            SelectedGroup = null;
         }
 
         public RelayCommand<object> OpenInFullScreenCommand => new RelayCommand<object>(a =>
@@ -119,6 +119,8 @@ namespace ScreenshotUtilities.ViewModels
 
         public RelayCommand<object> SelectNextScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectNextScreenshot());
 
+        public double AspectRatio => _plugin.Settings.Settings.AspectWidth / (float)_plugin.Settings.Settings.AspectHeight;
+
         public Guid GameId
         {
             get => _gameId;
@@ -140,16 +142,6 @@ namespace ScreenshotUtilities.ViewModels
         {
             get => _selectedGroup;
             set => SetValue(ref _selectedGroup, value);
-        }
-
-        public double AspectRatio
-        {
-            get
-            {
-                double aspectWidth = _plugin.Settings.Settings.AspectWidth;
-                double aspectHeight = _plugin.Settings.Settings.AspectHeight;
-                return aspectWidth / aspectHeight;
-            }
         }
     }
 }

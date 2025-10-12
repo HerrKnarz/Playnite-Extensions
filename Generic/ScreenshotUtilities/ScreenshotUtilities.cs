@@ -99,11 +99,7 @@ namespace ScreenshotUtilities
         {
             var groups = new ScreenshotGroups(GetPluginUserDataPath(), game.Id);
 
-            foreach (var group in groups)
-            {
-                group.Download();
-                group.Save();
-            }
+            groups.DownloadAll();
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)

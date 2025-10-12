@@ -37,7 +37,7 @@ namespace ScreenshotUtilities.Models
         public void Download()
         {
             var globalProgressOptions = new GlobalProgressOptions(
-                $"{ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadingScreenshots")} {Name}",
+                $"{ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadingScreenshots")} {DisplayName}",
                 true
             )
             {
@@ -64,10 +64,12 @@ namespace ScreenshotUtilities.Models
 
                         // Create file path and ensure directory exists
                         var path = Path.Combine(BasePath, $"{screenshot.Id}{FileHelper.GetFileExtensionFromUrl(screenshot.Path)}");
+                        var image = FileDownloader.Instance().DownloadFileAsync(path, new Uri(screenshot.Path)).Result;
 
-                        FileDownloader.Instance().DownloadFileAsync(path, new Uri(screenshot.Path)).Wait();
+                        var thumbnail = FileHelper.CreateThumbnailImage(path);
 
-                        screenshot.DownloadedPath = path;
+                        screenshot.DownloadedPath = image.FullName;
+                        screenshot.DownloadedThumbnailPath = thumbnail.FullName;
 
                         activateGlobalProgress.CurrentProgressValue++;
                     }
