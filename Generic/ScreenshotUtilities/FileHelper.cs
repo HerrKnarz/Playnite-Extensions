@@ -88,11 +88,6 @@ namespace ScreenshotUtilities
 
                 var di = new DirectoryInfo(path);
 
-                if (!di.Exists)
-                {
-                    di.Create();
-                }
-
                 return di;
             }
             catch (Exception ex)

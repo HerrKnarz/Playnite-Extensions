@@ -48,7 +48,7 @@ namespace ScreenshotUtilities.Models
             {
                 try
                 {
-                    activateGlobalProgress.ProgressMaxValue = Screenshots.Where(s => s.PathIsUrl && !s.IsDownloaded).Count();
+                    activateGlobalProgress.ProgressMaxValue = Screenshots.Count();
 
                     foreach (var screenshot in Screenshots)
                     {
@@ -57,19 +57,9 @@ namespace ScreenshotUtilities.Models
                             break;
                         }
 
-                        if (!screenshot.PathIsUrl || screenshot.IsDownloaded)
-                        {
-                            continue;
-                        }
+                        screenshot.Download(BasePath);
 
-                        // Create file path and ensure directory exists
-                        var path = Path.Combine(BasePath, $"{screenshot.Id}{FileHelper.GetFileExtensionFromUrl(screenshot.Path)}");
-                        var image = FileDownloader.Instance().DownloadFileAsync(path, new Uri(screenshot.Path)).Result;
-
-                        var thumbnail = FileHelper.CreateThumbnailImage(path);
-
-                        screenshot.DownloadedPath = image.FullName;
-                        screenshot.DownloadedThumbnailPath = thumbnail.FullName;
+                        screenshot.GenerateThumbnail();
 
                         activateGlobalProgress.CurrentProgressValue++;
                     }

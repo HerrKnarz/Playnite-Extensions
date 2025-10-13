@@ -22,6 +22,29 @@ namespace ScreenshotUtilities.Models
             _name = name == string.Empty ? System.IO.Path.GetFileNameWithoutExtension(path) : name;
         }
 
+        public void Download(string path)
+        {
+            if (!PathIsUrl || IsDownloaded)
+            {
+                return;
+            }
+
+            path = System.IO.Path.Combine(path, $"{Id}{FileHelper.GetFileExtensionFromUrl(Path)}");
+            var image = FileDownloader.Instance().DownloadFileAsync(path, new Uri(Path)).Result;
+            DownloadedPath = image.FullName;
+        }
+
+        public void GenerateThumbnail()
+        {
+            if (!IsDownloaded || !string.IsNullOrEmpty(DownloadedThumbnailPath) || !System.IO.File.Exists(DownloadedPath))
+            {
+                return;
+            }
+
+            var thumb = FileHelper.CreateThumbnailImage(DownloadedPath);
+            DownloadedThumbnailPath = thumb.FullName;
+        }
+
         [SerializationPropertyName("description")]
         public string Description
         {
