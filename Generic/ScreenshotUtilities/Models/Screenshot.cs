@@ -36,7 +36,7 @@ namespace ScreenshotUtilities.Models
 
         public void GenerateThumbnail()
         {
-            if (!IsDownloaded || !string.IsNullOrEmpty(DownloadedThumbnailPath) || !System.IO.File.Exists(DownloadedPath))
+            if (!IsDownloaded || (!string.IsNullOrEmpty(DownloadedThumbnailPath) && System.IO.File.Exists(DownloadedThumbnailPath)) || !System.IO.File.Exists(DownloadedPath))
             {
                 return;
             }

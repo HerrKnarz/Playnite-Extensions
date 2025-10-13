@@ -1,6 +1,6 @@
-﻿using KNARZhelper;
+﻿using ImageMagick;
+using KNARZhelper;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -14,26 +14,19 @@ namespace ScreenshotUtilities
 
         public static FileInfo CreateThumbnailImage(string imageFileName, string thumbnailFileName = "")
         {
-            const int thumbnailSize = 120;
-
             if (string.IsNullOrEmpty(thumbnailFileName))
             {
-                var fi = new FileInfo(imageFileName);
-                thumbnailFileName = Path.Combine(fi.DirectoryName, $"{Path.GetFileNameWithoutExtension(fi.Name)}_thumb.png");
+                var fileInfo = new FileInfo(imageFileName);
+                thumbnailFileName = Path.Combine(fileInfo.DirectoryName, $"{Path.GetFileNameWithoutExtension(fileInfo.Name)}_thumb.jpg");
             }
 
-            using (var image = Image.FromFile(imageFileName))
+            using (var image = new MagickImage(imageFileName))
             {
-                var imageHeight = image.Height;
-                var imageWidth = image.Width;
+                image.Scale(0, 120);
 
-                imageWidth = (int)(imageWidth / (float)imageHeight * thumbnailSize);
-                imageHeight = thumbnailSize;
+                image.Format = MagickFormat.Jpg;
 
-                using (var thumb = image.GetThumbnailImage(imageWidth, imageHeight, () => false, IntPtr.Zero))
-                {
-                    thumb.Save(thumbnailFileName);
-                }
+                image.Write(thumbnailFileName);
             }
 
             return new FileInfo(thumbnailFileName);
@@ -43,9 +36,9 @@ namespace ScreenshotUtilities
         {
             path = FixPathLength(path);
 
-            var fi = new FileInfo(path);
+            var fileInfo = new FileInfo(path);
 
-            if (!fi.Exists)
+            if (!fileInfo.Exists)
             {
                 return;
             }
@@ -53,13 +46,13 @@ namespace ScreenshotUtilities
             if (includeReadonly)
             {
 
-                if ((fi.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                if ((fileInfo.Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                 {
-                    fi.Attributes ^= FileAttributes.ReadOnly;
+                    fileInfo.Attributes ^= FileAttributes.ReadOnly;
                 }
             }
 
-            fi.Delete();
+            fileInfo.Delete();
         }
 
         public static string FixPathLength(string path)
@@ -86,9 +79,9 @@ namespace ScreenshotUtilities
                     gameId == default ? string.Empty : gameId.ToString(),
                     providerId == default ? string.Empty : providerId.ToString());
 
-                var di = new DirectoryInfo(path);
+                var directoryInfo = new DirectoryInfo(path);
 
-                return di;
+                return directoryInfo;
             }
             catch (Exception ex)
             {
