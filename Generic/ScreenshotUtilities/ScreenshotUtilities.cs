@@ -23,6 +23,7 @@ namespace ScreenshotUtilities
         private static readonly string _pluginSourceName = "ScreenshotUtilities";
 
         public override Guid Id { get; } = Guid.Parse("485d682f-73e9-4d54-b16f-b8dd49e88f90");
+        public List<ScreenshotViewerControl> ScreenshotViewerControls { get; set; } = new List<ScreenshotViewerControl>();
 
         public ScreenshotUtilities(IPlayniteAPI api) : base(api)
         {
@@ -100,15 +101,32 @@ namespace ScreenshotUtilities
             var groups = new ScreenshotGroups(GetPluginUserDataPath(), game.Id);
 
             groups.DownloadAll();
+
+            API.Instance.MainView.UIDispatcher.Invoke(delegate
+            {
+                foreach (var control in ScreenshotViewerControls)
+                {
+                    control.RefreshData();
+                }
+            });
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
-            return args.Name == _controlNameViewer
-                ? new ScreenshotViewerControl(this)
-                : args.Name == _controlNameButton
-                ? new ButtonControl(this)
-                : (Control)null;
+            if (args.Name == _controlNameViewer)
+            {
+                var viewerControl = new ScreenshotViewerControl(this);
+
+                ScreenshotViewerControls.Add(viewerControl);
+
+                return viewerControl;
+            }
+            else if (args.Name == _controlNameButton)
+            {
+                return new ButtonControl(this);
+            }
+
+            return null;
         }
 
         public override void OnGameInstalled(OnGameInstalledEventArgs args)
