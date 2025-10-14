@@ -11,9 +11,9 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Знімки екрану не знайдені</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Показати знімки екрану</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically on first view</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Автоматично завантажувати знімки екрану при першому перегляді</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Типове співвідношення сторін</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Показувати кнопку для відкриття окремого переглядача в темі</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Показувати керування переглядача знімків екрану в темі</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Only download screenshots for games with one of the following categories or tags. Of none are defined, screenshots will always be downloaded.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Завантажувати знімки екрану тільки для ігор з однією з наступних категорій або тегів. Знімки завантажуватимуться завжди якщо нічого не вибрано.</sys:String>
 </ResourceDictionary>
