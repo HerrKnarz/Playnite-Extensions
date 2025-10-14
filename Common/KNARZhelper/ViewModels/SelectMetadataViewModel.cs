@@ -1,6 +1,5 @@
-﻿using KNARZhelper;
-using MetadataUtilities.Models;
-using MetadataUtilities.Views;
+﻿using KNARZhelper.BaseModels;
+using KNARZhelper.Views;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 
-namespace MetadataUtilities.ViewModels
+namespace KNARZhelper.ViewModels
 {
     public class SelectMetadataViewModel : ObservableObject
     {
@@ -17,7 +16,7 @@ namespace MetadataUtilities.ViewModels
         private bool _filterSelected;
         private string _searchTerm = string.Empty;
 
-        public SelectMetadataViewModel(ObservableCollection<MetadataObject> items)
+        public SelectMetadataViewModel(ObservableCollection<BaseMetadataObject> items)
         {
             FilteredMetadata = CollectionViewSource.GetDefaultView(items);
             FilteredMetadata.Filter = Filter;
@@ -55,7 +54,7 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public static Window GetWindow(ObservableCollection<MetadataObject> items, string windowTitle)
+        public static Window GetWindow(ObservableCollection<BaseMetadataObject> items, string windowTitle)
         {
             try
             {
@@ -79,7 +78,7 @@ namespace MetadataUtilities.ViewModels
         }
 
         private bool Filter(object item) =>
-            item is MetadataObject metadataListObject &&
+            item is BaseMetadataObject metadataListObject &&
             metadataListObject.Name.RegExIsMatch(SearchTerm) &&
             (!FilterSelected || metadataListObject.Selected);
     }

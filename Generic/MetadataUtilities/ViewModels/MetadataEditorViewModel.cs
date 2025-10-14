@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.BaseModels;
 using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 using MetadataUtilities.Models;
@@ -598,7 +599,7 @@ namespace MetadataUtilities.ViewModels
                     }, globalProgressOptions);
                 }
 
-                var unwantedItems = new List<MetadataObject>();
+                var unwantedItems = new List<BaseMetadataObject>();
 
                 using (MetadataViewSource.DeferRefresh())
                 {

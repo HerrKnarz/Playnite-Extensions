@@ -57,6 +57,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,6 +76,7 @@
     <Compile Include="DatabaseObjectTypes\BaseIntegerType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseListType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseMediaType.cs" />
+    <Compile Include="BaseModels\BaseMetadataObject.cs" />
     <Compile Include="DatabaseObjectTypes\BaseObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseSingleObjectType.cs" />
     <Compile Include="DatabaseObjectTypes\BaseStringType.cs" />
@@ -133,6 +135,10 @@
     <Compile Include="PlatformHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="ViewModels\SelectMetadataViewModel.cs" />
+    <Compile Include="Views\SelectMetadataView.xaml.cs">
+      <DependentUpon>SelectMetadataView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,5 +153,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Page Include="Views\SelectMetadataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,6 +14,9 @@ namespace KNARZhelper
     {
         private static readonly Regex _regexNumbers = new Regex("[^0-9.-]+");
 
+        public static readonly Regex CompanyFormRegex =
+            new Regex(@",?\s+((co[,.\s]+)?ltd|(l\.)?inc|s\.?l|a[./]?s|limited|l\.?l\.?(c|p)|s\.?a(\.?r\.?l)?|s\.?r\.?o|gmbh|ab|corp|pte|ace|co|pty|pty\sltd|srl)\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
         public static void AddTextIcoFontResource(string key, string text)
         {
             Application.Current.Resources.Add(key, new TextBlock

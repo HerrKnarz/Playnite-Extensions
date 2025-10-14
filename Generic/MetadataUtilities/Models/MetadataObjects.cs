@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.BaseModels;
 using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
 using Playnite.SDK;
@@ -46,7 +47,7 @@ namespace MetadataUtilities.Models
             AddItems(items);
         }
 
-        public void AddItems(List<MetadataObject> items)
+        public void AddItems(List<BaseMetadataObject> items)
         {
             if (items.Count == 0)
             {

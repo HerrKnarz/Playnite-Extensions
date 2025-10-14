@@ -1,13 +1,13 @@
-﻿using KNARZhelper;
-using System;
+﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 
-namespace MetadataUtilities.Views
+namespace KNARZhelper.Views
 {
     /// <summary>
-    ///     Interaction logic for SelectMetadataView.xaml
+    /// Interaction logic for SelectMetadataView.xaml
     /// </summary>
-    public partial class SelectMetadataView
+    public partial class SelectMetadataView : UserControl
     {
         public SelectMetadataView()
         {

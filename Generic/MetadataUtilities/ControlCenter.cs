@@ -1,6 +1,8 @@
 ﻿using KNARZhelper;
+using KNARZhelper.BaseModels;
 using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
+using KNARZhelper.ViewModels;
 using MetadataUtilities.Models;
 using MetadataUtilities.ViewModels;
 using Playnite.SDK;
@@ -68,7 +70,7 @@ namespace MetadataUtilities
             return newItem;
         }
 
-        public static List<MetadataObject> GetItemsFromAddDialog(FieldType type, string prefix = default, bool ignoreEmptyPrefix = true, List<MetadataObject> selectedItems = null)
+        public static List<BaseMetadataObject> GetItemsFromAddDialog(FieldType type, string prefix = default, bool ignoreEmptyPrefix = true, List<MetadataObject> selectedItems = null)
         {
             var label = type.GetTypeManager().LabelPlural;
 
@@ -95,11 +97,13 @@ namespace MetadataUtilities
                 }
             }
 
-            var window = SelectMetadataViewModel.GetWindow(items, label);
+            var itemList = items.Select(x => (BaseMetadataObject)x).ToObservable();
+
+            var window = SelectMetadataViewModel.GetWindow(itemList, label);
 
             return (window?.ShowDialog() ?? false)
-                ? items.Where(x => x.Selected).ToList()
-                : new List<MetadataObject>();
+                ? itemList.Where(x => x.Selected).ToList()
+                : new List<BaseMetadataObject>();
         }
 
         public static void UpdateGames<T>(List<T> games)

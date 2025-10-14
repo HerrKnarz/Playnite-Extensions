@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="MetadataUtilities.Views.SelectMetadataView"
+﻿<UserControl x:Class="KNARZhelper.Views.SelectMetadataView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
+             xmlns:viewModels="clr-namespace:KNARZhelper.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:SelectMetadataViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="400">
