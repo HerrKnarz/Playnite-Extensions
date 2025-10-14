@@ -1,6 +1,10 @@
 ﻿using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace ScreenshotUtilities.Models
 {
@@ -43,6 +47,43 @@ namespace ScreenshotUtilities.Models
 
             var thumb = FileHelper.CreateThumbnailImage(DownloadedPath);
             DownloadedThumbnailPath = thumb.FullName;
+        }
+
+        public void OpenContainingFolder()
+        {
+            var directoryInfo = new FileInfo(DisplayPath).Directory;
+
+            if (directoryInfo.Exists)
+            {
+                Process.Start("explorer.exe", $"/select, \"{DisplayPath}\"");
+            }
+        }
+
+        public void OpenInAssociatedApplication()
+        {
+            var fileInfo = new FileInfo(DisplayPath);
+
+            if (fileInfo.Exists)
+            {
+                Process.Start(new ProcessStartInfo(fileInfo.FullName) { UseShellExecute = true });
+            }
+        }
+
+        internal void CopyToClipboard()
+        {
+            var fileInfo = new FileInfo(DisplayPath);
+
+            if (fileInfo.Exists)
+            {
+                try
+                {
+                    Clipboard.SetImage(BitmapFrame.Create(new Uri(DisplayPath, UriKind.Absolute)));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Failed to copy screenshot to clipboard: {ex}");
+                }
+            }
         }
 
         [SerializationPropertyName("description")]

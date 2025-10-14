@@ -91,12 +91,31 @@
                                                             Margin="0, 10">
 
                 <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath}"
-                   RenderOptions.BitmapScalingMode="Fant"
-                   Stretch="Uniform"
-                   Cursor="Hand">
+                       RenderOptions.BitmapScalingMode="Fant"
+                       Stretch="Uniform"
+                       Cursor="Hand">
                     <Image.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenInFullScreenCommand}" />
+                        <MouseBinding Gesture="LeftClick" 
+                                      Command="{Binding OpenInFullScreenCommand}" />
                     </Image.InputBindings>
+                    <Image.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInFullScreen}"
+                                      Command="{Binding OpenInFullScreenCommand}" />
+                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuCopyToClipboard}"
+                                      Command="{Binding CopyToClipboardCommand}"
+                                      Visibility="{Binding SelectedScreenshot.IsDownloaded, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuDeleteScreenshot}"
+                                      Command="{Binding DeleteScreenshotCommand}"
+                                      Visibility="Collapsed" />
+                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInAssociatedApplication}"
+                                      Command="{Binding OpenInAssociatedApplicationCommand}"
+                                      Visibility="{Binding SelectedScreenshot.IsDownloaded, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenContainingFolder}"
+                                      Command="{Binding OpenContainingFolderCommand}"
+                                      Visibility="{Binding SelectedScreenshot.IsDownloaded, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </ContextMenu>
+                    </Image.ContextMenu>
                 </Image>
             </knarzHelperControls:AspectRatioLayoutDecorator>
         </DockPanel>

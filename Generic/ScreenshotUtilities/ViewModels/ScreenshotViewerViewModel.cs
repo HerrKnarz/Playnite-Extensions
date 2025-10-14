@@ -156,5 +156,16 @@ namespace ScreenshotUtilities.ViewModels
             get => _selectedGroup;
             set => SetValue(ref _selectedGroup, value);
         }
+
+        public RelayCommand<object> CopyToClipboardCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.CopyToClipboard());
+
+        public RelayCommand<object> DeleteScreenshotCommand => new RelayCommand<object>(a =>
+        {
+
+        });
+
+        public RelayCommand<object> OpenContainingFolderCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenContainingFolder());
+
+        public RelayCommand<object> OpenInAssociatedApplicationCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenInAssociatedApplication());
     }
 }
