@@ -5,7 +5,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">Um {0} com esse nome já existe.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Alterar tipo de metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Editor de ações condicionais</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogCopiedMetadataMessage">Copied metadata to {0} games.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogCopiedMetadataMessage">Metadados copiados para {0} jogos.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Insira um valor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Ações condicionais alteradas em {0} jogos!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogMergeAs">Mesclar como</sys:String>
@@ -18,7 +18,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">Você precisa inserir um nome.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">Você precisa adicionar um Nome para o alvo da regra.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Nenhum item de metadados não utilizado foi encontrado.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogOnlyIfEmpty">Only if empty</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogOnlyIfEmpty">Somente se estiver vazio</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">item adicionado a {0} jogos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">item removido de {0} jogos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">item alternado em {0} jogos</sys:String>
@@ -26,7 +26,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Removido itens de metadados indesejados dos jogos {0}!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Renomear empresa</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Você está renomeando {0}. Deseja renomear {1} correspondente, também?</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogReplace">Replace</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogReplace">Substituir</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Salvar como regra de mesclagem</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Selecionar novo tipo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Defina a pontuação de usuário nos {0} jogos!</sys:String>
@@ -46,8 +46,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Alvo da regra</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Definir como alvo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Estatísticas</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGame">Jump to game</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGameHint">Opens the details of the currently selected game in Playnite</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGame">Pular para o jogo</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGameHint">Abre os detalhes do jogo atualmente selecionado no Playnite</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_And">Todas as condições são verdadeiras</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Two">Pelo menos duas condições são verdadeiras</sys:String>
@@ -66,8 +66,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">remover</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">limpar campo</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">Copy metadata</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">Paste metadata from {0}</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">Copiar metadados</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">Colar metadados de {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuEditor">Abrir Editor de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuMergeMetadata">Mesclar metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuQuickAddAdd">Adicionar {0}</sys:String>
@@ -84,7 +84,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removido os seguintes itens de metadados não utilizados:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefixo</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Copying metadata...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Copiando metadados...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Executando ações condicionais...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Mesclando metadados...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Adicionando {0}</sys:String>
@@ -108,7 +108,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayAddButton">Exibir botão adicionar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Exibir botão excluir</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editar</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Prefixes can't be empty!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Os prefixos não podem estar vazios!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Executar somente em novos jogos antes de baixar os metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Ocultar nos detalhes</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Ocultar no editor</sys:String>
@@ -130,7 +130,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Exibir no Editor de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Mostrar botão de configurações no painel superior (requer reinicialização)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Exibir botão do Editor de Metadados no painel superior (requer reinicialização)</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowUserScoreMenu">Show an option to quickly set the user score in the game context menu</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowUserScoreMenu">Mostrar uma opção para definir rapidamente a nota do usuário no menu de contexto do jogo</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Colocar os submenus sob a entrada de menu de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Ações condicionais</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Geral</sys:String>
