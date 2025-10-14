@@ -5,11 +5,17 @@
 
     <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Screenshots</sys:String>
 
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Copy to clipboard</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Delete screenshot</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Download screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Downloading images for</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Open containing folder</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Open in associated application</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Open in full screen mode</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Show Screenshots</sys:String>
+
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">No game selected</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">No screenshots found</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Show Screenshots</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically on first view</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Default aspect ratio</sys:String>
