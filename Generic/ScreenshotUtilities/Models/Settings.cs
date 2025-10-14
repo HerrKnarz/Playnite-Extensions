@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK.Data;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ScreenshotUtilities.Models
 {
@@ -7,10 +8,12 @@ namespace ScreenshotUtilities.Models
     {
         private int _aspectHeight = 9;
         private int _aspectWidth = 16;
-        private bool _isViewerControlVisible = false;
-        private bool _isButtonControlVisible = false;
+        private bool _automaticDownload = false;
         private bool _displayButtonControl = true;
         private bool _displayViewerControl = true;
+        private ObservableCollection<MetadataObject> _downloadFilter = new ObservableCollection<MetadataObject>();
+        private bool _isViewerControlVisible = false;
+        private bool _isButtonControlVisible = false;
         private int _viewerWindowHeight = 700;
         private int _viewerWindowWidth = 800;
 
@@ -42,6 +45,12 @@ namespace ScreenshotUtilities.Models
             }
         }
 
+        public bool AutomaticDownload
+        {
+            get => _automaticDownload;
+            set => SetValue(ref _automaticDownload, value);
+        }
+
         public bool DisplayButtonControl
         {
             get => _displayButtonControl;
@@ -52,6 +61,12 @@ namespace ScreenshotUtilities.Models
         {
             get => _displayViewerControl;
             set => SetValue(ref _displayViewerControl, value);
+        }
+
+        public ObservableCollection<MetadataObject> DownloadFilter
+        {
+            get => _downloadFilter;
+            set => SetValue(ref _downloadFilter, value);
         }
 
         [DontSerialize]

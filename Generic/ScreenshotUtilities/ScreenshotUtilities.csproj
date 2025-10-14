@@ -55,6 +55,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -66,17 +67,69 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\KNARZhelper\BaseModels\BaseMetadataObject.cs">
+      <Link>Shared\BaseMetadataObject.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Controls\AspectRatioLayoutDecorator.cs">
       <Link>Shared\AspectRatioLayoutDecorator.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Controls\ListBoxScrollIntoViewBehavior.cs">
       <Link>Shared\ListBoxScrollIntoViewBehavior.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseListType.cs">
+      <Link>Shared\BaseListType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseObjectType.cs">
+      <Link>Shared\BaseObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IClearAbleType.cs">
+      <Link>Shared\IClearAbleType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IEditableObjectType.cs">
+      <Link>Shared\IEditableObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IGameInfoType.cs">
+      <Link>Shared\IGameInfoType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IMetadataFieldType.cs">
+      <Link>Shared\IMetadataFieldType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IObjectType.cs">
+      <Link>Shared\IObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IValueType.cs">
+      <Link>Shared\IValueType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCategory.cs">
+      <Link>Shared\TypeCategory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeTag.cs">
+      <Link>Shared\TypeTag.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\Enum\DbInteractionResult.cs">
+      <Link>Shared\DbInteractionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\Enum\FieldType.cs">
+      <Link>Shared\FieldType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\Enum\ItemValueType.cs">
+      <Link>Shared\ItemValueType.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\MiscHelper.cs">
       <Link>Shared\MiscHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\StringHelper.cs">
+      <Link>Shared\StringHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\ViewModels\SelectMetadataViewModel.cs">
+      <Link>Shared\SelectMetadataViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\Views\SelectMetadataView.xaml.cs">
+      <Link>Shared\SelectMetadataView.xaml.cs</Link>
+      <DependentUpon>SelectMetadataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
@@ -89,6 +142,7 @@
     </Compile>
     <Compile Include="FileDownloader.cs" />
     <Compile Include="FileHelper.cs" />
+    <Compile Include="Models\MetadataObject.cs" />
     <Compile Include="Models\ScreenshotGroups.cs" />
     <Compile Include="Models\ScreenshotProvider.cs" />
     <Compile Include="Models\Screenshot.cs" />
@@ -119,6 +173,11 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="..\..\Common\KNARZhelper\Views\SelectMetadataView.xaml">
+      <Link>Shared\SelectMetadataView.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

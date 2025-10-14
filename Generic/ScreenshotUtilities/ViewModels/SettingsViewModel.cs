@@ -1,7 +1,15 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using KNARZhelper.BaseModels;
+using KNARZhelper.DatabaseObjectTypes;
+using KNARZhelper.Enum;
+using KNARZhelper.ViewModels;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using ScreenshotUtilities.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 
 namespace ScreenshotUtilities
 {
@@ -38,6 +46,67 @@ namespace ScreenshotUtilities
             {
                 Settings = new Settings();
             }
+        }
+
+        public RelayCommand AddCategoryCommand => new RelayCommand(() => SelectMetadata(FieldType.Category));
+
+        public RelayCommand AddTagCommand => new RelayCommand(() => SelectMetadata(FieldType.Tag));
+
+        public RelayCommand<IList<object>> RemoveFromListCommand => new RelayCommand<IList<object>>(items =>
+            {
+                if (items == null || items.Count == 0)
+                {
+                    return;
+                }
+
+                foreach (var item in items.ToList().Cast<MetadataObject>())
+                {
+                    Settings.DownloadFilter.Remove(item);
+                }
+            }, items => items?.Count != 0);
+
+        public void SelectMetadata(FieldType type)
+        {
+            if (type != FieldType.Category && type != FieldType.Tag)
+            {
+                Debug.WriteLine("ScreenshotUtilitiesSettingsViewModel.SelectMetadata: Invalid field type");
+                return;
+            }
+
+            BaseListType typeManager = new TypeTag();
+
+            if (type == FieldType.Category)
+            {
+                typeManager = new TypeCategory();
+            }
+            else if (type == FieldType.Tag)
+            {
+                typeManager = new TypeTag();
+            }
+
+            var label = typeManager.LabelPlural;
+
+            var items = new ObservableCollection<BaseMetadataObject>();
+
+            typeManager.LoadAllMetadata(new HashSet<System.Guid>()).ForEach(item => items.Add(
+                            new BaseMetadataObject(typeManager, typeManager.Type, item.Name)
+                            {
+                                Id = item.Id
+                            }));
+
+            SelectMetadataViewModel.GetWindow(items, label)?.ShowDialog();
+
+            if (items.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var item in items.Where(item => item.Selected && Settings.DownloadFilter.All(x => x.TypeAndName != item.TypeAndName)))
+            {
+                Settings.DownloadFilter.Add(new MetadataObject(item.Type, item.Name));
+            }
+
+            Settings.DownloadFilter.Sort(x => x.TypeAndName);
         }
 
         public void BeginEdit() =>

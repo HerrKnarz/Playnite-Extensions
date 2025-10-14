@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -17,6 +18,9 @@ namespace ScreenshotUtilities.Models
         {
             CreateGroupsFromFiles(basePath, gameId);
         }
+
+        [DontSerialize]
+        public bool IsEverythingDownloaded => !this.Any(g => g.Screenshots.Any(s => !s.IsDownloaded || string.IsNullOrEmpty(s.DownloadedThumbnailPath)));
 
         public void CreateGroupsFromFiles(string basePath, Guid gameId, bool createEmptyGroupOnError = true)
         {

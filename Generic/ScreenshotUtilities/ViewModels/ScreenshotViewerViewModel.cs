@@ -5,6 +5,7 @@ using ScreenshotUtilities.Controls;
 using ScreenshotUtilities.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace ScreenshotUtilities.ViewModels
@@ -64,12 +65,24 @@ namespace ScreenshotUtilities.ViewModels
                 return;
             }
 
-            ScreenshotGroups.CreateGroupsFromFiles(_plugin.GetPluginUserDataPath(), _gameId, false);
+            var groups = new ScreenshotGroups();
+            groups.CreateGroupsFromFiles(_plugin.GetPluginUserDataPath(), _gameId, false);
 
-            if (ScreenshotGroups.Count == 0)
+            if (groups.Count == 0)
             {
                 return;
             }
+
+            var game = API.Instance.Database.Games[_gameId];
+
+            if (_plugin.Settings.Settings.AutomaticDownload
+                && ((_plugin.Settings.Settings.DownloadFilter.Count == 0) || _plugin.Settings.Settings.DownloadFilter.Any(f => f.ExistsInGame(game)))
+                && !groups.IsEverythingDownloaded)
+            {
+                groups.DownloadAll();
+            }
+
+            ScreenshotGroups = groups;
 
             SelectedGroup = ScreenshotGroups[0];
 
