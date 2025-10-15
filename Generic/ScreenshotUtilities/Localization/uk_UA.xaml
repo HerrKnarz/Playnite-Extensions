@@ -11,6 +11,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Завантаження зображень для</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Відкрити теку</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Відкрити в пов'язаній програмі</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Open in browser</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Відкрити в повноекранному режимі</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Показати знімки екрану</sys:String>
 
