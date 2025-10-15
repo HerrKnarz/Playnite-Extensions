@@ -11,6 +11,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Bilder herunterladen für</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Ordner öffnen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">In zugehöriger Anwendung öffnen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Im Browser öffnen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Im Vollbildmodus öffnen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Screenshots anzeigen</sys:String>
 
