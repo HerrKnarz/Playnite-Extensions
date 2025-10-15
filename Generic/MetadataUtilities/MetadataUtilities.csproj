@@ -66,188 +66,192 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Common\KNARZhelper\BaseModels\BaseMetadataObject.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\BaseMetadataObject.cs">
       <Link>Shared\BaseMetadataObject.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseBooleanType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseBooleanType.cs">
       <Link>Shared\BaseBooleanType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseCompanyType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseCompanyType.cs">
       <Link>Shared\BaseCompanyType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseDateType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseDateType.cs">
       <Link>Shared\BaseDateType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseEditableDateType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseEditableDateType.cs">
       <Link>Shared\BaseEditableDateType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseIntegerType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseIntegerType.cs">
       <Link>Shared\BaseIntegerType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseListType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseListType.cs">
       <Link>Shared\BaseListType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseMediaType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseMediaType.cs">
       <Link>Shared\BaseMediaType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseObjectType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseObjectType.cs">
       <Link>Shared\BaseObjectType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseSingleObjectType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseSingleObjectType.cs">
       <Link>Shared\BaseSingleObjectType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseStringType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseStringType.cs">
       <Link>Shared\BaseStringType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\BaseUlongType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseUlongType.cs">
       <Link>Shared\BaseUlongType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IClearAbleType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IClearAbleType.cs">
       <Link>Shared\IClearAbleType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IEditableObjectType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IEditableObjectType.cs">
       <Link>Shared\IEditableObjectType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IGameInfoType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IGameInfoType.cs">
       <Link>Shared\IGameInfoType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IMetadataFieldType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IMetadataFieldType.cs">
       <Link>Shared\IMetadataFieldType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\INumberType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\INumberType.cs">
       <Link>Shared\INumberType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IObjectType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IObjectType.cs">
       <Link>Shared\IObjectType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\IValueType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IValueType.cs">
       <Link>Shared\IValueType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeAgeRating.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeAgeRating.cs">
       <Link>Shared\TypeAgeRating.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeBackground.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeBackground.cs">
       <Link>Shared\TypeBackground.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCategory.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeCategory.cs">
       <Link>Shared\TypeCategory.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCommunityScore.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeCommunityScore.cs">
       <Link>Shared\TypeCommunityScore.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCompletionStatus.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeCompletionStatus.cs">
       <Link>Shared\TypeCompletionStatus.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCover.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeCover.cs">
       <Link>Shared\TypeCover.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeCriticScore.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeCriticScore.cs">
       <Link>Shared\TypeCriticScore.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeDateAdded.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeDateAdded.cs">
       <Link>Shared\TypeDateAdded.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeDescription.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeDescription.cs">
       <Link>Shared\TypeDescription.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeDeveloper.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeDeveloper.cs">
       <Link>Shared\TypeDeveloper.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeFavorite.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeFavorite.cs">
       <Link>Shared\TypeFavorite.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeFeature.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeFeature.cs">
       <Link>Shared\TypeFeature.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeGenre.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeGenre.cs">
       <Link>Shared\TypeGenre.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeHdr.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeHdr.cs">
       <Link>Shared\TypeHdr.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeHidden.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeHidden.cs">
       <Link>Shared\TypeHidden.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeIcon.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeIcon.cs">
       <Link>Shared\TypeIcon.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeInstallSize.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeInstallSize.cs">
       <Link>Shared\TypeInstallSize.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeIsInstalled.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeIsInstalled.cs">
       <Link>Shared\TypeIsInstalled.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeLastPlayed.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeLastPlayed.cs">
       <Link>Shared\TypeLastPlayed.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeLibrary.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeLibrary.cs">
       <Link>Shared\TypeLibrary.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeLink.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeLink.cs">
       <Link>Shared\TypeLink.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeManual.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeManual.cs">
       <Link>Shared\TypeManual.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeName.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeName.cs">
       <Link>Shared\TypeName.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeNotes.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeNotes.cs">
       <Link>Shared\TypeNotes.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeOverrideInstallState.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeOverrideInstallState.cs">
       <Link>Shared\TypeOverrideInstallState.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePlatform.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypePlatform.cs">
       <Link>Shared\TypePlatform.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePlayCount.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypePlayCount.cs">
       <Link>Shared\TypePlayCount.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypePublisher.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypePublisher.cs">
       <Link>Shared\TypePublisher.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeRegion.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeRegion.cs">
       <Link>Shared\TypeRegion.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeReleaseDate.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeReleaseDate.cs">
       <Link>Shared\TypeReleaseDate.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeSeries.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeSeries.cs">
       <Link>Shared\TypeSeries.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeSortingName.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeSortingName.cs">
       <Link>Shared\TypeSortingName.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeSource.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeSource.cs">
       <Link>Shared\TypeSource.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeTag.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeTag.cs">
       <Link>Shared\TypeTag.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeTimePlayed.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeTimePlayed.cs">
       <Link>Shared\TypeTimePlayed.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeUserScore.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeUserScore.cs">
       <Link>Shared\TypeUserScore.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\DatabaseObjectTypes\TypeVersion.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeVersion.cs">
       <Link>Shared\TypeVersion.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Enum\DbInteractionResult.cs">
       <Link>Shared\DbInteractionResult.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\Enum\FieldType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\Enum\FieldType.cs">
       <Link>Shared\FieldType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\Enum\ItemValueType.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\Enum\ItemValueType.cs">
       <Link>Shared\ItemValueType.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\FieldTypeHelper.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\FieldTypeHelper.cs">
       <Link>Shared\FieldTypeHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\Views\SelectMetadataView.xaml.cs">
+      <Link>Shared\SelectMetadataView.xaml.cs</Link>
+      <DependentUpon>SelectMetadataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\MiscHelper.cs">
       <Link>Shared\MiscHelper.cs</Link>
@@ -255,12 +259,8 @@
     <Compile Include="..\..\Common\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\ViewModels\SelectMetadataViewModel.cs">
+    <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\ViewModels\SelectMetadataViewModel.cs">
       <Link>Shared\SelectMetadataViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\KNARZhelper\Views\SelectMetadataView.xaml.cs">
-      <Link>Shared\SelectMetadataView.xaml.cs</Link>
-      <DependentUpon>SelectMetadataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="..\..\Common\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
@@ -364,7 +364,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Include="..\..\Common\KNARZhelper\Views\SelectMetadataView.xaml">
+    <Page Include="..\..\Common\KNARZhelper\MetadataCommon\Views\SelectMetadataView.xaml">
       <Link>Shared\SelectMetadataView.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

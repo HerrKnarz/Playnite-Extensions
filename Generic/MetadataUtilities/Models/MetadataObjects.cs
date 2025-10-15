@@ -1,7 +1,7 @@
 ﻿using KNARZhelper;
-using KNARZhelper.BaseModels;
-using KNARZhelper.DatabaseObjectTypes;
-using KNARZhelper.Enum;
+using KNARZhelper.MetadataCommon;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
+using KNARZhelper.MetadataCommon.Enum;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;

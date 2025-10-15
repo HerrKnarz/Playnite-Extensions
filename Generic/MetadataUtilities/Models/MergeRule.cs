@@ -1,5 +1,5 @@
 ﻿using KNARZhelper;
-using KNARZhelper.Enum;
+using KNARZhelper.MetadataCommon.Enum;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -13,8 +13,10 @@ namespace MetadataUtilities.Models
     {
         private MetadataObjects _sourceObjects;
 
-        public MergeRule(FieldType type, string name = default) : base(type, name) =>
+        public MergeRule(FieldType type, string name = default) : base(type, name)
+        {
             _sourceObjects = new MetadataObjects();
+        }
 
         public MetadataObjects SourceObjects
         {

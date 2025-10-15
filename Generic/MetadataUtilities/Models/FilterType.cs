@@ -1,6 +1,6 @@
-﻿using KNARZhelper;
-using KNARZhelper.DatabaseObjectTypes;
-using KNARZhelper.Enum;
+﻿using KNARZhelper.MetadataCommon;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
+using KNARZhelper.MetadataCommon.Enum;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
 
@@ -12,7 +12,10 @@ namespace MetadataUtilities.Models
         private FieldType _fieldType;
         private bool _selected = true;
 
-        public FilterType() => UpdateCount();
+        public FilterType()
+        {
+            UpdateCount();
+        }
 
         [DontSerialize]
         public int Count

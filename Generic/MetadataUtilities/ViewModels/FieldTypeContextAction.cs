@@ -1,4 +1,4 @@
-﻿using KNARZhelper.Enum;
+﻿using KNARZhelper.MetadataCommon.Enum;
 using System.Windows.Input;
 
 namespace MetadataUtilities.ViewModels

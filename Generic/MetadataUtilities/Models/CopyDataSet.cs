@@ -1,4 +1,4 @@
-﻿using KNARZhelper;
+﻿using KNARZhelper.MetadataCommon;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System.Collections.Generic;

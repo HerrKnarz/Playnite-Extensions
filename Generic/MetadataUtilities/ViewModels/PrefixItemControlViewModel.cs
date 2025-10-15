@@ -1,6 +1,6 @@
-﻿using KNARZhelper;
-using KNARZhelper.DatabaseObjectTypes;
-using KNARZhelper.Enum;
+﻿using KNARZhelper.MetadataCommon;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
+using KNARZhelper.MetadataCommon.Enum;
 using MetadataUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -20,7 +20,10 @@ namespace MetadataUtilities.ViewModels
         private Guid _gameId = Guid.Empty;
         private ObservableCollection<PrefixItemList> _itemLists = new ObservableCollection<PrefixItemList>();
 
-        public PrefixItemControlViewModel(FieldType type) => _fieldType = type;
+        public PrefixItemControlViewModel(FieldType type)
+        {
+            _fieldType = type;
+        }
 
         public Visibility AddButtonVisibility => ControlCenter.Instance.Settings.PrefixControlDisplayAddButton
             ? Visibility.Visible

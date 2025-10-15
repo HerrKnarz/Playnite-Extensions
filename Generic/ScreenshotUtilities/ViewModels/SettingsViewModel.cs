@@ -1,8 +1,8 @@
 ﻿using KNARZhelper;
-using KNARZhelper.BaseModels;
-using KNARZhelper.DatabaseObjectTypes;
-using KNARZhelper.Enum;
-using KNARZhelper.ViewModels;
+using KNARZhelper.MetadataCommon;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
+using KNARZhelper.MetadataCommon.Enum;
+using KNARZhelper.MetadataCommon.ViewModels;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using ScreenshotUtilities.Models;

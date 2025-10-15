@@ -1,5 +1,5 @@
 ﻿using KNARZhelper;
-using KNARZhelper.Enum;
+using KNARZhelper.MetadataCommon.Enum;
 using MetadataUtilities.ViewModels;
 using Playnite.SDK.Models;
 using System;

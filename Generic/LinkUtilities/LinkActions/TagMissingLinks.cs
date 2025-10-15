@@ -1,4 +1,4 @@
-﻿using KNARZhelper.DatabaseObjectTypes;
+﻿using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
