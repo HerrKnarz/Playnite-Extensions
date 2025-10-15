@@ -111,6 +111,14 @@ namespace ScreenshotUtilities.ViewModels
             SelectedGroup = null;
         }
 
+        public RelayCommand<object> CopyToClipboardCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.CopyToClipboard());
+
+        public RelayCommand<object> OpenContainingFolderCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenContainingFolder());
+
+        public RelayCommand<object> OpenInAssociatedApplicationCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenInAssociatedApplication());
+
+        public RelayCommand<object> OpenInBrowserCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenInBrowser());
+
         public RelayCommand<object> OpenInFullScreenCommand => new RelayCommand<object>(a =>
         {
             if (!(SelectedGroup?.Screenshots?.Count > 0) || SelectedGroup.SelectedScreenshot == null)
@@ -156,16 +164,5 @@ namespace ScreenshotUtilities.ViewModels
             get => _selectedGroup;
             set => SetValue(ref _selectedGroup, value);
         }
-
-        public RelayCommand<object> CopyToClipboardCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.CopyToClipboard());
-
-        public RelayCommand<object> DeleteScreenshotCommand => new RelayCommand<object>(a =>
-        {
-
-        });
-
-        public RelayCommand<object> OpenContainingFolderCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenContainingFolder());
-
-        public RelayCommand<object> OpenInAssociatedApplicationCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenInAssociatedApplication());
     }
 }

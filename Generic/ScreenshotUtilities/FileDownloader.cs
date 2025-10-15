@@ -13,7 +13,7 @@ namespace ScreenshotUtilities
 
         public FileDownloader(HttpClient httpClient = null)
         {
-            InitHttpClient();
+            InitHttpClient(httpClient);
         }
 
         private void InitHttpClient(HttpClient httpClient = null)

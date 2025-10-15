@@ -69,6 +69,14 @@ namespace ScreenshotUtilities.Models
             }
         }
 
+        public void OpenInBrowser()
+        {
+            if (PathIsUrl)
+            {
+                Process.Start(new ProcessStartInfo(Path));
+            }
+        }
+
         internal void CopyToClipboard()
         {
             var fileInfo = new FileInfo(DisplayPath);
