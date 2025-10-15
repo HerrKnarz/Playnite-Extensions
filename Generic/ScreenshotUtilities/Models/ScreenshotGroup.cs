@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.FilesCommon;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;

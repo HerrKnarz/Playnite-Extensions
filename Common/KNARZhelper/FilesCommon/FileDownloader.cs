@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ScreenshotUtilities
+namespace KNARZhelper.FilesCommon
 {
     public class FileDownloader : IDisposable
     {

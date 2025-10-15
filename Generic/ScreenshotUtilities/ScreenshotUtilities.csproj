@@ -67,6 +67,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\KNARZhelper\FilesCommon\FileDownloader.cs">
+      <Link>Shared\FileDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\FilesCommon\FileHelper.cs">
+      <Link>Shared\FileHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\MetadataCommon\BaseMetadataObject.cs">
       <Link>Shared\BaseMetadataObject.cs</Link>
     </Compile>
@@ -140,8 +146,6 @@
     <Compile Include="Controls\ScreenshotViewerControl.xaml.cs">
       <DependentUpon>ScreenshotViewerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FileDownloader.cs" />
-    <Compile Include="FileHelper.cs" />
     <Compile Include="Models\MetadataObject.cs" />
     <Compile Include="Models\ScreenshotGroups.cs" />
     <Compile Include="Models\ScreenshotProvider.cs" />

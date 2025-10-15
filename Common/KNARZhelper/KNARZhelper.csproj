@@ -69,6 +69,8 @@
   <ItemGroup>
     <Compile Include="Controls\AspectRatioLayoutDecorator.cs" />
     <Compile Include="Controls\ListBoxScrollIntoViewBehavior.cs" />
+    <Compile Include="FilesCommon\FileDownloader.cs" />
+    <Compile Include="FilesCommon\FileHelper.cs" />
     <Compile Include="MetadataCommon\DatabaseObjectTypes\BaseBooleanType.cs" />
     <Compile Include="MetadataCommon\DatabaseObjectTypes\BaseCompanyType.cs" />
     <Compile Include="MetadataCommon\DatabaseObjectTypes\BaseDateType.cs" />
