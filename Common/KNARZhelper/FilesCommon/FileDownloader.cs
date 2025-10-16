@@ -5,12 +5,19 @@ using System.Threading.Tasks;
 
 namespace KNARZhelper.FilesCommon
 {
+    /// <summary>
+    /// A utility class for downloading files asynchronously using HttpClient.
+    /// </summary>
     public class FileDownloader : IDisposable
     {
         private bool _disposed;
         private HttpClient _httpClient;
         private static FileDownloader _instance;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileDownloader"/> class.
+        /// </summary>
+        /// <param name="httpClient">An optional HttpClient instance to use for downloading files.</param>
         public FileDownloader(HttpClient httpClient = null)
         {
             InitHttpClient(httpClient);
@@ -41,6 +48,9 @@ namespace KNARZhelper.FilesCommon
             return new FileInfo(directoryPath);
         }
 
+        /// <summary>
+        /// Disposes the HttpClient instance used by the FileDownloader.
+        /// </summary>
         public void Dispose()
         {
             if (_disposed)
@@ -53,6 +63,10 @@ namespace KNARZhelper.FilesCommon
             _disposed = true;
         }
 
+        /// <summary>
+        /// Gets the singleton instance of the <see cref="FileDownloader"/> class.
+        /// </summary>
+        /// <returns>The singleton instance of the <see cref="FileDownloader"/> class.</returns>
         public static FileDownloader Instance() => _instance ?? (_instance = new FileDownloader());
     }
 }

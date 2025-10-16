@@ -1,10 +1,10 @@
 ﻿using KNARZhelper;
+using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using ScreenshotUtilities.Controls;
-using ScreenshotUtilities.Models;
 using ScreenshotUtilities.ViewModels;
 using ScreenshotUtilities.Views;
 using System;

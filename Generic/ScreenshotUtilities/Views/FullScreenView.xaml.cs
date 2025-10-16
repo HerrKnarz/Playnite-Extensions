@@ -1,4 +1,4 @@
-﻿using ScreenshotUtilities.Models;
+﻿using KNARZhelper.ScreenshotsCommon.Models;
 using ScreenshotUtilities.ViewModels;
 using System.Windows;
 using System.Windows.Controls;

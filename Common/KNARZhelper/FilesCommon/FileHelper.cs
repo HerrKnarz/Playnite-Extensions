@@ -6,11 +6,20 @@ using System.Text.RegularExpressions;
 
 namespace KNARZhelper.FilesCommon
 {
+    /// <summary>
+    /// Helper class for file operations.
+    /// </summary>
     public class FileHelper
     {
         private const string longPathPrefix = @"\\?\";
         private const string longPathUncPrefix = @"\\?\UNC\";
 
+        /// <summary>
+        /// Creates a thumbnail image with a height of 120 pixels, maintaining the aspect ratio.
+        /// </summary>
+        /// <param name="imageFileName">The path to the original image file.</param>
+        /// <param name="thumbnailFileName">The path to the thumbnail image file.</param>
+        /// <returns>The FileInfo of the created thumbnail image.</returns>
         public static FileInfo CreateThumbnailImage(string imageFileName, string thumbnailFileName = "")
         {
             if (string.IsNullOrEmpty(thumbnailFileName))
@@ -31,6 +40,11 @@ namespace KNARZhelper.FilesCommon
             return new FileInfo(thumbnailFileName);
         }
 
+        /// <summary>
+        /// Deletes the specified file. If the file is read-only and includeReadonly is true, the read-only attribute will be removed before deletion.
+        /// </summary>
+        /// <param name="path">The path to the file to delete.</param>
+        /// <param name="includeReadonly">Whether to remove the read-only attribute before deletion.</param>
         public static void DeleteFile(string path, bool includeReadonly = false)
         {
             path = FixPathLength(path);
@@ -54,6 +68,11 @@ namespace KNARZhelper.FilesCommon
             fileInfo.Delete();
         }
 
+        /// <summary>
+        /// Fixes the path length by adding the appropriate prefix for long paths if necessary.
+        /// </summary>
+        /// <param name="path">The file path to fix.</param>
+        /// <returns>The fixed file path.</returns>
         public static string FixPathLength(string path)
         {
             // Relative paths don't support long paths
@@ -65,6 +84,13 @@ namespace KNARZhelper.FilesCommon
                 : path;
         }
 
+        /// <summary>
+        /// Gets the download path based on the base path, game ID, and provider ID.
+        /// </summary>
+        /// <param name="basePath">The base path for the download location.</param>
+        /// <param name="gameId">The ID of the game.</param>
+        /// <param name="providerId">The ID of the provider.</param>
+        /// <returns>The directory info for the download path.</returns>
         public static DirectoryInfo GetDownloadPath(string basePath, Guid gameId = default, Guid providerId = default)
         {
             try
@@ -90,6 +116,11 @@ namespace KNARZhelper.FilesCommon
             }
         }
 
+        /// <summary>
+        /// Gets the file extension from a URL.
+        /// </summary>
+        /// <param name="url">The URL to get the file extension from.</param>
+        /// <returns>The file extension, or an empty string if the URL is invalid.</returns>
         public static string GetFileExtensionFromUrl(string url)
         {
             try
@@ -103,6 +134,11 @@ namespace KNARZhelper.FilesCommon
             }
         }
 
+        /// <summary>
+        /// Checks if the given path is a full path (absolute path).
+        /// </summary>
+        /// <param name="path">The file path to check.</param>
+        /// <returns>True if the path is a full path; otherwise, false.</returns>
         public static bool IsFullPath(string path) => !string.IsNullOrWhiteSpace(path) && Regex.IsMatch(path, @"^([a-zA-Z]:\\|\\\\)");
 
         private static void PrepareSaveFile(string path, bool deleteFile = true)
@@ -115,6 +151,12 @@ namespace KNARZhelper.FilesCommon
             }
         }
 
+        /// <summary>
+        /// Writes the specified content to a file at the given path. If the file already exists, it will be deleted before writing.
+        /// </summary>
+        /// <param name="path">The file path to write to.</param>
+        /// <param name="content">The content to write to the file.</param>
+        /// <param name="useUtf8">Whether to use UTF-8 encoding.</param>
         internal static void WriteStringToFile(string path, string content, bool useUtf8 = false)
         {
             path = FixPathLength(path);

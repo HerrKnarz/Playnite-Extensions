@@ -4,6 +4,9 @@ using System.Windows.Controls;
 
 namespace KNARZhelper.Controls
 {
+    /// <summary>
+    /// A decorator that forces its child to keep a certain aspect ratio.
+    /// </summary>
     public class AspectRatioLayoutDecorator : Decorator
     {
         public static readonly DependencyProperty AspectRatioProperty =

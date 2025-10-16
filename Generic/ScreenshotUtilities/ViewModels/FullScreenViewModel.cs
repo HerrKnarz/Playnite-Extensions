@@ -1,6 +1,6 @@
 ﻿using KNARZhelper;
+using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
-using ScreenshotUtilities.Models;
 using ScreenshotUtilities.Views;
 using System;
 using System.Collections.Generic;

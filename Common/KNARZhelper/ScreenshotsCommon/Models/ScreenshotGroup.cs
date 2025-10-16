@@ -1,5 +1,4 @@
-﻿using KNARZhelper;
-using KNARZhelper.FilesCommon;
+﻿using KNARZhelper.FilesCommon;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
@@ -7,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace ScreenshotUtilities.Models
+namespace KNARZhelper.ScreenshotsCommon.Models
 {
     public class ScreenshotGroup : ObservableObject
     {

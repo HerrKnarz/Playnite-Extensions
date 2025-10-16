@@ -16,6 +16,10 @@ namespace KNARZhelper
         private readonly Regex _trimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
         private readonly Regex _trimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlatformHelper"/> class.
+        /// </summary>
+        /// <param name="platforms">List of platforms to initialize the helper with</param>
         public PlatformHelper(IEnumerable<Platform> platforms)
         {
             _platformSpecNameByNormalName = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
@@ -91,6 +95,13 @@ namespace KNARZhelper
                     : new List<MetadataProperty> { new MetadataNameProperty(sanitizedPlatformName) };
         }
 
+        /// <summary>
+        /// Tries to add a platform to the dictionary by its name.
+        /// </summary>
+        /// <param name="dict">Dictionary to add the platform to</param>
+        /// <param name="platformName">Name of the platform</param>
+        /// <param name="platformSpecNames">Specification names of the platform</param>
+        /// <returns>True if the platform was added, false if it already exists</returns>
         private static bool TryAddPlatformByName(IDictionary<string, string[]> dict, string platformName, params string[] platformSpecNames)
         {
             if (dict.ContainsKey(platformName))
@@ -102,6 +113,13 @@ namespace KNARZhelper
             return true;
         }
 
+        /// <summary>
+        /// Tries to add multiple platforms to the dictionary by their names.
+        /// </summary>
+        /// <param name="dict">Dictionary to add the platforms to</param>
+        /// <param name="platformNames">Names of the platforms</param>
+        /// <param name="platformSpecNames">Specification names of the platforms</param>
+        /// <returns>True if all platforms were added, false if any already exist</returns>
         private static bool TryAddPlatformByName(IDictionary<string, string[]> dict, IEnumerable<string> platformNames, params string[] platformSpecNames)
             => platformNames.Aggregate(true, (current, platformName) => current & TryAddPlatformByName(dict, platformName, platformSpecNames));
     }

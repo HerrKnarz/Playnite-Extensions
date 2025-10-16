@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ScreenshotUtilities.Models
+namespace KNARZhelper.ScreenshotsCommon.Models
 {
     public class ScreenshotProvider : ObservableObject
     {

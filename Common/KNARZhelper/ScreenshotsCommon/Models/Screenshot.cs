@@ -7,7 +7,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace ScreenshotUtilities.Models
+namespace KNARZhelper.ScreenshotsCommon.Models
 {
     public class Screenshot : ObservableObject
     {
@@ -41,7 +41,7 @@ namespace ScreenshotUtilities.Models
 
         public void GenerateThumbnail()
         {
-            if (!IsDownloaded || (!string.IsNullOrEmpty(DownloadedThumbnailPath) && System.IO.File.Exists(DownloadedThumbnailPath)) || !System.IO.File.Exists(DownloadedPath))
+            if (!IsDownloaded || (!string.IsNullOrEmpty(DownloadedThumbnailPath) && File.Exists(DownloadedThumbnailPath)) || !File.Exists(DownloadedPath))
             {
                 return;
             }
@@ -144,7 +144,7 @@ namespace ScreenshotUtilities.Models
         }
 
         [DontSerialize]
-        public bool PathIsUrl => !string.IsNullOrEmpty(Path) && (Path.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || Path.StartsWith("https://", StringComparison.OrdinalIgnoreCase));
+        public bool PathIsUrl => !string.IsNullOrEmpty(Path) && Path.IsValidHttpUrl();
 
         [SerializationPropertyName("sortOrder")]
         public int SortOrder

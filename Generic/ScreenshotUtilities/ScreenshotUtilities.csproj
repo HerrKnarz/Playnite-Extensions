@@ -131,6 +131,18 @@
     <Compile Include="..\..\Common\KNARZhelper\MiscHelper.cs">
       <Link>Shared\MiscHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\ScreenshotsCommon\Models\Screenshot.cs">
+      <Link>Shared\Screenshot.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\ScreenshotsCommon\Models\ScreenshotGroup.cs">
+      <Link>Shared\ScreenshotGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\ScreenshotsCommon\Models\ScreenshotGroups.cs">
+      <Link>Shared\ScreenshotGroups.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\KNARZhelper\ScreenshotsCommon\Models\ScreenshotProvider.cs">
+      <Link>Shared\ScreenshotProvider.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
@@ -147,10 +159,6 @@
       <DependentUpon>ScreenshotViewerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\MetadataObject.cs" />
-    <Compile Include="Models\ScreenshotGroups.cs" />
-    <Compile Include="Models\ScreenshotProvider.cs" />
-    <Compile Include="Models\Screenshot.cs" />
-    <Compile Include="Models\ScreenshotGroup.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="ScreenshotUtilities.cs" />
     <Compile Include="ViewModels\ButtonControlViewModel.cs" />

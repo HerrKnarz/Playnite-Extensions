@@ -16,14 +16,18 @@ namespace KNARZhelper
         /// Dictionary with special characters that need to be replaced before regular removing of diacritics.
         /// </summary>
         public static IReadOnlyDictionary<string, string> SpecialDiacritics = new Dictionary<string, string>
-                                                                   {
-                                                                        { "ß".Normalize(NormalizationForm.FormD), "ss".Normalize(NormalizationForm.FormD) },
-                                                                   };
+        {
+            {
+                "ß".Normalize(NormalizationForm.FormD), "ss".Normalize(NormalizationForm.FormD)
+            },
+        };
 
         /// <summary>
         /// Replaces multiple whitespaces between characters with a single one and trims them from
         /// beginning and end of the string.
         /// </summary>
+        /// <param name="str">String to process</param>
+        /// <returns>String with collapsed whitespaces</returns>
         public static string CollapseWhitespaces(this string str) => Regex.Replace(str, @"\s+", " ").Trim();
 
         /// <summary>
@@ -38,8 +42,8 @@ namespace KNARZhelper
         /// <summary>
         /// Substitutes every digit to its counterpart in roman notation.
         /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
+        /// <param name="str">String to process</param>
+        /// <returns>String with roman numerals</returns>
         public static string DigitsToRomanNumbers(this string str) => str.Replace("1", "I")
             .Replace("2", "II")
             .Replace("3", "III")
@@ -53,13 +57,30 @@ namespace KNARZhelper
         /// <summary>
         /// Escapes a string to be used in a URL.
         /// </summary>
+        /// <param name="str">String to escape</param>
+        /// <returns>Escaped string</returns>
         public static string EscapeDataString(this string str) => Uri.EscapeDataString(str);
 
         /// <summary>
         /// Escapes quotes in a string to \".
         /// </summary>
+        /// <param name="str">String to escape</param>
+        /// <returns>Escaped string</returns>
         public static string EscapeQuotes(this string str) => str.Replace("\"", "\\\"");
 
+        /// <summary>
+        /// Checks if a string is a valid HTTP or HTTPS URL.
+        /// </summary>
+        /// <param name="url">The URL to check</param>
+        /// <returns>True if the URL is valid, false otherwise</returns>
+        public static bool IsValidHttpUrl(this string url) => Uri.TryCreate(url, UriKind.Absolute, out var uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+        /// <summary>
+        /// Checks if a string matches a regular expression.
+        /// </summary>
+        /// <param name="source">String to check</param>
+        /// <param name="regEx">Regular expression to match</param>
+        /// <returns>True if the string matches the regular expression, false otherwise</returns>
         public static bool RegExIsMatch(this string source, string regEx)
         {
             var regExOptions = RegexOptions.ExplicitCapture;
@@ -71,6 +92,8 @@ namespace KNARZhelper
         /// <summary>
         /// Removes diacritics from a string
         /// </summary>
+        /// <param name="str">String to process</param>
+        /// <returns>String without diacritics</returns>
         public static string RemoveDiacritics(this string str)
         {
             var stringBuilder = new StringBuilder(str.Normalize(NormalizationForm.FormD));
@@ -127,6 +150,9 @@ namespace KNARZhelper
         /// <summary>
         /// Removes all characters that aren't part of the alphabet, a number, a whitespace or a hyphen.
         /// </summary>
+        /// <param name="str">String to process</param>
+        /// <param name="replaceStr">String to replace removed characters with</param>
+        /// <returns>Processed string</returns>
         public static string RemoveSpecialChars(this string str, string replaceStr = "") => Regex.Replace(str, @"[^a-zA-Z0-9\-\s]+", replaceStr);
 
         /// <summary>
@@ -154,11 +180,18 @@ namespace KNARZhelper
             return str;
         }
 
+        /// <summary>
+        /// Converts a string to title case (first letter of each word capitalized).
+        /// </summary>
+        /// <param name="title">String to convert</param>
+        /// <returns>Title case string</returns>
         public static string ToTitleCase(this string title) => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(title.ToLower());
 
         /// <summary>
         /// Encodes an URL.
         /// </summary>
+        /// <param name="str">String to encode</param>
+        /// <returns>Encoded string</returns>
         public static string UrlEncode(this string str) => HttpUtility.UrlEncode(str);
     }
 }

@@ -6,8 +6,16 @@ using System.Windows.Media;
 
 namespace KNARZhelper
 {
+    /// <summary>
+    /// Helper class to create and manage windows in a standardized way.
+    /// </summary>
     public static class WindowHelper
     {
+        /// <summary>
+        /// Creates a dialog window with fixed size that can't be resized by the user.
+        /// </summary>
+        /// <param name="title">Title of the window</param>
+        /// <returns>Created window</returns>
         public static Window CreateFixedDialog(string title)
         {
             var window = CreateSizeToContentWindow(title, 300, 50);
@@ -16,6 +24,10 @@ namespace KNARZhelper
             return window;
         }
 
+        /// <summary>
+        /// Creates a full screen window without borders and no way to resize or close it
+        /// </summary>
+        /// <returns>Created window</returns>
         public static Window CreateFullScreenWindow()
         {
             var window = new Window
@@ -33,6 +45,15 @@ namespace KNARZhelper
             return window;
         }
 
+        /// <summary>
+        /// Creates a window with the given size. If widthToMax or heightToMax is true, the window will be as high or wide as the screen allows.
+        /// </summary>
+        /// <param name="title">Title of the window</param>
+        /// <param name="width">Width of the window</param>
+        /// <param name="height">Height of the window</param>
+        /// <param name="widthToMax">Whether to stretch the window to the maximum width</param>
+        /// <param name="heightToMax">Whether to stretch the window to the maximum height</param>
+        /// <returns>Created window</returns>
         public static Window CreateSizedWindow(string title, int width, int height, bool widthToMax = false, bool heightToMax = false)
         {
             var window = CreateWindow(title);
@@ -75,6 +96,13 @@ namespace KNARZhelper
             return window;
         }
 
+        /// <summary>
+        /// Creates a window that sizes itself to its content, but has a minimum size and won't exceed the screen size.
+        /// </summary>
+        /// <param name="title">Title of the window</param>
+        /// <param name="minWidth">Minimum width of the window</param>
+        /// <param name="minHeight">Minimum height of the window</param>
+        /// <returns>Created window</returns>
         public static Window CreateSizeToContentWindow(string title, int minWidth = 500, int minHeight = 500)
         {
             var window = CreateWindow(title);
@@ -95,6 +123,14 @@ namespace KNARZhelper
             return window;
         }
 
+        /// <summary>
+        /// Creates a window with the given title and button configuration.
+        /// </summary>
+        /// <param name="title">Title of the window</param>
+        /// <param name="showMaximizeButton">Whether to show the maximize button</param>
+        /// <param name="showMinimizeButton">Whether to show the minimize button</param>
+        /// <param name="showCloseButton">Whether to show the close button</param>
+        /// <returns>Created window</returns>
         private static Window CreateWindow(string title, bool showMaximizeButton = false, bool showMinimizeButton = false, bool showCloseButton = true)
         {
             var window = API.Instance.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = showCloseButton, ShowMaximizeButton = showMaximizeButton, ShowMinimizeButton = showMinimizeButton });
@@ -104,6 +140,10 @@ namespace KNARZhelper
             return window;
         }
 
+        /// <summary>
+        /// Positions the window in the center of its owner.
+        /// </summary>
+        /// <param name="window">The window to position</param>
         private static void PositionWindow(Window window) => window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
     }
 }
