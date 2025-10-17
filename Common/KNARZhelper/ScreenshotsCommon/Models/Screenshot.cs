@@ -9,6 +9,9 @@ using System.Windows.Media.Imaging;
 
 namespace KNARZhelper.ScreenshotsCommon.Models
 {
+    /// <summary>
+    /// Class representing a screenshot with properties and methods for managing it.
+    /// </summary>
     public class Screenshot : ObservableObject
     {
         private string _description;
@@ -20,6 +23,12 @@ namespace KNARZhelper.ScreenshotsCommon.Models
         private int _sortOrder = 0;
         private string _thumbnailPath;
 
+        /// <summary>
+        /// Creates a new instance of the Screenshot class.
+        /// </summary>
+        /// <param name="path">Path to the screenshot file.</param>
+        /// <param name="name">Name of the screenshot.</param>
+        /// <param name="id">Unique identifier for the screenshot.</param>
         public Screenshot(string path = "", string name = "", Guid id = default)
         {
             _id = id == default ? _id : id;
@@ -27,6 +36,10 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             _name = name == string.Empty ? System.IO.Path.GetFileNameWithoutExtension(path) : name;
         }
 
+        /// <summary>
+        /// Downloads the screenshot to the specified path.
+        /// </summary>
+        /// <param name="path">Path to the folder where the screenshot will be downloaded.</param>
         public void Download(string path)
         {
             if (!PathIsUrl || IsDownloaded)
@@ -39,9 +52,14 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             DownloadedPath = image.FullName;
         }
 
+        /// <summary>
+        /// Generates a thumbnail for the downloaded screenshot.
+        /// </summary>
         public void GenerateThumbnail()
         {
-            if (!IsDownloaded || (!string.IsNullOrEmpty(DownloadedThumbnailPath) && File.Exists(DownloadedThumbnailPath)) || !File.Exists(DownloadedPath))
+            if (!IsDownloaded
+                || (!string.IsNullOrEmpty(DownloadedThumbnailPath) && File.Exists(DownloadedThumbnailPath))
+                || !File.Exists(DownloadedPath))
             {
                 return;
             }
@@ -50,6 +68,9 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             DownloadedThumbnailPath = thumb.FullName;
         }
 
+        /// <summary>
+        /// Opens the folder containing the screenshot in File Explorer.
+        /// </summary>
         public void OpenContainingFolder()
         {
             var directoryInfo = new FileInfo(DisplayPath).Directory;
@@ -60,6 +81,9 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             }
         }
 
+        /// <summary>
+        /// Opens the screenshot in its associated application.
+        /// </summary>
         public void OpenInAssociatedApplication()
         {
             var fileInfo = new FileInfo(DisplayPath);
@@ -70,6 +94,9 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             }
         }
 
+        /// <summary>
+        /// Opens the screenshot URL in the default web browser.
+        /// </summary>
         public void OpenInBrowser()
         {
             if (PathIsUrl)
@@ -78,7 +105,10 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             }
         }
 
-        internal void CopyToClipboard()
+        /// <summary>
+        /// Copies the screenshot image to the clipboard.
+        /// </summary>
+        public void CopyToClipboard()
         {
             var fileInfo = new FileInfo(DisplayPath);
 
@@ -95,6 +125,9 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             }
         }
 
+        /// <summary>
+        /// Description of the screenshot.
+        /// </summary>
         [SerializationPropertyName("description")]
         public string Description
         {
@@ -102,9 +135,16 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             set => SetValue(ref _description, value);
         }
 
+        /// <summary>
+        /// Gets the display path for the screenshot. If the screenshot is downloaded, it returns the downloaded path; otherwise, it
+        /// returns the original path.
+        /// </summary>
         [DontSerialize]
         public string DisplayPath => IsDownloaded ? DownloadedPath : Path;
 
+        /// <summary>
+        /// Gets or sets the file path where the downloaded screenshot is stored.
+        /// </summary>
         [SerializationPropertyName("downloadedPath")]
         public string DownloadedPath
         {
@@ -112,6 +152,10 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             set => SetValue(ref _downloadedPath, value);
         }
 
+        /// <summary>
+        /// Gets or sets the file path of the thumbnail to the downloaded screenshot. It will be generated automatically after downloading
+        /// the screenshot from the original file instead of downloading the thumbnail separately.
+        /// </summary>
         [SerializationPropertyName("downloadedThumbnailPath")]
         public string DownloadedThumbnailPath
         {
@@ -119,6 +163,10 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             set => SetValue(ref _downloadedThumbnailPath, value);
         }
 
+        /// <summary>
+        /// Gets or sets the unique identifier for the screenshot. It is used as the filename for the downloaded image, so it's not advisable
+        /// to change this value after the screenshot was downloaded already to avoid confusion.
+        /// </summary>
         [SerializationPropertyName("id")]
         public Guid Id
         {
@@ -126,9 +174,15 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             set => SetValue(ref _id, value);
         }
 
+        /// <summary>
+        /// Specifies whether the screenshot has been downloaded.
+        /// </summary>
         [DontSerialize]
         public bool IsDownloaded => !string.IsNullOrEmpty(DownloadedPath);
 
+        /// <summary>
+        /// Name of the screenshot.
+        /// </summary>
         [SerializationPropertyName("name")]
         public string Name
         {
@@ -136,6 +190,9 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             set => SetValue(ref _name, value);
         }
 
+        /// <summary>
+        /// Initial path or URL of the screenshot.
+        /// </summary>
         [SerializationPropertyName("path")]
         public string Path
         {
@@ -143,9 +200,15 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             set => SetValue(ref _path, value);
         }
 
+        /// <summary>
+        /// Specifies whether the Path property is a valid URL.
+        /// </summary>
         [DontSerialize]
         public bool PathIsUrl => !string.IsNullOrEmpty(Path) && Path.IsValidHttpUrl();
 
+        /// <summary>
+        /// Gets or sets the sort order for the item.
+        /// </summary>
         [SerializationPropertyName("sortOrder")]
         public int SortOrder
         {
@@ -153,6 +216,9 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             set => SetValue(ref _sortOrder, value);
         }
 
+        /// <summary>
+        /// Gets or sets the initial path or URL to the thumbnail image.
+        /// </summary>
         [SerializationPropertyName("thumbnailPath")]
         public string ThumbnailPath
         {
@@ -160,6 +226,9 @@ namespace KNARZhelper.ScreenshotsCommon.Models
             set => SetValue(ref _thumbnailPath, value);
         }
 
+        /// <summary>
+        /// Gets the path to the thumbnail image to display, based on the download and availability status.
+        /// </summary>
         [DontSerialize]
         public string DisplayThumbnail => IsDownloaded && !string.IsNullOrEmpty(DownloadedThumbnailPath)
             ? DownloadedThumbnailPath : !string.IsNullOrEmpty(ThumbnailPath)

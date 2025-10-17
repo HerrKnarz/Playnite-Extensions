@@ -7,10 +7,17 @@ using System.Linq;
 
 namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 {
+    /// <summary>
+    /// Base class for company metadata fields.
+    /// </summary>
     public abstract class BaseCompanyType : BaseListType
     {
         private readonly IItemCollection<Company> _collection = API.Instance.Database.Companies;
 
+        /// <summary>
+        /// Creates a new instance of the BaseCompanyType class.
+        /// </summary>
+        /// <param name="adoptEvents">Specifies if the instance should adopt events to react to changes to it made from the outside.</param>
         protected BaseCompanyType(bool adoptEvents = false)
         {
             if (!adoptEvents)
@@ -54,6 +61,11 @@ namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 
         public override void UpdateDbObject(Guid id, string name) => UpdateDbObject(id, name, _collection);
 
+        /// <summary>
+        /// Renames company objects in the class instance when they were updated in the database.
+        /// </summary>
+        /// <param name="sender">object sending the event</param>
+        /// <param name="args">Event arguments. Contains the companies that were changed with their old and new data.</param>
         private void ItemUpdated(object sender, ItemUpdatedEventArgs<Company> args)
         {
             if (RenameObject == null)

@@ -3,6 +3,9 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 {
+    /// <summary>
+    /// Base type for integer metadata fields.
+    /// </summary>
     public abstract class BaseIntegerType : IMetadataFieldType, INumberType, IValueType, IClearAbleType
     {
         public bool CanBeAdded => false;
@@ -33,6 +36,11 @@ namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 
         public bool GameContainsValue<T>(Game game, T value) => value is int intValue && GetValue(game) == intValue;
 
+        /// <summary>
+        /// Gets the integer value of the field for the specified game. Can be null.
+        /// </summary>
+        /// <param name="game">Game to get the integer from</param>
+        /// <returns>Retrieved integer</returns>
         public abstract int? GetValue(Game game);
 
         public bool IsBiggerThan<T>(Game game, T value) => value is int intValue && GetValue(game) > intValue;

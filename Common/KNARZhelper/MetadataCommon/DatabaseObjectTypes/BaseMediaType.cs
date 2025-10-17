@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 {
+    /// <summary>
+    /// Base type for media metadata fields.
+    /// </summary>
     public abstract class BaseMediaType : IMetadataFieldType, IValueType, IClearAbleType
     {
         public bool CanBeAdded => false;
@@ -78,8 +81,18 @@ namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 
         public bool GameContainsValue<T>(Game game, T value) => !GetValue(game)?.Any() ?? true;
 
+        /// <summary>
+        /// Gets the media value of the field for the specified game. Can be null.
+        /// </summary>
+        /// <param name="game">Game to get the media value from</param>
+        /// <returns>Media value of the field for the specified game</returns>
         internal abstract string GetValue(Game game);
 
+        /// <summary>
+        /// Sets the media value of the field for the specified game.
+        /// </summary>
+        /// <param name="game">Game to set the media value for</param>
+        /// <param name="value">Media value to set</param>
         internal abstract void SetValue(Game game, string value);
     }
 }

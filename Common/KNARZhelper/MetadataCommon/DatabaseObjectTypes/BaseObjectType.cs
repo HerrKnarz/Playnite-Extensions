@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 {
+    /// <summary>
+    /// Base type for object metadata fields.
+    /// </summary>
     public abstract class BaseObjectType : IEditableObjectType, IClearAbleType
     {
         public virtual event RenameObjectEventHandler RenameObject
@@ -103,26 +106,83 @@ namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
             return DbInteractionResult.Updated;
         }
 
+        /// <summary>
+        /// Adds a database object to the specified collection.
+        /// </summary>
+        /// <typeparam name="T">Type of the database object</typeparam>
+        /// <param name="name">Name of the database object</param>
+        /// <param name="collection">Collection to add the database object to</param>
+        /// <returns>ID of the added database object</returns>
         internal Guid AddDbObject<T>(string name, IItemCollection<T> collection) where T : DatabaseObject => collection.Add(name).Id;
 
+        /// <summary>
+        /// Checks if a database object with the specified name exists in the specified collection.
+        /// </summary>
+        /// <typeparam name="T">Type of the database object</typeparam>
+        /// <param name="name">Name of the database object</param>
+        /// <param name="collection">Collection to check for the the database object in</param>
+        /// <returns>True if the object was found, otherwise false</returns>
         internal bool DbObjectExists<T>(string name, IItemCollection<T> collection) where T : DatabaseObject =>
             collection?.Any(x => x.Name == name) ?? false;
 
+        /// <summary>
+        /// Checks if a database object with the specified ID exists in the specified collection.
+        /// </summary>
+        /// <typeparam name="T">Type of the database object</typeparam>
+        /// <param name="id">Id of the database object</param>
+        /// <param name="collection">Collection to check for the the database object in</param>
+        /// <returns>True if the object was found, otherwise false</returns>
         internal bool DbObjectExists<T>(Guid id, IItemCollection<T> collection) where T : DatabaseObject =>
             collection?.Any(x => x.Id == id) ?? false;
 
+        /// <summary>
+        /// Gets the ID of a database object with the specified name from the specified collection.
+        /// </summary>
+        /// <typeparam name="T">Type of the database object</typeparam>
+        /// <param name="name">Name of the database object</param>
+        /// <param name="collection">Collection to get the database object from</param>
+        /// <returns></returns>
         internal Guid GetDbObjectId<T>(string name, IItemCollection<T> collection) where T : DatabaseObject =>
             collection?.FirstOrDefault(x => x.Name == name)?.Id ?? Guid.Empty;
 
+        /// <summary>
+        /// Loads all metadata objects of this type from the specified collection, ignoring the ones in the ignore list.
+        /// </summary>
+        /// <typeparam name="T">Type of the database object</typeparam>
+        /// <param name="collection">Collection to load the metadata from</param>
+        /// <param name="itemsToIgnore">List of IDs to ignore</param>
+        /// <returns>List of database objects</returns>
         internal List<DatabaseObject> LoadAllMetadata<T>(IItemCollection<T> collection, HashSet<Guid> itemsToIgnore) where T : DatabaseObject =>
             collection.Where(x => !itemsToIgnore.Contains(x.Id)).Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList();
 
+        /// <summary>
+        /// Checks if a name exists in the specified collection, excluding the object with the specified ID.
+        /// </summary>
+        /// <typeparam name="T">Type of the database object</typeparam>
+        /// <param name="name">Name of the database object</param>
+        /// <param name="id">Id of the database object</param>
+        /// <param name="collection">Collection to check for the the database object in</param>
+        /// <returns>True if the object was found, otherwise false</returns>
         internal bool NameExists<T>(string name, Guid id, IItemCollection<T> collection) where T : DatabaseObject =>
             collection?.Any(x => x.Name == name && x.Id != id) ?? false;
 
+        /// <summary>
+        /// Removes a database object with the specified ID from the specified collection if it exists and is not in use.
+        /// </summary>
+        /// <typeparam name="T">Type of the database object</typeparam>
+        /// <param name="id">Id of the database object</param>
+        /// <param name="collection">Collection to remove the database object from</param>
+        /// <returns>True if the object was removed, otherwise false</returns>
         internal bool RemoveDbObject<T>(Guid id, IItemCollection<T> collection) where T : DatabaseObject =>
             DbObjectExists(id) && !DbObjectInUse(id) && API.Instance.MainView.UIDispatcher.Invoke(() => collection?.Remove(id) ?? false);
 
+        /// <summary>
+        /// Updates the name of a database object with the specified ID in the specified collection.
+        /// </summary>
+        /// <typeparam name="T">Type of the database object</typeparam>
+        /// <param name="id">Id of the database object</param>
+        /// <param name="name">New name of the database object</param>
+        /// <param name="collection">Collection to update the database object in</param>
         internal void UpdateDbObject<T>(Guid id, string name, IItemCollection<T> collection) where T : DatabaseObject
         {
             var item = collection?.FirstOrDefault(x => x.Id == id);

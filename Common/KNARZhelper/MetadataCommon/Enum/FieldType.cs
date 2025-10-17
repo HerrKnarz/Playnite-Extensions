@@ -1,5 +1,8 @@
 ﻿namespace KNARZhelper.MetadataCommon.Enum
 {
+    /// <summary>
+    /// All supported metadata field types.
+    /// </summary>
     public enum FieldType
     {
         Empty = -1,

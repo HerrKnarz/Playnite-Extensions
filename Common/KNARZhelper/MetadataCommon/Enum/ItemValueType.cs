@@ -1,5 +1,8 @@
 ﻿namespace KNARZhelper.MetadataCommon.Enum
 {
+    /// <summary>
+    /// All supported item value types.
+    /// </summary>
     public enum ItemValueType
     {
         None,

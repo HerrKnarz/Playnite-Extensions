@@ -3,6 +3,9 @@ using System;
 
 namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 {
+    /// <summary>
+    /// Base type for editable date metadata fields.
+    /// </summary>
     public abstract class BaseEditableDateType : BaseDateType, IClearAbleType
     {
         public override bool CanBeClearedInGame => true;

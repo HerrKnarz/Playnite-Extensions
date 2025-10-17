@@ -3,6 +3,9 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 {
+    /// <summary>
+    /// Base type for ulong metadata fields.
+    /// </summary>
     public abstract class BaseUlongType : IMetadataFieldType, INumberType, IValueType, IClearAbleType
     {
         public bool CanBeAdded => false;
@@ -33,6 +36,11 @@ namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 
         public bool GameContainsValue<T>(Game game, T value) => value is ulong ulongValue && GetValue(game) == ulongValue;
 
+        /// <summary>
+        /// Gets the ulong value of the field for the specified game. Can be null.
+        /// </summary>
+        /// <param name="game">Game to get the value from</param>
+        /// <returns></returns>
         public abstract ulong GetValue(Game game);
 
         public bool IsBiggerThan<T>(Game game, T value) => value is ulong ulongValue && GetValue(game) > ulongValue;

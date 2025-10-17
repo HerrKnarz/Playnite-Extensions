@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 {
+    /// <summary>
+    /// Base type for single object metadata fields.
+    /// </summary>
     public abstract class BaseSingleObjectType : BaseObjectType
     {
         public override bool IsList => false;
@@ -106,16 +109,40 @@ namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
             }
         }
 
+        /// <summary>
+        /// Gets the GUID value of the field for the specified game.
+        /// </summary>
+        /// <param name="game">Game to get the GUID from</param>
+        /// <returns>GUID of the field</returns>
         internal abstract Guid GetValue(Game game);
 
+        /// <summary>
+        /// Loads the metadata for a single database object.
+        /// </summary>
+        /// <typeparam name="T">Type of the database object</typeparam>
+        /// <param name="item">Database object to load metadata for</param>
+        /// <param name="itemsToIgnore">List of IDs to ignore</param>
+        /// <returns>List of database objects</returns>
         internal List<DatabaseObject> LoadGameMetadata<T>(T item, HashSet<Guid> itemsToIgnore)
             where T : DatabaseObject => !itemsToIgnore?.Contains(item?.Id ?? default) ?? true
             ? new List<DatabaseObject> { new DatabaseObject() { Name = item?.Name, Id = item?.Id ?? default } }
             : new List<DatabaseObject>();
 
+        /// <summary>
+        /// Loads all unused metadata from the specified collection.
+        /// </summary>
+        /// <typeparam name="T">Type of the database object</typeparam>
+        /// <param name="ignoreHiddenGames">Whether to ignore hidden games</param>
+        /// <param name="collection">Collection to load the metadata from</param>
+        /// <returns>List of unused database objects</returns>
         internal List<DatabaseObject> LoadUnusedMetadata<T>(bool ignoreHiddenGames, IItemCollection<T> collection) where T : DatabaseObject =>
             collection.Where(x => !DbObjectInUse(x.Id, ignoreHiddenGames)).Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();
 
+        /// <summary>
+        /// Sets the GUID value of the field for the specified game.
+        /// </summary>
+        /// <param name="game">Game to set the value in</param>
+        /// <param name="id">Id of the value</param>
         internal abstract void SetValue(Game game, Guid id);
 
         public override bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false) =>

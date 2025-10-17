@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 {
+    /// <summary>
+    /// Base type for list metadata fields.
+    /// </summary>
     public abstract class BaseListType : BaseObjectType
     {
         public override bool IsList => true;
@@ -87,11 +90,31 @@ namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
             }
         }
 
+        /// <summary>
+        /// List of GUIDs of the database objects of this type in the specified game.
+        /// </summary>
+        /// <param name="game">Game to get the GUIDs from</param>
+        /// <param name="writeable">Determines if this should be a writeable copy to not change the values in the original list.</param>
+        /// <returns></returns>
         internal abstract List<Guid> GameGuids(Game game, bool writeable = false);
 
+        /// <summary>
+        /// Loads the metadata objects of the specified game, ignoring the ones in the ignore list.
+        /// </summary>
+        /// <typeparam name="T">Type of the metadata object</typeparam>
+        /// <param name="items">List of metadata objects to load</param>
+        /// <param name="itemsToIgnore">Set of GUIDs to ignore</param>
+        /// <returns>List of loaded metadata objects</returns>
         internal List<DatabaseObject> LoadGameMetadata<T>(List<T> items, HashSet<Guid> itemsToIgnore) where T : DatabaseObject =>
             items?.Where(x => !itemsToIgnore?.Contains(x.Id) ?? true).Select(x => new DatabaseObject() { Name = x.Name, Id = x.Id }).ToList() ?? new List<DatabaseObject>();
 
+        /// <summary>
+        /// Loads all unused metadata objects of this type in the database.
+        /// </summary>
+        /// <typeparam name="T">Type of the metadata object</typeparam>
+        /// <param name="ignoreHiddenGames">Determines if hidden games should be ignored. When true items only used in hidden games will be considered unused.</param>
+        /// <param name="collection">Collection of metadata objects to search</param>
+        /// <returns>List of unused metadata objects</returns>
         internal List<DatabaseObject> LoadUnusedMetadata<T>(bool ignoreHiddenGames, IItemCollection<T> collection) where T : DatabaseObject =>
             collection.Where(x => !DbObjectInUse(x.Id, ignoreHiddenGames)).Select(x => new DatabaseObject() { Id = x.Id, Name = x.Name }).ToList();
 

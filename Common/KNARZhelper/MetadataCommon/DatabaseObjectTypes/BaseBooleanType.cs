@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 {
+    /// <summary>
+    /// Base type for boolean metadata fields.
+    /// </summary>
     public abstract class BaseBooleanType : IMetadataFieldType, IValueType, IGameInfoType, IClearAbleType
     {
         public bool CanBeAdded => false;
@@ -46,6 +49,11 @@ namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
         public List<Game> GetGames(Guid id, bool ignoreHiddenGames = false) =>
             API.Instance.Database.Games.Where(g => !(ignoreHiddenGames && g.Hidden) && GetValue(g)).ToList();
 
+        /// <summary>
+        /// Gets the boolean value of the field for the specified game.
+        /// </summary>
+        /// <param name="game">Game to get the value from</param>
+        /// <returns>Retrieved boolean value</returns>
         public abstract bool GetValue(Game game);
     }
 }

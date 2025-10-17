@@ -3,6 +3,9 @@ using Playnite.SDK.Models;
 
 namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 {
+    /// <summary>
+    /// Base type for string metadata fields.
+    /// </summary>
     public abstract class BaseStringType : IMetadataFieldType, IValueType, IClearAbleType
     {
         public bool CanBeAdded => false;
@@ -28,8 +31,19 @@ namespace KNARZhelper.MetadataCommon.DatabaseObjectTypes
 
         public bool GameContainsValue<T>(Game game, T value) => value is string stringValue && GameContainsValue(game, stringValue);
 
+        /// <summary>
+        /// Gets the string value of the field for the specified game.
+        /// </summary>
+        /// <param name="game">Game to get the value from</param>
+        /// <returns>Retrieved string value</returns>
         public abstract string GetValue(Game game);
 
+        /// <summary>
+        /// Checks if the field in the specified game contains the specified string value.
+        /// </summary>
+        /// <param name="game">Game to check the value in</param>
+        /// <param name="value">Value to check</param>
+        /// <returns>True if the game contains the value, otherwise false</returns>
         public abstract bool GameContainsValue(Game game, string value);
 
         public bool CopyValueToGame(Game sourceGame, Game targetGame, bool replaceValue = false, bool onlyIfEmpty = false) => sourceGame != null

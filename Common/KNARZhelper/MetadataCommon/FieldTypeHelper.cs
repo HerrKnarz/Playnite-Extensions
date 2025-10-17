@@ -6,8 +6,17 @@ using System.Linq;
 
 namespace KNARZhelper.MetadataCommon
 {
+    /// <summary>
+    /// Helper class for field types.
+    /// </summary>
     public static class FieldTypeHelper
     {
+        /// <summary>
+        /// Gets all metadata field types of the specified type.
+        /// </summary>
+        /// <typeparam name="T">Type to get</typeparam>
+        /// <param name="adoptEvents">Specifies if the field type should adopt events</param>
+        /// <returns>List of field types</returns>
         public static IEnumerable<T> GetAllTypes<T>(bool adoptEvents = false) where T : IMetadataFieldType
         {
             foreach (var type in GetAllTypes(adoptEvents))
@@ -19,6 +28,11 @@ namespace KNARZhelper.MetadataCommon
             }
         }
 
+        /// <summary>
+        /// Gets all metadata field types.
+        /// </summary>
+        /// <param name="adoptEvents">Specifies if the field type should adopt events</param>
+        /// <returns>List of field types</returns>
         public static List<IMetadataFieldType> GetAllTypes(bool adoptEvents = false) =>
             new List<IMetadataFieldType>()
             {
@@ -61,10 +75,19 @@ namespace KNARZhelper.MetadataCommon
                         new TypeVersion(),
             };
 
+        /// <summary>
+        /// Gets all item list metadata field types.
+        /// </summary>
+        /// <returns>List of field types</returns>
         public static IEnumerable<IEditableObjectType> GetItemListTypes() => GetAllTypes<IEditableObjectType>()
             .Where(x => x.ValueType == ItemValueType.ItemList && x.CanBeSetInGame && x.IsList && x.CanBeModified)
             .OrderBy(x => x.LabelSingular);
 
+        /// <summary>
+        /// Gets the type manager for the specified field type.
+        /// </summary>
+        /// <param name="e">Field type to get the type manager for</param>
+        /// <returns>Type manager of the field type</returns>
         public static IMetadataFieldType GetTypeManager(this FieldType e)
         {
             switch (e)
@@ -188,6 +211,11 @@ namespace KNARZhelper.MetadataCommon
             }
         }
 
+        /// <summary>
+        /// Dictionary of item list field types and their singular labels.
+        /// </summary>
+        /// <param name="withEmptyEntry">When true an empty entry will be added to the dictionary</param>
+        /// <returns></returns>
         public static Dictionary<FieldType, string> ItemListFieldValues(bool withEmptyEntry = false)
         {
             var result = new Dictionary<FieldType, string>();
