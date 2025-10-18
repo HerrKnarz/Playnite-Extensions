@@ -1,0 +1,7 @@
+﻿Id: ScreenshotUtilitiesGOGProvider_228c70e8-7c89-46fc-b2c8-6e97966d01a4
+Name: Generic Plugin
+Author: John Doe
+Version: 1.0
+Module: ScreenshotUtilitiesGOGProvider.dll
+Type: GenericPlugin
+Icon: icon.png
