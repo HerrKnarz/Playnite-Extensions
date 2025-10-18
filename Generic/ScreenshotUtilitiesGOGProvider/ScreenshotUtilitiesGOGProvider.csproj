@@ -79,6 +79,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Magick.NET-Q8-x86">
+      <Version>14.8.2</Version>
+    </PackageReference>
     <PackageReference Include="PlayniteSDK">
       <Version>6.13.0</Version>
     </PackageReference>

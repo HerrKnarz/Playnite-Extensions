@@ -35,6 +35,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,11 +49,38 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ApiHelper.cs">
       <Link>Shared\ApiHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileDownloader.cs">
+      <Link>Shared\FilesCommon\FileDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs">
+      <Link>Shared\FilesCommon\FileHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\ImageHelper.cs">
+      <Link>Shared\FilesCommon\ImageHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\Screenshot.cs">
+      <Link>Shared\ScreenshotsCommon\Models\Screenshot.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotGroup.cs">
+      <Link>Shared\ScreenshotsCommon\Models\ScreenshotGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotGroups.cs">
+      <Link>Shared\ScreenshotsCommon\Models\ScreenshotGroups.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotProvider.cs">
+      <Link>Shared\ScreenshotsCommon\Models\ScreenshotProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\ScreenshotHelper.cs">
+      <Link>Shared\ScreenshotsCommon\ScreenshotHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\SteamHelper.cs">
       <Link>Shared\SteamHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
+      <Link>Shared\StringHelper.cs</Link>
     </Compile>
     <Compile Include="ScreenshotUtilitiesSteamProvider.cs" />
     <Compile Include="ScreenshotUtilitiesSteamProviderSettings.cs" />
@@ -88,8 +116,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Magick.NET-Q8-x86">
+      <Version>14.8.2</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>10.0.3</Version>
     </PackageReference>

@@ -1,4 +1,6 @@
 ﻿using KNARZhelper;
+using KNARZhelper.ScreenshotsCommon;
+using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
@@ -27,9 +29,14 @@ namespace ScreenshotUtilitiesSteamProvider
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            var menuSection = ResourceProvider.GetString("LOCScreenshotUtilitiesName");
-
             var menuItems = new List<GameMenuItem>();
+
+            if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled)
+            {
+                return menuItems;
+            }
+
+            var menuSection = ResourceProvider.GetString("LOCScreenshotUtilitiesName");
 
             menuItems.AddRange(new List<GameMenuItem>
             {
@@ -37,7 +44,7 @@ namespace ScreenshotUtilitiesSteamProvider
                 {
                     Description = "Add screenshots from Steam",
                     MenuSection = menuSection,
-                    Icon = "suShowScreenshotsIcon",
+                    //Icon = "suShowScreenshotsIcon",
                     Action = a => GetScreenshots(args.Games.FirstOrDefault())
                 }
             });
@@ -47,11 +54,15 @@ namespace ScreenshotUtilitiesSteamProvider
 
         private void GetScreenshots(Game game)
         {
+            if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled)
+            {
+                return;
+            }
+
             var steamId = SteamHelper.GetSteamId(game);
 
             if (string.IsNullOrEmpty(steamId))
             {
-                PlayniteApi.Dialogs.ShowMessage("Could not determine Steam ID for the selected game.", "Screenshot Utilities");
                 return;
             }
 
@@ -59,10 +70,27 @@ namespace ScreenshotUtilitiesSteamProvider
 
             var result = ApiHelper.GetJsonFromApi<SteamAppDetails>(apiUrl, "Steam");
 
-            if (result != null)
+            if ((result is null) || (result[steamId].Data.Screenshots is null) || (result[steamId].Data.Screenshots?.Count == 0))
             {
-                PlayniteApi.Dialogs.ShowMessage($"Got result: {result[steamId].Data.Screenshots[1].PathFull}", "Screenshot Utilities");
+                return;
             }
+
+            var screenshots = new RangeObservableCollection<KNARZhelper.ScreenshotsCommon.Models.Screenshot>();
+
+            screenshots.AddRange(result[steamId].Data.Screenshots.Select(s =>
+                new KNARZhelper.ScreenshotsCommon.Models.Screenshot(s.PathFull)
+                {
+                    ThumbnailPath = s.PathThumbnail,
+                    SortOrder = s.Id
+                }));
+
+            var screenshotGroup = new ScreenshotGroup("Steam")
+            {
+                Provider = new ScreenshotProvider("Steam", Id),
+                Screenshots = screenshots
+            };
+
+            ScreenshotHelper.SaveScreenshotGroupJson(game, screenshotGroup);
         }
 
         public override void OnGameInstalled(OnGameInstalledEventArgs args)
@@ -92,7 +120,12 @@ namespace ScreenshotUtilitiesSteamProvider
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            // Add code to be executed when Playnite is initialized.
+            if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled)
+            {
+                var notificationMessage = new NotificationMessage("Screenshot Utilities Steam Provider", "Screenshot Utilities has to be installed for this addon to work!", NotificationType.Error);
+
+                PlayniteApi.Notifications.Add(notificationMessage);
+            }
         }
 
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)

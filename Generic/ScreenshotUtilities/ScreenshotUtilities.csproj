@@ -77,10 +77,13 @@
       <Link>Shared\DbInteractionResult.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileDownloader.cs">
-      <Link>Shared\FileDownloader.cs</Link>
+      <Link>Shared\FilesCommon\FileDownloader.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs">
-      <Link>Shared\FileHelper.cs</Link>
+      <Link>Shared\FilesCommon\FileHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\ImageHelper.cs">
+      <Link>Shared\FilesCommon\ImageHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
