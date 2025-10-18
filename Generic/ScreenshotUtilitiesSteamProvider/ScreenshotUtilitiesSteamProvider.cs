@@ -55,6 +55,14 @@ namespace ScreenshotUtilitiesSteamProvider
                 return;
             }
 
+            var apiUrl = $"http://store.steampowered.com/api/appdetails?appids={steamId}";
+
+            var result = ApiHelper.GetJsonFromApi<SteamAppDetails>(apiUrl, "Steam");
+
+            if (result != null)
+            {
+                PlayniteApi.Dialogs.ShowMessage($"Got result: {result[steamId].Data.Screenshots[1].PathFull}", "Screenshot Utilities");
+            }
         }
 
         public override void OnGameInstalled(OnGameInstalledEventArgs args)

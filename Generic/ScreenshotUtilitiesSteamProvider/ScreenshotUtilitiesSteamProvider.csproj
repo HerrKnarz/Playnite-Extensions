@@ -60,6 +60,7 @@
       <DependentUpon>ScreenshotUtilitiesSteamProviderSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SteamAppDetails.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
