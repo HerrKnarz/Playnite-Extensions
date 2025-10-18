@@ -34,7 +34,8 @@
                         SelectedItem="{Binding SelectedGroup}"
                         ItemTemplate="{StaticResource TabHeaderTemplate}"
                         ContentTemplate="{StaticResource TabContentTemplate}"
-                        DockPanel.Dock="Top">
+                        DockPanel.Dock="Top"
+                        Visibility="{Binding ScreenshotGroups.HasMoreThanOneGroup, Converter={StaticResource BooleanToVisibilityConverter}}">
             </TabControl>
 
             <DockPanel DockPanel.Dock="Bottom" Height="150">
