@@ -22,7 +22,7 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var searchResults = ParseHelper.GetJsonFromApi<List<GameFaqsSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName)
+                var searchResults = ApiHelper.GetJsonFromApi<List<GameFaqsSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName)
                     .Where(n => n.GameName?.Length > 0).ToList();
 
                 return !searchResults?.Any() ?? true

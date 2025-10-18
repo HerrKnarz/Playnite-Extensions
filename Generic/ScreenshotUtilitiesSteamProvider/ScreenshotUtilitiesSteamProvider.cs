@@ -1,20 +1,17 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace ScreenshotUtilitiesSteamProvider
 {
     public class ScreenshotUtilitiesSteamProvider : GenericPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-
         private ScreenshotUtilitiesSteamProviderSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae");
@@ -24,8 +21,40 @@ namespace ScreenshotUtilitiesSteamProvider
             settings = new ScreenshotUtilitiesSteamProviderSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = true
+                HasSettings = false
             };
+        }
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            var menuSection = ResourceProvider.GetString("LOCScreenshotUtilitiesName");
+
+            var menuItems = new List<GameMenuItem>();
+
+            menuItems.AddRange(new List<GameMenuItem>
+            {
+                new GameMenuItem
+                {
+                    Description = "Add screenshots from Steam",
+                    MenuSection = menuSection,
+                    Icon = "suShowScreenshotsIcon",
+                    Action = a => GetScreenshots(args.Games.FirstOrDefault())
+                }
+            });
+
+            return menuItems;
+        }
+
+        private void GetScreenshots(Game game)
+        {
+            var steamId = SteamHelper.GetSteamId(game);
+
+            if (string.IsNullOrEmpty(steamId))
+            {
+                PlayniteApi.Dialogs.ShowMessage("Could not determine Steam ID for the selected game.", "Screenshot Utilities");
+                return;
+            }
+
         }
 
         public override void OnGameInstalled(OnGameInstalledEventArgs args)
@@ -68,14 +97,8 @@ namespace ScreenshotUtilitiesSteamProvider
             // Add code to be executed when library is updated.
         }
 
-        public override ISettings GetSettings(bool firstRunSettings)
-        {
-            return settings;
-        }
+        public override ISettings GetSettings(bool firstRunSettings) => settings;
 
-        public override UserControl GetSettingsView(bool firstRunSettings)
-        {
-            return new ScreenshotUtilitiesSteamProviderSettingsView();
-        }
+        public override UserControl GetSettingsView(bool firstRunSettings) => new ScreenshotUtilitiesSteamProviderSettingsView();
     }
 }

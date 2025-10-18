@@ -37,7 +37,7 @@ namespace LinkUtilities.Linker.LinkSources
                     Sort = "searchrank"
                 }, settings);
 
-                var vndbSearchResult = ParseHelper.GetJsonFromApi<VndbSearchResult>(SearchUrl, LinkName, null, false, searchRequest);
+                var vndbSearchResult = ApiHelper.GetJsonFromApi<VndbSearchResult>(SearchUrl, LinkName, null, false, searchRequest);
 
                 return !vndbSearchResult?.Results?.Any() ?? true
                     ? base.GetSearchResults(searchTerm)

@@ -58,7 +58,7 @@ namespace LinkUtilities.Linker.LinkSources
                 return base.GetSearchResults(searchTerm);
             }
 
-            var searchResult = ParseHelper.GetJsonFromApi<IsThereAnyDealSearchResult[]>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+            var searchResult = ApiHelper.GetJsonFromApi<IsThereAnyDealSearchResult[]>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
 
             return searchResult?.Any(g => g.Type == "game") ?? false
                 ? new List<GenericItemOption>(searchResult.Where(g => g.Type == "game").Select(r => new SearchResult
