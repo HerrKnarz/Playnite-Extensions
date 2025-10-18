@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
+using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using LinkUtilities.Settings;
 using Playnite.SDK;
@@ -238,6 +239,13 @@ namespace LinkUtilities.BaseClasses
             var foundGame = (SearchResult)searchResults.FirstOrDefault(r => r.Name.RemoveSpecialChars().Replace(" ", "").Equals(searchName, StringComparison.OrdinalIgnoreCase));
 
             return foundGame != null ? foundGame.Url : searchResults.Count == 1 ? ((SearchResult)searchResults[0]).Url : null;
+        }
+
+        internal string GetSteamId(Game game)
+        {
+            var steamId = SteamHelper.GetSteamId(game);
+
+            return string.IsNullOrEmpty(steamId) ? AddWebsiteLinks.Instance().SteamId : steamId;
         }
     }
 }

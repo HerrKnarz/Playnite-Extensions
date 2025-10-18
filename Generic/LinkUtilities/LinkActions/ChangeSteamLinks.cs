@@ -1,6 +1,7 @@
-﻿using LinkUtilities.BaseClasses;
-using LinkUtilities.Helper;
+﻿using KNARZhelper;
+using LinkUtilities.BaseClasses;
 using LinkUtilities.Interfaces;
+using LinkUtilities.Settings;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.LinkActions
@@ -26,6 +27,6 @@ namespace LinkUtilities.LinkActions
                Change(game, actionModifier);
 
         private static bool Change(Game game, ActionModifierTypes actionModifier, bool updateDb = true)
-            => SteamHelper.ChangeSteamLinks(game, actionModifier == ActionModifierTypes.AppLink, updateDb);
+            => SteamHelper.ChangeSteamLinks(game, actionModifier == ActionModifierTypes.AppLink, updateDb, GlobalSettings.Instance().OnlyATest);
     }
 }

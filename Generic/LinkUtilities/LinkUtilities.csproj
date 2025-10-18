@@ -112,6 +112,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs">
       <Link>Shared\MiscHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\SteamHelper.cs">
+      <Link>Shared\SteamHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
@@ -129,7 +132,6 @@
     </Compile>
     <Compile Include="BaseClasses\ObservableCollectionFast.cs" />
     <Compile Include="Helper\ParseHelper.cs" />
-    <Compile Include="Helper\SteamHelper.cs" />
     <Compile Include="Helper\WikipediaApiCaller.cs" />
     <Compile Include="LinkActions\AddLinkFromClipboard.cs" />
     <Compile Include="LinkActions\ChangeSteamLinks.cs" />
