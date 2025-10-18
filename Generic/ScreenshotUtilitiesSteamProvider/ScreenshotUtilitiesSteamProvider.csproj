@@ -61,6 +61,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs">
+      <Link>Shared\MiscHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\Screenshot.cs">
       <Link>Shared\ScreenshotsCommon\Models\Screenshot.cs</Link>
     </Compile>

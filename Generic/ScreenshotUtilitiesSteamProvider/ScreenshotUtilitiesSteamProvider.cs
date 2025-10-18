@@ -25,6 +25,16 @@ namespace ScreenshotUtilitiesSteamProvider
             {
                 HasSettings = false
             };
+
+            var iconResourcesToAdd = new Dictionary<string, string>
+            {
+                { "suhpSteamIcon", "\xed71" }
+            };
+
+            foreach (var iconResource in iconResourcesToAdd)
+            {
+                MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+            }
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -44,7 +54,7 @@ namespace ScreenshotUtilitiesSteamProvider
                 {
                     Description = "Add screenshots from Steam",
                     MenuSection = menuSection,
-                    //Icon = "suShowScreenshotsIcon",
+                    Icon = "suhpSteamIcon",
                     Action = a => GetScreenshots(args.Games.FirstOrDefault())
                 }
             });
