@@ -7,6 +7,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 
@@ -85,20 +86,24 @@ namespace ScreenshotUtilitiesSteamProvider
                 return;
             }
 
-            var screenshots = new RangeObservableCollection<KNARZhelper.ScreenshotsCommon.Models.Screenshot>();
+            var fileName = ScreenshotHelper.GenerateFileName(game.Id, Id, Id);
 
-            screenshots.AddRange(result[steamId].Data.Screenshots.Select(s =>
-                new KNARZhelper.ScreenshotsCommon.Models.Screenshot(s.PathFull)
+            var screenshotGroup = ScreenshotGroup.CreateFromFile(new FileInfo(fileName))
+                ?? new ScreenshotGroup("Steam", Id)
                 {
-                    ThumbnailPath = s.PathThumbnail,
-                    SortOrder = s.Id
-                }));
+                    Provider = new ScreenshotProvider("Steam", Id),
+                    Screenshots = new RangeObservableCollection<KNARZhelper.ScreenshotsCommon.Models.Screenshot>()
+                };
 
-            var screenshotGroup = new ScreenshotGroup("Steam")
-            {
-                Provider = new ScreenshotProvider("Steam", Id),
-                Screenshots = screenshots
-            };
+            screenshotGroup.Screenshots
+                .AddRange(result[steamId].Data.Screenshots
+                .Where(s => !screenshotGroup.Screenshots.Any(es => es.Path.Equals(s.PathFull)))
+                .Select(s =>
+               new KNARZhelper.ScreenshotsCommon.Models.Screenshot(s.PathFull)
+               {
+                   ThumbnailPath = s.PathThumbnail,
+                   SortOrder = s.Id
+               }));
 
             ScreenshotHelper.SaveScreenshotGroupJson(game, screenshotGroup);
         }
