@@ -107,16 +107,15 @@
                                       Command="{Binding OpenInFullScreenCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuCopyToClipboard}"
                                       Command="{Binding CopyToClipboardCommand}"
-                                      Visibility="{Binding SelectedScreenshot.IsDownloaded, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, RelativeSource={RelativeSource AncestorType={x:Type Image}}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInAssociatedApplication}"
                                       Command="{Binding OpenInAssociatedApplicationCommand}"
-                                      Visibility="{Binding SelectedScreenshot.IsDownloaded, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, RelativeSource={RelativeSource AncestorType={x:Type Image}}, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenContainingFolder}"
-                                      Command="{Binding OpenContainingFolderCommand}"
-                                      Visibility="{Binding SelectedScreenshot.IsDownloaded, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Command="{Binding OpenContainingFolderCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInBrowser}"
                                       Command="{Binding OpenInBrowserCommand}"
-                                      Visibility="{Binding SelectedScreenshot.PathIsUrl, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.PathIsUrl, RelativeSource={RelativeSource AncestorType={x:Type Image}}, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </ContextMenu>
                     </Image.ContextMenu>
                 </Image>
