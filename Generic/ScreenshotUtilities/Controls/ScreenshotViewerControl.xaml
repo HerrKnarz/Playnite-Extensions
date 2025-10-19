@@ -104,18 +104,18 @@
                     <Image.ContextMenu>
                         <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInFullScreen}"
-                                      Command="{Binding OpenInFullScreenCommand}" />
+                                      Command="{Binding DataContext.OpenInFullScreenCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuCopyToClipboard}"
-                                      Command="{Binding CopyToClipboardCommand}"
+                                      Command="{Binding DataContext.CopyToClipboardCommand}"
                                       Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInAssociatedApplication}"
-                                      Command="{Binding OpenInAssociatedApplicationCommand}"
+                                      Command="{Binding DataContext.OpenInAssociatedApplicationCommand}"
                                       Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenContainingFolder}"
-                                      Command="{Binding OpenContainingFolderCommand}"
+                                      Command="{Binding DataContext.OpenContainingFolderCommand}"
                                       Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInBrowser}"
-                                      Command="{Binding OpenInBrowserCommand}"
+                                      Command="{Binding DataContext.OpenInBrowserCommand}"
                                       Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.PathIsUrl, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </ContextMenu>
                     </Image.ContextMenu>

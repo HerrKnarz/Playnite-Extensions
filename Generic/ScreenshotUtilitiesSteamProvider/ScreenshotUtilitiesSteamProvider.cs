@@ -29,7 +29,7 @@ namespace ScreenshotUtilitiesSteamProvider
 
             var iconResourcesToAdd = new Dictionary<string, string>
             {
-                { "suhpSteamIcon", "\xed71" }
+                { "suspSteamIcon", "\xed71" }
             };
 
             foreach (var iconResource in iconResourcesToAdd)
@@ -53,9 +53,14 @@ namespace ScreenshotUtilitiesSteamProvider
             {
                 new GameMenuItem
                 {
+                    Description = "-",
+                    MenuSection = menuSection
+                },
+                new GameMenuItem
+                {
                     Description = "Add screenshots from Steam",
                     MenuSection = menuSection,
-                    Icon = "suhpSteamIcon",
+                    Icon = "suspSteamIcon",
                     Action = a => GetScreenshots(args.Games.FirstOrDefault())
                 }
             });

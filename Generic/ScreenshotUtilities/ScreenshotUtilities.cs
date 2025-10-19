@@ -48,7 +48,8 @@ namespace ScreenshotUtilities
             var iconResourcesToAdd = new Dictionary<string, string>
             {
                 { "suShowScreenshotsIcon", "\xef4b" },
-                { "suDownloadIcon", "\xef08" }
+                { "suDownloadIcon", "\xef08" },
+                { "suRefreshIcon", "\xefd1" }
             };
 
             foreach (var iconResource in iconResourcesToAdd)
@@ -90,6 +91,13 @@ namespace ScreenshotUtilities
                     MenuSection = menuSection,
                     Icon = "suDownloadIcon",
                     Action = a => DownloadScreenshots(args.Games.FirstOrDefault())
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshThumbnails"),
+                    MenuSection = menuSection,
+                    Icon = "suRefreshIcon",
+                    Action = a => RefreshThumbnails(args.Games.FirstOrDefault())
                 }
             });
 
@@ -101,6 +109,21 @@ namespace ScreenshotUtilities
             var groups = new ScreenshotGroups(GetPluginUserDataPath(), game.Id);
 
             groups.DownloadAll(Settings.Settings.ThumbnailHeight);
+
+            API.Instance.MainView.UIDispatcher.Invoke(delegate
+            {
+                foreach (var control in ScreenshotViewerControls)
+                {
+                    control.RefreshData();
+                }
+            });
+        }
+
+        private void RefreshThumbnails(Game game)
+        {
+            var groups = new ScreenshotGroups(GetPluginUserDataPath(), game.Id);
+
+            groups.RefreshAllThumbnails(Settings.Settings.ThumbnailHeight);
 
             API.Instance.MainView.UIDispatcher.Invoke(delegate
             {
