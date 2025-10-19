@@ -23,4 +23,5 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Schaltfläche anzeigen, um den Standalone-Viewer im Theme zu öffnen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Bildschirmfoto-Viewer-Steuerung im Theme anzeigen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Es werden nur Screenshots für Spiele mit einer der folgenden Kategorien oder Tags heruntergeladen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Miniaturansicht Höhe</sys:String>
 </ResourceDictionary>
