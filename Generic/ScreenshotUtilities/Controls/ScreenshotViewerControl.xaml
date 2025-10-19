@@ -102,20 +102,21 @@
                                       Command="{Binding OpenInFullScreenCommand}" />
                     </Image.InputBindings>
                     <Image.ContextMenu>
-                        <ContextMenu>
+                        <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInFullScreen}"
                                       Command="{Binding OpenInFullScreenCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuCopyToClipboard}"
                                       Command="{Binding CopyToClipboardCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, RelativeSource={RelativeSource AncestorType={x:Type Image}}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInAssociatedApplication}"
                                       Command="{Binding OpenInAssociatedApplicationCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, RelativeSource={RelativeSource AncestorType={x:Type Image}}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenContainingFolder}"
-                                      Command="{Binding OpenContainingFolderCommand}" />
+                                      Command="{Binding OpenContainingFolderCommand}"
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInBrowser}"
                                       Command="{Binding OpenInBrowserCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.PathIsUrl, RelativeSource={RelativeSource AncestorType={x:Type Image}}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.PathIsUrl, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </ContextMenu>
                     </Image.ContextMenu>
                 </Image>
