@@ -94,6 +94,8 @@ namespace ScreenshotUtilities
                                 Id = item.Id
                             }));
 
+            items.Sort(i => i.Name);
+
             SelectMetadataViewModel.GetWindow(items, label)?.ShowDialog();
 
             if (items.Count == 0)
