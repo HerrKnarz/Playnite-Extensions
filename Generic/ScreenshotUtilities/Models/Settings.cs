@@ -14,6 +14,7 @@ namespace ScreenshotUtilities.Models
         private ObservableCollection<MetadataObject> _downloadFilter = new ObservableCollection<MetadataObject>();
         private bool _isViewerControlVisible = false;
         private bool _isButtonControlVisible = false;
+        private int _thumbnailHeight = 120;
         private int _viewerWindowHeight = 700;
         private int _viewerWindowWidth = 800;
 
@@ -81,6 +82,20 @@ namespace ScreenshotUtilities.Models
         {
             get => _isButtonControlVisible;
             set => SetValue(ref _isButtonControlVisible, value);
+        }
+
+        public int ThumbnailHeight
+        {
+            get => _thumbnailHeight;
+            set
+            {
+                if (value < 50)
+                {
+                    value = 50;
+                }
+
+                SetValue(ref _thumbnailHeight, value);
+            }
         }
 
         public int ViewerWindowWidth

@@ -1,7 +1,7 @@
 ﻿Id: ScreenshotUtilitiesGOGProvider_228c70e8-7c89-46fc-b2c8-6e97966d01a4
-Name: Generic Plugin
-Author: John Doe
-Version: 1.0
+Name: Screenshot Utilities GOG Provider
+Author: Alexander Heidn
+Version: 0.1
 Module: ScreenshotUtilitiesGOGProvider.dll
 Type: GenericPlugin
 Icon: icon.png

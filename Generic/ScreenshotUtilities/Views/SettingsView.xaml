@@ -48,6 +48,16 @@
                      Width="40"/>
         </StackPanel>
 
+        <StackPanel Orientation="Horizontal"
+                    Margin="5"
+                    DockPanel.Dock="Top" >
+            <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsThumbnailHeight}"
+                   Margin="0,0,10,0"/>
+            <TextBox Text="{Binding Settings.ThumbnailHeight}"
+                     Width="40"
+                     Margin="0,0,5,0"/>
+        </StackPanel>
+
         <CheckBox IsChecked="{Binding Settings.DisplayViewerControl}"
                   Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayViewerControl}"
                   DockPanel.Dock="Top" 

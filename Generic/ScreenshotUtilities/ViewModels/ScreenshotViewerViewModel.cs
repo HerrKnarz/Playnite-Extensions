@@ -79,7 +79,7 @@ namespace ScreenshotUtilities.ViewModels
                 && ((_plugin.Settings.Settings.DownloadFilter.Count == 0) || _plugin.Settings.Settings.DownloadFilter.Any(f => f.ExistsInGame(game)))
                 && !groups.IsEverythingDownloaded)
             {
-                groups.DownloadAll();
+                groups.DownloadAll((int)ThumbnailHeight);
             }
 
             ScreenshotGroups = groups;
@@ -142,6 +142,10 @@ namespace ScreenshotUtilities.ViewModels
 
         public double AspectRatio => _plugin.Settings.Settings.AspectWidth / (float)_plugin.Settings.Settings.AspectHeight;
 
+        public double ButtonHeight => _plugin.Settings.Settings.ThumbnailHeight + 10;
+
+        public double DockPanelHeight => _plugin.Settings.Settings.ThumbnailHeight + 30;
+
         public Guid GameId
         {
             get => _gameId;
@@ -164,5 +168,6 @@ namespace ScreenshotUtilities.ViewModels
             get => _selectedGroup;
             set => SetValue(ref _selectedGroup, value);
         }
+        public double ThumbnailHeight => _plugin.Settings.Settings.ThumbnailHeight;
     }
 }

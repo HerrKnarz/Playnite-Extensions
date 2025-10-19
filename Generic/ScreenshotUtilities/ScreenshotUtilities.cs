@@ -100,7 +100,7 @@ namespace ScreenshotUtilities
         {
             var groups = new ScreenshotGroups(GetPluginUserDataPath(), game.Id);
 
-            groups.DownloadAll();
+            groups.DownloadAll(Settings.Settings.ThumbnailHeight);
 
             API.Instance.MainView.UIDispatcher.Invoke(delegate
             {
