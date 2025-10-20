@@ -18,6 +18,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string LinkName => "MobyGames";
         public override string SearchUrl => "https://www.mobygames.com/search/?type=game&q=";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
