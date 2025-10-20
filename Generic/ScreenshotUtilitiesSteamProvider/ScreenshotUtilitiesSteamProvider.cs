@@ -82,7 +82,7 @@ namespace ScreenshotUtilitiesSteamProvider
                 return;
             }
 
-            var apiUrl = $"http://store.steampowered.com/api/appdetails?appids={steamId}";
+            var apiUrl = $"https://store.steampowered.com/api/appdetails?appids={steamId}";
 
             var result = ApiHelper.GetJsonFromApi<SteamAppDetails>(apiUrl, "Steam");
 
