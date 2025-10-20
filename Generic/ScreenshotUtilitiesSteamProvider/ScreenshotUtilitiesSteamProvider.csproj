@@ -82,6 +82,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs">
       <Link>Shared\MiscHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\IScreenshotProvider.cs">
+      <Link>Shared\ScreenshotsCommon\IScreenshotProvider.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\Screenshot.cs">
       <Link>Shared\ScreenshotsCommon\Models\Screenshot.cs</Link>
     </Compile>
@@ -136,9 +139,6 @@
     <None Include="icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Magick.NET-Q8-x86">

@@ -13,7 +13,7 @@ using System.Windows.Controls;
 
 namespace ScreenshotUtilitiesSteamProvider
 {
-    public class ScreenshotUtilitiesSteamProvider : GenericPlugin
+    public class ScreenshotUtilitiesSteamProvider : GenericPlugin, IScreenshotProvider
     {
         private ScreenshotUtilitiesSteamProviderSettingsViewModel settings { get; set; }
 
@@ -26,60 +26,20 @@ namespace ScreenshotUtilitiesSteamProvider
             {
                 HasSettings = false
             };
-
-            var iconResourcesToAdd = new Dictionary<string, string>
-            {
-                { "suspSteamIcon", "\xed71" }
-            };
-
-            foreach (var iconResource in iconResourcesToAdd)
-            {
-                MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
-            }
         }
 
-        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        public bool GetScreenshots(Game game)
         {
-            var menuItems = new List<GameMenuItem>();
-
-            if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled)
+            if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled || game == null)
             {
-                return menuItems;
-            }
-
-            var menuSection = ResourceProvider.GetString("LOCScreenshotUtilitiesName");
-
-            menuItems.AddRange(new List<GameMenuItem>
-            {
-                new GameMenuItem
-                {
-                    Description = "-",
-                    MenuSection = menuSection
-                },
-                new GameMenuItem
-                {
-                    Description = "Add screenshots from Steam",
-                    MenuSection = menuSection,
-                    Icon = "suspSteamIcon",
-                    Action = a => GetScreenshots(args.Games.FirstOrDefault())
-                }
-            });
-
-            return menuItems;
-        }
-
-        private void GetScreenshots(Game game)
-        {
-            if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled)
-            {
-                return;
+                return false;
             }
 
             var steamId = SteamHelper.GetSteamId(game);
 
             if (string.IsNullOrEmpty(steamId))
             {
-                return;
+                return false;
             }
 
             var apiUrl = $"https://store.steampowered.com/api/appdetails?appids={steamId}";
@@ -88,7 +48,7 @@ namespace ScreenshotUtilitiesSteamProvider
 
             if ((result is null) || (result[steamId].Data.Screenshots is null) || (result[steamId].Data.Screenshots?.Count == 0))
             {
-                return;
+                return false;
             }
 
             var fileName = ScreenshotHelper.GenerateFileName(game.Id, Id, Id);
@@ -111,31 +71,8 @@ namespace ScreenshotUtilitiesSteamProvider
                }));
 
             ScreenshotHelper.SaveScreenshotGroupJson(game, screenshotGroup);
-        }
 
-        public override void OnGameInstalled(OnGameInstalledEventArgs args)
-        {
-            // Add code to be executed when game is finished installing.
-        }
-
-        public override void OnGameStarted(OnGameStartedEventArgs args)
-        {
-            // Add code to be executed when game is started running.
-        }
-
-        public override void OnGameStarting(OnGameStartingEventArgs args)
-        {
-            // Add code to be executed when game is preparing to be started.
-        }
-
-        public override void OnGameStopped(OnGameStoppedEventArgs args)
-        {
-            // Add code to be executed when game is preparing to be started.
-        }
-
-        public override void OnGameUninstalled(OnGameUninstalledEventArgs args)
-        {
-            // Add code to be executed when game is uninstalled.
+            return true;
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
@@ -146,16 +83,6 @@ namespace ScreenshotUtilitiesSteamProvider
 
                 PlayniteApi.Notifications.Add(notificationMessage);
             }
-        }
-
-        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
-        {
-            // Add code to be executed when Playnite is shutting down.
-        }
-
-        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
-        {
-            // Add code to be executed when library is updated.
         }
 
         public override ISettings GetSettings(bool firstRunSettings) => settings;

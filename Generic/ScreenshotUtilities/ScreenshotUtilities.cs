@@ -49,12 +49,40 @@ namespace ScreenshotUtilities
             {
                 { "suShowScreenshotsIcon", "\xef4b" },
                 { "suDownloadIcon", "\xef08" },
-                { "suRefreshIcon", "\xefd1" }
+                { "suRefreshIcon", "\xefd1" },
+                { "suFetchIcon", "\xefbe" }
             };
 
             foreach (var iconResource in iconResourcesToAdd)
             {
                 MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+            }
+        }
+
+        public void GetScreenshots(Game game)
+        {
+            var needsRefresh = false;
+
+            foreach (var plugin in API.Instance.Addons.Plugins)
+            {
+                var type = plugin.GetType();
+
+                if (type != null && type.GetInterface("IScreenshotProvider") != null)
+                {
+                    var methodInfo = type.GetMethod("GetScreenshots");
+
+                    if (methodInfo != null)
+                    {
+                        var parametersArray = new object[] { game };
+
+                        needsRefresh |= (bool)methodInfo.Invoke(plugin, parametersArray);
+                    }
+                }
+            }
+
+            if (needsRefresh)
+            {
+                RefreshControls();
             }
         }
 
@@ -98,6 +126,13 @@ namespace ScreenshotUtilities
                     MenuSection = menuSection,
                     Icon = "suRefreshIcon",
                     Action = a => RefreshThumbnails(args.Games.FirstOrDefault())
+                },
+                new GameMenuItem
+                {
+                    Description = "Get screenshots from all providers",
+                    MenuSection = menuSection,
+                    Icon = "suFetchIcon",
+                    Action = a => GetScreenshots(args.Games.FirstOrDefault())
                 }
             });
 
@@ -110,6 +145,11 @@ namespace ScreenshotUtilities
 
             groups.DownloadAll(Settings.Settings.ThumbnailHeight);
 
+            RefreshControls();
+        }
+
+        private void RefreshControls()
+        {
             API.Instance.MainView.UIDispatcher.Invoke(delegate
             {
                 foreach (var control in ScreenshotViewerControls)
@@ -125,13 +165,7 @@ namespace ScreenshotUtilities
 
             groups.RefreshAllThumbnails(Settings.Settings.ThumbnailHeight);
 
-            API.Instance.MainView.UIDispatcher.Invoke(delegate
-            {
-                foreach (var control in ScreenshotViewerControls)
-                {
-                    control.RefreshData();
-                }
-            });
+            RefreshControls();
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)

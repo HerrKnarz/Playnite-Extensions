@@ -137,17 +137,23 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs">
       <Link>Shared\MiscHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\IScreenshotProvider.cs">
+      <Link>Shared\ScreenshotsCommon\IScreenshotProvider.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\Screenshot.cs">
-      <Link>Shared\Screenshot.cs</Link>
+      <Link>Shared\ScreenshotsCommon\Models\Screenshot.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotGroup.cs">
-      <Link>Shared\ScreenshotGroup.cs</Link>
+      <Link>Shared\ScreenshotsCommon\Models\ScreenshotGroup.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotGroups.cs">
-      <Link>Shared\ScreenshotGroups.cs</Link>
+      <Link>Shared\ScreenshotsCommon\Models\ScreenshotGroups.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotProvider.cs">
-      <Link>Shared\ScreenshotProvider.cs</Link>
+      <Link>Shared\ScreenshotsCommon\Models\ScreenshotProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\ScreenshotHelper.cs">
+      <Link>Shared\ScreenshotsCommon\ScreenshotHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
