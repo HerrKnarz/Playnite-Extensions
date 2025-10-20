@@ -169,6 +169,7 @@
     </Compile>
     <Compile Include="Models\MetadataObject.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="ScreenshotActions.cs" />
     <Compile Include="ScreenshotUtilities.cs" />
     <Compile Include="ViewModels\ButtonControlViewModel.cs" />
     <Compile Include="ViewModels\FullScreenViewModel.cs" />

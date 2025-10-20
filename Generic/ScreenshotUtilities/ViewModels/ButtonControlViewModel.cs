@@ -23,7 +23,7 @@ namespace ScreenshotUtilities.ViewModels
                 return;
             }
 
-            _plugin.OpenScreenshotViewer(Game);
+            ScreenshotActions.OpenScreenshotViewer(Game, _plugin);
         });
 
         public Game Game

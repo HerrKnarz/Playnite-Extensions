@@ -1,11 +1,8 @@
 ﻿using KNARZhelper;
-using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
-using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using ScreenshotUtilities.Controls;
-using ScreenshotUtilities.ViewModels;
 using ScreenshotUtilities.Views;
 using System;
 using System.Collections.Generic;
@@ -16,14 +13,15 @@ namespace ScreenshotUtilities
 {
     public class ScreenshotUtilities : GenericPlugin
     {
-        public ScreenshotUtilitiesSettingsViewModel Settings { get; set; }
-
         private static readonly string _controlNameViewer = "ScreenshotViewerControl";
         private static readonly string _controlNameButton = "ButtonControl";
         private static readonly string _pluginSourceName = "ScreenshotUtilities";
 
         public override Guid Id { get; } = Guid.Parse("485d682f-73e9-4d54-b16f-b8dd49e88f90");
+
         public List<ScreenshotViewerControl> ScreenshotViewerControls { get; set; } = new List<ScreenshotViewerControl>();
+
+        public ScreenshotUtilitiesSettingsViewModel Settings { get; set; }
 
         public ScreenshotUtilities(IPlayniteAPI api) : base(api)
         {
@@ -59,113 +57,46 @@ namespace ScreenshotUtilities
             }
         }
 
-        public void GetScreenshots(Game game)
-        {
-            var needsRefresh = false;
-
-            foreach (var plugin in API.Instance.Addons.Plugins)
-            {
-                var type = plugin.GetType();
-
-                if (type != null && type.GetInterface("IScreenshotProvider") != null)
-                {
-                    var methodInfo = type.GetMethod("GetScreenshots");
-
-                    if (methodInfo != null)
-                    {
-                        var parametersArray = new object[] { game };
-
-                        needsRefresh |= (bool)methodInfo.Invoke(plugin, parametersArray);
-                    }
-                }
-            }
-
-            if (needsRefresh)
-            {
-                RefreshControls();
-            }
-        }
-
-        public void OpenScreenshotViewer(Game game)
-        {
-            var window = ScreenshotViewerViewModel.GetWindow(this, game);
-
-            if (window == null)
-            {
-                return;
-            }
-
-            window.ShowDialog();
-        }
-
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             var menuSection = ResourceProvider.GetString("LOCScreenshotUtilitiesName");
 
-            var menuItems = new List<GameMenuItem>();
-
-            menuItems.AddRange(new List<GameMenuItem>
+            yield return new GameMenuItem
             {
-                new GameMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuShowScreenshots"),
-                    MenuSection = menuSection,
-                    Icon = "suShowScreenshotsIcon",
-                    Action = a => OpenScreenshotViewer(args.Games.FirstOrDefault())
-                },
-                new GameMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadScreenshots"),
-                    MenuSection = menuSection,
-                    Icon = "suDownloadIcon",
-                    Action = a => DownloadScreenshots(args.Games.FirstOrDefault())
-                },
-                new GameMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshThumbnails"),
-                    MenuSection = menuSection,
-                    Icon = "suRefreshIcon",
-                    Action = a => RefreshThumbnails(args.Games.FirstOrDefault())
-                },
-                new GameMenuItem
-                {
-                    Description = "Get screenshots from all providers",
-                    MenuSection = menuSection,
-                    Icon = "suFetchIcon",
-                    Action = a => GetScreenshots(args.Games.FirstOrDefault())
-                }
-            });
+                Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuShowScreenshots"),
+                MenuSection = menuSection,
+                Icon = "suShowScreenshotsIcon",
+                Action = a => ScreenshotActions.OpenScreenshotViewer(args.Games.FirstOrDefault(), this)
+            };
 
-            return menuItems;
-        }
-
-        private void DownloadScreenshots(Game game)
-        {
-            var groups = new ScreenshotGroups(GetPluginUserDataPath(), game.Id);
-
-            groups.DownloadAll(Settings.Settings.ThumbnailHeight);
-
-            RefreshControls();
-        }
-
-        private void RefreshControls()
-        {
-            API.Instance.MainView.UIDispatcher.Invoke(delegate
+            yield return new GameMenuItem
             {
-                foreach (var control in ScreenshotViewerControls)
-                {
-                    control.RefreshData();
-                }
-            });
-        }
+                Description = "-",
+                MenuSection = menuSection
+            };
 
-        private void RefreshThumbnails(Game game)
-        {
-            var groups = new ScreenshotGroups(GetPluginUserDataPath(), game.Id);
+            yield return new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadScreenshots"),
+                MenuSection = menuSection,
+                Icon = "suDownloadIcon",
+                Action = a => DownloadScreenshots(args.Games.FirstOrDefault())
+            };
+            yield return new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshScreenshots"),
+                MenuSection = menuSection,
+                Icon = "suFetchIcon",
+                Action = a => GetScreenshots(args.Games.FirstOrDefault())
+            };
 
-            groups.RefreshAllThumbnails(Settings.Settings.ThumbnailHeight);
-
-            RefreshControls();
+            yield return new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshThumbnails"),
+                MenuSection = menuSection,
+                Icon = "suRefreshIcon",
+                Action = a => RefreshThumbnails(args.Games.FirstOrDefault())
+            };
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
@@ -186,48 +117,43 @@ namespace ScreenshotUtilities
             return null;
         }
 
-        public override void OnGameInstalled(OnGameInstalledEventArgs args)
-        {
-            // Add code to be executed when game is finished installing.
-        }
-
-        public override void OnGameStarted(OnGameStartedEventArgs args)
-        {
-            // Add code to be executed when game is started running.
-        }
-
-        public override void OnGameStarting(OnGameStartingEventArgs args)
-        {
-            // Add code to be executed when game is preparing to be started.
-        }
-
-        public override void OnGameStopped(OnGameStoppedEventArgs args)
-        {
-            // Add code to be executed when game is preparing to be started.
-        }
-
-        public override void OnGameUninstalled(OnGameUninstalledEventArgs args)
-        {
-            // Add code to be executed when game is uninstalled.
-        }
-
-        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
-        {
-            // Add code to be executed when Playnite is initialized.
-        }
-
-        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
-        {
-            // Add code to be executed when Playnite is shutting down.
-        }
-
-        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
-        {
-            // Add code to be executed when library is updated.
-        }
-
         public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
         public override UserControl GetSettingsView(bool firstRunSettings) => new ScreenshotUtilitiesSettingsView();
+
+        private void DownloadScreenshots(Game game)
+        {
+            if (ScreenshotActions.DownloadScreenshots(game, this))
+            {
+                RefreshControls();
+            }
+        }
+
+        private void GetScreenshots(Game game)
+        {
+            if (ScreenshotActions.GetScreenshots(game))
+            {
+                RefreshControls();
+            }
+        }
+
+        private void RefreshControls()
+        {
+            API.Instance.MainView.UIDispatcher.Invoke(delegate
+            {
+                foreach (var control in ScreenshotViewerControls)
+                {
+                    control.RefreshData();
+                }
+            });
+        }
+
+        private void RefreshThumbnails(Game game)
+        {
+            if (ScreenshotActions.RefreshThumbnails(game, this))
+            {
+                RefreshControls();
+            }
+        }
     }
 }
