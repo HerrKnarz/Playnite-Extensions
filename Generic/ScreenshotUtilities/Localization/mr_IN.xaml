@@ -13,6 +13,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Open in associated application</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Open in browser</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Open in full screen mode</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Refresh screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Refresh thumbnails</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Refreshing thumbnails for</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Show Screenshots</sys:String>
