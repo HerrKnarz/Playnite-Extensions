@@ -1,7 +1,6 @@
 ﻿using KNARZhelper;
 using Playnite.SDK;
 using Playnite.SDK.Events;
-using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
@@ -26,84 +25,27 @@ namespace KNARZtools
             };
         }
 
-        public void RenameTags()
+        public void GetFamilySharedIds()
         {
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                "KNARZtools - updating tags",
-                true
-            )
+            var idList = new List<string>();
+
+            foreach (var game in API.Instance.Database.Games.Where(g => g.Categories?.Any(c => c.Name.Equals("Family Shared")) ?? false).ToList())
             {
-                IsIndeterminate = false
-            };
+                idList.Add($"{SteamHelper.GetSteamId(game)};{game.Name}\n");
+            }
 
-            PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
-            {
-                try
-                {
-                    List<Tag> tags = API.Instance.Database.Tags.Where(t => t.Name.StartsWith("🧑")).ToList();
-
-                    activateGlobalProgress.ProgressMaxValue = tags.Count;
-
-                    foreach (Tag tag in tags)
-                    {
-                        if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                        {
-                            break;
-                        }
-
-                        string tagName = tag.Name;
-
-                        tagName = tagName
-                            .Replace(" director:", "🎬")
-                            .Replace(" producer:", "🗓")
-                            .Replace(" designer:", "🖼")
-                            .Replace(" programmer:", "⌨️")
-                            .Replace(" artist:", "🎨")
-                            .Replace(" writer:", "📝")
-                            .Replace(" composer:", "🎵");
-
-                        if (tagName != tag.Name)
-                        {
-                            Tag existingTag = API.Instance.Database.Tags.FirstOrDefault(t => t.Name == tagName);
-
-                            if (existingTag != null)
-                            {
-                                foreach (Game game in API.Instance.Database.Games.Where(g => (g.TagIds?.Any() ?? false) && g.Tags.Exists(t => t.Name == tag.Name)))
-                                {
-                                    game.TagIds.Remove(tag.Id);
-                                    game.TagIds.AddMissing(existingTag.Id);
-                                    API.Instance.Database.Games.Update(game);
-                                }
-
-                                API.Instance.Database.Tags.Remove(tag.Id);
-                            }
-                            else
-                            {
-                                tag.Name = tagName;
-                                API.Instance.Database.Tags.Update(tag);
-                            }
-                        }
-
-                        activateGlobalProgress.CurrentProgressValue++;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                }
-            }, globalProgressOptions);
+            API.Instance.Dialogs.ShowSelectableString("", "Family Sharing Ids", string.Concat(idList));
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            List<MainMenuItem> menuItems = new List<MainMenuItem>
+            var menuItems = new List<MainMenuItem>
             {
-                // Adds the "clean up" item to the main menu.
                 new MainMenuItem
                 {
-                    Description = "Rename tags",
-                    MenuSection = "KNARZtools",
-                    Action = a => RenameTags()
+                    Description = "Get family shared games",
+                    MenuSection = "@KNARZtools",
+                    Action = a => GetFamilySharedIds()
                 }
             };
 

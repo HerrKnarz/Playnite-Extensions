@@ -70,6 +70,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs">
       <Link>MiscHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\SteamHelper.cs">
+      <Link>SteamHelper.cs</Link>
+    </Compile>
     <Compile Include="KNARZtools.cs" />
     <Compile Include="KNARZtoolsSettings.cs" />
     <Compile Include="KNARZtoolsSettingsView.xaml.cs">
@@ -106,9 +109,6 @@
     <PackageReference Include="PlayniteSDK">
       <Version>6.13.0</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
