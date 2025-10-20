@@ -5,7 +5,6 @@ using Playnite.SDK.Models;
 using ScreenshotUtilities.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 
 namespace ScreenshotUtilities.ViewModels
@@ -14,7 +13,6 @@ namespace ScreenshotUtilities.ViewModels
     {
         private Guid _gameId = Guid.Empty;
         private static ScreenshotUtilities _plugin;
-        private ScreenshotGroups _screenshotGroups = new ScreenshotGroups();
         private ScreenshotGroup _selectedGroup;
         private readonly bool _standaloneMode = false;
 
@@ -60,38 +58,17 @@ namespace ScreenshotUtilities.ViewModels
         {
             ResetViewModel();
 
-            if (!_plugin.Settings.Settings.DisplayViewerControl && !_standaloneMode)
+            if (!_plugin.Settings.Settings.IsViewerControlVisible && !_standaloneMode)
             {
                 return;
             }
 
-            var groups = new ScreenshotGroups();
-            groups.CreateGroupsFromFiles(_plugin.GetPluginUserDataPath(), _gameId, false);
-
-            if (groups.Count == 0)
+            if (ScreenshotGroups == null)
             {
                 return;
             }
-
-            var game = API.Instance.Database.Games[_gameId];
-
-            if (_plugin.Settings.Settings.AutomaticDownload
-                && ((_plugin.Settings.Settings.DownloadFilter.Count == 0) || _plugin.Settings.Settings.DownloadFilter.Any(f => f.ExistsInGame(game)))
-                && !groups.IsEverythingDownloaded)
-            {
-                groups.DownloadAll((int)ThumbnailHeight);
-            }
-
-            ScreenshotGroups = groups;
 
             SelectedGroup = ScreenshotGroups[0];
-
-            if (_plugin.Settings.Settings.DisplayViewerControl && !_standaloneMode)
-            {
-                _plugin.Settings.Settings.IsViewerControlVisible = true;
-            }
-
-            return;
         }
 
         private static void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -104,12 +81,7 @@ namespace ScreenshotUtilities.ViewModels
             }
         }
 
-        public void ResetViewModel()
-        {
-            _plugin.Settings.Settings.IsViewerControlVisible = false;
-            ScreenshotGroups.Reset();
-            SelectedGroup = null;
-        }
+        public void ResetViewModel() => SelectedGroup = null;
 
         public RelayCommand<object> CopyToClipboardCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.CopyToClipboard());
 
@@ -157,11 +129,7 @@ namespace ScreenshotUtilities.ViewModels
             }
         }
 
-        public ScreenshotGroups ScreenshotGroups
-        {
-            get => _screenshotGroups;
-            set => SetValue(ref _screenshotGroups, value);
-        }
+        public ScreenshotGroups ScreenshotGroups => _plugin.CurrentScreenshotsGroups;
 
         public ScreenshotGroup SelectedGroup
         {

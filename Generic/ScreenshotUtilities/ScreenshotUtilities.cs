@@ -1,5 +1,7 @@
 ﻿using KNARZhelper;
+using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using ScreenshotUtilities.Controls;
@@ -20,6 +22,8 @@ namespace ScreenshotUtilities
         public override Guid Id { get; } = Guid.Parse("485d682f-73e9-4d54-b16f-b8dd49e88f90");
 
         public List<ScreenshotViewerControl> ScreenshotViewerControls { get; set; } = new List<ScreenshotViewerControl>();
+
+        public ScreenshotGroups CurrentScreenshotsGroups { get; set; } = new ScreenshotGroups();
 
         public ScreenshotUtilitiesSettingsViewModel Settings { get; set; }
 
@@ -120,6 +124,18 @@ namespace ScreenshotUtilities
         public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
         public override UserControl GetSettingsView(bool firstRunSettings) => new ScreenshotUtilitiesSettingsView();
+
+        public override void OnGameSelected(OnGameSelectedEventArgs args)
+        {
+            base.OnGameSelected(args);
+
+            if (args.NewValue.Count == 1)
+            {
+                ScreenshotActions.PrepareScreenshots(args.NewValue[0], this);
+
+                RefreshControls();
+            }
+        }
 
         private void DownloadScreenshots(Game game)
         {
