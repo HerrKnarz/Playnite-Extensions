@@ -1,5 +1,13 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 4.2.2
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2025-10-20
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2025-10-20/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_2_2.pext
+    Changelog:
+      - Links requiring an offscreen web view are now fetched in serial to avoid crashes probably caused by running them in parallel. This unfortunately slows down the process significantly.
+      - Bumped Playnite SDK to version 6.13
+      - Refactored some code needed for better separating my helper library from the main extensions.
   - Version: 4.2.1
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-10-05
