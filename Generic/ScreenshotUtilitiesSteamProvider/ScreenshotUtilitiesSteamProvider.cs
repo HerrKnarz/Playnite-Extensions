@@ -30,49 +30,57 @@ namespace ScreenshotUtilitiesSteamProvider
 
         public bool GetScreenshots(Game game)
         {
-            if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled || game == null)
+            try
             {
-                return false;
-            }
-
-            var steamId = SteamHelper.GetSteamId(game);
-
-            if (string.IsNullOrEmpty(steamId))
-            {
-                return false;
-            }
-
-            var apiUrl = $"https://store.steampowered.com/api/appdetails?appids={steamId}";
-
-            var result = ApiHelper.GetJsonFromApi<SteamAppDetails>(apiUrl, "Steam");
-
-            if ((result is null) || (result[steamId].Data.Screenshots is null) || (result[steamId].Data.Screenshots?.Count == 0))
-            {
-                return false;
-            }
-
-            var fileName = ScreenshotHelper.GenerateFileName(game.Id, Id, Id);
-
-            var screenshotGroup = ScreenshotGroup.CreateFromFile(new FileInfo(fileName))
-                ?? new ScreenshotGroup("Steam", Id)
+                if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled || game == null)
                 {
-                    Provider = new ScreenshotProvider("Steam", Id),
-                    Screenshots = new RangeObservableCollection<KNARZhelper.ScreenshotsCommon.Models.Screenshot>()
-                };
+                    return false;
+                }
 
-            screenshotGroup.Screenshots
-                .AddRange(result[steamId].Data.Screenshots
-                .Where(s => !screenshotGroup.Screenshots.Any(es => es.Path.Equals(s.PathFull)))
-                .Select(s =>
-               new KNARZhelper.ScreenshotsCommon.Models.Screenshot(s.PathFull)
-               {
-                   ThumbnailPath = s.PathThumbnail,
-                   SortOrder = s.Id
-               }));
+                var steamId = SteamHelper.GetSteamId(game);
 
-            ScreenshotHelper.SaveScreenshotGroupJson(game, screenshotGroup);
+                if (string.IsNullOrEmpty(steamId))
+                {
+                    return false;
+                }
 
-            return true;
+                var apiUrl = $"https://store.steampowered.com/api/appdetails?appids={steamId}";
+
+                var result = ApiHelper.GetJsonFromApi<SteamAppDetails>(apiUrl, "Steam");
+
+                if ((result is null) || (result[steamId].Data.Screenshots is null) || (result[steamId].Data.Screenshots?.Count == 0))
+                {
+                    return false;
+                }
+
+                var fileName = ScreenshotHelper.GenerateFileName(game.Id, Id, Id);
+
+                var screenshotGroup = ScreenshotGroup.CreateFromFile(new FileInfo(fileName))
+                    ?? new ScreenshotGroup("Steam", Id)
+                    {
+                        Provider = new ScreenshotProvider("Steam", Id),
+                        Screenshots = new RangeObservableCollection<KNARZhelper.ScreenshotsCommon.Models.Screenshot>()
+                    };
+
+                screenshotGroup.Screenshots
+                    .AddRange(result[steamId].Data.Screenshots
+                    .Where(s => !screenshotGroup.Screenshots.Any(es => es.Path.Equals(s.PathFull)))
+                    .Select(s =>
+                   new KNARZhelper.ScreenshotsCommon.Models.Screenshot(s.PathFull)
+                   {
+                       ThumbnailPath = s.PathThumbnail,
+                       SortOrder = s.Id
+                   }));
+
+                ScreenshotHelper.SaveScreenshotGroupJson(game, screenshotGroup);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error fetching screenshots for {game.Name}");
+                return false;
+            }
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
