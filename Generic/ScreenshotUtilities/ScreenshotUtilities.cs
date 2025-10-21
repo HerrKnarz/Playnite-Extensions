@@ -85,7 +85,7 @@ namespace ScreenshotUtilities
                 Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadScreenshots"),
                 MenuSection = menuSection,
                 Icon = "suDownloadIcon",
-                Action = a => DownloadScreenshots(args.Games.FirstOrDefault())
+                Action = a => DownloadScreenshotsAsync(args.Games.FirstOrDefault())
             };
             yield return new GameMenuItem
             {
@@ -100,7 +100,7 @@ namespace ScreenshotUtilities
                 Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshThumbnails"),
                 MenuSection = menuSection,
                 Icon = "suRefreshIcon",
-                Action = a => RefreshThumbnails(args.Games.FirstOrDefault())
+                Action = a => RefreshThumbnailsAsync(args.Games.FirstOrDefault())
             };
         }
 
@@ -136,9 +136,9 @@ namespace ScreenshotUtilities
             }
         }
 
-        private void DownloadScreenshots(Game game)
+        private async Task DownloadScreenshotsAsync(Game game)
         {
-            if (ScreenshotActions.DownloadScreenshots(game, this))
+            if (await ScreenshotActions.DownloadScreenshotsAsync(game, this))
             {
                 RefreshControls();
             }
@@ -163,9 +163,9 @@ namespace ScreenshotUtilities
             });
         }
 
-        private void RefreshThumbnails(Game game)
+        private async Task RefreshThumbnailsAsync(Game game)
         {
-            if (ScreenshotActions.RefreshThumbnails(game, this))
+            if (await ScreenshotActions.RefreshThumbnailsAsync(game, this))
             {
                 RefreshControls();
             }

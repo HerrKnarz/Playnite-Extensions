@@ -11,11 +11,11 @@ namespace ScreenshotUtilities
 {
     internal static class ScreenshotActions
     {
-        internal static bool DownloadScreenshots(Game game, ScreenshotUtilities plugin)
+        internal static async Task<bool> DownloadScreenshotsAsync(Game game, ScreenshotUtilities plugin)
         {
             var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
 
-            return groups.DownloadAll(plugin.Settings.Settings.ThumbnailHeight);
+            return await groups.DownloadAllAsync(plugin.Settings.Settings.ThumbnailHeight);
         }
 
         internal static async Task<bool> GetScreenshotsAsync(Game game)
@@ -78,7 +78,7 @@ namespace ScreenshotUtilities
                         || plugin.Settings.Settings.DownloadFilter.Any(f => f.ExistsInGame(game)))
                         && !groups.IsEverythingDownloaded)
                     {
-                        groups.DownloadAll(plugin.Settings.Settings.ThumbnailHeight);
+                        await groups.DownloadAllAsync(plugin.Settings.Settings.ThumbnailHeight);
                     }
                 }
 
@@ -105,11 +105,11 @@ namespace ScreenshotUtilities
             }
         }
 
-        internal static bool RefreshThumbnails(Game game, ScreenshotUtilities plugin)
+        internal static async Task<bool> RefreshThumbnailsAsync(Game game, ScreenshotUtilities plugin)
         {
             var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
 
-            return groups.RefreshAllThumbnails(plugin.Settings.Settings.ThumbnailHeight);
+            return await groups.RefreshAllThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight);
         }
     }
 }
