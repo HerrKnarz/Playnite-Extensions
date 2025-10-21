@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace ScreenshotUtilitiesSteamProvider
@@ -28,7 +29,7 @@ namespace ScreenshotUtilitiesSteamProvider
             };
         }
 
-        public bool GetScreenshots(Game game)
+        public async Task<bool> GetScreenshotsAsync(Game game)
         {
             try
             {
@@ -46,7 +47,7 @@ namespace ScreenshotUtilitiesSteamProvider
 
                 var apiUrl = $"https://store.steampowered.com/api/appdetails?appids={steamId}";
 
-                var result = ApiHelper.GetJsonFromApi<SteamAppDetails>(apiUrl, "Steam");
+                var result = await ApiHelper.GetJsonFromApiAsync<SteamAppDetails>(apiUrl, "Steam");
 
                 if ((result is null) || (result[steamId].Data.Screenshots is null) || (result[steamId].Data.Screenshots?.Count == 0))
                 {

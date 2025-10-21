@@ -1,8 +1,11 @@
-﻿using KNARZhelper.ScreenshotsCommon.Models;
+﻿using KNARZhelper;
+using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using ScreenshotUtilities.ViewModels;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ScreenshotUtilities
 {
@@ -15,7 +18,7 @@ namespace ScreenshotUtilities
             return groups.DownloadAll(plugin.Settings.Settings.ThumbnailHeight);
         }
 
-        internal static bool GetScreenshots(Game game)
+        internal static async Task<bool> GetScreenshotsAsync(Game game)
         {
             var needsRefresh = false;
 
@@ -25,26 +28,20 @@ namespace ScreenshotUtilities
 
                 if (type != null && type.GetInterface("IScreenshotProvider") != null)
                 {
-                    var methodInfo = type.GetMethod("GetScreenshots");
+                    var methodInfo = type.GetMethod("GetScreenshotsAsync");
 
                     if (methodInfo != null)
                     {
                         var parametersArray = new object[] { game };
 
-                        needsRefresh |= (bool)methodInfo.Invoke(plugin, parametersArray);
+                        var resultTask = (Task<bool>)methodInfo.Invoke(plugin, parametersArray);
+
+                        needsRefresh |= await resultTask;
                     }
                 }
             }
 
             return needsRefresh;
-        }
-
-        public static ScreenshotGroups LoadScreenshots(Game game, ScreenshotUtilities plugin, bool standaloneMode = false)
-        {
-            var groups = new ScreenshotGroups();
-            groups.CreateGroupsFromFiles(plugin.GetPluginUserDataPath(), game.Id, false);
-
-            return groups;
         }
 
         internal static void OpenScreenshotViewer(Game game, ScreenshotUtilities plugin)
@@ -59,37 +56,52 @@ namespace ScreenshotUtilities
             window.ShowDialog();
         }
 
-        internal static void PrepareScreenshots(Game game, ScreenshotUtilities plugin)
+        internal static async Task PrepareScreenshotsAsync(Game game, ScreenshotUtilities plugin)
         {
-            plugin.Settings.Settings.IsViewerControlVisible = false;
-            plugin.CurrentScreenshotsGroups.Reset();
-
-            GetScreenshots(game);
-
-            var groups = new ScreenshotGroups();
-            groups.CreateGroupsFromFiles(plugin.GetPluginUserDataPath(), game.Id, false);
-
-            if (plugin.Settings.Settings.AutomaticDownload)
+            try
             {
-
-                if (((plugin.Settings.Settings.DownloadFilter.Count == 0)
-                    || plugin.Settings.Settings.DownloadFilter.Any(f => f.ExistsInGame(game)))
-                    && !groups.IsEverythingDownloaded)
+                API.Instance.MainView.UIDispatcher.Invoke(() =>
                 {
-                    groups.DownloadAll(plugin.Settings.Settings.ThumbnailHeight);
+                    plugin.Settings.Settings.IsViewerControlVisible = false;
+                    plugin.CurrentScreenshotsGroups.Reset();
+                });
+
+                _ = await GetScreenshotsAsync(game);
+
+                var groups = new ScreenshotGroups();
+                groups.CreateGroupsFromFiles(plugin.GetPluginUserDataPath(), game.Id, false);
+
+                if (plugin.Settings.Settings.AutomaticDownload)
+                {
+
+                    if (((plugin.Settings.Settings.DownloadFilter.Count == 0)
+                        || plugin.Settings.Settings.DownloadFilter.Any(f => f.ExistsInGame(game)))
+                        && !groups.IsEverythingDownloaded)
+                    {
+                        groups.DownloadAll(plugin.Settings.Settings.ThumbnailHeight);
+                    }
                 }
+
+                if (groups.Count == 0)
+                {
+                    return;
+                }
+
+                API.Instance.MainView.UIDispatcher.Invoke(() =>
+                {
+                    plugin.CurrentScreenshotsGroups = groups;
+
+                    if (plugin.Settings.Settings.DisplayViewerControl)
+                    {
+                        plugin.Settings.Settings.IsViewerControlVisible = true;
+                    }
+
+                    plugin.RefreshControls();
+                });
             }
-
-            if (groups.Count == 0)
+            catch (Exception ex)
             {
-                return;
-            }
-
-            plugin.CurrentScreenshotsGroups = groups;
-
-            if (plugin.Settings.Settings.DisplayViewerControl)
-            {
-                plugin.Settings.Settings.IsViewerControlVisible = true;
+                Log.Error(ex, $"Error preparing screenshots for {game.Name}");
             }
         }
 

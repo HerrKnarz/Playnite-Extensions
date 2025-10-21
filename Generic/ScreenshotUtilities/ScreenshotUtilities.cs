@@ -9,6 +9,7 @@ using ScreenshotUtilities.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace ScreenshotUtilities
@@ -91,7 +92,7 @@ namespace ScreenshotUtilities
                 Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshScreenshots"),
                 MenuSection = menuSection,
                 Icon = "suFetchIcon",
-                Action = a => GetScreenshots(args.Games.FirstOrDefault())
+                Action = a => GetScreenshotsAsync(args.Games.FirstOrDefault())
             };
 
             yield return new GameMenuItem
@@ -131,9 +132,7 @@ namespace ScreenshotUtilities
 
             if (args.NewValue.Count == 1)
             {
-                ScreenshotActions.PrepareScreenshots(args.NewValue[0], this);
-
-                RefreshControls();
+                ScreenshotActions.PrepareScreenshotsAsync(args.NewValue[0], this);
             }
         }
 
@@ -145,15 +144,15 @@ namespace ScreenshotUtilities
             }
         }
 
-        private void GetScreenshots(Game game)
+        private async Task GetScreenshotsAsync(Game game)
         {
-            if (ScreenshotActions.GetScreenshots(game))
+            if (await ScreenshotActions.GetScreenshotsAsync(game))
             {
                 RefreshControls();
             }
         }
 
-        private void RefreshControls()
+        internal void RefreshControls()
         {
             API.Instance.MainView.UIDispatcher.Invoke(delegate
             {
