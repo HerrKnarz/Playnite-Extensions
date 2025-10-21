@@ -10,26 +10,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace ScreenshotUtilitiesSteamProvider
 {
     public class ScreenshotUtilitiesSteamProvider : GenericPlugin, IScreenshotProvider
     {
-        private ScreenshotUtilitiesSteamProviderSettingsViewModel settings { get; set; }
-
         public override Guid Id { get; } = Guid.Parse("074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae");
 
         public ScreenshotUtilitiesSteamProvider(IPlayniteAPI api) : base(api)
         {
-            settings = new ScreenshotUtilitiesSteamProviderSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = false
             };
         }
 
-        public async Task<bool> GetScreenshotsAsync(Game game)
+        public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate)
         {
             try
             {
@@ -45,15 +41,6 @@ namespace ScreenshotUtilitiesSteamProvider
                     return false;
                 }
 
-                var apiUrl = $"https://store.steampowered.com/api/appdetails?appids={steamId}";
-
-                var result = await ApiHelper.GetJsonFromApiAsync<SteamAppDetails>(apiUrl, "Steam");
-
-                if ((result is null) || (result[steamId].Data.Screenshots is null) || (result[steamId].Data.Screenshots?.Count == 0))
-                {
-                    return false;
-                }
-
                 var fileName = ScreenshotHelper.GenerateFileName(game.Id, Id, Id);
 
                 var screenshotGroup = ScreenshotGroup.CreateFromFile(new FileInfo(fileName))
@@ -63,19 +50,37 @@ namespace ScreenshotUtilitiesSteamProvider
                         Screenshots = new RangeObservableCollection<KNARZhelper.ScreenshotsCommon.Models.Screenshot>()
                     };
 
-                screenshotGroup.Screenshots
-                    .AddRange(result[steamId].Data.Screenshots
-                    .Where(s => !screenshotGroup.Screenshots.Any(es => es.Path.Equals(s.PathFull)))
-                    .Select(s =>
-                   new KNARZhelper.ScreenshotsCommon.Models.Screenshot(s.PathFull)
-                   {
-                       ThumbnailPath = s.PathThumbnail,
-                       SortOrder = s.Id
-                   }));
+                if (!forceUpdate
+                    && screenshotGroup.LastUpdate != null
+                    && (screenshotGroup.LastUpdate > DateTime.Now.AddDays(daysSinceLastUpdate * -1)))
+                {
+                    return false;
+                }
+
+                var apiUrl = $"https://store.steampowered.com/api/appdetails?appids={steamId}";
+
+                var result = await ApiHelper.GetJsonFromApiAsync<SteamAppDetails>(apiUrl, "Steam");
+
+                var updated = false;
+
+                if (!(result is null) && !(result[steamId].Data.Screenshots is null) && (result[steamId].Data.Screenshots?.Count) != 0)
+                {
+                    screenshotGroup.Screenshots
+                        .AddRange(result[steamId].Data.Screenshots
+                        .Where(s => !screenshotGroup.Screenshots.Any(es => es.Path.Equals(s.PathFull)))
+                        .Select(s =>
+                       new KNARZhelper.ScreenshotsCommon.Models.Screenshot(s.PathFull)
+                       {
+                           ThumbnailPath = s.PathThumbnail,
+                           SortOrder = s.Id
+                       }));
+
+                    updated = true;
+                }
 
                 ScreenshotHelper.SaveScreenshotGroupJson(game, screenshotGroup);
 
-                return true;
+                return updated;
             }
             catch (Exception ex)
             {
@@ -93,9 +98,5 @@ namespace ScreenshotUtilitiesSteamProvider
                 PlayniteApi.Notifications.Add(notificationMessage);
             }
         }
-
-        public override ISettings GetSettings(bool firstRunSettings) => settings;
-
-        public override UserControl GetSettingsView(bool firstRunSettings) => new ScreenshotUtilitiesSteamProviderSettingsView();
     }
 }

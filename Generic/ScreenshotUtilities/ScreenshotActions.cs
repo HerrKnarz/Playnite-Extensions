@@ -18,7 +18,7 @@ namespace ScreenshotUtilities
             return await groups.DownloadAllAsync(plugin.Settings.Settings.ThumbnailHeight);
         }
 
-        internal static async Task<bool> GetScreenshotsAsync(Game game)
+        internal static async Task<bool> GetScreenshotsAsync(Game game, bool forceUpdate = false)
         {
             var needsRefresh = false;
 
@@ -32,7 +32,7 @@ namespace ScreenshotUtilities
 
                     if (methodInfo != null)
                     {
-                        var parametersArray = new object[] { game };
+                        var parametersArray = new object[] { game, 5, forceUpdate };
 
                         var resultTask = (Task<bool>)methodInfo.Invoke(plugin, parametersArray);
 
@@ -82,7 +82,6 @@ namespace ScreenshotUtilities
 
                 if (plugin.Settings.Settings.AutomaticDownload)
                 {
-
                     if (plugin.Settings.Settings.Debug)
                     {
                         API.Instance.MainView.UIDispatcher.Invoke(() => Log.Debug($"PrepareScreenshots {game.Name}: Downloading"));

@@ -180,7 +180,7 @@ namespace ScreenshotUtilities
 
         private async Task GetScreenshotsAsync(Game game)
         {
-            if (await ScreenshotActions.GetScreenshotsAsync(game))
+            if (await ScreenshotActions.GetScreenshotsAsync(game, true))
             {
                 RefreshControls();
             }
