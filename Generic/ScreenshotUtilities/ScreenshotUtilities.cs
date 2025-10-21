@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace ScreenshotUtilities
 {
@@ -21,6 +22,8 @@ namespace ScreenshotUtilities
         private static readonly string _pluginSourceName = "ScreenshotUtilities";
 
         public override Guid Id { get; } = Guid.Parse("485d682f-73e9-4d54-b16f-b8dd49e88f90");
+
+        public DispatcherTimer Timer { get; private set; }
 
         public List<ScreenshotViewerControl> ScreenshotViewerControls { get; set; } = new List<ScreenshotViewerControl>();
 
@@ -35,6 +38,13 @@ namespace ScreenshotUtilities
             {
                 HasSettings = true
             };
+
+            Timer = new DispatcherTimer()
+            {
+                Interval = TimeSpan.FromMilliseconds(500)
+            };
+
+            Timer.Tick += new EventHandler(PrepareScreenshotsEvent);
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
@@ -131,11 +141,32 @@ namespace ScreenshotUtilities
 
         public override void OnGameSelected(OnGameSelectedEventArgs args)
         {
+            if (Settings.Settings.Debug)
+            {
+                Log.Debug("OnGameSelected triggered!");
+            }
+
             base.OnGameSelected(args);
 
             if (args.NewValue.Count == 1)
             {
-                ScreenshotActions.PrepareScreenshotsAsync(args.NewValue[0], this);
+                Timer.Stop();
+
+                if (Settings.Settings.Debug)
+                {
+                    Log.Debug($"OnGameSelected timer stopped for game {args.NewValue[0].Name}!");
+                }
+
+                Settings.Settings.IsViewerControlVisible = false;
+                CurrentScreenshotsGroups.Reset();
+                RefreshControls();
+
+                Timer.Start();
+
+                if (Settings.Settings.Debug)
+                {
+                    Log.Debug($"OnGameSelected timer started for game {args.NewValue[0].Name}!");
+                }
             }
         }
 
@@ -152,6 +183,23 @@ namespace ScreenshotUtilities
             if (await ScreenshotActions.GetScreenshotsAsync(game))
             {
                 RefreshControls();
+            }
+        }
+
+        internal async void PrepareScreenshotsEvent(object sender, EventArgs e)
+        {
+            Timer.Stop();
+
+            var game = API.Instance.MainView.SelectedGames.FirstOrDefault();
+
+            if (Settings.Settings.Debug)
+            {
+                Log.Debug($"Prepare event timer stopped for game {game.Name}!");
+            }
+
+            if (game != null)
+            {
+                await ScreenshotActions.PrepareScreenshotsAsync(game, this);
             }
         }
 

@@ -60,20 +60,33 @@ namespace ScreenshotUtilities
         {
             try
             {
-                API.Instance.MainView.UIDispatcher.Invoke(() =>
+                if (plugin.Settings.Settings.Debug)
                 {
-                    plugin.Settings.Settings.IsViewerControlVisible = false;
-                    plugin.CurrentScreenshotsGroups.Reset();
-                    plugin.RefreshControls();
-                });
+                    API.Instance.MainView.UIDispatcher.Invoke(() => Log.Debug($"PrepareScreenshots {game.Name}: Getting screenshots"));
+                }
 
                 await GetScreenshotsAsync(game);
 
                 var groups = new ScreenshotGroups();
                 groups.CreateGroupsFromFiles(plugin.GetPluginUserDataPath(), game.Id, false);
 
+                if (plugin.Settings.Settings.Debug)
+                {
+                    API.Instance.MainView.UIDispatcher.Invoke(() => Log.Debug($"PrepareScreenshots {game.Name}: Create groups: {groups?.Count}"));
+                }
+
+                if (groups.Count == 0)
+                {
+                    return;
+                }
+
                 if (plugin.Settings.Settings.AutomaticDownload)
                 {
+
+                    if (plugin.Settings.Settings.Debug)
+                    {
+                        API.Instance.MainView.UIDispatcher.Invoke(() => Log.Debug($"PrepareScreenshots {game.Name}: Downloading"));
+                    }
 
                     if (((plugin.Settings.Settings.DownloadFilter.Count == 0)
                         || plugin.Settings.Settings.DownloadFilter.Any(f => f.ExistsInGame(game)))
@@ -83,13 +96,13 @@ namespace ScreenshotUtilities
                     }
                 }
 
-                if (groups.Count == 0)
-                {
-                    return;
-                }
-
                 API.Instance.MainView.UIDispatcher.Invoke(() =>
                 {
+                    if (plugin.Settings.Settings.Debug)
+                    {
+                        Log.Debug($"PrepareScreenshots {game.Name}: Setting current groups: {groups?.Count}");
+                    }
+
                     plugin.CurrentScreenshotsGroups = groups;
 
                     if (plugin.Settings.Settings.DisplayViewerControl)

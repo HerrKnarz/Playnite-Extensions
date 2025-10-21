@@ -9,6 +9,7 @@ namespace ScreenshotUtilities.Models
         private int _aspectHeight = 9;
         private int _aspectWidth = 16;
         private bool _automaticDownload = false;
+        private bool _debug = true;
         private bool _displayButtonControl = true;
         private bool _displayViewerControl = true;
         private ObservableCollection<MetadataObject> _downloadFilter = new ObservableCollection<MetadataObject>();
@@ -50,6 +51,12 @@ namespace ScreenshotUtilities.Models
         {
             get => _automaticDownload;
             set => SetValue(ref _automaticDownload, value);
+        }
+
+        public bool Debug
+        {
+            get => _debug;
+            set => SetValue(ref _debug, value);
         }
 
         public bool DisplayButtonControl
