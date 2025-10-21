@@ -66,19 +66,22 @@ namespace ScreenshotUtilities
         {
             var menuSection = ResourceProvider.GetString("LOCScreenshotUtilitiesName");
 
-            yield return new GameMenuItem
+            if (CurrentScreenshotsGroups != null && CurrentScreenshotsGroups.Count > 0)
             {
-                Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuShowScreenshots"),
-                MenuSection = menuSection,
-                Icon = "suShowScreenshotsIcon",
-                Action = a => ScreenshotActions.OpenScreenshotViewer(args.Games.FirstOrDefault(), this)
-            };
+                yield return new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuShowScreenshots"),
+                    MenuSection = menuSection,
+                    Icon = "suShowScreenshotsIcon",
+                    Action = a => ScreenshotActions.OpenScreenshotViewer(args.Games.FirstOrDefault(), this)
+                };
 
-            yield return new GameMenuItem
-            {
-                Description = "-",
-                MenuSection = menuSection
-            };
+                yield return new GameMenuItem
+                {
+                    Description = "-",
+                    MenuSection = menuSection
+                };
+            }
 
             yield return new GameMenuItem
             {

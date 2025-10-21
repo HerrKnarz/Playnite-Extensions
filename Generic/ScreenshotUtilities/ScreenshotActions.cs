@@ -64,9 +64,10 @@ namespace ScreenshotUtilities
                 {
                     plugin.Settings.Settings.IsViewerControlVisible = false;
                     plugin.CurrentScreenshotsGroups.Reset();
+                    plugin.RefreshControls();
                 });
 
-                _ = await GetScreenshotsAsync(game);
+                await GetScreenshotsAsync(game);
 
                 var groups = new ScreenshotGroups();
                 groups.CreateGroupsFromFiles(plugin.GetPluginUserDataPath(), game.Id, false);

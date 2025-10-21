@@ -63,7 +63,7 @@ namespace ScreenshotUtilities.ViewModels
                 return;
             }
 
-            if (ScreenshotGroups == null)
+            if (ScreenshotGroups == null || (ScreenshotGroups.Count == 0) || !ScreenshotGroups[0].BasePath.Contains(_gameId.ToString()))
             {
                 return;
             }
@@ -136,6 +136,7 @@ namespace ScreenshotUtilities.ViewModels
             get => _selectedGroup;
             set => SetValue(ref _selectedGroup, value);
         }
+
         public double ThumbnailHeight => _plugin.Settings.Settings.ThumbnailHeight;
     }
 }
