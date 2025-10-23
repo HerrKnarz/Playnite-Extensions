@@ -1,0 +1,32 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCScreenshotUtilitiesName">Screenshot Utilities</sys:String>
+
+    <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Знімки екрану</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Копіювати в буфер обміну</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Видалити скріншот</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Завантажити знімки екрану</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Завантаження зображень для</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Відкрити теку</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Відкрити в пов'язаній програмі</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Відкрити в браузері</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Відкрити в повноекранному режимі</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Оновити знімки екрану</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Оновити мініатюри</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Оновити мініатюри для</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Показати знімки екрану</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Не вибрано жодної гри</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Знімки екрану не знайдені</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Теку зі знімками екрану не вдалося видалити після видалення гри {0}. Видаліть теку вручну. Натисніть на це повідомлення, щоб її відкрити.</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Автоматично завантажувати знімки екрану при першому перегляді</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Типове співвідношення сторін</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Показувати кнопку для відкриття окремого переглядача в темі</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Показувати керування переглядача знімків екрану в темі</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Завантажувати знімки екрану тільки для ігор з однією з наступних категорій або тегів. Знімки завантажуватимуться завжди якщо нічого не вибрано.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Висота мініатюри</sys:String>
+</ResourceDictionary>
