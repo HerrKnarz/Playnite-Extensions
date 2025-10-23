@@ -21,6 +21,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Aucun jeu sélectionné</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Aucune capture d'écran trouvée</sys:String>
 
+    <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots folder couldn't be deleted after the game {0} was removed. Please delete it manually. Click on this message to open the folder.</sys:String>
+
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically on first view</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Ratio d'aspect par défaut</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Afficher le bouton pour ouvrir la visionneuse autonome dans le thème</sys:String>
