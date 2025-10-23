@@ -21,6 +21,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Kein Spiel ausgewählt</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Keine Screenshots gefunden</sys:String>
 
+    <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots-Ordner konnte nicht gelöscht werden, nachdem das Spiel {0} entfernt wurde. Bitte löschen Sie es manuell. Klicken Sie auf diese Nachricht, um den Ordner zu öffnen.</sys:String>
+
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Screenshots automatisch bei der ersten Ansicht herunterladen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Standard-Seitenverhältnis</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Schaltfläche anzeigen, um den Standalone-Viewer im Theme zu öffnen</sys:String>
