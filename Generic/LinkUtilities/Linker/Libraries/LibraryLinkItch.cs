@@ -47,7 +47,7 @@ namespace LinkUtilities.Linker.Libraries
                 return false;
             }
 
-            var itchMetaData = ParseHelper.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName);
+            var itchMetaData = ApiHelper.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName);
 
             LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
 
@@ -68,7 +68,7 @@ namespace LinkUtilities.Linker.Libraries
                 return base.GetSearchResults(searchTerm);
             }
 
-            var itchSearchResult = ParseHelper.GetJsonFromApi<ItchSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName, Encoding.UTF8);
+            var itchSearchResult = ApiHelper.GetJsonFromApi<ItchSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName, Encoding.UTF8);
 
             return itchSearchResult?.Games?.Any() ?? false
                 ? new List<GenericItemOption>(itchSearchResult.Games.Select(g => new SearchResult

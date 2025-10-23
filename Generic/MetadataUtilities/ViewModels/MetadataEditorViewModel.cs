@@ -1,6 +1,8 @@
 ﻿using KNARZhelper;
-using KNARZhelper.DatabaseObjectTypes;
 using KNARZhelper.Enum;
+using KNARZhelper.MetadataCommon;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
+using KNARZhelper.MetadataCommon.Enum;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
 using Playnite.SDK;
@@ -598,7 +600,7 @@ namespace MetadataUtilities.ViewModels
                     }, globalProgressOptions);
                 }
 
-                var unwantedItems = new List<MetadataObject>();
+                var unwantedItems = new List<BaseMetadataObject>();
 
                 using (MetadataViewSource.DeferRefresh())
                 {

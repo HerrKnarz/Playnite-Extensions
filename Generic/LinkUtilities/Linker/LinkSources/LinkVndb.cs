@@ -3,6 +3,7 @@ using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
+using Newtonsoft.Json;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
@@ -25,15 +26,18 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var searchRequest = Newtonsoft.Json.JsonConvert.SerializeObject(new VndbSearchRequest
+                var settings = new JsonSerializerSettings();
+                settings.StringEscapeHandling = StringEscapeHandling.EscapeNonAscii;
+
+                var searchRequest = JsonConvert.SerializeObject(new VndbSearchRequest
                 {
                     Filters = new List<string> { "search", "=", searchTerm },
                     Fields = "id,title,released",
                     Results = 50,
                     Sort = "searchrank"
-                });
+                }, settings);
 
-                var vndbSearchResult = ParseHelper.GetJsonFromApi<VndbSearchResult>(SearchUrl, LinkName, null, false, searchRequest);
+                var vndbSearchResult = ApiHelper.GetJsonFromApi<VndbSearchResult>(SearchUrl, LinkName, null, false, searchRequest);
 
                 return !vndbSearchResult?.Results?.Any() ?? true
                     ? base.GetSearchResults(searchTerm)

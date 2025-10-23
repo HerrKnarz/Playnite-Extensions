@@ -1,5 +1,4 @@
-﻿using LinkUtilities.Helper;
-using Playnite.SDK.Models;
+﻿using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources
 {
@@ -13,7 +12,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string LinkName => "ProtonDB";
 
         // ProtonDb Links need the steam game id.
-        public override string GetGamePath(Game game, string gameName = null) => SteamHelper.GetSteamId(game);
+        public override string GetGamePath(Game game, string gameName = null) => GetSteamId(game);
 
         //TODO: Maybe add a search function via steam later.
     }

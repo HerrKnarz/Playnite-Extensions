@@ -40,7 +40,7 @@ namespace LinkUtilities.Linker.Libraries
                 return false;
             }
 
-            var gogMetaData = ParseHelper.GetJsonFromApi<GogMetaData>($"https://api.gog.com/products/{game.GameId}", LinkName);
+            var gogMetaData = ApiHelper.GetJsonFromApi<GogMetaData>($"https://api.gog.com/products/{game.GameId}", LinkName);
 
             if (!gogMetaData?.Slug?.Any() ?? true)
             {
@@ -65,7 +65,7 @@ namespace LinkUtilities.Linker.Libraries
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            var gogSearchResult = ParseHelper.GetJsonFromApi<GogSearchResult>($"{SearchUrl}{searchTerm.RemoveDiacritics().UrlEncode()}", LinkName);
+            var gogSearchResult = ApiHelper.GetJsonFromApi<GogSearchResult>($"{SearchUrl}{searchTerm.RemoveDiacritics().UrlEncode()}", LinkName);
 
             var searchResults = new List<GenericItemOption>();
 

@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
-using KNARZhelper.DatabaseObjectTypes;
-using KNARZhelper.Enum;
+using KNARZhelper.MetadataCommon;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
+using KNARZhelper.MetadataCommon.Enum;
 using MetadataUtilities.Models;
 using MetadataUtilities.Views;
 using Playnite.SDK;
@@ -408,7 +409,7 @@ namespace MetadataUtilities.ViewModels
             Settings.UnusedItemsWhiteList.Sort(x => x.TypeAndName);
         }
 
-        public void AddItemsToQuickAddList(List<MetadataObject> items)
+        public void AddItemsToQuickAddList(List<BaseMetadataObject> items)
         {
             if (items.Count == 0)
             {
@@ -432,7 +433,7 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public void AddItemsToWhiteList(List<MetadataObject> items)
+        public void AddItemsToWhiteList(List<BaseMetadataObject> items)
         {
             if (items.Count == 0)
             {

@@ -28,7 +28,7 @@ namespace LinkUtilities.LinkActions
 
         private List<BaseClasses.Linker> _linkers;
 
-        private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
+        private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Environment.ProcessorCount) };
 
         private AddWebsiteLinks()
         {
@@ -52,7 +52,7 @@ namespace LinkUtilities.LinkActions
         public override string ProgressMessage => "LOCLinkUtilitiesProgressWebsiteLink";
         public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
 
-        public string SteamId { get; set; } = String.Empty;
+        public string SteamId { get; set; } = string.Empty;
 
         public static AddWebsiteLinks Instance() => _instance ?? (_instance = new AddWebsiteLinks());
 
@@ -183,10 +183,13 @@ namespace LinkUtilities.LinkActions
         private bool FindLinks(Game game, out List<Link> links)
         {
             links = new List<Link>();
-
+            var linksAdded = false;
             var linksQueue = new ConcurrentQueue<Link>();
 
-            foreach (var priorityGroup in _linkers.GroupBy(x => x.Priority).OrderBy(x => x.Key))
+            foreach (var priorityGroup in _linkers
+                .Where(x => x.UrlLoadMethod != UrlLoadMethod.OffscreenView)
+                .GroupBy(x => x.Priority)
+                .OrderBy(x => x.Key))
             {
                 Parallel.ForEach(priorityGroup, _parallelOptions, linker =>
                 {
@@ -198,7 +201,17 @@ namespace LinkUtilities.LinkActions
                 });
             }
 
-            return links.AddMissing(linksQueue.Distinct());
+            linksAdded = links.AddMissing(linksQueue.Distinct());
+
+            foreach (var linker in _linkers
+                .Where(x => x.UrlLoadMethod == UrlLoadMethod.OffscreenView))
+            {
+                linker.FindLinks(game, out var innerLinks);
+
+                linksAdded |= links.AddMissing(innerLinks);
+            }
+
+            return linksAdded;
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
-using KNARZhelper.DatabaseObjectTypes;
+using KNARZhelper.MetadataCommon;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
 using MetadataUtilities.Enums;
 using MetadataUtilities.Models;
 using Playnite.SDK;

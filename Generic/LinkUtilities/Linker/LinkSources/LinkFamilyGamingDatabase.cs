@@ -15,6 +15,7 @@ namespace LinkUtilities.Linker.LinkSources
         private const string _websiteUrl = "https://www.familygamingdatabase.com";
         public override string BaseUrl => _websiteUrl + "/en-gb/game/";
         public override string CheckForContent => "<div class=\"gameTitleShare\"";
+        public override int Delay => 200;
         public override string LinkName => "Family Gaming Database";
         public override string SearchUrl => _websiteUrl + "/search/text/";
         public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Load;

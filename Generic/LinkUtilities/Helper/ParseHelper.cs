@@ -1,14 +1,11 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
-using Newtonsoft.Json;
-using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
@@ -20,63 +17,6 @@ namespace LinkUtilities.Helper
     /// </summary>
     internal static class ParseHelper
     {
-        /// <summary>
-        ///     Gets a JSON result from an API and deserializes it.
-        /// </summary>
-        /// <typeparam name="T">Type the JSON gets deserialized to</typeparam>
-        /// <param name="apiUrl">Url to fetch the JSON result from</param>
-        /// <param name="linkName">Link name for the error message</param>
-        /// <param name="encoding">the encoding to use</param>
-        /// <returns>Deserialized JSON result</returns>
-        internal static T GetJsonFromApi<T>(string apiUrl, string linkName, Encoding encoding = null, bool useWebView = false, string body = "")
-        {
-            try
-            {
-                var pageSource = string.Empty;
-
-                if (useWebView)
-                {
-                    var webView = API.Instance.WebViews.CreateOffscreenView();
-
-                    webView.NavigateAndWait(apiUrl);
-
-                    pageSource = webView.GetPageText();
-
-                    webView.Close();
-                }
-                else
-                {
-                    if (encoding is null)
-                    {
-                        encoding = Encoding.Default;
-                    }
-
-                    var client = new WebClient { Encoding = encoding };
-
-                    client.Headers.Add("Accept", "application/json");
-                    client.Headers.Add("user-agent", "Playnite LinkUtilities AddOn");
-
-                    if (body.Length == 0)
-                    {
-                        pageSource = client.DownloadString(apiUrl);
-                    }
-                    else
-                    {
-                        client.Headers.Add("Content-Type", "application/json");
-                        pageSource = client.UploadString(apiUrl, body);
-                    }
-                }
-
-                return JsonConvert.DeserializeObject<T>(pageSource);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, $"Error loading data from {linkName} - {apiUrl}");
-            }
-
-            return default;
-        }
-
         /// <summary>
         ///     Gets the search results from a mediawiki website via opensearch.
         /// </summary>

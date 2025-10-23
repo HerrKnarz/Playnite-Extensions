@@ -88,7 +88,7 @@ namespace LinkUtilities.Linker.Libraries
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            var games = ParseHelper.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, Encoding.UTF8);
+            var games = ApiHelper.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, Encoding.UTF8);
 
             return games?.Any() ?? false
                 ? new List<GenericItemOption>(games.Select(g => new SearchResult

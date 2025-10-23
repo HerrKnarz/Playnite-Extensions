@@ -1,0 +1,125 @@
+﻿<PluginUserControl x:Class="ScreenshotUtilities.Controls.ScreenshotViewerControl"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:local="clr-namespace:ScreenshotUtilities.Views"
+                   xmlns:knarzHelperControls="clr-namespace:KNARZhelper.Controls"
+                   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                   xmlns:viewModels="clr-namespace:ScreenshotUtilities.ViewModels"
+                   d:DataContext="{d:DesignInstance Type=viewModels:ScreenshotViewerViewModel}"
+                   mc:Ignorable="d" 
+                   d:DesignHeight="450" d:DesignWidth="800"
+                   Focusable="True">
+    <PluginUserControl.Resources>
+       <Style TargetType="Button" x:Key="SolidScreenshotButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="5, 0"/>
+            <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="{Binding ButtonHeight}"/>
+        </Style>
+
+        <DataTemplate x:Key="TabHeaderTemplate" DataType="{x:Type viewModels:ScreenshotViewerViewModel}">
+            <TextBlock Text="{Binding DisplayName}" FontWeight="Bold"/>
+        </DataTemplate>
+        <DataTemplate x:Key="TabContentTemplate"
+                      DataType="{x:Type viewModels:ScreenshotViewerViewModel}">
+            <Grid Height="0" />
+        </DataTemplate>
+
+        <knarzHelperControls:LocalFileImageConverter x:Key="LocalFileImageConverter" />
+    </PluginUserControl.Resources>
+    <Grid>
+        <DockPanel>
+            <TabControl ItemsSource="{Binding ScreenshotGroups}"
+                        SelectedItem="{Binding SelectedGroup}"
+                        ItemTemplate="{StaticResource TabHeaderTemplate}"
+                        ContentTemplate="{StaticResource TabContentTemplate}"
+                        DockPanel.Dock="Top"
+                        Visibility="{Binding ScreenshotGroups.HasMoreThanOneGroup, Converter={StaticResource BooleanToVisibilityConverter}}">
+            </TabControl>
+
+            <DockPanel DockPanel.Dock="Bottom"
+                       Height="{Binding DockPanelHeight}"
+                       VerticalAlignment="Stretch">
+                <Button DockPanel.Dock="Left"
+                        Content="&#xea9d;"
+                        Style="{DynamicResource SolidScreenshotButtonStyle}"
+                        Command="{Binding SelectPreviousScreenshotCommand}"
+                        Margin="0, 0, 5, 0" />
+
+                <Button DockPanel.Dock="Right"
+                        Content="&#xeaa0;"
+                        Style="{DynamicResource SolidScreenshotButtonStyle}"
+                        Command="{Binding SelectNextScreenshotCommand}"
+                        Margin="5, 0, 0, 0" />
+
+                <ListBox DockPanel.Dock="Left"
+                         x:Name="ScreenshotListBox"
+                         VerticalAlignment="Top"
+                         ItemsSource="{Binding SelectedGroup.Screenshots}" 
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         HorizontalAlignment="Stretch"
+                         SelectedItem="{Binding SelectedGroup.SelectedScreenshot}"
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                         ScrollViewer.PanningMode="HorizontalOnly"
+                         VirtualizingPanel.ScrollUnit="Pixel"
+                         VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding DisplayThumbnail, Converter={StaticResource LocalFileImageConverter}}" 
+                                   RenderOptions.BitmapScalingMode="Fant" 
+                                   Stretch="Uniform"
+                                   Margin="2"
+                                   Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, Path=DataContext.ThumbnailHeight}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <i:Interaction.Behaviors>
+                        <knarzHelperControls:ScrollIntoViewBehavior />
+                    </i:Interaction.Behaviors>  
+                </ListBox>
+            </DockPanel>
+
+            <knarzHelperControls:AspectRatioLayoutDecorator AspectRatio="{Binding AspectRatio}"
+                                                            DockPanel.Dock="Top"
+                                                            Margin="0, 10">
+
+                <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath, Converter={StaticResource LocalFileImageConverter}}" 
+                       RenderOptions.BitmapScalingMode="Fant"
+                       Stretch="Uniform"
+                       Cursor="Hand">
+                    <Image.InputBindings>
+                        <MouseBinding Gesture="LeftClick" 
+                                      Command="{Binding OpenInFullScreenCommand}" />
+                    </Image.InputBindings>
+                    <Image.ContextMenu>
+                        <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
+                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInFullScreen}"
+                                      Command="{Binding DataContext.OpenInFullScreenCommand}" />
+                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuCopyToClipboard}"
+                                      Command="{Binding DataContext.CopyToClipboardCommand}"
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInAssociatedApplication}"
+                                      Command="{Binding DataContext.OpenInAssociatedApplicationCommand}"
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenContainingFolder}"
+                                      Command="{Binding DataContext.OpenContainingFolderCommand}"
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInBrowser}"
+                                      Command="{Binding DataContext.OpenInBrowserCommand}"
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.PathIsUrl, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </ContextMenu>
+                    </Image.ContextMenu>
+                </Image>
+            </knarzHelperControls:AspectRatioLayoutDecorator>
+        </DockPanel>
+    </Grid>
+</PluginUserControl>

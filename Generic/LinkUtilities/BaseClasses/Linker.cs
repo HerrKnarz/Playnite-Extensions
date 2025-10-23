@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
+using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using LinkUtilities.Settings;
 using Playnite.SDK;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 
 // ReSharper disable VirtualMemberCallInConstructor
 
@@ -39,6 +41,7 @@ namespace LinkUtilities.BaseClasses
         public virtual bool CanBeBrowserSearched => !string.IsNullOrWhiteSpace(BrowserSearchUrl);
         public virtual bool CanBeSearched => !string.IsNullOrWhiteSpace(SearchUrl);
         public virtual string CheckForContent => string.Empty;
+        public virtual int Delay => 0;
         public abstract string LinkName { get; }
         public virtual string LinkUrl { get; set; } = string.Empty;
         public virtual bool NeedsToBeChecked { get; set; } = true;
@@ -87,7 +90,14 @@ namespace LinkUtilities.BaseClasses
             {
                 case ActionModifierTypes.Add:
                 case ActionModifierTypes.AddSelected:
-                    return AddLink(game);
+                    {
+                        if (isBulkAction && (Delay > 0))
+                        {
+                            Thread.Sleep(Delay);
+                        }
+
+                        return AddLink(game);
+                    }
                 case ActionModifierTypes.Search:
                 case ActionModifierTypes.SearchSelected:
                     return AddSearchedLink(game);
@@ -229,6 +239,13 @@ namespace LinkUtilities.BaseClasses
             var foundGame = (SearchResult)searchResults.FirstOrDefault(r => r.Name.RemoveSpecialChars().Replace(" ", "").Equals(searchName, StringComparison.OrdinalIgnoreCase));
 
             return foundGame != null ? foundGame.Url : searchResults.Count == 1 ? ((SearchResult)searchResults[0]).Url : null;
+        }
+
+        internal string GetSteamId(Game game)
+        {
+            var steamId = SteamHelper.GetSteamId(game);
+
+            return string.IsNullOrEmpty(steamId) ? AddWebsiteLinks.Instance().SteamId : steamId;
         }
     }
 }

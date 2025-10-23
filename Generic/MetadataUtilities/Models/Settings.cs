@@ -1,18 +1,12 @@
-﻿using KNARZhelper;
-using Playnite.SDK.Data;
+﻿using KNARZhelper.MetadataCommon;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace MetadataUtilities.Models
 {
     public class Settings : ObservableObject
     {
-        [DontSerialize]
-        public readonly Regex CompanyFormRegex =
-            new Regex(@",?\s+((co[,.\s]+)?ltd|(l\.)?inc|s\.?l|a[./]?s|limited|l\.?l\.?(c|p)|s\.?a(\.?r\.?l)?|s\.?r\.?o|gmbh|ab|corp|pte|ace|co|pty|pty\sltd|srl)\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
         private bool _addRemovedToUnwanted;
         private bool _alwaysSaveManualMergeRules;
         private int _conditionActionWindowHeight = 600;

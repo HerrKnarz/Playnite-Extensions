@@ -66,7 +66,7 @@ namespace LinkUtilities.Linker.LinkSources
                 .Replace("{SearchString}", searchTerm.UrlEncode())
                 .Replace("{DateUntil}", DateTime.Now.AddDays(5).ToString("yyyy-MM-dd"));
 
-            var epicSearchResult = ParseHelper.GetJsonFromApi<EpicSearchResult>(url, LinkName, Encoding.UTF8, true);
+            var epicSearchResult = ApiHelper.GetJsonFromApi<EpicSearchResult>(url, LinkName, Encoding.UTF8, true);
 
             return epicSearchResult?.Data?.Catalog?.SearchStore?.Elements?.Any() ?? false
                 ? new List<GenericItemOption>(Enumerable.Where<Element>(epicSearchResult.Data.Catalog.SearchStore.Elements, e => !string.IsNullOrEmpty(e.UrlSlug))

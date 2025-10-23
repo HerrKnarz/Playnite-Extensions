@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="ScreenshotUtilities.Views.FullScreenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ScreenshotUtilities.Views"
+             xmlns:knarzHelperControls="clr-namespace:KNARZhelper.Controls"
+             xmlns:viewModels="clr-namespace:ScreenshotUtilities.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:ScreenshotViewerViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Focusable="True">
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="FloatScreenshotButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}"/>
+            <Setter Property="Foreground" Value="Transparent"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Opacity" Value="0.5" />
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}" />
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Opacity" Value="1" />
+                    <Setter Property="Background" Value="Transparent" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <knarzHelperControls:LocalFileImageConverter x:Key="LocalFileImageConverter" />
+    </UserControl.Resources>
+
+    <Grid x:Name="FullScreenGrid">
+        <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath, Converter={StaticResource LocalFileImageConverter}}"
+               RenderOptions.BitmapScalingMode="Fant"
+               Stretch="Uniform"
+               Margin="0"/>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="2"
+                    Grid.Row="0"
+                    Style="{DynamicResource FloatScreenshotButtonStyle}"
+                    Margin="10"
+                    Height="50"
+                    Width="50"
+                    Foreground="{DynamicResource GlyphBrush}"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    FontSize="30"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    Content="&#xef16;"
+                    IsCancel="True"/>
+            <Button Grid.Column="0"
+                    Grid.Row="1"
+                    Style="{DynamicResource FloatScreenshotButtonStyle}"
+                    Padding="20"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Left"
+                    FontSize="70"
+                    Command="{Binding SelectPreviousScreenshotCommand}"
+                    Content="&#xea9d;" />
+            <Button Grid.Column="2"
+                    Grid.Row="1"
+                    Style="{DynamicResource FloatScreenshotButtonStyle}"
+                    Padding="20"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Right"
+                    FontSize="70"
+                    Command="{Binding SelectNextScreenshotCommand}"
+                    Content="&#xeaa0;" />
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,6 +1,7 @@
 ﻿using LinkUtilities.Settings;
 using Playnite.SDK.Models;
 using System.Linq;
+using System.Threading;
 using Xunit;
 
 namespace LinkUtilities.Test
@@ -55,6 +56,11 @@ namespace LinkUtilities.Test
             {
                 Name = testCase.GameName
             };
+
+            if (testCase.Link.Delay > 0)
+            {
+                Thread.Sleep(testCase.Link.Delay);
+            }
 
             Assert.Equal(testCase.GamePath, testCase.Link.GetGamePath(game));
         }

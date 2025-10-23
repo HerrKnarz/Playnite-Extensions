@@ -37,7 +37,7 @@ namespace LinkUtilities.Linker.LinkSources
                 return base.GetSearchResults(searchTerm);
             }
 
-            var rawgSearchResult = ParseHelper.GetJsonFromApi<RawgSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+            var rawgSearchResult = ApiHelper.GetJsonFromApi<RawgSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
 
             if (!rawgSearchResult?.Results?.Any() ?? true)
             {

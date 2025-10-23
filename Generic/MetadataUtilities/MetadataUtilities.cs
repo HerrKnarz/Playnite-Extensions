@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
-using KNARZhelper.DatabaseObjectTypes;
-using KNARZhelper.Enum;
+using KNARZhelper.MetadataCommon;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
+using KNARZhelper.MetadataCommon.Enum;
 using MetadataUtilities.Actions;
 using MetadataUtilities.Controls;
 using MetadataUtilities.Enums;

@@ -28,7 +28,7 @@ namespace LinkUtilities.Linker.LinkSources
                 return base.GetSearchResults(searchTerm);
             }
 
-            var giantBombSearchResult = ParseHelper.GetJsonFromApi<GiantBombSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
+            var giantBombSearchResult = ApiHelper.GetJsonFromApi<GiantBombSearchResult>(string.Format(SearchUrl, Settings.ApiKey, searchTerm.UrlEncode()), LinkName);
 
             if (giantBombSearchResult is null || giantBombSearchResult.Error != "OK" || giantBombSearchResult.NumberOfTotalResults <= 0)
             {

@@ -461,6 +461,8 @@ namespace LinkUtilities.Helper
             try
             {
                 var htmlWeb = GetHtmlWeb(allowRedirects);
+                htmlWeb.BrowserTimeout = new TimeSpan(0, 0, 10);
+
                 document = htmlWeb.Load(url);
 
                 statusCode = htmlWeb.StatusCode == HttpStatusCode.OK
@@ -486,7 +488,6 @@ namespace LinkUtilities.Helper
         /// <returns>The document, response url, status code and an object containing a possible exception</returns>
         private static (HtmlAgilityPack.HtmlDocument, string, HttpStatusCode, object) LoadHtmlDocumentFromBrowser(string url, bool allowRedirects = false, string checkForContent = "")
         {
-            object web = null;
             object doc = null;
             string responseUrl = null;
             var statusCode = HttpStatusCode.OK;
@@ -497,21 +498,21 @@ namespace LinkUtilities.Helper
                       {
                           try
                           {
-                              var threadWeb = GetHtmlWeb(allowRedirects);
-
-                              web = threadWeb;
+                              var web = GetHtmlWeb(allowRedirects);
+                              web.BrowserTimeout = new TimeSpan(0, 0, 10);
 
                               doc = checkForContent.Length > 0
-                                  ? threadWeb.LoadFromBrowser(url, o =>
+                                  ? web.LoadFromBrowser(url, o =>
                                   {
-                                      var webBrowser = (WebBrowser)o;
-
-                                      return webBrowser.Document.Body.InnerHtml.Contains(checkForContent);
+                                      using (var webBrowser = (WebBrowser)o)
+                                      {
+                                          return webBrowser.Document.Body.InnerHtml.Contains(checkForContent);
+                                      }
                                   })
-                                  : threadWeb.LoadFromBrowser(url);
+                                  : web.LoadFromBrowser(url);
 
-                              statusCode = threadWeb.StatusCode;
-                              responseUrl = threadWeb.ResponseUri.AbsoluteUri;
+                              statusCode = web.StatusCode;
+                              responseUrl = web.ResponseUri.AbsoluteUri;
                           }
                           catch (Exception ex)
                           {
@@ -552,15 +553,20 @@ namespace LinkUtilities.Helper
                     UserAgent = _agentString
                 };
 
-                var webView = API.Instance.WebViews.CreateOffscreenView(webViewSettings);
-
-                webView.NavigateAndWait(url);
-
-                responseUrl = webView.GetCurrentAddress();
-
-                htmlSource = webView.GetPageSource();
-
-                webView.Close();
+                using (var webView = API.Instance.WebViews.CreateOffscreenView(webViewSettings))
+                {
+                    try
+                    {
+                        webView.NavigateAndWait(url);
+                        responseUrl = webView.GetCurrentAddress();
+                        htmlSource = webView.GetPageSource();
+                        webView.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        exception = ex;
+                    }
+                }
 
                 statusCode = checkForContent.Length == 0 || htmlSource.Contains(checkForContent) ? HttpStatusCode.OK : HttpStatusCode.NotFound;
             }
