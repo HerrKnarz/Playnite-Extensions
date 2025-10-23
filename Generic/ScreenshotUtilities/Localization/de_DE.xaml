@@ -8,7 +8,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">In Zwischenablage kopieren</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Screenshot löschen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Screenshots herunterladen</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Bilder herunterladen für</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Bilder werden heruntergeladen für</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Ordner öffnen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">In zugehöriger Anwendung öffnen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Im Browser öffnen</sys:String>
@@ -21,12 +21,12 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Kein Spiel ausgewählt</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Keine Screenshots gefunden</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots-Ordner konnte nicht gelöscht werden, nachdem das Spiel {0} entfernt wurde. Bitte löschen Sie es manuell. Klicken Sie auf diese Nachricht, um den Ordner zu öffnen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots-Ordner konnte nicht gelöscht werden, nachdem das Spiel {0} entfernt wurde. Bitte lösche es manuell. Klicke auf diese Nachricht, um den Ordner zu öffnen.</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Screenshots automatisch bei der ersten Ansicht herunterladen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Standard-Seitenverhältnis</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Schaltfläche anzeigen, um den Standalone-Viewer im Theme zu öffnen</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Bildschirmfoto-Viewer-Steuerung im Theme anzeigen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Schaltfläche für den Standalone-Viewer im Theme anzeigen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Screenshot-Viewer im Theme anzeigen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Es werden nur Screenshots für Spiele mit einer der folgenden Kategorien oder Tags heruntergeladen.</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Miniaturansicht Höhe</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Höhe der Miniaturansicht</sys:String>
 </ResourceDictionary>
