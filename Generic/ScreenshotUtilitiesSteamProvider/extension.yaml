@@ -1,7 +1,14 @@
 ﻿Id: ScreenshotUtilitiesSteamProvider_074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae
 Name: Screenshot Utilities Steam Provider
 Author: Alexander Heidn
-Version: 0.2
+Version: 0.3.0
 Module: ScreenshotUtilitiesSteamProvider.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+  - Name: Help
+    Url: https://knarzwerk.de/en/playnite-extensions/screenshot-utilities
+  - Name: GitHub
+    Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
+  - Name: AddOn database
+    Url: https://playnite.link/addons.html#ScreenshotUtilitiesSteamProvider_074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae
