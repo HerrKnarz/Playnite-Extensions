@@ -21,7 +21,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Не вибрано жодної гри</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Знімки екрану не знайдені</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots folder couldn't be deleted after the game {0} was removed. Please delete it manually. Click on this message to open the folder.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Теку зі знімками екрану не вдалося видалити після видалення гри {0}. Видаліть теку вручну. Натисніть на це повідомлення, щоб її відкрити.</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Автоматично завантажувати знімки екрану при першому перегляді</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Типове співвідношення сторін</sys:String>
