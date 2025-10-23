@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCScreenshotUtilitiesName">Screenshot Utilities</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesName">Utilitaires de capture d'écran</sys:String>
 
-    <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Screenshots</sys:String>
+    <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Captures d'écran </sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Copy to clipboard</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Delete screenshot</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Download screenshots</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Downloading images for</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Open containing folder</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Open in associated application</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Open in browser</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Open in full screen mode</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Refresh screenshots</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Refresh thumbnails</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Refreshing thumbnails for</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Show Screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Copier dans le presse-papiers</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Supprimer la capture d'écran</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Télécharger les captures d'écran</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Téléchargement des images pour</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Ouvrir le dossier contenant</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Ouvrir dans l'application associée</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Ouvrir dans le navigateur</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Ouvrir en mode plein écran</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Actualiser les captures d'écran</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Actualiser les miniatures</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Actualisation des miniatures pour</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Afficher les captures d'écran</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">No game selected</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">No screenshots found</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Aucun jeu sélectionné</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Aucune capture d'écran trouvée</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically on first view</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Default aspect ratio</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Display button to open the standalone viewer in the theme</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Display screenshot viewer control in the theme</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Only download screenshots for games with one of the following categories or tags. Of none are defined, screenshots will always be downloaded.</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Thumbnail height</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Ratio d'aspect par défaut</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Afficher le bouton pour ouvrir la visionneuse autonome dans le thème</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Afficher le contrôle de la visionneuse de capture d'écran dans le thème</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Téléchargez uniquement des captures d'écran pour les jeux avec l'une des catégories ou des tags suivantes. De aucune d'entre elles sont définies, les captures d'écran seront toujours téléchargées.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Hauteur de la miniature</sys:String>
 </ResourceDictionary>
