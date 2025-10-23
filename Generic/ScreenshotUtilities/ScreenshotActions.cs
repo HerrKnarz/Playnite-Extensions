@@ -153,7 +153,7 @@ namespace ScreenshotUtilities
             if (!succeeded)
             {
                 API.Instance.Notifications.Add(new NotificationMessage($"ScreenshotUtilitiesDelete{path.Name}",
-                    $"Screenshots folder couldn't be deleted after the game {game.Name} was removed. Please delete it manually. Click on this message to open the folder.",
+                    string.Format(ResourceProvider.GetString("LOCScreenshotUtilitiesNotificationFolderNotDeleted"), game.Name),
                     NotificationType.Error,
                     () => Process.Start("explorer.exe", path.FullName)));
             }
