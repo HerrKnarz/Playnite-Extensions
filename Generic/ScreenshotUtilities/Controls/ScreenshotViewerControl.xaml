@@ -27,6 +27,8 @@
                       DataType="{x:Type viewModels:ScreenshotViewerViewModel}">
             <Grid Height="0" />
         </DataTemplate>
+
+        <knarzHelperControls:LocalFileImageConverter x:Key="LocalFileImageConverter" />
     </PluginUserControl.Resources>
     <Grid>
         <DockPanel>
@@ -73,7 +75,7 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding DisplayThumbnail}" 
+                            <Image Source="{Binding DisplayThumbnail, Converter={StaticResource LocalFileImageConverter}}" 
                                    RenderOptions.BitmapScalingMode="Fant" 
                                    Stretch="Uniform"
                                    Margin="2"
@@ -90,7 +92,7 @@
                                                             DockPanel.Dock="Top"
                                                             Margin="0, 10">
 
-                <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath}"
+                <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath, Converter={StaticResource LocalFileImageConverter}}" 
                        RenderOptions.BitmapScalingMode="Fant"
                        Stretch="Uniform"
                        Cursor="Hand">

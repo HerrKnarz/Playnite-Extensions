@@ -1,9 +1,11 @@
 ﻿using KNARZhelper;
+using KNARZhelper.FilesCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using ScreenshotUtilities.ViewModels;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -123,6 +125,38 @@ namespace ScreenshotUtilities
             var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
 
             return await groups.RefreshAllThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight);
+        }
+
+        internal static void RemoveScreenshots(Game game, ScreenshotUtilities plugin)
+        {
+            var path = FileHelper.GetDownloadPath(plugin.GetPluginUserDataPath(), game.Id);
+            var succeeded = false;
+            try
+            {
+                if (path.Exists)
+                {
+                    path.Delete(true);
+                }
+
+                Task.Delay(TimeSpan.FromMilliseconds(100));
+
+                path.Refresh();
+
+                succeeded = !path.Exists;
+            }
+            catch (Exception ex)
+            {
+                succeeded = false;
+                Log.Error(ex, $"Couldn't delete folder for removed game \"{game.Name}\" ({game.Id})");
+            }
+
+            if (!succeeded)
+            {
+                API.Instance.Notifications.Add(new NotificationMessage($"ScreenshotUtilitiesDelete{path.Name}",
+                    $"Screenshots folder couldn't be deleted after the game {game.Name} was removed. Please delete it manually. Click on this message to open the folder.",
+                    NotificationType.Error,
+                    () => Process.Start("explorer.exe", path.FullName)));
+            }
         }
     }
 }

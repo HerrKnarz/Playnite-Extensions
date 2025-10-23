@@ -66,9 +66,19 @@ namespace ScreenshotUtilities
                 { "suFetchIcon", "\xefbe" }
             };
 
+            PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+
             foreach (var iconResource in iconResourcesToAdd)
             {
                 MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+            }
+        }
+
+        private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
+        {
+            foreach (var game in e.RemovedItems)
+            {
+                ScreenshotActions.RemoveScreenshots(game, this);
             }
         }
 

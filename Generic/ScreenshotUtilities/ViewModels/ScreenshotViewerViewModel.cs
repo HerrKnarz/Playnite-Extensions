@@ -68,6 +68,8 @@ namespace ScreenshotUtilities.ViewModels
                 return;
             }
 
+            OnPropertyChanged("ScreenshotGroups");
+
             SelectedGroup = ScreenshotGroups[0];
         }
 

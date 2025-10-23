@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ScreenshotUtilities.Views"
+             xmlns:knarzHelperControls="clr-namespace:KNARZhelper.Controls"
              xmlns:viewModels="clr-namespace:ScreenshotUtilities.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:ScreenshotViewerViewModel}"
              mc:Ignorable="d" 
@@ -29,10 +30,12 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <knarzHelperControls:LocalFileImageConverter x:Key="LocalFileImageConverter" />
     </UserControl.Resources>
 
     <Grid x:Name="FullScreenGrid">
-        <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath}"
+        <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath, Converter={StaticResource LocalFileImageConverter}}"
                RenderOptions.BitmapScalingMode="Fant"
                Stretch="Uniform"
                Margin="0"/>
