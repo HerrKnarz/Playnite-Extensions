@@ -21,6 +21,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Nenhum jogo selecionado</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Nenhuma captura de tela encontrada</sys:String>
 
+    <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots folder couldn't be deleted after the game {0} was removed. Please delete it manually. Click on this message to open the folder.</sys:String>
+
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Baixar capturas de tela automaticamente na primeira visualização</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Proporção de aspecto padrão</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Exibir botão para abrir o visualizador independente no tema</sys:String>
