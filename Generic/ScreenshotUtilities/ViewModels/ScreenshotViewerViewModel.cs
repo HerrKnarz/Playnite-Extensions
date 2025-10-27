@@ -87,7 +87,17 @@ namespace ScreenshotUtilities.ViewModels
 
         public RelayCommand<object> CopyToClipboardCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.CopyToClipboard());
 
-        public RelayCommand<object> OpenContainingFolderCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenContainingFolder());
+        public RelayCommand<object> OpenContainingFolderCommand => new RelayCommand<object>(a =>
+        {
+            if (string.IsNullOrEmpty(SelectedGroup?.SelectedScreenshot?.DownloadedPath))
+            {
+                SelectedGroup.OpenContainingFolder();
+
+                return;
+            }
+
+            SelectedGroup?.SelectedScreenshot?.OpenContainingFolder();
+        });
 
         public RelayCommand<object> OpenInAssociatedApplicationCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenInAssociatedApplication());
 

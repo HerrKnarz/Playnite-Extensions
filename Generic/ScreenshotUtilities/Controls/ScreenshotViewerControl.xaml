@@ -111,8 +111,7 @@
                                       Command="{Binding DataContext.OpenInAssociatedApplicationCommand}"
                                       Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenContainingFolder}"
-                                      Command="{Binding DataContext.OpenContainingFolderCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Command="{Binding DataContext.OpenContainingFolderCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInBrowser}"
                                       Command="{Binding DataContext.OpenInBrowserCommand}"
                                       Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.PathIsUrl, Converter={StaticResource BooleanToVisibilityConverter}}" />
