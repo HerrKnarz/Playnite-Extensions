@@ -107,7 +107,7 @@ namespace ScreenshotUtilitiesGOGProvider
         {
             if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled)
             {
-                var notificationMessage = new NotificationMessage("Screenshot Utilities Steam Provider", "Screenshot Utilities has to be installed for this addon to work!", NotificationType.Error);
+                var notificationMessage = new NotificationMessage("Screenshot Utilities GOG Provider", "Screenshot Utilities has to be installed for this addon to work!", NotificationType.Error);
 
                 PlayniteApi.Notifications.Add(notificationMessage);
             }

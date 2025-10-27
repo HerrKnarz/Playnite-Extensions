@@ -1,0 +1,14 @@
+﻿Id: ScreenshotUtilitiesArcadeDatabaseProvider_f2109af2-b240-4700-a61d-c316f47b8cf4
+Name: Screenshot Utilities Arcade Database Provider
+Author: Alexander Heidn
+Version: 0.3.0
+Module: ScreenshotUtilitiesArcadeDatabaseProvider.dll
+Type: GenericPlugin
+Icon: icon.png
+Links:
+  - Name: Help
+    Url: https://knarzwerk.de/en/playnite-extensions/screenshot-utilities
+  - Name: GitHub
+    Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
+  - Name: AddOn database
+    Url: https://playnite.link/addons.html#ScreenshotUtilitiesArcadeDatabaseProvider_f2109af2-b240-4700-a61d-c316f47b8cf4
