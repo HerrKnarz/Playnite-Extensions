@@ -3,6 +3,7 @@ using KNARZhelper.FilesCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using ScreenshotUtilities.Models;
 using ScreenshotUtilities.ViewModels;
 using System;
 using System.Diagnostics;
@@ -20,37 +21,45 @@ namespace ScreenshotUtilities
             return await groups.DownloadAllAsync(plugin.Settings.Settings.ThumbnailHeight);
         }
 
-        internal static async Task<bool> GetScreenshotsAsync(Game game, bool forceUpdate = false)
+        internal static async Task<bool> GetScreenshotsAsync(Game game, ScreenshotUtilities plugin, bool forceUpdate = false)
         {
             var needsRefresh = false;
 
-            foreach (var plugin in API.Instance.Addons.Plugins)
+            if (!plugin.ProvidersInitialized)
             {
-                var type = plugin.GetType();
+                InitializeProviders(plugin);
+            }
 
-                if (type != null && type.GetInterface("IScreenshotProvider") != null)
-                {
-                    var propertyInfo = type.GetProperty("SupportsAutomaticScreenshots");
-
-                    if ((propertyInfo == null) || !(bool)propertyInfo.GetValue(plugin, null))
-                    {
-                        continue;
-                    }
-
-                    var methodInfo = type.GetMethod("GetScreenshotsAsync");
-
-                    if (methodInfo != null)
-                    {
-                        var parametersArray = new object[] { game, 5, forceUpdate };
-
-                        var resultTask = (Task<bool>)methodInfo.Invoke(plugin, parametersArray);
-
-                        needsRefresh |= await resultTask;
-                    }
-                }
+            foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsAutomaticScreenshots))
+            {
+                needsRefresh |= await provider.GetScreenshotsAsync(game, 5, forceUpdate);
             }
 
             return needsRefresh;
+        }
+
+        internal static void InitializeProviders(ScreenshotUtilities plugin)
+        {
+            if (plugin.ProvidersInitialized)
+            {
+                return;
+            }
+
+            plugin.ScreenshotProviders.Clear();
+
+            foreach (var provider in API.Instance.Addons.Plugins)
+            {
+                var type = provider.GetType();
+
+                if ((type == null) || (type.GetInterface("IScreenshotProviderPlugin") == null))
+                {
+                    continue;
+                }
+
+                plugin.ScreenshotProviders.Add(new ScreenshotProviderPlugin(provider));
+            }
+
+            plugin.ProvidersInitialized = true;
         }
 
         internal static void OpenScreenshotViewer(Game game, ScreenshotUtilities plugin)
@@ -74,7 +83,7 @@ namespace ScreenshotUtilities
                     API.Instance.MainView.UIDispatcher.Invoke(() => Log.Debug($"PrepareScreenshots {game.Name}: Getting screenshots"));
                 }
 
-                await GetScreenshotsAsync(game);
+                await GetScreenshotsAsync(game, plugin);
 
                 var groups = new ScreenshotGroups();
                 groups.CreateGroupsFromFiles(plugin.GetPluginUserDataPath(), game.Id, false);
@@ -164,6 +173,28 @@ namespace ScreenshotUtilities
                     NotificationType.Error,
                     () => Process.Start("explorer.exe", path.FullName)));
             }
+        }
+
+        internal static async Task<bool> SearchScreenshotsAsync(Game game, ScreenshotUtilities plugin)
+        {
+            var needsRefresh = false;
+
+            if (!plugin.ProvidersInitialized)
+            {
+                InitializeProviders(plugin);
+            }
+
+            foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsScreenshotSearch))
+            {
+                provider.Search(game);
+            }
+
+            foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsScreenshotSearch))
+            {
+                needsRefresh |= await provider.GetScreenshotsManualAsync(game, null);
+            }
+
+            return needsRefresh;
         }
     }
 }

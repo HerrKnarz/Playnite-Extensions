@@ -14,7 +14,7 @@ using System.Windows.Controls;
 
 namespace ScreenshotUtilitiesGOGProvider
 {
-    public class ScreenshotUtilitiesGOGProvider : GenericPlugin, IScreenshotProvider
+    public class ScreenshotUtilitiesGOGProvider : GenericPlugin, IScreenshotProviderPlugin
     {
         private ScreenshotUtilitiesGOGProviderSettingsViewModel settings { get; set; }
 
@@ -104,9 +104,9 @@ namespace ScreenshotUtilitiesGOGProvider
             }
         }
 
-        public Task<bool> GetScreenshotsManualAsync(Game game, GenericItemOption searchResult) => throw new NotImplementedException();
+        public Task<bool> GetScreenshotsManualAsync(Game game, ScreenshotSearchResult searchResult) => throw new NotImplementedException();
 
-        public List<GenericItemOption> GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
+        public List<ScreenshotSearchResult> GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {

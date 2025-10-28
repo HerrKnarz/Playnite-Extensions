@@ -82,8 +82,8 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs">
       <Link>Shared\MiscHelper.cs</Link>
     </Compile>
-    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\IScreenshotProvider.cs">
-      <Link>Shared\ScreenshotsCommon\IScreenshotProvider.cs</Link>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\IScreenshotProviderPlugin.cs">
+      <Link>Shared\ScreenshotsCommon\IScreenshotProviderPlugin.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\Screenshot.cs">
       <Link>Shared\ScreenshotsCommon\Models\Screenshot.cs</Link>
@@ -96,6 +96,9 @@
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotProvider.cs">
       <Link>Shared\ScreenshotsCommon\Models\ScreenshotProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotSearchResult.cs">
+      <Link>Shared\ScreenshotsCommon\Models\ScreenshotSearchResult.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\ScreenshotHelper.cs">
       <Link>Shared\ScreenshotsCommon\ScreenshotHelper.cs</Link>

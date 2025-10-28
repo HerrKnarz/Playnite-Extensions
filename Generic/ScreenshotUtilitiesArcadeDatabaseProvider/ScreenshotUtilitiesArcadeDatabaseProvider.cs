@@ -16,7 +16,7 @@ using System.Windows.Controls;
 
 namespace ScreenshotUtilitiesArcadeDatabaseProvider
 {
-    public class ScreenshotUtilitiesArcadeDatabaseProvider : GenericPlugin, IScreenshotProvider
+    public class ScreenshotUtilitiesArcadeDatabaseProvider : GenericPlugin, IScreenshotProviderPlugin
     {
         private ScreenshotUtilitiesArcadeDatabaseProviderSettingsViewModel settings { get; set; }
         public override Guid Id { get; } = Guid.Parse("f2109af2-b240-4700-a61d-c316f47b8cf4");
@@ -127,9 +127,9 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
             }
         }
 
-        public Task<bool> GetScreenshotsManualAsync(Game game, GenericItemOption searchResult) => throw new NotImplementedException();
+        public Task<bool> GetScreenshotsManualAsync(Game game, ScreenshotSearchResult searchResult) => throw new NotImplementedException();
 
-        public List<GenericItemOption> GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
+        public List<ScreenshotSearchResult> GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {

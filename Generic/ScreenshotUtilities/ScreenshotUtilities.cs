@@ -5,6 +5,7 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using ScreenshotUtilities.Controls;
+using ScreenshotUtilities.Models;
 using ScreenshotUtilities.Views;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,10 @@ namespace ScreenshotUtilities
         public override Guid Id { get; } = Guid.Parse("485d682f-73e9-4d54-b16f-b8dd49e88f90");
 
         public DispatcherTimer Timer { get; private set; }
+
+        public List<ScreenshotProviderPlugin> ScreenshotProviders { get; set; } = new List<ScreenshotProviderPlugin>();
+
+        public bool ProvidersInitialized { get; set; } = false;
 
         public List<ScreenshotViewerControl> ScreenshotViewerControls { get; set; } = new List<ScreenshotViewerControl>();
 
@@ -190,7 +195,7 @@ namespace ScreenshotUtilities
 
         private async Task GetScreenshotsAsync(Game game)
         {
-            if (await ScreenshotActions.GetScreenshotsAsync(game, true))
+            if (await ScreenshotActions.GetScreenshotsAsync(game, this, true))
             {
                 RefreshControls();
             }
