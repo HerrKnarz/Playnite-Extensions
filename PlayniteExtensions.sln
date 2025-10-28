@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{
 		Manifest\HerrKnarz_MetadataUtilities.yaml = Manifest\HerrKnarz_MetadataUtilities.yaml
 		Manifest\HerrKnarz_QuickAdd.yaml = Manifest\HerrKnarz_QuickAdd.yaml
 		Manifest\HerrKnarz_ScreenshotUtilities.yaml = Manifest\HerrKnarz_ScreenshotUtilities.yaml
+		Manifest\HerrKnarz_ScreenshotUtilitiesArcadeDatabaseProvider.yaml = Manifest\HerrKnarz_ScreenshotUtilitiesArcadeDatabaseProvider.yaml
 		Manifest\HerrKnarz_ScreenshotUtilitiesGOGProvider.yaml = Manifest\HerrKnarz_ScreenshotUtilitiesGOGProvider.yaml
 		Manifest\HerrKnarz_ScreenshotUtilitiesSteamProvider.yaml = Manifest\HerrKnarz_ScreenshotUtilitiesSteamProvider.yaml
 		Manifest\HerrKnarz_WikipediaMetadata.yaml = Manifest\HerrKnarz_WikipediaMetadata.yaml
