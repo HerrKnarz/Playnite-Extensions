@@ -30,6 +30,13 @@ namespace ScreenshotUtilities
 
                 if (type != null && type.GetInterface("IScreenshotProvider") != null)
                 {
+                    var propertyInfo = type.GetProperty("SupportsAutomaticScreenshots");
+
+                    if ((propertyInfo == null) || !(bool)propertyInfo.GetValue(plugin, null))
+                    {
+                        continue;
+                    }
+
                     var methodInfo = type.GetMethod("GetScreenshotsAsync");
 
                     if (methodInfo != null)

@@ -19,8 +19,9 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
     public class ScreenshotUtilitiesArcadeDatabaseProvider : GenericPlugin, IScreenshotProvider
     {
         private ScreenshotUtilitiesArcadeDatabaseProviderSettingsViewModel settings { get; set; }
-
         public override Guid Id { get; } = Guid.Parse("f2109af2-b240-4700-a61d-c316f47b8cf4");
+        public bool SupportsAutomaticScreenshots { get; set; } = true;
+        public bool SupportsScreenshotSearch { get; set; } = false;
 
         public ScreenshotUtilitiesArcadeDatabaseProvider(IPlayniteAPI api) : base(api)
         {
@@ -125,6 +126,10 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                 return false;
             }
         }
+
+        public Task<bool> GetScreenshotsManualAsync(Game game, GenericItemOption searchResult) => throw new NotImplementedException();
+
+        public List<GenericItemOption> GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {

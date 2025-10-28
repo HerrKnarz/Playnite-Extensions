@@ -16,6 +16,8 @@ namespace ScreenshotUtilitiesSteamProvider
     public class ScreenshotUtilitiesSteamProvider : GenericPlugin, IScreenshotProvider
     {
         public override Guid Id { get; } = Guid.Parse("074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae");
+        public bool SupportsAutomaticScreenshots { get; set; } = true;
+        public bool SupportsScreenshotSearch { get; set; } = false;
 
         public ScreenshotUtilitiesSteamProvider(IPlayniteAPI api) : base(api)
         {
@@ -88,6 +90,10 @@ namespace ScreenshotUtilitiesSteamProvider
                 return false;
             }
         }
+
+        public Task<bool> GetScreenshotsManualAsync(Game game, GenericItemOption searchResult) => throw new NotImplementedException();
+
+        public List<GenericItemOption> GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {

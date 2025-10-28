@@ -19,9 +19,10 @@ namespace ScreenshotUtilitiesGOGProvider
         private ScreenshotUtilitiesGOGProviderSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("228c70e8-7c89-46fc-b2c8-6e97966d01a4");
-
         public static Guid GogId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
         public static Guid GogOssId = Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C");
+        public bool SupportsAutomaticScreenshots { get; set; } = true;
+        public bool SupportsScreenshotSearch { get; set; } = false;
 
         public ScreenshotUtilitiesGOGProvider(IPlayniteAPI api) : base(api)
         {
@@ -102,6 +103,10 @@ namespace ScreenshotUtilitiesGOGProvider
                 return false;
             }
         }
+
+        public Task<bool> GetScreenshotsManualAsync(Game game, GenericItemOption searchResult) => throw new NotImplementedException();
+
+        public List<GenericItemOption> GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
