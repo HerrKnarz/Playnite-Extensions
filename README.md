@@ -28,6 +28,12 @@ Extension to manage metadata for the games in the playnite library. It adds a ne
 
 [-> Info, help and documentation](https://knarzwerk.de/en/playnite-extensions/metadata-utilities/)
 
+## Screenshot Utilities
+
+Extension to display screenshots and other images for your games from different sources like Steam Store, GOG or Arcade Database. You need to add one or more Screenshot Provider addons for this to work and also can easily write your own.
+
+[-> Info, help and documentation](https://knarzwerk.de/en/playnite-extensions/screenshot-utilities/)
+
 ## Link Utilities
 
 Extension to manage links for the games in the playnite library. With it you can automatically add links to several supported websites, sort, rename and remove unwanted links among many other useful features.
