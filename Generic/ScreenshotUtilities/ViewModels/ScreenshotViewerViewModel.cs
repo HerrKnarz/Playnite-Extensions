@@ -5,6 +5,7 @@ using Playnite.SDK.Models;
 using ScreenshotUtilities.Controls;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace ScreenshotUtilities.ViewModels
@@ -140,6 +141,9 @@ namespace ScreenshotUtilities.ViewModels
                 LoadScreenshots();
             }
         }
+
+        public int ScreenshotCount
+            => _plugin.CurrentScreenshotsGroups is null || _plugin.CurrentScreenshotsGroups.Count == 0 ? 0 : _plugin.CurrentScreenshotsGroups.Sum(g => g.Screenshots.Count);
 
         public ScreenshotGroups ScreenshotGroups => _plugin.CurrentScreenshotsGroups is null ? new ScreenshotGroups() : _plugin.CurrentScreenshotsGroups;
 

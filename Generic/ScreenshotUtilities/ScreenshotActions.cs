@@ -122,7 +122,7 @@ namespace ScreenshotUtilities
 
                     plugin.CurrentScreenshotsGroups = groups;
 
-                    if (plugin.Settings.Settings.DisplayViewerControl)
+                    if (plugin.Settings.Settings.DisplayViewerControl && groups.Sum(g => g.Screenshots?.Count ?? 0) > 0)
                     {
                         plugin.Settings.Settings.IsViewerControlVisible = true;
                     }
