@@ -32,6 +32,8 @@ namespace ScreenshotUtilities
 
         public List<ScreenshotViewerControl> ScreenshotViewerControls { get; set; } = new List<ScreenshotViewerControl>();
 
+        public List<ButtonControl> ScreenshotButtonControls { get; set; } = new List<ButtonControl>();
+
         public ScreenshotGroups CurrentScreenshotsGroups { get; set; } = new ScreenshotGroups();
 
         public ScreenshotUtilitiesSettingsViewModel Settings { get; set; }
@@ -144,7 +146,11 @@ namespace ScreenshotUtilities
             }
             else if (args.Name == _controlNameButton)
             {
-                return new ButtonControl(this);
+                var buttonControl = new ButtonControl(this);
+
+                ScreenshotButtonControls.Add(buttonControl);
+
+                return buttonControl;
             }
 
             return null;
@@ -224,7 +230,12 @@ namespace ScreenshotUtilities
             {
                 foreach (var control in ScreenshotViewerControls)
                 {
-                    control.RefreshData();
+                    control.LoadScreenshots();
+                }
+
+                foreach (var control in ScreenshotButtonControls)
+                {
+                    control.LoadButton();
                 }
             });
         }

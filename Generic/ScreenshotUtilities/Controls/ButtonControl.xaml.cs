@@ -21,6 +21,11 @@ namespace ScreenshotUtilities.Controls
         {
             base.GameContextChanged(oldContext, newContext);
 
+            LoadButton();
+        }
+
+        public void LoadButton()
+        {
             try
             {
                 if (!(DataContext is ButtonControlViewModel viewModel))
@@ -30,6 +35,7 @@ namespace ScreenshotUtilities.Controls
 
                 if ((viewModel.Game?.Id ?? Guid.Empty) == (GameContext?.Id ?? Guid.Empty))
                 {
+                    viewModel.Refresh();
                     return;
                 }
 

@@ -32,9 +32,11 @@ namespace ScreenshotUtilities.ViewModels
             set
             {
                 SetValue(ref _game, value);
-                _plugin.Settings.Settings.IsButtonControlVisible = ButtonIsVisible();
+                Refresh();
             }
         }
+
+        public void Refresh() => _plugin.Settings.Settings.IsButtonControlVisible = ButtonIsVisible();
 
         private bool ButtonIsVisible()
         {

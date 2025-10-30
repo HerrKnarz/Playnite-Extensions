@@ -103,7 +103,5 @@ namespace ScreenshotUtilities.Controls
                 Log.Error(e);
             }
         }
-
-        internal void RefreshData() => LoadScreenshots();
     }
 }
