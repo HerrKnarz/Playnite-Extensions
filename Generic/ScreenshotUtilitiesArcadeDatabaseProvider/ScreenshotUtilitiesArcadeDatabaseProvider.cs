@@ -19,9 +19,14 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
 {
     public class ScreenshotUtilitiesArcadeDatabaseProvider : GenericPlugin, IScreenshotProviderPlugin
     {
+        private const string _websiteName = "Arcade Database";
         private const string _websiteUrl = "http://adb.arcadeitalia.net/";
         private readonly string _pageUrl = $"{_websiteUrl}dettaglio_mame.php?lang=en&game_name=";
         private readonly string _searchUrl = $"{_websiteUrl}lista_mame.php?lang=en&ricerca=";
+
+        private Game _game;
+        private ScreenshotGroup _screenshotGroup;
+
         public override Guid Id { get; } = Guid.Parse("f2109af2-b240-4700-a61d-c316f47b8cf4");
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = true;
@@ -34,111 +39,146 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
             };
         }
 
+        public bool LoadFile()
+        {
+            _screenshotGroup = ScreenshotGroup.CreateFromFile(new FileInfo(ScreenshotHelper.GenerateFileName(_game.Id, Id, Id)));
+
+            if (_screenshotGroup == null)
+            {
+                _screenshotGroup = new ScreenshotGroup(_websiteName, Id)
+                {
+                    Provider = new ScreenshotProvider(_websiteName, Id),
+                    Screenshots = new RangeObservableCollection<Screenshot>()
+                };
+
+                return false;
+            }
+
+            return true;
+        }
+
+        public string GetRomName(string romName = default)
+        {
+            var searchRomName = romName;
+
+            if (searchRomName == default)
+            {
+                searchRomName = _screenshotGroup.GameIdentifier;
+            }
+
+            if (searchRomName == default)
+            {
+                searchRomName = _game.IsInstalled && (_game.Roms?.Any() ?? false)
+                        ? Path.GetFileNameWithoutExtension(_game.Roms[0].Path)
+                        : string.Empty;
+            }
+
+            return searchRomName;
+        }
+
+        public async Task<bool> LoadScreenshotsFromSourceAsync()
+        {
+            var url = $"{_pageUrl}{_screenshotGroup.GameIdentifier}";
+
+            var updated = false;
+
+            try
+            {
+                var htmlWeb = new HtmlWeb
+                {
+                    UseCookies = true,
+                    BrowserTimeout = new TimeSpan(0, 0, 10),
+                    UserAgent = WebHelper.AgentString
+                };
+
+                var document = await htmlWeb.LoadFromWebAsync(url);
+
+                if (htmlWeb.StatusCode != HttpStatusCode.OK || document == null)
+                {
+                    return false;
+                }
+
+                var htmlNodes = document.DocumentNode.SelectNodes("//ul[@class='elenco_immagini']/li");
+
+                if (htmlNodes == null || (htmlNodes.Count == 0))
+                {
+                    return false;
+                }
+
+                foreach (var node in htmlNodes.Where(n => n.SelectSingleNode("./div/img") != null))
+                {
+                    var imageUrl = node.SelectSingleNode("./div/img").GetAttributeValue("data-custom-src_full", "");
+                    var name = node.SelectSingleNode("./span").InnerText;
+
+                    if (!_screenshotGroup.Screenshots.Any(es => es.Path.Equals(imageUrl)))
+                    {
+                        _screenshotGroup.Screenshots.Add(new Screenshot(imageUrl)
+                        {
+                            ThumbnailPath = imageUrl,
+                            Name = name,
+                            SortOrder = htmlNodes.IndexOf(node)
+                        });
+                    }
+                }
+
+                updated = true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+
+            return updated;
+        }
+
         public async Task<bool> FetchScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate, string romName = default)
         {
             try
             {
+                // return when the main addon isn't installed.
                 if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled || game == null)
                 {
                     return false;
                 }
 
-                var searchRomName = romName == default
-                    ? game.IsInstalled && (game.Roms?.Any() ?? false)
-                        ? Path.GetFileNameWithoutExtension(game.Roms[0].Path)
-                        : string.Empty
-                    : romName;
+                // set game and load the file.
+                _game = game;
 
-                var fileName = ScreenshotHelper.GenerateFileName(game.Id, Id, Id);
+                var newFile = !LoadFile();
 
-                var screenshotGroup = ScreenshotGroup.CreateFromFile(new FileInfo(fileName))
-                    ?? new ScreenshotGroup("Arcade Database", Id)
-                    {
-                        GameIdentifier = searchRomName,
-                        Provider = new ScreenshotProvider("Arcade Database", Id),
-                        Screenshots = new RangeObservableCollection<Screenshot>()
-                    };
-
+                // return if we don't want to force an update and the last update was inside the days configured.
                 if (!forceUpdate
-                    && screenshotGroup.LastUpdate != null
-                    && (screenshotGroup.LastUpdate > DateTime.Now.AddDays(daysSinceLastUpdate * -1)))
+                    && _screenshotGroup.LastUpdate != null
+                    && (_screenshotGroup.LastUpdate > DateTime.Now.AddDays(daysSinceLastUpdate * -1)))
                 {
                     return false;
                 }
 
-                if (romName != default && romName.Equals(screenshotGroup.GameIdentifier))
+                // Return if a game was searched and it's the one we already have.
+                if (romName != default && romName.Equals(_screenshotGroup.GameIdentifier))
                 {
                     return false;
                 }
 
-                // if we got a new romName from the method call we use that one going forward.
-                if (romName != default && !romName.Equals(screenshotGroup.GameIdentifier))
-                {
-                    screenshotGroup.GameIdentifier = romName;
+                // Get the right name to search for.
+                var searchName = GetRomName(romName);
 
-                    screenshotGroup.Screenshots.Clear();
-                }
-                else
-                {
-                    searchRomName = screenshotGroup.GameIdentifier;
-                }
-
-                if (string.IsNullOrEmpty(searchRomName))
+                if (string.IsNullOrEmpty(searchName))
                 {
                     return false;
                 }
 
-                var url = $"{_pageUrl}{searchRomName}";
-
-                var updated = false;
-
-                try
+                // We need to reset the file if we got a new romName from the method call and it's not the same we already got.
+                if (newFile || (romName != default && !searchName.Equals(_screenshotGroup.GameIdentifier)))
                 {
-                    var htmlWeb = new HtmlWeb
-                    {
-                        UseCookies = true,
-                        BrowserTimeout = new TimeSpan(0, 0, 10),
-                        UserAgent = WebHelper.AgentString
-                    };
+                    _screenshotGroup.GameIdentifier = searchName;
 
-                    var document = await htmlWeb.LoadFromWebAsync(url);
-
-                    if (htmlWeb.StatusCode != HttpStatusCode.OK || document == null)
-                    {
-                        return false;
-                    }
-
-                    var htmlNodes = document.DocumentNode.SelectNodes("//ul[@class='elenco_immagini']/li");
-
-                    if (htmlNodes == null || (htmlNodes.Count == 0))
-                    {
-                        return false;
-                    }
-
-                    foreach (var node in htmlNodes.Where(n => n.SelectSingleNode("./div/img") != null))
-                    {
-                        var imageUrl = node.SelectSingleNode("./div/img").GetAttributeValue("data-custom-src_full", "");
-                        var name = node.SelectSingleNode("./span").InnerText;
-
-                        if (!screenshotGroup.Screenshots.Any(es => es.Path.Equals(imageUrl)))
-                        {
-                            screenshotGroup.Screenshots.Add(new Screenshot(imageUrl)
-                            {
-                                ThumbnailPath = imageUrl,
-                                Name = name,
-                                SortOrder = htmlNodes.IndexOf(node)
-                            });
-                        }
-                    }
-
-                    updated = true;
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
+                    _screenshotGroup.Screenshots.Clear();
                 }
 
-                ScreenshotHelper.SaveScreenshotGroupJson(game, screenshotGroup);
+                var updated = await LoadScreenshotsFromSourceAsync();
+
+                ScreenshotHelper.SaveScreenshotGroupJson(game, _screenshotGroup);
 
                 return updated;
             }

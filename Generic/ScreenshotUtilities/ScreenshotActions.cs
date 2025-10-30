@@ -74,7 +74,7 @@ namespace ScreenshotUtilities
             window.ShowDialog();
         }
 
-        internal static async Task PrepareScreenshotsAsync(Game game, ScreenshotUtilities plugin)
+        internal static async Task PrepareScreenshotsAsync(Game game, ScreenshotUtilities plugin, bool getFromSource = true)
         {
             try
             {
@@ -83,7 +83,10 @@ namespace ScreenshotUtilities
                     API.Instance.MainView.UIDispatcher.Invoke(() => Log.Debug($"PrepareScreenshots {game.Name}: Getting screenshots"));
                 }
 
-                await GetScreenshotsAsync(game, plugin);
+                if (getFromSource)
+                {
+                    await GetScreenshotsAsync(game, plugin);
+                }
 
                 var groups = new ScreenshotGroups();
                 groups.CreateGroupsFromFiles(plugin.GetPluginUserDataPath(), game.Id, false);
@@ -196,7 +199,7 @@ namespace ScreenshotUtilities
 
             if (needsRefresh)
             {
-                PrepareScreenshotsAsync(game, plugin);
+                PrepareScreenshotsAsync(game, plugin, false);
             }
 
             return needsRefresh;
