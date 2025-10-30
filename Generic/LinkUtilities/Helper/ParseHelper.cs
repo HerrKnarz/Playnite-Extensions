@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using System;
@@ -69,7 +70,7 @@ namespace LinkUtilities.Helper
 
             try
             {
-                var urlLoadResult = LinkHelper.LoadHtmlDocument(string.Format(searchUrl, searchTerm.UrlEncode()), UrlLoadMethod.OffscreenView);
+                var urlLoadResult = WebHelper.LoadHtmlDocument(string.Format(searchUrl, searchTerm.UrlEncode()), UrlLoadMethod.OffscreenView);
 
                 if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
                 {

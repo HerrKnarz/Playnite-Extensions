@@ -121,6 +121,12 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\Models\UrlLoadResult.cs">
+      <Link>Shared\WebCommon\Models\UrlLoadResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\WebHelper.cs">
+      <Link>Shared\WebCommon\WebHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
@@ -258,7 +264,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\UrlLoadResult.cs" />
     <Page Include="Views\CheckLinksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

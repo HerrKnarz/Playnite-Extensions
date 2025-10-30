@@ -1,5 +1,5 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
@@ -25,7 +25,7 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
+                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
 
                 if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
                 {

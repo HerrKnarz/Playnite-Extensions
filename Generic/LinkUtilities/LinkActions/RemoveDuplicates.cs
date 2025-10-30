@@ -1,6 +1,6 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.BaseClasses;
-using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Settings;
 using LinkUtilities.ViewModels;
@@ -81,14 +81,14 @@ namespace LinkUtilities.LinkActions
             {
                 case DuplicateTypes.NameAndUrl:
                     newLinks = new ObservableCollection<Link>(game.Links
-                        .GroupBy(x => new { x.Name, url = LinkHelper.CleanUpUrl(x.Url) }).Select(x => x.First()));
+                        .GroupBy(x => new { x.Name, url = WebHelper.CleanUpUrl(x.Url) }).Select(x => x.First()));
                     break;
                 case DuplicateTypes.Name:
                     newLinks = new ObservableCollection<Link>(
                         game.Links.GroupBy(x => x.Name).Select(x => x.First()));
                     break;
                 case DuplicateTypes.Url:
-                    newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => LinkHelper.CleanUpUrl(x.Url))
+                    newLinks = new ObservableCollection<Link>(game.Links.GroupBy(x => WebHelper.CleanUpUrl(x.Url))
                         .Select(x => x.First()));
                     break;
                 default:

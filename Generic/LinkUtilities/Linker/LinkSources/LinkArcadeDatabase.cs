@@ -1,5 +1,5 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -27,7 +27,7 @@ namespace LinkUtilities.Linker.LinkSources
             try
             {
                 // Arcade Database returns code 200, if the game isn't found. So we have to check the HTML itself.
-                var urlLoadResult = LinkHelper.LoadHtmlDocument(link);
+                var urlLoadResult = WebHelper.LoadHtmlDocument(link);
 
                 return urlLoadResult.ErrorDetails.Length == 0
                     && urlLoadResult.StatusCode == HttpStatusCode.OK
@@ -50,7 +50,7 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = LinkHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
+                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
                 if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
                 {

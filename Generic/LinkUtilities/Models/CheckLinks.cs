@@ -1,6 +1,6 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.BaseClasses;
-using LinkUtilities.Helper;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -121,7 +121,7 @@ namespace LinkUtilities.ViewModels
 
             Parallel.ForEach(game.Links.Where(x => !x.Url.StartsWith("steam")), _parallelOptions, link =>
             {
-                var linkCheckResult = LinkHelper.CheckUrl(link.Url);
+                var linkCheckResult = WebHelper.CheckUrl(link.Url);
 
                 if (!hideOkOnLinkCheck || linkCheckResult.StatusCode != HttpStatusCode.OK)
                 {
@@ -130,7 +130,7 @@ namespace LinkUtilities.ViewModels
                         Game = game,
                         Link = link,
                         LinkCheckResult = linkCheckResult,
-                        UrlIsEqual = LinkHelper.CleanUpUrl(linkCheckResult.ResponseUrl) == LinkHelper.CleanUpUrl(link.Url)
+                        UrlIsEqual = WebHelper.CleanUpUrl(linkCheckResult.ResponseUrl) == WebHelper.CleanUpUrl(link.Url)
                     });
                 }
             });

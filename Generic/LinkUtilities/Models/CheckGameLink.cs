@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Models;
+﻿using KNARZhelper.WebCommon.Models;
+using LinkUtilities.Models;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using System.Linq;

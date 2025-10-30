@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.LinkActions;
@@ -74,7 +75,7 @@ namespace LinkUtilities.BaseClasses
             return result != null && AddLinkFromSearch(game, (SearchResult)result, cleanUpAfterAdding);
         }
 
-        public virtual bool CheckLink(string link) => LinkHelper.IsUrlOk(link, UrlLoadMethod, AllowRedirects, ReturnsSameUrl, WrongTitle, CheckForContent);
+        public virtual bool CheckLink(string link) => WebHelper.IsUrlOk(link, UrlLoadMethod, AllowRedirects, ReturnsSameUrl, WrongTitle, CheckForContent);
 
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {

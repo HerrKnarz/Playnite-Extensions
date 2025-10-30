@@ -1,5 +1,5 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
+using KNARZhelper.WebCommon;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources

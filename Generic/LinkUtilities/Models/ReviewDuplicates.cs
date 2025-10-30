@@ -1,5 +1,5 @@
-﻿using LinkUtilities.BaseClasses;
-using LinkUtilities.Helper;
+﻿using KNARZhelper.WebCommon;
+using LinkUtilities.BaseClasses;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +39,7 @@ namespace LinkUtilities.Models
             var newLinks =
                 game.Links.GroupBy(x => x.Name).Where(x => x.Count() > 1).SelectMany(x => x).ToObservable();
 
-            newLinks.AddMissing(game.Links?.GroupBy(x => LinkHelper.CleanUpUrl(x.Url)).Where(x => x.Count() > 1).SelectMany(x => x));
+            newLinks.AddMissing(game.Links?.GroupBy(x => WebHelper.CleanUpUrl(x.Url)).Where(x => x.Count() > 1).SelectMany(x => x));
 
             if (!newLinks.Any())
             {
