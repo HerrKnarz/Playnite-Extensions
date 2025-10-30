@@ -54,6 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -103,11 +104,13 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
-    <Compile Include="ScreenshotUtilitiesArcadeDatabaseProvider.cs" />
-    <Compile Include="ScreenshotUtilitiesArcadeDatabaseProviderSettings.cs" />
-    <Compile Include="ScreenshotUtilitiesArcadeDatabaseProviderSettingsView.xaml.cs">
-      <DependentUpon>ScreenshotUtilitiesArcadeDatabaseProviderSettingsView.xaml</DependentUpon>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\Models\UrlLoadResult.cs">
+      <Link>Shared\WebCommon\Models\UrlLoadResult.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\WebHelper.cs">
+      <Link>Shared\WebCommon\WebHelper.cs</Link>
+    </Compile>
+    <Compile Include="ScreenshotUtilitiesArcadeDatabaseProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -125,10 +128,6 @@
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ScreenshotUtilitiesArcadeDatabaseProviderSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

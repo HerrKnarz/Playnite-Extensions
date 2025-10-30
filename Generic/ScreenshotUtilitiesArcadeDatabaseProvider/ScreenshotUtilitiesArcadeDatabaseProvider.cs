@@ -2,6 +2,7 @@
 using KNARZhelper;
 using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
+using KNARZhelper.WebCommon;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
@@ -12,20 +13,20 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace ScreenshotUtilitiesArcadeDatabaseProvider
 {
     public class ScreenshotUtilitiesArcadeDatabaseProvider : GenericPlugin, IScreenshotProviderPlugin
     {
-        private ScreenshotUtilitiesArcadeDatabaseProviderSettingsViewModel settings { get; set; }
+        private const string _websiteUrl = "http://adb.arcadeitalia.net/";
+        private readonly string _pageUrl = $"{_websiteUrl}dettaglio_mame.php?lang=en&game_name=";
+        private readonly string _searchUrl = $"{_websiteUrl}lista_mame.php?lang=en&ricerca=";
         public override Guid Id { get; } = Guid.Parse("f2109af2-b240-4700-a61d-c316f47b8cf4");
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = false;
 
         public ScreenshotUtilitiesArcadeDatabaseProvider(IPlayniteAPI api) : base(api)
         {
-            settings = new ScreenshotUtilitiesArcadeDatabaseProviderSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = false
@@ -66,7 +67,7 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                     return false;
                 }
 
-                var url = $"http://adb.arcadeitalia.net/dettaglio_mame.php?lang=en&game_name={romName}";
+                var url = $"{_pageUrl}{romName}";
 
                 var updated = false;
 
@@ -76,7 +77,7 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                     {
                         UseCookies = true,
                         BrowserTimeout = new TimeSpan(0, 0, 10),
-                        UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+                        UserAgent = WebHelper.AgentString
                     };
 
                     var document = await htmlWeb.LoadFromWebAsync(url);
@@ -129,7 +130,37 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
 
         public Task<bool> GetScreenshotsManualAsync(Game game, ScreenshotSearchResult searchResult) => throw new NotImplementedException();
 
-        public List<ScreenshotSearchResult> GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
+        public List<ScreenshotSearchResult> GetScreenshotSearchResult(Game game, string searchTerm)
+        {
+            try
+            {
+                var urlLoadResult = WebHelper.LoadHtmlDocument($"{_searchUrl}{searchTerm.UrlEncode()}");
+
+                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                {
+                    return null;
+                }
+
+                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//li[@class='elenco_galleria']");
+
+                if (htmlNodes?.Any() ?? false)
+                {
+                    return new List<ScreenshotSearchResult>(htmlNodes.Select(n => new ScreenshotSearchResult()
+                    {
+                        Name = WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='titolo_galleria']").InnerText),
+                        Description =
+                            $"{WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='romset_galleria']").InnerText)} - {WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='produttore_galleria']").InnerText)}",
+                        Identifier = $"{_websiteUrl}{n.SelectSingleNode("./a").GetAttributeValue("href", "")}"
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error loading data for game {game.Name}");
+            }
+
+            return null;
+        }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
@@ -140,9 +171,5 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                 PlayniteApi.Notifications.Add(notificationMessage);
             }
         }
-
-        public override ISettings GetSettings(bool firstRunSettings) => settings;
-
-        public override UserControl GetSettingsView(bool firstRunSettings) => null;//new ScreenshotUtilitiesArcadeDatabaseProviderSettingsView();
     }
 }
