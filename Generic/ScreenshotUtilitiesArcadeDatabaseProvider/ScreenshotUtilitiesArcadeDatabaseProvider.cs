@@ -4,6 +4,7 @@ using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using KNARZhelper.WebCommon;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
@@ -23,7 +24,7 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
         private readonly string _searchUrl = $"{_websiteUrl}lista_mame.php?lang=en&ricerca=";
         public override Guid Id { get; } = Guid.Parse("f2109af2-b240-4700-a61d-c316f47b8cf4");
         public bool SupportsAutomaticScreenshots { get; set; } = true;
-        public bool SupportsScreenshotSearch { get; set; } = false;
+        public bool SupportsScreenshotSearch { get; set; } = true;
 
         public ScreenshotUtilitiesArcadeDatabaseProvider(IPlayniteAPI api) : base(api)
         {
@@ -33,7 +34,7 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
             };
         }
 
-        public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate)
+        public async Task<bool> FetchScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate, string romName = default)
         {
             try
             {
@@ -42,20 +43,18 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                     return false;
                 }
 
-                var romName = game.IsInstalled && (game.Roms?.Any() ?? false)
-                ? Path.GetFileNameWithoutExtension(game.Roms[0].Path)
-                : string.Empty;
-
-                if (string.IsNullOrEmpty(romName))
-                {
-                    return false;
-                }
+                var searchRomName = romName == default
+                    ? game.IsInstalled && (game.Roms?.Any() ?? false)
+                        ? Path.GetFileNameWithoutExtension(game.Roms[0].Path)
+                        : string.Empty
+                    : romName;
 
                 var fileName = ScreenshotHelper.GenerateFileName(game.Id, Id, Id);
 
                 var screenshotGroup = ScreenshotGroup.CreateFromFile(new FileInfo(fileName))
                     ?? new ScreenshotGroup("Arcade Database", Id)
                     {
+                        GameIdentifier = searchRomName,
                         Provider = new ScreenshotProvider("Arcade Database", Id),
                         Screenshots = new RangeObservableCollection<Screenshot>()
                     };
@@ -67,7 +66,29 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                     return false;
                 }
 
-                var url = $"{_pageUrl}{romName}";
+                if (romName != default && romName.Equals(screenshotGroup.GameIdentifier))
+                {
+                    return false;
+                }
+
+                // if we got a new romName from the method call we use that one going forward.
+                if (romName != default && !romName.Equals(screenshotGroup.GameIdentifier))
+                {
+                    screenshotGroup.GameIdentifier = romName;
+
+                    screenshotGroup.Screenshots.Clear();
+                }
+                else
+                {
+                    searchRomName = screenshotGroup.GameIdentifier;
+                }
+
+                if (string.IsNullOrEmpty(searchRomName))
+                {
+                    return false;
+                }
+
+                var url = $"{_pageUrl}{searchRomName}";
 
                 var updated = false;
 
@@ -128,9 +149,11 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
             }
         }
 
-        public Task<bool> GetScreenshotsManualAsync(Game game, ScreenshotSearchResult searchResult) => throw new NotImplementedException();
+        public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate) => await FetchScreenshotsAsync(game, daysSinceLastUpdate, forceUpdate);
 
-        public List<ScreenshotSearchResult> GetScreenshotSearchResult(Game game, string searchTerm)
+        public async Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => await FetchScreenshotsAsync(game, 0, true, gameIdentifier);
+
+        public string GetScreenshotSearchResult(Game game, string searchTerm)
         {
             try
             {
@@ -145,13 +168,15 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    return new List<ScreenshotSearchResult>(htmlNodes.Select(n => new ScreenshotSearchResult()
+                    var result = new List<ScreenshotSearchResult>(htmlNodes.Select(n => new ScreenshotSearchResult()
                     {
                         Name = WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='titolo_galleria']").InnerText),
                         Description =
                             $"{WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='romset_galleria']").InnerText)} - {WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='produttore_galleria']").InnerText)}",
-                        Identifier = $"{_websiteUrl}{n.SelectSingleNode("./a").GetAttributeValue("href", "")}"
+                        Identifier = WebUtility.HtmlDecode(n.SelectSingleNode("./a/div[@class='romset_galleria']").InnerText)
                     }));
+
+                    return Serialization.ToJson(result);
                 }
             }
             catch (Exception ex)

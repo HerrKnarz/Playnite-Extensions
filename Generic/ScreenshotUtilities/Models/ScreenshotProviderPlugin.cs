@@ -1,6 +1,7 @@
 ﻿using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace ScreenshotUtilities.Models
             return await resultTask;
         }
 
-        public List<ScreenshotSearchResult> GetScreenshotSearchResult(Game game, string searchTerm)
+        public string GetScreenshotSearchResult(Game game, string searchTerm)
         {
             if (!SupportsScreenshotSearch || _methodInfoGetScreenshotSearchResults == null)
             {
@@ -70,17 +71,17 @@ namespace ScreenshotUtilities.Models
 
             var parametersArray = new object[] { game, searchTerm };
 
-            return (List<ScreenshotSearchResult>)_methodInfoGetScreenshotSearchResults.Invoke(_plugin, parametersArray);
+            return (string)_methodInfoGetScreenshotSearchResults.Invoke(_plugin, parametersArray);
         }
 
-        public async Task<bool> GetScreenshotsManualAsync(Game game, ScreenshotSearchResult searchResult)
+        public async Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier)
         {
             if (!SupportsScreenshotSearch || _methodInfoGetScreenshotsManualAsync == null)
             {
                 return false;
             }
 
-            var parametersArray = new object[] { game, searchResult ?? _screenshotSearchResult };
+            var parametersArray = new object[] { game, gameIdentifier == default ? _screenshotSearchResult.Identifier : gameIdentifier };
 
             var resultTask = (Task<bool>)_methodInfoGetScreenshotsManualAsync.Invoke(_plugin, parametersArray);
 
@@ -91,7 +92,7 @@ namespace ScreenshotUtilities.Models
         {
             var result = new List<GenericItemOption>();
 
-            result.AddRange(GetScreenshotSearchResult(_game, searchTerm));
+            result.AddRange(Serialization.FromJson<List<ScreenshotSearchResult>>(GetScreenshotSearchResult(_game, searchTerm)));
 
             return result;
         }

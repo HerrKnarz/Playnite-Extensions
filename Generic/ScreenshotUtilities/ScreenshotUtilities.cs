@@ -70,7 +70,8 @@ namespace ScreenshotUtilities
                 { "suShowScreenshotsIcon", "\xef4b" },
                 { "suDownloadIcon", "\xef08" },
                 { "suRefreshIcon", "\xefd1" },
-                { "suFetchIcon", "\xefbe" }
+                { "suFetchIcon", "\xefbe" },
+                { "suSearchIcon", "\xec82" }
             };
 
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
@@ -93,7 +94,7 @@ namespace ScreenshotUtilities
         {
             var menuSection = ResourceProvider.GetString("LOCScreenshotUtilitiesName");
 
-            if (CurrentScreenshotsGroups != null && CurrentScreenshotsGroups.Count > 0)
+            if (CurrentScreenshotsGroups != null && CurrentScreenshotsGroups.ScreenshotCount > 0)
             {
                 yield return new GameMenuItem
                 {
@@ -117,6 +118,7 @@ namespace ScreenshotUtilities
                 Icon = "suDownloadIcon",
                 Action = a => DownloadScreenshotsAsync(args.Games.FirstOrDefault())
             };
+
             yield return new GameMenuItem
             {
                 Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshScreenshots"),
@@ -131,6 +133,14 @@ namespace ScreenshotUtilities
                 MenuSection = menuSection,
                 Icon = "suRefreshIcon",
                 Action = a => RefreshThumbnailsAsync(args.Games.FirstOrDefault())
+            };
+
+            yield return new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuSearchScreenshots"),
+                MenuSection = menuSection,
+                Icon = "suSearchIcon",
+                Action = a => SearchScreenshotsAsync(args.Games.FirstOrDefault())
             };
         }
 
@@ -243,6 +253,14 @@ namespace ScreenshotUtilities
         private async Task RefreshThumbnailsAsync(Game game)
         {
             if (await ScreenshotActions.RefreshThumbnailsAsync(game, this))
+            {
+                RefreshControls();
+            }
+        }
+
+        private async Task SearchScreenshotsAsync(Game game)
+        {
+            if (await ScreenshotActions.SearchScreenshotsAsync(game, this))
             {
                 RefreshControls();
             }

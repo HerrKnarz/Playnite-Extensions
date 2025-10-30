@@ -36,14 +36,11 @@ namespace ScreenshotUtilities.ViewModels
             }
         }
 
-        public int ScreenshotCount
-            => _plugin.CurrentScreenshotsGroups is null || _plugin.CurrentScreenshotsGroups.Count == 0 ? 0 : _plugin.CurrentScreenshotsGroups.Sum(g => g.Screenshots.Count);
-
         public void Refresh() => _plugin.Settings.Settings.IsButtonControlVisible = ButtonIsVisible();
 
         private bool ButtonIsVisible()
         {
-            if (_plugin == null || !_plugin.Settings.Settings.DisplayButtonControl || _game == null || ScreenshotCount == 0)
+            if (_plugin == null || !_plugin.Settings.Settings.DisplayButtonControl || _game == null || (_plugin.CurrentScreenshotsGroups?.ScreenshotCount ?? 0) == 0)
             {
                 return false;
             }

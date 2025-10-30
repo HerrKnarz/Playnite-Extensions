@@ -122,7 +122,7 @@ namespace ScreenshotUtilities
 
                     plugin.CurrentScreenshotsGroups = groups;
 
-                    if (plugin.Settings.Settings.DisplayViewerControl && groups.Sum(g => g.Screenshots?.Count ?? 0) > 0)
+                    if (plugin.Settings.Settings.DisplayViewerControl && groups.ScreenshotCount > 0)
                     {
                         plugin.Settings.Settings.IsViewerControlVisible = true;
                     }
@@ -192,6 +192,11 @@ namespace ScreenshotUtilities
             foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsScreenshotSearch))
             {
                 needsRefresh |= await provider.GetScreenshotsManualAsync(game, null);
+            }
+
+            if (needsRefresh)
+            {
+                PrepareScreenshotsAsync(game, plugin);
             }
 
             return needsRefresh;

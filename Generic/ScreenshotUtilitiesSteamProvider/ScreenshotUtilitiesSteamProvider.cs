@@ -91,9 +91,9 @@ namespace ScreenshotUtilitiesSteamProvider
             }
         }
 
-        public Task<bool> GetScreenshotsManualAsync(Game game, ScreenshotSearchResult searchResult) => throw new NotImplementedException();
+        public Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => throw new NotImplementedException();
 
-        public List<ScreenshotSearchResult> GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
+        public string GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
