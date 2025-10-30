@@ -69,11 +69,11 @@ namespace ScreenshotUtilitiesSteamProvider
                 {
                     screenshotGroup.Screenshots
                         .AddRange(result[steamId].Data.Screenshots
-                        .Where(s => !screenshotGroup.Screenshots.Any(es => es.Path.Equals(s.PathFull)))
+                        .Where(s => !screenshotGroup.Screenshots.Any(es => es.Path.StripUriParams().Equals(s.PathFull.StripUriParams())))
                         .Select(s =>
-                       new KNARZhelper.ScreenshotsCommon.Models.Screenshot(s.PathFull)
+                       new KNARZhelper.ScreenshotsCommon.Models.Screenshot(s.PathFull.StripUriParams())
                        {
-                           ThumbnailPath = s.PathThumbnail,
+                           ThumbnailPath = s.PathThumbnail.StripUriParams(),
                            SortOrder = s.Id
                        }));
 
