@@ -1,7 +1,7 @@
 ﻿Id: ScreenshotUtilitiesSteamProvider_074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae
 Name: Screenshot Utilities Steam Provider
 Author: Alexander Heidn
-Version: 0.3.0
+Version: 0.4.0
 Module: ScreenshotUtilitiesSteamProvider.dll
 Type: GenericPlugin
 Icon: icon.png
@@ -12,3 +12,5 @@ Links:
     Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
   - Name: AddOn database
     Url: https://playnite.link/addons.html#ScreenshotUtilitiesSteamProvider_074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae
+  - Name: Ko-fi (Tips and Donations)
+    Url: https://ko-fi.com/herrknarz

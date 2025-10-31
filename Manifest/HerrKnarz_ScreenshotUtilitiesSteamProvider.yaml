@@ -1,5 +1,12 @@
 AddonId: ScreenshotUtilitiesSteamProvider_074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae
 Packages:
+  - Version: 0.4.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2025-10-31
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2025-10-31/ScreenshotUtilitiesSteamProvider_074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae_0_4_0.pext
+    Changelog:
+      - Fixed duplication of screenshots by stripping parameters from the url.
+      - Updated to the new interface to Screenshot Utilities. Needs to be updated along with Screenshot Utilities.
   - Version: 0.3.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2025-10-23

@@ -1,7 +1,7 @@
 ﻿Id: ScreenshotUtilitiesGOGProvider_228c70e8-7c89-46fc-b2c8-6e97966d01a4
 Name: Screenshot Utilities GOG Provider
 Author: Alexander Heidn
-Version: 0.3.0
+Version: 0.4.0
 Module: ScreenshotUtilitiesGOGProvider.dll
 Type: GenericPlugin
 Icon: icon.png
@@ -12,3 +12,5 @@ Links:
     Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
   - Name: AddOn database
     Url: https://playnite.link/addons.html#ScreenshotUtilitiesGOGProvider_228c70e8-7c89-46fc-b2c8-6e97966d01a4
+  - Name: Ko-fi (Tips and Donations)
+    Url: https://ko-fi.com/herrknarz

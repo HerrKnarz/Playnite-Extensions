@@ -1,7 +1,7 @@
 ﻿Id: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Name: Screenshot Utilities
 Author: HerrKnarz
-Version: 0.3.0
+Version: 0.4.0
 Module: ScreenshotUtilities.dll
 Type: GenericPlugin
 Icon: icon.png
@@ -14,3 +14,5 @@ Links:
     Url: https://playnite.link/addons.html#ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
   - Name: Translate
     Url: https://crowdin.com/project/playnite-extension-linkutiliti
+  - Name: Ko-fi (Tips and Donations)
+    Url: https://ko-fi.com/herrknarz

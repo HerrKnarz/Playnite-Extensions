@@ -1,7 +1,7 @@
 ﻿Id: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Name: Metadata Utilities
 Author: HerrKnarz
-Version: 1.8.1
+Version: 1.8.2
 Module: MetadataUtilities.dll
 Type: GenericPlugin
 Icon: icon.png
@@ -14,3 +14,5 @@ Links:
     Url: https://playnite.link/addons.html#MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
   - Name: Translate
     Url: https://crowdin.com/project/playnite-extension-linkutiliti
+  - Name: Ko-fi (Tips and Donations)
+    Url: https://ko-fi.com/herrknarz

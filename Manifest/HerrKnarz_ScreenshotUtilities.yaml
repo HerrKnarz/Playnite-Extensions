@@ -1,5 +1,18 @@
 AddonId: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Packages:
+  - Version: 0.4.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2025-10-31
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2025-10-31/ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90_0_4_0.pext
+    Changelog:
+      - Attention! Breaking changes in the implementation of provider adons. Pleas update them, too!
+      - Menu option "Open containing folder" now also works for screenshots that aren't downloaded yet.
+      - Display screenshot name as tool tip for the thumbnails in the viewer control.
+      - Implemented manual search functionality. Provider addons have to support it separately.
+      - Fixed button control not appearing automatically after screenshots were fetched.
+      - Fixed screenshot controls being visible when a json file without any screenshots exists.
+      - various refactorings
+      - Updated localizations
   - Version: 0.3.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2025-10-23

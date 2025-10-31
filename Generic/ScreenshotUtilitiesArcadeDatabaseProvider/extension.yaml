@@ -1,7 +1,7 @@
 ﻿Id: ScreenshotUtilitiesArcadeDatabaseProvider_f2109af2-b240-4700-a61d-c316f47b8cf4
 Name: Screenshot Utilities Arcade Database Provider
 Author: Alexander Heidn
-Version: 0.3.0
+Version: 0.4.0
 Module: ScreenshotUtilitiesArcadeDatabaseProvider.dll
 Type: GenericPlugin
 Icon: icon.png
@@ -12,3 +12,5 @@ Links:
     Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
   - Name: AddOn database
     Url: https://playnite.link/addons.html#ScreenshotUtilitiesArcadeDatabaseProvider_f2109af2-b240-4700-a61d-c316f47b8cf4
+  - Name: Ko-fi (Tips and Donations)
+    Url: https://ko-fi.com/herrknarz
