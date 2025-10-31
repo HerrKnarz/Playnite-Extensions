@@ -79,7 +79,8 @@
                                    RenderOptions.BitmapScalingMode="Fant" 
                                    Stretch="Uniform"
                                    Margin="2"
-                                   Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, Path=DataContext.ThumbnailHeight}"/>
+                                   Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, Path=DataContext.ThumbnailHeight}"
+                                   ToolTip="{Binding Name}"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <i:Interaction.Behaviors>
