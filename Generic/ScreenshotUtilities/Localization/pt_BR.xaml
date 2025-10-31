@@ -16,7 +16,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Refresh screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Refresh thumbnails</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Refreshing thumbnails for</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Mostrar capturas de tela</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Search screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Show screenshots</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Nenhum jogo selecionado</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Nenhuma captura de tela encontrada</sys:String>
