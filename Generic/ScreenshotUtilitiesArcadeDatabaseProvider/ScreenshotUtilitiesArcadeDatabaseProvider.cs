@@ -1,5 +1,4 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
 using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using KNARZhelper.WebCommon;
@@ -39,24 +38,6 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
             };
         }
 
-        public bool LoadFile()
-        {
-            _screenshotGroup = ScreenshotGroup.CreateFromFile(new FileInfo(ScreenshotHelper.GenerateFileName(_game.Id, Id, Id)));
-
-            if (_screenshotGroup == null)
-            {
-                _screenshotGroup = new ScreenshotGroup(_websiteName, Id)
-                {
-                    Provider = new ScreenshotProvider(_websiteName, Id),
-                    Screenshots = new RangeObservableCollection<Screenshot>()
-                };
-
-                return false;
-            }
-
-            return true;
-        }
-
         public string GetRomName(string romName = default)
         {
             var searchRomName = romName;
@@ -76,61 +57,6 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
             return searchRomName;
         }
 
-        public async Task<bool> LoadScreenshotsFromSourceAsync()
-        {
-            var url = $"{_pageUrl}{_screenshotGroup.GameIdentifier}";
-
-            var updated = false;
-
-            try
-            {
-                var htmlWeb = new HtmlWeb
-                {
-                    UseCookies = true,
-                    BrowserTimeout = new TimeSpan(0, 0, 10),
-                    UserAgent = WebHelper.AgentString
-                };
-
-                var document = await htmlWeb.LoadFromWebAsync(url);
-
-                if (htmlWeb.StatusCode != HttpStatusCode.OK || document == null)
-                {
-                    return false;
-                }
-
-                var htmlNodes = document.DocumentNode.SelectNodes("//ul[@class='elenco_immagini']/li");
-
-                if (htmlNodes == null || (htmlNodes.Count == 0))
-                {
-                    return false;
-                }
-
-                foreach (var node in htmlNodes.Where(n => n.SelectSingleNode("./div/img") != null))
-                {
-                    var imageUrl = node.SelectSingleNode("./div/img").GetAttributeValue("data-custom-src_full", "");
-                    var name = node.SelectSingleNode("./span").InnerText;
-
-                    if (!_screenshotGroup.Screenshots.Any(es => es.Path.Equals(imageUrl)))
-                    {
-                        _screenshotGroup.Screenshots.Add(new Screenshot(imageUrl)
-                        {
-                            ThumbnailPath = imageUrl,
-                            Name = name,
-                            SortOrder = htmlNodes.IndexOf(node)
-                        });
-                    }
-                }
-
-                updated = true;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-            }
-
-            return updated;
-        }
-
         public async Task<bool> FetchScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate, string romName = default)
         {
             try
@@ -144,7 +70,9 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                 // set game and load the file.
                 _game = game;
 
-                var newFile = !LoadFile();
+                var fileExists = false;
+
+                (fileExists, _screenshotGroup) = ScreenshotHelper.LoadGroups(game, _websiteName, Id);
 
                 // return if we don't want to force an update and the last update was inside the days configured.
                 if (!forceUpdate
@@ -169,7 +97,7 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                 }
 
                 // We need to reset the file if we got a new romName from the method call and it's not the same we already got.
-                if (newFile || (romName != default && !searchName.Equals(_screenshotGroup.GameIdentifier)))
+                if (!fileExists || (romName != default && !searchName.Equals(_screenshotGroup.GameIdentifier)))
                 {
                     _screenshotGroup.GameIdentifier = searchName;
 
@@ -225,6 +153,54 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
             }
 
             return null;
+        }
+
+        public async Task<bool> LoadScreenshotsFromSourceAsync()
+        {
+            var url = $"{_pageUrl}{_screenshotGroup.GameIdentifier}";
+
+            var updated = false;
+
+            try
+            {
+                var urlLoadResult = await WebHelper.LoadHtmlDocumentAsync(url);
+
+                if (urlLoadResult.StatusCode != HttpStatusCode.OK || urlLoadResult.Document == null)
+                {
+                    return false;
+                }
+
+                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//ul[@class='elenco_immagini']/li");
+
+                if (htmlNodes == null || (htmlNodes.Count == 0))
+                {
+                    return false;
+                }
+
+                foreach (var node in htmlNodes.Where(n => n.SelectSingleNode("./div/img") != null))
+                {
+                    var imageUrl = node.SelectSingleNode("./div/img").GetAttributeValue("data-custom-src_full", "");
+                    var name = node.SelectSingleNode("./span").InnerText;
+
+                    if (!_screenshotGroup.Screenshots.Any(es => es.Path.Equals(imageUrl)))
+                    {
+                        _screenshotGroup.Screenshots.Add(new Screenshot(imageUrl)
+                        {
+                            ThumbnailPath = imageUrl,
+                            Name = name,
+                            SortOrder = htmlNodes.IndexOf(node)
+                        });
+                    }
+                }
+
+                updated = true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+
+            return updated;
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
