@@ -38,14 +38,7 @@ namespace ScreenshotUtilities
             var savedSettings = plugin.LoadPluginSettings<Settings>();
 
             // LoadPluginSettings returns null if no saved data is available.
-            if (savedSettings != null)
-            {
-                Settings = savedSettings;
-            }
-            else
-            {
-                Settings = new Settings();
-            }
+            Settings = savedSettings ?? new Settings();
         }
 
         public RelayCommand AddCategoryCommand => new RelayCommand(() => SelectMetadata(FieldType.Category));

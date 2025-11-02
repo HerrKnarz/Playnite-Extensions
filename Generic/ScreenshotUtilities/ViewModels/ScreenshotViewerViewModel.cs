@@ -6,6 +6,7 @@ using Playnite.SDK.Plugins;
 using ScreenshotUtilities.Controls;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace ScreenshotUtilities.ViewModels
@@ -86,7 +87,7 @@ namespace ScreenshotUtilities.ViewModels
 
         public void ResetViewModel() => SelectedGroup = null;
 
-        public void SetAs(MetadataField type)
+        public async Task SetAs(MetadataField type)
         {
             if (SelectedGroup?.SelectedScreenshot is null || _gameId == default)
             {
@@ -95,7 +96,7 @@ namespace ScreenshotUtilities.ViewModels
 
             if ((SelectedGroup.SelectedScreenshot.DownloadedPath is null)
                 && (string.IsNullOrEmpty(SelectedGroup.BasePath)
-                    || !SelectedGroup.SelectedScreenshot.DownloadAsync(SelectedGroup.BasePath).Result))
+                    || !await SelectedGroup.SelectedScreenshot.DownloadAsync(SelectedGroup.BasePath)))
             {
                 return;
             }
