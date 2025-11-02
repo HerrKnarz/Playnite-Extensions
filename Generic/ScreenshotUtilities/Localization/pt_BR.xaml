@@ -20,6 +20,9 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Refreshing thumbnails for</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Reset screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Search screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsBackground">Set as background</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsCover">Set as cover</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsIcon">Set as icon</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Show screenshots</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Nenhum jogo selecionado</sys:String>
