@@ -117,14 +117,11 @@
                                       Command="{Binding DataContext.OpenInBrowserCommand}"
                                       Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.PathIsUrl, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsBackground}"
-                                      Command="{Binding DataContext.SetAsBackgroundCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Command="{Binding DataContext.SetAsBackgroundCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsCover}"
-                                      Command="{Binding DataContext.SetAsCoverCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Command="{Binding DataContext.SetAsCoverCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsIcon}"
-                                      Command="{Binding DataContext.SetAsIconCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Command="{Binding DataContext.SetAsIconCommand}" />
                         </ContextMenu>
                     </Image.ContextMenu>
                 </Image>

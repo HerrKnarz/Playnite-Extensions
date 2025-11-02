@@ -93,6 +93,13 @@ namespace ScreenshotUtilities.ViewModels
                 return;
             }
 
+            if ((SelectedGroup.SelectedScreenshot.DownloadedPath is null)
+                && (string.IsNullOrEmpty(SelectedGroup.BasePath)
+                    || !SelectedGroup.SelectedScreenshot.DownloadAsync(SelectedGroup.BasePath).Result))
+            {
+                return;
+            }
+
             var game = API.Instance.Database.Games.Get(GameId);
 
             SelectedGroup.SelectedScreenshot.SetAs(game, type);
