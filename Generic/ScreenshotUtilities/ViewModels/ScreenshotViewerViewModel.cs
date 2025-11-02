@@ -2,6 +2,7 @@
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using Playnite.SDK.Plugins;
 using ScreenshotUtilities.Controls;
 using System;
 using System.Collections.Generic;
@@ -85,6 +86,18 @@ namespace ScreenshotUtilities.ViewModels
 
         public void ResetViewModel() => SelectedGroup = null;
 
+        public void SetAs(MetadataField type)
+        {
+            if (SelectedGroup?.SelectedScreenshot is null || _gameId == default)
+            {
+                return;
+            }
+
+            var game = API.Instance.Database.Games.Get(GameId);
+
+            SelectedGroup.SelectedScreenshot.SetAs(game, type);
+        }
+
         public RelayCommand<object> CopyToClipboardCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.CopyToClipboard());
 
         public RelayCommand<object> OpenContainingFolderCommand => new RelayCommand<object>(a =>
@@ -123,6 +136,12 @@ namespace ScreenshotUtilities.ViewModels
         public RelayCommand<object> SelectPreviousScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectPreviousScreenshot());
 
         public RelayCommand<object> SelectNextScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectNextScreenshot());
+
+        public RelayCommand<object> SetAsBackgroundCommand => new RelayCommand<object>(a => SetAs(MetadataField.BackgroundImage));
+
+        public RelayCommand<object> SetAsCoverCommand => new RelayCommand<object>(a => SetAs(MetadataField.CoverImage));
+
+        public RelayCommand<object> SetAsIconCommand => new RelayCommand<object>(a => SetAs(MetadataField.Icon));
 
         public double AspectRatio => _plugin.Settings.Settings.AspectWidth / (float)_plugin.Settings.Settings.AspectHeight;
 
