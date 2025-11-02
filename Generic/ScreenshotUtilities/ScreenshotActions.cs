@@ -1,12 +1,11 @@
 ﻿using KNARZhelper;
-using KNARZhelper.FilesCommon;
+using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using ScreenshotUtilities.Models;
 using ScreenshotUtilities.ViewModels;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -146,36 +145,16 @@ namespace ScreenshotUtilities
             return await groups.RefreshAllThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight);
         }
 
-        internal static void RemoveScreenshots(Game game, ScreenshotUtilities plugin)
+        internal static async Task<bool> ResetScreenshots(Game game, ScreenshotUtilities plugin)
         {
-            var path = FileHelper.GetDownloadPath(plugin.GetPluginUserDataPath(), game.Id);
-            var succeeded = false;
-            try
+            if (!ScreenshotHelper.RemoveScreenshots(game))
             {
-                if (path.Exists)
-                {
-                    path.Delete(true);
-                }
-
-                Task.Delay(TimeSpan.FromMilliseconds(100));
-
-                path.Refresh();
-
-                succeeded = !path.Exists;
-            }
-            catch (Exception ex)
-            {
-                succeeded = false;
-                Log.Error(ex, $"Couldn't delete folder for removed game \"{game.Name}\" ({game.Id})");
+                return false;
             }
 
-            if (!succeeded)
-            {
-                API.Instance.Notifications.Add(new NotificationMessage($"ScreenshotUtilitiesDelete{path.Name}",
-                    string.Format(ResourceProvider.GetString("LOCScreenshotUtilitiesNotificationFolderNotDeleted"), game.Name),
-                    NotificationType.Error,
-                    () => Process.Start("explorer.exe", path.FullName)));
-            }
+            await PrepareScreenshotsAsync(game, plugin);
+
+            return true;
         }
 
         internal static async Task<bool> SearchScreenshotsAsync(Game game, ScreenshotUtilities plugin)

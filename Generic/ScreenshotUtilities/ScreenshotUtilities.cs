@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using Playnite.SDK.Events;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
@@ -86,7 +88,7 @@ namespace ScreenshotUtilities
         {
             foreach (var game in e.RemovedItems)
             {
-                ScreenshotActions.RemoveScreenshots(game, this);
+                ScreenshotHelper.RemoveScreenshots(game);
             }
         }
 
@@ -133,6 +135,14 @@ namespace ScreenshotUtilities
                 MenuSection = menuSection,
                 Icon = "suRefreshIcon",
                 Action = a => RefreshThumbnailsAsync(args.Games.FirstOrDefault())
+            };
+
+            yield return new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuResetScreenshots"),
+                MenuSection = menuSection,
+                Icon = "suRefreshIcon",
+                Action = a => ResetScreenshotsAsync(args.Games.FirstOrDefault())
             };
 
             yield return new GameMenuItem
@@ -253,6 +263,21 @@ namespace ScreenshotUtilities
         private async Task RefreshThumbnailsAsync(Game game)
         {
             if (await ScreenshotActions.RefreshThumbnailsAsync(game, this))
+            {
+                RefreshControls();
+            }
+        }
+
+        private async Task ResetScreenshotsAsync(Game game)
+        {
+            if (API.Instance.Dialogs.ShowMessage(
+                        ResourceProvider.GetString("LOCScreenshotUtilitiesDialogResetScreenshots"), string.Empty,
+                        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            if (await ScreenshotActions.ResetScreenshots(game, this))
             {
                 RefreshControls();
             }
