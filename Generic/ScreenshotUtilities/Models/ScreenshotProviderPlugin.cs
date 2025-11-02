@@ -13,6 +13,7 @@ namespace ScreenshotUtilities.Models
     public class ScreenshotProviderPlugin : IScreenshotProviderPlugin
     {
         private readonly Plugin _plugin;
+        private readonly MethodInfo _methodInfoCleanUpAsync = null;
         private readonly MethodInfo _methodInfoGetScreenshotsAsync = null;
         private readonly MethodInfo _methodInfoGetScreenshotSearchResults = null;
         private readonly MethodInfo _methodInfoGetScreenshotsManualAsync = null;
@@ -26,6 +27,7 @@ namespace ScreenshotUtilities.Models
 
             var type = _plugin.GetType();
 
+            _methodInfoCleanUpAsync = type.GetMethod("CleanUpAsync");
             _methodInfoGetScreenshotsAsync = type.GetMethod("GetScreenshotsAsync");
             _methodInfoGetScreenshotSearchResults = type.GetMethod("GetScreenshotSearchResult");
             _methodInfoGetScreenshotsManualAsync = type.GetMethod("GetScreenshotsManualAsync");
@@ -47,6 +49,15 @@ namespace ScreenshotUtilities.Models
 
         public bool SupportsAutomaticScreenshots { get; set; } = false;
         public bool SupportsScreenshotSearch { get; set; } = false;
+
+        public async Task<bool> CleanUpAsync(Game game)
+        {
+            var parametersArray = new object[] { game };
+
+            var resultTask = (Task<bool>)_methodInfoCleanUpAsync.Invoke(_plugin, parametersArray);
+
+            return await resultTask;
+        }
 
         public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate)
         {

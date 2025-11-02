@@ -57,6 +57,8 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
             return searchRomName;
         }
 
+        public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
+
         public async Task<bool> FetchScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate, string romName = default)
         {
             try

@@ -27,6 +27,8 @@ namespace ScreenshotUtilitiesSteamProvider
             };
         }
 
+        public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
+
         public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate)
         {
             try

@@ -31,6 +31,7 @@ namespace ScreenshotUtilities
 
             foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsAutomaticScreenshots))
             {
+                needsRefresh |= await provider.CleanUpAsync(game);
                 needsRefresh |= await provider.GetScreenshotsAsync(game, 5, forceUpdate);
             }
 
