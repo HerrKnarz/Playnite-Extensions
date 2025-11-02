@@ -116,6 +116,8 @@ namespace ScreenshotUtilities
                     }
                 }
 
+                groups.DeleteOrphanedFiles();
+
                 API.Instance.MainView.UIDispatcher.Invoke(() =>
                 {
                     if (plugin.Settings.Settings.Debug)
