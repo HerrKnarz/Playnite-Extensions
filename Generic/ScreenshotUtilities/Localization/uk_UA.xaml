@@ -9,13 +9,15 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Копіювати в буфер обміну</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Видалити скріншот</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Завантажити знімки екрану</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadFrom">Download screenshots from...</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Download all screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Завантаження зображень для</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Відкрити теку</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Відкрити в пов'язаній програмі</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Відкрити в браузері</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Відкрити в повноекранному режимі</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Оновити знімки екрану</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshFrom">Refresh screenshots from...</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Refresh all screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Оновити мініатюри</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Оновити мініатюри для</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Скинути знімки екрану</sys:String>
