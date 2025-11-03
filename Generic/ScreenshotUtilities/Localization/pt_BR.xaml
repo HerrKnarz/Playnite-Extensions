@@ -9,13 +9,15 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Copiar para a área de transferência</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Excluir captura de tela</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Baixar capturas de tela</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadFrom">Download screenshots from...</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Download all screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Baixando imagens de</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Abrir pasta contendo o arquivo</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Abrir com o aplicativo associado</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Open in browser</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Abrir em modo de tela cheia</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Refresh screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshFrom">Refresh screenshots from...</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Refresh all screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Refresh thumbnails</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Refreshing thumbnails for</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Reset screenshots</sys:String>
