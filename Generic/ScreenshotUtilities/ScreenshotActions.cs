@@ -13,14 +13,14 @@ namespace ScreenshotUtilities
 {
     internal static class ScreenshotActions
     {
-        internal static async Task<bool> DownloadScreenshotsAsync(Game game, ScreenshotUtilities plugin)
+        internal static async Task<bool> DownloadScreenshotsAsync(Game game, ScreenshotUtilities plugin, Guid providerGuid = default)
         {
             var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
 
-            return await groups.DownloadAllAsync(plugin.Settings.Settings.ThumbnailHeight);
+            return await groups.DownloadAllAsync(plugin.Settings.Settings.ThumbnailHeight, providerGuid);
         }
 
-        internal static async Task<bool> GetScreenshotsAsync(Game game, ScreenshotUtilities plugin, bool forceUpdate = false)
+        internal static async Task<bool> GetScreenshotsAsync(Game game, ScreenshotUtilities plugin, bool forceUpdate = false, Guid providerId = default)
         {
             var needsRefresh = false;
 
@@ -29,7 +29,7 @@ namespace ScreenshotUtilities
                 InitializeProviders(plugin);
             }
 
-            foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsAutomaticScreenshots))
+            foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsAutomaticScreenshots && (providerId == default || p.Id == providerId)))
             {
                 needsRefresh |= await provider.CleanUpAsync(game);
                 needsRefresh |= await provider.GetScreenshotsAsync(game, 5, forceUpdate);

@@ -116,6 +116,7 @@
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInBrowser}"
                                       Command="{Binding DataContext.OpenInBrowserCommand}"
                                       Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.PathIsUrl, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <Separator />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsBackground}"
                                       Command="{Binding DataContext.SetAsBackgroundCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsCover}"
