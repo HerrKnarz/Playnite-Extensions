@@ -27,6 +27,7 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
         private ScreenshotGroup _screenshotGroup;
 
         public override Guid Id { get; } = Guid.Parse("f2109af2-b240-4700-a61d-c316f47b8cf4");
+        public string Name { get; set; } = _websiteName;
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = true;
 

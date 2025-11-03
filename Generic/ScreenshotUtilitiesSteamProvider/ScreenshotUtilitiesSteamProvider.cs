@@ -16,6 +16,7 @@ namespace ScreenshotUtilitiesSteamProvider
     public class ScreenshotUtilitiesSteamProvider : GenericPlugin, IScreenshotProviderPlugin
     {
         public override Guid Id { get; } = Guid.Parse("074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae");
+        public string Name { get; set; } = "Steam";
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = false;
 
@@ -48,9 +49,9 @@ namespace ScreenshotUtilitiesSteamProvider
                 var fileName = ScreenshotHelper.GenerateFileName(game.Id, Id, Id);
 
                 var screenshotGroup = ScreenshotGroup.CreateFromFile(new FileInfo(fileName))
-                    ?? new ScreenshotGroup("Steam", Id)
+                    ?? new ScreenshotGroup(Name, Id)
                     {
-                        Provider = new ScreenshotProvider("Steam", Id),
+                        Provider = new ScreenshotProvider(Name, Id),
                         Screenshots = new RangeObservableCollection<KNARZhelper.ScreenshotsCommon.Models.Screenshot>()
                     };
 
@@ -63,7 +64,7 @@ namespace ScreenshotUtilitiesSteamProvider
 
                 var apiUrl = $"https://store.steampowered.com/api/appdetails?appids={steamId}";
 
-                var result = await ApiHelper.GetJsonFromApiAsync<SteamAppDetails>(apiUrl, "Steam");
+                var result = await ApiHelper.GetJsonFromApiAsync<SteamAppDetails>(apiUrl, Name);
 
                 var updated = false;
 

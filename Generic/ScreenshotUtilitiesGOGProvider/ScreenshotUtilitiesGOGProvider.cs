@@ -21,6 +21,7 @@ namespace ScreenshotUtilitiesGOGProvider
         public override Guid Id { get; } = Guid.Parse("228c70e8-7c89-46fc-b2c8-6e97966d01a4");
         public static Guid GogId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
         public static Guid GogOssId = Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C");
+        public string Name { get; set; } = "GOG";
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = false;
 
@@ -59,9 +60,9 @@ namespace ScreenshotUtilitiesGOGProvider
                 var fileName = ScreenshotHelper.GenerateFileName(game.Id, Id, Id);
 
                 var screenshotGroup = ScreenshotGroup.CreateFromFile(new FileInfo(fileName))
-                    ?? new ScreenshotGroup("GOG", Id)
+                    ?? new ScreenshotGroup(Name, Id)
                     {
-                        Provider = new ScreenshotProvider("GOG", Id),
+                        Provider = new ScreenshotProvider(Name, Id),
                         Screenshots = new RangeObservableCollection<KNARZhelper.ScreenshotsCommon.Models.Screenshot>()
                     };
 
@@ -74,7 +75,7 @@ namespace ScreenshotUtilitiesGOGProvider
 
                 var apiUrl = $"https://api.gog.com/products/{gogId}?expand=screenshots";
 
-                var result = await ApiHelper.GetJsonFromApiAsync<GogApiResult>(apiUrl, "GOG");
+                var result = await ApiHelper.GetJsonFromApiAsync<GogApiResult>(apiUrl, Name);
 
                 var updated = false;
 

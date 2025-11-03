@@ -4,6 +4,7 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -27,6 +28,10 @@ namespace ScreenshotUtilities.Models
 
             var type = _plugin.GetType();
 
+            var propertyInfoName = type.GetProperty("Name");
+
+            Name = propertyInfoName != null ? (string)propertyInfoName.GetValue(_plugin, null) : type.Name;
+
             _methodInfoCleanUpAsync = type.GetMethod("CleanUpAsync");
             _methodInfoGetScreenshotsAsync = type.GetMethod("GetScreenshotsAsync");
             _methodInfoGetScreenshotSearchResults = type.GetMethod("GetScreenshotSearchResult");
@@ -47,6 +52,8 @@ namespace ScreenshotUtilities.Models
             }
         }
 
+        public Guid Id => _plugin.Id;
+        public string Name { get; set; } = null;
         public bool SupportsAutomaticScreenshots { get; set; } = false;
         public bool SupportsScreenshotSearch { get; set; } = false;
 
