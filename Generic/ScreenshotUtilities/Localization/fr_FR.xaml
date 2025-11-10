@@ -19,6 +19,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshFrom">Refresh screenshots from...</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Refresh all screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Actualiser les miniatures</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom">Refresh thumbnails from...</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Actualisation des miniatures pour</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Reset screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Search screenshots</sys:String>
