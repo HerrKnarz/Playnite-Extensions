@@ -141,21 +141,21 @@ namespace ScreenshotUtilities
             }
         }
 
-        internal static async Task<bool> RefreshThumbnailsAsync(Game game, ScreenshotUtilities plugin)
+        internal static async Task<bool> RefreshThumbnailsAsync(Game game, ScreenshotUtilities plugin, Guid providerId = default)
         {
             var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
 
-            return await groups.RefreshAllThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight);
+            return await groups.RefreshAllThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight, providerId);
         }
 
-        internal static async Task<bool> ResetScreenshots(Game game, ScreenshotUtilities plugin)
+        internal static async Task<bool> ResetScreenshots(Game game, ScreenshotUtilities plugin, Guid providerId = default)
         {
-            if (!ScreenshotHelper.RemoveScreenshots(game))
+            if (!ScreenshotHelper.RemoveScreenshots(game, true, providerId))
             {
                 return false;
             }
 
-            await PrepareScreenshotsAsync(game, plugin);
+            await PrepareScreenshotsAsync(game, plugin, true);
 
             return true;
         }

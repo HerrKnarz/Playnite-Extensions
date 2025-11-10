@@ -109,9 +109,13 @@ namespace ScreenshotUtilities
             var menuSection = ResourceProvider.GetString("LOCScreenshotUtilitiesName");
             var menuDownload = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadFrom");
             var menuRefresh = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshFrom");
+            var menuRefreshThumbs = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom");
+            var menuReset = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuResetScreenshotsFrom");
 
             var menuDownloadItems = new List<GameMenuItem>();
             var menuRefreshItems = new List<GameMenuItem>();
+            var menuRefreshThumbsItems = new List<GameMenuItem>();
+            var menuResetItems = new List<GameMenuItem>();
 
             foreach (var provider in ScreenshotProviders
                 .OrderBy(p => p.Name)
@@ -136,16 +140,43 @@ namespace ScreenshotUtilities
                     .OrderBy(p => p.Name)
                     .ToList())
                 {
-                    if (menuDownloadItems.Any(m => m.Description.Equals(provider.Name)))
+                    if (!menuDownloadItems.Any(m => m.Description.Equals(provider.Name)))
+                    {
+                        menuDownloadItems.Add(new GameMenuItem
+                        {
+                            Description = provider.Name,
+                            MenuSection = $"{menuSection}|{menuDownload}",
+                            Action = a => DownloadScreenshotsAsync(args.Games.FirstOrDefault(), provider.Id)
+                        });
+                    }
+
+                    if (!menuResetItems.Any(m => m.Description.Equals(provider.Name)))
+                    {
+                        menuResetItems.Add(new GameMenuItem
+                        {
+                            Description = provider.Name,
+                            MenuSection = $"{menuSection}|{menuReset}",
+                            Action = a => ResetScreenshotsAsync(args.Games.FirstOrDefault(), provider.Id)
+                        });
+                    }
+                }
+
+                foreach (var provider in CurrentScreenshotsGroups
+                    .Where(g => g.Screenshots?.Count(s => s.IsDownloaded) > 0)
+                    .Select(g => g.Provider)
+                    .OrderBy(p => p.Name)
+                    .ToList())
+                {
+                    if (menuRefreshThumbsItems.Any(m => m.Description.Equals(provider.Name)))
                     {
                         continue;
                     }
 
-                    menuDownloadItems.Add(new GameMenuItem
+                    menuRefreshThumbsItems.Add(new GameMenuItem
                     {
                         Description = provider.Name,
-                        MenuSection = $"{menuSection}|{menuDownload}",
-                        Action = a => DownloadScreenshotsAsync(args.Games.FirstOrDefault(), provider.Id)
+                        MenuSection = $"{menuSection}|{menuRefreshThumbsItems}",
+                        Action = a => RefreshThumbnailsAsync(args.Games.FirstOrDefault(), provider.Id)
                     });
                 }
 
@@ -162,33 +193,36 @@ namespace ScreenshotUtilities
                     Description = "-",
                     MenuSection = menuSection
                 });
+            }
 
-                if (menuDownloadItems.Count > 0)
+            if (menuDownloadItems.Count > 0)
+            {
+                menuItems.Add(new GameMenuItem
                 {
-                    menuItems.Add(new GameMenuItem
-                    {
-                        Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadScreenshots"),
-                        MenuSection = menuSection,
-                        Icon = "suDownloadIcon",
-                        Action = a => DownloadScreenshotsAsync(args.Games.FirstOrDefault())
-                    });
+                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadScreenshots"),
+                    MenuSection = menuSection,
+                    Icon = "suDownloadIcon",
+                    Action = a => DownloadScreenshotsAsync(args.Games.FirstOrDefault())
+                });
 
-                    menuItems.AddRange(menuDownloadItems);
-                }
+                menuItems.AddRange(menuDownloadItems);
+            }
 
-                if (menuRefreshItems.Count > 0)
+            if (menuRefreshItems.Count > 0)
+            {
+                menuItems.Add(new GameMenuItem
                 {
-                    menuItems.Add(new GameMenuItem
-                    {
-                        Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshScreenshots"),
-                        MenuSection = menuSection,
-                        Icon = "suFetchIcon",
-                        Action = a => GetScreenshotsAsync(args.Games.FirstOrDefault())
-                    });
+                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshScreenshots"),
+                    MenuSection = menuSection,
+                    Icon = "suFetchIcon",
+                    Action = a => GetScreenshotsAsync(args.Games.FirstOrDefault())
+                });
 
-                    menuItems.AddRange(menuRefreshItems);
-                }
+                menuItems.AddRange(menuRefreshItems);
+            }
 
+            if (menuRefreshThumbsItems.Count > 0)
+            {
                 menuItems.Add(new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuRefreshThumbnails"),
@@ -196,15 +230,22 @@ namespace ScreenshotUtilities
                     Icon = "suRefreshIcon",
                     Action = a => RefreshThumbnailsAsync(args.Games.FirstOrDefault())
                 });
+
+                menuItems.AddRange(menuRefreshThumbsItems);
             }
 
-            menuItems.Add(new GameMenuItem
+            if (menuResetItems.Count > 0)
             {
-                Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuResetScreenshots"),
-                MenuSection = menuSection,
-                Icon = "suRefreshIcon",
-                Action = a => ResetScreenshotsAsync(args.Games.FirstOrDefault())
-            });
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuResetScreenshots"),
+                    MenuSection = menuSection,
+                    Icon = "suRefreshIcon",
+                    Action = a => ResetScreenshotsAsync(args.Games.FirstOrDefault())
+                });
+
+                menuItems.AddRange(menuResetItems);
+            }
 
             menuItems.Add(new GameMenuItem
             {
@@ -323,15 +364,15 @@ namespace ScreenshotUtilities
             });
         }
 
-        private async Task RefreshThumbnailsAsync(Game game)
+        private async Task RefreshThumbnailsAsync(Game game, Guid providerId = default)
         {
-            if (await ScreenshotActions.RefreshThumbnailsAsync(game, this))
+            if (await ScreenshotActions.RefreshThumbnailsAsync(game, this, providerId))
             {
                 RefreshControls();
             }
         }
 
-        private async Task ResetScreenshotsAsync(Game game)
+        private async Task ResetScreenshotsAsync(Game game, Guid providerId = default)
         {
             if (API.Instance.Dialogs.ShowMessage(
                         ResourceProvider.GetString("LOCScreenshotUtilitiesDialogResetScreenshots"), string.Empty,
@@ -340,7 +381,7 @@ namespace ScreenshotUtilities
                 return;
             }
 
-            if (await ScreenshotActions.ResetScreenshots(game, this))
+            if (await ScreenshotActions.ResetScreenshots(game, this, providerId))
             {
                 RefreshControls();
             }

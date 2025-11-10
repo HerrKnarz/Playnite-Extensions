@@ -75,7 +75,7 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
 
                 var fileExists = false;
 
-                (fileExists, _screenshotGroup) = ScreenshotHelper.LoadGroups(game, _websiteName, Id);
+                (fileExists, _screenshotGroup) = ScreenshotHelper.LoadGroup(game, _websiteName, Id);
 
                 // return if we don't want to force an update and the last update was inside the days configured.
                 if (!forceUpdate
