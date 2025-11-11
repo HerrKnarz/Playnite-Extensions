@@ -120,19 +120,26 @@ namespace ScreenshotUtilities
 
                 API.Instance.MainView.UIDispatcher.Invoke(() =>
                 {
-                    if (plugin.Settings.Settings.Debug)
+                    try
                     {
-                        Log.Debug($"PrepareScreenshots {game.Name}: Setting current groups: {groups?.Count}");
+                        if (plugin.Settings.Settings.Debug)
+                        {
+                            Log.Debug($"PrepareScreenshots {game.Name}: Setting current groups: {groups?.Count}");
+                        }
+
+                        plugin.CurrentScreenshotsGroups = groups;
+
+                        if (plugin.Settings.Settings.DisplayViewerControl && groups.ScreenshotCount > 0)
+                        {
+                            plugin.Settings.Settings.IsViewerControlVisible = true;
+                        }
+
+                        plugin.RefreshControls();
                     }
-
-                    plugin.CurrentScreenshotsGroups = groups;
-
-                    if (plugin.Settings.Settings.DisplayViewerControl && groups.ScreenshotCount > 0)
+                    catch (Exception ex)
                     {
-                        plugin.Settings.Settings.IsViewerControlVisible = true;
+                        Log.Error(ex, $"Error updating screenshot viewer controls for {game.Name}");
                     }
-
-                    plugin.RefreshControls();
                 });
             }
             catch (Exception ex)
