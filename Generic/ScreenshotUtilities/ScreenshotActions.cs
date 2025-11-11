@@ -167,7 +167,7 @@ namespace ScreenshotUtilities
             return true;
         }
 
-        internal static async Task<bool> SearchScreenshotsAsync(Game game, ScreenshotUtilities plugin)
+        internal static async Task<bool> SearchScreenshotsAsync(Game game, ScreenshotUtilities plugin, Guid providerId = default)
         {
             var needsRefresh = false;
 
@@ -176,12 +176,14 @@ namespace ScreenshotUtilities
                 InitializeProviders(plugin);
             }
 
-            foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsScreenshotSearch))
+            var providers = plugin.ScreenshotProviders.Where(p => p.SupportsScreenshotSearch && (providerId == default || p.Id == providerId)).ToList();
+
+            foreach (var provider in providers)
             {
                 provider.Search(game);
             }
 
-            foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsScreenshotSearch))
+            foreach (var provider in providers)
             {
                 needsRefresh |= await provider.GetScreenshotsManualAsync(game, null);
             }

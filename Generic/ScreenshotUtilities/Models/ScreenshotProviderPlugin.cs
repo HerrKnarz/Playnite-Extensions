@@ -108,11 +108,25 @@ namespace ScreenshotUtilities.Models
 
         public List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            var result = new List<GenericItemOption>();
+            var genericResult = new List<GenericItemOption>();
 
-            result.AddRange(Serialization.FromJson<List<ScreenshotSearchResult>>(GetScreenshotSearchResult(_game, searchTerm)));
+            var resultString = GetScreenshotSearchResult(_game, searchTerm);
 
-            return result;
+            if (string.IsNullOrEmpty(resultString))
+            {
+                return genericResult;
+            }
+
+            var searchResult = Serialization.FromJson<List<ScreenshotSearchResult>>(resultString);
+
+            if (searchResult == null)
+            {
+                return genericResult;
+            }
+
+            genericResult.AddRange(searchResult);
+
+            return genericResult;
         }
 
         public void Search(Game game)

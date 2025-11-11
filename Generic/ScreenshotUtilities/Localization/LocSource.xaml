@@ -22,7 +22,9 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Refresh thumbnails</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom">Refresh thumbnails from...</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Refreshing thumbnails for</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFrom">Reset screenshots from...</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Reset screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchFrom">Search screenshots from...</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Search screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsBackground">Set as background</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsCover">Set as cover</sys:String>
