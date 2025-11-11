@@ -9,21 +9,21 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">In Zwischenablage kopieren</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Screenshot löschen</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadFrom">Screenshots herunterladen von...</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadFrom">Screenshots herunterladen von</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Alle Screenshots herunterladen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Bilder werden heruntergeladen für</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Ordner öffnen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">In zugehöriger Anwendung öffnen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Im Browser öffnen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Im Vollbildmodus öffnen</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshFrom">Screenshots aktualisieren von...</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshFrom">Screenshots aktualisieren von</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Alle Screenshots aktualisieren</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Vorschaubilder aktualisieren</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom">Vorschaubilder aktualisieren von...</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom">Vorschaubilder aktualisieren von</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Aktualisiere Vorschaubilder für</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFrom">Screenshots zurücksetzen von...</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFrom">Screenshots zurücksetzen von</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Screenshots zurücksetzen</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchFrom">Suche Screenshots von...</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchFrom">Suche Screenshots von</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Screenshots durchsuchen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsBackground">Als Hintergrund festlegen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsCover">Als Cover setzen</sys:String>
