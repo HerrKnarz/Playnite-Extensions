@@ -21,7 +21,9 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Vorschaubilder aktualisieren</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom">Vorschaubilder aktualisieren von...</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Aktualisiere Vorschaubilder für</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFrom">Screenshots zurücksetzen von...</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Screenshots zurücksetzen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchFrom">Suche Screenshots von...</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Screenshots durchsuchen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsBackground">Als Hintergrund festlegen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsCover">Als Cover setzen</sys:String>
