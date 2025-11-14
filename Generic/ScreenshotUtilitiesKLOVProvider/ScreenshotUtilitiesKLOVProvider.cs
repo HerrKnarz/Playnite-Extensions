@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.MetadataCommon;
 using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using KNARZhelper.WebCommon;
@@ -61,25 +62,32 @@ namespace ScreenshotUtilitiesKLOVProvider
                     return false;
                 }
 
-                // TODO: Search for a link to the site in the game and use that one if available.
+                var link = MetadataHelper.GetLink(game, new System.Text.RegularExpressions.Regex(@"arcade-museum\.com\/(Videogame\/|game_detail.php\?game_id)"));
 
-                // Get the right name to search for.
-                var searchName = game.Name
-                    .RemoveDiacritics()
-                    .RemoveSpecialChars()
-                    .Replace("-", " ")
-                    .CollapseWhitespaces()
-                    .Replace(" ", "-")
-                    .ToLower();
-
-                if (string.IsNullOrEmpty(searchName))
+                if (link != null)
                 {
-                    return false;
+                    _screenshotGroup.GameIdentifier = link.Url;
                 }
-
-                if (string.IsNullOrEmpty(_screenshotGroup.GameIdentifier))
+                else
                 {
-                    _screenshotGroup.GameIdentifier = $"{_websiteUrl}{searchName}";
+                    // Get the right name to search for.
+                    var searchName = game.Name
+                        .RemoveDiacritics()
+                        .RemoveSpecialChars()
+                        .Replace("-", " ")
+                        .CollapseWhitespaces()
+                        .Replace(" ", "-")
+                        .ToLower();
+
+                    if (string.IsNullOrEmpty(searchName))
+                    {
+                        return false;
+                    }
+
+                    if (string.IsNullOrEmpty(_screenshotGroup.GameIdentifier))
+                    {
+                        _screenshotGroup.GameIdentifier = $"{_websiteUrl}{searchName}";
+                    }
                 }
 
                 var updated = await LoadScreenshotsFromSourceAsync();
@@ -113,11 +121,9 @@ namespace ScreenshotUtilitiesKLOVProvider
 
                 if (urlLoadResult.StatusCode != HttpStatusCode.OK || urlLoadResult.Document == null)
                 {
-                    // TODO: Try again with edition suffixes stripped.
                     return false;
                 }
 
-                //TODO: Change the scraping to match the KLOV layout.
                 var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//a[@data-fancybox='gallery']");
 
                 if (htmlNodes == null || (htmlNodes.Count == 0))
