@@ -107,6 +107,7 @@
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
     <Compile Include="GogApiResult.cs" />
+    <Compile Include="GogSearchResult.cs" />
     <Compile Include="ScreenshotUtilitiesGOGProvider.cs" />
     <Compile Include="ScreenshotUtilitiesGOGProviderSettings.cs" />
     <Compile Include="ScreenshotUtilitiesGOGProviderSettingsView.xaml.cs">
