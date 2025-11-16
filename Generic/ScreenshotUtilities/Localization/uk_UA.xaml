@@ -6,6 +6,7 @@
     <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Знімки екрану</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshots">Ви дійсно хочете скинути знімки екрану? Це видалить і завантажить повторно всі знімки з цієї гри.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesDialogSearchGame">Search game</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Копіювати в буфер обміну</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Видалити скріншот</sys:String>
