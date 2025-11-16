@@ -13,8 +13,8 @@ namespace ScreenshotUtilities.Models
         private bool _displayButtonControl = true;
         private bool _displayViewerControl = true;
         private ObservableCollection<MetadataObject> _downloadFilter = new ObservableCollection<MetadataObject>();
-        private bool _isViewerControlVisible = false;
         private bool _isButtonControlVisible = false;
+        private bool _isViewerControlVisible = false;
         private int _thumbnailHeight = 120;
         private int _viewerWindowHeight = 700;
         private int _viewerWindowWidth = 800;
@@ -78,17 +78,17 @@ namespace ScreenshotUtilities.Models
         }
 
         [DontSerialize]
-        public bool IsViewerControlVisible
-        {
-            get => _isViewerControlVisible;
-            set => SetValue(ref _isViewerControlVisible, value);
-        }
-
-        [DontSerialize]
         public bool IsButtonControlVisible
         {
             get => _isButtonControlVisible;
             set => SetValue(ref _isButtonControlVisible, value);
+        }
+
+        [DontSerialize]
+        public bool IsViewerControlVisible
+        {
+            get => _isViewerControlVisible;
+            set => SetValue(ref _isViewerControlVisible, value);
         }
 
         public int ThumbnailHeight
@@ -105,20 +105,6 @@ namespace ScreenshotUtilities.Models
             }
         }
 
-        public int ViewerWindowWidth
-        {
-            get => _viewerWindowWidth;
-            set
-            {
-                if (value < 100)
-                {
-                    value = 100;
-                }
-
-                SetValue(ref _viewerWindowWidth, value);
-            }
-        }
-
         public int ViewerWindowHeight
         {
             get => _viewerWindowHeight;
@@ -130,6 +116,20 @@ namespace ScreenshotUtilities.Models
                 }
 
                 SetValue(ref _viewerWindowHeight, value);
+            }
+        }
+
+        public int ViewerWindowWidth
+        {
+            get => _viewerWindowWidth;
+            set
+            {
+                if (value < 100)
+                {
+                    value = 100;
+                }
+
+                SetValue(ref _viewerWindowWidth, value);
             }
         }
     }

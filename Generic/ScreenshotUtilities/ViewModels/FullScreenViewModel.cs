@@ -19,6 +19,16 @@ namespace ScreenshotUtilities.ViewModels
             SelectedGroup = selectedGroup;
         }
 
+        public ScreenshotGroup SelectedGroup
+        {
+            get => _selectedGroup;
+            set => SetValue(ref _selectedGroup, value);
+        }
+
+        public RelayCommand<object> SelectNextScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectNextScreenshot());
+
+        public RelayCommand<object> SelectPreviousScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectPreviousScreenshot());
+
         public static Window GetWindow(ScreenshotUtilities plugin, ScreenshotGroup selectedGroup)
         {
             try
@@ -35,16 +45,6 @@ namespace ScreenshotUtilities.ViewModels
 
                 return null;
             }
-        }
-
-        public RelayCommand<object> SelectPreviousScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectPreviousScreenshot());
-
-        public RelayCommand<object> SelectNextScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectNextScreenshot());
-
-        public ScreenshotGroup SelectedGroup
-        {
-            get => _selectedGroup;
-            set => SetValue(ref _selectedGroup, value);
         }
     }
 }

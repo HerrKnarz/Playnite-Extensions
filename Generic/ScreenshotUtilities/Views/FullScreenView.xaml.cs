@@ -19,12 +19,6 @@ namespace ScreenshotUtilities.Views
             AddKeyBindings();
         }
 
-        private void FullScreenView_Loaded(object sender, RoutedEventArgs e)
-        {
-            Focus();
-            Keyboard.Focus(this);
-        }
-
         private void AddKeyBindings()
         {
             if (!(DataContext is FullScreenViewModel viewModel))
@@ -51,6 +45,12 @@ namespace ScreenshotUtilities.Views
             InputBindings.Add(rightKeyBinding);
 
             FullScreenGrid.PreviewMouseWheel += WheelHandler;
+        }
+
+        private void FullScreenView_Loaded(object sender, RoutedEventArgs e)
+        {
+            Focus();
+            Keyboard.Focus(this);
         }
 
         private void WheelHandler(object s, MouseWheelEventArgs e)

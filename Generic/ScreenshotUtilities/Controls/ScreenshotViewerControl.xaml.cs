@@ -19,6 +19,36 @@ namespace ScreenshotUtilities.Controls
             AddKeyBindings();
         }
 
+        public override void GameContextChanged(Game oldContext, Game newContext)
+        {
+            base.GameContextChanged(oldContext, newContext);
+
+            LoadScreenshots();
+        }
+
+        public void LoadScreenshots()
+        {
+            try
+            {
+                if (!(DataContext is ScreenshotViewerViewModel viewModel))
+                {
+                    return;
+                }
+
+                if (viewModel.GameId == (GameContext?.Id ?? Guid.Empty))
+                {
+                    viewModel.LoadScreenshots();
+                    return;
+                }
+
+                viewModel.GameId = GameContext?.Id ?? Guid.Empty;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+        }
+
         private void AddKeyBindings()
         {
             if (!(DataContext is ScreenshotViewerViewModel viewModel))
@@ -71,36 +101,6 @@ namespace ScreenshotUtilities.Controls
                 }
 
                 e.Handled = true;
-            }
-        }
-
-        public override void GameContextChanged(Game oldContext, Game newContext)
-        {
-            base.GameContextChanged(oldContext, newContext);
-
-            LoadScreenshots();
-        }
-
-        public void LoadScreenshots()
-        {
-            try
-            {
-                if (!(DataContext is ScreenshotViewerViewModel viewModel))
-                {
-                    return;
-                }
-
-                if (viewModel.GameId == (GameContext?.Id ?? Guid.Empty))
-                {
-                    viewModel.LoadScreenshots();
-                    return;
-                }
-
-                viewModel.GameId = GameContext?.Id ?? Guid.Empty;
-            }
-            catch (Exception e)
-            {
-                Log.Error(e);
             }
         }
     }

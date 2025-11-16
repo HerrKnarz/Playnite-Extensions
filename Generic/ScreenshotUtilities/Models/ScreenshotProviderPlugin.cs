@@ -13,12 +13,11 @@ namespace ScreenshotUtilities.Models
 {
     public class ScreenshotProviderPlugin : IScreenshotProviderPlugin
     {
-        private readonly Plugin _plugin;
         private readonly MethodInfo _methodInfoCleanUpAsync = null;
         private readonly MethodInfo _methodInfoGetScreenshotsAsync = null;
         private readonly MethodInfo _methodInfoGetScreenshotSearchResults = null;
         private readonly MethodInfo _methodInfoGetScreenshotsManualAsync = null;
-
+        private readonly Plugin _plugin;
         private Game _game = null;
         private ScreenshotSearchResult _screenshotSearchResult = null;
 

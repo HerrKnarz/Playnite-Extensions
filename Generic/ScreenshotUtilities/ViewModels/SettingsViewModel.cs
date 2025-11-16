@@ -16,22 +16,12 @@ namespace ScreenshotUtilities
     public class ScreenshotUtilitiesSettingsViewModel : ObservableObject, ISettings
     {
         private readonly ScreenshotUtilities plugin;
-        private Settings EditingClone { get; set; }
-
         private Settings settings;
-        public Settings Settings
-        {
-            get => settings;
-            set
-            {
-                settings = value;
-                OnPropertyChanged();
-            }
-        }
 
         public ScreenshotUtilitiesSettingsViewModel(ScreenshotUtilities plugin)
         {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
+            // Injecting your plugin instance is required for Save/Load method because Playnite
+            // saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
 
             // Load saved settings.
@@ -42,7 +32,6 @@ namespace ScreenshotUtilities
         }
 
         public RelayCommand AddCategoryCommand => new RelayCommand(() => SelectMetadata(FieldType.Category));
-
         public RelayCommand AddTagCommand => new RelayCommand(() => SelectMetadata(FieldType.Tag));
 
         public RelayCommand<IList<object>> RemoveFromListCommand => new RelayCommand<IList<object>>(items =>
@@ -57,6 +46,32 @@ namespace ScreenshotUtilities
                     Settings.DownloadFilter.Remove(item);
                 }
             }, items => items?.Count != 0);
+
+        public Settings Settings
+        {
+            get => settings;
+            set
+            {
+                settings = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Settings EditingClone { get; set; }
+
+        public void BeginEdit() =>
+            // Code executed when settings view is opened and user starts editing values.
+            EditingClone = Serialization.GetClone(Settings);
+
+        public void CancelEdit() =>
+            // Code executed when user decides to cancel any changes made since BeginEdit was
+            // called. This method should revert any changes made to Option1 and Option2.
+            Settings = EditingClone;
+
+        public void EndEdit() =>
+            // Code executed when user decides to confirm changes made since BeginEdit was called.
+            // This method should save settings made to Option1 and Option2.
+            plugin.SavePluginSettings(Settings);
 
         public void SelectMetadata(FieldType type)
         {
@@ -103,20 +118,6 @@ namespace ScreenshotUtilities
 
             Settings.DownloadFilter.Sort(x => x.TypeAndName);
         }
-
-        public void BeginEdit() =>
-            // Code executed when settings view is opened and user starts editing values.
-            EditingClone = Serialization.GetClone(Settings);
-
-        public void CancelEdit() =>
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-            Settings = EditingClone;
-
-        public void EndEdit() =>
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
 
         public bool VerifySettings(out List<string> errors)
         {

@@ -13,10 +13,10 @@ namespace ScreenshotUtilities.ViewModels
 {
     internal class ScreenshotViewerViewModel : ObservableObject
     {
-        private Guid _gameId = Guid.Empty;
         private static ScreenshotUtilities _plugin;
-        private ScreenshotGroup _selectedGroup;
         private readonly bool _standaloneMode = false;
+        private Guid _gameId = Guid.Empty;
+        private ScreenshotGroup _selectedGroup;
 
         public ScreenshotViewerViewModel(ScreenshotUtilities plugin, Game game = null)
         {
@@ -28,6 +28,78 @@ namespace ScreenshotUtilities.ViewModels
                 GameId = game.Id;
             }
         }
+
+        public double AspectRatio => _plugin.Settings.Settings.AspectWidth / (float)_plugin.Settings.Settings.AspectHeight;
+
+        public double ButtonHeight => _plugin.Settings.Settings.ThumbnailHeight + 10;
+
+        public RelayCommand<object> CopyToClipboardCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.CopyToClipboard());
+
+        public double DockPanelHeight => _plugin.Settings.Settings.ThumbnailHeight + 30;
+
+        public Guid GameId
+        {
+            get => _gameId;
+            set
+            {
+                SetValue(ref _gameId, value);
+
+                LoadScreenshots();
+            }
+        }
+
+        public RelayCommand<object> OpenContainingFolderCommand => new RelayCommand<object>(a =>
+        {
+            if (string.IsNullOrEmpty(SelectedGroup?.SelectedScreenshot?.DownloadedPath))
+            {
+                SelectedGroup.OpenContainingFolder();
+
+                return;
+            }
+
+            SelectedGroup?.SelectedScreenshot?.OpenContainingFolder();
+        });
+
+        public RelayCommand<object> OpenInAssociatedApplicationCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenInAssociatedApplication());
+
+        public RelayCommand<object> OpenInBrowserCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenInBrowser());
+
+        public RelayCommand<object> OpenInFullScreenCommand => new RelayCommand<object>(a =>
+        {
+            if (!(SelectedGroup?.Screenshots?.Count > 0) || SelectedGroup.SelectedScreenshot == null)
+            {
+                return;
+            }
+
+            var window = FullScreenViewModel.GetWindow(_plugin, SelectedGroup);
+
+            if (window == null)
+            {
+                return;
+            }
+
+            window?.ShowDialog();
+        });
+
+        public ScreenshotGroups ScreenshotGroups => _plugin.CurrentScreenshotsGroups is null ? new ScreenshotGroups() : _plugin.CurrentScreenshotsGroups;
+
+        public ScreenshotGroup SelectedGroup
+        {
+            get => _selectedGroup;
+            set => SetValue(ref _selectedGroup, value);
+        }
+
+        public RelayCommand<object> SelectNextScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectNextScreenshot());
+
+        public RelayCommand<object> SelectPreviousScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectPreviousScreenshot());
+
+        public RelayCommand<object> SetAsBackgroundCommand => new RelayCommand<object>(a => SetAs(MetadataField.BackgroundImage));
+
+        public RelayCommand<object> SetAsCoverCommand => new RelayCommand<object>(a => SetAs(MetadataField.CoverImage));
+
+        public RelayCommand<object> SetAsIconCommand => new RelayCommand<object>(a => SetAs(MetadataField.Icon));
+
+        public double ThumbnailHeight => _plugin.Settings.Settings.ThumbnailHeight;
 
         public static Window GetWindow(ScreenshotUtilities plugin, Game game)
         {
@@ -75,16 +147,6 @@ namespace ScreenshotUtilities.ViewModels
             SelectedGroup = ScreenshotGroups[0];
         }
 
-        private static void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (sender is Window window)
-            {
-                _plugin.Settings.Settings.ViewerWindowWidth = (int)window.Width;
-                _plugin.Settings.Settings.ViewerWindowHeight = (int)window.Height;
-                _plugin.SavePluginSettings(_plugin.Settings.Settings);
-            }
-        }
-
         public void ResetViewModel() => SelectedGroup = null;
 
         public async Task SetAs(MetadataField type)
@@ -106,76 +168,14 @@ namespace ScreenshotUtilities.ViewModels
             SelectedGroup.SelectedScreenshot.SetAs(game, type);
         }
 
-        public RelayCommand<object> CopyToClipboardCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.CopyToClipboard());
-
-        public RelayCommand<object> OpenContainingFolderCommand => new RelayCommand<object>(a =>
+        private static void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (string.IsNullOrEmpty(SelectedGroup?.SelectedScreenshot?.DownloadedPath))
+            if (sender is Window window)
             {
-                SelectedGroup.OpenContainingFolder();
-
-                return;
-            }
-
-            SelectedGroup?.SelectedScreenshot?.OpenContainingFolder();
-        });
-
-        public RelayCommand<object> OpenInAssociatedApplicationCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenInAssociatedApplication());
-
-        public RelayCommand<object> OpenInBrowserCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenInBrowser());
-
-        public RelayCommand<object> OpenInFullScreenCommand => new RelayCommand<object>(a =>
-        {
-            if (!(SelectedGroup?.Screenshots?.Count > 0) || SelectedGroup.SelectedScreenshot == null)
-            {
-                return;
-            }
-
-            var window = FullScreenViewModel.GetWindow(_plugin, SelectedGroup);
-
-            if (window == null)
-            {
-                return;
-            }
-
-            window?.ShowDialog();
-        });
-
-        public RelayCommand<object> SelectPreviousScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectPreviousScreenshot());
-
-        public RelayCommand<object> SelectNextScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectNextScreenshot());
-
-        public RelayCommand<object> SetAsBackgroundCommand => new RelayCommand<object>(a => SetAs(MetadataField.BackgroundImage));
-
-        public RelayCommand<object> SetAsCoverCommand => new RelayCommand<object>(a => SetAs(MetadataField.CoverImage));
-
-        public RelayCommand<object> SetAsIconCommand => new RelayCommand<object>(a => SetAs(MetadataField.Icon));
-
-        public double AspectRatio => _plugin.Settings.Settings.AspectWidth / (float)_plugin.Settings.Settings.AspectHeight;
-
-        public double ButtonHeight => _plugin.Settings.Settings.ThumbnailHeight + 10;
-
-        public double DockPanelHeight => _plugin.Settings.Settings.ThumbnailHeight + 30;
-
-        public Guid GameId
-        {
-            get => _gameId;
-            set
-            {
-                SetValue(ref _gameId, value);
-
-                LoadScreenshots();
+                _plugin.Settings.Settings.ViewerWindowWidth = (int)window.Width;
+                _plugin.Settings.Settings.ViewerWindowHeight = (int)window.Height;
+                _plugin.SavePluginSettings(_plugin.Settings.Settings);
             }
         }
-
-        public ScreenshotGroups ScreenshotGroups => _plugin.CurrentScreenshotsGroups is null ? new ScreenshotGroups() : _plugin.CurrentScreenshotsGroups;
-
-        public ScreenshotGroup SelectedGroup
-        {
-            get => _selectedGroup;
-            set => SetValue(ref _selectedGroup, value);
-        }
-
-        public double ThumbnailHeight => _plugin.Settings.Settings.ThumbnailHeight;
     }
 }

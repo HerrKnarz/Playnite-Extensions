@@ -8,23 +8,13 @@ namespace ScreenshotUtilities.ViewModels
 {
     internal class ButtonControlViewModel : ObservableObject
     {
-        private Game _game;
         private static ScreenshotUtilities _plugin;
+        private Game _game;
 
         public ButtonControlViewModel(ScreenshotUtilities plugin)
         {
             _plugin = plugin;
         }
-
-        public RelayCommand<object> OpenViewerCommand => new RelayCommand<object>(a =>
-        {
-            if (Game == null)
-            {
-                return;
-            }
-
-            ScreenshotActions.OpenScreenshotViewer(Game, _plugin);
-        });
 
         public Game Game
         {
@@ -35,6 +25,16 @@ namespace ScreenshotUtilities.ViewModels
                 Refresh();
             }
         }
+
+        public RelayCommand<object> OpenViewerCommand => new RelayCommand<object>(a =>
+                {
+                    if (Game == null)
+                    {
+                        return;
+                    }
+
+                    ScreenshotActions.OpenScreenshotViewer(Game, _plugin);
+                });
 
         public void Refresh() => _plugin.Settings.Settings.IsButtonControlVisible = ButtonIsVisible();
 
