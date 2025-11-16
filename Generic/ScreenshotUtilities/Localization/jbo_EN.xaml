@@ -6,6 +6,7 @@
     <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Screenshots</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshots">Do you really want to reset the screenshots? This will delete all screenshots from this game and loads them again from their sources.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesDialogSearchGame">Search game</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Copy to clipboard</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Delete screenshot</sys:String>
