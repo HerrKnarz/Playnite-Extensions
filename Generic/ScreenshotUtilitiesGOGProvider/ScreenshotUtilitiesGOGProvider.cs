@@ -8,11 +8,8 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows.Controls;
 
 namespace ScreenshotUtilitiesGOGProvider
@@ -43,10 +40,7 @@ namespace ScreenshotUtilitiesGOGProvider
 
         public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
 
-        public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate)
-        {
-            return await FetchScreenshotsAsync(game, daysSinceLastUpdate, forceUpdate);
-        }
+        public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate) => await FetchScreenshotsAsync(game, daysSinceLastUpdate, forceUpdate);
 
         public string GetScreenshotSearchResult(Game game, string searchTerm)
         {
@@ -69,10 +63,7 @@ namespace ScreenshotUtilitiesGOGProvider
             return Serialization.ToJson(result);
         }
 
-        public async Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier)
-        {
-            return await FetchScreenshotsAsync(game, 0, true, gameIdentifier);
-        }
+        public async Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => await FetchScreenshotsAsync(game, 0, true, gameIdentifier);
 
         public override ISettings GetSettings(bool firstRunSettings) => settings;
 

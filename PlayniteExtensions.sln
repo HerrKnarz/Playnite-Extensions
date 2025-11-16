@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.11.35208.52
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11206.111 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkUtilities", "Generic\LinkUtilities\LinkUtilities.csproj", "{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}"
 EndProject
@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{
 		Manifest\HerrKnarz_ScreenshotUtilities.yaml = Manifest\HerrKnarz_ScreenshotUtilities.yaml
 		Manifest\HerrKnarz_ScreenshotUtilitiesArcadeDatabaseProvider.yaml = Manifest\HerrKnarz_ScreenshotUtilitiesArcadeDatabaseProvider.yaml
 		Manifest\HerrKnarz_ScreenshotUtilitiesGOGProvider.yaml = Manifest\HerrKnarz_ScreenshotUtilitiesGOGProvider.yaml
+		Manifest\HerrKnarz_ScreenshotUtilitiesKLOVProvider.yaml = Manifest\HerrKnarz_ScreenshotUtilitiesKLOVProvider.yaml
 		Manifest\HerrKnarz_ScreenshotUtilitiesSteamProvider.yaml = Manifest\HerrKnarz_ScreenshotUtilitiesSteamProvider.yaml
 		Manifest\HerrKnarz_WikipediaMetadata.yaml = Manifest\HerrKnarz_WikipediaMetadata.yaml
 	EndProjectSection

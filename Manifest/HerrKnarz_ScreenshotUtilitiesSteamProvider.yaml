@@ -1,5 +1,12 @@
 AddonId: ScreenshotUtilitiesSteamProvider_074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae
 Packages:
+  - Version: 0.6.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2025-11-16
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2025-11-16/ScreenshotUtilitiesSteamProvider_074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae_0_6_0.pext
+    Changelog:
+      - Implemented manual search functionality.
+      - Redesigned icon.
   - Version: 0.5.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2025-11-02
