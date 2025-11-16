@@ -112,6 +112,7 @@
     <Compile Include="ScreenshotUtilitiesSteamProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SteamAppDetails.cs" />
+    <Compile Include="SteamSearchResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
