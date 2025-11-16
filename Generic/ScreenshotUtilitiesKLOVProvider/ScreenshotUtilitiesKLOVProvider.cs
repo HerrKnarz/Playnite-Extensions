@@ -22,11 +22,6 @@ namespace ScreenshotUtilitiesKLOVProvider
         private Game _game;
         private ScreenshotGroup _screenshotGroup;
 
-        public override Guid Id { get; } = Guid.Parse("10a18213-f522-4818-8e8d-2b063398b069");
-        public string Name { get; set; } = _websiteName;
-        public bool SupportsAutomaticScreenshots { get; set; } = true;
-        public bool SupportsScreenshotSearch { get; set; } = false;
-
         public ScreenshotUtilitiesKLOVProvider(IPlayniteAPI api) : base(api)
         {
             Properties = new GenericPluginProperties
@@ -34,6 +29,11 @@ namespace ScreenshotUtilitiesKLOVProvider
                 HasSettings = false
             };
         }
+
+        public override Guid Id { get; } = Guid.Parse("10a18213-f522-4818-8e8d-2b063398b069");
+        public string Name { get; set; } = _websiteName;
+        public bool SupportsAutomaticScreenshots { get; set; } = true;
+        public bool SupportsScreenshotSearch { get; set; } = false;
 
         public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
 
@@ -54,7 +54,8 @@ namespace ScreenshotUtilitiesKLOVProvider
 
                 (fileExists, _screenshotGroup) = ScreenshotHelper.LoadGroup(game, _websiteName, Id);
 
-                // return if we don't want to force an update and the last update was inside the days configured.
+                // return if we don't want to force an update and the last update was inside the
+                // days configured.
                 if (!forceUpdate
                     && _screenshotGroup.LastUpdate != null
                     && (_screenshotGroup.LastUpdate > DateTime.Now.AddDays(daysSinceLastUpdate * -1)))
@@ -105,9 +106,9 @@ namespace ScreenshotUtilitiesKLOVProvider
 
         public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate) => await FetchScreenshotsAsync(game, daysSinceLastUpdate, forceUpdate);
 
-        public Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => throw new NotImplementedException();
-
         public string GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
+
+        public Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => throw new NotImplementedException();
 
         public async Task<bool> LoadScreenshotsFromSourceAsync()
         {

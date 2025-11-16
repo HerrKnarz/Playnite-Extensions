@@ -15,11 +15,6 @@ namespace ScreenshotUtilitiesSteamProvider
 {
     public class ScreenshotUtilitiesSteamProvider : GenericPlugin, IScreenshotProviderPlugin
     {
-        public override Guid Id { get; } = Guid.Parse("074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae");
-        public string Name { get; set; } = "Steam";
-        public bool SupportsAutomaticScreenshots { get; set; } = true;
-        public bool SupportsScreenshotSearch { get; set; } = false;
-
         public ScreenshotUtilitiesSteamProvider(IPlayniteAPI api) : base(api)
         {
             Properties = new GenericPluginProperties
@@ -27,6 +22,11 @@ namespace ScreenshotUtilitiesSteamProvider
                 HasSettings = false
             };
         }
+
+        public override Guid Id { get; } = Guid.Parse("074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae");
+        public string Name { get; set; } = "Steam";
+        public bool SupportsAutomaticScreenshots { get; set; } = true;
+        public bool SupportsScreenshotSearch { get; set; } = false;
 
         public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
 
@@ -94,9 +94,9 @@ namespace ScreenshotUtilitiesSteamProvider
             }
         }
 
-        public Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => throw new NotImplementedException();
-
         public string GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
+
+        public Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => throw new NotImplementedException();
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {

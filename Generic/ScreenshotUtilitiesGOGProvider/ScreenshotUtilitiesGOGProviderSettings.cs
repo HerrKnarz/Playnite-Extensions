@@ -16,8 +16,9 @@ namespace ScreenshotUtilitiesGOGProvider
 
         public string Option1 { get => option1; set => SetValue(ref option1, value); }
         public bool Option2 { get => option2; set => SetValue(ref option2, value); }
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
+
+        // Playnite serializes settings object to a JSON object and saves it as text file. If you
+        // want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         [DontSerialize]
         public bool OptionThatWontBeSaved { get => optionThatWontBeSaved; set => SetValue(ref optionThatWontBeSaved, value); }
     }
@@ -25,22 +26,12 @@ namespace ScreenshotUtilitiesGOGProvider
     public class ScreenshotUtilitiesGOGProviderSettingsViewModel : ObservableObject, ISettings
     {
         private readonly ScreenshotUtilitiesGOGProvider plugin;
-        private ScreenshotUtilitiesGOGProviderSettings editingClone { get; set; }
-
         private ScreenshotUtilitiesGOGProviderSettings settings;
-        public ScreenshotUtilitiesGOGProviderSettings Settings
-        {
-            get => settings;
-            set
-            {
-                settings = value;
-                OnPropertyChanged();
-            }
-        }
 
         public ScreenshotUtilitiesGOGProviderSettingsViewModel(ScreenshotUtilitiesGOGProvider plugin)
         {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
+            // Injecting your plugin instance is required for Save/Load method because Playnite
+            // saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
 
             // Load saved settings.
@@ -57,6 +48,18 @@ namespace ScreenshotUtilitiesGOGProvider
             }
         }
 
+        public ScreenshotUtilitiesGOGProviderSettings Settings
+        {
+            get => settings;
+            set
+            {
+                settings = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ScreenshotUtilitiesGOGProviderSettings editingClone { get; set; }
+
         public void BeginEdit()
         {
             // Code executed when settings view is opened and user starts editing values.
@@ -65,8 +68,8 @@ namespace ScreenshotUtilitiesGOGProvider
 
         public void CancelEdit()
         {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
+            // Code executed when user decides to cancel any changes made since BeginEdit was
+            // called. This method should revert any changes made to Option1 and Option2.
             Settings = editingClone;
         }
 

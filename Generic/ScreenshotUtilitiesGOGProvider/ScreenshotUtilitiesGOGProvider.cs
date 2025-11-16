@@ -16,14 +16,8 @@ namespace ScreenshotUtilitiesGOGProvider
 {
     public class ScreenshotUtilitiesGOGProvider : GenericPlugin, IScreenshotProviderPlugin
     {
-        private ScreenshotUtilitiesGOGProviderSettingsViewModel settings { get; set; }
-
-        public override Guid Id { get; } = Guid.Parse("228c70e8-7c89-46fc-b2c8-6e97966d01a4");
         public static Guid GogId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
         public static Guid GogOssId = Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C");
-        public string Name { get; set; } = "GOG";
-        public bool SupportsAutomaticScreenshots { get; set; } = true;
-        public bool SupportsScreenshotSearch { get; set; } = false;
 
         public ScreenshotUtilitiesGOGProvider(IPlayniteAPI api) : base(api)
         {
@@ -33,6 +27,12 @@ namespace ScreenshotUtilitiesGOGProvider
                 HasSettings = false
             };
         }
+
+        public override Guid Id { get; } = Guid.Parse("228c70e8-7c89-46fc-b2c8-6e97966d01a4");
+        public string Name { get; set; } = "GOG";
+        public bool SupportsAutomaticScreenshots { get; set; } = true;
+        public bool SupportsScreenshotSearch { get; set; } = false;
+        private ScreenshotUtilitiesGOGProviderSettingsViewModel settings { get; set; }
 
         public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
 
@@ -107,9 +107,13 @@ namespace ScreenshotUtilitiesGOGProvider
             }
         }
 
+        public string GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
+
         public Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => throw new NotImplementedException();
 
-        public string GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();
+        public override ISettings GetSettings(bool firstRunSettings) => settings;
+
+        public override UserControl GetSettingsView(bool firstRunSettings) => null;
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
@@ -121,8 +125,6 @@ namespace ScreenshotUtilitiesGOGProvider
             }
         }
 
-        public override ISettings GetSettings(bool firstRunSettings) => settings;
-
-        public override UserControl GetSettingsView(bool firstRunSettings) => null;//new ScreenshotUtilitiesGOGProviderSettingsView();
+        //new ScreenshotUtilitiesGOGProviderSettingsView();
     }
 }

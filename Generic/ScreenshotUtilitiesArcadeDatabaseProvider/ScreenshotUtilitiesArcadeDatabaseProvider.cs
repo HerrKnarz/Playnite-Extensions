@@ -26,11 +26,6 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
         private Game _game;
         private ScreenshotGroup _screenshotGroup;
 
-        public override Guid Id { get; } = Guid.Parse("f2109af2-b240-4700-a61d-c316f47b8cf4");
-        public string Name { get; set; } = _websiteName;
-        public bool SupportsAutomaticScreenshots { get; set; } = true;
-        public bool SupportsScreenshotSearch { get; set; } = true;
-
         public ScreenshotUtilitiesArcadeDatabaseProvider(IPlayniteAPI api) : base(api)
         {
             Properties = new GenericPluginProperties
@@ -39,24 +34,10 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
             };
         }
 
-        public string GetRomName(string romName = default)
-        {
-            var searchRomName = romName;
-
-            if (searchRomName == default)
-            {
-                searchRomName = _screenshotGroup.GameIdentifier;
-            }
-
-            if (searchRomName == default)
-            {
-                searchRomName = _game.IsInstalled && (_game.Roms?.Any() ?? false)
-                        ? Path.GetFileNameWithoutExtension(_game.Roms[0].Path)
-                        : string.Empty;
-            }
-
-            return searchRomName;
-        }
+        public override Guid Id { get; } = Guid.Parse("f2109af2-b240-4700-a61d-c316f47b8cf4");
+        public string Name { get; set; } = _websiteName;
+        public bool SupportsAutomaticScreenshots { get; set; } = true;
+        public bool SupportsScreenshotSearch { get; set; } = true;
 
         public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
 
@@ -77,7 +58,8 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
 
                 (fileExists, _screenshotGroup) = ScreenshotHelper.LoadGroup(game, _websiteName, Id);
 
-                // return if we don't want to force an update and the last update was inside the days configured.
+                // return if we don't want to force an update and the last update was inside the
+                // days configured.
                 if (!forceUpdate
                     && _screenshotGroup.LastUpdate != null
                     && (_screenshotGroup.LastUpdate > DateTime.Now.AddDays(daysSinceLastUpdate * -1)))
@@ -99,7 +81,8 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                     return false;
                 }
 
-                // We need to reset the file if we got a new romName from the method call and it's not the same we already got.
+                // We need to reset the file if we got a new romName from the method call and it's
+                // not the same we already got.
                 if (!fileExists || (romName != default && !searchName.Equals(_screenshotGroup.GameIdentifier)))
                 {
                     _screenshotGroup.GameIdentifier = searchName;
@@ -120,9 +103,26 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
             }
         }
 
-        public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate) => await FetchScreenshotsAsync(game, daysSinceLastUpdate, forceUpdate);
+        public string GetRomName(string romName = default)
+        {
+            var searchRomName = romName;
 
-        public async Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => await FetchScreenshotsAsync(game, 0, true, gameIdentifier);
+            if (searchRomName == default)
+            {
+                searchRomName = _screenshotGroup.GameIdentifier;
+            }
+
+            if (searchRomName == default)
+            {
+                searchRomName = _game.IsInstalled && (_game.Roms?.Any() ?? false)
+                        ? Path.GetFileNameWithoutExtension(_game.Roms[0].Path)
+                        : string.Empty;
+            }
+
+            return searchRomName;
+        }
+
+        public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate) => await FetchScreenshotsAsync(game, daysSinceLastUpdate, forceUpdate);
 
         public string GetScreenshotSearchResult(Game game, string searchTerm)
         {
@@ -157,6 +157,8 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
 
             return null;
         }
+
+        public async Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => await FetchScreenshotsAsync(game, 0, true, gameIdentifier);
 
         public async Task<bool> LoadScreenshotsFromSourceAsync()
         {
