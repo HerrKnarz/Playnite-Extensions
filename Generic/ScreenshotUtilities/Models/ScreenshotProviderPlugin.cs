@@ -136,7 +136,7 @@ namespace ScreenshotUtilities.Models
                 new List<GenericItemOption>(),
                 GetSearchResults,
                 _game.Name,
-                $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({_plugin})");
+                $"{ResourceProvider.GetString("LOCScreenshotUtilitiesDialogSearchGame")} ({Name})");
         }
     }
 }
