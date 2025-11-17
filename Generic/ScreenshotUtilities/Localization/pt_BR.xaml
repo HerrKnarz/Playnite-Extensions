@@ -13,6 +13,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadFrom">Download screenshots from</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Download all screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Baixando imagens de</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuIgnoreFrom">Disable screenshots from</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuIgnoreGame">Disable all screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Abrir pasta contendo o arquivo</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Abrir com o aplicativo associado</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Open in browser</sys:String>
