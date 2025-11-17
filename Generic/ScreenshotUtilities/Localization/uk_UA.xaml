@@ -13,8 +13,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadFrom">Завантажити знімки екрану з</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Завантажити всі знімки екрану</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Завантаження зображень для</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuIgnoreFrom">Disable screenshots from</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuIgnoreGame">Disable all screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuIgnoreFrom">Вимкнути знімки екрану від</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuIgnoreGame">Вимкнути всі знімки екрану</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Відкрити теку</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Відкрити в пов'язаній програмі</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Відкрити в браузері</sys:String>
