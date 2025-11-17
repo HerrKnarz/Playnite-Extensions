@@ -56,6 +56,7 @@ namespace ScreenshotUtilities
             {
                 { "suShowScreenshotsIcon", "\xef4b" },
                 { "suDownloadIcon", "\xef08" },
+                { "suIgnoreIcon", "\xefa9" },
                 { "suRefreshIcon", "\xefd1" },
                 { "suFetchIcon", "\xefbe" },
                 { "suSearchIcon", "\xec82" }
@@ -71,7 +72,6 @@ namespace ScreenshotUtilities
 
         public ScreenshotGroups CurrentScreenshotsGroups { get; set; } = new ScreenshotGroups();
         public override Guid Id { get; } = Guid.Parse("485d682f-73e9-4d54-b16f-b8dd49e88f90");
-
         public bool ProvidersInitialized { get; set; } = false;
         public List<ButtonControl> ScreenshotButtonControls { get; set; } = new List<ButtonControl>();
         public List<ScreenshotProviderPlugin> ScreenshotProviders { get; set; } = new List<ScreenshotProviderPlugin>();
@@ -131,6 +131,8 @@ namespace ScreenshotUtilities
             menuItems.AddRange(GetResetMenuItems(game, providers));
 
             menuItems.AddRange(GetSearchMenuItems(game));
+
+            menuItems.AddRange(GetIgnoreMenuItems(game));
 
             return menuItems;
         }
@@ -289,6 +291,55 @@ namespace ScreenshotUtilities
                     MenuSection = menuSection,
                     Icon = icon,
                     Action = a => DownloadScreenshotsAsync(game, provider.Id)
+                };
+            }
+        }
+
+        private IEnumerable<GameMenuItem> GetIgnoreMenuItems(Game game)
+        {
+            var providers = ScreenshotProviders
+                .OrderBy(p => p.Name)
+                .ToList();
+
+            if (providers?.Count == 0)
+            {
+                yield break;
+            }
+
+            var menuCaption = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuIgnoreFrom");
+            var menuSection = _defaultGameMenuSection;
+            var icon = "suIgnoreIcon";
+            var captionPrefix = $"{menuCaption} ";
+
+            if (providers.Count > 1)
+            {
+                menuSection = $"{_defaultGameMenuSection}|{menuCaption}...";
+                icon = null;
+                captionPrefix = string.Empty;
+
+                yield return new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuIgnoreGame"),
+                    MenuSection = menuSection,
+                    Icon = "suIgnoreIcon",
+                    Action = a => ScreenshotActions.SetGameToIgnore(game, this)
+                };
+
+                yield return new GameMenuItem
+                {
+                    Description = "-",
+                    MenuSection = menuSection
+                };
+            }
+
+            foreach (var provider in providers)
+            {
+                yield return new GameMenuItem
+                {
+                    Description = $"{captionPrefix}{provider.Name}",
+                    MenuSection = menuSection,
+                    Icon = icon,
+                    Action = a => ScreenshotActions.SetGameToIgnore(game, this, provider.Id)
                 };
             }
         }

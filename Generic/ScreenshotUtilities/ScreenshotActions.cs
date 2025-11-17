@@ -13,6 +13,8 @@ namespace ScreenshotUtilities
 {
     internal static class ScreenshotActions
     {
+        internal static int DaysSinceLastUpdate = 5;
+
         internal static async Task<bool> DownloadScreenshotsAsync(Game game, ScreenshotUtilities plugin, Guid providerGuid = default)
         {
             var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
@@ -29,10 +31,24 @@ namespace ScreenshotUtilities
                 InitializeProviders(plugin);
             }
 
+            var screenshotGroups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
+
             foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsAutomaticScreenshots && (providerId == default || p.Id == providerId)))
             {
+                var existingGroup = screenshotGroups.FirstOrDefault(g => g.Provider.Id == provider.Id);
+
+                if (existingGroup?.Provider.Id == provider.Id)
+                {
+                    if (existingGroup.IgnoreGame || (!forceUpdate
+                        && existingGroup.LastUpdate != null
+                        && (existingGroup.LastUpdate > DateTime.Now.AddDays(DaysSinceLastUpdate * -1))))
+                    {
+                        continue;
+                    }
+                }
+
                 needsRefresh |= await provider.CleanUpAsync(game);
-                needsRefresh |= await provider.GetScreenshotsAsync(game, 5, forceUpdate);
+                needsRefresh |= await provider.GetScreenshotsAsync(game, DaysSinceLastUpdate, forceUpdate);
             }
 
             return needsRefresh;
@@ -194,6 +210,23 @@ namespace ScreenshotUtilities
             }
 
             return needsRefresh;
+        }
+
+        internal static void SetGameToIgnore(Game game, ScreenshotUtilities plugin, Guid providerId = default)
+        {
+            if (plugin.CurrentScreenshotsGroups == null || plugin.CurrentScreenshotsGroups.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var group in plugin.CurrentScreenshotsGroups.Where(g => providerId == default || g.Provider.Id == providerId))
+            {
+                group.IgnoreGame = true;
+                group.Screenshots.Clear();
+                group.Save();
+            }
+
+            plugin.RefreshControls();
         }
     }
 }
