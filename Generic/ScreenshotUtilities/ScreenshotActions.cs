@@ -35,9 +35,9 @@ namespace ScreenshotUtilities
 
             foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsAutomaticScreenshots && (providerId == default || p.Id == providerId)))
             {
-                var existingGroup = screenshotGroups.FirstOrDefault(g => g.Provider.Id == provider.Id);
+                var existingGroup = screenshotGroups.FirstOrDefault(g => g.Provider?.Id == provider.Id);
 
-                if (existingGroup?.Provider.Id == provider.Id)
+                if (existingGroup?.Provider?.Id == provider.Id)
                 {
                     if (existingGroup.IgnoreGame || (!forceUpdate
                         && existingGroup.LastUpdate != null
