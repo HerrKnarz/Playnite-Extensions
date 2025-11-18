@@ -207,15 +207,22 @@ namespace ScreenshotUtilities
 
             var game = API.Instance.MainView.SelectedGames.FirstOrDefault();
 
+            if (game is null)
+            {
+                if (Settings.Settings.Debug)
+                {
+                    Log.Debug($"Prepare event timer stopped - no game selected!");
+                }
+
+                return;
+            }
+
             if (Settings.Settings.Debug)
             {
                 Log.Debug($"Prepare event timer stopped for game {game.Name}!");
             }
 
-            if (game != null)
-            {
-                await ScreenshotActions.PrepareScreenshotsAsync(game, this);
-            }
+            await ScreenshotActions.PrepareScreenshotsAsync(game, this);
         }
 
         internal void RefreshControls()
