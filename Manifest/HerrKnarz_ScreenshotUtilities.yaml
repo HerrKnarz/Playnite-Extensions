@@ -1,5 +1,12 @@
 AddonId: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Packages:
+  - Version: 0.6.1
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2025-11-18
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2025-11-18/ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90_0_6_1.pext
+    Changelog:
+      - Added option to disable screenshots for specific providers per game.
+      - Fixed a crash when no game is selected anymore.
   - Version: 0.6.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2025-11-16
