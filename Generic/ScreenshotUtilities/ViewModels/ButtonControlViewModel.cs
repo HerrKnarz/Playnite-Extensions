@@ -40,7 +40,7 @@ namespace ScreenshotUtilities.ViewModels
 
         private bool ButtonIsVisible()
         {
-            if (_plugin == null || !_plugin.Settings.Settings.DisplayButtonControl || _game == null || (_plugin.CurrentScreenshotsGroups?.ScreenshotCount ?? 0) == 0)
+            if (_plugin == null || !_plugin.Settings.Settings.DisplayButtonControl || _game == null || (_plugin.Settings.Settings.CurrentScreenshotGroups?.ScreenshotCount ?? 0) == 0)
             {
                 return false;
             }

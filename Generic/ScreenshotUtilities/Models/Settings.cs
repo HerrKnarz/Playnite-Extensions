@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Data;
+﻿using KNARZhelper.ScreenshotsCommon.Models;
+using Playnite.SDK.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -9,6 +10,7 @@ namespace ScreenshotUtilities.Models
         private int _aspectHeight = 9;
         private int _aspectWidth = 16;
         private bool _automaticDownload = false;
+        private ScreenshotGroups _currentScreenshotGroups = new ScreenshotGroups();
         private bool _debug = true;
         private bool _displayButtonControl = true;
         private bool _displayViewerControl = true;
@@ -51,6 +53,13 @@ namespace ScreenshotUtilities.Models
         {
             get => _automaticDownload;
             set => SetValue(ref _automaticDownload, value);
+        }
+
+        [DontSerialize]
+        public ScreenshotGroups CurrentScreenshotGroups
+        {
+            get => _currentScreenshotGroups;
+            set => SetValue(ref _currentScreenshotGroups, value);
         }
 
         public bool Debug

@@ -143,7 +143,7 @@ namespace ScreenshotUtilities
                             Log.Debug($"PrepareScreenshots {game.Name}: Setting current groups: {groups?.Count}");
                         }
 
-                        plugin.CurrentScreenshotsGroups = groups;
+                        plugin.Settings.Settings.CurrentScreenshotGroups = groups;
 
                         if (plugin.Settings.Settings.DisplayViewerControl && groups.ScreenshotCount > 0)
                         {
@@ -214,12 +214,12 @@ namespace ScreenshotUtilities
 
         internal static void SetGameToIgnore(Game game, ScreenshotUtilities plugin, Guid providerId = default)
         {
-            if (plugin.CurrentScreenshotsGroups == null || plugin.CurrentScreenshotsGroups.Count == 0)
+            if (plugin.Settings.Settings.CurrentScreenshotGroups == null || plugin.Settings.Settings.CurrentScreenshotGroups.Count == 0)
             {
                 return;
             }
 
-            foreach (var group in plugin.CurrentScreenshotsGroups.Where(g => providerId == default || g.Provider.Id == providerId))
+            foreach (var group in plugin.Settings.Settings.CurrentScreenshotGroups.Where(g => providerId == default || g.Provider.Id == providerId))
             {
                 group.IgnoreGame = true;
                 group.Screenshots.Clear();

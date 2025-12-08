@@ -70,7 +70,6 @@ namespace ScreenshotUtilities
             }
         }
 
-        public ScreenshotGroups CurrentScreenshotsGroups { get; set; } = new ScreenshotGroups();
         public override Guid Id { get; } = Guid.Parse("485d682f-73e9-4d54-b16f-b8dd49e88f90");
         public bool ProvidersInitialized { get; set; } = false;
         public List<ButtonControl> ScreenshotButtonControls { get; set; } = new List<ButtonControl>();
@@ -99,7 +98,7 @@ namespace ScreenshotUtilities
 
             var providers = new List<ScreenshotProvider>();
 
-            if (CurrentScreenshotsGroups?.ScreenshotCount > 0)
+            if (Settings.Settings.CurrentScreenshotGroups?.ScreenshotCount > 0)
             {
                 menuItems.Add(new GameMenuItem
                 {
@@ -115,7 +114,7 @@ namespace ScreenshotUtilities
                     MenuSection = menuSection
                 });
 
-                providers.AddRange(CurrentScreenshotsGroups
+                providers.AddRange(Settings.Settings.CurrentScreenshotGroups
                     .Where(g => g.Screenshots?.Count > 0)
                     .Select(g => g.Provider)
                     .Distinct()
@@ -184,7 +183,7 @@ namespace ScreenshotUtilities
                     }
 
                     Settings.Settings.IsViewerControlVisible = false;
-                    CurrentScreenshotsGroups.Reset();
+                    Settings.Settings.CurrentScreenshotGroups.Reset();
                     RefreshControls();
 
                     Timer.Start();
@@ -403,12 +402,12 @@ namespace ScreenshotUtilities
 
         private IEnumerable<GameMenuItem> GetRefreshThumbnailsMenuItems(Game game)
         {
-            if (CurrentScreenshotsGroups?.ScreenshotCount == 0)
+            if (Settings.Settings.CurrentScreenshotGroups?.ScreenshotCount == 0)
             {
                 yield break;
             }
 
-            var providers = CurrentScreenshotsGroups
+            var providers = Settings.Settings.CurrentScreenshotGroups
                                 .Where(g => g.Screenshots?.Count(s => s.IsDownloaded) > 0)
                                 .Select(g => g.Provider)
                                 .Distinct()

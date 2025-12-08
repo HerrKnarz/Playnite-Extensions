@@ -81,7 +81,7 @@ namespace ScreenshotUtilities.ViewModels
             window?.ShowDialog();
         });
 
-        public ScreenshotGroups ScreenshotGroups => _plugin.CurrentScreenshotsGroups is null ? new ScreenshotGroups() : _plugin.CurrentScreenshotsGroups;
+        public ScreenshotGroups ScreenshotGroups => _plugin.Settings.Settings.CurrentScreenshotGroups is null ? new ScreenshotGroups() : _plugin.Settings.Settings.CurrentScreenshotGroups;
 
         public ScreenshotGroup SelectedGroup
         {
