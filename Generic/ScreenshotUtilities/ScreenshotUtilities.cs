@@ -11,10 +11,10 @@ using ScreenshotUtilities.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
 
 namespace ScreenshotUtilities
 {
@@ -33,12 +33,7 @@ namespace ScreenshotUtilities
                 HasSettings = true
             };
 
-            Timer = new DispatcherTimer()
-            {
-                Interval = TimeSpan.FromMilliseconds(500)
-            };
-
-            Timer.Tick += new EventHandler(PrepareScreenshotsEvent);
+            Timer = new Timer(new TimerCallback(TimerCallbackPrepareScreenshots), null, Timeout.Infinite, Timeout.Infinite);
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
@@ -76,7 +71,7 @@ namespace ScreenshotUtilities
         public List<ScreenshotProviderPlugin> ScreenshotProviders { get; set; } = new List<ScreenshotProviderPlugin>();
         public List<ScreenshotViewerControl> ScreenshotViewerControls { get; set; } = new List<ScreenshotViewerControl>();
         public ScreenshotUtilitiesSettingsViewModel Settings { get; set; }
-        public DispatcherTimer Timer { get; private set; }
+        public Timer Timer { get; private set; }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
@@ -175,7 +170,7 @@ namespace ScreenshotUtilities
 
                 if (args?.NewValue?.Count == 1)
                 {
-                    Timer.Stop();
+                    Timer.Change(Timeout.Infinite, Timeout.Infinite);
 
                     if (Settings.Settings.Debug)
                     {
@@ -186,7 +181,7 @@ namespace ScreenshotUtilities
                     Settings.Settings.CurrentScreenshotGroups.Reset();
                     RefreshControls();
 
-                    Timer.Start();
+                    Timer.Change(500, Timeout.Infinite);
 
                     if (Settings.Settings.Debug)
                     {
@@ -200,9 +195,25 @@ namespace ScreenshotUtilities
             }
         }
 
-        internal async void PrepareScreenshotsEvent(object sender, EventArgs e)
+        internal void RefreshControls()
         {
-            Timer.Stop();
+            API.Instance.MainView.UIDispatcher.Invoke(delegate
+            {
+                foreach (var control in ScreenshotViewerControls)
+                {
+                    control.LoadScreenshots();
+                }
+
+                foreach (var control in ScreenshotButtonControls)
+                {
+                    control.LoadButton();
+                }
+            });
+        }
+
+        internal async void TimerCallbackPrepareScreenshots(object sender)
+        {
+            Timer.Change(Timeout.Infinite, Timeout.Infinite);
 
             var game = API.Instance.MainView.SelectedGames.FirstOrDefault();
 
@@ -222,22 +233,6 @@ namespace ScreenshotUtilities
             }
 
             await ScreenshotActions.PrepareScreenshotsAsync(game, this);
-        }
-
-        internal void RefreshControls()
-        {
-            API.Instance.MainView.UIDispatcher.Invoke(delegate
-            {
-                foreach (var control in ScreenshotViewerControls)
-                {
-                    control.LoadScreenshots();
-                }
-
-                foreach (var control in ScreenshotButtonControls)
-                {
-                    control.LoadButton();
-                }
-            });
         }
 
         private async Task DownloadScreenshotsAsync(Game game, Guid providerId = default)
