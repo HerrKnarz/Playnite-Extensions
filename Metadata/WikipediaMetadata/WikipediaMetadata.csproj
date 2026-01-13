@@ -13,6 +13,7 @@
         <LangVersion>14</LangVersion>
         <UseWpf>true</UseWpf>
         <UseWindowsForms>true</UseWindowsForms>
+        <Version>1.7.1</Version>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DebugSymbols>true</DebugSymbols>
@@ -46,7 +47,19 @@
         <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs" Link="Shared\StringHelper.cs" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Categories\Common\IEnumerableExtensions.cs" />
+        <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Categories\Common\IPlatformUtility.cs" />
+        <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Categories\Common\LibraryIdUtility.cs" />
+        <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\PlatformUtility.cs" Link="Categories\Common\PlatformUtility.cs" />
+        <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\SortableNameConverter.cs" Link="Categories\Common\SortableNameConverter.cs" />
+        <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\StringExtensions.cs" Link="Categories\Common\StringExtensions.cs" />
+        <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\TitleComparer.cs" Link="Categories\Common\TitleComparer.cs" />
+        <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\WebDownloader.cs" Link="Categories\Common\WebDownloader.cs" />
+        <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Metadata.Common\*.cs" LinkBase="Categories\Common\Metadata" />
     </ItemGroup>
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="xcopy $(SolutionDir)Jeshibu\source\PlayniteExtensions.Metadata.Common\Views $(ProjectDir)Categories\Common\Metadata\Views /Y /I" />
+    </Target>
     <ItemGroup>
         <None Include="extension.yaml" CopyToOutputDirectory="Always" />
         <None Include="icon.png" CopyToOutputDirectory="Always" />

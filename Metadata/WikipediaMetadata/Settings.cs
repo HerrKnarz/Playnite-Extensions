@@ -21,7 +21,7 @@ public class WikipediaMetadataSettingsViewModel : ObservableObject, ISettings
         Settings = plugin.LoadPluginSettings<PluginSettings>() ?? new PluginSettings();
 
         Settings.SectionsToRemove = Settings.SectionsToRemove is null
-            ? new ObservableCollection<string>()
+            ? []
             : new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
 
         if (Settings.TagSettings is null)
@@ -89,7 +89,7 @@ public class WikipediaMetadataSettingsViewModel : ObservableObject, ISettings
 
     public bool VerifySettings(out List<string> errors)
     {
-        errors = new List<string>();
+        errors = [];
         return true;
     }
 }

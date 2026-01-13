@@ -16,7 +16,7 @@ namespace WikipediaMetadata;
 internal class HtmlParser
 {
     public static string[][] AllowedNodes =
-        { Resources.AllowedSecondLevelNodes, Resources.AllowedThirdLevelNodes, Resources.AllowedFourthLevelNodes };
+        [Resources.AllowedSecondLevelNodes, Resources.AllowedThirdLevelNodes, Resources.AllowedFourthLevelNodes];
 
     private readonly PluginSettings _settings;
 
@@ -61,7 +61,7 @@ internal class HtmlParser
 
     public string Description { get; set; } = string.Empty;
 
-    public List<Link> Links { get; } = new List<Link>();
+    public List<Link> Links { get; } = [];
 
     /// <summary>
     ///     Removes annotation marks from the text, because we don't need those in the game description.

@@ -66,7 +66,7 @@ internal class WikitextParser
                 GameMetadata.Developers = GetValues(infoBox, "developer", true);
                 GameMetadata.Publishers = GetValues(infoBox, "publisher", true);
                 GameMetadata.Features = GetValues(infoBox, "modes");
-                GameMetadata.Tags = new List<MetadataProperty>();
+                GameMetadata.Tags = [];
 
                 foreach (var tagSetting in _settings.TagSettings.Where(s => s.IsChecked))
                 {
@@ -181,7 +181,7 @@ internal class WikitextParser
         }
 
         // Now we split the values by the new line characters.
-        values.AddRange(plainTextValue.Split(new[] { "\r\n", "\r", "\n" }, 100, StringSplitOptions.RemoveEmptyEntries)
+        values.AddRange(plainTextValue.Split(["\r\n", "\r", "\n"], 100, StringSplitOptions.RemoveEmptyEntries)
                                       .Select(segment => segment.Trim())
                                       .Where(segment => segment.Length > 0)
                                       .Select(segment => new MetadataNameProperty(segment)));
@@ -364,10 +364,7 @@ internal class WikitextParser
     /// <param name="gameData">game data with the key to the page</param>
     /// <returns>List of found links</returns>
     internal List<Link> GetLinks(WikipediaPage gameData) => gameData?.Key?.Any() ?? false
-        ? new List<Link>
-        {
-            new Link("Wikipedia", "https://en.wikipedia.org/wiki/" + gameData.Key)
-        }
+        ? [new Link("Wikipedia", "https://en.wikipedia.org/wiki/" + gameData.Key)]
         : null;
 
     /// <summary>
@@ -462,7 +459,7 @@ internal class WikitextParser
                 // Now we add the prefix to all
                 return string.IsNullOrEmpty(prefix)
                     ? values
-                    : new List<MetadataProperty>(values.Select(v => new MetadataNameProperty($"{prefix} {v}")));
+                    : values.Select(v => new MetadataNameProperty($"{prefix} {v}")).ToList<MetadataProperty>();
             }
         }
         catch (Exception ex)
@@ -470,7 +467,7 @@ internal class WikitextParser
             Log.Error(ex, $"Error parsing argument '{field}'");
         }
 
-        return new List<MetadataProperty>();
+        return [];
     }
 
     /// <summary>

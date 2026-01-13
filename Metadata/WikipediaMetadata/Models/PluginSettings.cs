@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace WikipediaMetadata.Models;
@@ -11,7 +12,7 @@ public class PluginSettings : ObservableObject
     private bool _descriptionOverviewOnly;
     private RatingToUse _ratingToUse = RatingToUse.Average;
     private bool _removeDescriptionLinks;
-    private ObservableCollection<string> _sectionsToRemove = new ObservableCollection<string>();
+    private ObservableCollection<string> _sectionsToRemove = [];
     private ObservableCollection<TagSetting> _tagSettings;
 
     public bool AdvancedSearchResultSorting
@@ -62,12 +63,29 @@ public class PluginSettings : ObservableObject
         set => SetValue(ref _tagSettings, value);
     }
 
+    public int MaxDegreeOfParallelism { get; set; } = GetDefaultMaxDegreeOfParallelism();
+    public bool ShowTopPanelButton { get; set; } = true;
+
+    private static int GetDefaultMaxDegreeOfParallelism()
+    {
+        var processorCount = Environment.ProcessorCount;
+        var parallelism = (int)Math.Round(processorCount * .75D, MidpointRounding.AwayFromZero);
+
+        if (parallelism == processorCount)
+            parallelism--;
+
+        if (parallelism < 1)
+            parallelism = 1;
+
+        return parallelism;
+    }
+
     public void PopulateTagSettings()
     {
         if (_tagSettings is null)
         {
-            _tagSettings = new ObservableCollection<TagSetting>
-            {
+            _tagSettings =
+            [
                 new TagSetting()
                 {
                     IsChecked = true,
@@ -122,7 +140,7 @@ public class PluginSettings : ObservableObject
                     Name = "Composer",
                     Prefix = "[People] composer:"
                 }
-            };
+            ];
         }
     }
 }

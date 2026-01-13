@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="WikipediaCategories.BulkImport.SelectCategoriesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WikipediaCategories.BulkImport"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:SelectCategoriesViewModel}"
+             d:DesignHeight="450" d:DesignWidth="400">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Margin="20" TextWrapping="Wrap">
+            Select the subcategories you want imported.
+        </TextBlock>
+        <WrapPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Click="CheckAll_Click" Content="Check all" Padding="10 5" Margin="20 5" />
+            <Button Click="UncheckAll_Click" Content="Uncheck all" Padding="10 5" Margin="0 5" />
+        </WrapPanel>
+        <TreeView Grid.Row="2" Margin="20 5" ItemsSource="{Binding Items}">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type local:SelectableCategoryViewModel}" ItemsSource="{Binding Subcategories}">
+                    <CheckBox Content="{Binding DisplayName}"
+                              IsChecked="{Binding IsChecked}"
+                              Margin="0 0 20 4"/>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+            <TreeView.Resources>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="IsExpanded" Value="True" />
+                </Style>
+            </TreeView.Resources>
+        </TreeView>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Margin="20">
+            <Button Content="OK" Padding="25,5" Margin="15,0" Click="OK_Click" />
+            <Button Content="Cancel" Padding="15,5" Margin="15,0,0,0" Click="Cancel_Click" />
+        </StackPanel>
+    </Grid>
+</UserControl>

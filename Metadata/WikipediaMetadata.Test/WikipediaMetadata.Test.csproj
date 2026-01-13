@@ -9,6 +9,8 @@
         <LangVersion>14</LangVersion>
         <FileAlignment>512</FileAlignment>
         <Deterministic>true</Deterministic>
+        <UseWindowsForms>true</UseWindowsForms>
+        <UseWpf>true</UseWpf>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
@@ -64,5 +66,9 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\WikipediaMetadata\WikipediaMetadata.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Update="Resources\**" CopyToOutputDirectory="Always" />
+        <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Tests.Common\*.cs" LinkBase="Common" />
     </ItemGroup>
 </Project>
