@@ -21,7 +21,7 @@ public class ApiTests
     public void UserAgentContainsVersions()
     {
         var pluginVersion = _api.GetType().Assembly.GetName().Version;
-        Assert.Equal($"Wikipedia Metadata plugin {pluginVersion} for Playnite 10.47, https://github.com/HerrKnarz/Playnite-Extensions", _downloader.UserAgent);
+        Assert.Equal($"Wikipedia plugin {pluginVersion} for Playnite 10.47", _downloader.UserAgent);
     }
 
     [Fact]
