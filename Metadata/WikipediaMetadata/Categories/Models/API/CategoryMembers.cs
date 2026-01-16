@@ -1,4 +1,4 @@
-namespace WikipediaCategories.Models.API;
+namespace WikipediaMetadata.Categories.Models.API;
 
 public class CategoryMemberQueryResult
 {

@@ -1,8 +1,10 @@
 ﻿using PlayniteExtensions.Tests.Common;
 using System.Linq;
+using WikipediaMetadata.Categories;
+using WikipediaMetadata.Categories.Models;
 using Xunit;
 
-namespace WikipediaCategories.Tests;
+namespace WikipediaMetadata.Test.Categories;
 
 public class ApiTests
 {

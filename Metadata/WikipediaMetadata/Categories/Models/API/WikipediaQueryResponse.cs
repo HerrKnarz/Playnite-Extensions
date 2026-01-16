@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WikipediaCategories.Models.API;
+namespace WikipediaMetadata.Categories.Models.API;
 
 public class WikipediaQueryResponse<TQuery>
 {

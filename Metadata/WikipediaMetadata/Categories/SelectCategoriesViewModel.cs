@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using WikipediaCategories.Models;
+using WikipediaMetadata.Categories.Models;
 
-namespace WikipediaCategories.BulkImport;
+namespace WikipediaMetadata.Categories;
 
 public class SelectCategoriesViewModel(SelectableCategoryViewModel rootCategory)
 {

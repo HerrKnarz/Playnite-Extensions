@@ -2,11 +2,12 @@ using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Tests.Common;
 using System.Linq;
-using WikipediaCategories.BulkImport;
-using WikipediaCategories.Tests.Fakes;
+using WikipediaMetadata.Categories;
+using WikipediaMetadata.Categories.Models;
+using WikipediaMetadata.Test.Categories.Fakes;
 using Xunit;
 
-namespace WikipediaCategories.Tests;
+namespace WikipediaMetadata.Test.Categories;
 
 public class BulkImportIntegrationTests
 {
@@ -40,7 +41,7 @@ public class BulkImportIntegrationTests
         var ps2 = new Platform("Sony Playstation 2") { SpecificationId = "sony_playstation_2" };
         db.Platforms.Add(ps2);
 
-        db.Games.Add(new Game("Red Ninja") { PlatformIds = [ps2.Id], Links = [new("Wikipedia", "https://en.wikipedia.org/wiki/Red_Ninja:_End_of_Honor")]});
+        db.Games.Add(new Game("Red Ninja") { PlatformIds = [ps2.Id], Links = [new("Wikipedia", "https://en.wikipedia.org/wiki/Red_Ninja:_End_of_Honor")] });
         db.Games.Add("Ninja Master's");
         db.Games.Add("Nioh 2 – The Complete Edition");
 

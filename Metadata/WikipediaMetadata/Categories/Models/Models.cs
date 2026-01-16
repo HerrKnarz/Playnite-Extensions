@@ -2,7 +2,7 @@ using Playnite.SDK.Models;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 
-namespace WikipediaCategories;
+namespace WikipediaMetadata.Categories.Models;
 
 public class WikipediaSearchResult:IHasName
 {

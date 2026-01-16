@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WikipediaCategories.Models;
+namespace WikipediaMetadata.Categories.Models;
 
 public class ArticleDetails
 {

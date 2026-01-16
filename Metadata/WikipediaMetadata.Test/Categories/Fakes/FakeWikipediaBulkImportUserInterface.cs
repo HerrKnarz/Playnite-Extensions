@@ -6,14 +6,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-using WikipediaCategories.BulkImport;
+using WikipediaMetadata.Categories;
 
-namespace WikipediaCategories.Tests.Fakes;
+namespace WikipediaMetadata.Test.Categories.Fakes;
 
 public class FakeWikipediaBulkImportUserInterface(string searchQuery, Predicate<GameCheckboxViewModel> gameApprovalPredicate, Predicate<SelectableCategoryViewModel> selectCategoryPredicate)
     : WikipediaBulkImportUserInterface(null)
 {
-    public Predicate<GameCheckboxViewModel> GameApprovalPredicate { get; set; } = gameApprovalPredicate;
 
     public override void ShowProgress(Action<GlobalProgressActionArgs> action, GlobalProgressOptions progressOptions)
     {
@@ -24,7 +23,7 @@ public class FakeWikipediaBulkImportUserInterface(string searchQuery, Predicate<
     public override GamePropertyImportViewModel SelectGames<TApprovalPromptViewModel>(TApprovalPromptViewModel viewModel)
     {
         foreach (var gameCheckboxViewModel in viewModel.Games)
-            gameCheckboxViewModel.IsChecked = GameApprovalPredicate(gameCheckboxViewModel);
+            gameCheckboxViewModel.IsChecked = gameApprovalPredicate(gameCheckboxViewModel);
 
         return viewModel;
     }

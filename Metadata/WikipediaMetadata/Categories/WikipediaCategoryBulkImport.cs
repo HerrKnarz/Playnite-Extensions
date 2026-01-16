@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using WikipediaMetadata.Categories.Models;
 
-namespace WikipediaCategories.BulkImport;
+namespace WikipediaMetadata.Categories;
 
 public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSearchResult, GamePropertyImportViewModel>
 {

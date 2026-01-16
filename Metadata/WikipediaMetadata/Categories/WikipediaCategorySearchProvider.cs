@@ -4,9 +4,9 @@ using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using WikipediaCategories.Models;
+using WikipediaMetadata.Categories.Models;
 
-namespace WikipediaCategories.BulkImport;
+namespace WikipediaMetadata.Categories;
 
 public interface IWikipediaCategorySearchProvider : IBulkPropertyImportDataSource<WikipediaSearchResult>
 {

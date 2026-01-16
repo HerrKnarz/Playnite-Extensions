@@ -1,9 +1,9 @@
 using PlayniteExtensions.Tests.Common;
 using System.Threading;
-using WikipediaCategories.BulkImport;
+using WikipediaMetadata.Categories;
 using Xunit;
 
-namespace WikipediaCategories.Tests;
+namespace WikipediaMetadata.Test.Categories;
 
 public class CategorySearchProviderTests
 {

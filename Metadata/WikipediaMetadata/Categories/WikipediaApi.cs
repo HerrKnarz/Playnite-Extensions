@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using WikipediaCategories.Models;
-using WikipediaCategories.Models.API;
+using WikipediaMetadata.Categories.Models;
+using WikipediaMetadata.Categories.Models.API;
 
-namespace WikipediaCategories;
+namespace WikipediaMetadata.Categories;
 
 public class WikipediaApi
 {
@@ -26,7 +26,7 @@ public class WikipediaApi
         _baseUrl = $"https://{wikipediaLocale}.wikipedia.org/w/api.php?format=json";
 
         var pluginVersion = GetType().Assembly!.GetName().Version;
-        _downloader.UserAgent = $"Wikipedia Metadata plugin {pluginVersion} for Playnite {playniteVersion}, https://github.com/HerrKnarz/Playnite-Extensions";
+        _downloader.UserAgent = $"Wikipedia plugin {pluginVersion} for Playnite {playniteVersion}";
     }
 
     public string GetSearchUrl(string query, WikipediaNamespace ns)

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace WikipediaCategories.BulkImport;
+namespace WikipediaMetadata.Categories;
 
 /// <summary>
 /// Interaction logic for SelectStringsView.xaml

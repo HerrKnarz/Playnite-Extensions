@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows.Controls;
-using WikipediaCategories;
-using WikipediaCategories.BulkImport;
+using WikipediaMetadata.Categories;
 
 namespace WikipediaMetadata;
 
