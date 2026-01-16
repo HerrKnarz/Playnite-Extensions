@@ -40,16 +40,16 @@ public class WikipediaCategorySearchProvider(WikipediaApi api) : IWikipediaCateg
             if (cancellationToken.IsCancellationRequested)
                 break;
 
-            switch ((WikipediaNamespace)categoryMember.ns)
+            switch ((WikipediaNamespace)categoryMember.Ns)
             {
                 case WikipediaNamespace.Article:
-                    output.ArticleNames.Add(categoryMember.title);
+                    output.ArticleNames.Add(categoryMember.Title);
                     break;
                 case WikipediaNamespace.Category:
-                    output.SubcategoryNames.Add(categoryMember.title);
+                    output.SubcategoryNames.Add(categoryMember.Title);
                     break;
                 default:
-                    _logger.Info($"Unknown wikipedia namespace: {categoryMember.ns} ({categoryMember.title})");
+                    _logger.Info($"Unknown wikipedia namespace: {categoryMember.Ns} ({categoryMember.Title})");
                     break;
             }
         }

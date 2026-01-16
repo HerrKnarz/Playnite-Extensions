@@ -100,12 +100,12 @@ public class WikipediaApi
                 break;
 
             var article = GetArticleCategories(pageName, continueParams, cancellationToken);
-            var page = article.query.pages.First().Value;
-            output.Title ??= page.title;
-            output.Url ??= WikipediaIdUtility.ToWikipediaUrl(WikipediaLocale, page.title);
-            output.Categories.AddRange(page.categories.Select(c => c.title));
+            var page = article.Query.Pages.First().Value;
+            output.Title ??= page.Title;
+            output.Url ??= WikipediaIdUtility.ToWikipediaUrl(WikipediaLocale, page.Title);
+            output.Categories.AddRange(page.Categories.Select(c => c.Title));
 
-            continueParams = article.@continue;
+            continueParams = article.Continue;
 
             if (continueParams == null)
                 break;
@@ -124,9 +124,9 @@ public class WikipediaApi
                 break;
 
             var response = GetCategoryMembers(pageName, continueParams, cancellationToken);
-            output.AddRange(response.query.categorymembers);
+            output.AddRange(response.Query.CategoryMembers);
 
-            continueParams = response.@continue;
+            continueParams = response.Continue;
 
             if (continueParams == null)
                 break;

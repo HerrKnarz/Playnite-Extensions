@@ -4,34 +4,34 @@ namespace WikipediaCategories.Models.API;
 
 public class PageQuery
 {
-    public NormalizedTitle[] normalized { get; set; } = [];
-    public Redirects[] redirects { get; set; } = [];
-    public Dictionary<string, PageData> pages { get; set; } = [];
+    public NormalizedTitle[] Normalized { get; set; } = [];
+    public Redirects[] Redirects { get; set; } = [];
+    public Dictionary<string, PageData> Pages { get; set; } = [];
 }
 
 public class NormalizedTitle
 {
-    public string from { get; set; }
-    public string to { get; set; }
+    public string From { get; set; }
+    public string To { get; set; }
 }
 
 public class Redirects
 {
-    public string from { get; set; }
-    public string to { get; set; }
+    public string From { get; set; }
+    public string To { get; set; }
 }
 
 public class PageData
 {
-    public int pageid { get; set; }
-    public int ns { get; set; }
-    public string title { get; set; }
-    public OtherPageDetails[] categories { get; set; } = [];
-    public OtherPageDetails[] redirects { get; set; } = [];
+    public int PageId { get; set; }
+    public int Ns { get; set; }
+    public string Title { get; set; }
+    public OtherPageDetails[] Categories { get; set; } = [];
+    public OtherPageDetails[] Redirects { get; set; } = [];
 }
 
 public class OtherPageDetails
 {
-    public int ns { get; set; }
-    public string title { get; set; }
+    public int Ns { get; set; }
+    public string Title { get; set; }
 }
