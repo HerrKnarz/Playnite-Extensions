@@ -1,4 +1,10 @@
-﻿[*.cs]
+﻿root = true
+
+[*.cs]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
 
 # IDE0010: Add missing cases
 dotnet_diagnostic.IDE0010.severity = none
@@ -11,3 +17,29 @@ dotnet_diagnostic.VSSpell001.severity = suggestion
 
 # CS4014: Because this call is not awaited, execution of the current method continues before the call is completed
 dotnet_diagnostic.CS4014.severity = silent
+
+[*.csproj]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.xaml]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[{**/Models/**.cs,*Models.cs,*Model.cs}]
+resharper_inconsistent_naming_highlighting = none
+resharper_class_never_instantiated_global_highlighting = none
+resharper_unused_auto_property_accessor_global_highlighting = none
+resharper_property_field_keyword_is_never_assigned_highlighting = none
+resharper_unassigned_field_global_highlighting = none
+resharper_collection_never_updated_global_highlighting = none
+resharper_auto_property_can_be_made_get_only_global_highlighting = none
