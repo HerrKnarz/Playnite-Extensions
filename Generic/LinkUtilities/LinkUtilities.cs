@@ -16,7 +16,7 @@ using System.Windows.Controls;
 namespace LinkUtilities
 {
     /// <summary>
-    ///     Class of the actual playnite extension
+    /// Class of the actual playnite extension
     /// </summary>
     public class LinkUtilities : GenericPlugin
     {
@@ -72,20 +72,20 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        ///     The global GUID to identify the extension in playnite
+        /// The global GUID to identify the extension in playnite
         /// </summary>
         public override Guid Id { get; } = Guid.Parse("f692b4bb-238d-4080-ae76-4aaefde6f7a1");
 
         /// <summary>
-        ///     Is set to true, while the library is updated via the sortLinks function. Is used to avoid an endless loop in the
-        ///     function.
-        /// </summary>
-        internal bool IsUpdating { get; set; }
-
-        /// <summary>
-        ///     The settings view model of the extension
+        /// The settings view model of the extension
         /// </summary>
         public SettingsViewModel Settings { get; set; }
+
+        /// <summary>
+        /// Is set to true, while the library is updated via the sortLinks function. Is used to
+        /// avoid an endless loop in the function.
+        /// </summary>
+        internal bool IsUpdating { get; set; }
 
         public void CheckLinks(List<Game> games)
         {
@@ -113,17 +113,19 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        ///     Executes a specific action for all games in a list. Shows a progress bar and result dialog and uses buffered update
-        ///     mode if the
-        ///     list contains more than one game.
+        /// Executes a specific action for all games in a list. Shows a progress bar and result
+        /// dialog and uses buffered update mode if the list contains more than one game.
         /// </summary>
         /// <param name="games">List of games to be processed</param>
         /// <param name="linkAction">Instance of the action to be executed</param>
         /// <param name="showDialog">If true a dialog will be shown after completion</param>
-        /// <param name="actionModifier">specifies the type of action to execute, if more than one is possible.</param>
+        /// <param name="actionModifier">
+        /// specifies the type of action to execute, if more than one is possible.
+        /// </param>
         public void DoForAll(List<Game> games, ILinkAction linkAction, bool showDialog = false, ActionModifierTypes actionModifier = ActionModifierTypes.None)
         {
-            // While sorting Links we set IsUpdating to true, so the library update event knows it doesn't need to sort again.
+            // While sorting Links we set IsUpdating to true, so the library update event knows it
+            // doesn't need to sort again.
             IsUpdating = true;
 
             try
@@ -132,7 +134,8 @@ namespace LinkUtilities
                 {
                     linkAction.Execute(games.First(), actionModifier, false);
                 }
-                // if we have more than one game in the list, we want to start buffered mode and show a progress bar.
+                // if we have more than one game in the list, we want to start buffered mode and
+                // show a progress bar.
                 else if (games.Count > 1)
                 {
                     var gamesAffected = 0;
@@ -196,7 +199,7 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        ///     Event that get's triggered after updating the game database. Is used to sort Links after updating.
+        /// Event that get's triggered after updating the game database. Is used to sort Links after updating.
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="args">Event arguments. Contains a list of all updated games.</param>
@@ -343,16 +346,20 @@ namespace LinkUtilities
 
             menuItems.AddRange(menuBrowserSearchItems);
 
-            menuItems.AddRange(new List<GameMenuItem>
+            // Adds the "All missing websites" item to the browser search sub menu.
+            if (menuBrowserSearchItems.Count > 0)
             {
-                // Adds the "All missing websites" item to the browser search sub menu.
-                new GameMenuItem
+                menuItems.Add(new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllMissingWebsites"),
                     MenuSection = menuSection,
                     Icon = "luWebIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), false, ActionModifierTypes.SearchInBrowser)
-                },
+                });
+            }
+
+            menuItems.AddRange(new List<GameMenuItem>
+            {
                 // Adds a separator to the browser search sub menu
                 new GameMenuItem
                 {
@@ -781,14 +788,14 @@ namespace LinkUtilities
         }
 
         /// <summary>
-        ///     Gets the settings of the extension
+        /// Gets the settings of the extension
         /// </summary>
         /// <param name="firstRunSettings">True, if it's the first time the settings are fetched</param>
         /// <returns>Settings interface</returns>
         public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
         /// <summary>
-        ///     Gets the settings view to be shown in playnite
+        /// Gets the settings view to be shown in playnite
         /// </summary>
         /// <param name="firstRunSettings">True, if it's the first time the settings view is fetched</param>
         /// <returns>Settings view</returns>
