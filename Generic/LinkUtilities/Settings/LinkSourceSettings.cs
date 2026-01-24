@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Linker;
+﻿using LinkUtilities.LinkActions;
+using LinkUtilities.Linker;
 using LinkUtilities.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,12 +9,16 @@ namespace LinkUtilities.Settings
 {
     public class LinkSourceSettings : ObservableCollection<LinkSourceSetting>
     {
-        public LinkSourceSettings(IEnumerable<LinkSourceSetting> items) => this.AddMissing(items);
+        public LinkSourceSettings(IEnumerable<LinkSourceSetting> items)
+        {
+            this.AddMissing(items);
+        }
 
-        public LinkSourceSettings() { }
+        public LinkSourceSettings()
+        { }
 
         /// <summary>
-        ///     Gets a collection of the settings to all link sources in the plugin.
+        /// Gets a collection of the settings to all link sources in the plugin.
         /// </summary>
         /// <param name="links">Link sources to be added</param>
         /// <returns>Collection of the settings to all link sources in the plugin</returns>
@@ -35,8 +40,24 @@ namespace LinkUtilities.Settings
         }
 
         /// <summary>
-        ///     Refreshes a LinkSourceCollection with the actual link sources present in the plugin. Is needed after updates when
-        ///     link sources get added or had to be removed.
+        /// Refreshes the settings of library links
+        /// </summary>
+        internal void RefreshLibraryLinkSettings()
+        {
+            foreach (var item in AddLibraryLinks.Instance().LibraryLinks)
+            {
+                var itemFound = this.FirstOrDefault(x => x.LinkName == item.Value.LinkName);
+
+                if (itemFound != null)
+                {
+                    item.Value.Settings.ApiKey = itemFound.ApiKey;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Refreshes a LinkSourceCollection with the actual link sources present in the plugin. Is
+        /// needed after updates when link sources get added or had to be removed.
         /// </summary>
         /// <param name="links">Link sources to be added</param>
         internal void RefreshLinkSources(Links links)

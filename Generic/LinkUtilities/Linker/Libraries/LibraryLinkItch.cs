@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
@@ -15,7 +16,7 @@ using Game = Playnite.SDK.Models.Game;
 namespace LinkUtilities.Linker.Libraries
 {
     /// <summary>
-    ///     Adds a link to itch.io.
+    /// Adds a link to itch.io.
     /// </summary>
     internal class LibraryLinkItch : LibraryLink
     {
@@ -30,24 +31,26 @@ namespace LinkUtilities.Linker.Libraries
         public override string BrowserSearchUrl => "https://itch.io/search?q=";
 
         /// <summary>
-        ///     ID of the game library to identify it in Playnite.
+        /// ID of the game library to identify it in Playnite.
         /// </summary>
         public override Guid Id { get; } = Guid.Parse("00000001-ebb2-4eec-abcb-7c89937a42bb");
 
         public override string LinkName => "Itch";
         public override string SearchUrl => "https://itch.io/api/1/{0}/search/games?query={1}";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
 
         public override bool FindLibraryLink(Game game, out List<Link> links)
         {
             links = new List<Link>();
 
-            // To get the link to a game on the itch website, you need an API key and request the game data from their api.
+            // To get the link to a game on the itch website, you need an API key and request the
+            // game data from their api.
             if (string.IsNullOrWhiteSpace(Settings.ApiKey) || LinkHelper.LinkExists(game, LinkName))
             {
                 return false;
             }
 
-            var itchMetaData = ApiHelper.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName);
+            var itchMetaData = ApiHelper.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName, Encoding.UTF8, true);
 
             LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
 
@@ -78,7 +81,6 @@ namespace LinkUtilities.Linker.Libraries
                     Description = g.PublishedAt
                 }))
                 : base.GetSearchResults(searchTerm);
-
         }
     }
 }

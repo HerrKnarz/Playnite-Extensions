@@ -33,6 +33,7 @@ namespace LinkUtilities.ViewModels
             {
                 Settings = savedSettings;
                 Settings.LinkSettings.RefreshLinkSources(AddWebsiteLinks.Instance().Links);
+                Settings.LinkSettings.RefreshLibraryLinkSettings();
                 Settings.LinkSettings = new LinkSourceSettings(Settings.LinkSettings.OrderBy(x => x.LinkName).ToList());
             }
             else
@@ -132,8 +133,6 @@ namespace LinkUtilities.ViewModels
                     Position = position
                 });
             });
-
-        private LinkUtilitiesSettings EditingClone { get; set; }
 
         public string ExampleName
         {
@@ -242,6 +241,8 @@ namespace LinkUtilities.ViewModels
 
         public RelayCommand TestCustomLinkProfileCommand => new RelayCommand(() =>
             ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty);
+
+        private LinkUtilitiesSettings EditingClone { get; set; }
 
         public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
 
