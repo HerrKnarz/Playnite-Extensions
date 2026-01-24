@@ -18,7 +18,7 @@ using System.Threading;
 namespace LinkUtilities.BaseClasses
 {
     /// <summary>
-    ///     Base class for a website link
+    /// Base class for a website link
     /// </summary>
     public abstract class Linker : ILinker, ILinkAction
     {
@@ -46,6 +46,7 @@ namespace LinkUtilities.BaseClasses
         public abstract string LinkName { get; }
         public virtual string LinkUrl { get; set; } = string.Empty;
         public virtual bool NeedsToBeChecked { get; set; } = true;
+        public virtual int Priority => 10;
         public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
         public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
         public virtual bool ReturnsSameUrl { get; set; } = false;
@@ -53,9 +54,10 @@ namespace LinkUtilities.BaseClasses
         public LinkSourceSetting Settings { get; set; }
         public virtual UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Header;
         public virtual string WrongTitle { get; set; } = string.Empty;
-        public virtual int Priority => 10;
 
         public virtual bool AddLink(Game game) => FindLinks(game, out var links) && LinkHelper.AddLinks(game, links);
+
+        public virtual bool AddLinkFromSearch(Game game, SearchResult result, bool cleanUpAfterAdding = true) => LinkHelper.AddLink(game, LinkName, result.Url, false, cleanUpAfterAdding);
 
         public virtual bool AddSearchedLink(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true)
         {
@@ -102,11 +104,14 @@ namespace LinkUtilities.BaseClasses
                 case ActionModifierTypes.Search:
                 case ActionModifierTypes.SearchSelected:
                     return AddSearchedLink(game);
+
                 case ActionModifierTypes.SearchMissing:
                     return AddSearchedLink(game, true);
+
                 case ActionModifierTypes.SearchInBrowser:
                     StartBrowserSearch(game);
                     return true;
+
                 case ActionModifierTypes.AppLink:
                 case ActionModifierTypes.DontRename:
                 case ActionModifierTypes.Name:
@@ -133,6 +138,7 @@ namespace LinkUtilities.BaseClasses
                 case LinkAddTypes.SingleSearchResult:
                     LinkUrl = GetGamePath(game);
                     break;
+
                 case LinkAddTypes.UrlMatch:
                     var gameName = GetGamePath(game);
 
@@ -163,8 +169,10 @@ namespace LinkUtilities.BaseClasses
                     }
 
                     break;
+
                 case LinkAddTypes.None:
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -197,6 +205,7 @@ namespace LinkUtilities.BaseClasses
             {
                 case LinkAddTypes.UrlMatch:
                     return gameName;
+
                 case LinkAddTypes.SingleSearchResult:
                     if (!CanBeSearched)
                     {
@@ -212,6 +221,7 @@ namespace LinkUtilities.BaseClasses
 
                 case LinkAddTypes.None:
                     return string.Empty;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -224,10 +234,15 @@ namespace LinkUtilities.BaseClasses
 
         public virtual void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game.Name));
 
-        public virtual bool AddLinkFromSearch(Game game, SearchResult result, bool cleanUpAfterAdding = true) => LinkHelper.AddLink(game, LinkName, result.Url, false, cleanUpAfterAdding);
+        internal string GetSteamId(Game game)
+        {
+            var steamId = SteamHelper.GetSteamId(game);
+
+            return string.IsNullOrEmpty(steamId) ? AddWebsiteLinks.Instance().SteamId : steamId;
+        }
 
         /// <summary>
-        ///     Searches for a game by name and looks for a matching search result.
+        /// Searches for a game by name and looks for a matching search result.
         /// </summary>
         /// <param name="gameName">Name of the game</param>
         /// <returns>Url of the game. Returns null if no match was found.</returns>
@@ -235,18 +250,11 @@ namespace LinkUtilities.BaseClasses
         {
             var searchResults = GetSearchResults(gameName);
 
-            var searchName = gameName.RemoveSpecialChars().Replace(" ", "");
+            var searchName = gameName.RemoveSpecialChars().Replace("-", "").Replace(" ", "");
 
-            var foundGame = (SearchResult)searchResults.FirstOrDefault(r => r.Name.RemoveSpecialChars().Replace(" ", "").Equals(searchName, StringComparison.OrdinalIgnoreCase));
+            var foundGame = (SearchResult)searchResults.FirstOrDefault(r => r.Name.RemoveSpecialChars().Replace("-", "").Replace(" ", "").Equals(searchName, StringComparison.OrdinalIgnoreCase));
 
             return foundGame != null ? foundGame.Url : searchResults.Count == 1 ? ((SearchResult)searchResults[0]).Url : null;
-        }
-
-        internal string GetSteamId(Game game)
-        {
-            var steamId = SteamHelper.GetSteamId(game);
-
-            return string.IsNullOrEmpty(steamId) ? AddWebsiteLinks.Instance().SteamId : steamId;
         }
     }
 }
