@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
@@ -16,7 +17,7 @@ using Game = Playnite.SDK.Models.Game;
 namespace LinkUtilities.Linker.Libraries
 {
     /// <summary>
-    ///     Adds a link to Steam.
+    /// Adds a link to Steam.
     /// </summary>
     internal class LibraryLinkSteam : LibraryLink
     {
@@ -40,12 +41,11 @@ namespace LinkUtilities.Linker.Libraries
         public override string BrowserSearchUrl => "https://store.steampowered.com/search/?term=";
 
         /// <summary>
-        ///     ID of the game library to identify it in Playnite.
+        /// ID of the game library to identify it in Playnite.
         /// </summary>
         public override Guid Id { get; } = SteamHelper.SteamId;
 
         public override string LinkName => "Steam";
-
         public string NameAchievementLink { get; set; } = "Achievements";
         public string NameCommunityLink { get; set; } = "Community Hub";
         public string NameDiscussionLink { get; set; } = "Discussion";
@@ -55,7 +55,7 @@ namespace LinkUtilities.Linker.Libraries
         public string NameWorkshopLink { get; set; } = "Workshop";
         public override int Priority => 1;
         public override string SearchUrl => "https://steamcommunity.com/actions/SearchApps/";
-
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
         public bool UseAppLinks { get; set; } = false;
 
         public override bool AddLinkFromSearch(Game game, SearchResult result, bool cleanUpAfterAdding = true)
