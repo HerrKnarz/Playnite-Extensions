@@ -1,5 +1,15 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 4.2.3
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-01-26
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-01-26/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_2_3.pext
+    Changelog:
+      - Fixed steam library links causing Playnite to hang up.
+      - Fixed itch library links not being added.
+      - Fixed Nintendo Wiki and SNK Wiki adding links for games not on the respective site.
+      - Fixed and improved search for Backloggd not returning any results.
+      - Put the buttons for bulk operations back into the respective sub menus in the context menu for better clarity.
   - Version: 4.2.2
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2025-10-20
