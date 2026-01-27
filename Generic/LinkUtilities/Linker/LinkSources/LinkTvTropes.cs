@@ -4,7 +4,7 @@ using Playnite.SDK.Models;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to TV Tropes.
+    /// Adds a link to TV Tropes.
     /// </summary>
     internal class LinkTvTropes : BaseClasses.Linker
     {
@@ -15,9 +15,10 @@ namespace LinkUtilities.Linker.LinkSources
 
         public override string LinkName => "TV Tropes";
 
-        public override string GetBrowserSearchLink(string searchTerm) => $"{BrowserSearchUrl}{searchTerm.RemoveDiacritics().EscapeDataString()}";
+        public override string GetBrowserSearchLink(Game game = null) => $"{BrowserSearchUrl}{game.Name.RemoveDiacritics().EscapeDataString()}";
 
-        // TVTropes Links need the game name in title case without diacritics exchanged and special characters and white spaces removed.
+        // TVTropes Links need the game name in title case without diacritics exchanged and special
+        // characters and white spaces removed.
         public override string GetGamePath(Game game, string gameName = null) => (gameName ?? game.Name)
             .RemoveDiacritics().ToTitleCase().RemoveSpecialChars().Replace("_", "").Replace(" ", "");
     }

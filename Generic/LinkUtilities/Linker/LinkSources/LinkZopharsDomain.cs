@@ -3,6 +3,7 @@ using KNARZhelper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Net;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to Zophar's Domain for game soundtracks.
+    /// Adds a link to Zophar's Domain for game soundtracks.
     /// </summary>
     internal class LinkZopharsDomain : BaseClasses.Linker
     {
@@ -20,14 +21,14 @@ namespace LinkUtilities.Linker.LinkSources
         public override string LinkName => "Zophar (Music)";
         public override string SearchUrl => "https://www.zophar.net/music/search?search=";
 
-        public override string GetBrowserSearchLink(string searchTerm) => $"{BrowserSearchUrl}{searchTerm.RemoveDiacritics().EscapeDataString()}";
+        public override string GetBrowserSearchLink(Game game = null) => GetSearchUrl(game.Name);
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
             {
                 var web = new HtmlWeb();
-                var doc = web.Load(GetBrowserSearchLink(searchTerm));
+                var doc = web.Load(GetSearchUrl(searchTerm));
 
                 var htmlNodes = doc.DocumentNode.SelectNodes("//tr[contains(@class, 'regularrow')]");
 
@@ -48,5 +49,7 @@ namespace LinkUtilities.Linker.LinkSources
 
             return base.GetSearchResults(searchTerm);
         }
+
+        private string GetSearchUrl(string searchString) => $"{BrowserSearchUrl}{searchString.RemoveDiacritics().EscapeDataString()}";
     }
 }

@@ -187,7 +187,7 @@ namespace LinkUtilities.BaseClasses
             return true;
         }
 
-        public virtual string GetBrowserSearchLink(string searchTerm) => BrowserSearchUrl + searchTerm.UrlEncode();
+        public virtual string GetBrowserSearchLink(Game game = null) => BrowserSearchUrl + game.Name.UrlEncode();
 
         public virtual string GetGamePath(Game game, string gameName = null)
         {
@@ -232,7 +232,7 @@ namespace LinkUtilities.BaseClasses
         public virtual bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
             => true;
 
-        public virtual void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game.Name));
+        public virtual void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game));
 
         internal string GetSteamId(Game game)
         {

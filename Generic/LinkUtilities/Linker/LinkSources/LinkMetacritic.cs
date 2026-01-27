@@ -8,12 +8,12 @@ using System.Linq;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to Metacritic.
+    /// Adds a link to Metacritic.
     /// </summary>
     internal class LinkMetacritic : BaseClasses.Linker
     {
         /// <summary>
-        ///     Dictionary with playnite platform ids and their equivalents in metacritic links
+        /// Dictionary with playnite platform ids and their equivalents in metacritic links
         /// </summary>
         private readonly IReadOnlyDictionary<string, string> _platforms = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -62,7 +62,8 @@ namespace LinkUtilities.Linker.LinkSources
 
             var linkName = LinkName;
 
-            // Since Metacritic has an own link for every platform, we'll go through all of them and add one for each.
+            // Since Metacritic has an own link for every platform, we'll go through all of them and
+            // add one for each.
             foreach (var platform in game.Platforms.Where(x => x.SpecificationId != null))
             {
                 if (addPlatformName)
@@ -100,9 +101,10 @@ namespace LinkUtilities.Linker.LinkSources
             return result;
         }
 
-        public override string GetBrowserSearchLink(string searchTerm) => string.Format(BrowserSearchUrl, searchTerm.RemoveDiacritics().EscapeDataString());
+        public override string GetBrowserSearchLink(Game game = null) => string.Format(BrowserSearchUrl, game.Name.RemoveDiacritics().EscapeDataString());
 
-        // Metacritic Links need the game name in lowercase without special characters and hyphens instead of white spaces.
+        // Metacritic Links need the game name in lowercase without special characters and hyphens
+        // instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()
                 .CollapseWhitespaces()
