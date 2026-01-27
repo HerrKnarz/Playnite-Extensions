@@ -86,7 +86,7 @@
     <sys:String x:Key="LOCLinkUtilitiesSettingsButtonUncheckAll">全部取消勾选</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureLinkNamePatterns">配置链接名称模式(只有剪贴板链接将被检查以查找名称) 因为我们没有名字开头。)</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsConfigureWebsites">配置网站</sys:String>
-    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">在这里，您可以为包含游戏名称、ROM 名称、Steam ID 或 GOG ID 且没有可变部分的网址的网站添加您自己的链接。在“游戏网址”字段中，您可以为此使用占位符{GameName}、{RomName}、{SteamId}和{GogId}。以下复选框定义了如何修改游戏名称以适应网址方案以及如何检查链接的有效性。您还可以添加一个浏览器搜索网址，然后可以在浏览器中打开以搜索游戏。此字段仅支持{GameName}占位符。有关自定义链接配置文件的更多信息，请单击问号按钮。</sys:String>
+    <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksDescription">Here you can add your own links for websites with urls, that contain either the game name, rom name, steam ID or GOG ID and have no variable parts. In the Game URL field you can use the placeholders {GameName}, {RomName}, {SteamId} and {GogId} for that. The following checkboxes define, how the game name will be modified to fit the url scheme and how to check for link validity. You can also add a Browser search url that then can be opened in a browser to search for the game. This field supports the same placeholders. For further information on custom link profiles click the questionmark button.</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveSpecialChars">删除特殊字符</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveHyphens">删除连字符</sys:String>
     <sys:String x:Key="LOCLinkUtilitiesSettingsCustomLinksRemoveWhitespaces">删除空格</sys:String>
