@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to NEC Retro.
+    /// Adds a link to NEC Retro.
     /// </summary>
     internal class LinkNecRetro : BaseClasses.Linker
     {
@@ -18,9 +18,10 @@ namespace LinkUtilities.Linker.LinkSources
         public override string CheckForContent => "itemtype=\"http://schema.org/VideoGame\"";
         public override string LinkName => "NEC Retro";
         public override string SearchUrl => "https://necretro.org/index.php?search={0}&fulltext=1";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
-        // NEC Retro Links need the game with underscores instead of whitespaces and special characters simply encoded.
+        // NEC Retro Links need the game with underscores instead of whitespaces and special
+        // characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).CollapseWhitespaces()
                 .Replace(" ", "_")

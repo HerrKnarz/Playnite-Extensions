@@ -53,7 +53,6 @@ namespace LinkUtilities.Linker.Libraries
         public string NameNewsLink { get; set; } = "News";
         public string NameStorePageLink { get; set; } = "Store Page";
         public string NameWorkshopLink { get; set; } = "Workshop";
-        public override int Priority => 1;
         public override string SearchUrl => "https://steamcommunity.com/actions/SearchApps/";
         public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
         public bool UseAppLinks { get; set; } = false;

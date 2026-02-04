@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to PCGamingWiki.
+    /// Adds a link to PCGamingWiki.
     /// </summary>
     internal class LinkPcGamingWiki : BaseClasses.Linker
     {
@@ -18,7 +18,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string CheckForContent => "id=\"infobox-game\"";
         public override string LinkName => "PCGamingWiki";
         public override string SearchUrl => _websiteUrl + "/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
@@ -62,7 +62,8 @@ namespace LinkUtilities.Linker.LinkSources
             return true;
         }
 
-        // PCGamingWiki Links need the game with underscores instead of whitespaces and special characters simply encoded.
+        // PCGamingWiki Links need the game with underscores instead of whitespaces and special
+        // characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).CollapseWhitespaces()
                 .Replace(" ", "_")

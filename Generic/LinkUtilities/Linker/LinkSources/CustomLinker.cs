@@ -11,6 +11,11 @@ namespace LinkUtilities.Linker.LinkSources
 {
     public class CustomLinker : BaseClasses.Linker
     {
+        private readonly string _placeholderGameName = "{GameName}";
+        private readonly string _placeholderGogId = "{GogId}";
+        private readonly string _placeholderRomName = "{RomName}";
+        private readonly string _placeholderSteamId = "{SteamId}";
+
         public CustomLinker(CustomLinkProfile customSettings)
         {
             CustomSettings = customSettings;
@@ -20,14 +25,12 @@ namespace LinkUtilities.Linker.LinkSources
 
         public override LinkAddTypes AddType => CustomSettings?.GameUrl?.Any() ?? false ? LinkAddTypes.UrlMatch : LinkAddTypes.None;
         public override bool AllowRedirects => CustomSettings?.AllowRedirects ?? true;
-
         public override string BaseUrl => CustomSettings?.GameUrl ?? string.Empty;
         public override string BrowserSearchUrl => CustomSettings?.BrowserSearchUrl ?? string.Empty;
-
         public CustomLinkProfile CustomSettings { get; }
-
         public override string LinkName => CustomSettings?.Name ?? string.Empty;
         public override bool NeedsToBeChecked => CustomSettings?.NeedsToBeChecked ?? true;
+        public override int Priority => BaseUrl.Contains(_placeholderSteamId) ? 10 : 1;
         public override bool ReturnsSameUrl => CustomSettings?.ReturnsSameUrl ?? false;
 
         public override bool FindLinks(Game game, out List<Link> links)
@@ -70,7 +73,7 @@ namespace LinkUtilities.Linker.LinkSources
         {
             var result = url;
 
-            if (result.Contains("{GameName}"))
+            if (result.Contains(_placeholderGameName))
             {
                 var gameName = forBrowserSearch ? game.Name.UrlEncode() : GetGamePath(game);
 
@@ -79,10 +82,10 @@ namespace LinkUtilities.Linker.LinkSources
                     return string.Empty;
                 }
 
-                result = result.Replace("{GameName}", gameName);
+                result = result.Replace(_placeholderGameName, gameName);
             }
 
-            if (result.Contains("{SteamId}"))
+            if (result.Contains(_placeholderSteamId))
             {
                 var steamId = GetSteamId(game);
 
@@ -91,24 +94,24 @@ namespace LinkUtilities.Linker.LinkSources
                     return string.Empty;
                 }
 
-                result = result.Replace("{SteamId}", steamId);
+                result = result.Replace(_placeholderSteamId, steamId);
             }
 
-            if (result.Contains("{GogId}"))
+            if (result.Contains(_placeholderGogId))
             {
                 if (game.PluginId != LinkHelper.GogId)
                 {
                     return string.Empty;
                 }
 
-                result = result.Replace("{GogId}", game.GameId);
+                result = result.Replace(_placeholderGogId, game.GameId);
             }
 
-            if (result.Contains("{RomName}"))
+            if (result.Contains(_placeholderRomName))
             {
                 if (game.IsInstalled && (game.Roms?.Any() ?? false))
                 {
-                    result = result.Replace("{RomName}", Path.GetFileNameWithoutExtension(game.Roms[0].Path));
+                    result = result.Replace(_placeholderRomName, Path.GetFileNameWithoutExtension(game.Roms[0].Path));
                 }
                 else
                 {

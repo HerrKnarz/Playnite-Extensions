@@ -19,17 +19,16 @@ using System.Threading.Tasks;
 namespace LinkUtilities.LinkActions
 {
     /// <summary>
-    ///     Class to add a link to all available websites in the Links list, if a definitive link was found.
+    /// Class to add a link to all available websites in the Links list, if a definitive link was found.
     /// </summary>
     internal class AddWebsiteLinks : LinkAction
     {
+        private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Environment.ProcessorCount) };
         private static AddWebsiteLinks _instance;
 
         private readonly List<CustomLinkProfile> _customLinkProfiles = new List<CustomLinkProfile>();
-
+        private readonly List<LinkWorker> Pipelines = new List<LinkWorker>();
         private List<BaseClasses.Linker> _linkers;
-
-        private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Environment.ProcessorCount) };
 
         private AddWebsiteLinks()
         {
@@ -78,12 +77,15 @@ namespace LinkUtilities.LinkActions
                     case ActionModifierTypes.Add:
                     case ActionModifierTypes.AddSelected:
                         return AddLinks(game, isBulkAction);
+
                     case ActionModifierTypes.Search:
                     case ActionModifierTypes.SearchMissing:
                     case ActionModifierTypes.SearchSelected:
                         return SearchLinks(game, actionModifier, isBulkAction);
+
                     case ActionModifierTypes.SearchInBrowser:
                         return SearchLinksInBrowser(game, isBulkAction);
+
                     case ActionModifierTypes.AppLink:
                     case ActionModifierTypes.DontRename:
                     case ActionModifierTypes.Name:
@@ -111,18 +113,26 @@ namespace LinkUtilities.LinkActions
             {
                 case ActionModifierTypes.Add:
                     _linkers = Links.Where(x => x.Settings.IsAddable == true || (x.Settings.IsCustomSource && x.AddType != LinkAddTypes.None)).ToList();
+
+                    InitializePipelines();
+
                     return true;
+
                 case ActionModifierTypes.AddSelected:
                     return SelectLinks();
+
                 case ActionModifierTypes.Search:
                 case ActionModifierTypes.SearchMissing:
                     _linkers = Links.Where(x => x.Settings.IsSearchable == true).ToList();
                     return true;
+
                 case ActionModifierTypes.SearchInBrowser:
                     _linkers = Links.Where(x => x.CanBeBrowserSearched).ToList();
                     return true;
+
                 case ActionModifierTypes.SearchSelected:
                     return SelectLinks(false);
+
                 case ActionModifierTypes.AppLink:
                 case ActionModifierTypes.DontRename:
                 case ActionModifierTypes.Name:
@@ -137,10 +147,12 @@ namespace LinkUtilities.LinkActions
         private bool Add(Game g, Game game) => FindLinks(game, out var links) && (links?.Any() ?? false) && LinkHelper.AddLinks(g, links);
 
         /// <summary>
-        ///     Adds links to all configured websites
+        /// Adds links to all configured websites
         /// </summary>
         /// <param name="game">game the links will be added to.</param>
-        /// <param name="isBulkAction">If true, the method already is used in a progress bar and no new one has to be started.</param>
+        /// <param name="isBulkAction">
+        /// If true, the method already is used in a progress bar and no new one has to be started.
+        /// </param>
         /// <returns>True, if new links were added.</returns>
         private bool AddLinks(Game game, bool isBulkAction = true)
         {
@@ -174,9 +186,29 @@ namespace LinkUtilities.LinkActions
             return result;
         }
 
+        private void DisposePipelines()
+        {
+            if (Pipelines.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var linker in _linkers)
+            {
+                linker.LinkWorker = null;
+            }
+
+            foreach (var pipeline in Pipelines)
+            {
+                pipeline.Dispose();
+            }
+
+            Pipelines.Clear();
+        }
+
         /// <summary>
-        ///     Finds links to all configured websites. The links are added asynchronously to a ConcurrentBag and then returned as
-        ///     a distinct list.
+        /// Finds links to all configured websites. The links are added asynchronously to a
+        /// ConcurrentBag and then returned as a distinct list.
         /// </summary>
         /// <param name="game">game the links will be found for.</param>
         /// <param name="links">Returns a list of found links</param>
@@ -187,17 +219,22 @@ namespace LinkUtilities.LinkActions
             var linksAdded = false;
             var linksQueue = new ConcurrentQueue<Link>();
 
+            //TODO: Remove where condition when all linkers are switched to new method.
             foreach (var priorityGroup in _linkers
                 .Where(x => x.UrlLoadMethod != UrlLoadMethod.OffscreenView)
                 .GroupBy(x => x.Priority)
                 .OrderBy(x => x.Key))
             {
-                Parallel.ForEach(priorityGroup, _parallelOptions, linker =>
+                Parallel.ForEach(priorityGroup.Where(x => x.UrlLoadMethod != UrlLoadMethod.OffscreenView).GroupBy(x => x.LinkWorker), _parallelOptions, workerGroup =>
                 {
-                    linker.FindLinks(game, out var innerLinks);
-                    foreach (var innerLink in innerLinks)
+                    foreach (var linker in workerGroup)
                     {
-                        linksQueue.Enqueue(innerLink);
+                        linker.FindLinks(game, out var innerLinks);
+
+                        foreach (var innerLink in innerLinks)
+                        {
+                            linksQueue.Enqueue(innerLink);
+                        }
                     }
                 });
             }
@@ -215,12 +252,46 @@ namespace LinkUtilities.LinkActions
             return linksAdded;
         }
 
+        private void InitializePipelines()
+        {
+            //TODO: Maybe make Pipelines a separate class to manage them better.
+
+            DisposePipelines();
+            //TODO: Add After method to ILinkAction to dispose pipelines after bulk action is done.
+
+            var pipelineId = 0;
+
+            var maxPipelines = _linkers.Count > 5 ? 5 : _linkers.Count;
+
+            while (pipelineId < maxPipelines)
+            {
+                Pipelines.Add(new LinkWorker());
+                pipelineId++;
+            }
+
+            pipelineId = 0;
+
+            foreach (var linker in _linkers)
+            {
+                linker.LinkWorker = Pipelines[pipelineId];
+
+                pipelineId++;
+
+                if (pipelineId >= maxPipelines)
+                {
+                    pipelineId = 0;
+                }
+            }
+        }
+
         /// <summary>
-        ///     Searches links for all configured websites
+        /// Searches links for all configured websites
         /// </summary>
         /// <param name="game">game the links will be searched for.</param>
         /// <param name="actionModifier">Kind of search (e.g. Search or SearchMissing)</param>
-        /// <param name="isBulkAction">If true, the method already is used in a progress bar and no new one has to be started.</param>
+        /// <param name="isBulkAction">
+        /// If true, the method already is used in a progress bar and no new one has to be started.
+        /// </param>
         /// <returns>True, if new links were added.</returns>
         private bool SearchLinks(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -276,10 +347,12 @@ namespace LinkUtilities.LinkActions
         }
 
         /// <summary>
-        ///     Opens the search page for all configured websites in the standard web browser
+        /// Opens the search page for all configured websites in the standard web browser
         /// </summary>
         /// <param name="game">game the links will be searched for.</param>
-        /// <param name="isBulkAction">If true, the method already is used in a progress bar and no new one has to be started.</param>
+        /// <param name="isBulkAction">
+        /// If true, the method already is used in a progress bar and no new one has to be started.
+        /// </param>
         /// <returns>True, if pages were opened.</returns>
         private bool SearchLinksInBrowser(Game game, bool isBulkAction = true)
         {
@@ -346,6 +419,11 @@ namespace LinkUtilities.LinkActions
                 }
 
                 _linkers = viewModel.Links.Where(x => x.Selected).Select(x => x.Linker).ToList();
+
+                if (add)
+                {
+                    InitializePipelines();
+                }
 
                 return true;
             }

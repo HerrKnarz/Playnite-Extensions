@@ -45,8 +45,9 @@ namespace LinkUtilities.BaseClasses
         public virtual int Delay => 0;
         public abstract string LinkName { get; }
         public virtual string LinkUrl { get; set; } = string.Empty;
+        public virtual LinkWorker LinkWorker { get; set; }
         public virtual bool NeedsToBeChecked { get; set; } = true;
-        public virtual int Priority => 10;
+        public virtual int Priority => 1;
         public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
         public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
         public virtual bool ReturnsSameUrl { get; set; } = false;
@@ -77,7 +78,12 @@ namespace LinkUtilities.BaseClasses
             return result != null && AddLinkFromSearch(game, (SearchResult)result, cleanUpAfterAdding);
         }
 
-        public virtual bool CheckLink(string link) => WebHelper.IsUrlOk(link, UrlLoadMethod, AllowRedirects, ReturnsSameUrl, WrongTitle, CheckForContent);
+        public virtual bool CheckLink(string link)
+        {
+            return UrlLoadMethod == UrlLoadMethod.NewDefault
+                ? LinkWorker.IsUrlOk(link, ReturnsSameUrl, WrongTitle, CheckForContent, GlobalSettings.Instance().DebugMode)
+                : WebHelper.IsUrlOk(link, UrlLoadMethod, AllowRedirects, ReturnsSameUrl, WrongTitle, CheckForContent);
+        }
 
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -135,6 +141,9 @@ namespace LinkUtilities.BaseClasses
 
             switch (AddType)
             {
+                //TODO: Temporarily add new UrlLoadMethod for new Pipelines to use the new pipeline method
+                //and change certain linkers to thar one.
+
                 case LinkAddTypes.SingleSearchResult:
                     LinkUrl = GetGamePath(game);
                     break;
@@ -230,7 +239,16 @@ namespace LinkUtilities.BaseClasses
         public virtual List<GenericItemOption> GetSearchResults(string searchTerm) => new List<GenericItemOption>();
 
         public virtual bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
-            => true;
+        {
+            if (LinkWorker != null)
+            {
+                return true;
+            }
+
+            LinkWorker = new LinkWorker();
+
+            return true;
+        }
 
         public virtual void StartBrowserSearch(Game game) => Process.Start(GetBrowserSearchLink(game));
 

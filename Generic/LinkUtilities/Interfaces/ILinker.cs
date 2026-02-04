@@ -77,6 +77,11 @@ namespace LinkUtilities.Interfaces
         string LinkUrl { get; set; }
 
         /// <summary>
+        /// Specifies the LinkWorker the link source uses to load urls.
+        /// </summary>
+        LinkWorker LinkWorker { get; }
+
+        /// <summary>
         /// Specifies, if the link needs to be checked.
         /// </summary>
         bool NeedsToBeChecked { get; set; }

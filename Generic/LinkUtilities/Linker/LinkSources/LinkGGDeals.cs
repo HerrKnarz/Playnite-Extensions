@@ -3,7 +3,7 @@
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to GG.deals.
+    /// Adds a link to GG.deals.
     /// </summary>
     internal class LinkGgDeals : BaseClasses.Linker
     {
@@ -12,6 +12,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override bool CanBeSearched => false;
         public override string LinkName => "GG.deals";
         public override bool NeedsToBeChecked => false;
+        public override int Priority => 10;
 
         // GG.deals only works with steam ids, since the website won't let us verify the links.
         public override string GetGamePath(Game game, string gameName = null) => GetSteamId(game);

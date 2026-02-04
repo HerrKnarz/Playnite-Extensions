@@ -11,7 +11,7 @@ using System.Net;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to Mod DB.
+    /// Adds a link to Mod DB.
     /// </summary>
     internal class LinkModDb : BaseClasses.Linker
     {
@@ -20,9 +20,10 @@ namespace LinkUtilities.Linker.LinkSources
         public override string CheckForContent => "<h2 itemprop=\"name\"";
         public override string LinkName => "Mod DB";
         public override string SearchUrl => _websiteUrl + "/games?filter=t&kw=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
-        // Mod DB Links need the game name in lowercase without special characters and hyphens instead of white spaces.
+        // Mod DB Links need the game name in lowercase without special characters and hyphens
+        // instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()
                 .CollapseWhitespaces()
