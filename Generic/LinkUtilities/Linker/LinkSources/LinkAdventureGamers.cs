@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -11,7 +12,7 @@ using System.Net;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to Adventure Gamers.
+    /// Adds a link to Adventure Gamers.
     /// </summary>
     internal class LinkAdventureGamers : BaseClasses.Linker
     {
@@ -19,7 +20,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string CheckForContent => "<div class=\"game-detail-page\"";
         public override string LinkName => "Adventure Gamers";
         public override string SearchUrl => "https://adventuregamers.com/?s=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()
@@ -31,7 +32,7 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
+                var urlLoadResult = LinkWorker.LoadUrl($"{SearchUrl}{searchTerm.UrlEncode()}", DocumentType.Source, string.Empty, GlobalSettings.Instance().DebugMode);
 
                 if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
                 {
