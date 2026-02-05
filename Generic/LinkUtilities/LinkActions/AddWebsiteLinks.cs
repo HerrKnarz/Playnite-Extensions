@@ -107,6 +107,13 @@ namespace LinkUtilities.LinkActions
             }
         }
 
+        public override void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            base.FollowUp(actionModifier, isBulkAction);
+
+            DisposePipelines();
+        }
+
         public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
             switch (actionModifier)
@@ -255,9 +262,7 @@ namespace LinkUtilities.LinkActions
         private void InitializePipelines()
         {
             //TODO: Maybe make Pipelines a separate class to manage them better.
-
             DisposePipelines();
-            //TODO: Add After method to ILinkAction to dispose pipelines after bulk action is done.
 
             var pipelineId = 0;
 

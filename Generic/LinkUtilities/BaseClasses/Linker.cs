@@ -141,9 +141,6 @@ namespace LinkUtilities.BaseClasses
 
             switch (AddType)
             {
-                //TODO: Temporarily add new UrlLoadMethod for new Pipelines to use the new pipeline method
-                //and change certain linkers to thar one.
-
                 case LinkAddTypes.SingleSearchResult:
                     LinkUrl = GetGamePath(game);
                     break;
@@ -194,6 +191,12 @@ namespace LinkUtilities.BaseClasses
             links.Add(new Link(LinkName, LinkUrl));
 
             return true;
+        }
+
+        public void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            LinkWorker?.Dispose();
+            LinkWorker = null;
         }
 
         public virtual string GetBrowserSearchLink(Game game = null) => BrowserSearchUrl + game.Name.UrlEncode();

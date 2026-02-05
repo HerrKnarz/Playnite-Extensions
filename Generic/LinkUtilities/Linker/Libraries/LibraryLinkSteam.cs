@@ -88,19 +88,7 @@ namespace LinkUtilities.Linker.Libraries
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            var games = new List<SteamSearchResult>();
-
-            if (LinkWorker != null)
-            {
-                games = LinkWorker.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, GlobalSettings.Instance().DebugMode);
-            }
-            else
-            {
-                using (LinkWorker = new LinkWorker())
-                {
-                    games = LinkWorker.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, GlobalSettings.Instance().DebugMode);
-                }
-            }
+            var games = LinkWorker.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, GlobalSettings.Instance().DebugMode);
 
             return games?.Any() ?? false
                 ? new List<GenericItemOption>(games.Select(g => new SearchResult

@@ -2,6 +2,7 @@
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.LinkActions;
+using LinkUtilities.Settings;
 using LinkUtilities.ViewModels;
 using LinkUtilities.Views;
 using Playnite.SDK;
@@ -11,7 +12,8 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
+using System.Windows.Forms;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace LinkUtilities
 {
@@ -127,19 +129,23 @@ namespace LinkUtilities
             // While sorting Links we set IsUpdating to true, so the library update event knows it
             // doesn't need to sort again.
             IsUpdating = true;
+            var gamesAffected = 0;
 
+            Cursor.Current = Cursors.WaitCursor;
             try
             {
                 if (games.Count == 1)
                 {
                     linkAction.Execute(games.First(), actionModifier, false);
+
+                    linkAction.FollowUp(actionModifier, false);
+
+                    gamesAffected = 1;
                 }
                 // if we have more than one game in the list, we want to start buffered mode and
                 // show a progress bar.
                 else if (games.Count > 1)
                 {
-                    var gamesAffected = 0;
-
                     using (PlayniteApi.Database.BufferedUpdate())
                     {
                         if (!linkAction.Prepare(actionModifier))
@@ -177,6 +183,8 @@ namespace LinkUtilities
 
                                     activateGlobalProgress.CurrentProgressValue++;
                                 }
+
+                                linkAction.FollowUp(actionModifier);
                             }
                             catch (Exception ex)
                             {
@@ -185,16 +193,25 @@ namespace LinkUtilities
                         }, globalProgressOptions);
                     }
 
-                    // Shows a dialog with the number of games actually affected.
-                    if (showDialog)
+                    if (!showDialog)
                     {
-                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
+                        return;
                     }
+
+                    // Shows a dialog with the number of games actually affected.
+                    Cursor.Current = Cursors.Default;
+                    PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(linkAction.ResultMessage), gamesAffected));
                 }
             }
             finally
             {
+                if (GlobalSettings.Instance().DebugMode)
+                {
+                    Log.Debug($"===> Finished {linkAction.GetType()} with {gamesAffected} games affected. =======================");
+                }
+
                 IsUpdating = false;
+                Cursor.Current = Cursors.Default;
             }
         }
 
