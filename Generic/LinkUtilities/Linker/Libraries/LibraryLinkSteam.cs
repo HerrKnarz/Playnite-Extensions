@@ -6,12 +6,12 @@ using LinkUtilities.Interfaces;
 using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Game = Playnite.SDK.Models.Game;
 
 namespace LinkUtilities.Linker.Libraries
@@ -53,8 +53,9 @@ namespace LinkUtilities.Linker.Libraries
         public string NameNewsLink { get; set; } = "News";
         public string NameStorePageLink { get; set; } = "Store Page";
         public string NameWorkshopLink { get; set; } = "Workshop";
+
         public override string SearchUrl => "https://steamcommunity.com/actions/SearchApps/";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
         public bool UseAppLinks { get; set; } = false;
 
         public override bool AddLinkFromSearch(Game game, SearchResult result, bool cleanUpAfterAdding = true)
@@ -87,7 +88,19 @@ namespace LinkUtilities.Linker.Libraries
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
-            var games = ApiHelper.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, Encoding.UTF8);
+            var games = new List<SteamSearchResult>();
+
+            if (LinkWorker != null)
+            {
+                games = LinkWorker.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, GlobalSettings.Instance().DebugMode);
+            }
+            else
+            {
+                using (LinkWorker = new LinkWorker())
+                {
+                    games = LinkWorker.GetJsonFromApi<List<SteamSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, GlobalSettings.Instance().DebugMode);
+                }
+            }
 
             return games?.Any() ?? false
                 ? new List<GenericItemOption>(games.Select(g => new SearchResult
@@ -99,7 +112,7 @@ namespace LinkUtilities.Linker.Libraries
                 : base.GetSearchResults(searchTerm);
         }
 
-        private void AddLink(Game game, ICollection<Link> links, bool canAdd, string gameId, string url, string name, bool checkLink = false)
+        private void AddLink(Game game, ICollection<Link> links, string gameId, string url, string name, bool checkLink = false)
         {
             if (LinkHelper.LinkExists(game, name))
             {
@@ -111,10 +124,7 @@ namespace LinkUtilities.Linker.Libraries
                 return;
             }
 
-            if (canAdd)
-            {
-                links.Add(new Link(name, $"{GetPrefix()}{string.Format(url, gameId)}"));
-            }
+            links.Add(new Link(name, $"{GetPrefix()}{string.Format(url, gameId)}"));
         }
 
         private bool AddLinks(Game game, out List<Link> links, string gameId)
@@ -123,20 +133,48 @@ namespace LinkUtilities.Linker.Libraries
 
             links = new List<Link>();
 
-            AddLink(game, links, AddAchievementLink, gameId, _urlAchievements, NameAchievementLink);
-            AddLink(game, links, AddCommunityLink, gameId, _urlCommunity, NameCommunityLink);
-            AddLink(game, links, AddDiscussionLink, gameId, _urlDiscussion, NameDiscussionLink);
-            AddLink(game, links, AddGuidesLink, gameId, _urlGuides, NameGuidesLink);
-            AddLink(game, links, AddNewsLink, gameId, _urlNews, NameNewsLink);
-            AddLink(game, links, AddStorePageLink, gameId, _urlStorePage, NameStorePageLink);
-            AddLink(game, links, AddWorkshopLink, gameId, _urlWorkshop, NameWorkshopLink, true);
+            if (AddAchievementLink)
+            {
+                AddLink(game, links, gameId, _urlAchievements, NameAchievementLink);
+            }
+
+            if (AddCommunityLink)
+            {
+                AddLink(game, links, gameId, _urlCommunity, NameCommunityLink);
+            }
+
+            if (AddDiscussionLink)
+            {
+                AddLink(game, links, gameId, _urlDiscussion, NameDiscussionLink);
+            }
+
+            if (AddGuidesLink)
+            {
+                AddLink(game, links, gameId, _urlGuides, NameGuidesLink);
+            }
+
+            if (AddNewsLink)
+            {
+                AddLink(game, links, gameId, _urlNews, NameNewsLink);
+            }
+
+            if (AddStorePageLink)
+            {
+                AddLink(game, links, gameId, _urlStorePage, NameStorePageLink);
+            }
+
+            // TODO: Find a more reliable way to check for workshop existence - probably an API call
+            if (AddWorkshopLink)
+            {
+                AddLink(game, links, gameId, _urlWorkshop, NameWorkshopLink, true);
+            }
 
             if (links.Any())
             {
                 return true;
             }
 
-            AddLink(game, links, true, gameId, _urlStorePage, LinkName);
+            AddLink(game, links, gameId, _urlStorePage, LinkName);
 
             return links.Any();
         }
