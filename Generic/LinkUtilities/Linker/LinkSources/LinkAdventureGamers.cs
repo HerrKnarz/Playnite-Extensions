@@ -1,7 +1,6 @@
 ﻿using KNARZhelper;
 using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
-using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -32,14 +31,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = LinkWorker.LoadUrl($"{SearchUrl}{searchTerm.UrlEncode()}", DocumentType.Source, string.Empty, GlobalSettings.Instance().DebugMode);
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectSingleNode("//div[@id='search-adgames']").SelectNodes(".//a[@class='search-title-text']");
+                var htmlNodes = document.DocumentNode.SelectSingleNode("//div[@id='search-adgames']").SelectNodes(".//a[@class='search-title-text']");
 
                 if (htmlNodes?.Any() ?? false)
                 {

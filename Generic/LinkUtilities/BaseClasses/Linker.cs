@@ -1,4 +1,5 @@
-﻿using KNARZhelper;
+﻿using HtmlAgilityPack;
+using KNARZhelper;
 using KNARZhelper.WebCommon;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading;
 
 // ReSharper disable VirtualMemberCallInConstructor
@@ -80,8 +82,9 @@ namespace LinkUtilities.BaseClasses
 
         public virtual bool CheckLink(string link)
         {
+            // TODO: Remove else block when all linkers are switched to new method
             return UrlLoadMethod == UrlLoadMethod.NewDefault
-                ? LinkWorker.IsUrlOk(link, ReturnsSameUrl, WrongTitle, CheckForContent, GlobalSettings.Instance().DebugMode)
+                ? LinkWorker.IsUrlOk(link, ReturnsSameUrl, WrongTitle, GlobalSettings.Instance().DebugMode, CheckForContent)
                 : WebHelper.IsUrlOk(link, UrlLoadMethod, AllowRedirects, ReturnsSameUrl, WrongTitle, CheckForContent);
         }
 
@@ -260,6 +263,21 @@ namespace LinkUtilities.BaseClasses
             var steamId = SteamHelper.GetSteamId(game);
 
             return string.IsNullOrEmpty(steamId) ? AddWebsiteLinks.Instance().SteamId : steamId;
+        }
+
+        internal (bool, HtmlDocument) LoadDocument(string url)
+        {
+            var urlLoadResult = LinkWorker.LoadUrl(url, DocumentType.Source, GlobalSettings.Instance().DebugMode);
+
+            if (urlLoadResult.StatusCode != HttpStatusCode.OK || urlLoadResult.ErrorDetails.Length > 0 || string.IsNullOrEmpty(urlLoadResult.PageText))
+            {
+                return (false, null);
+            }
+
+            var document = new HtmlDocument();
+            document.LoadHtml(urlLoadResult.PageText);
+
+            return (true, document);
         }
 
         /// <summary>

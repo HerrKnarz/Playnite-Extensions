@@ -21,18 +21,17 @@ namespace LinkUtilities.Linker.LinkSources
 
         public override string LinkName => "Arcade Database";
         public override string SearchUrl => "http://adb.arcadeitalia.net/lista_mame.php?lang=en&ricerca=";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool CheckLink(string link)
         {
             try
             {
-                // Arcade Database returns code 200, if the game isn't found. So we have to check the HTML itself.
-                var urlLoadResult = WebHelper.LoadHtmlDocument(link);
+                // Arcade Database returns code 200, if the game isn't found. So we have to check
+                // the HTML itself.
+                (var success, var document) = LoadDocument(link);
 
-                return urlLoadResult.ErrorDetails.Length == 0
-                    && urlLoadResult.StatusCode == HttpStatusCode.OK
-                    && !(urlLoadResult.Document is null)
-                    && urlLoadResult.Document.DocumentNode.SelectSingleNode("//div[@id='game_not_found']") is null;
+                return success && document.DocumentNode.SelectSingleNode("//div[@id='game_not_found']") is null;
             }
             catch
             {
@@ -50,14 +49,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//li[@class='elenco_galleria']");
+                var htmlNodes = document.DocumentNode.SelectNodes("//li[@class='elenco_galleria']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
