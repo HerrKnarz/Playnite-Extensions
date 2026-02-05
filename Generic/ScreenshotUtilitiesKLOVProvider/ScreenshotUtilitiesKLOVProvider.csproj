@@ -107,9 +107,6 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
-    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\LinkWorker.cs">
-      <Link>Shared\WebCommon\LinkWorker.cs</Link>
-    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\Models\UrlLoadResult.cs">
       <Link>Shared\WebCommon\Models\UrlLoadResult.cs</Link>
     </Compile>
