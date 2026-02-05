@@ -5,6 +5,7 @@ using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -37,7 +38,7 @@ namespace LinkUtilities.Linker.Libraries
 
         public override string LinkName => "Itch";
         public override string SearchUrl => "https://itch.io/api/1/{0}/search/games?query={1}";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool FindLibraryLink(Game game, out List<Link> links)
         {
@@ -50,7 +51,19 @@ namespace LinkUtilities.Linker.Libraries
                 return false;
             }
 
-            var itchMetaData = ApiHelper.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName, Encoding.UTF8, true);
+            var itchMetaData = new ItchMetaData();
+
+            if (LinkWorker != null)
+            {
+                itchMetaData = LinkWorker.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName, GlobalSettings.Instance().DebugMode);
+            }
+            else
+            {
+                using (LinkWorker = new LinkWorker())
+                {
+                    itchMetaData = LinkWorker.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName, GlobalSettings.Instance().DebugMode);
+                }
+            }
 
             LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
 
