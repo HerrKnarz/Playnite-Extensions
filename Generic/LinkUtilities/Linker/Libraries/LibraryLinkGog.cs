@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
 using LinkUtilities.Models;
@@ -13,7 +14,7 @@ using Game = Playnite.SDK.Models.Game;
 namespace LinkUtilities.Linker.Libraries
 {
     /// <summary>
-    ///     Adds a link to GOG.
+    /// Adds a link to GOG.
     /// </summary>
     internal class LibraryLinkGog : LibraryLink
     {
@@ -22,14 +23,14 @@ namespace LinkUtilities.Linker.Libraries
         public override string BrowserSearchUrl => "https://www.gog.com/en/games?query=";
 
         /// <summary>
-        ///     ID of the game library to identify it in Playnite.
+        /// ID of the game library to identify it in Playnite.
         /// </summary>
         public override Guid Id { get; } = LinkHelper.GogId;
 
         public override string LinkName => "GOG";
-
         public override bool ReturnsSameUrl { get; set; } = true;
         public override string SearchUrl => "https://catalog.gog.com/v1/catalog?limit=100&locale=en&order=desc:score&page=1&productType=in:game,pack&query=like:";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool FindLibraryLink(Game game, out List<Link> links)
         {
@@ -54,7 +55,8 @@ namespace LinkUtilities.Linker.Libraries
             return true;
         }
 
-        // GOG Links need the game name in lowercase without special characters and underscores instead of white spaces.
+        // GOG Links need the game name in lowercase without special characters and underscores
+        // instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()
