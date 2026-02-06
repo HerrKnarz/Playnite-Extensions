@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources
@@ -11,8 +12,10 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "https://mapgenie.io/";
         public override int Delay => 200;
         public override string LinkName => "Map Genie";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
-        // Map Genie Links need the game name in lowercase without special characters and hyphens instead of white spaces.
+        // Map Genie Links need the game name in lowercase without special characters and hyphens
+        // instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
         {
             return (gameName ?? game.Name).RemoveDiacritics()

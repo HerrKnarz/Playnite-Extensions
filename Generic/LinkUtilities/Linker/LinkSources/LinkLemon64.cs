@@ -11,7 +11,7 @@ using System.Net;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to Lemon Amiga.
+    /// Adds a link to Lemon Amiga.
     /// </summary>
     internal class LinkLemon64 : BaseClasses.Linker
     {
@@ -19,8 +19,10 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => _websiteUrl + "/game/";
         public override string LinkName => "Lemon64";
         public override string SearchUrl => "https://www.lemon64.com/games/list.php?list_title=";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
-        // Lemon64 Links need the game name in lowercase without leading articles, special characters and hyphens instead of white spaces.
+        // Lemon64 Links need the game name in lowercase without leading articles, special
+        // characters and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()
                 .RemoveFirst("the ")
@@ -33,14 +35,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]/div/div[2]");
+                var htmlNodes = document.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]/div/div[2]");
 
                 if (htmlNodes?.Any() ?? false)
                 {

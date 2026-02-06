@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Helper;
 using Playnite.SDK.Models;
 using System;
@@ -47,6 +48,7 @@ namespace LinkUtilities.Linker.LinkSources
 
         public override string LinkName => "Metacritic";
         public override string SearchUrl => string.Empty;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
