@@ -11,7 +11,7 @@ using System.Net;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to Lemon Amiga.
+    /// Adds a link to Lemon Amiga.
     /// </summary>
     internal class LinkLemonAmiga : BaseClasses.Linker
     {
@@ -19,44 +19,44 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "https://www.lemonamiga.com/games/";
         public override string LinkName => "Lemon Amiga";
         public override string SearchUrl => "https://www.lemonamiga.com/games/list.php?list_title=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]");
+                var htmlNodes = document.DocumentNode.SelectNodes("//div[contains(@class, 'game-col')]/div/div[2]");
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    return htmlNodes
-                            .Select(node => new
-                            {
-                                node,
-                                suffixNode = node.SelectSingleNode("./div/div[@class='game-grid-title']/a/img")
-                            })
-                            .Select(t => new
-                            {
-                                t,
-                                suffix =
-                                    t.suffixNode != null
-                                        ? $" ({t.suffixNode.GetAttributeValue("alt", "")})"
-                                        : string.Empty
-                            })
-                            .Select(t => new SearchResult
-                            {
-                                Name = $"{WebUtility.HtmlDecode(t.t.node.SelectSingleNode("./div/div[@class='game-grid-title']/a").InnerText)}{t.suffix}",
-                                Url = $"{BaseUrl}{t.t.node.SelectSingleNode("./div/div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
-                                Description = $"{WebUtility.HtmlDecode(t.t.node.SelectSingleNode("./div/div[@class='game-grid-info']").InnerText.Trim())} {WebUtility.HtmlDecode(t.t.node.SelectSingleNode("./div/div[@class='game-grid-category']").InnerText.Trim())}"
-                            }).Cast<GenericItemOption>()
-                        .ToList();
+                    var searchResults = new List<GenericItemOption>();
+                    var suffix = string.Empty;
+
+                    foreach (var node in htmlNodes)
+                    {
+                        var suffixNode = node.SelectSingleNode("./div[@class='game-grid-title']/a/img");
+
+                        if (suffixNode != null)
+                        {
+                            suffix = $" ({suffixNode.GetAttributeValue("alt", "")})";
+                        }
+
+                        searchResults.Add(new SearchResult
+                        {
+                            Name = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='game-grid-title']/a").InnerText)}{suffix}",
+                            Url = $"{BaseUrl}{node.SelectSingleNode("./div[@class='game-grid-title']/a").GetAttributeValue("href", "")}",
+                            Description = $"{WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='grid-info']").InnerText.Trim())} {WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='grid-category']").InnerText.Trim())}"
+                        });
+                    }
+
+                    return searchResults;
                 }
             }
             catch (Exception ex)
