@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 # manual ignores
 /Source/Constants.cs
+**/Common/Metadata/Views/
+.idea/

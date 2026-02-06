@@ -1,9 +1,8 @@
 ﻿using System.Windows.Controls;
 
-namespace WikipediaMetadata
+namespace WikipediaMetadata;
+
+public partial class WikipediaMetadataSettingsView : UserControl
 {
-    public partial class WikipediaMetadataSettingsView : UserControl
-    {
-        public WikipediaMetadataSettingsView() => InitializeComponent();
-    }
+    public WikipediaMetadataSettingsView() => InitializeComponent();
 }
