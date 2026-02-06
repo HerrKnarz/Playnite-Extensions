@@ -18,8 +18,10 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "http://www.hardcoregaming101.net/";
         public override string LinkName => "Hardcore Gaming 101";
         public override string SearchUrl => "http://www.hardcoregaming101.net/?s=";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
-        // HG101 Links need the game name in lowercase without special characters and hyphens instead of white spaces.
+        // HG101 Links need the game name in lowercase without special characters and hyphens
+        // instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()
                 .CollapseWhitespaces()
@@ -30,14 +32,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}", string.Empty, true);
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//header[@class='entry-header']");
+                var htmlNodes = document.DocumentNode.SelectNodes("//header[@class='entry-header']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
