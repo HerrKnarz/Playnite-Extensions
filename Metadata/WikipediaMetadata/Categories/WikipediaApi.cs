@@ -36,7 +36,7 @@ public class WikipediaApi
             { "action", "query" },
             { "list", "search" },
             { "srsearch", query },
-            { "limit", "100" },
+            { "srlimit", "100" },
             { "srnamespace", ((int)ns).ToString() },
         });
     }

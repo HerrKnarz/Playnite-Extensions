@@ -20,7 +20,7 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
         _ui = ui;
         _wikipediaDataSource = dataSource;
         Ui.AllowEmptySearchQuery = false;
-        Ui.DefaultSearch = "Video games set in";
+        Ui.DefaultSearch = "Video games";
     }
 
     public override string MetadataProviderName => "Wikipedia";
