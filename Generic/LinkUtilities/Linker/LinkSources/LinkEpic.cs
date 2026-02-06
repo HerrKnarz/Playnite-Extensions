@@ -1,7 +1,8 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -20,6 +21,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BrowserSearchUrl => "https://store.epicgames.com/en-US/browse?q=";
         public override string LinkName => "Epic";
         public override string SearchUrl => "https://www.epicgames.com/graphql?query={Catalog{searchStore(keywords:%22{SearchString}%22,category:%22games/edition%22,effectiveDate:%22[1900-01-01,{DateUntil}]%22,count:100){elements{title%20urlSlug%20seller{name}}}}}";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
@@ -33,9 +35,10 @@ namespace LinkUtilities.Linker.LinkSources
 
             try
             {
-                // Unfortunately Epic returns the status code forbidden, when trying to check the url, because they want cookies and
-                // javascript active. Fortunately we can use the game slug in the store api. If it doesn't return an error, there should also
-                // be a link with that slug.
+                // Unfortunately Epic returns the status code forbidden, when trying to check the
+                // url, because they want cookies and javascript active. Fortunately we can use the
+                // game slug in the store api. If it doesn't return an error, there should also be a
+                // link with that slug.
                 _ = client.DownloadString(url);
 
                 LinkUrl = $"{BaseUrl}{gameSlug}";
@@ -51,7 +54,8 @@ namespace LinkUtilities.Linker.LinkSources
             }
         }
 
-        // Epic Links need the game name in lowercase without special characters and underscores instead of white spaces.
+        // Epic Links need the game name in lowercase without special characters and underscores
+        // instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()
@@ -66,7 +70,7 @@ namespace LinkUtilities.Linker.LinkSources
                 .Replace("{SearchString}", searchTerm.UrlEncode())
                 .Replace("{DateUntil}", DateTime.Now.AddDays(5).ToString("yyyy-MM-dd"));
 
-            var epicSearchResult = ApiHelper.GetJsonFromApi<EpicSearchResult>(url, LinkName, Encoding.UTF8, true);
+            var epicSearchResult = LinkWorker.GetJsonFromApi<EpicSearchResult>(url, LinkName, GlobalSettings.Instance().DebugMode);
 
             return epicSearchResult?.Data?.Catalog?.SearchStore?.Elements?.Any() ?? false
                 ? new List<GenericItemOption>(Enumerable.Where<Element>(epicSearchResult.Data.Catalog.SearchStore.Elements, e => !string.IsNullOrEmpty(e.UrlSlug))
