@@ -11,22 +11,22 @@ using System.Net;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to Mod DB.
+    /// Adds a link to Mod DB.
     /// </summary>
     internal class LinkIGDB : BaseClasses.Linker
     {
-        private string _gameSlug = string.Empty;
-
         private const string _websiteUrl = "https://www.igdb.com";
+        private string _gameSlug = string.Empty;
         public override string BaseUrl => _websiteUrl + "/games/";
         public override string CheckForContent => $"<meta content=\"{BaseUrl}{_gameSlug}\"";
         public override string LinkName => "IGDB";
         public override string SearchUrl => _websiteUrl + "/search?utf8=✓&q=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         //TODO: Find a reliable way to verify the correct game page. For some reason it always returns the same url and also has the game-slug-id, although it doesn't anymore when opening it in browser...
 
-        // IGDB Links need the game name in lowercase without special characters and hyphens instead of white spaces.
+        // IGDB Links need the game name in lowercase without special characters and hyphens instead
+        // of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
         {
             _gameSlug = (gameName ?? game.Name).RemoveDiacritics()
@@ -42,14 +42,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//div[@id='search-results']//div[@class='media-body']");
+                var htmlNodes = document.DocumentNode.SelectNodes("//div[@id='search-results']//div[@class='media-body']");
 
                 if (htmlNodes?.Any() ?? false)
                 {

@@ -1,5 +1,5 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using Playnite.SDK;
@@ -10,7 +10,7 @@ using Game = Playnite.SDK.Models.Game;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to IsThereAnyDeal.
+    /// Adds a link to IsThereAnyDeal.
     /// </summary>
     internal class LinkIsThereAnyDeal : BaseClasses.Linker
     {
@@ -25,9 +25,9 @@ namespace LinkUtilities.Linker.LinkSources
 
         public override string BaseUrl => _baseUrl;
         public override string BrowserSearchUrl => "https://isthereanydeal.com/search/?q=";
-
         public override string LinkName => "IsThereAnyDeal";
         public override string SearchUrl => "https://api.isthereanydeal.com/games/search/v1?key={0}&title={1}";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override string GetGamePath(Game game, string gameName = null)
         {
@@ -40,7 +40,8 @@ namespace LinkUtilities.Linker.LinkSources
                 return steamId;
             }
 
-            // For all other libraries links need the result name in lowercase without special characters and hyphens instead of white spaces.
+            // For all other libraries links need the result name in lowercase without special
+            // characters and hyphens instead of white spaces.
             _baseUrl = _standardUrl;
 
             return (gameName ?? game.Name).RemoveDiacritics()
