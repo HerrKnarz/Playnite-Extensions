@@ -98,26 +98,41 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
     public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)
     {
         var foundGame = FindGame();
-        if (foundGame == null)
-            return [];
+
+        var categorySettings = settings.TagSettings.FirstOrDefault(ts => ts.Name == "Categories");
+        if (categorySettings?.IsChecked != true)
+            return foundGame.Tags;
 
         var tags = foundGame.Tags ?? [];
-        if (!settings.TagSettings.Any(ts => ts.Name == "Categories" && ts.IsChecked))
-            return tags;
 
         var articleDetails = api.GetArticleCategories(foundGame.Key);
         HashSet<string> excludedCategoryStarts = ["Articles ", "All Wikipedia articles ", "CS1", "Use ", ..foundGame.InfoBoxLinkedArticles];
+        HashSet<string> excludedCategories = foundGame.InfoBoxLinkedArticles.Select(GetCategoryNameFromArticle).Where(x => x != null).ToHashSet();
         foreach (string category in articleDetails.Categories)
         {
             string strippedName = category.StripCategoryPrefix();
-            if (excludedCategoryStarts.Any(a => strippedName.StartsWith(a, StringComparison.InvariantCultureIgnoreCase)) || strippedName.Contains("Wikidata"))
+            if (excludedCategoryStarts.Any(a => strippedName.StartsWith(a, StringComparison.InvariantCultureIgnoreCase)) || strippedName.Contains("Wikidata") || excludedCategories.Contains(strippedName))
                 continue;
 
-            tags.Add(new MetadataNameProperty(strippedName));
+            string nameWithPrefix = $"{categorySettings.Prefix} {strippedName}".Trim();
+
+            tags.Add(new MetadataNameProperty(nameWithPrefix));
         }
 
-        return tags.Any() ? tags : base.GetTags(args);
+        return tags.Any() ? tags : null; //return null to allow Playnite to skip to other metadata providers' results
     }
+
+    /// <summary>
+    /// Some articles aren't the first part of their category names - get those articles' exact corresponding category names to exclude
+    /// </summary>
+    /// <param name="articleName"></param>
+    /// <returns></returns>
+    private static string GetCategoryNameFromArticle(string articleName) => articleName switch
+    {
+        "Xbox (console)" => "Xbox games",
+        "Mac OS X" => "MacOS games",
+        _ => null,
+    };
 
     /// <summary>
     /// Gets the page to the game from Wikipedia
