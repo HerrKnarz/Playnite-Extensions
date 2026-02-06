@@ -24,7 +24,7 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}", string.Empty, true);
 
                 if (!success)
                 {

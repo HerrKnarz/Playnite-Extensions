@@ -251,7 +251,7 @@ namespace LinkUtilities.BaseClasses
                 return true;
             }
 
-            LinkWorker = new LinkWorker();
+            LinkWorker = new LinkWorker(-1);
 
             return true;
         }
@@ -288,6 +288,11 @@ namespace LinkUtilities.BaseClasses
         private string TryToFindPerfectMatchingUrl(string gameName)
         {
             var searchResults = GetSearchResults(gameName);
+
+            if (searchResults == null || searchResults.Count == 0)
+            {
+                return string.Empty;
+            }
 
             var searchName = gameName.RemoveSpecialChars().Replace("-", "").Replace(" ", "");
 

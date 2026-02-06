@@ -34,14 +34,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}", "<div class=\"col-12 result\"", true);
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//div[contains(@class, 'rowcontent')]/div[@class='content']");
+                var htmlNodes = document.DocumentNode.SelectNodes("//div[contains(@class, 'rowcontent')]/div[@class='content']");
 
                 if (htmlNodes?.Any() ?? false)
                 {

@@ -59,7 +59,7 @@ namespace LinkUtilities.Linker.Libraries
             }
             else
             {
-                using (LinkWorker = new LinkWorker())
+                using (LinkWorker = new LinkWorker(-2))
                 {
                     itchMetaData = LinkWorker.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName, GlobalSettings.Instance().DebugMode);
                 }

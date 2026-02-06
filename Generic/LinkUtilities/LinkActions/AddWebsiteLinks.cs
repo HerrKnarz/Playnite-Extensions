@@ -270,7 +270,7 @@ namespace LinkUtilities.LinkActions
 
             while (pipelineId < maxPipelines)
             {
-                Pipelines.Add(new LinkWorker());
+                Pipelines.Add(new LinkWorker(pipelineId));
                 pipelineId++;
             }
 

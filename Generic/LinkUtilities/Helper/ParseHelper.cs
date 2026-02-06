@@ -83,7 +83,7 @@ namespace LinkUtilities.Helper
                 {
                     var success = false;
 
-                    (success, document) = linker.LoadDocument(string.Format(searchUrl, searchTerm.UrlEncode()));
+                    (success, document) = linker.LoadDocument(string.Format(searchUrl, searchTerm.UrlEncode()), "", true);
 
                     if (!success)
                     {
