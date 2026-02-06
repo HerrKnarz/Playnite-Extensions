@@ -18,9 +18,10 @@ namespace LinkUtilities.Linker.LinkSources
         public override int Delay => 200;
         public override string LinkName => "Family Gaming Database";
         public override string SearchUrl => _websiteUrl + "/search/text/";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Load;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
-        // Family Gaming Database Links need the game name in lowercase without special characters and hyphens instead of white spaces.
+        // Family Gaming Database Links need the game name in lowercase without special characters
+        // and hyphens instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()
                 .CollapseWhitespaces()
@@ -30,14 +31,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectSingleNode("//div[@id='searchResultsFlexContainer']").SelectNodes(".//div[@class='listViewOverview']/a[@class='quietLink']");
+                var htmlNodes = document.DocumentNode.SelectSingleNode("//div[@id='searchResultsFlexContainer']").SelectNodes(".//div[@class='listViewOverview']/a[@class='quietLink']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
