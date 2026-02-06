@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Helper;
 using LinkUtilities.Settings;
 using Playnite.SDK;
@@ -11,7 +12,7 @@ using WikipediaMetadata.Models;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to Wikipedia.
+    /// Adds a link to Wikipedia.
     /// </summary>
     internal class LinkWikipedia : BaseClasses.Linker
     {
@@ -19,6 +20,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BrowserSearchUrl => "https://en.wikipedia.org/w/index.php?search=";
         public override string LinkName => "Wikipedia";
         public override string SearchUrl => "https://en.wikipedia.org/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool AddSearchedLink(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true)
         {
@@ -38,7 +40,8 @@ namespace LinkUtilities.Linker.LinkSources
             return result != null && LinkHelper.AddLink(game, LinkName, BaseUrl + ((WikipediaItemOption)result).Key, false, cleanUpAfterAdding);
         }
 
-        // Wikipedia Links need the game with underscores instead of whitespaces and special characters simply encoded.
+        // Wikipedia Links need the game with underscores instead of whitespaces and special
+        // characters simply encoded.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).CollapseWhitespaces()
                 .Replace(" ", "_")

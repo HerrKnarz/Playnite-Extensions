@@ -1,5 +1,5 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
+﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
@@ -20,6 +20,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "https://www.zophar.net";
         public override string LinkName => "Zophar (Music)";
         public override string SearchUrl => "https://www.zophar.net/music/search?search=";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override string GetBrowserSearchLink(Game game = null) => GetSearchUrl(game.Name);
 
@@ -27,10 +28,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var web = new HtmlWeb();
-                var doc = web.Load(GetSearchUrl(searchTerm));
+                (var success, var document) = LoadDocument(GetSearchUrl(searchTerm));
 
-                var htmlNodes = doc.DocumentNode.SelectNodes("//tr[contains(@class, 'regularrow')]");
+                if (!success)
+                {
+                    return null;
+                }
+
+                var htmlNodes = document.DocumentNode.SelectNodes("//tr[contains(@class, 'regularrow')]");
 
                 if (htmlNodes?.Any() ?? false)
                 {
