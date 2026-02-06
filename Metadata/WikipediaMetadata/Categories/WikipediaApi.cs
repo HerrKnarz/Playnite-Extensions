@@ -33,11 +33,11 @@ public class WikipediaApi
     {
         return GetUrl(new()
         {
-            { "action", "opensearch" },
-            { "search", query },
-            { "limit", "50" },
-            { "namespace", ((int)ns).ToString() },
-            //{ "redirects", "resolve" },
+            { "action", "query" },
+            { "list", "search" },
+            { "srsearch", query },
+            { "limit", "100" },
+            { "srnamespace", ((int)ns).ToString() },
         });
     }
 
@@ -63,6 +63,7 @@ public class WikipediaApi
             { "cmtitle", pageName },
             { "cmlimit", "max" },
             { "cmprop", "title|type" },
+            { "cmnamespace", "0|14" }, // 0=articles, 14=categories - sometimes there would be images in here too
         }, continueParams);
     }
 
@@ -70,24 +71,10 @@ public class WikipediaApi
     {
         var url = GetSearchUrl(query, ns);
         var response = _downloader.DownloadString(url, cancellationToken: cancellationToken);
-        var responseObj = JsonConvert.DeserializeObject<object[]>(response.ResponseContent);
-        if (responseObj[1] is not JArray names
-            || responseObj[2] is not JArray descriptions
-            || responseObj[3] is not JArray urls)
-        {
-            _logger.Warn($"Failed to deserialize response from {url}: {response.ResponseContent}");
-            yield break;
-        }
+        var responseObj = JsonConvert.DeserializeObject<WikipediaQueryResponse<SearchQueryResponse>>(response.ResponseContent);
 
-        for (int i = 0; i < names.Count; i++)
-        {
-            yield return new()
-            {
-                Name = names[i].ToString(),
-                Description = descriptions[i].ToString(),
-                Url = urls[i].ToString(),
-            };
-        }
+        foreach (var searchResult in responseObj.Query.Search)
+            yield return new() { Name = searchResult.title };
     }
 
     public ArticleDetails GetArticleCategories(string pageName, CancellationToken cancellationToken = default)
