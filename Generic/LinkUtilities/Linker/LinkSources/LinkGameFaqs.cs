@@ -1,8 +1,9 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
+using LinkUtilities.Settings;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,13 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BrowserSearchUrl => $"{BaseUrl}search?game=";
         public override string LinkName => "GameFAQs";
         public override string SearchUrl => $"{BaseUrl}ajax/home_game_search?term=&term=";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
             {
-                var searchResults = ApiHelper.GetJsonFromApi<List<GameFaqsSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName)
+                var searchResults = LinkWorker.GetJsonFromApi<List<GameFaqsSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, GlobalSettings.Instance().DebugMode)
                     .Where(n => n.GameName?.Length > 0).ToList();
 
                 return !searchResults?.Any() ?? true
