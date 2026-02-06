@@ -28,6 +28,6 @@ namespace LinkUtilities.Linker.LinkSources
                 .EscapeDataString();
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
-            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName, 2));
+            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName, 2, this));
     }
 }

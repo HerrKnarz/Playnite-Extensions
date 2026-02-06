@@ -1,4 +1,5 @@
-﻿using KNARZhelper;
+﻿using HtmlAgilityPack;
+using KNARZhelper;
 using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
@@ -14,17 +15,19 @@ using System.Xml.Serialization;
 namespace LinkUtilities.Helper
 {
     /// <summary>
-    ///     Helper functions for parsing strings
+    /// Helper functions for parsing strings
     /// </summary>
     internal static class ParseHelper
     {
         /// <summary>
-        ///     Gets the search results from a mediawiki website via opensearch.
+        /// Gets the search results from a mediawiki website via opensearch.
         /// </summary>
         /// <param name="searchUrl">URL of the search page with {0} for the search term</param>
         /// <param name="searchTerm">Term to search for. Will be encoded in the function!</param>
         /// <param name="linkName">Name of the site for the error message</param>
-        /// <returns>Search results for the search dialogs. Will be an empty list in case of an error.</returns>
+        /// <returns>
+        /// Search results for the search dialogs. Will be an empty list in case of an error.
+        /// </returns>
         internal static List<SearchResult> GetMediaWikiResultsFromApi(string searchUrl, string searchTerm, string linkName)
         {
             var result = new List<SearchResult>();
@@ -55,30 +58,52 @@ namespace LinkUtilities.Helper
         }
 
         /// <summary>
-        ///     Scrapes the search results from a mediawiki search results page. Is used on sites, where opensearch doesn't return
-        ///     sufficient results.
+        /// Scrapes the search results from a mediawiki search results page. Is used on sites, where
+        /// opensearch doesn't return sufficient results.
         /// </summary>
         /// <param name="searchUrl">URL of the search page with {0} for the search term</param>
         /// <param name="searchTerm">Term to search for. Will be encoded in the function!</param>
         /// <param name="websiteUrl">Base URL to add the relative URL of the search results to</param>
         /// <param name="linkName">Name of the site for the error message</param>
-        /// <param name="slashCount">Minimum of slashes in the relative URL to indicate, if it's a subpage</param>
-        /// <returns>Search results for the search dialogs. Will be an empty list in case of an error.</returns>
-        internal static List<SearchResult> GetMediaWikiResultsFromHtml(string searchUrl, string searchTerm, string websiteUrl, string linkName, int slashCount = 3)
+        /// <param name="slashCount">
+        /// Minimum of slashes in the relative URL to indicate, if it's a subpage
+        /// </param>
+        /// <returns>
+        /// Search results for the search dialogs. Will be an empty list in case of an error.
+        /// </returns>
+        internal static List<SearchResult> GetMediaWikiResultsFromHtml(string searchUrl, string searchTerm, string websiteUrl, string linkName, int slashCount = 3, BaseClasses.Linker linker = null)
         {
             var result = new List<SearchResult>();
 
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument(string.Format(searchUrl, searchTerm.UrlEncode()), UrlLoadMethod.OffscreenView);
+                var document = new HtmlDocument();
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (linker != null)
                 {
-                    return null;
+                    var success = false;
+
+                    (success, document) = linker.LoadDocument(string.Format(searchUrl, searchTerm.UrlEncode()));
+
+                    if (!success)
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    var urlLoadResult = WebHelper.LoadHtmlDocument(string.Format(searchUrl, searchTerm.UrlEncode()), UrlLoadMethod.OffscreenView);
+
+                    if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                    {
+                        return null;
+                    }
+
+                    document = urlLoadResult.Document;
                 }
 
-                var resultNode = urlLoadResult.Document.DocumentNode.SelectSingleNode("//h2[text()[contains(., 'Page title matches')]]/following::ul[1]")
-                    ?? urlLoadResult.Document.DocumentNode.SelectSingleNode("//h2/span[text()[contains(., 'Page title matches')]]/following::ul[1]");
+                var resultNode = document.DocumentNode.SelectSingleNode("//h2[text()[contains(., 'Page title matches')]]/following::ul[1]")
+                    ?? document.DocumentNode.SelectSingleNode("//h2/span[text()[contains(., 'Page title matches')]]/following::ul[1]");
 
                 if (resultNode != null)
                 {
@@ -90,7 +115,8 @@ namespace LinkUtilities.Helper
                         {
                             var url = node.SelectSingleNode("./div[@class='mw-search-result-heading']/a").GetAttributeValue("href", "");
 
-                            // MediaWiki returns subpages to games in the results, so we simply count the slashes to filter them out.
+                            // MediaWiki returns subpages to games in the results, so we simply
+                            // count the slashes to filter them out.
                             if (url.Count(x => x == '/') >= slashCount)
                             {
                                 continue;
@@ -122,7 +148,7 @@ namespace LinkUtilities.Helper
         }
 
         /// <summary>
-        ///     Deserializes an XML string into an object
+        /// Deserializes an XML string into an object
         /// </summary>
         /// <typeparam name="T">Object the XML will be deserialized to.</typeparam>
         /// <param name="this">XML string</param>
@@ -134,7 +160,7 @@ namespace LinkUtilities.Helper
         }
 
         /// <summary>
-        ///     Converts a string to a stream.
+        /// Converts a string to a stream.
         /// </summary>
         /// <param name="this">String to convert</param>
         /// <returns>Stream from the string</returns>
@@ -149,9 +175,8 @@ namespace LinkUtilities.Helper
         }
 
         /// <summary>
-        ///     Converts a wildcard pattern to a regular expression.
-        ///     * is interpreted as zero or more characters,
-        ///     ? is interpreted as exactly one character.
+        /// Converts a wildcard pattern to a regular expression.
+        /// * is interpreted as zero or more characters, ? is interpreted as exactly one character.
         /// </summary>
         /// <param name="value">Pattern to convert</param>
         /// <returns>The resulting regular expression</returns>

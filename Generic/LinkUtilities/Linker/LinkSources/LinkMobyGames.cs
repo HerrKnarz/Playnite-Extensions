@@ -11,27 +11,27 @@ using System.Net;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to MobyGames.
+    /// Adds a link to MobyGames.
     /// </summary>
     internal class LinkMobyGames : BaseClasses.Linker
     {
         public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
         public override string LinkName => "MobyGames";
         public override string SearchUrl => "https://www.mobygames.com/search/?type=game&q=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.OffscreenView;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView);
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//tbody/tr/td[last()]");
+                var htmlNodes = document.DocumentNode.SelectNodes("//tbody/tr/td[last()]");
 
                 if (htmlNodes?.Any() ?? false)
                 {

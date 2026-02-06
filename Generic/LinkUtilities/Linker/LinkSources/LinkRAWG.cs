@@ -1,5 +1,5 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using LinkUtilities.Models.RAWG;
 using Playnite.SDK;
@@ -11,17 +11,23 @@ using Game = Playnite.SDK.Models.Game;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to RAWG.io.
+    /// Adds a link to RAWG.io.
     /// </summary>
     internal class LinkRawg : BaseClasses.Linker
     {
-        public LinkRawg() => Settings.NeedsApiKey = true;
+        public LinkRawg()
+        {
+            Settings.NeedsApiKey = true;
+        }
+
         public override string BaseUrl => "https://rawg.io/games/";
         public override string BrowserSearchUrl => "https://rawg.io/search?query=";
         public override string LinkName => "RAWG";
         public override string SearchUrl => "https://api.rawg.io/api/games?key={0}&search={1}&search_precise=true&page_size=50";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
-        // RAWG Links need the result name in lowercase without special characters and hyphens instead of white spaces.
+        // RAWG Links need the result name in lowercase without special characters and hyphens
+        // instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()

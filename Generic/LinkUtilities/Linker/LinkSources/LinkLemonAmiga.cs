@@ -37,11 +37,11 @@ namespace LinkUtilities.Linker.LinkSources
                 if (htmlNodes?.Any() ?? false)
                 {
                     var searchResults = new List<GenericItemOption>();
-                    var suffix = string.Empty;
 
                     foreach (var node in htmlNodes)
                     {
                         var suffixNode = node.SelectSingleNode("./div[@class='game-grid-title']/a/img");
+                        var suffix = string.Empty;
 
                         if (suffixNode != null)
                         {
