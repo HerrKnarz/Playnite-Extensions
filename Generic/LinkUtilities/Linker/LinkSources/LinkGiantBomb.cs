@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
@@ -11,13 +10,19 @@ using System.Linq;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to Giant Bomb.
+    /// Adds a link to Giant Bomb.
     /// </summary>
     internal class LinkGiantBomb : BaseClasses.Linker
     {
-        public LinkGiantBomb() => Settings.NeedsApiKey = true;
-        public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
+        //TODO: Reactivate once GiantBomb switched to MediaWiki.
+        public LinkGiantBomb()
+        {
+            Settings.NeedsApiKey = false;
+        }
+
+        public override LinkAddTypes AddType => LinkAddTypes.None;
         public override string BrowserSearchUrl => "https://www.giantbomb.com/search/?i=&q=";
+        public override bool CanBeSearched => false;
         public override string LinkName => "Giant Bomb";
         public override string SearchUrl => "https://www.giantbomb.com/api/search/?api_key={0}&format=json&query={1}&resources=game&field_list=name,platforms,site_detail_url,original_release_date&limit=50";
 
