@@ -265,11 +265,11 @@ namespace LinkUtilities.BaseClasses
             return string.IsNullOrEmpty(steamId) ? AddWebsiteLinks.Instance().SteamId : steamId;
         }
 
-        internal (bool, HtmlDocument) LoadDocument(string url)
+        internal (bool, HtmlDocument) LoadDocument(string url, string checkForContent = "", bool ignoreStatus = false)
         {
-            var urlLoadResult = LinkWorker.LoadUrl(url, DocumentType.Source, GlobalSettings.Instance().DebugMode);
+            var urlLoadResult = LinkWorker.LoadUrl(url, DocumentType.Source, GlobalSettings.Instance().DebugMode, checkForContent);
 
-            if (urlLoadResult.StatusCode != HttpStatusCode.OK || urlLoadResult.ErrorDetails.Length > 0 || string.IsNullOrEmpty(urlLoadResult.PageText))
+            if ((!ignoreStatus && urlLoadResult.StatusCode != HttpStatusCode.OK) || urlLoadResult.ErrorDetails.Length > 0 || string.IsNullOrEmpty(urlLoadResult.PageText))
             {
                 return (false, null);
             }

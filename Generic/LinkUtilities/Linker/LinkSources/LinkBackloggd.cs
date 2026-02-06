@@ -21,7 +21,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => _websiteUrl + "/games/";
         public override string LinkName => "Backloggd";
         public override string SearchUrl => _websiteUrl + "/search/games/";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.Load;
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         // Since Backloggd always returns the status code OK and the same url, even if that leads to
         // a non-existing game, we also check if the title isn't the one of that generic page. Funny
@@ -40,14 +40,14 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}", UrlLoadMethod.OffscreenView, false, true, "<div class=\"col-12 result\"");
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}", "<div class=\"col-12 result\"", true);
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//div[contains(@class, 'result')]");
+                var htmlNodes = document.DocumentNode.SelectNodes("//div[contains(@class, 'result')]");
 
                 if (htmlNodes?.Any() ?? false)
                 {
