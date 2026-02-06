@@ -67,6 +67,7 @@ internal class WikitextParser
                 GameMetadata.Publishers = GetValues(infoBox, "publisher", true);
                 GameMetadata.Features = GetValues(infoBox, "modes");
                 GameMetadata.Tags = [];
+                GameMetadata.InfoBoxLinkedArticles = GetLinkedArticlesFromInfoBox(infoBox).ToHashSet();
 
                 foreach (var tagSetting in _settings.TagSettings.Where(s => s.IsChecked))
                 {
@@ -97,6 +98,19 @@ internal class WikitextParser
         catch (Exception ex)
         {
             Log.Error(ex, "Error parsing Wikitext");
+            throw;
+        }
+    }
+
+    private static IEnumerable<string> GetLinkedArticlesFromInfoBox(Template infoBox)
+    {
+        foreach (var line in infoBox.Arguments.SelectMany(a => a.Value.Lines))
+        {
+            var links = line.EnumDescendants().OfType<WikiLink>();
+            foreach (var link in links)
+            {
+                yield return link.Target.ToString();
+            }
         }
     }
 
@@ -105,7 +119,7 @@ internal class WikitextParser
     /// </summary>
     /// <param name="name">name of the template</param>
     /// <returns>The cleaned up name</returns>
-    internal string CleanTemplateName(string name)
+    internal static string CleanTemplateName(string name)
     {
         if (name.IndexOf("\n", StringComparison.Ordinal) > 0)
         {
@@ -421,7 +435,8 @@ internal class WikitextParser
                             continue;
                         }
 
-                        var sublistTemplates = listArgument.EnumDescendants().OfType<Template>().Where(t => Resources.AllowedSubListTemplates.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower())).ToList();
+                        var sublistTemplates = listArgument.EnumDescendants().OfType<Template>()
+                                                           .Where(t => Resources.AllowedSubListTemplates.Contains(MwParserUtility.NormalizeTemplateArgumentName(t.Name).ToLower())).ToList();
 
                         if (sublistTemplates.Count > 0)
                         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using WikipediaMetadata.Categories;
 
-namespace WikipediaMetadata.Test.Categories.Fakes;
+namespace WikipediaMetadata.Test.Fakes;
 
 public class FakeWikipediaBulkImportUserInterface(string searchQuery, Predicate<GameCheckboxViewModel> gameApprovalPredicate, Predicate<SelectableCategoryViewModel> selectCategoryPredicate)
     : WikipediaBulkImportUserInterface(null)

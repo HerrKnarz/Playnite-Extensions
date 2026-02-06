@@ -10,7 +10,6 @@ namespace WikipediaMetadata;
 public class WikipediaMetadataSettingsViewModel : ObservableObject, ISettings
 {
     private readonly WikipediaMetadata _plugin;
-    private PluginSettings _settings;
 
     public WikipediaMetadataSettingsViewModel(WikipediaMetadata plugin)
     {
@@ -24,18 +23,7 @@ public class WikipediaMetadataSettingsViewModel : ObservableObject, ISettings
             ? []
             : new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
 
-        if (Settings.TagSettings is null)
-        {
-            Settings.PopulateTagSettings();
-        }
-        // Hotfix to a bug that duplicated the tag settings in version 1.3 and 1.4
-        else if (Settings.TagSettings.Count > 9)
-        {
-            while (Settings.TagSettings.Count > 9)
-            {
-                Settings.TagSettings.RemoveAt(9);
-            }
-        }
+        Settings.PopulateTagSettings();
     }
 
     public RelayCommand AddSectionCommand
@@ -47,7 +35,7 @@ public class WikipediaMetadataSettingsViewModel : ObservableObject, ISettings
             Settings.SectionsToRemove = new ObservableCollection<string>(Settings.SectionsToRemove.OrderBy(x => x));
         });
 
-    public Dictionary<DateToUse, string> DateToUseModes { get; } = new Dictionary<DateToUse, string>
+    public Dictionary<DateToUse, string> DateToUseModes { get; } = new()
     {
         { DateToUse.Earliest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateEarliest") },
         { DateToUse.Latest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsDateLatest") },
@@ -56,7 +44,7 @@ public class WikipediaMetadataSettingsViewModel : ObservableObject, ISettings
 
     private PluginSettings EditingClone { get; set; }
 
-    public Dictionary<RatingToUse, string> RatingToUseModes { get; } = new Dictionary<RatingToUse, string>
+    public Dictionary<RatingToUse, string> RatingToUseModes { get; } = new()
     {
         { RatingToUse.Lowest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingLowest") },
         { RatingToUse.Highest, ResourceProvider.GetString("LOCWikipediaMetadataSettingsRatingHighest") },
@@ -71,15 +59,7 @@ public class WikipediaMetadataSettingsViewModel : ObservableObject, ISettings
         }
     }, (items) => items?.Any() ?? false);
 
-    public PluginSettings Settings
-    {
-        get => _settings;
-        set
-        {
-            _settings = value;
-            OnPropertyChanged();
-        }
-    }
+    public PluginSettings Settings { get; private set; }
 
     public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
 

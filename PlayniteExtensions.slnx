@@ -6,14 +6,7 @@
     <Platform Name="Any CPU" />
     <Platform Name="x86" />
   </Configurations>
-  <Folder Name="/Solution Items/">
-    <File Path=".editorconfig" />
-    <File Path=".gitignore" />
-    <File Path="crowdin.yml" />
-    <File Path="LICENSE.txt" />
-    <File Path="README.md" />
-  </Folder>
-  <Folder Name="/Solution Items/Common/">
+  <Folder Name="/Common/">
     <Project Path="KNARZhelper/KNARZhelper.Test/KNARZhelper.Test.csproj">
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
@@ -23,7 +16,7 @@
       <Platform Solution="*|x86" Project="x86" />
     </Project>
   </Folder>
-  <Folder Name="/Solution Items/Generic/">
+  <Folder Name="/Generic/">
     <Project Path="Generic/CompanyCompanion/CompanyCompanion.csproj">
       <BuildType Solution="Deploy|Any CPU" Project="Debug" />
       <BuildType Solution="Deploy|x86" Project="Release" />
@@ -75,6 +68,25 @@
       <Platform Solution="Release|x86" Project="x86" />
     </Project>
   </Folder>
+  <Folder Name="/Metadata/">
+    <Project Path="Metadata/WikipediaMetadata.Test/WikipediaMetadata.Test.csproj">
+      <BuildType Solution="Deploy|Any CPU" Project="Debug" />
+      <BuildType Solution="Deploy|x86" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Metadata/WikipediaMetadata/WikipediaMetadata.csproj">
+      <BuildType Solution="Deploy|Any CPU" Project="Debug" />
+      <BuildType Solution="Deploy|x86" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="crowdin.yml" />
+    <File Path="LICENSE.txt" />
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/Solution Items/Manifests/">
     <File Path="Manifest/HerrKnarz_CompanyCompanion.yaml" />
     <File Path="Manifest/HerrKnarz_LinkUtilities.yaml" />
@@ -86,17 +98,5 @@
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesKLOVProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesSteamProvider.yaml" />
     <File Path="Manifest/HerrKnarz_WikipediaMetadata.yaml" />
-  </Folder>
-  <Folder Name="/Solution Items/Metadata/">
-    <Project Path="Metadata/WikipediaMetadata.Test/WikipediaMetadata.Test.csproj">
-      <BuildType Solution="Deploy|Any CPU" Project="Debug" />
-      <BuildType Solution="Deploy|x86" Project="Release" />
-      <Platform Solution="*|x86" Project="x86" />
-    </Project>
-    <Project Path="Metadata/WikipediaMetadata/WikipediaMetadata.csproj">
-      <BuildType Solution="Deploy|Any CPU" Project="Debug" />
-      <BuildType Solution="Deploy|x86" Project="Release" />
-      <Platform Solution="*|x86" Project="x86" />
-    </Project>
   </Folder>
 </Solution>

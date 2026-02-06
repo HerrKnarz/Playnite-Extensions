@@ -16,7 +16,9 @@ public class WikipediaMetadata : MetadataPlugin
 
     public override Guid Id { get; } = Guid.Parse("6c1bdd62-77bf-4866-a264-11544508687c");
 
-    public override List<MetadataField> SupportedFields { get; } =
+    public override List<MetadataField> SupportedFields => Fields;
+
+    public static readonly List<MetadataField> Fields =
     [
         MetadataField.Name,
         MetadataField.ReleaseDate,
@@ -47,12 +49,12 @@ public class WikipediaMetadata : MetadataPlugin
         _api = new(new WebDownloader(), PlayniteApi.ApplicationInfo.ApplicationVersion);
     }
 
-    public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, this, _api);
+    public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, Settings.Settings, PlayniteApi, _api);
 
     public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
     public override UserControl GetSettingsView(bool firstRunSettings) => new WikipediaMetadataSettingsView();
-    
+
     public override IEnumerable<TopPanelItem> GetTopPanelItems()
     {
         if (!Settings.Settings.ShowTopPanelButton)

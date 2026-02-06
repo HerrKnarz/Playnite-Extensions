@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Categories\Common\IEnumerableExtensions.cs"/>
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Categories\Common\IntegerFormatConverter.cs"/>
     <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Categories\Common\IPlatformUtility.cs"/>
     <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Categories\Common\LibraryIdUtility.cs"/>
     <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\PlatformUtility.cs" Link="Categories\Common\PlatformUtility.cs"/>

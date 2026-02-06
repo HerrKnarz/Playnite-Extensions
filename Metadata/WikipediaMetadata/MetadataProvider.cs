@@ -10,12 +10,12 @@ using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata;
 
-public class MetadataProvider(MetadataRequestOptions options, WikipediaMetadata plugin, WikipediaApi api) : OnDemandMetadataProvider
+public class MetadataProvider(MetadataRequestOptions options, PluginSettings settings, IPlayniteAPI playniteApi, WikipediaApi api) : OnDemandMetadataProvider
 {
     private WikipediaGameMetadata _foundGame;
     private HtmlParser _htmlParser;
 
-    public override List<MetadataField> AvailableFields => plugin.SupportedFields;
+    public override List<MetadataField> AvailableFields => WikipediaMetadata.Fields;
 
     public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
     {
@@ -100,10 +100,22 @@ public class MetadataProvider(MetadataRequestOptions options, WikipediaMetadata 
         var foundGame = FindGame();
         if (foundGame == null)
             return [];
-        
+
         var tags = foundGame.Tags ?? [];
+        if (!settings.TagSettings.Any(ts => ts.Name == "Categories" && ts.IsChecked))
+            return tags;
+
         var articleDetails = api.GetArticleCategories(foundGame.Key);
-        tags.AddRange(articleDetails.Categories.Select(c => new MetadataNameProperty(c.StripCategoryPrefix())));
+        HashSet<string> excludedCategoryStarts = ["Articles ", "All Wikipedia articles ", "CS1", "Use ", ..foundGame.InfoBoxLinkedArticles];
+        foreach (string category in articleDetails.Categories)
+        {
+            string strippedName = category.StripCategoryPrefix();
+            if (excludedCategoryStarts.Any(a => strippedName.StartsWith(a, StringComparison.InvariantCultureIgnoreCase)) || strippedName.Contains("Wikidata"))
+                continue;
+
+            tags.Add(new MetadataNameProperty(strippedName));
+        }
+
         return tags.Any() ? tags : base.GetTags(args);
     }
 
@@ -115,15 +127,13 @@ public class MetadataProvider(MetadataRequestOptions options, WikipediaMetadata 
     {
         // If we already found the game, we simply return it.
         if (_foundGame != null)
-        {
             return _foundGame;
-        }
 
         _foundGame = new WikipediaGameMetadata();
 
         try
         {
-            var gameFinder = new GameFinder(plugin.Settings.Settings.AdvancedSearchResultSorting);
+            var gameFinder = new GameFinder(settings.AdvancedSearchResultSorting);
 
             string key;
 
@@ -133,9 +143,9 @@ public class MetadataProvider(MetadataRequestOptions options, WikipediaMetadata 
             }
             else
             {
-                var chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, gameFinder.GetSearchResults,
-                                                                             options.GameData.Name,
-                                                                             $"{plugin.Name}: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
+                var chosen = playniteApi.Dialogs.ChooseItemWithSearch(null, gameFinder.GetSearchResults,
+                                                                      options.GameData.Name,
+                                                                      $"Wikipedia: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
 
                 if (chosen is not WikipediaItemOption option)
                     return _foundGame;
@@ -145,9 +155,9 @@ public class MetadataProvider(MetadataRequestOptions options, WikipediaMetadata 
 
             if (key != string.Empty)
             {
-                var wikitextParser = new WikitextParser(plugin.Settings.Settings);
+                var wikitextParser = new WikitextParser(settings);
 
-                wikitextParser.Parse(WikipediaApiCaller.GetGameData(key), plugin.PlayniteApi.Database.Platforms);
+                wikitextParser.Parse(WikipediaApiCaller.GetGameData(key), playniteApi.Database.Platforms);
 
                 return _foundGame = wikitextParser.GameMetadata;
             }
@@ -155,15 +165,16 @@ public class MetadataProvider(MetadataRequestOptions options, WikipediaMetadata 
         catch (Exception ex)
         {
             Log.Error(ex, "Error loading data from Wikipedia");
+            throw;
         }
 
         return _foundGame;
     }
 
     /// <summary>
-    /// Similar to searching the game we only parse the html when needed (by requesting the description or links metadata)
+    /// Similar to searching the game we only parse the HTML when needed (by requesting the description or links metadata)
     /// </summary>
-    /// <param name="key">Page key to fetch the html</param>
+    /// <param name="key">Page key to fetch the HTML</param>
     /// <returns>Parsed result with the description and additional links</returns>
-    private HtmlParser ParseHtml(string key) => _htmlParser ?? (_htmlParser = new HtmlParser(key, plugin.Settings.Settings));
+    private HtmlParser ParseHtml(string key) => _htmlParser ??= new(key, settings);
 }

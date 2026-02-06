@@ -15,8 +15,6 @@ public class WikitextParserTest
     [InlineData("[Test]<!--comment!-->\n[Second]", "[test]")]
     public void TestCleanTemplateName(string wikitext, string expectedResult)
     {
-        WikitextParser wikitextParser = new WikitextParser(null);
-
-        Assert.Equal(expectedResult, wikitextParser.CleanTemplateName(wikitext));
+        Assert.Equal(expectedResult, WikitextParser.CleanTemplateName(wikitext));
     }
 }

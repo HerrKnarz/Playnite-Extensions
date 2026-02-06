@@ -4,7 +4,7 @@ using PlayniteExtensions.Tests.Common;
 using System.Linq;
 using WikipediaMetadata.Categories;
 using WikipediaMetadata.Categories.Models;
-using WikipediaMetadata.Test.Categories.Fakes;
+using WikipediaMetadata.Test.Fakes;
 using Xunit;
 
 namespace WikipediaMetadata.Test.Categories;
@@ -23,7 +23,7 @@ public class BulkImportIntegrationTests
     [Fact]
     public void SixteenthCenturyImports()
     {
-        var search = "video games set in the 16th century";
+        const string search = "video games set in the 16th century";
         var bi = Setup(search, out var db, out var downloader, out var api);
 
         downloader.FilesByUrl[api.GetSearchUrl(search, WikipediaNamespace.Category)] = "Resources/16th-century/search.json";
@@ -62,7 +62,7 @@ public class BulkImportIntegrationTests
     [Fact]
     public void TwentyFifthCenturyImports()
     {
-        var search = "video games set in the 25th century";
+        const string search = "video games set in the 25th century";
         var bi = Setup(search, out var db, out var downloader, out var api);
 
         downloader.FilesByUrl.Add(api.GetSearchUrl(search, WikipediaNamespace.Category), "Resources/25th-century/search.json");
@@ -75,10 +75,31 @@ public class BulkImportIntegrationTests
         db.Games.Add(new Game("Æon Flux") { Links = [new("Wikipedia", "https://en.wikipedia.org/wiki/%C3%86on_Flux_(video_game)")] });
 
         bi.ImportGameProperty();
-        
+
         Assert.All(db.Games, g => g.TagIds.Single());
         Assert.All(db.Games, g => g.Links.Single());
         Assert.Single(db.Tags, t => t.Name == "Video games set in the 25th century");
+        downloader.AssertAllUrlsCalledOnce();
+    }
+
+    [Fact]
+    public void MetroidPrimeImports()
+    {
+        const string search = "metroid prime";
+        var bi = Setup(search, out var db, out var downloader, out var api);
+
+        downloader.FilesByUrl.Add(api.GetSearchUrl(search, WikipediaNamespace.Category), "Resources/search-category-metroid-prime.json");
+        downloader.FilesByUrl.Add(api.GetCategoryMembersUrl("Category:Metroid Prime"), "Resources/details-category-metroid-prime.json");
+
+        var mp4 = new Game("Metroid Prime 4: Beyond") { Links = [new("Wikipedia", "https://en.wikipedia.org/wiki/Metroid_Prime_4%3A_Beyond")] };
+        db.Games.Add(mp4);
+
+        bi.ImportGameProperty();
+
+        Assert.Single(db.Tags);
+        Assert.Equal("Metroid Prime", db.Tags.Single().Name);
+        Assert.Single(mp4.TagIds);
+        Assert.Single(mp4.Links);
         downloader.AssertAllUrlsCalledOnce();
     }
 }
