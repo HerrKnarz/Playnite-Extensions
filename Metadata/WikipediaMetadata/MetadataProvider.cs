@@ -105,10 +105,9 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
 
         var tags = foundGame.Tags ?? [];
 
-        var articleDetails = api.GetArticleCategories(foundGame.Key);
         HashSet<string> excludedCategoryStarts = ["Articles ", "All Wikipedia articles ", "CS1", "Use ", ..foundGame.InfoBoxLinkedArticles];
         HashSet<string> excludedCategories = foundGame.InfoBoxLinkedArticles.Select(GetCategoryNameFromArticle).Where(x => x != null).ToHashSet();
-        foreach (string category in articleDetails.Categories)
+        foreach (string category in foundGame.Categories)
         {
             string strippedName = category.StripCategoryPrefix();
             if (excludedCategoryStarts.Any(a => strippedName.StartsWith(a, StringComparison.InvariantCultureIgnoreCase)) || strippedName.Contains("Wikidata") || excludedCategories.Contains(strippedName))

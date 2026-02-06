@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Playnite.SDK.Models;
 using System.Collections.Generic;
 
 namespace WikipediaMetadata.Models;
@@ -7,7 +8,7 @@ namespace WikipediaMetadata.Models;
 public class Normalized
 {
     [JsonProperty("fromencoded")]
-    public bool Fromencoded;
+    public bool FromEncoded;
 
     [JsonProperty("from")]
     public string From;
@@ -31,7 +32,7 @@ public class Original
 public class ImagePage
 {
     [JsonProperty("pageid")]
-    public int Pageid;
+    public int PageId;
 
     [JsonProperty("ns")]
     public int Ns;
@@ -44,6 +45,9 @@ public class ImagePage
 
     [JsonProperty("terms")]
     public Terms Terms;
+
+    [JsonProperty("categories")]
+    public List<WikipediaCategory> Categories;
 }
 
 public class Query
@@ -52,14 +56,11 @@ public class Query
     public List<Normalized> Normalized;
 
     [JsonProperty("pages")]
-    public List<ImagePage> Pages;
+    public Dictionary<string,ImagePage> Pages;
 }
 
 public class WikipediaImage
 {
-    [JsonProperty("batchcomplete")]
-    public bool Batchcomplete;
-
     [JsonProperty("query")]
     public Query Query;
 }
@@ -71,4 +72,13 @@ public class Terms
 
     [JsonProperty("description")]
     public List<string> Description;
+}
+
+public class WikipediaCategory
+{
+    [JsonProperty("ns")]
+    public int Namespace;
+
+    [JsonProperty("title")]
+    public string Title;
 }

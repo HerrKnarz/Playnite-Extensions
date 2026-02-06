@@ -12,7 +12,7 @@ namespace WikipediaMetadata;
 internal class WikipediaApiCaller
 {
     private const string _baseUrl = "https://en.wikipedia.org/w/rest.php/v1/";
-    private const string _imageUrl = "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&pilicense=any&titles={0}";
+    private const string _imageUrl = "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms|categories&piprop=original&pilicense=any&cllimit=max&titles={0}";
     private static string PageUrl => _baseUrl + "page/{0}";
     private static string SearchUrl => _baseUrl + "search/page?q={0}&limit=100";
     public static IWebClient WebClientOverride { get; set; }

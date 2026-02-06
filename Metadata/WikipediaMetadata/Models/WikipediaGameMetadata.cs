@@ -32,4 +32,5 @@ internal class WikipediaGameMetadata
     public List<MetadataProperty> Series { get; set; }
     public List<MetadataProperty> Tags { get; set; }
     public HashSet<string> InfoBoxLinkedArticles { get; set; } = [];
+    public List<string> Categories { get; set; }
 }

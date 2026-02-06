@@ -22,8 +22,7 @@ public class MetadataProviderTests
         {
             { "https://en.wikipedia.org/w/rest.php/v1/search/page?q=Doom+3&limit=100", "Resources/doom3/search.json" },
             { "https://en.wikipedia.org/w/rest.php/v1/page/Doom_3", "Resources/doom3/article.json" },
-            { "https://en.wikipedia.org/w/api.php?format=json&action=query&titles=Doom_3&prop=categories%7Credirects&cllimit=max&rdlimit=max&redirects", "Resources/doom3/article-categories.json" },
-            { "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&pilicense=any&titles=Doom_3", "Resources/doom3/article-images.json" },
+            { "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms|categories&piprop=original&pilicense=any&cllimit=max&titles=Doom_3", "Resources/doom3/article-images.json" },
         });
         WikipediaApiCaller.WebClientOverride = downloader;
 

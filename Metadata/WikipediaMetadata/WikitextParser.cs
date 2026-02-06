@@ -69,6 +69,10 @@ internal class WikitextParser
                 GameMetadata.Tags = [];
                 GameMetadata.InfoBoxLinkedArticles = GetLinkedArticlesFromInfoBox(infoBox).ToHashSet();
 
+                var pageData = WikipediaApiCaller.GetImage(gameData.Key)?.Query?.Pages?.Values.FirstOrDefault();
+                GameMetadata.CoverImageUrl = pageData?.Original?.Source;
+                GameMetadata.Categories = pageData?.Categories.Select(c=>c.Title).ToList();
+
                 foreach (var tagSetting in _settings.TagSettings.Where(s => s.IsChecked))
                 {
                     GameMetadata.Tags.AddRange(GetValues(infoBox, tagSetting.Name.ToLower(), false, tagSetting.Prefix));
