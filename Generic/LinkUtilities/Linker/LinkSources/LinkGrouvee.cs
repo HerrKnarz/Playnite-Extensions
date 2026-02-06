@@ -7,12 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+
 // ReSharper disable IdentifierTypo
 
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to Grouvee.
+    /// Adds a link to Grouvee.
     /// </summary>
     internal class LinkGrouvee : BaseClasses.Linker
     {
@@ -21,37 +22,40 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "https://www.grouvee.com";
         public override string LinkName => "Grouvee";
         public override string SearchUrl => "https://www.grouvee.com/search/?q=";
+        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
+                (var success, var document) = LoadDocument($"{SearchUrl}{searchTerm.UrlEncode()}");
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (!success)
                 {
                     return null;
                 }
 
-                var htmlNodes =
-                    urlLoadResult.Document.DocumentNode.SelectNodes("//div[@class='details-section']");
+                var htmlNodes = document.DocumentNode.SelectNodes("//div[@class='game-info']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
                     var searchResults = new List<GenericItemOption>();
+                    var description = string.Empty;
 
                     foreach (var node in htmlNodes)
                     {
-                        foreach (var span in node.SelectNodes("./h4/span"))
+                        var platformNodes = node.SelectNodes("./div[@class='small platform-list']/span");
+
+                        if (platformNodes?.Any() ?? false)
                         {
-                            span.Remove();
+                            description = string.Join(", ", platformNodes.Select(p => WebUtility.HtmlDecode(p.InnerText.Trim())));
                         }
 
                         searchResults.Add(new SearchResult
                         {
-                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./h4[@class='media-heading']").InnerText.Trim()),
-                            Url = $"{BaseUrl}{node.SelectSingleNode("./h4[@class='media-heading']/a").GetAttributeValue("href", "")}",
-                            Description = WebUtility.HtmlDecode(node.SelectSingleNode("./div[@class='wrapper']").InnerText.Trim())
+                            Name = WebUtility.HtmlDecode(node.SelectSingleNode("./h6/a").InnerText.Trim()),
+                            Url = $"{BaseUrl}{node.SelectSingleNode("./h6/a").GetAttributeValue("href", "")}",
+                            Description = description
                         });
                     }
 
