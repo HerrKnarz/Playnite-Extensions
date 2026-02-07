@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources
@@ -13,7 +12,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BrowserSearchUrl => "https://www.metacritic.com/search/{0}/?page=1&category=13";
         public override string LinkName => "Metacritic";
         public override string SearchUrl => string.Empty;
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override string GetBrowserSearchLink(Game game = null) => string.Format(BrowserSearchUrl, game.Name.RemoveDiacritics().EscapeDataString());
 

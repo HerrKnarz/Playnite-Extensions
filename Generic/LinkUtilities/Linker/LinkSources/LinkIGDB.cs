@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -21,7 +20,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string CheckForContent => $"<meta content=\"{BaseUrl}{_gameSlug}\"";
         public override string LinkName => "IGDB";
         public override string SearchUrl => _websiteUrl + "/search?utf8=✓&q=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         //TODO: Find a reliable way to verify the correct game page. For some reason it always returns the same url and also has the game-slug-id, although it doesn't anymore when opening it in browser...
 

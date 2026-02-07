@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -20,7 +19,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string CheckForContent => "<h2 itemprop=\"name\"";
         public override string LinkName => "Mod DB";
         public override string SearchUrl => _websiteUrl + "/games?filter=t&kw=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         // Mod DB Links need the game name in lowercase without special characters and hyphens
         // instead of white spaces.

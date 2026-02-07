@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Helper;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -18,7 +17,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string CheckForContent => "itemtype=\"http://schema.org/VideoGame\"";
         public override string LinkName => "Sega Retro";
         public override string SearchUrl => "https://segaretro.org/index.php?search={0}&fulltext=1";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         // Sega Retro Links need the game with underscores instead of whitespaces and special
         // characters simply encoded.
@@ -28,6 +26,6 @@ namespace LinkUtilities.Linker.LinkSources
                 .EscapeDataString();
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
-            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName, 2, this));
+            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(this, SearchUrl, searchTerm, _websiteUrl, LinkName));
     }
 }

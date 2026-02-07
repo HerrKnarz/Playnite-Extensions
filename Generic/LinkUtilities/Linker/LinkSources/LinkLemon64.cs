@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -19,7 +18,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => _websiteUrl + "/game/";
         public override string LinkName => "Lemon64";
         public override string SearchUrl => "https://www.lemon64.com/games/list.php?list_title=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         // Lemon64 Links need the game name in lowercase without leading articles, special
         // characters and hyphens instead of white spaces.

@@ -18,7 +18,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BrowserSearchUrl => $"{BaseUrl}search?game=";
         public override string LinkName => "GameFAQs";
         public override string SearchUrl => $"{BaseUrl}ajax/home_game_search?term=&term=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {

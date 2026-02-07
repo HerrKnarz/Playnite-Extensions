@@ -55,7 +55,6 @@ namespace LinkUtilities.Linker.Libraries
         public string NameWorkshopLink { get; set; } = "Workshop";
 
         public override string SearchUrl => "https://steamcommunity.com/actions/SearchApps/";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
         public bool UseAppLinks { get; set; } = false;
 
         public override bool AddLinkFromSearch(Game game, SearchResult result, bool cleanUpAfterAdding = true)

@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
@@ -19,7 +18,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "https://www.lemonamiga.com/games/";
         public override string LinkName => "Lemon Amiga";
         public override string SearchUrl => "https://www.lemonamiga.com/games/list.php?list_title=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {

@@ -38,7 +38,6 @@ namespace LinkUtilities.Linker.Libraries
 
         public override string LinkName => "Itch";
         public override string SearchUrl => "https://itch.io/api/1/{0}/search/games?query={1}";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool FindLibraryLink(Game game, out List<Link> links)
         {

@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Helper;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -17,7 +16,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BrowserSearchUrl => "https://strategywiki.org/w/index.php?search=";
         public override string LinkName => "StrategyWiki";
         public override string SearchUrl => "https://strategywiki.org/w/index.php?search={0}&fulltext=1";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         // StrategyWiki Links need the game with underscores instead of whitespaces and special
         // characters simply encoded.
@@ -27,6 +25,6 @@ namespace LinkUtilities.Linker.LinkSources
                 .EscapeDataString();
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
-            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(SearchUrl, searchTerm, _websiteUrl, LinkName, 3, this));
+            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromHtml(this, SearchUrl, searchTerm, _websiteUrl, LinkName, 3));
     }
 }

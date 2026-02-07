@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
 using LinkUtilities.Models;
@@ -35,7 +34,6 @@ namespace LinkUtilities.Linker.Libraries
         public override string LinkName => "GOG";
         public override bool ReturnsSameUrl { get; set; } = true;
         public override string SearchUrl => "https://catalog.gog.com/v1/catalog?limit=100&locale=en&order=desc:score&page=1&productType=in:game,pack&query=like:";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool FindLibraryLink(Game game, out List<Link> links)
         {

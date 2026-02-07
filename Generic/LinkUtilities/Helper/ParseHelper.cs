@@ -1,6 +1,4 @@
-﻿using HtmlAgilityPack;
-using KNARZhelper;
-using KNARZhelper.WebCommon;
+﻿using KNARZhelper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using System;
@@ -71,35 +69,17 @@ namespace LinkUtilities.Helper
         /// <returns>
         /// Search results for the search dialogs. Will be an empty list in case of an error.
         /// </returns>
-        internal static List<SearchResult> GetMediaWikiResultsFromHtml(string searchUrl, string searchTerm, string websiteUrl, string linkName, int slashCount = 3, BaseClasses.Linker linker = null)
+        internal static List<SearchResult> GetMediaWikiResultsFromHtml(BaseClasses.Linker linker, string searchUrl, string searchTerm, string websiteUrl, string linkName, int slashCount = 2)
         {
             var result = new List<SearchResult>();
 
             try
             {
-                var document = new HtmlDocument();
+                (var success, var document) = linker.LoadDocument(string.Format(searchUrl, searchTerm.UrlEncode()), "", true);
 
-                if (linker != null)
+                if (!success)
                 {
-                    var success = false;
-
-                    (success, document) = linker.LoadDocument(string.Format(searchUrl, searchTerm.UrlEncode()), "", true);
-
-                    if (!success)
-                    {
-                        return null;
-                    }
-                }
-                else
-                {
-                    var urlLoadResult = WebHelper.LoadHtmlDocument(string.Format(searchUrl, searchTerm.UrlEncode()), UrlLoadMethod.OffscreenView);
-
-                    if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
-                    {
-                        return null;
-                    }
-
-                    document = urlLoadResult.Document;
+                    return null;
                 }
 
                 var resultNode = document.DocumentNode.SelectSingleNode("//h2[text()[contains(., 'Page title matches')]]/following::ul[1]")

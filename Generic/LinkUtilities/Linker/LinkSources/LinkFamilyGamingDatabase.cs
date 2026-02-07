@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -18,7 +17,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override int Delay => 200;
         public override string LinkName => "Family Gaming Database";
         public override string SearchUrl => _websiteUrl + "/search/text/";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         // Family Gaming Database Links need the game name in lowercase without special characters
         // and hyphens instead of white spaces.

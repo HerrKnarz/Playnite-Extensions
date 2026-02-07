@@ -116,11 +116,6 @@ namespace LinkUtilities.Interfaces
         LinkSourceSetting Settings { get; set; }
 
         /// <summary>
-        /// specifies how the url will be loaded. Default is Load.
-        /// </summary>
-        UrlLoadMethod UrlLoadMethod { get; }
-
-        /// <summary>
         /// Adds a link to the specific game page of the specified website.
         /// </summary>
         /// <param name="game">Game the link will be added to</param>

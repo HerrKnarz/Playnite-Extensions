@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Helper;
 using LinkUtilities.Settings;
 using Playnite.SDK;
@@ -20,7 +19,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BrowserSearchUrl => "https://en.wikipedia.org/w/index.php?search=";
         public override string LinkName => "Wikipedia";
         public override string SearchUrl => "https://en.wikipedia.org/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool AddSearchedLink(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true)
         {

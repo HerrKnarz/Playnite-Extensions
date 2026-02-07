@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources
@@ -13,7 +12,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => _baseUrl;
         public override string BrowserSearchUrl => "https://tvtropes.org/pmwiki/search_result.php?q=";
         public override string LinkName => "TV Tropes";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override string GetBrowserSearchLink(Game game = null) => $"{BrowserSearchUrl}{game.Name.RemoveDiacritics().EscapeDataString()}";
 

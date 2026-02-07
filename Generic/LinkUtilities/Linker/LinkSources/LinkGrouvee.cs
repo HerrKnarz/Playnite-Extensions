@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite.SDK;
@@ -22,7 +21,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "https://www.grouvee.com";
         public override string LinkName => "Grouvee";
         public override string SearchUrl => "https://www.grouvee.com/search/?q=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
         {

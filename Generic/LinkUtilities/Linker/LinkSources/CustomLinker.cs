@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
@@ -33,7 +32,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override bool NeedsToBeChecked => CustomSettings?.NeedsToBeChecked ?? true;
         public override int Priority => BaseUrl.Contains(_placeholderSteamId) ? 10 : 1;
         public override bool ReturnsSameUrl => CustomSettings?.ReturnsSameUrl ?? false;
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool FindLinks(Game game, out List<Link> links)
         {

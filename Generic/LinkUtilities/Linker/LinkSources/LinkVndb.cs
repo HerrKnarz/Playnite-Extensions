@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
@@ -12,7 +11,7 @@ using System.Linq;
 namespace LinkUtilities.Linker.LinkSources
 {
     /// <summary>
-    ///     Adds a link to RAWG.io.
+    /// Adds a link to RAWG.io.
     /// </summary>
     internal class LinkVndb : BaseClasses.Linker
     {
@@ -37,7 +36,7 @@ namespace LinkUtilities.Linker.LinkSources
                     Sort = "searchrank"
                 }, settings);
 
-                var vndbSearchResult = ApiHelper.GetJsonFromApi<VndbSearchResult>(SearchUrl, LinkName, null, false, searchRequest);
+                var vndbSearchResult = ApiHelper.GetJsonFromApi<VndbSearchResult>(SearchUrl, LinkName, null, searchRequest);
 
                 return !vndbSearchResult?.Results?.Any() ?? true
                     ? base.GetSearchResults(searchTerm)

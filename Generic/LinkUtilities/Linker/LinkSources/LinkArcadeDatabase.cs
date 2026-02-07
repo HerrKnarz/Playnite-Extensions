@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -21,7 +20,6 @@ namespace LinkUtilities.Linker.LinkSources
 
         public override string LinkName => "Arcade Database";
         public override string SearchUrl => "http://adb.arcadeitalia.net/lista_mame.php?lang=en&ricerca=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool CheckLink(string link)
         {

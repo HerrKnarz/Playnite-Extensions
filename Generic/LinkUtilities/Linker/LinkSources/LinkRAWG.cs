@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using LinkUtilities.Models.RAWG;
 using Playnite.SDK;
@@ -24,7 +23,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BrowserSearchUrl => "https://rawg.io/search?query=";
         public override string LinkName => "RAWG";
         public override string SearchUrl => "https://api.rawg.io/api/games?key={0}&search={1}&search_precise=true&page_size=50";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         // RAWG Links need the result name in lowercase without special characters and hyphens
         // instead of white spaces.

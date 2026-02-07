@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -19,7 +18,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string CheckForContent => "<div class=\"game-detail-page\"";
         public override string LinkName => "Adventure Gamers";
         public override string SearchUrl => "https://adventuregamers.com/?s=";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override string GetGamePath(Game game, string gameName = null)
             => (gameName ?? game.Name).RemoveSpecialChars()

@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -21,7 +20,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => _websiteUrl + "/games/";
         public override string LinkName => "Backloggd";
         public override string SearchUrl => _websiteUrl + "/search/games/";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         // Since Backloggd always returns the status code OK and the same url, even if that leads to
         // a non-existing game, we also check if the title isn't the one of that generic page. Funny

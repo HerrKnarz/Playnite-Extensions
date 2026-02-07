@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.Linker.LinkSources
@@ -9,7 +8,6 @@ namespace LinkUtilities.Linker.LinkSources
         private const string _baseUrl = "https://www.arcade-museum.com/Videogame/";
         public override string BaseUrl => _baseUrl;
         public override string LinkName => "Killer List Of Video Games";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override string GetGamePath(Game game, string gameName = null) => (gameName ?? game.Name)
             .RemoveDiacritics()

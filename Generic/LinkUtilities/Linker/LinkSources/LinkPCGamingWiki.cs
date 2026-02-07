@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.Helper;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -18,7 +17,6 @@ namespace LinkUtilities.Linker.LinkSources
         public override string CheckForContent => "id=\"infobox-game\"";
         public override string LinkName => "PCGamingWiki";
         public override string SearchUrl => _websiteUrl + "/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
-        public override UrlLoadMethod UrlLoadMethod => UrlLoadMethod.NewDefault;
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
