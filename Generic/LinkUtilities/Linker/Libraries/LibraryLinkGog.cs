@@ -18,6 +18,11 @@ namespace LinkUtilities.Linker.Libraries
     /// </summary>
     internal class LibraryLinkGog : LibraryLink
     {
+        public LibraryLinkGog() : base()
+        {
+            AllowedCallbackUrls.Add("https://www.gog.com/games");
+        }
+
         public override bool AllowRedirects { get; set; } = false;
         public override string BaseUrl => "https://www.gog.com/en/game/";
         public override string BrowserSearchUrl => "https://www.gog.com/en/games?query=";

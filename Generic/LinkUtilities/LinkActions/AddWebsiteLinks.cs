@@ -25,8 +25,8 @@ namespace LinkUtilities.LinkActions
     {
         private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Environment.ProcessorCount) };
         private static AddWebsiteLinks _instance;
-
         private readonly List<CustomLinkProfile> _customLinkProfiles = new List<CustomLinkProfile>();
+        private readonly int _maxPipelines = 10;
         private readonly List<LinkWorker> Pipelines = new List<LinkWorker>();
         private List<BaseClasses.Linker> _linkers;
 
@@ -223,21 +223,15 @@ namespace LinkUtilities.LinkActions
         private bool FindLinks(Game game, out List<Link> links)
         {
             links = new List<Link>();
-            var linksAdded = false;
             var linksQueue = new ConcurrentQueue<Link>();
 
-            //TODO: Remove where condition when all linkers are switched to new method.
-            foreach (var priorityGroup in _linkers
-                .Where(x => x.UrlLoadMethod != UrlLoadMethod.OffscreenView)
-                .GroupBy(x => x.Priority)
-                .OrderBy(x => x.Key))
+            foreach (var priority in _linkers.Select(l => l.Priority).Distinct())
             {
-                Parallel.ForEach(priorityGroup.Where(x => x.UrlLoadMethod != UrlLoadMethod.OffscreenView).GroupBy(x => x.LinkWorker), _parallelOptions, workerGroup =>
+                Parallel.ForEach(Pipelines, _parallelOptions, pipeline =>
                 {
-                    foreach (var linker in workerGroup)
+                    foreach (var linker in _linkers.Where(x => x.Priority == priority && x.LinkWorker == pipeline).OrderBy(l => l.LinkName))
                     {
                         linker.FindLinks(game, out var innerLinks);
-
                         foreach (var innerLink in innerLinks)
                         {
                             linksQueue.Enqueue(innerLink);
@@ -246,17 +240,7 @@ namespace LinkUtilities.LinkActions
                 });
             }
 
-            linksAdded = links.AddMissing(linksQueue.Distinct());
-
-            foreach (var linker in _linkers
-                .Where(x => x.UrlLoadMethod == UrlLoadMethod.OffscreenView))
-            {
-                linker.FindLinks(game, out var innerLinks);
-
-                linksAdded |= links.AddMissing(innerLinks);
-            }
-
-            return linksAdded;
+            return links.AddMissing(linksQueue.Distinct());
         }
 
         private void InitializePipelines()
@@ -266,7 +250,8 @@ namespace LinkUtilities.LinkActions
 
             var pipelineId = 0;
 
-            var maxPipelines = _linkers.Count > 5 ? 5 : _linkers.Count;
+            var maxPipelines = _parallelOptions.MaxDegreeOfParallelism > _maxPipelines ? _maxPipelines : _parallelOptions.MaxDegreeOfParallelism;
+            maxPipelines = _linkers.Count > maxPipelines ? maxPipelines : _linkers.Count;
 
             while (pipelineId < maxPipelines)
             {

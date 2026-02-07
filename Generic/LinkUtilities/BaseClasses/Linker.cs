@@ -38,6 +38,7 @@ namespace LinkUtilities.BaseClasses
         }
 
         public virtual LinkAddTypes AddType => LinkAddTypes.UrlMatch;
+        public virtual HashSet<string> AllowedCallbackUrls { get; set; } = new HashSet<string>();
         public virtual bool AllowRedirects { get; set; } = true;
         public virtual string BaseUrl => string.Empty;
         public virtual string BrowserSearchUrl => SearchUrl;
@@ -80,13 +81,7 @@ namespace LinkUtilities.BaseClasses
             return result != null && AddLinkFromSearch(game, (SearchResult)result, cleanUpAfterAdding);
         }
 
-        public virtual bool CheckLink(string link)
-        {
-            // TODO: Remove else block when all linkers are switched to new method
-            return UrlLoadMethod == UrlLoadMethod.NewDefault
-                ? LinkWorker.IsUrlOk(link, ReturnsSameUrl, WrongTitle, GlobalSettings.Instance().DebugMode, CheckForContent)
-                : WebHelper.IsUrlOk(link, UrlLoadMethod, AllowRedirects, ReturnsSameUrl, WrongTitle, CheckForContent);
-        }
+        public virtual bool CheckLink(string link) => LinkWorker.IsUrlOk(link, ReturnsSameUrl, WrongTitle, GlobalSettings.Instance().DebugMode, CheckForContent, AllowedCallbackUrls);
 
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -267,7 +262,7 @@ namespace LinkUtilities.BaseClasses
 
         internal (bool, HtmlDocument) LoadDocument(string url, string checkForContent = "", bool ignoreStatus = false)
         {
-            var urlLoadResult = LinkWorker.LoadUrl(url, DocumentType.Source, GlobalSettings.Instance().DebugMode, checkForContent);
+            var urlLoadResult = LinkWorker.LoadUrl(url, DocumentType.Source, GlobalSettings.Instance().DebugMode, checkForContent, AllowedCallbackUrls);
 
             if ((!ignoreStatus && urlLoadResult.StatusCode != HttpStatusCode.OK) || urlLoadResult.ErrorDetails.Length > 0 || string.IsNullOrEmpty(urlLoadResult.PageText))
             {

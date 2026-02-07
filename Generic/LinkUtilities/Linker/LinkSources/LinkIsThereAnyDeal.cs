@@ -37,12 +37,14 @@ namespace LinkUtilities.Linker.LinkSources
             if (steamId.Length > 0)
             {
                 _baseUrl = _steamUrl;
+                NeedsToBeChecked = false;
                 return steamId;
             }
 
             // For all other libraries links need the result name in lowercase without special
             // characters and hyphens instead of white spaces.
             _baseUrl = _standardUrl;
+            NeedsToBeChecked = true;
 
             return (gameName ?? game.Name).RemoveDiacritics()
                 .RemoveSpecialChars()

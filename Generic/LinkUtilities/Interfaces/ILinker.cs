@@ -27,6 +27,12 @@ namespace LinkUtilities.Interfaces
         LinkAddTypes AddType { get; }
 
         /// <summary>
+        /// Specifies urls that are allowed to return their status in the callback. It's used to add
+        /// optional fallback urls when the desired url itself isn't found.
+        /// </summary>
+        HashSet<string> AllowedCallbackUrls { get; set; }
+
+        /// <summary>
         /// Specifies, if a redirect is allowed while checking the URL. Some sites redirect to the
         /// homepage if the link isn't valid. In that case this should be set to false.
         /// </summary>

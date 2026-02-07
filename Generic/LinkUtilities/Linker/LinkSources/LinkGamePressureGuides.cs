@@ -9,6 +9,11 @@ namespace LinkUtilities.Linker.LinkSources
     /// </summary>
     internal class LinkGamePressureGuides : BaseClasses.Linker
     {
+        public LinkGamePressureGuides() : base()
+        {
+            AllowedCallbackUrls.Add("https://www.gamepressure.com/guides/");
+        }
+
         public override string BaseUrl => "https://www.gamepressure.com/";
         public override string LinkName => "gamepressure Guides";
         public override bool ReturnsSameUrl { get; set; } = true;
