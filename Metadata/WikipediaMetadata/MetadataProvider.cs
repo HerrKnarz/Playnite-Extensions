@@ -100,7 +100,7 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
         var foundGame = FindGame();
 
         var categorySettings = settings.TagSettings.FirstOrDefault(ts => ts.Name == "Categories");
-        if (categorySettings?.IsChecked != true)
+        if (categorySettings?.IsChecked != true || foundGame.Categories == null)
             return foundGame.Tags;
 
         var tags = foundGame.Tags ?? [];
@@ -110,7 +110,11 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
         foreach (string category in foundGame.Categories)
         {
             string strippedName = category.StripCategoryPrefix();
-            if (excludedCategoryStarts.Any(a => strippedName.StartsWith(a, StringComparison.InvariantCultureIgnoreCase)) || strippedName.Contains("Wikidata") || excludedCategories.Contains(strippedName))
+            bool skipCategory = excludedCategoryStarts.Any(a => strippedName.StartsWith(a, StringComparison.InvariantCultureIgnoreCase))
+                                || strippedName.Contains("Wikidata")
+                                || excludedCategories.Contains(strippedName);
+            
+            if (skipCategory)
                 continue;
 
             string nameWithPrefix = $"{categorySettings.Prefix} {strippedName}".Trim();
