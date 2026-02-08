@@ -20,7 +20,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => "https://store.epicgames.com/en-US/p/";
         public override string BrowserSearchUrl => "https://store.epicgames.com/en-US/browse?q=";
         public override string LinkName => "Epic";
-        public override string SearchUrl => "https://www.epicgames.com/graphql?query={Catalog{searchStore(keywords:%22{SearchString}%22,category:%22games/edition%22,effectiveDate:%22[1900-01-01,{DateUntil}]%22,count:100){elements{title%20urlSlug%20seller{name}}}}}";
+        public override string SearchUrl => "https://store.epicgames.com/graphql?query={Catalog{searchStore(keywords:%22{SearchString}%22,category:%22games/edition%22,effectiveDate:%22[1900-01-01,{DateUntil}]%22,count:100){elements{title%20urlSlug%20seller{name}}}}}";
 
         public override bool FindLinks(Game game, out List<Link> links)
         {

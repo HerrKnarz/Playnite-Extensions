@@ -40,12 +40,28 @@ namespace LinkUtilities.Linker.LinkSources
 
                 if (htmlNodes?.Any() ?? false)
                 {
-                    return new List<GenericItemOption>(htmlNodes.Select(n => new SearchResult
+                    var searchResults = new List<GenericItemOption>();
+
+                    foreach (var node in htmlNodes)
                     {
-                        Name = WebUtility.HtmlDecode(n.FirstChild.FirstChild.InnerText),
-                        Url = n.GetAttributeValue("href", ""),
-                        Description = WebUtility.HtmlDecode(n.FirstChild.InnerText)
-                    }));
+                        if (!node.HasChildNodes)
+                        {
+                            continue;
+                        }
+
+                        var name = WebUtility.HtmlDecode(node.FirstChild.FirstChild.InnerText);
+                        var url = node.GetAttributeValue("href", "");
+                        var description = WebUtility.HtmlDecode(node.FirstChild.InnerText);
+
+                        searchResults.Add(new SearchResult
+                        {
+                            Name = name,
+                            Url = url,
+                            Description = description
+                        });
+                    }
+
+                    return searchResults;
                 }
             }
             catch (Exception ex)

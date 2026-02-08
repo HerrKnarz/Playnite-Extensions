@@ -24,6 +24,6 @@ namespace LinkUtilities.Linker.LinkSources
                 .EscapeDataString();
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
-            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromApi(SearchUrl, searchTerm, LinkName));
+            => new List<GenericItemOption>(ParseHelper.GetMediaWikiResultsFromApi(SearchUrl, searchTerm, LinkName, this));
     }
 }

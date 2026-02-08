@@ -1,6 +1,8 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
+using LinkUtilities.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,17 +28,35 @@ namespace LinkUtilities.Helper
         /// <returns>
         /// Search results for the search dialogs. Will be an empty list in case of an error.
         /// </returns>
-        internal static List<SearchResult> GetMediaWikiResultsFromApi(string searchUrl, string searchTerm, string linkName)
+        internal static List<SearchResult> GetMediaWikiResultsFromApi(string searchUrl, string searchTerm, string linkName, BaseClasses.Linker linker = null)
         {
             var result = new List<SearchResult>();
 
             try
             {
-                var client = new WebClient();
+                var xml = string.Empty;
 
-                client.Headers.Add("Accept", "application/xml");
+                if (linker == null)
+                {
+                    var client = new WebClient();
 
-                var xml = client.DownloadString(string.Format(searchUrl, searchTerm.UrlEncode()));
+                    client.Headers.Add("Accept", "application/xml");
+
+                    xml = client.DownloadString(string.Format(searchUrl, searchTerm.UrlEncode()));
+                }
+                else
+                {
+                    var urlLoadResult = linker.LinkWorker.LoadUrl(string.Format(searchUrl, searchTerm.UrlEncode()), DocumentType.Text, GlobalSettings.Instance().DebugMode);
+
+                    if (urlLoadResult == null)
+                    {
+                        return result;
+                    }
+
+                    xml = urlLoadResult.PageText;
+
+                    xml = xml.Replace("This XML file does not appear to have any style information associated with it. The document tree is shown below.", "");
+                }
 
                 var searchResults = xml.ParseXml<SearchSuggestion>();
 

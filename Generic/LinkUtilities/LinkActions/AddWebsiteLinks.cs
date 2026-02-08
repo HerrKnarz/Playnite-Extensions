@@ -131,6 +131,7 @@ namespace LinkUtilities.LinkActions
                 case ActionModifierTypes.Search:
                 case ActionModifierTypes.SearchMissing:
                     _linkers = Links.Where(x => x.Settings.IsSearchable == true).ToList();
+                    InitializePipelines(1);
                     return true;
 
                 case ActionModifierTypes.SearchInBrowser:
@@ -243,14 +244,15 @@ namespace LinkUtilities.LinkActions
             return links.AddMissing(linksQueue.Distinct());
         }
 
-        private void InitializePipelines()
+        private void InitializePipelines(int count = 0)
         {
             //TODO: Maybe make Pipelines a separate class to manage them better.
             DisposePipelines();
 
             var pipelineId = 0;
 
-            var maxPipelines = _parallelOptions.MaxDegreeOfParallelism > _maxPipelines ? _maxPipelines : _parallelOptions.MaxDegreeOfParallelism;
+            var maxPipelines = count > 0 ? count : _maxPipelines;
+            maxPipelines = _parallelOptions.MaxDegreeOfParallelism > maxPipelines ? maxPipelines : _parallelOptions.MaxDegreeOfParallelism;
             maxPipelines = _linkers.Count > maxPipelines ? maxPipelines : _linkers.Count;
 
             while (pipelineId < maxPipelines)
@@ -410,10 +412,7 @@ namespace LinkUtilities.LinkActions
 
                 _linkers = viewModel.Links.Where(x => x.Selected).Select(x => x.Linker).ToList();
 
-                if (add)
-                {
-                    InitializePipelines();
-                }
+                InitializePipelines(add ? 0 : 1);
 
                 return true;
             }
