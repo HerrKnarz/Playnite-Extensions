@@ -56,7 +56,7 @@ public class Query
     public List<Normalized> Normalized;
 
     [JsonProperty("pages")]
-    public Dictionary<string,ImagePage> Pages;
+    public List<ImagePage> Pages;
 }
 
 public class WikipediaImage

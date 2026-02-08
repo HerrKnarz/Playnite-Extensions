@@ -11,7 +11,7 @@ internal static class WikipediaHelper
     /// <param name="key">Key of the page</param>
     /// <returns>Url of the image</returns>
     internal static string GetImageUrl(string key) =>
-        WikipediaApiCaller.GetImage(key)?.Query?.Pages?.Values.FirstOrDefault()?.Original?.Source;
+        WikipediaApiCaller.GetImage(key)?.Query?.Pages?.FirstOrDefault()?.Original?.Source;
 
     private static readonly Regex TitleParenthesesRegex = new(@"^(?<title>.+) \((?<parenContents>.+)\)$", RegexOptions.Compiled);
 
