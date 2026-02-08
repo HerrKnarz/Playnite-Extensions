@@ -162,6 +162,7 @@
     <Compile Include="Linker\LinkSources\LinkModDB.cs" />
     <Compile Include="Linker\LinkSources\LinkProtonDb.cs" />
     <Compile Include="Linker\LinkSources\LinkSteamDb.cs" />
+    <Compile Include="Linker\LinkSources\LinkSteamPeek.cs" />
     <Compile Include="Linker\LinkSources\LinkTvTropes.cs" />
     <Compile Include="Linker\LinkSources\LinkVndb.cs" />
     <Compile Include="Models\ApiResults\GameFaqsSearchResult.cs" />

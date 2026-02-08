@@ -25,6 +25,7 @@ namespace LinkUtilities.Linker.LinkSources
         public override string BaseUrl => _baseUrl;
         public override string BrowserSearchUrl => "https://isthereanydeal.com/search/?q=";
         public override string LinkName => "IsThereAnyDeal";
+        public override int Priority => 10;
         public override string SearchUrl => "https://api.isthereanydeal.com/games/search/v1?key={0}&title={1}";
 
         public override string GetGamePath(Game game, string gameName = null)

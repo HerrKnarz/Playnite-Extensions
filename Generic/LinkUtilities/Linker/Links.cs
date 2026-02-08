@@ -7,7 +7,7 @@ using System.Linq;
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    ///     List of all website Links that can be added.
+    /// List of all website Links that can be added.
     /// </summary>
     public class Links : List<BaseClasses.Linker>
     {
@@ -50,6 +50,7 @@ namespace LinkUtilities.Linker
             Add(new LinkSnkWiki());
             Add(new LibraryLinkSteam());
             Add(new LinkSteamDb());
+            Add(new LinkSteamPeek());
             Add(new LinkStrategyWiki());
             Add(new LinkTvTropes());
             Add(new LinkVndb());
