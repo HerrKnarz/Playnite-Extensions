@@ -44,7 +44,7 @@ namespace LinkUtilities.BaseClasses
         public virtual string BrowserSearchUrl => SearchUrl;
         public virtual bool CanBeBrowserSearched => !string.IsNullOrWhiteSpace(BrowserSearchUrl);
         public virtual bool CanBeSearched => !string.IsNullOrWhiteSpace(SearchUrl);
-        public virtual string CheckForContent => string.Empty;
+        public virtual string CheckForContent { get; set; } = string.Empty;
         public virtual int Delay => 0;
         public abstract string LinkName { get; }
         public virtual string LinkUrl { get; set; } = string.Empty;

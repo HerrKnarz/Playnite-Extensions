@@ -153,6 +153,8 @@ namespace LinkUtilities.Linker.Libraries
             // TODO: Find a more reliable way to check for workshop existence - probably an API call
             if (AddWorkshopLink)
             {
+                CheckForContent = "workshop_home_content";
+
                 AddLink(game, links, gameId, _urlWorkshop, NameWorkshopLink, true);
             }
 

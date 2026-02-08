@@ -50,19 +50,7 @@ namespace LinkUtilities.Linker.Libraries
                 return false;
             }
 
-            var itchMetaData = new ItchMetaData();
-
-            if (LinkWorker != null)
-            {
-                itchMetaData = LinkWorker.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName, GlobalSettings.Instance().DebugMode);
-            }
-            else
-            {
-                using (LinkWorker = new LinkWorker(-2))
-                {
-                    itchMetaData = LinkWorker.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName, GlobalSettings.Instance().DebugMode);
-                }
-            }
+            var itchMetaData = LinkWorker.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName, GlobalSettings.Instance().DebugMode);
 
             LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
 

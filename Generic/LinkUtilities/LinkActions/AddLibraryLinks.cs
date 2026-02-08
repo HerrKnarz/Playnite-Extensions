@@ -1,4 +1,5 @@
-﻿using LinkUtilities.BaseClasses;
+﻿using KNARZhelper.WebCommon;
+using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Linker;
@@ -11,14 +12,17 @@ namespace LinkUtilities.LinkActions
     /// </summary>
     internal class AddLibraryLinks : LinkAction
     {
-        private static AddLibraryLinks _instance;
-
         /// <summary>
         /// contains all game LibraryLinks that have a link to a store page that can be added.
         /// </summary>
         public readonly LibraryLinks LibraryLinks;
 
-        private AddLibraryLinks() => LibraryLinks = new LibraryLinks();
+        private static AddLibraryLinks _instance;
+
+        private AddLibraryLinks()
+        {
+            LibraryLinks = new LibraryLinks();
+        }
 
         public override string ProgressMessage => "LOCLinkUtilitiesProgressLibraryLink";
         public override string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
@@ -30,5 +34,26 @@ namespace LinkUtilities.LinkActions
                LibraryLinks.TryGetValue(game.PluginId, out var lib) &&
                lib.FindLibraryLink(game, out var links) &&
                LinkHelper.AddLinks(game, links);
+
+        public override void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            base.FollowUp(actionModifier, isBulkAction);
+
+            foreach (var linker in LibraryLinks)
+            {
+                linker.Value.LinkWorker.Dispose();
+                linker.Value.LinkWorker = null;
+            }
+        }
+
+        public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
+        {
+            foreach (var linker in LibraryLinks)
+            {
+                linker.Value.LinkWorker = new LinkWorker(0);
+            }
+
+            return true;
+        }
     }
 }
