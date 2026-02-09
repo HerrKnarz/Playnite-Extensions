@@ -22,7 +22,7 @@ namespace LinkUtilities.Linker.Libraries
     internal class LibraryLinkSteam : LibraryLink
     {
         private const string _steamAppPrefix = "steam://openurl/";
-        private const string _urlAchievements = "https://steamcommunity.com/stats/{0}/achievements";
+        private const string _urlAchievements = "https://steamcommunity.com/stats/{0}/achievements/";
         private const string _urlCommunity = "https://steamcommunity.com/app/{0}";
         private const string _urlDiscussion = "https://steamcommunity.com/app/{0}/discussions/";
         private const string _urlGuides = "https://steamcommunity.com/app/{0}/guides/";
@@ -150,12 +150,19 @@ namespace LinkUtilities.Linker.Libraries
                 AddLink(game, links, gameId, _urlStorePage, NameStorePageLink);
             }
 
-            // TODO: Find a more reliable way to check for workshop existence - probably an API call
             if (AddWorkshopLink)
             {
                 CheckForContent = "workshop_home_content";
-
-                AddLink(game, links, gameId, _urlWorkshop, NameWorkshopLink, true);
+                AllowedCallbackUrls.Add(string.Format(_urlCommunity, gameId));
+                try
+                {
+                    AddLink(game, links, gameId, _urlWorkshop, NameWorkshopLink, true);
+                }
+                finally
+                {
+                    CheckForContent = string.Empty;
+                    AllowedCallbackUrls.Clear();
+                }
             }
 
             if (links.Any())
