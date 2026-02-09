@@ -15,12 +15,11 @@ public interface IWikipediaCategorySearchProvider : IBulkPropertyImportDataSourc
 
 public class WikipediaCategorySearchProvider(WikipediaApi api) : IWikipediaCategorySearchProvider
 {
-    public WikipediaApi Api { get; } = api;
     private readonly ILogger _logger = LogManager.GetLogger();
 
     public IEnumerable<WikipediaSearchResult> Search(string query, CancellationToken cancellationToken = default)
     {
-        return Api.Search(query, WikipediaNamespace.Category, cancellationToken);
+        return api.Search(query, WikipediaNamespace.Category);
     }
 
     public GenericItemOption<WikipediaSearchResult> ToGenericItemOption(WikipediaSearchResult item) => new(item) { Name = item.Name };
@@ -34,7 +33,7 @@ public class WikipediaCategorySearchProvider(WikipediaApi api) : IWikipediaCateg
     {
         var output = new CategoryContents();
 
-        var categoryMembers = Api.GetCategoryMembers(categoryName, cancellationToken);
+        var categoryMembers = api.GetCategoryMembers(categoryName, cancellationToken);
         foreach (var categoryMember in categoryMembers)
         {
             if (cancellationToken.IsCancellationRequested)

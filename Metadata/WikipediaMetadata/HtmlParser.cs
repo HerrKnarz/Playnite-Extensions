@@ -15,7 +15,7 @@ namespace WikipediaMetadata;
 /// </summary>
 internal class HtmlParser
 {
-    public static string[][] AllowedNodes =
+    public static readonly string[][] AllowedNodes =
         [Resources.AllowedSecondLevelNodes, Resources.AllowedThirdLevelNodes, Resources.AllowedFourthLevelNodes];
 
     private readonly PluginSettings _settings;
@@ -27,7 +27,7 @@ internal class HtmlParser
     /// </summary>
     /// <param name="gameKey">Key of the page we want to parse</param>
     /// <param name="settings">Settings of the plugin</param>
-    public HtmlParser(string gameKey, PluginSettings settings)
+    public HtmlParser(string gameKey, PluginSettings settings, WikipediaApi api)
     {
         _settings = settings;
 
@@ -36,9 +36,12 @@ internal class HtmlParser
 
         _unwantedParagraphs.AddMissing(settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
 
-        // We use HTML Agility Pack to fetch and parse the code. For the description we strip all bloat from the text and
+        var html = api.GetPageHtml(gameKey);
+
+        // We use HTML Agility Pack to parse the code. For the description we strip all bloat from the text and
         // build a simple new html string.
-        var doc = new HtmlWeb().Load(string.Format(Resources.PageHtmlUrl, gameKey.UrlEncode()));
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
 
         // We go through all sections, because those typically contain the text sections of the page.
         foreach (var topLevelSection in doc.DocumentNode.SelectNodes("//body/section"))

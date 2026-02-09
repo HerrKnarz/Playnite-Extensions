@@ -16,16 +16,10 @@ namespace WikipediaMetadata;
 /// <summary>
 /// Parses the given wikitext to get the relevant metadata infos.
 /// </summary>
-internal class WikitextParser
+/// <param name="settings">Settings of the plugin</param>
+/// <param name="api">Wikipedia API</param>
+internal class WikitextParser(PluginSettings settings, WikipediaApi api)
 {
-    private readonly PluginSettings _settings;
-
-    /// <summary>
-    /// Creates an instance of the class and fills the parameters by parsing the wikitext.
-    /// </summary>
-    /// <param name="settings">Settings of the plugin</param>
-    public WikitextParser(PluginSettings settings) => _settings = settings;
-
     public WikipediaGameMetadata GameMetadata { get; set; }
 
     /// <summary>
@@ -60,7 +54,6 @@ internal class WikitextParser
             if (infoBox != null)
             {
                 GameMetadata.Name = infoBox.Arguments["title"]?.Value.ToPlainText(NodePlainTextOptions.RemoveRefTags);
-                GameMetadata.CoverImageUrl = WikipediaHelper.GetImageUrl(gameData.Key);
                 GameMetadata.ReleaseDate = GetDate(infoBox);
                 GameMetadata.Genres = GetValues(infoBox, "genre");
                 GameMetadata.Developers = GetValues(infoBox, "developer", true);
@@ -69,11 +62,11 @@ internal class WikitextParser
                 GameMetadata.Tags = [];
                 GameMetadata.InfoBoxLinkedArticles = GetLinkedArticlesFromInfoBox(infoBox).ToHashSet();
 
-                var pageData = WikipediaApiCaller.GetImage(gameData.Key)?.Query?.Pages?.FirstOrDefault();
+                var pageData = api.GetPageProperties(gameData.Key)?.Query?.Pages?.FirstOrDefault();
                 GameMetadata.CoverImageUrl = pageData?.Original?.Source;
                 GameMetadata.Categories = pageData?.Categories.Select(c=>c.Title).ToList();
 
-                foreach (var tagSetting in _settings.TagSettings.Where(s => s.IsChecked))
+                foreach (var tagSetting in settings.TagSettings.Where(s => s.IsChecked))
                 {
                     GameMetadata.Tags.AddRange(GetValues(infoBox, tagSetting.Name.ToLower(), false, tagSetting.Prefix));
                 }
@@ -84,7 +77,7 @@ internal class WikitextParser
 
                 platforms.AddRange(GetValues(infoBox, "platforms"));
 
-                if (_settings.ArcadeSystemAsPlatform)
+                if (settings.ArcadeSystemAsPlatform)
                 {
                     platforms.AddRange(GetValues(infoBox, "arcade system"));
                 }
@@ -283,7 +276,7 @@ internal class WikitextParser
             return -1;
         }
 
-        switch (_settings.RatingToUse)
+        switch (settings.RatingToUse)
         {
             case RatingToUse.Lowest:
                 return ratings.Min();
@@ -343,7 +336,7 @@ internal class WikitextParser
 
                 PartialDate dateToUse;
 
-                switch (_settings.DateToUse)
+                switch (settings.DateToUse)
                 {
                     case DateToUse.Earliest:
                         dateToUse = dates.OrderBy(d => d.Date).First();

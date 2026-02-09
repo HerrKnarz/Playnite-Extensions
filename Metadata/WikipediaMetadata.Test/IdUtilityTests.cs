@@ -1,7 +1,7 @@
 using PlayniteExtensions.Common;
 using Xunit;
 
-namespace WikipediaMetadata.Test.Categories;
+namespace WikipediaMetadata.Test;
 
 public class IdUtilityTests
 {

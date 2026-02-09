@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
-using Playnite.SDK.Models;
 using System.Collections.Generic;
 
 namespace WikipediaMetadata.Models;
 
 /// Contains the classes needed to fetch images from a Wikipedia page.
-public class Normalized
+public class NormalizedPageTitle
 {
     [JsonProperty("fromencoded")]
     public bool FromEncoded;
@@ -17,7 +16,7 @@ public class Normalized
     public string To;
 }
 
-public class Original
+public class OriginalImage
 {
     [JsonProperty("source")]
     public string Source;
@@ -29,19 +28,19 @@ public class Original
     public int Height;
 }
 
-public class ImagePage
+public class PropertiesPage
 {
     [JsonProperty("pageid")]
     public int PageId;
 
     [JsonProperty("ns")]
-    public int Ns;
+    public int Namespace;
 
     [JsonProperty("title")]
     public string Title;
 
     [JsonProperty("original")]
-    public Original Original;
+    public OriginalImage Original;
 
     [JsonProperty("terms")]
     public Terms Terms;
@@ -50,19 +49,19 @@ public class ImagePage
     public List<WikipediaCategory> Categories;
 }
 
-public class Query
+public class PagePropertiesQuery
 {
     [JsonProperty("normalized")]
-    public List<Normalized> Normalized;
+    public List<NormalizedPageTitle> Normalized;
 
     [JsonProperty("pages")]
-    public List<ImagePage> Pages;
+    public List<PropertiesPage> Pages;
 }
 
-public class WikipediaImage
+public class PagePropertiesResponse
 {
     [JsonProperty("query")]
-    public Query Query;
+    public PagePropertiesQuery Query;
 }
 
 public class Terms

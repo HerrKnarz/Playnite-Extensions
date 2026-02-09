@@ -7,16 +7,16 @@ using WikipediaMetadata.Categories.Models;
 using WikipediaMetadata.Test.Fakes;
 using Xunit;
 
-namespace WikipediaMetadata.Test.Categories;
+namespace WikipediaMetadata.Test;
 
-public class BulkImportIntegrationTests
+public class CategoryImportIntegrationTests
 {
-    private WikipediaCategoryBulkImport Setup(string search, out FakePlayniteDatabase db, out FakeWebDownloader downloader, out WikipediaApi api)
+    private WikipediaCategoryBulkImport Setup(string search, out FakePlayniteDatabase db, out FakeWebClient downloader, out WikipediaApi api)
     {
         db = new FakePlayniteDatabase();
         var ui = new FakeWikipediaBulkImportUserInterface(search, _ => true, _ => true);
-        downloader = new FakeWebDownloader();
-        api = new WikipediaApi(downloader, new(10, 47), "en");
+        downloader = new FakeWebClient(new());
+        api = new WikipediaApi(downloader);
         return new WikipediaCategoryBulkImport(db, ui, new(api), new PlatformUtility(), 1);
     }
 
@@ -26,8 +26,8 @@ public class BulkImportIntegrationTests
         const string search = "video games set in the 16th century";
         var bi = Setup(search, out var db, out var downloader, out var api);
 
-        downloader.FilesByUrl[api.GetSearchUrl(search, WikipediaNamespace.Category)] = "Resources/16th-century/search.json";
-        void AddCategoryUrlFile(string categoryName) => downloader.FilesByUrl.Add(api.GetCategoryMembersUrl($"Category:{categoryName}"), $"Resources/16th-century/{categoryName}.json");
+        downloader.AddFile(WikipediaApiUrl.GetSearchUrl(search, WikipediaNamespace.Category), "data/CategoryImport/16th-century/search.json");
+        void AddCategoryUrlFile(string categoryName) => downloader.AddFile(WikipediaApiUrl.GetCategoryMembersUrl($"Category:{categoryName}"), $"data/CategoryImport/16th-century/{categoryName}.json");
         AddCategoryUrlFile("Inuyasha games");
         AddCategoryUrlFile("Video games set in the 16th century");
         AddCategoryUrlFile("Video games set in the 1500s");
@@ -65,8 +65,8 @@ public class BulkImportIntegrationTests
         const string search = "video games set in the 25th century";
         var bi = Setup(search, out var db, out var downloader, out var api);
 
-        downloader.FilesByUrl.Add(api.GetSearchUrl(search, WikipediaNamespace.Category), "Resources/25th-century/search.json");
-        downloader.FilesByUrl.Add(api.GetCategoryMembersUrl("Category:Video games set in the 25th century"), "Resources/25th-century/category.json");
+        downloader.AddFile(WikipediaApiUrl.GetSearchUrl(search, WikipediaNamespace.Category), "data/CategoryImport/25th-century/search.json");
+        downloader.AddFile(WikipediaApiUrl.GetCategoryMembersUrl("Category:Video games set in the 25th century"), "data/CategoryImport/25th-century/category.json");
 
         db.Games.Add("Beyond Good & Evil");
         db.Games.Add(new Game("Beyond Good & Evil") { Links = [new("Wikipedia", "https://en.wikipedia.org/wiki/Beyond_Good_%26_Evil_(video_game)")] });
@@ -88,8 +88,8 @@ public class BulkImportIntegrationTests
         const string search = "metroid prime";
         var bi = Setup(search, out var db, out var downloader, out var api);
 
-        downloader.FilesByUrl.Add(api.GetSearchUrl(search, WikipediaNamespace.Category), "Resources/search-category-metroid-prime.json");
-        downloader.FilesByUrl.Add(api.GetCategoryMembersUrl("Category:Metroid Prime"), "Resources/details-category-metroid-prime.json");
+        downloader.AddFile(WikipediaApiUrl.GetSearchUrl(search, WikipediaNamespace.Category), "data/CategoryImport/Metroid Prime/search.json");
+        downloader.AddFile(WikipediaApiUrl.GetCategoryMembersUrl("Category:Metroid Prime"), "data/CategoryImport/Metroid Prime/category-members.json");
 
         var mp4 = new Game("Metroid Prime 4: Beyond") { Links = [new("Wikipedia", "https://en.wikipedia.org/wiki/Metroid_Prime_4%3A_Beyond")] };
         db.Games.Add(mp4);

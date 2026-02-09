@@ -1,6 +1,7 @@
 using Playnite.SDK.Models;
 using System.Collections.Generic;
 using WikipediaMetadata.Models;
+using WikipediaMetadata.Test.Fakes;
 using Xunit;
 
 namespace WikipediaMetadata.Test;
@@ -39,8 +40,10 @@ public class HtmlParserTest
     public void TestDescription(PluginSettings settings, string gameKey, string expectedDescription)
     {
         settings.PopulateTagSettings();
+        var webClient = new FakeWebClient(WikipediaApiUrl.GetPageHtmlUrl(gameKey), $"data/HtmlParser/{gameKey}.html");
+        var api = new WikipediaApi(webClient);
 
-        HtmlParser htmlParser = new HtmlParser(gameKey, settings);
+        HtmlParser htmlParser = new HtmlParser(gameKey, settings, api);
 
         Assert.Equal(expectedDescription, htmlParser.Description);
     }
@@ -101,7 +104,10 @@ public class HtmlParserTest
     {
         settings.PopulateTagSettings();
 
-        HtmlParser htmlParser = new HtmlParser(gameKey, settings);
+        var webClient = new FakeWebClient(WikipediaApiUrl.GetPageHtmlUrl(gameKey), $"data/HtmlParser/{gameKey.Replace(":", "")}.html");
+        var api = new WikipediaApi(webClient);
+
+        var htmlParser = new HtmlParser(gameKey, settings, api);
 
         Assert.Equal(expectedLinks, htmlParser.Links);
     }

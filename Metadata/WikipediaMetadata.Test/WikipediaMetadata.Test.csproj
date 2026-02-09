@@ -68,7 +68,8 @@
     <ProjectReference Include="..\WikipediaMetadata\WikipediaMetadata.csproj"/>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Resources\**" CopyToOutputDirectory="Always"/>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Tests.Common\*.cs" LinkBase="Common"/>
+    <None Update="data\**" CopyToOutputDirectory="Always"/>
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Tests.Common\FakeItemCollection.cs" Link="Common/FakeItemCollection.cs"/>
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Tests.Common\FakePlayniteDatabase.cs" Link="Common/FakePlayniteDatabase.cs"/>
   </ItemGroup>
 </Project>

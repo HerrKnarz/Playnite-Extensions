@@ -113,7 +113,7 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
             bool skipCategory = excludedCategoryStarts.Any(a => strippedName.StartsWith(a, StringComparison.InvariantCultureIgnoreCase))
                                 || strippedName.Contains("Wikidata")
                                 || excludedCategories.Contains(strippedName);
-            
+
             if (skipCategory)
                 continue;
 
@@ -151,7 +151,7 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
 
         try
         {
-            var gameFinder = new GameFinder(settings.AdvancedSearchResultSorting);
+            var gameFinder = new GameFinder(api, settings.AdvancedSearchResultSorting);
 
             string key;
 
@@ -173,9 +173,9 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
 
             if (key != string.Empty)
             {
-                var wikitextParser = new WikitextParser(settings);
+                var wikitextParser = new WikitextParser(settings, api);
 
-                wikitextParser.Parse(WikipediaApiCaller.GetGameData(key), playniteApi.Database.Platforms);
+                wikitextParser.Parse(api.GetGameData(key), playniteApi.Database.Platforms);
 
                 return _foundGame = wikitextParser.GameMetadata;
             }
@@ -194,5 +194,5 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
     /// </summary>
     /// <param name="key">Page key to fetch the HTML</param>
     /// <returns>Parsed result with the description and additional links</returns>
-    private HtmlParser ParseHtml(string key) => _htmlParser ??= new(key, settings);
+    private HtmlParser ParseHtml(string key) => _htmlParser ??= new(key, settings, api);
 }

@@ -14,6 +14,7 @@ namespace WikipediaMetadata;
 
 public class WikipediaMetadata : MetadataPlugin
 {
+    private WikipediaApi WikipediaApi { get; } = new(new HttpClientWrapper());
     public WikipediaMetadataSettingsViewModel Settings { get; set; }
 
     public override Guid Id { get; } = Guid.Parse("6c1bdd62-77bf-4866-a264-11544508687c");
@@ -39,8 +40,6 @@ public class WikipediaMetadata : MetadataPlugin
 
     public override string Name => "Wikipedia";
 
-    private readonly WikipediaApi _api;
-
     public WikipediaMetadata(IPlayniteAPI api) : base(api)
     {
         Settings = new WikipediaMetadataSettingsViewModel(this);
@@ -48,10 +47,9 @@ public class WikipediaMetadata : MetadataPlugin
         {
             HasSettings = true
         };
-        _api = new(new WebDownloader(), PlayniteApi.ApplicationInfo.ApplicationVersion);
     }
 
-    public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, Settings.Settings, PlayniteApi, _api);
+    public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, Settings.Settings, PlayniteApi, WikipediaApi);
 
     public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
@@ -81,11 +79,7 @@ public class WikipediaMetadata : MetadataPlugin
 
     private void ImportGameProperty()
     {
-        var handler = TimeLimiter
-                      .GetFromMaxCountByInterval(100, TimeSpan.FromMinutes(1))
-                      .AsDelegatingHandler();
-        var api = new WikipediaApi(new WebDownloader(handler), PlayniteApi.ApplicationInfo.ApplicationVersion);
-        var searchProvider = new WikipediaCategorySearchProvider(api);
+        var searchProvider = new WikipediaCategorySearchProvider(WikipediaApi);
         var bulk = new WikipediaCategoryBulkImport(PlayniteApi.Database, new(PlayniteApi), searchProvider, new PlatformUtility(PlayniteApi), Settings.Settings.MaxDegreeOfParallelism);
         bulk.ImportGameProperty();
     }

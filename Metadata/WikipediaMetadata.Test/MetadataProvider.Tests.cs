@@ -1,7 +1,6 @@
 using Playnite.SDK.Models;
 using PlayniteExtensions.Tests.Common;
 using System.Linq;
-using WikipediaMetadata.Categories;
 using WikipediaMetadata.Models;
 using WikipediaMetadata.Test.Fakes;
 using Xunit;
@@ -18,17 +17,16 @@ public class MetadataProviderTests
         settings.PopulateTagSettings();
         var db = new FakePlayniteDatabase();
         var playniteApi = new FakePlayniteApi { Database = db };
-        var downloader = new FakeWebDownloader(new()
+        var downloader = new FakeWebClient(new()
         {
-            { "https://en.wikipedia.org/w/rest.php/v1/search/page?q=Doom+3&limit=100", "Resources/doom3/search.json" },
-            { "https://en.wikipedia.org/w/rest.php/v1/page/Doom_3", "Resources/doom3/article.json" },
-            { "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms|categories&piprop=original&pilicense=any&cllimit=max&titles=Doom_3", "Resources/doom3/article-images.json" },
+            { WikipediaApiUrl.GetArticleSearchUrl(game.Name), "data/doom3/search.json" },
+            { WikipediaApiUrl.GetPageDataUrl("Doom_3"), "data/doom3/article.json" },
+            { WikipediaApiUrl.GetPagePropertiesUrl("Doom_3"), "data/doom3/article-images.json" },
         });
-        WikipediaApiCaller.WebClientOverride = downloader;
 
         db.Games.Add(game);
 
-        var wikipediaApi = new WikipediaApi(downloader, new(10, 50));
+        var wikipediaApi = new WikipediaApi(downloader);
         var metadataProvider = new MetadataProvider(new(game, backgroundDownload: true), settings, playniteApi, wikipediaApi);
         var tags = metadataProvider.GetTags(new());
         var tagNames = tags.OfType<MetadataNameProperty>().Select(p => p.Name).ToList();

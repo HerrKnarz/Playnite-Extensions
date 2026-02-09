@@ -86,8 +86,8 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
             output.Add(new()
             {
                 Names = [displayTitle],
-                Id = DbId.Wikipedia(_wikipediaDataSource.Api.WikipediaLocale, articleName).Id,
-                Url = WikipediaIdUtility.ToWikipediaUrl(_wikipediaDataSource.Api.WikipediaLocale, articleName),
+                Id = DbId.Wikipedia("en", articleName).Id,
+                Url = WikipediaIdUtility.ToWikipediaUrl("en", articleName),
             });
         }
 
@@ -131,7 +131,7 @@ public class WikipediaBulkImportUserInterface(IPlayniteAPI playniteApi) : BulkPr
         var view = new SelectCategoriesView(window, vm);
         window.Content = view;
         window.SizeToContent = SizeToContent.WidthAndHeight;
-        window.Owner = playniteApi.Dialogs.GetCurrentAppWindow();
+        window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
         window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         window.Title = "Select Categories";
         var result = window.ShowDialog();
