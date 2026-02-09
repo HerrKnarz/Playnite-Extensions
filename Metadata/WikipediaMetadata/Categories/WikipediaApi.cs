@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
 using System;
@@ -63,7 +62,7 @@ public class WikipediaApi
             { "cmtitle", pageName },
             { "cmlimit", "max" },
             { "cmprop", "title|type" },
-            { "cmnamespace", "0|14" }, // 0=articles, 14=categories - sometimes there would be images in here too
+            { "cmnamespace", "0|14" }, // 0=articles, 14=categories - sometimes there would be images in here too, this excludes them
         }, continueParams);
     }
 

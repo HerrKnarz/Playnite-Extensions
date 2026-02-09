@@ -1,6 +1,8 @@
-﻿using Playnite.SDK;
+﻿using ComposableAsync;
+using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
+using RateLimiter;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,7 +81,10 @@ public class WikipediaMetadata : MetadataPlugin
 
     private void ImportGameProperty()
     {
-        var api = new WikipediaApi(new WebDownloader(), PlayniteApi.ApplicationInfo.ApplicationVersion);
+        var handler = TimeLimiter
+                      .GetFromMaxCountByInterval(100, TimeSpan.FromMinutes(1))
+                      .AsDelegatingHandler();
+        var api = new WikipediaApi(new WebDownloader(handler), PlayniteApi.ApplicationInfo.ApplicationVersion);
         var searchProvider = new WikipediaCategorySearchProvider(api);
         var bulk = new WikipediaCategoryBulkImport(PlayniteApi.Database, new(PlayniteApi), searchProvider, new PlatformUtility(PlayniteApi), Settings.Settings.MaxDegreeOfParallelism);
         bulk.ImportGameProperty();
