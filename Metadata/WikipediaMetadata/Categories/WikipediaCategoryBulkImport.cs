@@ -1,3 +1,4 @@
+using KNARZhelper;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
@@ -64,7 +65,9 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
     {
         var rootCategory = DownloadRootCategory(searchResult);
         if (rootCategory == null)
-            return [];
+            return null;
+
+        RemoveEmptyChildren(rootCategory);
 
         var vm = new SelectCategoriesViewModel(rootCategory);
 
@@ -72,7 +75,7 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
             vm = _ui.SelectSubcategories(vm);
 
         if (vm == null)
-            return [];
+            return null;
 
         var articleNames = GetSelectedCategoryArticleMembers(vm.Items.Single()).Distinct().ToList();
 
@@ -93,6 +96,14 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
 
         return output;
 
+
+        void RemoveEmptyChildren(SelectableCategoryViewModel category)
+        {
+            foreach (var subcategory in category.Subcategories)
+                RemoveEmptyChildren(subcategory);
+
+            category.Subcategories.RemoveAll(c => c.Subcategories.Count == 0 && c.Contents.ArticleNames.Count == 0);
+        }
 
         List<string> GetSelectedCategoryArticleMembers(SelectableCategoryViewModel category)
         {
