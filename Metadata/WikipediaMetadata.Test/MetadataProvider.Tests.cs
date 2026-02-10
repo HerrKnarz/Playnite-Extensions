@@ -61,6 +61,7 @@ public class MetadataProviderTests
         Assert.DoesNotContain("Articles using Video game reviews template in single platform mode", categories);
         Assert.DoesNotContain("Articles using Wikidata infoboxes with locally defined images", categories);
         Assert.DoesNotContain("Articles with short description", categories);
+        Assert.DoesNotContain("Bethesda Softworks games", categories);
         Assert.DoesNotContain("CS1: unfit URL", categories);
         Assert.DoesNotContain("Doom (franchise) games", categories);
         Assert.DoesNotContain("First-person shooters", categories);
@@ -71,11 +72,13 @@ public class MetadataProviderTests
         Assert.DoesNotContain("Multiplayer and single-player video games", categories);
         Assert.DoesNotContain("Multiplayer online games", categories);
         Assert.DoesNotContain("Nintendo Switch games", categories);
+        Assert.DoesNotContain("Panic Button (company) games", categories);
         Assert.DoesNotContain("PlayStation 3 games", categories);
         Assert.DoesNotContain("PlayStation 4 games", categories);
         Assert.DoesNotContain("Short description is different from Wikidata", categories);
         Assert.DoesNotContain("Use American English from May 2025", categories);
         Assert.DoesNotContain("Use mdy dates from May 2025", categories);
+        Assert.DoesNotContain("Vicarious Visions games", categories);
         Assert.DoesNotContain("Windows games", categories);
         Assert.DoesNotContain("Xbox 360 games", categories);
         Assert.DoesNotContain("Xbox One games", categories);
@@ -89,7 +92,6 @@ public class MetadataProviderTests
                                   "Good articles",
                                   "Science fiction horror video games",
                                   "Science fiction video games",
-                                  "Vicarious Visions games",
                                   "Video game reboots",
                                   "Video games about Satanism",
                                   "Video games about demons",
@@ -97,11 +99,9 @@ public class MetadataProviderTests
                                   "Video games set in hell",
                                   "Video games set in the 22nd century",
                                   "Video games set on Mars",
-                                  //Unwanted but probably unavoidable tags, due to them not being in the infobox:
+                                  //Unwanted but probably unavoidable developer/platform/mode tags, due to them not being (exactly) in the infobox:
                                   "Aspyr games",
-                                  "Bethesda Softworks games",
                                   "Cooperative video games",
-                                  "Panic Button (company) games",
                                   "PlayStation VR games",
                                   "Splash Damage games",
                                   "Xbox Cloud Gaming games");
