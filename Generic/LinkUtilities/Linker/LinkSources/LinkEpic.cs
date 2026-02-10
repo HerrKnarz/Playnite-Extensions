@@ -69,7 +69,7 @@ namespace LinkUtilities.Linker.LinkSources
                 .Replace("{SearchString}", searchTerm.UrlEncode())
                 .Replace("{DateUntil}", DateTime.Now.AddDays(5).ToString("yyyy-MM-dd"));
 
-            var epicSearchResult = LinkWorker.GetJsonFromApi<EpicSearchResult>(url, LinkName, GlobalSettings.Instance().DebugMode);
+            var epicSearchResult = Pipeline.GetJsonFromApi<EpicSearchResult>(url, LinkName, GlobalSettings.Instance().DebugMode);
 
             return epicSearchResult?.Data?.Catalog?.SearchStore?.Elements?.Any() ?? false
                 ? new List<GenericItemOption>(Enumerable.Where<Element>(epicSearchResult.Data.Catalog.SearchStore.Elements, e => !string.IsNullOrEmpty(e.UrlSlug))

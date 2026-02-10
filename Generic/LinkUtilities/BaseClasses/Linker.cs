@@ -49,8 +49,8 @@ namespace LinkUtilities.BaseClasses
         public virtual int Delay => 0;
         public abstract string LinkName { get; }
         public virtual string LinkUrl { get; set; } = string.Empty;
-        public virtual LinkWorker LinkWorker { get; set; }
         public virtual bool NeedsToBeChecked { get; set; } = true;
+        public virtual Pipeline Pipeline { get; set; }
         public virtual int Priority => 1;
         public string ProgressMessage => "LOCLinkUtilitiesProgressLink";
         public string ResultMessage => "LOCLinkUtilitiesDialogAddedMessage";
@@ -81,7 +81,7 @@ namespace LinkUtilities.BaseClasses
             return result != null && AddLinkFromSearch(game, (SearchResult)result, cleanUpAfterAdding);
         }
 
-        public virtual bool CheckLink(string link) => LinkWorker.IsUrlOk(link, ReturnsSameUrl, WrongTitle, GlobalSettings.Instance().DebugMode, CheckForContent, AllowedCallbackUrls);
+        public virtual bool CheckLink(string link) => Pipeline.IsUrlOk(link, ReturnsSameUrl, WrongTitle, GlobalSettings.Instance().DebugMode, CheckForContent, AllowedCallbackUrls);
 
         public virtual bool Execute(Game game, ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -193,8 +193,8 @@ namespace LinkUtilities.BaseClasses
 
         public void FollowUp(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            LinkWorker?.Dispose();
-            LinkWorker = null;
+            Pipeline?.Dispose();
+            Pipeline = null;
         }
 
         public virtual string GetBrowserSearchLink(Game game = null) => BrowserSearchUrl + game.Name.UrlEncode();
@@ -241,12 +241,12 @@ namespace LinkUtilities.BaseClasses
 
         public virtual bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
-            if (LinkWorker != null)
+            if (Pipeline != null)
             {
                 return true;
             }
 
-            LinkWorker = new LinkWorker(-1);
+            Pipeline = new Pipeline(-1);
 
             return true;
         }
@@ -262,7 +262,7 @@ namespace LinkUtilities.BaseClasses
 
         internal (bool, HtmlDocument) LoadDocument(string url, string checkForContent = "", bool ignoreStatus = false)
         {
-            var urlLoadResult = LinkWorker.LoadUrl(url, DocumentType.Source, GlobalSettings.Instance().DebugMode, checkForContent, AllowedCallbackUrls);
+            var urlLoadResult = Pipeline.LoadUrl(url, DocumentType.Source, GlobalSettings.Instance().DebugMode, checkForContent, AllowedCallbackUrls);
 
             if ((!ignoreStatus && urlLoadResult.StatusCode != HttpStatusCode.OK) || urlLoadResult.ErrorDetails.Length > 0 || string.IsNullOrEmpty(urlLoadResult.PageText))
             {

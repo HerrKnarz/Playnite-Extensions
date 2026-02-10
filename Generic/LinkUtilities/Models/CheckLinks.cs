@@ -1,23 +1,20 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.BaseClasses;
+using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace LinkUtilities.ViewModels
 {
     internal class CheckLinks : ObservableObject
     {
         private readonly List<Game> _games;
+        private readonly Pipelines Pipelines = new Pipelines();
         private ObservableCollectionFast<CheckGameLink> _filteredLinks = new ObservableCollectionFast<CheckGameLink>();
         private ObservableCollectionFast<CheckGameLink> _links = new ObservableCollectionFast<CheckGameLink>();
-        private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)) };
         private string _searchString = string.Empty;
 
         public CheckLinks(List<Game> games, bool hideOkOnLinkCheck)
@@ -117,25 +114,11 @@ namespace LinkUtilities.ViewModels
                 return;
             }
 
-            var linksQueue = new ConcurrentQueue<CheckGameLink>();
+            Pipelines.Initialize(game);
 
-            Parallel.ForEach(game.Links.Where(x => !x.Url.StartsWith("steam")), _parallelOptions, link =>
-            {
-                var linkCheckResult = WebHelper.CheckUrl(link.Url);
+            Links.AddRange(Pipelines.CheckLinks(hideOkOnLinkCheck).OrderBy(x => x.Link.Name).ToList());
 
-                if (!hideOkOnLinkCheck || linkCheckResult.StatusCode != HttpStatusCode.OK)
-                {
-                    linksQueue.Enqueue(new CheckGameLink
-                    {
-                        Game = game,
-                        Link = link,
-                        LinkCheckResult = linkCheckResult,
-                        UrlIsEqual = WebHelper.CleanUpUrl(linkCheckResult.ResponseUrl) == WebHelper.CleanUpUrl(link.Url)
-                    });
-                }
-            });
-
-            Links.AddRange(linksQueue.OrderBy(x => x.Link.Name).ToList());
+            Pipelines.CleanUp();
         }
     }
 }

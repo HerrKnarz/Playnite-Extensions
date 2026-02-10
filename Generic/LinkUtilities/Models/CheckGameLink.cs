@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace LinkUtilities.ViewModels
 {
-    internal class CheckGameLink : GameLink
+    public class CheckGameLink : GameLink
     {
         private UrlLoadResult _linkCheckResult;
         private bool _urlIsEqual;

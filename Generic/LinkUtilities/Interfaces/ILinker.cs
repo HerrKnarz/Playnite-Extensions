@@ -1,5 +1,4 @@
-﻿using KNARZhelper.WebCommon;
-using LinkUtilities.Models;
+﻿using LinkUtilities.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
@@ -83,14 +82,14 @@ namespace LinkUtilities.Interfaces
         string LinkUrl { get; set; }
 
         /// <summary>
-        /// Specifies the LinkWorker the link source uses to load urls.
-        /// </summary>
-        LinkWorker LinkWorker { get; }
-
-        /// <summary>
         /// Specifies, if the link needs to be checked.
         /// </summary>
         bool NeedsToBeChecked { get; set; }
+
+        /// <summary>
+        /// Specifies the Pipeline the link source uses to load urls.
+        /// </summary>
+        Pipeline Pipeline { get; }
 
         /// <summary>
         /// Specifies the priority of the link source. Lower numbers mean higher priority and will

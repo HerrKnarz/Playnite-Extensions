@@ -168,6 +168,8 @@
     <Compile Include="Models\ApiResults\GameFaqsSearchResult.cs" />
     <Compile Include="Models\ApiResults\VndbSearchRequest.cs" />
     <Compile Include="Models\ApiResults\VndbSearchResult.cs" />
+    <Compile Include="Models\Pipeline.cs" />
+    <Compile Include="Models\Pipelines.cs" />
     <Compile Include="Models\SelectedLink.cs" />
     <Compile Include="Models\CustomLinkProfile.cs" />
     <Compile Include="Models\CheckGameLink.cs" />

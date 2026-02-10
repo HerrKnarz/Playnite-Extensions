@@ -1,8 +1,8 @@
-﻿using KNARZhelper.WebCommon;
-using LinkUtilities.BaseClasses;
+﻿using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
 using LinkUtilities.Linker;
+using LinkUtilities.Models;
 using Playnite.SDK.Models;
 
 namespace LinkUtilities.LinkActions
@@ -41,8 +41,8 @@ namespace LinkUtilities.LinkActions
 
             foreach (var linker in LibraryLinks)
             {
-                linker.Value.LinkWorker.Dispose();
-                linker.Value.LinkWorker = null;
+                linker.Value.Pipeline.Dispose();
+                linker.Value.Pipeline = null;
             }
         }
 
@@ -50,7 +50,7 @@ namespace LinkUtilities.LinkActions
         {
             foreach (var linker in LibraryLinks)
             {
-                linker.Value.LinkWorker = new LinkWorker(0);
+                linker.Value.Pipeline = new Pipeline(0);
             }
 
             return true;

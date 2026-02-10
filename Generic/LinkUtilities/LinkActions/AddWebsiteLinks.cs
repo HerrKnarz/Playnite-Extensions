@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
@@ -23,11 +22,9 @@ namespace LinkUtilities.LinkActions
     /// </summary>
     internal class AddWebsiteLinks : LinkAction
     {
-        private static readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Convert.ToInt32(Environment.ProcessorCount) };
         private static AddWebsiteLinks _instance;
         private readonly List<CustomLinkProfile> _customLinkProfiles = new List<CustomLinkProfile>();
-        private readonly int _maxPipelines = 10;
-        private readonly List<LinkWorker> Pipelines = new List<LinkWorker>();
+        private readonly Pipelines Pipelines = new Pipelines();
         private List<BaseClasses.Linker> _linkers;
 
         private AddWebsiteLinks()
@@ -111,7 +108,7 @@ namespace LinkUtilities.LinkActions
         {
             base.FollowUp(actionModifier, isBulkAction);
 
-            DisposePipelines();
+            Pipelines?.CleanUp();
         }
 
         public override bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
@@ -203,15 +200,10 @@ namespace LinkUtilities.LinkActions
 
             foreach (var linker in _linkers)
             {
-                linker.LinkWorker = null;
+                linker.Pipeline = null;
             }
 
-            foreach (var pipeline in Pipelines)
-            {
-                pipeline.Dispose();
-            }
-
-            Pipelines.Clear();
+            Pipelines.CleanUp();
         }
 
         /// <summary>
@@ -228,9 +220,9 @@ namespace LinkUtilities.LinkActions
 
             foreach (var priority in _linkers.Select(l => l.Priority).Distinct())
             {
-                Parallel.ForEach(Pipelines, _parallelOptions, pipeline =>
+                Parallel.ForEach(Pipelines, Pipelines.ParallelOptions, pipeline =>
                 {
-                    foreach (var linker in _linkers.Where(x => x.Priority == priority && x.LinkWorker == pipeline).OrderBy(l => l.LinkName))
+                    foreach (var linker in _linkers.Where(x => x.Priority == priority && x.Pipeline == pipeline).OrderBy(l => l.LinkName))
                     {
                         linker.FindLinks(game, out var innerLinks);
                         foreach (var innerLink in innerLinks)
@@ -246,30 +238,19 @@ namespace LinkUtilities.LinkActions
 
         private void InitializePipelines(int count = 0)
         {
-            //TODO: Maybe make Pipelines a separate class to manage them better.
             DisposePipelines();
+
+            Pipelines.Initialize(count == 0 ? _linkers.Count : count);
 
             var pipelineId = 0;
 
-            var maxPipelines = count > 0 ? count : _maxPipelines;
-            maxPipelines = _parallelOptions.MaxDegreeOfParallelism > maxPipelines ? maxPipelines : _parallelOptions.MaxDegreeOfParallelism;
-            maxPipelines = _linkers.Count > maxPipelines ? maxPipelines : _linkers.Count;
-
-            while (pipelineId < maxPipelines)
-            {
-                Pipelines.Add(new LinkWorker(pipelineId));
-                pipelineId++;
-            }
-
-            pipelineId = 0;
-
             foreach (var linker in _linkers)
             {
-                linker.LinkWorker = Pipelines[pipelineId];
+                linker.Pipeline = Pipelines[pipelineId];
 
                 pipelineId++;
 
-                if (pipelineId >= maxPipelines)
+                if (pipelineId >= Pipelines.Count)
                 {
                     pipelineId = 0;
                 }

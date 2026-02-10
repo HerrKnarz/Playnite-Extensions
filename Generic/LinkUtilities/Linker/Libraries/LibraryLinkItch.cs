@@ -50,7 +50,7 @@ namespace LinkUtilities.Linker.Libraries
                 return false;
             }
 
-            var itchMetaData = LinkWorker.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName, GlobalSettings.Instance().DebugMode);
+            var itchMetaData = Pipeline.GetJsonFromApi<ItchMetaData>(string.Format(_libraryUrl, Settings.ApiKey, game.GameId), LinkName, GlobalSettings.Instance().DebugMode);
 
             LinkUrl = itchMetaData?.Game?.Url ?? string.Empty;
 

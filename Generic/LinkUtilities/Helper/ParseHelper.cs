@@ -46,7 +46,7 @@ namespace LinkUtilities.Helper
                 }
                 else
                 {
-                    var urlLoadResult = linker.LinkWorker.LoadUrl(string.Format(searchUrl, searchTerm.UrlEncode()), DocumentType.Text, GlobalSettings.Instance().DebugMode);
+                    var urlLoadResult = linker.Pipeline.LoadUrl(string.Format(searchUrl, searchTerm.UrlEncode()), DocumentType.Text, GlobalSettings.Instance().DebugMode);
 
                     if (urlLoadResult == null)
                     {

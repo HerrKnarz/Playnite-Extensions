@@ -23,7 +23,7 @@ namespace LinkUtilities.Linker.LinkSources
         {
             try
             {
-                var searchResults = LinkWorker.GetJsonFromApi<List<GameFaqsSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, GlobalSettings.Instance().DebugMode)
+                var searchResults = Pipeline.GetJsonFromApi<List<GameFaqsSearchResult>>($"{SearchUrl}{searchTerm.UrlEncode()}", LinkName, GlobalSettings.Instance().DebugMode)
                     .Where(n => n.GameName?.Length > 0).ToList();
 
                 return !searchResults?.Any() ?? true
