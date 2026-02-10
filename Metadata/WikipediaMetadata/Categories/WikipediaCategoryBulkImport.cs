@@ -134,7 +134,12 @@ public class WikipediaBulkImportUserInterface(IPlayniteAPI playniteApi) : BulkPr
         window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
         window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         window.Title = "Select Categories";
-        var result = window.ShowDialog();
+
+        windowSizedDown = false;
+        window.SizeChanged += Window_SizeChanged;
+        bool? result = window.ShowDialog();
+        window.SizeChanged -= Window_SizeChanged;
+
         return result switch
         {
             true => vm,
