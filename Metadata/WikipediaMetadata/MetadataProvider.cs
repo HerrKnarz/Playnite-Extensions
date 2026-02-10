@@ -105,7 +105,7 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
 
         var tags = foundGame.Tags ?? [];
 
-        HashSet<string> excludedCategoryStarts = ["Articles ", "All Wikipedia articles ", "CS1", "Use ", ..foundGame.InfoBoxLinkedArticles];
+        HashSet<string> excludedCategoryStarts = ["Articles ", "All articles ", "All Wikipedia articles ", "CS1", "Use ", ..foundGame.InfoBoxLinkedArticles];
         HashSet<string> excludedCategories = foundGame.InfoBoxLinkedArticles.Select(GetCategoryNameFromArticle).Where(x => x != null).ToHashSet();
         foreach (string category in foundGame.Categories)
         {
@@ -134,6 +134,10 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
     {
         "Xbox (console)" => "Xbox games",
         "Mac OS X" => "MacOS games",
+        "Microsoft Windows" => "Windows games",
+        "Nintendo Wii" => "Wii games",
+        "Platform game" => "Platformers",
+        "Xbox Series X/S" => "Xbox Series X and Series S games",
         _ => null,
     };
 

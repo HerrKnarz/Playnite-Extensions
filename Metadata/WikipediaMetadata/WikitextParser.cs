@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata;
@@ -60,11 +61,11 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
                 GameMetadata.Publishers = GetValues(infoBox, "publisher", true);
                 GameMetadata.Features = GetValues(infoBox, "modes");
                 GameMetadata.Tags = [];
-                GameMetadata.InfoBoxLinkedArticles = GetLinkedArticlesFromInfoBox(infoBox).ToHashSet();
+                GameMetadata.InfoBoxLinkedArticles = GetLinkedArticlesFromInfoBox(gameData.Source).ToHashSet();
 
                 var pageData = api.GetPageProperties(gameData.Key)?.Query?.Pages?.FirstOrDefault();
                 GameMetadata.CoverImageUrl = pageData?.Original?.Source;
-                GameMetadata.Categories = pageData?.Categories.Select(c=>c.Title).ToList();
+                GameMetadata.Categories = pageData?.Categories.Select(c => c.Title).ToList();
 
                 foreach (var tagSetting in settings.TagSettings.Where(s => s.IsChecked))
                 {
@@ -101,14 +102,29 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
 
     private static IEnumerable<string> GetLinkedArticlesFromInfoBox(Template infoBox)
     {
-        foreach (var line in infoBox.Arguments.SelectMany(a => a.Value.Lines))
+        foreach (var arg in infoBox.Arguments)
         {
-            var links = line.EnumDescendants().OfType<WikiLink>();
+            var links = arg.Value.EnumDescendants().OfType<WikiLink>().ToList();
             foreach (var link in links)
-            {
                 yield return link.Target.ToString();
-            }
         }
+    }
+
+    private static readonly Regex WikiLinkRegex = new("""\[\[(?<article>[^|\]]+)(\|[^\]]+)?\]\]""", RegexOptions.Compiled);
+
+    private static IEnumerable<string> GetLinkedArticlesFromInfoBox(string wikiPageSource)
+    {
+        var lines = wikiPageSource
+                    .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+                    .SkipWhile(l => !(l.TrimStart().StartsWith("{{") && l.Contains("Infobox ")))
+                    .Skip(1)
+                    .TakeWhile(l => !l.TrimStart().StartsWith("}}"));
+
+        var infoBoxContent = string.Join(Environment.NewLine, lines);
+
+        var matches = WikiLinkRegex.Matches(infoBoxContent);
+        foreach (Match match in matches)
+            yield return match.Groups["article"].Value;
     }
 
     /// <summary>
