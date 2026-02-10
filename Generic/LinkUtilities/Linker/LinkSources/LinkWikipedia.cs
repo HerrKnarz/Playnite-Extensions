@@ -1,5 +1,4 @@
-﻿using KNARZhelper;
-using LinkUtilities.Helper;
+﻿using LinkUtilities.Helper;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -38,12 +37,21 @@ namespace LinkUtilities.Linker.LinkSources
             return result != null && LinkHelper.AddLink(game, LinkName, BaseUrl + ((WikipediaItemOption)result).Key, false, cleanUpAfterAdding);
         }
 
-        // Wikipedia Links need the game with underscores instead of whitespaces and special
-        // characters simply encoded.
-        public override string GetGamePath(Game game, string gameName = null)
-            => (gameName ?? game.Name).CollapseWhitespaces()
-                .Replace(" ", "_")
-                .EscapeDataString();
+        public override bool FindLinks(Game game, out List<Link> links)
+        {
+            links = new List<Link>();
+
+            var page = new GameFinder(true).FindGame(game.Name);
+
+            if (page == null)
+            {
+                return false;
+            }
+
+            links.Add(new Link(LinkName, BaseUrl + page.Key));
+
+            return links.Count > 0;
+        }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
             => new GameFinder(true).GetSearchResults(searchTerm);
