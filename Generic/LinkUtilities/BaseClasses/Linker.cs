@@ -37,6 +37,7 @@ namespace LinkUtilities.BaseClasses
             };
         }
 
+        public virtual bool AcceptSingleSearchResult => true;
         public virtual LinkAddTypes AddType => LinkAddTypes.UrlMatch;
         public virtual HashSet<string> AllowedCallbackUrls { get; set; } = new HashSet<string>();
         public virtual bool AllowRedirects { get; set; } = true;
@@ -285,14 +286,14 @@ namespace LinkUtilities.BaseClasses
 
             if (searchResults == null || searchResults.Count == 0)
             {
-                return string.Empty;
+                return null;
             }
 
             var searchName = gameName.RemoveSpecialChars().Replace("-", "").Replace(" ", "");
 
             var foundGame = (SearchResult)searchResults.FirstOrDefault(r => r.Name.RemoveSpecialChars().Replace("-", "").Replace(" ", "").Equals(searchName, StringComparison.OrdinalIgnoreCase));
 
-            return foundGame != null ? foundGame.Url : searchResults.Count == 1 ? ((SearchResult)searchResults[0]).Url : null;
+            return foundGame?.Url;
         }
     }
 }
