@@ -49,8 +49,6 @@ namespace LinkUtilities.Models
             Clear();
         }
 
-        // TODO: Add constructor with a list of links and a method to check those links with the pipelines. If there are more links than pipelines, check the links in batches.
-
         public void Initialize(int linkCount, Game game = null)
         {
             CleanUp();
