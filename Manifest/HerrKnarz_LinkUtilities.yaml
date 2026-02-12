@@ -1,5 +1,18 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 4.3.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-02-12
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-02-12/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_3_0.pext
+    Changelog:
+      - Completely remade the way links are verified to make adding links to sites with strong bot blocking mechanisms more reliable.
+      - Fixed all broken add/search functions in the process.
+      - Added support to add links to SteamPeek for games from the steam library or having a steam link.
+      - Added option to custom links to use all placeholders also in the browser search url.
+      - Removed add/search function for GiantBomb for now until they finished their transition to a new API.
+      - Link sources using the website's search function won't simply add a link anymore if only one result was found, except it matches the name of the game. This fixes frequent cases of Nintendo Wiki, SNK Wiki, Zophar and others adding wrong links.
+      - Changed the way Wikipedia links are added to the same method Wikipedia Metadata does. This should minimize false positives like finding a link to a movie or other thing with the same name as the game.
+      - Changed the "Check links" function to use the new method to verify the validity. This should make it more reliable and won't return a "forbidden" status for most sites anymore.
   - Version: 4.2.3
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2026-01-26
