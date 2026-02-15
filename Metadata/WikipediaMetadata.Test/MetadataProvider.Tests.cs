@@ -141,6 +141,31 @@ public class MetadataProviderTests
                                   "Works about the Battle of Sekigahara");
     }
 
+    [Fact]
+    public void ShinobiCategories()
+    {
+        var categories = GetCategoryNames("SHINOBI: Art of Vengeance", "Shinobi:_Art_of_Vengeance", "shinobi").ToList();
+
+        Assert.DoesNotContain("Nintendo Switch games", categories);
+        Assert.DoesNotContain("Playstation 4 games", categories);
+        Assert.DoesNotContain("Playstation 5 games", categories);
+        Assert.DoesNotContain("Sega video games", categories);
+        Assert.DoesNotContain("Shinobi (series)", categories);
+        Assert.DoesNotContain("Single-player video games", categories);
+        Assert.DoesNotContain("Windows games", categories);
+        Assert.DoesNotContain("Xbox One games", categories);
+        Assert.DoesNotContain("Xbox Series X and Series S games", categories);
+        Assert.DoesNotContain("Lizardcube games", categories); //has no wiki link, only a text name in the infobox
+
+        AssertContainsExclusively(categories,
+                                  "Action games",
+                                  "Side-scrolling video games",
+                                  "2025 video games",
+                                  "Video games about ninja",
+                                  "Video games about revenge",
+                                  "Video games developed in France");
+    }
+
     private static void AssertContainsExclusively<T>(List<T> collection, params T[] expected)
     {
         foreach (var expectedItem in expected)

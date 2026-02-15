@@ -105,7 +105,12 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
 
         var tags = foundGame.Tags ?? [];
 
-        HashSet<string> excludedCategoryStarts = ["Articles ", "All articles ", "All Wikipedia articles ", "CS1", "Use ", ..foundGame.InfoBoxLinkedArticles];
+        HashSet<string> excludedCategoryStarts =
+        [
+            "Articles ", "All articles ", "All Wikipedia articles ", "CS1", "Use ", ..foundGame.InfoBoxLinkedArticles,
+            ..foundGame.Developers.OfType<MetadataNameProperty>().Select(d => d.Name),
+            ..foundGame.Publishers.OfType<MetadataNameProperty>().Select(d => d.Name),
+        ];
         HashSet<string> excludedCategories = foundGame.InfoBoxLinkedArticles.Select(GetCategoryNameFromArticle).Where(x => x != null).ToHashSet();
         foreach (string category in foundGame.Categories)
         {
