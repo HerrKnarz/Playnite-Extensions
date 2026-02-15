@@ -37,6 +37,8 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
         SelectableCategoryViewModel rootCategory = null;
         Ui.ShowProgress(progressArgs =>
         {
+            var progressTextTemplate = ResourceProvider.GetString("LOCWikipediaMetadataCategoryDownloadText");
+            int downloadedCategoryCount = 0;
             var downloadedCategories = new HashSet<string>();
             rootCategory = DownloadCategory(searchResult.Name);
             return;
@@ -44,12 +46,16 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
             SelectableCategoryViewModel DownloadCategory(string categoryName)
             {
                 var category = new SelectableCategoryViewModel(categoryName, _wikipediaDataSource.GetCategoryContents(categoryName, progressArgs.CancelToken));
+                downloadedCategoryCount++;
+                if (downloadedCategoryCount % 5 == 0 || downloadedCategoryCount > 70)
+                    progressArgs.Text = string.Format(progressTextTemplate, downloadedCategoryCount); //if you're debugging a unit test, you'll get stuck here - temporarily comment out the line
+
                 foreach (string subcategoryName in category.Contents.SubcategoryNames)
                 {
                     if (progressArgs.CancelToken.IsCancellationRequested)
                         break;
 
-                    if (!downloadedCategories.Add(subcategoryName))
+                    if (!downloadedCategories.Add(subcategoryName)) //Prevent downloading any category twice
                         continue;
 
                     category.Subcategories.Add(DownloadCategory(subcategoryName));

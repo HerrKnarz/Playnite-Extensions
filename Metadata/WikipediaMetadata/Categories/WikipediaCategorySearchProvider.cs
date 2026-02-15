@@ -21,6 +21,7 @@ public class WikipediaCategorySearchProvider(WikipediaApi api) : IBulkPropertyIm
 
     IEnumerable<GameDetails> ISearchableDataSourceWithDetails<WikipediaSearchResult, IEnumerable<GameDetails>>.GetDetails(WikipediaSearchResult searchResult, GlobalProgressActionArgs progressArgs, Game searchGame)
     {
+        // Because this bulk import process requires an extra step in selecting the categories you want to import in a tree view, this step is not handled here, but in WikipediaCategoryBulkImport
         throw new NotImplementedException();
     }
 

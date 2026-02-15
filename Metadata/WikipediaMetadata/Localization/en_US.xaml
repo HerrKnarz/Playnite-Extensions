@@ -26,6 +26,7 @@
     <sys:String x:Key="LOCWikipediaMetadataSettingsShowTopPanelCategoryImportButton">Show top panel category import button</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsParallelismLabel">Parellelism:</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsParallelismExplanation">Parallelism dictates how many simultaneous threads can be used to process the category import game matching. It is recommended to set this lower than the amount of cores in your CPU.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataCategoryDownloadText">Downloading category and its child categories. Wikipedia supports up to 100 requests per minute, so for categories with many child categories, this can take 1 or more minutes. Downloaded {0} categories.</sys:String>
 
     <sys:String x:Key="LOCWikipediaMetadataSearchDialog">select game</sys:String>
 </ResourceDictionary>
