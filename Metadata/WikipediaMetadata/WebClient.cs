@@ -2,12 +2,15 @@
 using RateLimiter;
 using System;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace WikipediaMetadata;
 
 public interface IWebClient
 {
-    string DownloadString(string url);
+    string DownloadString(string url, CancellationToken cancellationToken = default);
+    Task<string> DownloadStringAsync(string url, CancellationToken cancellationToken = default);
 }
 
 public class HttpClientWrapper : IWebClient
@@ -24,8 +27,15 @@ public class HttpClientWrapper : IWebClient
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"Playnite Wikipedia Metadata Addon/{version} (alex@knarzwerk.de)");
     }
 
-    public string DownloadString(string url)
+    public string DownloadString(string url, CancellationToken cancellationToken)
     {
-        return _httpClient.GetStringAsync(url).Result;
+        return DownloadStringAsync(url, cancellationToken).Result;
+    }
+
+    public async Task<string> DownloadStringAsync(string url, CancellationToken cancellationToken)
+    {
+        var response = await _httpClient.GetAsync(url, cancellationToken);
+        var content = await response.Content.ReadAsStringAsync();
+        return content;
     }
 }

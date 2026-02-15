@@ -47,7 +47,7 @@ public class WikipediaApi(IWebClient webClient)
             if (cancellationToken.IsCancellationRequested)
                 break;
 
-            var response = GetCategoryMembers(pageName, continueParams);
+            var response = GetCategoryMembers(pageName, continueParams, cancellationToken);
             output.AddRange(response.Query.CategoryMembers);
 
             continueParams = response.Continue;
@@ -59,11 +59,11 @@ public class WikipediaApi(IWebClient webClient)
         return output;
     }
 
-    private WikipediaQueryResponse<CategoryMemberQueryResult> GetCategoryMembers(string pageName, Dictionary<string, string> continueParams)
+    private WikipediaQueryResponse<CategoryMemberQueryResult> GetCategoryMembers(string pageName, Dictionary<string, string> continueParams, CancellationToken cancellationToken)
     {
         var url = WikipediaApiUrl.GetCategoryMembersUrl(pageName, continueParams);
 
-        var response = webClient.DownloadString(url);
+        var response = webClient.DownloadString(url, cancellationToken);
         var responseObj = JsonConvert.DeserializeObject<WikipediaQueryResponse<CategoryMemberQueryResult>>(response);
         return responseObj;
     }

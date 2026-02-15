@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace WikipediaMetadata.Test.Fakes;
@@ -27,12 +29,17 @@ public class FakeWebClient : IWebClient
         FilesByUrl.Add(url, file);
     }
 
-    public string DownloadString(string url)
+    public string DownloadString(string url, CancellationToken cancellationToken = default)
     {
         CalledUrls.Add(url);
         return FilesByUrl.TryGetValue(url, out string filePath)
             ? File.ReadAllText(filePath)
             : throw new($"Url not accounted for: {url}");
+    }
+
+    public Task<string> DownloadStringAsync(string url, CancellationToken cancellationToken = default)
+    {
+        return Task.FromResult(DownloadString(url, cancellationToken));
     }
 
     public void AssertAllUrlsCalledOnce()

@@ -8,12 +8,7 @@ using WikipediaMetadata.Categories.Models;
 
 namespace WikipediaMetadata.Categories;
 
-public interface IWikipediaCategorySearchProvider : IBulkPropertyImportDataSource<WikipediaSearchResult>
-{
-
-}
-
-public class WikipediaCategorySearchProvider(WikipediaApi api) : IWikipediaCategorySearchProvider
+public class WikipediaCategorySearchProvider(WikipediaApi api) : IBulkPropertyImportDataSource<WikipediaSearchResult>
 {
     private readonly ILogger _logger = LogManager.GetLogger();
 
