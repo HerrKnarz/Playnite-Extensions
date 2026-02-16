@@ -6,7 +6,8 @@ using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using WikipediaMetadata.Categories.Models;
+using WikipediaMetadata.Models;
+using WikipediaSearchResult = WikipediaMetadata.Categories.Models.WikipediaSearchResult;
 
 namespace WikipediaMetadata.Categories;
 
@@ -14,14 +15,16 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
 {
     private readonly WikipediaBulkImportUserInterface _ui;
     private readonly WikipediaCategorySearchProvider _wikipediaDataSource;
+    private readonly string _categoryPrefix;
 
-    public WikipediaCategoryBulkImport(IGameDatabaseAPI db, WikipediaBulkImportUserInterface ui, WikipediaCategorySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
+    public WikipediaCategoryBulkImport(PluginSettings settings, IGameDatabaseAPI db, WikipediaBulkImportUserInterface ui, WikipediaCategorySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
         : base(db, ui, dataSource, platformUtility, new WikipediaIdUtility(), ExternalDatabase.Wikipedia, maxDegreeOfParallelism)
     {
         _ui = ui;
         _wikipediaDataSource = dataSource;
         Ui.AllowEmptySearchQuery = false;
         Ui.DefaultSearch = "Video games";
+        _categoryPrefix = settings.TagSettings.FirstOrDefault(c => c.Name == "Categories")?.Prefix;
     }
 
     public override string MetadataProviderName => "Wikipedia";
@@ -29,7 +32,7 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
     protected override PropertyImportSetting GetPropertyImportSetting(WikipediaSearchResult searchItem, out string name)
     {
         name = searchItem?.Name.StripCategoryPrefix();
-        return new() { ImportTarget = PropertyImportTarget.Tags };
+        return new() { ImportTarget = PropertyImportTarget.Tags, Prefix = $"{_categoryPrefix} ".TrimStart() };
     }
 
     private SelectableCategoryViewModel DownloadRootCategory(WikipediaSearchResult searchResult)

@@ -43,7 +43,7 @@ public class PluginSettings : ObservableObject
         return parallelism;
     }
 
-    public void PopulateTagSettings()
+    public PluginSettings PopulateTagSettings()
     {
         if (_tagSettings is null)
             _tagSettings = [];
@@ -60,6 +60,7 @@ public class PluginSettings : ObservableObject
         AddMissingTagSetting("Artist", "[People] artist:");
         AddMissingTagSetting("Writer", "[People] writer:");
         AddMissingTagSetting("Composer", "[People] composer:");
+        return this;
     }
 
     private void AddMissingTagSetting(string name, string prefix)

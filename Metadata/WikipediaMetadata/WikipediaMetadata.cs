@@ -80,7 +80,7 @@ public class WikipediaMetadata : MetadataPlugin
     private void ImportGameProperty()
     {
         var searchProvider = new WikipediaCategorySearchProvider(WikipediaApi);
-        var bulk = new WikipediaCategoryBulkImport(PlayniteApi.Database, new(PlayniteApi), searchProvider, new PlatformUtility(PlayniteApi), Settings.Settings.MaxDegreeOfParallelism);
+        var bulk = new WikipediaCategoryBulkImport(Settings.Settings, PlayniteApi.Database, new(PlayniteApi), searchProvider, new PlatformUtility(PlayniteApi), Settings.Settings.MaxDegreeOfParallelism);
         bulk.ImportGameProperty();
     }
 }

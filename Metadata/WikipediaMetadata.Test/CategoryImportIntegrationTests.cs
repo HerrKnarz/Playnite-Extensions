@@ -4,6 +4,7 @@ using PlayniteExtensions.Tests.Common;
 using System.Linq;
 using WikipediaMetadata.Categories;
 using WikipediaMetadata.Categories.Models;
+using WikipediaMetadata.Models;
 using WikipediaMetadata.Test.Fakes;
 using Xunit;
 
@@ -17,7 +18,7 @@ public class CategoryImportIntegrationTests
         var ui = new FakeWikipediaBulkImportUserInterface(search, _ => true, _ => true);
         downloader = new FakeWebClient(new());
         api = new WikipediaApi(downloader);
-        return new WikipediaCategoryBulkImport(db, ui, new(api), new PlatformUtility(), 1);
+        return new WikipediaCategoryBulkImport(new PluginSettings().PopulateTagSettings(), db, ui, new(api), new PlatformUtility(), 1);
     }
 
     [Fact]
@@ -55,7 +56,7 @@ public class CategoryImportIntegrationTests
 
         Assert.All(db.Games, g => g.TagIds.Single());
         Assert.All(db.Games, g => g.Links.Single());
-        Assert.Single(db.Tags, t => t.Name == "Video games set in the 16th century");
+        Assert.Single(db.Tags, t => t.Name == "[Category] Video games set in the 16th century");
         downloader.AssertAllUrlsCalledOnce();
     }
 
@@ -78,7 +79,7 @@ public class CategoryImportIntegrationTests
 
         Assert.All(db.Games, g => g.TagIds.Single());
         Assert.All(db.Games, g => g.Links.Single());
-        Assert.Single(db.Tags, t => t.Name == "Video games set in the 25th century");
+        Assert.Single(db.Tags, t => t.Name == "[Category] Video games set in the 25th century");
         downloader.AssertAllUrlsCalledOnce();
     }
 
@@ -97,7 +98,7 @@ public class CategoryImportIntegrationTests
         bi.ImportGameProperty();
 
         Assert.Single(db.Tags);
-        Assert.Equal("Metroid Prime", db.Tags.Single().Name);
+        Assert.Equal("[Category] Metroid Prime", db.Tags.Single().Name);
         Assert.Single(mp4.TagIds);
         Assert.Single(mp4.Links);
         downloader.AssertAllUrlsCalledOnce();
