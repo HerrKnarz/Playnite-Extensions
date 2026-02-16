@@ -50,7 +50,7 @@ public class PluginSettings : ObservableObject
         else
             _tagSettings = DistinctByName(_tagSettings).ToObservable(); // Hotfix to a bug that duplicated the tag settings in version 1.3 and 1.4
 
-        AddMissingTagSetting("Arcade System", "[Arcade System]");
+        AddMissingTagSetting("Arcade system", "[Arcade System]");
         AddMissingTagSetting("Engine", "[Game Engine]");
         AddMissingTagSetting("Categories", "[Category]");
         AddMissingTagSetting("Director", "[People] director:");
@@ -78,7 +78,7 @@ public class PluginSettings : ObservableObject
 
     private static IEnumerable<TagSetting> DistinctByName(IEnumerable<TagSetting> tagSettings)
     {
-        HashSet<string> tagSettingNames = [];
+        var tagSettingNames = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
         foreach (var tagSetting in tagSettings)
         {
             if (tagSettingNames.Add(tagSetting.Name))
