@@ -20,6 +20,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
+    <LangVersion>14</LangVersion>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,6 +29,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
+    <LangVersion>14</LangVersion>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -145,12 +147,14 @@
     <Compile Include="..\..\Metadata\WikipediaMetadata\Models\WikipediaSearchResult.cs">
       <Link>Shared\Wikipedia\WikipediaSearchResult.cs</Link>
     </Compile>
+    <Compile Include="..\..\Metadata\WikipediaMetadata\WebClient.cs">
+      <Link>Shared\Wikipedia\WebClient.cs</Link>
+    </Compile>
     <Compile Include="..\..\Metadata\WikipediaMetadata\WikipediaApiUrl.cs">
       <Link>Shared\Wikipedia\WikipediaApiUrl.cs</Link>
     </Compile>
     <Compile Include="BaseClasses\ObservableCollectionFast.cs" />
     <Compile Include="Helper\ParseHelper.cs" />
-    <Compile Include="Helper\WikipediaApiCaller.cs" />
     <Compile Include="LinkActions\AddLinkFromClipboard.cs" />
     <Compile Include="LinkActions\ChangeSteamLinks.cs" />
     <Compile Include="LinkActions\DoAfterChange.cs" />
@@ -331,6 +335,9 @@
     </PackageReference>
     <PackageReference Include="PlayniteSDK">
       <Version>6.13.0</Version>
+    </PackageReference>
+    <PackageReference Include="RateLimiter">
+      <Version>2.2.0</Version>
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.5.0</Version>

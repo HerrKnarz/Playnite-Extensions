@@ -29,7 +29,7 @@ namespace LinkUtilities.Linker.LinkSources
             var result = GlobalSettings.Instance().OnlyATest
                 ? GetSearchResults(game.Name)?.FirstOrDefault() ?? new WikipediaItemOption()
                 : API.Instance.Dialogs.ChooseItemWithSearch(
-                    new List<GenericItemOption>(),
+                    [],
                     GetSearchResults,
                     game.Name,
                     $"{ResourceProvider.GetString("LOCLinkUtilitiesDialogSearchGame")} ({LinkName})");
@@ -39,7 +39,7 @@ namespace LinkUtilities.Linker.LinkSources
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
-            links = new List<Link>();
+            links = [];
 
             var page = new GameFinder(true).FindGame(game.Name);
 

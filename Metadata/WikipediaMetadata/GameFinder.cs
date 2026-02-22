@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using Newtonsoft.Json;
 using Playnite.SDK;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,6 @@ namespace WikipediaMetadata;
 /// </summary>
 internal class GameFinder(bool useAdvancedSearchResultSorting)
 {
-    private readonly string _apiName = "Wikipedia";
-
     /// <summary>
     /// Tries to find a single game based on the given name.
     /// </summary>
@@ -27,7 +26,7 @@ internal class GameFinder(bool useAdvancedSearchResultSorting)
         var searchName = gameName.RemoveEditionSuffix();
 
         // We search for the game name on Wikipedia
-        searchResult ??= ApiHelper.GetJsonFromApi<WikipediaSearchResult>(WikipediaApiUrl.GetArticleSearchUrl(searchName), _apiName, null, "");
+        searchResult ??= GetSearchResult(searchName);
 
         var searchNameVideoGame = (searchName + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
         searchName = searchName.RemoveSpecialChars().ToLower().Replace(" ", "");
@@ -61,7 +60,7 @@ internal class GameFinder(bool useAdvancedSearchResultSorting)
         var (nameVideoGame, compareName, startName) = PrepareSearchTerms(searchTerm);
 
         // We search for the game name on Wikipedia
-        var searchResult = ApiHelper.GetJsonFromApi<WikipediaSearchResult>(WikipediaApiUrl.GetArticleSearchUrl(searchTerm), _apiName, null, "");
+        var searchResult = GetSearchResult(searchTerm);
 
         if (useAdvancedSearchResultSorting)
         {
@@ -69,15 +68,21 @@ internal class GameFinder(bool useAdvancedSearchResultSorting)
             // actual game as one of the first results. First we order by containing "video game" in
             // the short description, then by titles starting with the game name, then by titles
             // starting with the first five characters of the game name and at last by page title itself.
-            return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
+            return [.. searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)
                                .OrderByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(nameVideoGame))
                                .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").StartsWith(startName))
                                .ThenByDescending(o => o.Name.RemoveSpecialChars().ToLower().Replace(" ", "").Contains(compareName))
-                               .ThenByDescending(o => o.Description != null && o.Description.Contains("video game"))
-                               .ToList<GenericItemOption>();
+                               .ThenByDescending(o => o.Description != null && o.Description.Contains("video game"))];
         }
 
-        return searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult).ToList<GenericItemOption>();
+        return [.. searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)];
+    }
+
+    private static WikipediaSearchResult GetSearchResult(string searchName)
+    {
+        IWebClient httpClient = new HttpClientWrapper();
+        var jsonResult = httpClient.DownloadString(WikipediaApiUrl.GetArticleSearchUrl(searchName));
+        return JsonConvert.DeserializeObject<WikipediaSearchResult>(jsonResult);
     }
 
     /// <summary>
@@ -97,7 +102,7 @@ internal class GameFinder(bool useAdvancedSearchResultSorting)
         (
             $"{searchTerm} (video game)".RemoveSpecialChars().ToLower().Replace(" ", ""),
             compareName,
-            new string(compareName.Take(5).ToArray())
+            new string([.. compareName.Take(5)])
         );
     }
 }
