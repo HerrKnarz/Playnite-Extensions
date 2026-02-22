@@ -1,0 +1,102 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Deploy" />
+    <BuildType Name="Release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Common/">
+    <Project Path="KNARZhelper/KNARZhelper.Test/KNARZhelper.Test.csproj">
+      <BuildType Solution="Deploy|*" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="KNARZhelper/KNARZhelper/KNARZhelper.csproj">
+      <BuildType Solution="Deploy|*" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Generic/">
+    <Project Path="Generic/CompanyCompanion/CompanyCompanion.csproj">
+      <BuildType Solution="Deploy|Any CPU" Project="Debug" />
+      <BuildType Solution="Deploy|x86" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Generic/KNARZtools/KNARZtools.csproj">
+      <Platform Solution="Debug|x86" Project="x86" />
+      <Platform Solution="Release|x86" Project="x86" />
+    </Project>
+    <Project Path="Generic/LinkUtilities.Test/LinkUtilities.Test.csproj">
+      <BuildType Solution="Deploy|Any CPU" Project="Debug" />
+      <BuildType Solution="Deploy|x86" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Generic/LinkUtilities/LinkUtilities.csproj">
+      <Platform Solution="Debug|x86" Project="x86" />
+      <Platform Solution="Release|x86" Project="x86" />
+    </Project>
+    <Project Path="Generic/MetadataUtilities/MetadataUtilities.csproj">
+      <BuildType Solution="Deploy|Any CPU" Project="Debug" />
+      <BuildType Solution="Deploy|x86" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Generic/QuickAdd/QuickAdd.csproj">
+      <BuildType Solution="Deploy|Any CPU" Project="Debug" />
+      <BuildType Solution="Deploy|x86" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Generic/ScreenshotUtilities/ScreenshotUtilities.csproj">
+      <BuildType Solution="Deploy|*" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Generic/ScreenshotUtilitiesArcadeDatabaseProvider/ScreenshotUtilitiesArcadeDatabaseProvider.csproj">
+      <BuildType Solution="Deploy|*" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Generic/ScreenshotUtilitiesGOGProvider/ScreenshotUtilitiesGOGProvider.csproj">
+      <BuildType Solution="Deploy|*" Project="Release" />
+      <Platform Solution="Debug|x86" Project="x86" />
+      <Platform Solution="Release|x86" Project="x86" />
+    </Project>
+    <Project Path="Generic/ScreenshotUtilitiesKLOVProvider/ScreenshotUtilitiesKLOVProvider.csproj">
+      <BuildType Solution="Deploy|*" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Generic/ScreenshotUtilitiesSteamProvider/ScreenshotUtilitiesSteamProvider.csproj">
+      <BuildType Solution="Deploy|*" Project="Release" />
+      <Platform Solution="Debug|x86" Project="x86" />
+      <Platform Solution="Release|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Metadata/">
+    <Project Path="Metadata/WikipediaMetadata.Test/WikipediaMetadata.Test.csproj">
+      <BuildType Solution="Deploy|Any CPU" Project="Debug" />
+      <BuildType Solution="Deploy|x86" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Metadata/WikipediaMetadata/WikipediaMetadata.csproj">
+      <BuildType Solution="Deploy|Any CPU" Project="Debug" />
+      <BuildType Solution="Deploy|x86" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="crowdin.yml" />
+    <File Path="LICENSE.txt" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/Manifests/">
+    <File Path="Manifest/HerrKnarz_CompanyCompanion.yaml" />
+    <File Path="Manifest/HerrKnarz_LinkUtilities.yaml" />
+    <File Path="Manifest/HerrKnarz_MetadataUtilities.yaml" />
+    <File Path="Manifest/HerrKnarz_QuickAdd.yaml" />
+    <File Path="Manifest/HerrKnarz_ScreenshotUtilities.yaml" />
+    <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesArcadeDatabaseProvider.yaml" />
+    <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesGOGProvider.yaml" />
+    <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesKLOVProvider.yaml" />
+    <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesSteamProvider.yaml" />
+    <File Path="Manifest/HerrKnarz_WikipediaMetadata.yaml" />
+  </Folder>
+</Solution>

@@ -8,326 +8,328 @@ using System.Net;
 using System.Text;
 using WikipediaMetadata.Models;
 
-namespace WikipediaMetadata
+namespace WikipediaMetadata;
+
+/// <summary>
+///     Parser for the html code of a wikipedia page fetched by the rest api, to get the description and additional links.
+/// </summary>
+internal class HtmlParser
 {
+    public static readonly string[][] AllowedNodes =
+        [Resources.AllowedSecondLevelNodes, Resources.AllowedThirdLevelNodes, Resources.AllowedFourthLevelNodes];
+
+    private readonly PluginSettings _settings;
+
+    private readonly List<string> _unwantedParagraphs;
+
     /// <summary>
-    ///     Parser for the html code of a wikipedia page fetched by the rest api, to get the description and additional links.
+    ///     Creates an instance of the class, fetches the html code and parses it.
     /// </summary>
-    internal class HtmlParser
+    /// <param name="gameKey">Key of the page we want to parse</param>
+    /// <param name="settings">Settings of the plugin</param>
+    public HtmlParser(string gameKey, PluginSettings settings, WikipediaApi api)
     {
-        public static string[][] AllowedNodes =
-            { Resources.AllowedSecondLevelNodes, Resources.AllowedThirdLevelNodes, Resources.AllowedFourthLevelNodes };
+        _settings = settings;
 
-        private readonly PluginSettings _settings;
+        // All paragraphs we want to remove from the description by default.
+        _unwantedParagraphs = Resources.UnwantedParagraphs.ToList();
 
-        private readonly List<string> _unwantedParagraphs;
+        _unwantedParagraphs.AddMissing(settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
 
-        /// <summary>
-        ///     Creates an instance of the class, fetches the html code and parses it.
-        /// </summary>
-        /// <param name="gameKey">Key of the page we want to parse</param>
-        /// <param name="settings">Settings of the plugin</param>
-        public HtmlParser(string gameKey, PluginSettings settings)
+        var html = api.GetPageHtml(gameKey);
+
+        // We use HTML Agility Pack to parse the code. For the description we strip all bloat from the text and
+        // build a simple new html string.
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
+
+        // We go through all sections, because those typically contain the text sections of the page.
+        foreach (var topLevelSection in doc.DocumentNode.SelectNodes("//body/section"))
         {
-            _settings = settings;
-
-            // All paragraphs we want to remove from the description by default.
-            _unwantedParagraphs = Resources.UnwantedParagraphs.ToList();
-
-            _unwantedParagraphs.AddMissing(settings.SectionsToRemove.Select(s => s.ToLower().Trim()));
-
-            // We use HTML Agility Pack to fetch and parse the code. For the description we strip all bloat from the text and
-            // build a simple new html string.
-            var doc = new HtmlWeb().Load(string.Format(Resources.PageHtmlUrl, gameKey.UrlEncode()));
-
-            // We go through all sections, because those typically contain the text sections of the page.
-            foreach (var topLevelSection in doc.DocumentNode.SelectNodes("//body/section"))
+            // First we check, if the current section is the external links block by fetching its heading.
+            if (topLevelSection.SelectSingleNode("./h2")?.InnerText.ToLower() == "external links")
             {
-                // First we check, if the current section is the external links block by fetching its heading.
-                if (topLevelSection.SelectSingleNode("./h2")?.InnerText.ToLower() == "external links")
-                {
-                    GetExternalLinks(topLevelSection);
-                }
+                GetExternalLinks(topLevelSection);
+            }
 
-                LoopSection(topLevelSection);
+            LoopSection(topLevelSection);
 
-                // If we only want the overview, we directly break the loop after the first section.
-                if (settings.DescriptionOverviewOnly)
-                {
-                    break;
-                }
+            // If we only want the overview, we directly break the loop after the first section.
+            if (settings.DescriptionOverviewOnly)
+            {
+                break;
             }
         }
+    }
 
-        public string Description { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 
-        public List<Link> Links { get; } = new List<Link>();
+    public List<Link> Links { get; } = [];
 
-        /// <summary>
-        ///     Removes annotation marks from the text, because we don't need those in the game description.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        private static HtmlNode RemoveAnnotationMarks(HtmlNode text)
+    /// <summary>
+    ///     Removes annotation marks from the text, because we don't need those in the game description.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    private static HtmlNode RemoveAnnotationMarks(HtmlNode text)
+    {
+        var supNodes = text.SelectNodes("./sup");
+
+        if ((supNodes?.Count ?? 0) == 0)
         {
-            var supNodes = text.SelectNodes("./sup");
-
-            if ((supNodes?.Count ?? 0) == 0)
-            {
-                return text;
-            }
-
-            foreach (var annotation in supNodes)
-            {
-                if (annotation.Attributes.Any(a => a.Name == "class" && a.Value.Contains("update")))
-                {
-                    annotation.Remove();
-                }
-
-                if (annotation.SelectSingleNode("./a/span[@class='mw-reflink-text']") != null)
-                {
-                    annotation.Remove();
-                }
-            }
-
             return text;
         }
 
-        /// <summary>
-        ///     Adds the provided section to the description
-        /// </summary>
-        /// <param name="node">The section to add</param>
-        /// <param name="level">Level the node appeared in. Is used in some elements to set the right heading level</param>
-        private void AddSectionToDescription(HtmlNode node, int level = 2)
+        foreach (var annotation in supNodes)
         {
-            if (node.Name.IsOneOf("ul", "ol"))
+            if (annotation.Attributes.Any(a => a.Name == "class" && a.Value.Contains("update")))
             {
-                Description += GetList(node) + Environment.NewLine + Environment.NewLine;
+                annotation.Remove();
             }
-            else if (node.Name == "dl")
+
+            if (annotation.SelectSingleNode("./a/span[@class='mw-reflink-text']") != null)
             {
-                Description += GetDescriptionList(node, level);
+                annotation.Remove();
+            }
+        }
+
+        return text;
+    }
+
+    /// <summary>
+    ///     Adds the provided section to the description
+    /// </summary>
+    /// <param name="node">The section to add</param>
+    /// <param name="level">Level the node appeared in. Is used in some elements to set the right heading level</param>
+    private void AddSectionToDescription(HtmlNode node, int level = 2)
+    {
+        if (node.Name.IsOneOf("ul", "ol"))
+        {
+            Description += GetList(node) + Environment.NewLine + Environment.NewLine;
+        }
+        else if (node.Name == "dl")
+        {
+            Description += GetDescriptionList(node, level);
+        }
+        else
+        {
+            var text = RemoveUnwantedTags(RemoveAnnotationMarks(node), Resources.AllowedParagraphTags).InnerHtml.Trim();
+
+            if (text.Any())
+            {
+                Description += $"<{node.Name}>{text}</{node.Name}>" + Environment.NewLine + Environment.NewLine;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Gets the content of a dl description list and converts it to paragraphs with headlines
+    /// </summary>
+    /// <param name="htmlList">list to process</param>
+    /// <param name="level">Level the dl list appeared in. Is used to add the right heading level</param>
+    /// <returns>the cleaned up html string for the list and its items</returns>
+    private string GetDescriptionList(HtmlNode htmlList, int level = 2)
+    {
+        var result = new StringBuilder();
+
+        var heading = level == 2 ? "h3" : "h4";
+
+        foreach (var node in htmlList.ChildNodes.Where(c => c.Name.IsOneOf("dt", "dd")))
+        {
+            if (node.Name == "dt")
+            {
+                result.Append("<").Append(heading).Append(">")
+                      .Append(RemoveUnwantedTags(RemoveAnnotationMarks(node), Resources.AllowedParagraphTags).InnerHtml)
+                      .Append("</").Append(heading).AppendLine(">").AppendLine();
             }
             else
             {
-                var text = RemoveUnwantedTags(RemoveAnnotationMarks(node), Resources.AllowedParagraphTags).InnerHtml.Trim();
-
-                if (text.Any())
-                {
-                    Description += $"<{node.Name}>{text}</{node.Name}>" + Environment.NewLine + Environment.NewLine;
-                }
+                result.Append("<p>")
+                      .Append(RemoveUnwantedTags(RemoveAnnotationMarks(node), Resources.AllowedParagraphTags).InnerHtml)
+                      .AppendLine("</p>").AppendLine();
             }
         }
 
-        /// <summary>
-        ///     Gets the content of a dl description list and converts it to paragraphs with headlines
-        /// </summary>
-        /// <param name="htmlList">list to process</param>
-        /// <param name="level">Level the dl list appeared in. Is used to add the right heading level</param>
-        /// <returns>the cleaned up html string for the list and its items</returns>
-        private string GetDescriptionList(HtmlNode htmlList, int level = 2)
+        return result.ToString();
+    }
+
+    /// <summary>
+    ///     Gets the external links from the provided node.
+    /// </summary>
+    /// <param name="node">Node with the links to add.</param>
+    private void GetExternalLinks(HtmlNode node)
+    {
+        // We now fetch the ul or ol list and go through all list items to fetch the links.
+        var linkList = node.SelectSingleNode("./ul[not(contains(@class,'portalbox'))]") ?? node.SelectSingleNode("./ol[not(contains(@class,'portalbox'))]");
+
+        if (linkList == null)
         {
-            var result = new StringBuilder();
-
-            var heading = level == 2 ? "h3" : "h4";
-
-            foreach (var node in htmlList.ChildNodes.Where(c => c.Name.IsOneOf("dt", "dd")))
-            {
-                if (node.Name == "dt")
-                {
-                    result.Append("<").Append(heading).Append(">")
-                        .Append(RemoveUnwantedTags(RemoveAnnotationMarks(node), Resources.AllowedParagraphTags).InnerHtml)
-                        .Append("</").Append(heading).AppendLine(">").AppendLine();
-                }
-                else
-                {
-                    result.Append("<p>")
-                        .Append(RemoveUnwantedTags(RemoveAnnotationMarks(node), Resources.AllowedParagraphTags).InnerHtml)
-                        .AppendLine("</p>").AppendLine();
-                }
-            }
-
-            return result.ToString();
+            return;
         }
 
-        /// <summary>
-        ///     Gets the external links from the provided node.
-        /// </summary>
-        /// <param name="node">Node with the links to add.</param>
-        private void GetExternalLinks(HtmlNode node)
+        var listItems = linkList.SelectNodes("./li");
+
+        if (!(listItems?.Any() ?? false))
         {
-            // We now fetch the ul or ol list and go through all list items to fetch the links.
-            var linkList = node.SelectSingleNode("./ul[not(contains(@class,'portalbox'))]") ?? node.SelectSingleNode("./ol[not(contains(@class,'portalbox'))]");
+            return;
+        }
 
-            if (linkList == null)
+        foreach (var listItem in listItems)
+        {
+            // We only use the first link from the list value.
+            var link = listItem.Descendants("a").FirstOrDefault();
+
+            if (link == null)
             {
-                return;
+                continue;
             }
 
-            var listItems = linkList.SelectNodes("./li");
+            var name = WebUtility.HtmlDecode(link.InnerText);
 
-            if (!(listItems?.Any() ?? false))
+            // Since the link text most of the time simply consist of the name of the game, try to
+            // match the url to popular websites that are often linked here.
+            var pair = Resources.LinkPairs.FirstOrDefault(p => link.GetAttributeValue("href", "").Contains(p.Contains));
+
+            if (pair != null)
             {
-                return;
+                name = pair.Name;
             }
 
-            foreach (var listItem in listItems)
+            Links.Add(new Link
             {
-                // We only use the first link from the list value.
-                var link = listItem.Descendants("a").FirstOrDefault();
+                Name = name,
+                Url = link.GetAttributeValue("href", "")
+            });
+        }
+    }
 
-                if (link == null)
-                {
+    /// <summary>
+    ///     Gets the content of an ul or ol list as cleaned up html code.
+    /// </summary>
+    /// <param name="htmlList">list to process</param>
+    /// <returns>the cleaned up html string for the list and its items</returns>
+    private string GetList(HtmlNode htmlList)
+    {
+        var result = new StringBuilder();
+
+        result.Append("<").Append(htmlList.Name).AppendLine(">");
+
+        foreach (var listNode in htmlList.SelectNodes("./li"))
+        {
+            result.AppendLine($"  <{listNode.Name}>{RemoveUnwantedTags(RemoveAnnotationMarks(listNode), Resources.AllowedParagraphTags).InnerHtml}</{listNode.Name}>");
+        }
+
+        result.Append($"</{htmlList.Name}>");
+
+        return result.ToString();
+    }
+
+    private void LoopSection(HtmlNode section, int level = 2)
+    {
+        var allowedNodesLevel = level > 4 ? 2 : level - 2;
+
+        foreach (var node in section.ChildNodes.Where(c => AllowedNodes[allowedNodesLevel].Contains(c.Name)))
+        {
+            switch (node.Name)
+            {
+                // If the heading is one of the unwanted sections, we completely omit the section.
+                case "h2" when _unwantedParagraphs.Contains(node.InnerText.ToLower().Trim()):
+                    return;
+                // If we have an unsupported div, we simply skip it.
+                case "div" when !node.Attributes.Any(a => a.Name == "class" && a.Value.Contains("div-col")):
                     continue;
-                }
-
-                var name = WebUtility.HtmlDecode(link.InnerText);
-
-                // Since the link text most of the time simply consist of the name of the game, try to
-                // match the url to popular websites that are often linked here.
-                var pair = Resources.LinkPairs.FirstOrDefault(p => link.GetAttributeValue("href", "").Contains(p.Contains));
-
-                if (pair != null)
-                {
-                    name = pair.Name;
-                }
-
-                Links.Add(new Link
-                {
-                    Name = name,
-                    Url = link.GetAttributeValue("href", "")
-                });
+                // Is the div supported, we keep the level and loop through the content of the div, as if it wasn't there at all.
+                case "div" when node.Attributes.Any(a => a.Name == "class" && a.Value.Contains("div-col")):
+                    LoopSection(node, level);
+                    break;
+                // if we have a section, we go one level deeper and loop through the content
+                case "section":
+                    LoopSection(node, ++level);
+                    break;
+                // We add every other tag directly to the description
+                default:
+                    AddSectionToDescription(node, level);
+                    break;
             }
         }
+    }
 
-        /// <summary>
-        ///     Gets the content of an ul or ol list as cleaned up html code.
-        /// </summary>
-        /// <param name="htmlList">list to process</param>
-        /// <returns>the cleaned up html string for the list and its items</returns>
-        private string GetList(HtmlNode htmlList)
+    private HtmlNode RemoveUnwantedTags(HtmlNode htmlNode, string[] acceptableTags)
+    {
+        var tryGetNodes = htmlNode.SelectNodes("./*|./text()");
+
+        if (tryGetNodes is null || !tryGetNodes.Any())
         {
-            var result = new StringBuilder();
-
-            result.Append("<").Append(htmlList.Name).AppendLine(">");
-
-            foreach (var listNode in htmlList.SelectNodes("./li"))
-            {
-                result.AppendLine($"  <{listNode.Name}>{RemoveUnwantedTags(RemoveAnnotationMarks(listNode), Resources.AllowedParagraphTags).InnerHtml}</{listNode.Name}>");
-            }
-
-            result.Append($"</{htmlList.Name}>");
-
-            return result.ToString();
+            return htmlNode;
         }
 
-        private void LoopSection(HtmlNode section, int level = 2)
-        {
-            var allowedNodesLevel = level > 4 ? 2 : level - 2;
+        var nodes = new Queue<HtmlNode>(tryGetNodes);
 
-            foreach (var node in section.ChildNodes.Where(c => AllowedNodes[allowedNodesLevel].Contains(c.Name)))
+        while (nodes.Any())
+        {
+            var node = nodes.Dequeue();
+            var parentNode = node.ParentNode;
+
+            var childNodes = node.SelectNodes("./*|./text()");
+
+            if (childNodes != null)
             {
-                switch (node.Name)
+                foreach (var child in childNodes)
                 {
-                    // If the heading is one of the unwanted sections, we completely omit the section.
-                    case "h2" when _unwantedParagraphs.Contains(node.InnerText.ToLower().Trim()):
-                        return;
-                    // If we have an unsupported div, we simply skip it.
-                    case "div" when !node.Attributes.Any(a => a.Name == "class" && a.Value.Contains("div-col")):
-                        continue;
-                    // Is the div supported, we keep the level and loop through the content of the div, as if it wasn't there at all.
-                    case "div" when node.Attributes.Any(a => a.Name == "class" && a.Value.Contains("div-col")):
-                        LoopSection(node, level);
-                        break;
-                    // if we have a section, we go one level deeper and loop through the content
-                    case "section":
-                        LoopSection(node, ++level);
-                        break;
-                    // We add every other tag directly to the description
-                    default:
-                        AddSectionToDescription(node, level);
-                        break;
+                    nodes.Enqueue(child);
                 }
             }
-        }
 
-        private HtmlNode RemoveUnwantedTags(HtmlNode htmlNode, string[] acceptableTags)
-        {
-            var tryGetNodes = htmlNode.SelectNodes("./*|./text()");
+            var acceptableTagList = acceptableTags.ToList();
 
-            if (tryGetNodes is null || !tryGetNodes.Any())
+            if (!_settings.RemoveDescriptionLinks)
             {
-                return htmlNode;
+                acceptableTagList.AddMissing("a");
             }
 
-            var nodes = new Queue<HtmlNode>(tryGetNodes);
-
-            while (nodes.Any())
+            if (!acceptableTagList.Contains(node.Name) && node.Name != "#text")
             {
-                var node = nodes.Dequeue();
-                var parentNode = node.ParentNode;
-
-                var childNodes = node.SelectNodes("./*|./text()");
-
                 if (childNodes != null)
                 {
                     foreach (var child in childNodes)
                     {
-                        nodes.Enqueue(child);
+                        parentNode.InsertBefore(child, node);
                     }
                 }
 
-                var acceptableTagList = acceptableTags.ToList();
-
-                if (!_settings.RemoveDescriptionLinks)
+                parentNode.RemoveChild(node);
+            }
+            else if (node.Name != "#text")
+            {
+                if (node.Name == "a")
                 {
-                    acceptableTagList.AddMissing("a");
-                }
-
-                if (!acceptableTagList.Contains(node.Name) && node.Name != "#text")
-                {
-                    if (childNodes != null)
+                    if (!(node.Attributes?.Any() ?? false))
                     {
-                        foreach (var child in childNodes)
-                        {
-                            parentNode.InsertBefore(child, node);
-                        }
+                        continue;
                     }
 
-                    parentNode.RemoveChild(node);
-                }
-                else if (node.Name != "#text")
-                {
-                    if (node.Name == "a")
+                    foreach (var attribute in node.Attributes.ToList())
                     {
-                        if (!(node.Attributes?.Any() ?? false))
+                        if (attribute.Name == "href")
                         {
-                            continue;
-                        }
-
-                        foreach (var attribute in node.Attributes.ToList())
-                        {
-                            if (attribute.Name == "href")
+                            if (attribute.Value.StartsWith("./"))
                             {
-                                if (attribute.Value.StartsWith("./"))
-                                {
-                                    attribute.Value = $"https://en.wikipedia.org/wiki/{attribute.Value.Remove(0, 2)}";
-                                }
-                            }
-                            else
-                            {
-                                attribute.Remove();
+                                attribute.Value = $"https://en.wikipedia.org/wiki/{attribute.Value.Remove(0, 2)}";
                             }
                         }
+                        else
+                        {
+                            attribute.Remove();
+                        }
                     }
-                    else
-                    {
-                        node.Attributes.RemoveAll();
-                    }
+                }
+                else
+                {
+                    node.Attributes.RemoveAll();
                 }
             }
-
-            return htmlNode;
         }
+
+        return htmlNode;
     }
 }

@@ -1,49 +1,86 @@
-﻿using Playnite.SDK;
+﻿using ComposableAsync;
+using Playnite.SDK;
 using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
+using RateLimiter;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Windows.Controls;
+using WikipediaMetadata.Categories;
 
-namespace WikipediaMetadata
+namespace WikipediaMetadata;
+
+public class WikipediaMetadata : MetadataPlugin
 {
-    public class WikipediaMetadata : MetadataPlugin
+    private WikipediaApi WikipediaApi { get; } = new(new HttpClientWrapper());
+    public WikipediaMetadataSettingsViewModel Settings { get; set; }
+
+    public override Guid Id { get; } = Guid.Parse("6c1bdd62-77bf-4866-a264-11544508687c");
+
+    public override List<MetadataField> SupportedFields => Fields;
+
+    public static readonly List<MetadataField> Fields =
+    [
+        MetadataField.Name,
+        MetadataField.ReleaseDate,
+        MetadataField.Genres,
+        MetadataField.Developers,
+        MetadataField.Publishers,
+        MetadataField.Features,
+        MetadataField.Tags,
+        MetadataField.Links,
+        MetadataField.Series,
+        MetadataField.Platform,
+        MetadataField.CoverImage,
+        MetadataField.CriticScore,
+        MetadataField.Description
+    ];
+
+    public override string Name => "Wikipedia";
+
+    public WikipediaMetadata(IPlayniteAPI api) : base(api)
     {
-        public WikipediaMetadataSettingsViewModel Settings { get; set; }
-
-        public override Guid Id { get; } = Guid.Parse("6c1bdd62-77bf-4866-a264-11544508687c");
-
-        public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
+        Settings = new WikipediaMetadataSettingsViewModel(this);
+        Properties = new MetadataPluginProperties
         {
-            MetadataField.Name,
-            MetadataField.ReleaseDate,
-            MetadataField.Genres,
-            MetadataField.Developers,
-            MetadataField.Publishers,
-            MetadataField.Features,
-            MetadataField.Tags,
-            MetadataField.Links,
-            MetadataField.Series,
-            MetadataField.Platform,
-            MetadataField.CoverImage,
-            MetadataField.CriticScore,
-            MetadataField.Description
+            HasSettings = true
         };
+    }
 
-        public override string Name => "Wikipedia";
+    public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, Settings.Settings, PlayniteApi, WikipediaApi);
 
-        public WikipediaMetadata(IPlayniteAPI api) : base(api)
+    public override ISettings GetSettings(bool firstRunSettings) => Settings;
+
+    public override UserControl GetSettingsView(bool firstRunSettings) => new WikipediaMetadataSettingsView();
+
+    public override IEnumerable<TopPanelItem> GetTopPanelItems()
+    {
+        if (!Settings.Settings.ShowTopPanelButton)
+            yield break;
+
+        var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation)!, "icon.png");
+        yield return new()
         {
-            Settings = new WikipediaMetadataSettingsViewModel(this);
-            Properties = new MetadataPluginProperties
-            {
-                HasSettings = true
-            };
-        }
+            Icon = iconPath,
+            Visible = true,
+            Title = "Import Wikipedia category",
+            Activated = ImportGameProperty
+        };
+    }
 
-        public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, this);
+    public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+    {
+        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            yield return new() { MenuSection = "@Wikipedia", Description = "Import Wikipedia category", Action = _ => ImportGameProperty(), };
+    }
 
-        public override ISettings GetSettings(bool firstRunSettings) => Settings;
-
-        public override UserControl GetSettingsView(bool firstRunSettings) => new WikipediaMetadataSettingsView();
+    private void ImportGameProperty()
+    {
+        var searchProvider = new WikipediaCategorySearchProvider(WikipediaApi);
+        var bulk = new WikipediaCategoryBulkImport(Settings.Settings, PlayniteApi.Database, new(PlayniteApi), searchProvider, new PlatformUtility(PlayniteApi), Settings.Settings.MaxDegreeOfParallelism);
+        bulk.ImportGameProperty();
     }
 }

@@ -1,16 +1,15 @@
 ﻿using Playnite.SDK.Data;
 
-namespace WikipediaMetadata.Models
+namespace WikipediaMetadata.Models;
+
+public class TagSetting
 {
-    public class TagSetting
-    {
-        [SerializationPropertyName("isChecked")]
-        public bool IsChecked { get; set; }
+    [SerializationPropertyName("isChecked")]
+    public bool IsChecked { get; set; }
 
-        [SerializationPropertyName("name")]
-        public string Name { get; set; }
+    [SerializationPropertyName("name")]
+    public string Name { get; set; }
 
-        [SerializationPropertyName("prefix")]
-        public string Prefix { get; set; }
-    }
+    [SerializationPropertyName("prefix")]
+    public string Prefix { get; set; }
 }

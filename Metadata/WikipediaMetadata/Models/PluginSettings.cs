@@ -1,129 +1,88 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
-namespace WikipediaMetadata.Models
+namespace WikipediaMetadata.Models;
+
+public class PluginSettings : ObservableObject
 {
-    public class PluginSettings : ObservableObject
+    private ObservableCollection<TagSetting> _tagSettings;
+
+    public bool AdvancedSearchResultSorting { get; set => SetValue(ref field, value); } = true;
+
+    public bool ArcadeSystemAsPlatform { get; set => SetValue(ref field, value); }
+
+    public DateToUse DateToUse { get; set => SetValue(ref field, value); } = DateToUse.Earliest;
+
+    public bool DescriptionOverviewOnly { get; set => SetValue(ref field, value); }
+
+    public RatingToUse RatingToUse { get; set => SetValue(ref field, value); } = RatingToUse.Average;
+
+    public bool RemoveDescriptionLinks { get; set => SetValue(ref field, value); }
+
+    public ObservableCollection<string> SectionsToRemove { get; set => SetValue(ref field, value); } = [];
+
+    public ObservableCollection<TagSetting> TagSettings { get => _tagSettings; set => SetValue(ref _tagSettings, value); }
+
+    public int MaxDegreeOfParallelism { get; set; } = GetDefaultMaxDegreeOfParallelism();
+    public bool ShowTopPanelButton { get; set; } = true;
+    public bool ImportCategories { get; set; } = false;
+
+    private static int GetDefaultMaxDegreeOfParallelism()
     {
-        private bool _advancedSearchResultSorting = true;
-        private bool _arcadeSystemAsPlatform;
-        private DateToUse _dateToUse = DateToUse.Earliest;
-        private bool _descriptionOverviewOnly;
-        private RatingToUse _ratingToUse = RatingToUse.Average;
-        private bool _removeDescriptionLinks;
-        private ObservableCollection<string> _sectionsToRemove = new ObservableCollection<string>();
-        private ObservableCollection<TagSetting> _tagSettings;
+        var processorCount = Environment.ProcessorCount;
+        var parallelism = (int)Math.Round(processorCount * .75D, MidpointRounding.AwayFromZero);
 
-        public bool AdvancedSearchResultSorting
-        {
-            get => _advancedSearchResultSorting;
-            set => SetValue(ref _advancedSearchResultSorting, value);
-        }
+        if (parallelism == processorCount)
+            parallelism--;
 
-        public bool ArcadeSystemAsPlatform
-        {
-            get => _arcadeSystemAsPlatform;
-            set => SetValue(ref _arcadeSystemAsPlatform, value);
-        }
+        if (parallelism < 1)
+            parallelism = 1;
 
-        public DateToUse DateToUse
-        {
-            get => _dateToUse;
-            set => SetValue(ref _dateToUse, value);
-        }
+        return parallelism;
+    }
 
-        public bool DescriptionOverviewOnly
-        {
-            get => _descriptionOverviewOnly;
-            set => SetValue(ref _descriptionOverviewOnly, value);
-        }
+    public PluginSettings PopulateTagSettings()
+    {
+        if (_tagSettings is null)
+            _tagSettings = [];
+        else
+            _tagSettings = DistinctByName(_tagSettings).ToObservable(); // Hotfix to a bug that duplicated the tag settings in version 1.3 and 1.4
 
-        public RatingToUse RatingToUse
-        {
-            get => _ratingToUse;
-            set => SetValue(ref _ratingToUse, value);
-        }
+        AddMissingTagSetting("Arcade system", "[Arcade System]");
+        AddMissingTagSetting("Engine", "[Game Engine]");
+        AddMissingTagSetting("Categories", "[Category]");
+        AddMissingTagSetting("Director", "[People] director:");
+        AddMissingTagSetting("Producer", "[People] producer:");
+        AddMissingTagSetting("Designer", "[People] designer:");
+        AddMissingTagSetting("Programmer", "[People] programmer:");
+        AddMissingTagSetting("Artist", "[People] artist:");
+        AddMissingTagSetting("Writer", "[People] writer:");
+        AddMissingTagSetting("Composer", "[People] composer:");
+        return this;
+    }
 
-        public bool RemoveDescriptionLinks
-        {
-            get => _removeDescriptionLinks;
-            set => SetValue(ref _removeDescriptionLinks, value);
-        }
+    private void AddMissingTagSetting(string name, string prefix)
+    {
+        if (_tagSettings.Any(ts => ts.Name == name))
+            return;
 
-        public ObservableCollection<string> SectionsToRemove
+        _tagSettings.Add(new()
         {
-            get => _sectionsToRemove;
-            set => SetValue(ref _sectionsToRemove, value);
-        }
+            IsChecked = true,
+            Name = name,
+            Prefix = prefix,
+        });
+    }
 
-        public ObservableCollection<TagSetting> TagSettings
+    private static IEnumerable<TagSetting> DistinctByName(IEnumerable<TagSetting> tagSettings)
+    {
+        var tagSettingNames = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+        foreach (var tagSetting in tagSettings)
         {
-            get => _tagSettings;
-            set => SetValue(ref _tagSettings, value);
-        }
-
-        public void PopulateTagSettings()
-        {
-            if (_tagSettings is null)
-            {
-                _tagSettings = new ObservableCollection<TagSetting>
-                {
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Arcade system",
-                        Prefix = "[Arcade System]"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Engine",
-                        Prefix = "[Game Engine]"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Director",
-                        Prefix = "[People] director:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Producer",
-                        Prefix = "[People] producer:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Designer",
-                        Prefix = "[People] designer:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Programmer",
-                        Prefix = "[People] programmer:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Artist",
-                        Prefix = "[People] artist:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Writer",
-                        Prefix = "[People] writer:"
-                    },
-                    new TagSetting()
-                    {
-                        IsChecked = true,
-                        Name = "Composer",
-                        Prefix = "[People] composer:"
-                    }
-                };
-            }
+            if (tagSettingNames.Add(tagSetting.Name))
+                yield return tagSetting;
         }
     }
 }
