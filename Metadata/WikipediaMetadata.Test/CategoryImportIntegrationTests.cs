@@ -3,7 +3,6 @@ using PlayniteExtensions.Common;
 using PlayniteExtensions.Tests.Common;
 using System.Linq;
 using WikipediaMetadata.Categories;
-using WikipediaMetadata.Categories.Models;
 using WikipediaMetadata.Models;
 using WikipediaMetadata.Test.Fakes;
 using Xunit;

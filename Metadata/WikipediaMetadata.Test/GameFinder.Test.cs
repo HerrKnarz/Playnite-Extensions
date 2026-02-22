@@ -6,42 +6,50 @@ namespace WikipediaMetadata.Test;
 
 public class GameFinderTest
 {
-    private GameFinder Setup(string internalSearchQuery, string fileName)
+    [Fact]
+    public void Doom()
     {
-        var settings = new PluginSettings();
-        var webclient = new FakeWebClient(WikipediaApiUrl.GetArticleSearchUrl(internalSearchQuery), $"data/GameFinder/{fileName}.json");
-        var api = new WikipediaApi(webclient);
+        const string gameName = "Doom";
+        var api = Api(gameName, "doom");
+        var searchResults = api.GetSearchResults(gameName);
+        Assert.Null(Finder().FindGame(gameName, searchResults)?.Key);
+    }
 
-        return new GameFinder(api, settings.AdvancedSearchResultSorting);
+    [Fact]
+    public void MassEffect()
+    {
+        var api = Api("Mass Effect", "mass-effect");
+        var searchResults = api.GetSearchResults("Mass Effect Legendary Edition");
+        Assert.Equal("Mass_Effect_Legendary_Edition", Finder().FindGame("Mass Effect Legendary Edition", searchResults)?.Key);
+    }
+
+    [Fact]
+    public void PlanescapeTorment()
+    {
+        var api = Api("Planescape:  Torment", "planescape-torment");
+        var searchResults = api.GetSearchResults("Planescape:  Torment");
+        Assert.Equal("Planescape:_Torment", Finder().FindGame("Planescape:  Torment: Enhanced Edition", searchResults)?.Key);
     }
 
     [Fact]
     public void VampireSurvivors()
     {
         const string gameName = "Vampire Survivors";
-        var gameFinder = Setup(gameName, "vampire-survivors");
-        Assert.Equal("Vampire_Survivors", gameFinder.FindGame(gameName)?.Key);
+        var api = Api(gameName, "vampire-survivors");
+        var searchResults = api.GetSearchResults(gameName);
+        Assert.Equal("Vampire_Survivors", Finder().FindGame(gameName, searchResults)?.Key);
     }
 
-    [Fact]
-    public void Doom()
+    private WikipediaApi Api(string internalSearchQuery, string fileName)
     {
-        const string gameName = "Doom";
-        var gameFinder = Setup(gameName, "doom");
-        Assert.Null(gameFinder.FindGame(gameName)?.Key);
+        var webclient = new FakeWebClient(WikipediaApiUrl.GetArticleSearchUrl(internalSearchQuery), $"data/GameFinder/{fileName}.json");
+        return new WikipediaApi(webclient);
     }
 
-    [Fact]
-    public void PlanescapeTorment()
+    private GameFinder Finder()
     {
-        var gameFinder = Setup("Planescape:  Torment","planescape-torment");
-        Assert.Equal("Planescape:_Torment", gameFinder.FindGame("Planescape:  Torment: Enhanced Edition")?.Key);
-    }
+        var settings = new PluginSettings();
 
-    [Fact]
-    public void MassEffect()
-    {
-        var gameFinder = Setup("Mass Effect","mass-effect");
-        Assert.Equal("Mass_Effect_Legendary_Edition", gameFinder.FindGame("Mass Effect Legendary Edition")?.Key);
+        return new GameFinder(settings.AdvancedSearchResultSorting);
     }
 }

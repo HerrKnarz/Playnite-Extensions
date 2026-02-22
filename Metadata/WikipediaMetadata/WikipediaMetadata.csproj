@@ -31,39 +31,40 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Web"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    <Reference Include="Microsoft.CSharp"/>
-    <Reference Include="System.Data"/>
-    <Reference Include="System.Net.Http"/>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs" Link="Shared\Log.cs"/>
-    <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs" Link="Shared\MiscHelper.cs"/>
-    <Compile Include="..\..\KNARZhelper\KNARZhelper\PlatformHelper.cs" Link="Shared\PlatformHelper.cs"/>
-    <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs" Link="Shared\StringHelper.cs"/>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ApiHelper.cs" Link="Shared\ApiHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs" Link="Shared\Log.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs" Link="Shared\MiscHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\PlatformHelper.cs" Link="Shared\PlatformHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs" Link="Shared\StringHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Categories\Common\IEnumerableExtensions.cs"/>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Categories\Common\IntegerFormatConverter.cs"/>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Categories\Common\IPlatformUtility.cs"/>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Categories\Common\LibraryIdUtility.cs"/>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\PlatformUtility.cs" Link="Categories\Common\PlatformUtility.cs"/>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\SortableNameConverter.cs" Link="Categories\Common\SortableNameConverter.cs"/>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\StringExtensions.cs" Link="Categories\Common\StringExtensions.cs"/>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\TitleComparer.cs" Link="Categories\Common\TitleComparer.cs"/>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\WebDownloader.cs" Link="Categories\Common\WebDownloader.cs"/>
-    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Metadata.Common\*.cs" LinkBase="Categories\Common\Metadata"/>
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Categories\Common\IEnumerableExtensions.cs" />
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Categories\Common\IntegerFormatConverter.cs" />
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Categories\Common\IPlatformUtility.cs" />
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Categories\Common\LibraryIdUtility.cs" />
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\PlatformUtility.cs" Link="Categories\Common\PlatformUtility.cs" />
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\SortableNameConverter.cs" Link="Categories\Common\SortableNameConverter.cs" />
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\StringExtensions.cs" Link="Categories\Common\StringExtensions.cs" />
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\TitleComparer.cs" Link="Categories\Common\TitleComparer.cs" />
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\WebDownloader.cs" Link="Categories\Common\WebDownloader.cs" />
+    <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Metadata.Common\*.cs" LinkBase="Categories\Common\Metadata" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy $(SolutionDir)Jeshibu\source\PlayniteExtensions.Metadata.Common\Views $(ProjectDir)Categories\Common\Metadata\Views /Y /I"/>
+    <Exec Command="xcopy $(SolutionDir)Jeshibu\source\PlayniteExtensions.Metadata.Common\Views $(ProjectDir)Categories\Common\Metadata\Views /Y /I" />
   </Target>
   <ItemGroup>
-    <None Include="extension.yaml" CopyToOutputDirectory="Always"/>
-    <None Include="icon.png" CopyToOutputDirectory="Always"/>
+    <None Include="extension.yaml" CopyToOutputDirectory="Always" />
+    <None Include="icon.png" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Localization\*.xaml">
@@ -73,12 +74,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CXuesong.MW.MwParserFromScratch" Version="0.2.1"/>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.46"/>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3"/>
-    <PackageReference Include="PlayniteSDK" Version="6.13.0"/>
+    <PackageReference Include="CXuesong.MW.MwParserFromScratch" Version="0.2.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="PlayniteSDK" Version="6.13.0" />
     <PackageReference Include="RateLimiter" Version="2.2.0" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0"/>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">

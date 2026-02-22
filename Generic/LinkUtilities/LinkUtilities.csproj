@@ -36,7 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>14</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
@@ -45,7 +45,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>14</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
@@ -139,8 +139,14 @@
     <Compile Include="..\..\Metadata\WikipediaMetadata\Models\WikipediaItemOption.cs">
       <Link>Shared\Wikipedia\WikipediaItemOption.cs</Link>
     </Compile>
+    <Compile Include="..\..\Metadata\WikipediaMetadata\Models\WikipediaNamespace.cs">
+      <Link>Shared\Wikipedia\WikipediaNamespace.cs</Link>
+    </Compile>
     <Compile Include="..\..\Metadata\WikipediaMetadata\Models\WikipediaSearchResult.cs">
       <Link>Shared\Wikipedia\WikipediaSearchResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Metadata\WikipediaMetadata\WikipediaApiUrl.cs">
+      <Link>Shared\Wikipedia\WikipediaApiUrl.cs</Link>
     </Compile>
     <Compile Include="BaseClasses\ObservableCollectionFast.cs" />
     <Compile Include="Helper\ParseHelper.cs" />

@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using WikipediaMetadata.Models;
-using WikipediaSearchResult = WikipediaMetadata.Categories.Models.WikipediaSearchResult;
+using CategorySearchResult = WikipediaMetadata.Categories.Models.CategorySearchResult;
 
 namespace WikipediaMetadata.Categories;
 
-public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSearchResult, GamePropertyImportViewModel>
+public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<CategorySearchResult, GamePropertyImportViewModel>
 {
     private readonly WikipediaBulkImportUserInterface _ui;
     private readonly WikipediaCategorySearchProvider _wikipediaDataSource;
@@ -29,13 +29,13 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
 
     public override string MetadataProviderName => "Wikipedia";
 
-    protected override PropertyImportSetting GetPropertyImportSetting(WikipediaSearchResult searchItem, out string name)
+    protected override PropertyImportSetting GetPropertyImportSetting(CategorySearchResult searchItem, out string name)
     {
         name = searchItem?.Name.StripCategoryPrefix();
         return new() { ImportTarget = PropertyImportTarget.Tags, Prefix = $"{_categoryPrefix} ".TrimStart() };
     }
 
-    private SelectableCategoryViewModel DownloadRootCategory(WikipediaSearchResult searchResult)
+    private SelectableCategoryViewModel DownloadRootCategory(CategorySearchResult searchResult)
     {
         SelectableCategoryViewModel rootCategory = null;
         Ui.ShowProgress(progressArgs =>
@@ -70,7 +70,7 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
         return rootCategory;
     }
 
-    protected override IEnumerable<GameDetails> GetGames(WikipediaSearchResult searchResult)
+    protected override IEnumerable<GameDetails> GetGames(CategorySearchResult searchResult)
     {
         var rootCategory = DownloadRootCategory(searchResult);
         if (rootCategory == null)
@@ -127,7 +127,7 @@ public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSea
         }
     }
 
-    protected override IEnumerable<PotentialLink> GetPotentialLinks(WikipediaSearchResult searchItem) => [new(MetadataProviderName, g => g.Url, IsAlreadyLinked)];
+    protected override IEnumerable<PotentialLink> GetPotentialLinks(CategorySearchResult searchItem) => [new(MetadataProviderName, g => g.Url, IsAlreadyLinked)];
 
     private bool IsAlreadyLinked(IEnumerable<Link> links, string url)
     {

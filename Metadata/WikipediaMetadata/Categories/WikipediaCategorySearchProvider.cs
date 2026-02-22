@@ -5,25 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using WikipediaMetadata.Categories.Models;
+using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata.Categories;
 
-public class WikipediaCategorySearchProvider(WikipediaApi api) : IBulkPropertyImportDataSource<WikipediaSearchResult>
+public class WikipediaCategorySearchProvider(WikipediaApi api) : IBulkPropertyImportDataSource<CategorySearchResult>
 {
     private readonly ILogger _logger = LogManager.GetLogger();
-
-    public IEnumerable<WikipediaSearchResult> Search(string query, CancellationToken cancellationToken = default)
-    {
-        return api.Search(query, WikipediaNamespace.Category);
-    }
-
-    public GenericItemOption<WikipediaSearchResult> ToGenericItemOption(WikipediaSearchResult item) => new(item) { Name = item.Name };
-
-    IEnumerable<GameDetails> ISearchableDataSourceWithDetails<WikipediaSearchResult, IEnumerable<GameDetails>>.GetDetails(WikipediaSearchResult searchResult, GlobalProgressActionArgs progressArgs, Game searchGame)
-    {
-        // Because this bulk import process requires an extra step in selecting the categories you want to import in a tree view, this step is not handled here, but in WikipediaCategoryBulkImport
-        throw new NotImplementedException();
-    }
 
     public CategoryContents GetCategoryContents(string categoryName, CancellationToken cancellationToken)
     {
@@ -33,16 +21,20 @@ public class WikipediaCategorySearchProvider(WikipediaApi api) : IBulkPropertyIm
         foreach (var categoryMember in categoryMembers)
         {
             if (cancellationToken.IsCancellationRequested)
+            {
                 break;
+            }
 
             switch ((WikipediaNamespace)categoryMember.Ns)
             {
                 case WikipediaNamespace.Article:
                     output.ArticleNames.Add(categoryMember.Title);
                     break;
+
                 case WikipediaNamespace.Category:
                     output.SubcategoryNames.Add(categoryMember.Title);
                     break;
+
                 default:
                     _logger.Info($"Unknown wikipedia namespace: {categoryMember.Ns} ({categoryMember.Title})");
                     break;
@@ -50,4 +42,13 @@ public class WikipediaCategorySearchProvider(WikipediaApi api) : IBulkPropertyIm
         }
         return output;
     }
+
+    IEnumerable<GameDetails> ISearchableDataSourceWithDetails<CategorySearchResult, IEnumerable<GameDetails>>.GetDetails(CategorySearchResult searchResult, GlobalProgressActionArgs progressArgs, Game searchGame) =>
+        // Because this bulk import process requires an extra step in selecting the categories you
+        // want to import in a tree view, this step is not handled here, but in WikipediaCategoryBulkImport
+        throw new NotImplementedException();
+
+    public IEnumerable<CategorySearchResult> Search(string query, CancellationToken cancellationToken = default) => api.Search(query, WikipediaNamespace.Category);
+
+    public GenericItemOption<Models.CategorySearchResult> ToGenericItemOption(CategorySearchResult item) => new(item) { Name = item.Name };
 }

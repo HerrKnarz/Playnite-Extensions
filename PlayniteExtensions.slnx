@@ -7,62 +7,62 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Common/">
-    <Project Path="KNARZhelper/KNARZhelper.Test/KNARZhelper.Test.csproj">
+    <Project Path="KNARZhelper/KNARZhelper.Test/KNARZhelper.Test.csproj" Id="ccc1a181-4ad4-4b7f-a61a-de8d115d913f">
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
-    <Project Path="KNARZhelper/KNARZhelper/KNARZhelper.csproj">
+    <Project Path="KNARZhelper/KNARZhelper/KNARZhelper.csproj" Id="e3e24870-27f7-400e-b411-47acd9c8b562">
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
   </Folder>
   <Folder Name="/Generic/">
-    <Project Path="Generic/CompanyCompanion/CompanyCompanion.csproj">
+    <Project Path="Generic/CompanyCompanion/CompanyCompanion.csproj" Id="b78a5d09-7d3a-4581-b0e4-3ee6036e04ca">
       <BuildType Solution="Deploy|Any CPU" Project="Debug" />
       <BuildType Solution="Deploy|x86" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/KNARZtools/KNARZtools.csproj">
+    <Project Path="Generic/KNARZtools/KNARZtools.csproj" Id="4ca28ae6-6efb-4fee-9780-4682bf093f3b">
       <Platform Solution="Debug|x86" Project="x86" />
       <Platform Solution="Release|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/LinkUtilities.Test/LinkUtilities.Test.csproj">
+    <Project Path="Generic/LinkUtilities.Test/LinkUtilities.Test.csproj" Id="a4284b4c-b63a-43a8-b2e0-16928cdf6db7">
       <BuildType Solution="Deploy|Any CPU" Project="Debug" />
       <BuildType Solution="Deploy|x86" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/LinkUtilities/LinkUtilities.csproj">
+    <Project Path="Generic/LinkUtilities/LinkUtilities.csproj" Id="4fdf1e89-5bc3-4c72-8fda-0d580e7a5d5f">
       <Platform Solution="Debug|x86" Project="x86" />
       <Platform Solution="Release|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/MetadataUtilities/MetadataUtilities.csproj">
+    <Project Path="Generic/MetadataUtilities/MetadataUtilities.csproj" Id="f154e2a4-5514-4061-97ac-21c1a85fb727">
       <BuildType Solution="Deploy|Any CPU" Project="Debug" />
       <BuildType Solution="Deploy|x86" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/QuickAdd/QuickAdd.csproj">
+    <Project Path="Generic/QuickAdd/QuickAdd.csproj" Id="389ca94c-a5ad-4e93-a4ae-a5b8f2496eb7">
       <BuildType Solution="Deploy|Any CPU" Project="Debug" />
       <BuildType Solution="Deploy|x86" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/ScreenshotUtilities/ScreenshotUtilities.csproj">
+    <Project Path="Generic/ScreenshotUtilities/ScreenshotUtilities.csproj" Id="199397ff-1755-4ff3-b0dd-2565d23439f1">
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/ScreenshotUtilitiesArcadeDatabaseProvider/ScreenshotUtilitiesArcadeDatabaseProvider.csproj">
+    <Project Path="Generic/ScreenshotUtilitiesArcadeDatabaseProvider/ScreenshotUtilitiesArcadeDatabaseProvider.csproj" Id="534b01ba-65c9-431c-882b-2377ffe272c8">
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/ScreenshotUtilitiesGOGProvider/ScreenshotUtilitiesGOGProvider.csproj">
+    <Project Path="Generic/ScreenshotUtilitiesGOGProvider/ScreenshotUtilitiesGOGProvider.csproj" Id="4678b0b0-089c-484c-aabc-03e4561ade8c">
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="Debug|x86" Project="x86" />
       <Platform Solution="Release|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/ScreenshotUtilitiesKLOVProvider/ScreenshotUtilitiesKLOVProvider.csproj">
+    <Project Path="Generic/ScreenshotUtilitiesKLOVProvider/ScreenshotUtilitiesKLOVProvider.csproj" Id="768ea476-83bc-4e0a-bfb4-320a776853a7">
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/ScreenshotUtilitiesSteamProvider/ScreenshotUtilitiesSteamProvider.csproj">
+    <Project Path="Generic/ScreenshotUtilitiesSteamProvider/ScreenshotUtilitiesSteamProvider.csproj" Id="318d4b0b-eb22-4fd9-8d09-68a87880d531">
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="Debug|x86" Project="x86" />
       <Platform Solution="Release|x86" Project="x86" />
@@ -72,12 +72,14 @@
     <Project Path="Metadata/WikipediaMetadata.Test/WikipediaMetadata.Test.csproj">
       <BuildType Solution="Deploy|Any CPU" Project="Debug" />
       <BuildType Solution="Deploy|x86" Project="Release" />
-      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="Deploy|x86" Project="x86" />
+      <Platform Solution="Release|x86" Project="x86" />
     </Project>
     <Project Path="Metadata/WikipediaMetadata/WikipediaMetadata.csproj">
       <BuildType Solution="Deploy|Any CPU" Project="Debug" />
       <BuildType Solution="Deploy|x86" Project="Release" />
-      <Platform Solution="*|x86" Project="x86" />
+      <Platform Solution="Deploy|x86" Project="x86" />
+      <Platform Solution="Release|x86" Project="x86" />
     </Project>
   </Folder>
   <Folder Name="/Solution Items/">

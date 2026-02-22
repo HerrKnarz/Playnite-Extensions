@@ -5,7 +5,6 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WikipediaMetadata.Categories;
 using WikipediaMetadata.Models;
 
 namespace WikipediaMetadata;
@@ -101,7 +100,9 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
 
         var categorySettings = settings.TagSettings.FirstOrDefault(ts => ts.Name == "Categories");
         if (categorySettings?.IsChecked != true || foundGame.Categories == null)
+        {
             return foundGame.Tags;
+        }
 
         var tags = foundGame.Tags ?? [];
 
@@ -111,7 +112,7 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
             ..foundGame.Developers.OfType<MetadataNameProperty>().Select(d => d.Name),
             ..foundGame.Publishers.OfType<MetadataNameProperty>().Select(d => d.Name),
         ];
-        HashSet<string> excludedCategories = foundGame.InfoBoxLinkedArticles.Select(GetCategoryNameFromArticle).Where(x => x != null).ToHashSet();
+        var excludedCategories = foundGame.InfoBoxLinkedArticles.Select(GetCategoryNameFromArticle).Where(x => x != null).ToHashSet();
         foreach (string category in foundGame.Categories)
         {
             string strippedName = category.StripCategoryPrefix();
@@ -120,7 +121,9 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
                                 || excludedCategories.Contains(strippedName);
 
             if (skipCategory)
+            {
                 continue;
+            }
 
             string nameWithPrefix = $"{categorySettings.Prefix} {strippedName}".Trim();
 
@@ -131,7 +134,8 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
     }
 
     /// <summary>
-    /// Some articles aren't the first part of their category names - get those articles' exact corresponding category names to exclude
+    /// Some articles aren't the first part of their category names - get those articles' exact
+    /// corresponding category names to exclude
     /// </summary>
     /// <param name="articleName"></param>
     /// <returns></returns>
@@ -154,13 +158,15 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
     {
         // If we already found the game, we simply return it.
         if (_foundGame != null)
+        {
             return _foundGame;
+        }
 
         _foundGame = new WikipediaGameMetadata();
 
         try
         {
-            var gameFinder = new GameFinder(api, settings.AdvancedSearchResultSorting);
+            var gameFinder = new GameFinder(settings.AdvancedSearchResultSorting);
 
             string key;
 
@@ -175,7 +181,9 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
                                                                       $"Wikipedia: {ResourceProvider.GetString("LOCWikipediaMetadataSearchDialog")}");
 
                 if (chosen is not WikipediaItemOption option)
+                {
                     return _foundGame;
+                }
 
                 key = option.Key;
             }
@@ -199,7 +207,8 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
     }
 
     /// <summary>
-    /// Similar to searching the game we only parse the HTML when needed (by requesting the description or links metadata)
+    /// Similar to searching the game we only parse the HTML when needed (by requesting the
+    /// description or links metadata)
     /// </summary>
     /// <param name="key">Page key to fetch the HTML</param>
     /// <returns>Parsed result with the description and additional links</returns>
