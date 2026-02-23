@@ -113,10 +113,10 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
             ..foundGame.Publishers.OfType<MetadataNameProperty>().Select(d => d.Name),
         ];
         var excludedCategories = foundGame.InfoBoxLinkedArticles.Select(GetCategoryNameFromArticle).Where(x => x != null).ToHashSet();
-        foreach (string category in foundGame.Categories)
+        foreach (var category in foundGame.Categories)
         {
-            string strippedName = category.StripCategoryPrefix();
-            bool skipCategory = excludedCategoryStarts.Any(a => strippedName.StartsWith(a, StringComparison.InvariantCultureIgnoreCase))
+            var strippedName = category.StripCategoryPrefix();
+            var skipCategory = excludedCategoryStarts.Any(a => strippedName.StartsWith(a, StringComparison.InvariantCultureIgnoreCase))
                                 || strippedName.Contains("Wikidata")
                                 || excludedCategories.Contains(strippedName);
 
@@ -125,7 +125,7 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
                 continue;
             }
 
-            string nameWithPrefix = $"{categorySettings.Prefix} {strippedName}".Trim();
+            var nameWithPrefix = $"{categorySettings.Prefix} {strippedName}".Trim();
 
             tags.Add(new MetadataNameProperty(nameWithPrefix));
         }
@@ -166,7 +166,7 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
 
         try
         {
-            var gameFinder = new GameFinder(settings.AdvancedSearchResultSorting);
+            var gameFinder = new GameFinder(api.HttpClient, settings.AdvancedSearchResultSorting);
 
             string key;
 

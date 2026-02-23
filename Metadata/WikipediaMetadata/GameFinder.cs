@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.WebCommon;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace WikipediaMetadata;
 /// <summary>
 /// Provides Functionality to find a game on Wikipedia.
 /// </summary>
-internal class GameFinder(bool useAdvancedSearchResultSorting)
+internal class GameFinder(IHttpClient httpClient, bool useAdvancedSearchResultSorting)
 {
     /// <summary>
     /// Tries to find a single game based on the given name.
@@ -19,17 +20,17 @@ internal class GameFinder(bool useAdvancedSearchResultSorting)
     /// <returns>
     /// Found game as a json result. Returns null if no confident single result was found.
     /// </returns>
-    public Page FindGame(string gameName, WikipediaSearchResult searchResult = null)
+    public Page FindGame(string gameName)
     {
         var (nameVideoGame, compareName, _) = PrepareSearchTerms(gameName);
 
         var searchName = gameName.RemoveEditionSuffix();
 
         // We search for the game name on Wikipedia
-        searchResult ??= GetSearchResult(searchName);
+        var searchResult = GetSearchResult(searchName);
 
-        var searchNameVideoGame = (searchName + " (video game)").RemoveSpecialChars().ToLower().Replace(" ", "");
-        searchName = searchName.RemoveSpecialChars().ToLower().Replace(" ", "");
+        var searchNameVideoGame = (searchName + " (video game)").NormalizeSearchTerm();
+        searchName = searchName.NormalizeSearchTerm();
 
         if (!(searchResult.Pages?.Any() ?? false))
         {
@@ -78,13 +79,6 @@ internal class GameFinder(bool useAdvancedSearchResultSorting)
         return [.. searchResult.Pages.Select(WikipediaItemOption.FromWikipediaSearchResult)];
     }
 
-    private static WikipediaSearchResult GetSearchResult(string searchName)
-    {
-        IWebClient httpClient = new HttpClientWrapper();
-        var jsonResult = httpClient.DownloadString(WikipediaApiUrl.GetArticleSearchUrl(searchName));
-        return JsonConvert.DeserializeObject<WikipediaSearchResult>(jsonResult);
-    }
-
     /// <summary>
     /// Prepares different strings for search functions
     /// </summary>
@@ -96,13 +90,19 @@ internal class GameFinder(bool useAdvancedSearchResultSorting)
     /// </returns>
     private static (string nameVideoGame, string compareName, string startName) PrepareSearchTerms(string searchTerm)
     {
-        var compareName = searchTerm.RemoveSpecialChars().ToLower().Replace(" ", "");
+        var compareName = searchTerm.NormalizeSearchTerm();
 
         return
         (
-            $"{searchTerm} (video game)".RemoveSpecialChars().ToLower().Replace(" ", ""),
+            $"{searchTerm} (video game)".NormalizeSearchTerm(),
             compareName,
             new string([.. compareName.Take(5)])
         );
+    }
+
+    private WikipediaSearchResult GetSearchResult(string searchName)
+    {
+        var jsonResult = httpClient.DownloadString(WikipediaApiUrl.GetArticleSearchUrl(searchName));
+        return JsonConvert.DeserializeObject<WikipediaSearchResult>(jsonResult);
     }
 }

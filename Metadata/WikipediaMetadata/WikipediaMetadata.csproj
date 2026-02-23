@@ -57,6 +57,7 @@
     <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\StringExtensions.cs" Link="Categories\Common\StringExtensions.cs" />
     <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\TitleComparer.cs" Link="Categories\Common\TitleComparer.cs" />
     <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Common\WebDownloader.cs" Link="Categories\Common\WebDownloader.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\HttpClientWrapper.cs" Link="HttpClientWrapper.cs" />
     <Compile Include="$(SolutionDir)Jeshibu\source\PlayniteExtensions.Metadata.Common\*.cs" LinkBase="Categories\Common\Metadata" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

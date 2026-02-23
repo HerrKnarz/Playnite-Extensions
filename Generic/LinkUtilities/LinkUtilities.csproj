@@ -123,6 +123,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\HttpClientWrapper.cs">
+      <Link>Shared\WebCommon\HttpClientWrapper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\LinkWorker.cs">
       <Link>Shared\WebCommon\LinkWorker.cs</Link>
     </Compile>
@@ -146,9 +149,6 @@
     </Compile>
     <Compile Include="..\..\Metadata\WikipediaMetadata\Models\WikipediaSearchResult.cs">
       <Link>Shared\Wikipedia\WikipediaSearchResult.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Metadata\WikipediaMetadata\WebClient.cs">
-      <Link>Shared\Wikipedia\WebClient.cs</Link>
     </Compile>
     <Compile Include="..\..\Metadata\WikipediaMetadata\WikipediaApiUrl.cs">
       <Link>Shared\Wikipedia\WikipediaApiUrl.cs</Link>

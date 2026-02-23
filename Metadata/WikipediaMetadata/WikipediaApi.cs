@@ -1,3 +1,4 @@
+using KNARZhelper.WebCommon;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,8 +11,10 @@ namespace WikipediaMetadata;
 /// <summary>
 /// Handles all API calls to Wikipedia
 /// </summary>
-public class WikipediaApi(IWebClient webClient)
+public class WikipediaApi(IHttpClient httpClient)
 {
+    public IHttpClient HttpClient => httpClient;
+
     public ICollection<CategoryMember> GetCategoryMembers(string pageName, CancellationToken cancellationToken = default)
     {
         var output = new List<CategoryMember>();
@@ -39,7 +42,7 @@ public class WikipediaApi(IWebClient webClient)
 
     public WikipediaPage GetGameData(string key) => GetObject<WikipediaPage>(WikipediaApiUrl.GetPageDataUrl(key));
 
-    public string GetPageHtml(string pageName) => webClient.DownloadString(WikipediaApiUrl.GetPageHtmlUrl(pageName));
+    public string GetPageHtml(string pageName) => HttpClient.DownloadString(WikipediaApiUrl.GetPageHtmlUrl(pageName));
 
     public PagePropertiesResponse GetPageProperties(string key) => GetObject<PagePropertiesResponse>(WikipediaApiUrl.GetPagePropertiesUrl(key));
 
@@ -48,7 +51,7 @@ public class WikipediaApi(IWebClient webClient)
     public IEnumerable<CategorySearchResult> Search(string query, WikipediaNamespace ns)
     {
         var url = WikipediaApiUrl.GetSearchUrl(query, ns);
-        var response = webClient.DownloadString(url);
+        var response = HttpClient.DownloadString(url);
         var responseObj = JsonConvert.DeserializeObject<WikipediaQueryResponse<SearchQueryResponse>>(response);
 
         foreach (var searchResult in responseObj.Query.Search)
@@ -61,14 +64,14 @@ public class WikipediaApi(IWebClient webClient)
     {
         var url = WikipediaApiUrl.GetCategoryMembersUrl(pageName, continueParams);
 
-        var response = webClient.DownloadString(url, cancellationToken);
+        var response = HttpClient.DownloadString(url, cancellationToken);
         var responseObj = JsonConvert.DeserializeObject<WikipediaQueryResponse<CategoryMemberQueryResult>>(response);
         return responseObj;
     }
 
     private T GetObject<T>(string url)
     {
-        var jsonResult = webClient.DownloadString(url);
+        var jsonResult = HttpClient.DownloadString(url);
 
         return JsonConvert.DeserializeObject<T>(jsonResult);
     }

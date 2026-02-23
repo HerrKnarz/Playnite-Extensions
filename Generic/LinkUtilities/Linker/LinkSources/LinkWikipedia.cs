@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Helper;
+﻿using KNARZhelper.WebCommon;
+using LinkUtilities.Helper;
 using LinkUtilities.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -14,10 +15,21 @@ namespace LinkUtilities.Linker.LinkSources
     /// </summary>
     internal class LinkWikipedia : BaseClasses.Linker
     {
+        private Page _page = null;
         public override string BaseUrl => "https://en.wikipedia.org/wiki/";
         public override string BrowserSearchUrl => "https://en.wikipedia.org/w/index.php?search=";
         public override string LinkName => "Wikipedia";
         public override string SearchUrl => "https://en.wikipedia.org/w/api.php?action=opensearch&format=xml&search={0}&limit=50";
+
+        private GameFinder GameFinder
+        {
+            get
+            {
+                field ??= new GameFinder(new HttpClientWrapper(null, 100), true);
+
+                return field;
+            }
+        }
 
         public override bool AddSearchedLink(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true)
         {
@@ -41,19 +53,24 @@ namespace LinkUtilities.Linker.LinkSources
         {
             links = [];
 
-            var page = new GameFinder(true).FindGame(game.Name);
+            _page = null;
 
-            if (page == null)
+            API.Instance.MainView.UIDispatcher.Invoke(delegate
+            {
+                _page = GameFinder.FindGame(game.Name);
+            });
+
+            if (_page == null)
             {
                 return false;
             }
 
-            links.Add(new Link(LinkName, BaseUrl + page.Key));
+            links.Add(new Link(LinkName, BaseUrl + _page.Key));
 
             return links.Count > 0;
         }
 
         public override List<GenericItemOption> GetSearchResults(string searchTerm)
-            => new GameFinder(true).GetSearchResults(searchTerm);
+            => GameFinder.GetSearchResults(searchTerm);
     }
 }
