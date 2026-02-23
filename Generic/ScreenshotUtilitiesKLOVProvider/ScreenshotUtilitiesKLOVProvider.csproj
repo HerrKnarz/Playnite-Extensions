@@ -65,6 +65,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\AsyncHelper.cs">
+      <Link>Shared\AsyncHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileDownloader.cs">
       <Link>Shared\FilesCommon\FileDownloader.cs</Link>
     </Compile>
