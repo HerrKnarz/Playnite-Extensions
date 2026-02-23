@@ -75,6 +75,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ApiHelper.cs">
       <Link>Shared\ApiHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\AsyncHelper.cs">
+      <Link>Shared\AsyncHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Enum\DbInteractionResult.cs">
       <Link>Shared\DbInteractionResult.cs</Link>
     </Compile>

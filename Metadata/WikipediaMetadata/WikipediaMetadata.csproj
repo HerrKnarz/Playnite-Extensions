@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ApiHelper.cs" Link="Shared\ApiHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\AsyncHelper.cs" Link="Shared\AsyncHelper.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs" Link="Shared\Log.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs" Link="Shared\MiscHelper.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\PlatformHelper.cs" Link="Shared\PlatformHelper.cs" />
