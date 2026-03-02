@@ -29,7 +29,7 @@ namespace ScreenshotUtilitiesSteamProvider
         }
 
         public override Guid Id { get; } = Guid.Parse("074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae");
-        public string Name { get; set; } = "Steam";
+        public string ProviderName { get; set; } = "Steam";
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = true;
 
@@ -39,7 +39,7 @@ namespace ScreenshotUtilitiesSteamProvider
 
         public string GetScreenshotSearchResult(Game game, string searchTerm)
         {
-            var games = ApiHelper.GetJsonFromApi<List<SteamSearchResult>>($"{_searchUrl}{searchTerm.UrlEncode()}", Name, Encoding.UTF8);
+            var games = ApiHelper.GetJsonFromApi<List<SteamSearchResult>>($"{_searchUrl}{searchTerm.UrlEncode()}", ProviderName, Encoding.UTF8);
 
             if (!(games?.Any() ?? false))
             {
@@ -83,7 +83,7 @@ namespace ScreenshotUtilitiesSteamProvider
 
                 var fileExists = false;
 
-                (fileExists, _screenshotGroup) = ScreenshotHelper.LoadGroup(_game, Name, Id);
+                (fileExists, _screenshotGroup) = ScreenshotHelper.LoadGroup(_game, ProviderName, Id);
 
                 // return if we don't want to force an update and the last update was inside the
                 // days configured.
@@ -151,7 +151,7 @@ namespace ScreenshotUtilitiesSteamProvider
         {
             var apiUrl = $"https://store.steampowered.com/api/appdetails?appids={_screenshotGroup.GameIdentifier}";
 
-            var result = await ApiHelper.GetJsonFromApiAsync<SteamAppDetails>(apiUrl, Name);
+            var result = await ApiHelper.GetJsonFromApiAsync<SteamAppDetails>(apiUrl, ProviderName);
 
             var updated = false;
 

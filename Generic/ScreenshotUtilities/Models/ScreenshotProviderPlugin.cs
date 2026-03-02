@@ -29,7 +29,7 @@ namespace ScreenshotUtilities.Models
 
             var propertyInfoName = type.GetProperty("Name");
 
-            Name = propertyInfoName != null ? (string)propertyInfoName.GetValue(_plugin, null) : type.Name;
+            ProviderName = propertyInfoName != null ? (string)propertyInfoName.GetValue(_plugin, null) : type.Name;
 
             _methodInfoCleanUpAsync = type.GetMethod("CleanUpAsync");
             _methodInfoGetScreenshotsAsync = type.GetMethod("GetScreenshotsAsync");
@@ -52,7 +52,7 @@ namespace ScreenshotUtilities.Models
         }
 
         public Guid Id => _plugin.Id;
-        public string Name { get; set; } = null;
+        public string ProviderName { get; set; } = null;
         public bool SupportsAutomaticScreenshots { get; set; } = false;
         public bool SupportsScreenshotSearch { get; set; } = false;
 
@@ -136,7 +136,7 @@ namespace ScreenshotUtilities.Models
                 new List<GenericItemOption>(),
                 GetSearchResults,
                 _game.Name,
-                $"{ResourceProvider.GetString("LOCScreenshotUtilitiesDialogSearchGame")} ({Name})");
+                $"{ResourceProvider.GetString("LOCScreenshotUtilitiesDialogSearchGame")} ({ProviderName})");
         }
     }
 }

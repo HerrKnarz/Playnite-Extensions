@@ -33,7 +33,7 @@ namespace ScreenshotUtilitiesGOGProvider
         }
 
         public override Guid Id { get; } = Guid.Parse("228c70e8-7c89-46fc-b2c8-6e97966d01a4");
-        public string Name { get; set; } = "GOG";
+        public string ProviderName { get; set; } = "GOG";
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = true;
         private ScreenshotUtilitiesGOGProviderSettingsViewModel settings { get; set; }
@@ -44,7 +44,7 @@ namespace ScreenshotUtilitiesGOGProvider
 
         public string GetScreenshotSearchResult(Game game, string searchTerm)
         {
-            var gogSearchResult = ApiHelper.GetJsonFromApi<GogSearchResult>($"{_searchUrl}{searchTerm.RemoveDiacritics().UrlEncode()}", Name);
+            var gogSearchResult = ApiHelper.GetJsonFromApi<GogSearchResult>($"{_searchUrl}{searchTerm.RemoveDiacritics().UrlEncode()}", ProviderName);
 
             var searchResults = new List<GenericItemOption>();
 
@@ -96,7 +96,7 @@ namespace ScreenshotUtilitiesGOGProvider
 
                 var fileExists = false;
 
-                (fileExists, _screenshotGroup) = ScreenshotHelper.LoadGroup(_game, Name, Id);
+                (fileExists, _screenshotGroup) = ScreenshotHelper.LoadGroup(_game, ProviderName, Id);
 
                 // return if we don't want to force an update and the last update was inside the
                 // days configured.
@@ -164,7 +164,7 @@ namespace ScreenshotUtilitiesGOGProvider
         {
             var apiUrl = $"https://api.gog.com/products/{_screenshotGroup.GameIdentifier}?expand=screenshots";
 
-            var result = await ApiHelper.GetJsonFromApiAsync<GogApiResult>(apiUrl, Name);
+            var result = await ApiHelper.GetJsonFromApiAsync<GogApiResult>(apiUrl, ProviderName);
 
             var updated = false;
 

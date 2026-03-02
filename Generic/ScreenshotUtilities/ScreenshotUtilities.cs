@@ -299,7 +299,7 @@ namespace ScreenshotUtilities
         private IEnumerable<GameMenuItem> GetIgnoreMenuItems(Game game)
         {
             var providers = ScreenshotProviders
-                .OrderBy(p => p.Name)
+                .OrderBy(p => p.ProviderName)
                 .ToList();
 
             if (providers?.Count == 0)
@@ -337,7 +337,7 @@ namespace ScreenshotUtilities
             {
                 yield return new GameMenuItem
                 {
-                    Description = $"{captionPrefix}{provider.Name}",
+                    Description = $"{captionPrefix}{provider.ProviderName}",
                     MenuSection = menuSection,
                     Icon = icon,
                     Action = a => ScreenshotActions.SetGameToIgnore(game, this, provider.Id)
@@ -349,7 +349,7 @@ namespace ScreenshotUtilities
         {
             var providers = ScreenshotProviders
                 .Where(p => p.SupportsAutomaticScreenshots)
-                .OrderBy(p => p.Name)
+                .OrderBy(p => p.ProviderName)
                 .ToList();
 
             if (providers?.Count == 0)
@@ -387,7 +387,7 @@ namespace ScreenshotUtilities
             {
                 yield return new GameMenuItem
                 {
-                    Description = $"{captionPrefix}{provider.Name}",
+                    Description = $"{captionPrefix}{provider.ProviderName}",
                     MenuSection = menuSection,
                     Icon = icon,
                     Action = a => GetScreenshotsAsync(game, provider.Id)
@@ -509,7 +509,7 @@ namespace ScreenshotUtilities
         {
             var providers = ScreenshotProviders
                 .Where(p => p.SupportsScreenshotSearch)
-                .OrderBy(p => p.Name)
+                .OrderBy(p => p.ProviderName)
                 .ToList();
 
             if (providers?.Count == 0)
@@ -547,7 +547,7 @@ namespace ScreenshotUtilities
             {
                 yield return new GameMenuItem
                 {
-                    Description = $"{captionPrefix}{provider.Name}",
+                    Description = $"{captionPrefix}{provider.ProviderName}",
                     MenuSection = menuSection,
                     Icon = icon,
                     Action = a => SearchScreenshotsAsync(game, provider.Id)

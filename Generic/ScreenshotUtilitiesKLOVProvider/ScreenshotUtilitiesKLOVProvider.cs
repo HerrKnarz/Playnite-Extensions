@@ -31,7 +31,7 @@ namespace ScreenshotUtilitiesKLOVProvider
         }
 
         public override Guid Id { get; } = Guid.Parse("10a18213-f522-4818-8e8d-2b063398b069");
-        public string Name { get; set; } = _websiteName;
+        public string ProviderName { get; set; } = _websiteName;
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = false;
 
