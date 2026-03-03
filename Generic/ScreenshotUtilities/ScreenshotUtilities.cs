@@ -126,7 +126,7 @@ namespace ScreenshotUtilities
 
             menuItems.AddRange(GetSearchMenuItems(game));
 
-            menuItems.AddRange(GetIgnoreMenuItems(game));
+            menuItems.AddRange(GetIgnoreMenuItems());
 
             return menuItems;
         }
@@ -296,7 +296,7 @@ namespace ScreenshotUtilities
             }
         }
 
-        private IEnumerable<GameMenuItem> GetIgnoreMenuItems(Game game)
+        private IEnumerable<GameMenuItem> GetIgnoreMenuItems()
         {
             var providers = ScreenshotProviders
                 .OrderBy(p => p.ProviderName)
@@ -323,7 +323,7 @@ namespace ScreenshotUtilities
                     Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuIgnoreGame"),
                     MenuSection = menuSection,
                     Icon = "suIgnoreIcon",
-                    Action = a => ScreenshotActions.SetGameToIgnore(game, this)
+                    Action = a => ScreenshotActions.SetGameToIgnore(this)
                 };
 
                 yield return new GameMenuItem
@@ -340,7 +340,7 @@ namespace ScreenshotUtilities
                     Description = $"{captionPrefix}{provider.ProviderName}",
                     MenuSection = menuSection,
                     Icon = icon,
-                    Action = a => ScreenshotActions.SetGameToIgnore(game, this, provider.Id)
+                    Action = a => ScreenshotActions.SetGameToIgnore(this, provider.Id)
                 };
             }
         }

@@ -212,7 +212,7 @@ namespace ScreenshotUtilities
             return needsRefresh;
         }
 
-        internal static void SetGameToIgnore(Game game, ScreenshotUtilities plugin, Guid providerId = default)
+        internal static void SetGameToIgnore(ScreenshotUtilities plugin, Guid providerId = default)
         {
             if (plugin.Settings.Settings.CurrentScreenshotGroups == null || plugin.Settings.Settings.CurrentScreenshotGroups.Count == 0)
             {

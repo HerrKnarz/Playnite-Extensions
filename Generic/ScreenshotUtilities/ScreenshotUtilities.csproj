@@ -143,6 +143,15 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\IScreenshotProviderPlugin.cs">
       <Link>Shared\ScreenshotsCommon\IScreenshotProviderPlugin.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\MediaFileHandling\ScreenshotFileHandling.cs">
+      <Link>Shared\ScreenshotsCommon\MediaFileHandling\ScreenshotFileHandling.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\MediaFileHandling\ScreenshotGroupFileHandling.cs">
+      <Link>Shared\ScreenshotsCommon\MediaFileHandling\ScreenshotGroupFileHandling.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\MediaFileHandling\ScreenshotGroupsFileHandling.cs">
+      <Link>Shared\ScreenshotsCommon\MediaFileHandling\ScreenshotGroupsFileHandling.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\Screenshot.cs">
       <Link>Shared\ScreenshotsCommon\Models\Screenshot.cs</Link>
     </Compile>
