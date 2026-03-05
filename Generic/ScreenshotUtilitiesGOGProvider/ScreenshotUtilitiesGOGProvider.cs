@@ -178,7 +178,8 @@ namespace ScreenshotUtilitiesGOGProvider
                     _screenshotGroup.Screenshots.Add(new KNARZhelper.ScreenshotsCommon.Models.Screenshot(imageUrl)
                     {
                         ThumbnailPath = thumbUrl,
-                        SortOrder = result.Screenshots.IndexOf(screenshot)
+                        SortOrder = result.Screenshots.IndexOf(screenshot),
+                        Type = MediaType.Promoshot
                     });
                 }
 
