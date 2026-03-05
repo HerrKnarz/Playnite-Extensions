@@ -186,6 +186,27 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                 {
                     var imageUrl = node.SelectSingleNode("./div/img").GetAttributeValue("data-custom-src_full", "");
                     var name = node.SelectSingleNode("./span").InnerText;
+                    var mediaType = MediaType.Screenshot;
+
+                    mediaType = name.Contains("Artwork") ? MediaType.Artwork
+                        : name.Contains("Boss") ? MediaType.Screenshot
+                        : name.Contains("Cabinet") ? MediaType.ArcadeCabinet
+                        : name.Contains("CPO") ? MediaType.ArcadeControlPanel
+                        : name.Contains("Decal") ? MediaType.Decal
+                        : name.Equals("End") ? MediaType.Screenshot
+                        : name.Contains("Flyer") ? MediaType.Advertisement
+                        : name.Contains("Game") ? MediaType.Screenshot
+                        : name.Contains("How To") ? MediaType.ArcadeControlsInfo
+                        : name.Contains("Logo") ? MediaType.Screenshot
+                        : name.Contains("Manual") ? MediaType.Manual
+                        : name.Contains("Marquee") ? MediaType.ArcadeMarquee
+                        : name.Contains("PCB") ? MediaType.ArcadeCircuit
+                        : name.Contains("Score") ? MediaType.Screenshot
+                        : name.Contains("Select") ? MediaType.Screenshot
+                        : name.Contains("Title") ? MediaType.Screenshot
+                        : name.Contains("Versus") ? MediaType.Screenshot
+                        : name.Contains("Warning") ? MediaType.Screenshot
+                        : MediaType.Unknown;
 
                     if (!_screenshotGroup.Screenshots.Any(es => es.Path.Equals(imageUrl)))
                     {
@@ -193,7 +214,8 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                         {
                             ThumbnailPath = imageUrl,
                             Name = name,
-                            SortOrder = htmlNodes.IndexOf(node)
+                            SortOrder = htmlNodes.IndexOf(node),
+                            Type = mediaType
                         });
                     }
                 }
