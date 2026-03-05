@@ -164,7 +164,8 @@ namespace ScreenshotUtilitiesSteamProvider
                    new KNARZhelper.ScreenshotsCommon.Models.Screenshot(s.PathFull.StripUriParams())
                    {
                        ThumbnailPath = s.PathThumbnail.StripUriParams(),
-                       SortOrder = s.Id
+                       SortOrder = s.Id,
+                       Type = MediaType.Promoshot
                    }));
 
                 updated = true;
