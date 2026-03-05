@@ -25,7 +25,7 @@ namespace ScreenshotUtilitiesGOGProvider
 
         public ScreenshotUtilitiesGOGProvider(IPlayniteAPI api) : base(api)
         {
-            settings = new ScreenshotUtilitiesGOGProviderSettingsViewModel(this);
+            Settings = new ScreenshotUtilitiesGOGProviderSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = false
@@ -36,7 +36,7 @@ namespace ScreenshotUtilitiesGOGProvider
         public string ProviderName { get; set; } = "GOG";
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = true;
-        private ScreenshotUtilitiesGOGProviderSettingsViewModel settings { get; set; }
+        private ScreenshotUtilitiesGOGProviderSettingsViewModel Settings { get; set; }
 
         public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
 
@@ -65,7 +65,7 @@ namespace ScreenshotUtilitiesGOGProvider
 
         public async Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => await FetchScreenshotsAsync(game, 0, true, gameIdentifier);
 
-        public override ISettings GetSettings(bool firstRunSettings) => settings;
+        public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
         public override UserControl GetSettingsView(bool firstRunSettings) => null;
 
