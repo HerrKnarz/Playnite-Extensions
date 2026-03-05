@@ -7,6 +7,13 @@
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <d:ResourceDictionary Source="/MetadataUtilities;component/Localization/en_US.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=TxtName}">
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left">
             <ComboBox SelectedValue="{Binding NewObject.Type}"

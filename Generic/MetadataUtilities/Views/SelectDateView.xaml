@@ -7,6 +7,13 @@
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="250" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <d:ResourceDictionary Source="/MetadataUtilities;component/Localization/en_US.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=DateValue}">
         <DockPanel DockPanel.Dock="Top">
             <DatePicker Name="DateValue" SelectedDate="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />

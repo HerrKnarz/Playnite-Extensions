@@ -11,101 +11,106 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <metadataUtilities:LogicTypeConverter x:Key="LogicTypeConverter" />
-        <ObjectDataProvider MethodName="GetValues"
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <d:ResourceDictionary Source="/MetadataUtilities;component/Localization/en_US.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <metadataUtilities:LogicTypeConverter x:Key="LogicTypeConverter" />
+            <ObjectDataProvider MethodName="GetValues"
                             ObjectType="{x:Type sys:Enum}"
                             x:Key="LogicTypeValues">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="enums:LogicType" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="enums:LogicType" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
 
-        <ContextMenu x:Key="ConditionsMenuContains" ItemsSource="{Binding ContextMenuConditionsContains}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding Action }" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
+            <ContextMenu x:Key="ConditionsMenuContains" ItemsSource="{Binding ContextMenuConditionsContains}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding Action }" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
 
-        <ContextMenu x:Key="ConditionsMenuContainNot" ItemsSource="{Binding ContextMenuConditionsContainsNot}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding Action }" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
+            <ContextMenu x:Key="ConditionsMenuContainNot" ItemsSource="{Binding ContextMenuConditionsContainsNot}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding Action }" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
 
-        <ContextMenu x:Key="ConditionsMenuIsEmpty" ItemsSource="{Binding ContextMenuConditionsEmpty}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding Action }" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
-        <ContextMenu x:Key="ConditionsMenuIsNotEmpty" ItemsSource="{Binding ContextMenuConditionsNotEmpty}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding Action }" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
+            <ContextMenu x:Key="ConditionsMenuIsEmpty" ItemsSource="{Binding ContextMenuConditionsEmpty}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding Action }" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
+            <ContextMenu x:Key="ConditionsMenuIsNotEmpty" ItemsSource="{Binding ContextMenuConditionsNotEmpty}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding Action }" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
 
-        <ContextMenu x:Key="ConditionsMenuIsBiggerThan" ItemsSource="{Binding ContextMenuConditionsBiggerThan}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding Action }" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
+            <ContextMenu x:Key="ConditionsMenuIsBiggerThan" ItemsSource="{Binding ContextMenuConditionsBiggerThan}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding Action }" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
 
-        <ContextMenu x:Key="ConditionsMenuIsSmallerThan" ItemsSource="{Binding ContextMenuConditionsSmallerThan}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding Action }" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
+            <ContextMenu x:Key="ConditionsMenuIsSmallerThan" ItemsSource="{Binding ContextMenuConditionsSmallerThan}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding Action }" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
 
-        <ContextMenu x:Key="ActionsMenuAdd" ItemsSource="{Binding ContextMenuActionsAdd}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding Action }" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
-        <ContextMenu x:Key="ActionsMenuRemove" ItemsSource="{Binding ContextMenuActionsRemove}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding Action }" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
-        <ContextMenu x:Key="ActionsMenuClear" ItemsSource="{Binding ContextMenuActionsClear}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding Action }" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
+            <ContextMenu x:Key="ActionsMenuAdd" ItemsSource="{Binding ContextMenuActionsAdd}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding Action }" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
+            <ContextMenu x:Key="ActionsMenuRemove" ItemsSource="{Binding ContextMenuActionsRemove}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding Action }" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
+            <ContextMenu x:Key="ActionsMenuClear" ItemsSource="{Binding ContextMenuActionsClear}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding Action }" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
+        </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Gesture="CTRL+S" Command="{Binding SaveCommand}"

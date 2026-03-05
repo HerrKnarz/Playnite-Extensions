@@ -8,33 +8,38 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
-        <ContextMenu x:Key="WhitelistContextMenu" ItemsSource="{Binding FieldTypeButtons}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddUnusedCommand}" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
-        <ContextMenu x:Key="QuickAddContextMenu" ItemsSource="{Binding FieldTypeButtonsExtended}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddQuickAddCommand}" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
-        <ContextMenu x:Key="UnwantedContextMenu" ItemsSource="{Binding FieldTypeButtonsUnwanted}">
-            <ContextMenu.ItemContainerStyle>
-                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                    <Setter Property="Header" Value="{Binding Name}" />
-                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddUnwantedCommand}" />
-                    <Setter Property="CommandParameter" Value="{Binding FieldType}" />
-                </Style>
-            </ContextMenu.ItemContainerStyle>
-        </ContextMenu>
+        <ResourceDictionary>
+            <ContextMenu x:Key="WhitelistContextMenu" ItemsSource="{Binding FieldTypeButtons}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddUnusedCommand}" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
+            <ContextMenu x:Key="QuickAddContextMenu" ItemsSource="{Binding FieldTypeButtonsExtended}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddQuickAddCommand}" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
+            <ContextMenu x:Key="UnwantedContextMenu" ItemsSource="{Binding FieldTypeButtonsUnwanted}">
+                <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header" Value="{Binding Name}" />
+                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddUnwantedCommand}" />
+                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    </Style>
+                </ContextMenu.ItemContainerStyle>
+            </ContextMenu>
+            <ResourceDictionary.MergedDictionaries>
+                <d:ResourceDictionary Source="/MetadataUtilities;component/Localization/en_US.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
@@ -85,9 +90,9 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Margin="0,5">
-                                            <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsShowInEditor}" Margin="0,0,0,3"/>
-                                            <CheckBox IsChecked="{Binding RemoveUnusedItems, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}" Margin="0,0,0,3"/>
-                                            <CheckBox IsChecked="{Binding HiddenAsUnused, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}"/>
+                                            <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsShowInEditor}" Margin="0,0,0,3" />
+                                            <CheckBox IsChecked="{Binding RemoveUnusedItems, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}" Margin="0,0,0,3" />
+                                            <CheckBox IsChecked="{Binding HiddenAsUnused, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -281,7 +286,7 @@
                     <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddDefaults}" Margin="0,0,0,0"
                             Command="{Binding AddDefaultWhiteListItemsCommand}" DockPanel.Dock="Left" />
                 </DockPanel>
-                
+
                 <Label Content="{DynamicResource LOCMetadataUtilitiesSettingsWhiteListInfo}" DockPanel.Dock="Top" />
 
                 <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameWhiteList}" Margin="0,10,0,0">
@@ -354,7 +359,7 @@
                     <Button Content="&#xec53;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
                             Command="{Binding RemovePrefixCommand}" Margin="10,0,0,0"
                             CommandParameter="{Binding SelectedItems, ElementName=LvPrefixes}" />
-                    <Button Content="&#xEFEE;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" 
+                    <Button Content="&#xEFEE;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}"
                             Command="{Binding SortPrefixesCommand}" Margin="10,0,0,0" />
                 </DockPanel>
                 <Grid DockPanel.Dock="Top">
@@ -418,7 +423,7 @@
                                     <DataTemplate>
                                         <ComboBox SelectedValue="{Binding FieldType}"
                                                   ItemsSource="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}, Path=DataContext.FieldValuePairs}"
-                                                  SelectedValuePath="Key" DisplayMemberPath="Value"/>
+                                                  SelectedValuePath="Key" DisplayMemberPath="Value" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

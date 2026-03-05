@@ -1,36 +1,42 @@
 ﻿<UserControl x:Class="LinkUtilities.Views.CheckLinksView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:LinkUtilities.ViewModels"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:CheckLinksViewModel}">
     <UserControl.Resources>
-        <CollectionViewSource x:Key='GroupedItems' 
+        <ResourceDictionary>
+            <CollectionViewSource x:Key='GroupedItems'
                               Source="{Binding CheckLinks.FilteredLinks}">
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Game.Name" />
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Game.Name" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+
+            <ResourceDictionary.MergedDictionaries>
+                <d:ResourceDictionary Source="/LinkUtilities;component/Localization/en_US.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel Margin="15">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
-            <Label Content="{DynamicResource LOCLinkUtilitiesCheckLinksFilter}"/>
-            <TextBox Text="{Binding CheckLinks.SearchString}" Width="150" Margin="10,0,0,0"/>
+            <Label Content="{DynamicResource LOCLinkUtilitiesCheckLinksFilter}" />
+            <TextBox Text="{Binding CheckLinks.SearchString}" Width="150" Margin="10,0,0,0" />
             <Button Content="&#xEF29;" FontFamily="{DynamicResource FontIcoFont}"
-                    Command="{Binding FilterCommand}" Margin="10,0,0,0"/>
+                    Command="{Binding FilterCommand}" Margin="10,0,0,0" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Left">
-            <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}" 
+            <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonRemove}"
                     Command="{Binding RemoveCommand}"
-                    CommandParameter="{Binding SelectedItems, ElementName=LvCheckedLinks}"/>
+                    CommandParameter="{Binding SelectedItems, ElementName=LvCheckedLinks}" />
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonReplace}"
                     Command="{Binding ReplaceCommand}" Margin="10,0,0,0"
-                    CommandParameter="{Binding SelectedItems, ElementName=LvCheckedLinks}"/>
+                    CommandParameter="{Binding SelectedItems, ElementName=LvCheckedLinks}" />
             <Button Content="{DynamicResource LOCLinkUtilitiesSettingsButtonHelp}" Margin="10,0,0,0"
-                    Command="{Binding HelpCommand}"/>
+                    Command="{Binding HelpCommand}" />
         </StackPanel>
         <ListView Name="LvCheckedLinks" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0" HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource GroupedItems}}"
@@ -46,8 +52,8 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                     <Button Content="🔗"
-                                            Click="UrlClick" Tag="{Binding Link.Url}"/>
-                                    <TextBlock Text="{Binding Link.Url}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                            Click="UrlClick" Tag="{Binding Link.Url}" />
+                                    <TextBlock Text="{Binding Link.Url}" Margin="10,0,0,0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -64,8 +70,8 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                     <Button Content="🔗"
-                                            Click="UrlClick" Tag="{Binding LinkCheckResult.ResponseUrl}"/>
-                                    <TextBlock Text="{Binding LinkCheckResult.ResponseUrl}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                            Click="UrlClick" Tag="{Binding LinkCheckResult.ResponseUrl}" />
+                                    <TextBlock Text="{Binding LinkCheckResult.ResponseUrl}" Margin="10,0,0,0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -74,7 +80,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding UrlIsEqual}" HorizontalAlignment="Center" IsHitTestVisible="False"
-                                          Focusable="False" Margin="0,0,-15,0"/>
+                                          Focusable="False" Margin="0,0,-15,0" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -94,7 +100,7 @@
                                                 <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" FontSize="{DynamicResource FontSizeLarge}"
                                                            VerticalAlignment="Bottom" />
                                             </Expander.Header>
-                                            <ItemsPresenter/>
+                                            <ItemsPresenter />
                                         </Expander>
                                     </ControlTemplate>
                                 </Setter.Value>

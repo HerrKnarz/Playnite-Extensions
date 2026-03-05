@@ -9,12 +9,18 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="PrefixesGrid" Source="{Binding Prefixes}" />
-        <CollectionViewSource x:Key="PrefixesFilter" Source="{Binding Prefixes}" />
-        <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="TextAlignment" Value="Right" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <d:ResourceDictionary Source="/MetadataUtilities;component/Localization/en_US.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <CollectionViewSource x:Key="PrefixesGrid" Source="{Binding Prefixes}" />
+            <CollectionViewSource x:Key="PrefixesFilter" Source="{Binding Prefixes}" />
+            <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="TextAlignment" Value="Right" />
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel FocusManager.FocusedElement="{Binding ElementName=SearchBox}">
         <Border DockPanel.Dock="Top" BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,0,0,0" />
