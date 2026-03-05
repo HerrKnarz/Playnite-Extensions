@@ -125,6 +125,8 @@ namespace ScreenshotUtilitiesKLOVProvider
                     return false;
                 }
 
+                var gameName = WebUtility.HtmlDecode(urlLoadResult.Document.DocumentNode.SelectSingleNode("//h1")?.InnerText.Trim());
+
                 var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//a[@data-fancybox='gallery']");
 
                 if (htmlNodes == null || (htmlNodes.Count == 0))
@@ -163,13 +165,27 @@ namespace ScreenshotUtilitiesKLOVProvider
                     var name = WebUtility.HtmlDecode(node.SelectSingleNode("./figure/figcaption")?.InnerText.Trim()
                         ?? node.SelectSingleNode("./img")?.GetAttributeValue("alt", "")).CollapseWhitespaces();
 
+                    name = name.Replace(gameName + " - ", "");
+
+                    var mediaType = MediaType.Screenshot;
+
+                    mediaType = name.Equals("Cabinet") ? MediaType.ArcadeCabinet
+                        : name.Contains("Cabinet - Control Panel") ? MediaType.ArcadeControlPanel
+                        : name.Contains("Cabinet - Machine") ? MediaType.ArcadeCabinet
+                        : name.Contains("Cabinet - Side Art") ? MediaType.Artwork
+                        : name.Equals("Flyer") ? MediaType.Advertisement
+                        : name.Contains("Video Game Marquee") ? MediaType.ArcadeMarquee
+                        : name.Contains("Video Game Screen") ? MediaType.Screenshot
+                        : MediaType.Unknown;
+
                     if (!_screenshotGroup.Screenshots.Any(es => es.Path.Equals(imageUrl)))
                     {
                         _screenshotGroup.Screenshots.Add(new Screenshot(imageUrl)
                         {
                             ThumbnailPath = thumbNailUrl,
                             Name = name,
-                            SortOrder = htmlNodes.IndexOf(node)
+                            SortOrder = htmlNodes.IndexOf(node),
+                            Type = mediaType
                         });
                     }
                 }
