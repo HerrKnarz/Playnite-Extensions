@@ -1,5 +1,12 @@
 AddonId: ScreenshotUtilitiesKLOVProvider_10a18213-f522-4818-8e8d-2b063398b069
 Packages:
+  - Version: 0.7.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-03-06
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-03-06/ScreenshotUtilitiesKLOVProvider_10a18213-f522-4818-8e8d-2b063398b069_0_7_0.pext
+    Changelog:
+      - Added new media type field to screenshots to distinguish between different types of media like screenshot, arcade cabinet, marquee, advertisement etc..
+      - Removed unnecessary ImageMagick dependency.
   - Version: 0.6.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2025-11-16

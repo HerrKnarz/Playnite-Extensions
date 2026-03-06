@@ -1,5 +1,12 @@
 AddonId: ScreenshotUtilitiesSteamProvider_074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae
 Packages:
+  - Version: 0.7.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-03-06
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-03-06/ScreenshotUtilitiesSteamProvider_074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae_0_7_0.pext
+    Changelog:
+      - Set new media type field to "promo shot" to distinguish them from player made screenshots.
+      - Removed unnecessary ImageMagick dependency.
   - Version: 0.6.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2025-11-16

@@ -1,5 +1,12 @@
 AddonId: ScreenshotUtilitiesArcadeDatabaseProvider_f2109af2-b240-4700-a61d-c316f47b8cf4
 Packages:
+  - Version: 0.7.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-03-06
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-03-06/ScreenshotUtilitiesArcadeDatabaseProvider_f2109af2-b240-4700-a61d-c316f47b8cf4_0_7_0.pext
+    Changelog:
+      - Added new media type field to screenshots to distinguish between different types of media like screenshot, arcade cabinet, marquee, advertisement etc..
+      - Removed unnecessary ImageMagick dependency.
   - Version: 0.6.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2025-11-16

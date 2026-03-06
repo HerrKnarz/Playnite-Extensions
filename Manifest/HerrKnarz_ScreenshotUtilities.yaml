@@ -1,5 +1,15 @@
 AddonId: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Packages:
+  - Version: 0.7.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-03-06
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-03-06/ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90_0_7_0.pext
+    Changelog:
+      - Added new media type field to screenshots to distinguish between different types of media like screenshot, promo shot, box art, arcade cabinet etc.. Will be used in the future to filter and sort screenshots and the option to display different types in different parts of the theme.
+      - Updated translations.
+      - Fixed empty tooltip when hovering over screenshots without a name assigned in the viewer control.
+      - Fixed error when cancelling the search dialog.
+      - Updated ImageMagick to the newest version.
   - Version: 0.6.3
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2026-01-12
