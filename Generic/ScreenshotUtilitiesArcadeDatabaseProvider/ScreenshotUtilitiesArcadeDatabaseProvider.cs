@@ -208,7 +208,9 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                         : name.Contains("Warning") ? MediaType.Screenshot
                         : MediaType.Unknown;
 
-                    if (!_screenshotGroup.Screenshots.Any(es => es.Path.Equals(imageUrl)))
+                    var screenshot = _screenshotGroup.Screenshots.FirstOrDefault(es => es.Path.Equals(imageUrl);
+
+                    if (screenshot == default)
                     {
                         _screenshotGroup.Screenshots.Add(new Screenshot(imageUrl)
                         {
@@ -217,6 +219,13 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                             SortOrder = htmlNodes.IndexOf(node),
                             Type = mediaType
                         });
+                    }
+                    else
+                    {
+                        screenshot.ThumbnailPath = imageUrl;
+                        screenshot.Name = name;
+                        screenshot.SortOrder = htmlNodes.IndexOf(node);
+                        screenshot.Type = mediaType;
                     }
                 }
 

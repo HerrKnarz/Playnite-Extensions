@@ -170,15 +170,20 @@ namespace ScreenshotUtilitiesKLOVProvider
                     var mediaType = MediaType.Screenshot;
 
                     mediaType = name.Equals("Cabinet") ? MediaType.ArcadeCabinet
-                        : name.Contains("Cabinet - Control Panel") ? MediaType.ArcadeControlPanel
-                        : name.Contains("Cabinet - Machine") ? MediaType.ArcadeCabinet
-                        : name.Contains("Cabinet - Side Art") ? MediaType.Artwork
-                        : name.Equals("Flyer") ? MediaType.Advertisement
                         : name.Contains("Video Game Marquee") ? MediaType.ArcadeMarquee
                         : name.Contains("Video Game Screen") ? MediaType.Screenshot
+                        : name.Contains("Game Logo") ? MediaType.Logo
+                        : name.Contains("Cabinet - PCB") ? MediaType.ArcadeCircuit
+                        : name.Contains("Cabinet - Control Panel") ? MediaType.ArcadeControlPanel
+                        : name.Contains("Cabinet - Instruction Card") ? MediaType.ArcadeControlsInfo
+                        : name.Contains("Cabinet - ") ? MediaType.ArcadeCabinet
+                        : name.Equals("Flyer") ? MediaType.Advertisement
+                        : name.Contains("Memorabilia") ? MediaType.Artwork
                         : MediaType.Unknown;
 
-                    if (!_screenshotGroup.Screenshots.Any(es => es.Path.Equals(imageUrl)))
+                    var screenshot = _screenshotGroup.Screenshots.FirstOrDefault(es => es.Path.Equals(imageUrl));
+
+                    if (screenshot == default)
                     {
                         _screenshotGroup.Screenshots.Add(new Screenshot(imageUrl)
                         {
@@ -187,6 +192,13 @@ namespace ScreenshotUtilitiesKLOVProvider
                             SortOrder = htmlNodes.IndexOf(node),
                             Type = mediaType
                         });
+                    }
+                    else
+                    {
+                        screenshot.ThumbnailPath = thumbNailUrl;
+                        screenshot.Name = name;
+                        screenshot.SortOrder = htmlNodes.IndexOf(node);
+                        screenshot.Type = mediaType;
                     }
                 }
 
