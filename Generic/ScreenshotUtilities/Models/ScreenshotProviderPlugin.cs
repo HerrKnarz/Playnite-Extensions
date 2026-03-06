@@ -27,7 +27,7 @@ namespace ScreenshotUtilities.Models
 
             var type = _plugin.GetType();
 
-            var propertyInfoName = type.GetProperty("Name");
+            var propertyInfoName = type.GetProperty("ProviderName");
 
             ProviderName = propertyInfoName != null ? (string)propertyInfoName.GetValue(_plugin, null) : type.Name;
 
@@ -93,7 +93,7 @@ namespace ScreenshotUtilities.Models
 
         public async Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier)
         {
-            if (!SupportsScreenshotSearch || _methodInfoGetScreenshotsManualAsync == null)
+            if (!SupportsScreenshotSearch || _methodInfoGetScreenshotsManualAsync == null || _screenshotSearchResult == null)
             {
                 return false;
             }
