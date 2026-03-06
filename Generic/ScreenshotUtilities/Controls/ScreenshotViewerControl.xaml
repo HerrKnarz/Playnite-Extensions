@@ -1,27 +1,27 @@
 ﻿<PluginUserControl x:Class="ScreenshotUtilities.Controls.ScreenshotViewerControl"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                    xmlns:local="clr-namespace:ScreenshotUtilities.Views"
                    xmlns:knarzHelperControls="clr-namespace:KNARZhelper.Controls"
                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                    xmlns:viewModels="clr-namespace:ScreenshotUtilities.ViewModels"
                    d:DataContext="{d:DesignInstance Type=viewModels:ScreenshotViewerViewModel}"
-                   mc:Ignorable="d" 
+                   mc:Ignorable="d"
                    d:DesignHeight="450" d:DesignWidth="800"
                    Focusable="True">
     <PluginUserControl.Resources>
-       <Style TargetType="Button" x:Key="SolidScreenshotButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Padding" Value="5, 0"/>
-            <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Height" Value="{Binding ButtonHeight}"/>
+        <Style TargetType="Button" x:Key="SolidScreenshotButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Padding" Value="5, 0" />
+            <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Height" Value="{Binding ButtonHeight}" />
         </Style>
 
         <DataTemplate x:Key="TabHeaderTemplate" DataType="{x:Type viewModels:ScreenshotViewerViewModel}">
-            <TextBlock Text="{Binding DisplayName}" FontWeight="Bold"/>
+            <TextBlock Text="{Binding DisplayName}" FontWeight="Bold" />
         </DataTemplate>
         <DataTemplate x:Key="TabContentTemplate"
                       DataType="{x:Type viewModels:ScreenshotViewerViewModel}">
@@ -58,7 +58,7 @@
                 <ListBox DockPanel.Dock="Left"
                          x:Name="ScreenshotListBox"
                          VerticalAlignment="Top"
-                         ItemsSource="{Binding SelectedGroup.Screenshots}" 
+                         ItemsSource="{Binding SelectedGroup.Screenshots}"
                          Background="Transparent"
                          BorderBrush="Transparent"
                          HorizontalAlignment="Stretch"
@@ -75,17 +75,27 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding DisplayThumbnail, Converter={StaticResource LocalFileImageConverter}}" 
-                                   RenderOptions.BitmapScalingMode="Fant" 
+                            <Image Source="{Binding DisplayThumbnail, Converter={StaticResource LocalFileImageConverter}}"
+                                   RenderOptions.BitmapScalingMode="Fant"
                                    Stretch="Uniform"
                                    Margin="2"
-                                   Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, Path=DataContext.ThumbnailHeight}"
-                                   ToolTip="{Binding Name}"/>
+                                   Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, Path=DataContext.ThumbnailHeight}">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="ToolTip" Value="{Binding Name}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Name}" Value="">
+                                                <Setter Property="ToolTip" Value="{x:Null}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <i:Interaction.Behaviors>
                         <knarzHelperControls:ScrollIntoViewBehavior />
-                    </i:Interaction.Behaviors>  
+                    </i:Interaction.Behaviors>
                 </ListBox>
             </DockPanel>
 
@@ -93,12 +103,12 @@
                                                             DockPanel.Dock="Top"
                                                             Margin="0, 10">
 
-                <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath, Converter={StaticResource LocalFileImageConverter}}" 
+                <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath, Converter={StaticResource LocalFileImageConverter}}"
                        RenderOptions.BitmapScalingMode="Fant"
                        Stretch="Uniform"
                        Cursor="Hand">
                     <Image.InputBindings>
-                        <MouseBinding Gesture="LeftClick" 
+                        <MouseBinding Gesture="LeftClick"
                                       Command="{Binding OpenInFullScreenCommand}" />
                     </Image.InputBindings>
                     <Image.ContextMenu>
@@ -107,7 +117,7 @@
                                       Command="{Binding DataContext.OpenInFullScreenCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuCopyToClipboard}"
                                       Command="{Binding DataContext.CopyToClipboardCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInAssociatedApplication}"
                                       Command="{Binding DataContext.OpenInAssociatedApplicationCommand}"
                                       Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
