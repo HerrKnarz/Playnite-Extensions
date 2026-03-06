@@ -5,38 +5,40 @@
 
     <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Captures d'écran </sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshots">Do you really want to reset the screenshots? This will delete all screenshots from this game and loads them again from their sources.</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesDialogSearchGame">Search game</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshots">Voulez-vous vraiment réinitialiser les captures d'écran ? Cela supprimera toutes les captures d'écran de ce jeu et les rechargera de leurs sources.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesDialogSearchGame">Rechercher un jeu</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Copier dans le presse-papiers</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Supprimer la capture d'écran</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadFrom">Download screenshots from</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Download all screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadFrom">Télécharger les captures d'écran de</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadScreenshots">Télécharger toutes les captures d’écran</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadingScreenshots">Téléchargement des images pour</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuIgnoreFrom">Désactiver les captures d'écran de</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuIgnoreGame">Désactiver toutes les captures d'écran</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenContainingFolder">Ouvrir le dossier contenant</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInAssociatedApplication">Ouvrir dans l'application associée</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInBrowser">Ouvrir dans le navigateur</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuOpenInFullScreen">Ouvrir en mode plein écran</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshFrom">Refresh screenshots from</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Refresh all screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshFrom">Rafraîchir les captures d'écran de</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshScreenshots">Rafraîchir toutes les captures d'écran</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnails">Actualiser les miniatures</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom">Refresh thumbnails from</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom">Rafraîchir les vignettes de</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Actualisation des miniatures pour</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFrom">Reset screenshots from</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Reset screenshots</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchFrom">Search screenshots from</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Search screenshots</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsBackground">Set as background</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsCover">Set as cover</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsIcon">Set as icon</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Show screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFrom">Réinitialiser les captures d'écran de</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Réinitialiser les captures d'écran</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchFrom">Rechercher des captures d'écran de</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Rechercher des captures d'écran</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsBackground">Définir comme fond d'écran</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsCover">Définir comme image de couverture</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsIcon">Définir comme icône</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Montrer les captures d'écran</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Aucun jeu sélectionné</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoScreenshotsFound">Aucune capture d'écran trouvée</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots folder couldn't be deleted after the game {0} was removed. Please delete it manually. Click on this message to open the folder.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Le dossier des captures d'écran n'a pas pu être supprimé après la suppression du jeu {0} . Veuillez le supprimer manuellement. Cliquez sur ce message pour ouvrir le dossier.</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically on first view</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Télécharger les captures d'écran automatiquement lors de la première vue</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Ratio d'aspect par défaut</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Afficher le bouton pour ouvrir la visionneuse autonome dans le thème</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Afficher le contrôle de la visionneuse de capture d'écran dans le thème</sys:String>
