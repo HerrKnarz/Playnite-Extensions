@@ -208,7 +208,7 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
                         : name.Contains("Warning") ? MediaType.Screenshot
                         : MediaType.Unknown;
 
-                    var screenshot = _screenshotGroup.Screenshots.FirstOrDefault(es => es.Path.Equals(imageUrl);
+                    var screenshot = _screenshotGroup.Screenshots.FirstOrDefault(es => es.Path.Equals(imageUrl));
 
                     if (screenshot == default)
                     {
