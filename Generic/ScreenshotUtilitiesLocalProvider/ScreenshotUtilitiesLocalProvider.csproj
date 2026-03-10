@@ -7,8 +7,8 @@
     <ProjectGuid>{CD61EE13-FF2E-4E12-A194-4050B9477429}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScreenshotUtilitiesSelfmadeProvider</RootNamespace>
-    <AssemblyName>ScreenshotUtilitiesSelfmadeProvider</AssemblyName>
+    <RootNamespace>ScreenshotUtilitiesLocalProvider</RootNamespace>
+    <AssemblyName>ScreenshotUtilitiesLocalProvider</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -103,9 +103,11 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
-    <Compile Include="ScreenshotUtilitiesSelfmadeProvider.cs" />
-    <Compile Include="SettingsViewModel.cs" />
-    <Compile Include="SettingsView.xaml.cs">
+    <Compile Include="Models\FolderConfig.cs" />
+    <Compile Include="ScreenshotUtilitiesLocalProvider.cs" />
+    <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -126,7 +128,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SettingsView.xaml">
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

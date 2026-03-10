@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderName">Local screenshots</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonAdd">Add</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove">Remove</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonSort">Sort</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Here you can add your screenshot folders. Path and File mask both can contain the following placeholders {GameName}, {RomName}, {SteamId} and {GogId}. The following checkboxes define, how the game name will be modified to fit the path scheme. The file mask can contain the usual placeholders for a file mask (* and ?).</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsConfigName">Name</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPath">Path</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFileMask">File mask</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription4">Here</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription5">Here</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveSpecialChars">Remove special chars</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveHyphens">Remove hyphens</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveWhitespaces">Remove whitespaces</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveDiacritics">Remove diacritics</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveEditionSuffix">Remove edition suffix</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigWhitespacesToHyphens">Whitespaces to hyphens</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigUnderscoresToWhitespaces">Underscores to whitespaces</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigWhitespacesToUnderscores">Whitespaces to underscores</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigEscapeDataString">Escape data string</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigUrlEncode">Url encode</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveSpecialChars">Removes all characters that aren't part of the alphabet, a number, a whitespace or a hyphen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix">Removes stuff like "Special Edition" or HD from the end of a game name.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionEscapeDataString">Escapes a string to be used in a URL.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionUrlEncode">Encodes the game name to be valid for a url</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut">Try out game name formatting</sys:String>
+</ResourceDictionary>

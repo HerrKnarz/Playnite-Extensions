@@ -62,7 +62,7 @@
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
-    <Project Path="Generic/ScreenshotUtilitiesSelfmadeProvider/ScreenshotUtilitiesSelfmadeProvider.csproj">
+    <Project Path="Generic/ScreenshotUtilitiesLocalProvider/ScreenshotUtilitiesLocalProvider.csproj" Id="cd61ee13-ff2e-4e12-a194-4050b9477429">
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
