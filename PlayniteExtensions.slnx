@@ -62,6 +62,10 @@
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
+    <Project Path="Generic/ScreenshotUtilitiesSelfmadeProvider/ScreenshotUtilitiesSelfmadeProvider.csproj">
+      <BuildType Solution="Deploy|*" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
     <Project Path="Generic/ScreenshotUtilitiesSteamProvider/ScreenshotUtilitiesSteamProvider.csproj" Id="318d4b0b-eb22-4fd9-8d09-68a87880d531">
       <BuildType Solution="Deploy|*" Project="Release" />
       <Platform Solution="Debug|x86" Project="x86" />

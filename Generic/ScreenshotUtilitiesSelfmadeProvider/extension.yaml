@@ -1,0 +1,16 @@
+﻿Id: ScreenshotUtilitiesSelfmadeProvider_a049eff8-fd41-4dbc-9e35-01acc6b1a0cb
+Name: Screenshot Utilities Selfmade Provider
+Author: Alexander Heidn
+Version: 0.1.0
+Module: ScreenshotUtilitiesSelfmadeProvider.dll
+Type: GenericPlugin
+Icon: icon.png
+Links:
+  - Name: Help
+    Url: https://knarzwerk.de/en/playnite-extensions/screenshot-utilities
+  - Name: GitHub
+    Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
+  - Name: AddOn database
+    Url: https://playnite.link/addons.html#ScreenshotUtilitiesSelfmadeProvider_a049eff8-fd41-4dbc-9e35-01acc6b1a0cb
+  - Name: Ko-fi (Tips and Donations)
+    Url: https://ko-fi.com/herrknarz
