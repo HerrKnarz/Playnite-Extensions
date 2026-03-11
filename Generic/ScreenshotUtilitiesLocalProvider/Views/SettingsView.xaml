@@ -57,7 +57,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="150"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsConfigName}">
+                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
@@ -65,8 +65,8 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="180"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsPath}">
+                    <GridViewColumn Width="300"
+                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
@@ -82,8 +82,8 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="180"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFileMask}">
+                    <GridViewColumn Width="100"
+                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding FileMask, UpdateSourceTrigger=PropertyChanged}"
@@ -98,6 +98,16 @@
                                 <CheckBox IsChecked="{Binding Active, UpdateSourceTrigger=PropertyChanged}"
                                           Margin="0,0,-15,0"
                                           HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto"
+                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigReplaceInvalidCharsWith}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding InvalidCharReplacement, UpdateSourceTrigger=PropertyChanged}"
+                                         ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith}"
+                                          VerticalAlignment="Center" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -179,28 +189,6 @@
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding WhitespacesToUnderscores, UpdateSourceTrigger=PropertyChanged}"
                                           Margin="0,0,-15,0"
-                                          HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigEscapeDataString}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding EscapeDataString, UpdateSourceTrigger=PropertyChanged}"
-                                          Margin="0,0,-15,0"
-                                          ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionEscapeDataString}"
-                                          HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigUrlEncode}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding UrlEncode, UpdateSourceTrigger=PropertyChanged}"
-                                          Margin="0,0,-15,0"
-                                          ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionUrlEncode}"
                                           HorizontalAlignment="Center" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

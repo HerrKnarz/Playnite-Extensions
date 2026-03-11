@@ -76,16 +76,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             }
         }
 
-        public RelayCommand SelectFolderCommand => new RelayCommand(() =>
-                                                                {
-                                                                    var path = API.Instance.Dialogs.SelectFolder(_selectedItem.Path);
-
-                                                                    if (string.IsNullOrEmpty(path))
-                                                                    {
-                                                                        _selectedItem.Path = path;
-                                                                    }
-                                                                });
-
         public SettingsModel Settings
         {
             get => _settings;

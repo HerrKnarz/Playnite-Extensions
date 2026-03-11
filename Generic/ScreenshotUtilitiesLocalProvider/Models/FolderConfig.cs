@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using KNARZhelper.ScreenshotsCommon.Models;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace ScreenshotUtilitiesLocalProvider.Models
 {
-    public class FolderConfig
+    public class FolderConfig : ObservableObject
     {
         private readonly Guid _gogId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
         private readonly Guid _gogOssId = Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C");
@@ -16,21 +17,148 @@ namespace ScreenshotUtilitiesLocalProvider.Models
         private readonly string _placeholderGogId = "{GogId}";
         private readonly string _placeholderRomName = "{RomName}";
         private readonly string _placeholderSteamId = "{SteamId}";
-        public bool Active { get; set; } = true;
-        public bool EscapeDataString { get; set; } = false;
-        public string FileMask { get; set; } = "*.jpg";
-        public string Name { get; set; }
-        public string Path { get; set; }
-        public bool RemoveDiacritics { get; set; } = false;
-        public bool RemoveEditionSuffix { get; set; } = false;
-        public bool RemoveHyphens { get; set; } = false;
-        public bool RemoveSpecialChars { get; set; } = false;
-        public bool RemoveWhitespaces { get; set; } = false;
-        public bool ReturnsSameUrl { get; set; } = false;
-        public bool UnderscoresToWhitespaces { get; set; } = false;
-        public bool UrlEncode { get; set; } = false;
-        public bool WhitespacesToHyphens { get; set; } = false;
-        public bool WhitespacesToUnderscores { get; set; } = false;
+
+        private bool _active = true;
+        private string _fileMask = "*.jpg";
+        private string _invalidCharReplacement = "_";
+        private string _name = string.Empty;
+        private string _path = string.Empty;
+        private bool _removeDiacritics = false;
+        private bool _removeEditionSuffix = false;
+        private bool _removeHyphens = false;
+        private bool _removeSpecialChars = false;
+        private bool _removeWhitespaces = false;
+        private bool _underscoresToWhitespaces = false;
+        private bool _whitespacesToHyphens = false;
+        private bool _whitespacesToUnderscores = false;
+
+        public bool Active
+        {
+            get => _active;
+            set
+            {
+                _active = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string FileMask
+        {
+            get => _fileMask; set
+            {
+                _fileMask = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string InvalidCharReplacement
+        {
+            get => _invalidCharReplacement; set
+            {
+                _invalidCharReplacement = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Name
+        {
+            get => _name; set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Path
+        {
+            get => _path; set
+            {
+                _path = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool RemoveDiacritics
+        {
+            get => _removeDiacritics; set
+            {
+                _removeDiacritics = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool RemoveEditionSuffix
+        {
+            get => _removeEditionSuffix; set
+            {
+                _removeEditionSuffix = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool RemoveHyphens
+        {
+            get => _removeHyphens; set
+            {
+                _removeHyphens = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool RemoveSpecialChars
+        {
+            get => _removeSpecialChars; set
+            {
+                _removeSpecialChars = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool RemoveWhitespaces
+        {
+            get => _removeWhitespaces; set
+            {
+                _removeWhitespaces = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public RelayCommand SelectFolderCommand => new RelayCommand(() =>
+        {
+            var path = API.Instance.Dialogs.SelectFolder(Path);
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                Path = path;
+            }
+        });
+
+        public bool UnderscoresToWhitespaces
+        {
+            get => _underscoresToWhitespaces; set
+            {
+                _underscoresToWhitespaces = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool WhitespacesToHyphens
+        {
+            get => _whitespacesToHyphens; set
+            {
+                _whitespacesToHyphens = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool WhitespacesToUnderscores
+        {
+            get => _whitespacesToUnderscores; set
+            {
+                _whitespacesToUnderscores = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string FormatGameName(string gameName)
         {
@@ -71,17 +199,7 @@ namespace ScreenshotUtilitiesLocalProvider.Models
                 gameName = gameName.Replace(" ", "_");
             }
 
-            if (EscapeDataString)
-            {
-                gameName = gameName.EscapeDataString();
-            }
-
-            if (UrlEncode)
-            {
-                gameName = gameName.UrlEncode();
-            }
-
-            return gameName;
+            return gameName.ReplaceInvalidFileNameChars(InvalidCharReplacement);
         }
 
         public List<Screenshot> LoadScreenshots(Game game)
