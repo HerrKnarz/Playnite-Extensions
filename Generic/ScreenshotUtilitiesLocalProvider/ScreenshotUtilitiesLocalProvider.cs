@@ -51,6 +51,8 @@ namespace ScreenshotUtilitiesLocalProvider
 
         public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
 
+        public async Task<bool> HandleGameStoppedAsync(Game game) => await FetchScreenshotsAsync(game, 0, true);
+
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled)
@@ -59,15 +61,6 @@ namespace ScreenshotUtilitiesLocalProvider
 
                 PlayniteApi.Notifications.Add(notificationMessage);
             }
-        }
-
-        public override void OnGameStopped(OnGameStoppedEventArgs args)
-        {
-            base.OnGameStopped(args);
-
-            FetchScreenshotsAsync(args.Game, 0, true);
-
-            // TODO: Add method to refresh screenshots in the main addon after this one finished.
         }
 
         private async Task<bool> FetchScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate)

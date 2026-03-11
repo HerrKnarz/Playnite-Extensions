@@ -195,6 +195,13 @@ namespace ScreenshotUtilities
             }
         }
 
+        public override void OnGameStopped(OnGameStoppedEventArgs args)
+        {
+            base.OnGameStopped(args);
+
+            ScreenshotActions.HandleGameStoppedAsync(this, args.Game);
+        }
+
         internal void RefreshControls()
         {
             API.Instance.MainView.UIDispatcher.Invoke(delegate

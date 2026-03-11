@@ -54,6 +54,21 @@ namespace ScreenshotUtilities
             return needsRefresh;
         }
 
+        internal static async Task HandleGameStoppedAsync(ScreenshotUtilities plugin, Game game)
+        {
+            var needsRefresh = false;
+
+            foreach (var provider in plugin.ScreenshotProviders)
+            {
+                needsRefresh |= await provider.HandleGameStoppedAsync(game);
+            }
+
+            if (needsRefresh)
+            {
+                PrepareScreenshotsAsync(game, plugin, false);
+            }
+        }
+
         internal static void InitializeProviders(ScreenshotUtilities plugin)
         {
             if (plugin.ProvidersInitialized)
