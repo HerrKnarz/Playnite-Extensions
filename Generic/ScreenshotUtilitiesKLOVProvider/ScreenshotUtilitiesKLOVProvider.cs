@@ -110,6 +110,8 @@ namespace ScreenshotUtilitiesKLOVProvider
 
         public Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => throw new NotImplementedException();
 
+        public async Task<bool> HandleGameStoppedAsync(Game game) => false;
+
         public async Task<bool> LoadScreenshotsFromSourceAsync()
         {
             var url = _screenshotGroup.GameIdentifier;

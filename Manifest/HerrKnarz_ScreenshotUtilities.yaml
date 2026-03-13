@@ -1,5 +1,11 @@
 AddonId: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Packages:
+  - Version: 0.7.1
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-03-13
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-03-13/ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90_0_7_1.pext
+    Changelog:
+      - Added option for provider addons to check for screenshot changes after a game was closed to trigger an automatic reload of the screenshot viewer. This is especially useful for providers that handle screenshots made by players while in game like the new local provider addon.
   - Version: 0.7.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2026-03-06
