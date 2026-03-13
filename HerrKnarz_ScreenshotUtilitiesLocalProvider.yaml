@@ -1,0 +1,8 @@
+AddonId: ScreenshotUtilitiesLocalProvider_a049eff8-fd41-4dbc-9e35-01acc6b1a0cb
+Packages:
+  - Version: 0.1.1
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-03-13
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-03-13/ScreenshotUtilitiesLocalProvider_a049eff8-fd41-4dbc-9e35-01acc6b1a0cb_0_1_1.pext
+    Changelog:
+      - Initial beta release

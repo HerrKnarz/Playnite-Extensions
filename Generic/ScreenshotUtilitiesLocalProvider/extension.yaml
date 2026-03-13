@@ -1,7 +1,7 @@
 ﻿Id: ScreenshotUtilitiesLocalProvider_a049eff8-fd41-4dbc-9e35-01acc6b1a0cb
 Name: Screenshot Utilities Local Provider
 Author: Alexander Heidn
-Version: 0.1.0
+Version: 0.1.1
 Module: ScreenshotUtilitiesLocalProvider.dll
 Type: GenericPlugin
 Icon: icon.png
