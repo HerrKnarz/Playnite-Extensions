@@ -117,10 +117,10 @@
                                       Command="{Binding DataContext.OpenInFullScreenCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuCopyToClipboard}"
                                       Command="{Binding DataContext.CopyToClipboardCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.CanBeOpened, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInAssociatedApplication}"
                                       Command="{Binding DataContext.OpenInAssociatedApplicationCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.IsDownloaded, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.CanBeOpened, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenContainingFolder}"
                                       Command="{Binding DataContext.OpenContainingFolderCommand}" />
                             <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInBrowser}"

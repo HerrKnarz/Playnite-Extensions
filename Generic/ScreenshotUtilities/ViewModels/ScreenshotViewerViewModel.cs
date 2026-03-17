@@ -50,14 +50,14 @@ namespace ScreenshotUtilities.ViewModels
 
         public RelayCommand<object> OpenContainingFolderCommand => new RelayCommand<object>(a =>
         {
-            if (string.IsNullOrEmpty(SelectedGroup?.SelectedScreenshot?.DownloadedPath))
+            if (SelectedGroup?.SelectedScreenshot?.CanBeOpened ?? false)
             {
-                SelectedGroup.OpenContainingFolder();
+                SelectedGroup.SelectedScreenshot.OpenContainingFolder();
 
                 return;
             }
 
-            SelectedGroup?.SelectedScreenshot?.OpenContainingFolder();
+            SelectedGroup.OpenContainingFolder();
         });
 
         public RelayCommand<object> OpenInAssociatedApplicationCommand => new RelayCommand<object>(a => SelectedGroup?.SelectedScreenshot?.OpenInAssociatedApplication());
@@ -156,7 +156,7 @@ namespace ScreenshotUtilities.ViewModels
                 return;
             }
 
-            if ((SelectedGroup.SelectedScreenshot.DownloadedPath is null)
+            if ((!SelectedGroup.SelectedScreenshot.CanBeOpened)
                 && (string.IsNullOrEmpty(SelectedGroup.BasePath)
                     || !await SelectedGroup.SelectedScreenshot.DownloadAsync(SelectedGroup.BasePath)))
             {
