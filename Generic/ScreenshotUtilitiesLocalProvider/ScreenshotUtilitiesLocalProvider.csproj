@@ -100,6 +100,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\SteamHelper.cs">
       <Link>Shared\SteamHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\StringFormatter.cs">
+      <Link>Shared\StringFormatter.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>

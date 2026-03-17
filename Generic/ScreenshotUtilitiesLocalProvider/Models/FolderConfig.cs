@@ -11,13 +11,6 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 {
     public class FolderConfig : ObservableObject
     {
-        private readonly Guid _gogId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
-        private readonly Guid _gogOssId = Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C");
-        private readonly string _placeholderGameName = "{GameName}";
-        private readonly string _placeholderGogId = "{GogId}";
-        private readonly string _placeholderRomName = "{RomName}";
-        private readonly string _placeholderSteamId = "{SteamId}";
-
         private bool _active = true;
         private string _fileMask = "*.jpg";
         private string _invalidCharReplacement = "_";
@@ -162,51 +155,28 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 
         public string FormatGameName(string gameName)
         {
-            if (RemoveEditionSuffix)
+            var formatParameters = new StringFormatParameters
             {
-                gameName = gameName.RemoveEditionSuffix();
-            }
+                InvalidCharReplacement = InvalidCharReplacement,
+                RemoveDiacritics = RemoveDiacritics,
+                RemoveEditionSuffix = RemoveEditionSuffix,
+                RemoveHyphens = RemoveHyphens,
+                RemoveSpecialChars = RemoveSpecialChars,
+                RemoveWhitespaces = RemoveWhitespaces,
+                ReplaceInvalidFileNameChars = true,
+                UnderscoresToWhitespaces = UnderscoresToWhitespaces,
+                WhitespacesToHyphens = WhitespacesToHyphens,
+                WhitespacesToUnderscores = WhitespacesToUnderscores
+            };
 
-            if (RemoveHyphens)
-            {
-                gameName = gameName.Replace("-", "");
-            }
-
-            if (UnderscoresToWhitespaces)
-            {
-                gameName = gameName.Replace("_", " ");
-            }
-
-            if (RemoveSpecialChars)
-            {
-                gameName = gameName.RemoveSpecialChars();
-            }
-
-            if (RemoveDiacritics)
-            {
-                gameName = gameName.RemoveDiacritics();
-            }
-
-            gameName = RemoveWhitespaces ? gameName.Replace(" ", "") : gameName.CollapseWhitespaces();
-
-            if (WhitespacesToHyphens)
-            {
-                gameName = gameName.Replace(" ", "-");
-            }
-
-            if (WhitespacesToUnderscores)
-            {
-                gameName = gameName.Replace(" ", "_");
-            }
-
-            return gameName.ReplaceInvalidFileNameChars(InvalidCharReplacement);
+            return gameName.FormatString(formatParameters);
         }
 
         public List<Screenshot> LoadScreenshots(Game game)
         {
-            var folder = ReplacePlaceholders(Path, game);
-            var fileMask = ReplacePlaceholders(FileMask, game);
-
+            var gameName = FormatGameName(game.Name);
+            var folder = Path.ReplacePlaceholders(game, gameName);
+            var fileMask = FileMask.ReplacePlaceholders(game, gameName);
             var result = new List<Screenshot>();
 
             try
@@ -237,59 +207,6 @@ namespace ScreenshotUtilitiesLocalProvider.Models
             catch (Exception ex)
             {
                 Log.Error(ex, $"Error loading screenshots from {Name} for {game.Name}");
-            }
-
-            return result;
-        }
-
-        private string ReplacePlaceholders(string path, Game game)
-        {
-            var result = path;
-
-            if (result.Contains(_placeholderGameName))
-            {
-                var gameName = FormatGameName(game.Name);
-
-                if (string.IsNullOrEmpty(gameName))
-                {
-                    return string.Empty;
-                }
-
-                result = result.Replace(_placeholderGameName, gameName);
-            }
-
-            if (result.Contains(_placeholderSteamId))
-            {
-                var steamId = SteamHelper.GetSteamId(game);
-
-                if (string.IsNullOrEmpty(steamId))
-                {
-                    return string.Empty;
-                }
-
-                result = result.Replace(_placeholderSteamId, steamId);
-            }
-
-            if (result.Contains(_placeholderGogId))
-            {
-                if (!game.PluginId.IsOneOf(_gogId, _gogOssId))
-                {
-                    return string.Empty;
-                }
-
-                result = result.Replace(_placeholderGogId, game.GameId);
-            }
-
-            if (result.Contains(_placeholderRomName))
-            {
-                if (game.IsInstalled && (game.Roms?.Any() ?? false))
-                {
-                    result = result.Replace(_placeholderRomName, System.IO.Path.GetFileNameWithoutExtension(game.Roms[0].Path));
-                }
-                else
-                {
-                    return string.Empty;
-                }
             }
 
             return result;
