@@ -14,9 +14,16 @@
     </UserControl.Resources>
     <DockPanel Margin="10"
                d:Background="LightGray">
-        <TextBlock DockPanel.Dock="Top"
-                   TextWrapping="Wrap"
-                   Text="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription}" />
+        <Grid DockPanel.Dock="Top" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap"
+               Text="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription}" />
+            <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
+            Command="{Binding HelpPlaceholderCommand}" Margin="10,0,0,0" />
+        </Grid>
 
         <StackPanel Orientation="Horizontal"
                     DockPanel.Dock="Bottom"

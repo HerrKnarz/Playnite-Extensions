@@ -4,6 +4,7 @@ using ScreenshotUtilitiesLocalProvider.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ScreenshotUtilitiesLocalProvider.ViewModels
@@ -57,13 +58,16 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             }
         }
 
+        public RelayCommand HelpPlaceholdersCommand => new RelayCommand(()
+            => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/screenshot-utilities/local-provider-placeholders/")));
+
         public RelayCommand<IList<object>> RemoveFolderConfigCommand => new RelayCommand<IList<object>>(items =>
-                        {
-                            foreach (var item in items.ToList().Cast<FolderConfig>())
-                            {
-                                Settings.FolderConfigs.Remove(item);
-                            }
-                        }, items => items?.Any() ?? false);
+                                {
+                                    foreach (var item in items.ToList().Cast<FolderConfig>())
+                                    {
+                                        Settings.FolderConfigs.Remove(item);
+                                    }
+                                }, items => items?.Any() ?? false);
 
         public FolderConfig SelectedItem
         {
