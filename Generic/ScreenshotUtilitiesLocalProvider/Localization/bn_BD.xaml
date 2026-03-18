@@ -6,7 +6,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonAdd">Add</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove">Remove</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonSort">Sort</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Here you can add your screenshot folders. Path and File mask both can contain the following placeholders {GameName}, {RomName}, {SteamId} and {GogId}. The following checkboxes define, how the game name will be modified to fit the path scheme. The file mask can contain the usual placeholders for a file mask (* and ?).</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Here you can add your screenshot folders. Path and File mask both can contain several placeholders like environment variables, playnite placeholders and some custom ones. A full list is available via the help button on the top right. The placeholder {GameName} can be modified by the checkboxes to fit the path scheme. The file mask can also contain the usual placeholders for a file mask under DOS/Windows (* and ?).</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName">Name</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath">Path</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask">File mask</sys:String>
