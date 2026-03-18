@@ -17,6 +17,7 @@ namespace ScreenshotUtilitiesLocalProvider
 {
     public class ScreenshotUtilitiesLocalProvider : GenericPlugin, IScreenshotProviderPlugin
     {
+        public StringExpander StringExpander = new StringExpander();
         private Game _game;
         private ScreenshotGroup _screenshotGroup;
 
@@ -27,6 +28,8 @@ namespace ScreenshotUtilitiesLocalProvider
             {
                 HasSettings = true
             };
+
+            Settings.Settings.FolderConfigs.ForEach(c => c.StringExpander = StringExpander);
         }
 
         public override Guid Id { get; } = Guid.Parse("a049eff8-fd41-4dbc-9e35-01acc6b1a0cb");
@@ -40,6 +43,24 @@ namespace ScreenshotUtilitiesLocalProvider
         private SettingsViewModel Settings { get; set; }
 
         public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            var game = args.Games.FirstOrDefault();
+
+            yield return new GameMenuItem
+            {
+                MenuSection = "Screenshot Utilities",
+                Description = "-"
+            };
+
+            yield return new GameMenuItem
+            {
+                MenuSection = "Screenshot Utilities",
+                Description = "Local Provider Placeholder Test",
+                Action = a => StringExpander.TestExpansions(args.Games.FirstOrDefault())
+            };
+        }
 
         public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate) => await FetchScreenshotsAsync(game, daysSinceLastUpdate, forceUpdate);
 

@@ -99,8 +99,12 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
         public void CancelEdit() =>
                         Settings.FolderConfigs = EditingClone.FolderConfigs;
 
-        public void EndEdit() =>
+        public void EndEdit()
+        {
             _plugin.SavePluginSettings(Settings);
+
+            Settings.FolderConfigs.ForEach(c => c.StringExpander = _plugin.StringExpander);
+        }
 
         public bool VerifySettings(out List<string> errors)
         {

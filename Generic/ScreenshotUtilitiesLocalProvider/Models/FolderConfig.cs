@@ -1,6 +1,7 @@
 ﻿using KNARZhelper;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,9 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 {
     public class FolderConfig : ObservableObject
     {
+        [DontSerialize]
+        public StringExpander StringExpander;
+
         private bool _active = true;
         private string _fileMask = "*.jpg";
         private string _invalidCharReplacement = "_";
@@ -175,8 +179,8 @@ namespace ScreenshotUtilitiesLocalProvider.Models
         public List<Screenshot> LoadScreenshots(Game game)
         {
             var gameName = FormatGameName(game.Name);
-            var folder = Path.ReplacePlaceholders(game, gameName);
-            var fileMask = FileMask.ReplacePlaceholders(game, gameName);
+            var folder = StringExpander.ReplaceAllPlaceholders(Path, game, gameName);
+            var fileMask = StringExpander.ReplaceAllPlaceholders(FileMask, game, gameName);
             var result = new List<Screenshot>();
 
             try
