@@ -4,9 +4,11 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderName">Lokale Screenshots</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonAdd">Neu</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit">Bearbeiten</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove">Entfernen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonSort">Sortieren</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Hier können Sie Ihre Screenshot-Ordner hinzufügen. Pfad und Dateimaske können beide verschiedene Platzhalter wie Umgebungsvariablen, Playnite Platzhalter und einige benutzerdefinierte enthalten. Eine vollständige Liste ist über den Hilfe-Button oben rechts verfügbar. Der Platzhalter {GameName} kann durch die Kontrollkästchen an das Pfadschema angepasst werden. Die Datei-Maske kann auch die üblichen Platzhalter für eine Datei-Maske unter DOS/Windows enthalten (* und ?).</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsDescription">Beschreibung</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Hier können Sie Ihre Screenshot-Ordner hinzufügen. Pfad und Dateimaske können beide verschiedene Platzhalter wie Umgebungsvariablen, Playnite Platzhalter und einige benutzerdefinierte enthalten. Eine vollständige Liste finden Sie im Bearbeitungsdialog.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName">Name</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath">Pfad</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask">Datei-Maske</sys:String>
@@ -23,4 +25,10 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix">Entfernt Gegenstände wie &quot;Special Edition&quot; oder HD vom Ende eines Spielnamens.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith">Ersetzt Zeichen, die nicht für Dateinamen im Spielnamen erlaubt sind, nachdem die anderen Regeln angewendet wurden. Kann leer gelassen werden, um einfach die Zeichen zu entfernen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut">Probiere die Formatierung des Spielnamens aus</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription">Mit diesen Kontrollkästchen können Sie formatieren, wie der Name des Spiels über den Platzhalter {GameName} zum Pfad hinzugefügt wird.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholder">Platzhalter</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription">Dies sind alle Platzhalter, die in den Feldern Pfad- und Dateimaske unterstützt werden. Unter ENV sind alle Windows-Umgebungsvariablen auf Ihrem PC. Sie können den aktuell ausgewählten Platzhalter mit Strg+C kopieren, um ihn in die Textfelder einzufügen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsSelectFolder">Ordner auswählen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsTabGameNameConfig">Spielname formatieren</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsTabPlaceholderLegend">Platzhalter-Legende</sys:String>
 </ResourceDictionary>
