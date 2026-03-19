@@ -22,13 +22,14 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel FocusManager.FocusedElement="{Binding ElementName=SearchBox}">
+    <DockPanel FocusManager.FocusedElement="{Binding ElementName=SearchBox}"
+               d:Background="AliceBlue">
         <Border DockPanel.Dock="Top" BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,0,0,0" />
         <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,0,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <Button Content="{DynamicResource LOCCloseLabel}" Command="{Binding CloseCommand}"
                         CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" IsDefault="True"
-                        Style="{StaticResource BottomButton}" />
+                        Style="{DynamicResource BottomButton}" />
             </StackPanel>
         </Border>
         <Grid DockPanel.Dock="Top" Margin="10, 0, 10, 0">

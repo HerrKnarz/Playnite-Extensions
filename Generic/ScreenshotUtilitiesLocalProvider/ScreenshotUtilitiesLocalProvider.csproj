@@ -53,7 +53,9 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -106,10 +108,17 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WindowHelper.cs">
+      <Link>Shared\WindowHelper.cs</Link>
+    </Compile>
     <Compile Include="Models\FolderConfig.cs" />
     <Compile Include="ScreenshotUtilitiesLocalProvider.cs" />
     <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="ViewModels\EditFolderConfigViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\EditFolderConfigView.xaml.cs">
+      <DependentUpon>EditFolderConfigView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -130,6 +139,10 @@
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EditFolderConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>

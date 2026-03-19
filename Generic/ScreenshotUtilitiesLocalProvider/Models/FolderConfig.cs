@@ -12,8 +12,7 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 {
     public class FolderConfig : ObservableObject
     {
-        [DontSerialize]
-        public StringExpander StringExpander;
+        // TODO: Add option to set the currently selected game and display how the path would look for that game. Maybe even add a button to open the folder with the example path. Useful for settings and edit dialogs.
 
         private bool _active = true;
         private string _fileMask = "*.jpg";
@@ -129,6 +128,9 @@ namespace ScreenshotUtilitiesLocalProvider.Models
                 Path = path;
             }
         });
+
+        [DontSerialize]
+        public StringExpander StringExpander { get; set; }
 
         public bool UnderscoresToWhitespaces
         {

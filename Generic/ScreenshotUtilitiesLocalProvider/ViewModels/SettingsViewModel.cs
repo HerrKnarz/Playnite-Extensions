@@ -1,10 +1,11 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using ScreenshotUtilitiesLocalProvider.Models;
+using ScreenshotUtilitiesLocalProvider.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 
 namespace ScreenshotUtilitiesLocalProvider.ViewModels
@@ -12,8 +13,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
     public class SettingsViewModel : ObservableObject, ISettings
     {
         private readonly ScreenshotUtilitiesLocalProvider _plugin;
-        private string _exampleName = "Baldur's Gate 3";
-        private string _exampleResult = "";
         private FolderConfig _selectedItem;
         private SettingsModel _settings;
 
@@ -35,39 +34,45 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             }
         }
 
-        public RelayCommand AddFolderConfigCommand => new RelayCommand(() => Settings.FolderConfigs.Add(new FolderConfig()));
-
-        public string ExampleName
+        public RelayCommand AddFolderConfigCommand => new RelayCommand(() =>
         {
-            get => _exampleName;
-            set
-            {
-                _exampleName = value;
-                ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty;
-                OnPropertyChanged();
-            }
-        }
+            var configToEdit = new FolderConfig();
 
-        public string ExampleResult
+            if (!OpenEditDialog(ref configToEdit))
+            {
+                return;
+            }
+
+            Settings.FolderConfigs.Add(configToEdit);
+        });
+
+        public RelayCommand<object> EditFolderConfigCommand => new RelayCommand<object>(item =>
         {
-            get => _exampleResult;
-            set
+            var selectedConfig = item as FolderConfig;
+
+            var configToEdit = selectedConfig.DeepClone();
+
+            if (!OpenEditDialog(ref configToEdit))
             {
-                _exampleResult = value;
-                OnPropertyChanged();
+                return;
             }
-        }
 
-        public RelayCommand HelpPlaceholdersCommand => new RelayCommand(()
-            => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/screenshot-utilities/local-provider-placeholders/")));
+            selectedConfig.Active = configToEdit.Active;
+            selectedConfig.FileMask = configToEdit.FileMask;
+            selectedConfig.InvalidCharReplacement = configToEdit.InvalidCharReplacement;
+            selectedConfig.Name = configToEdit.Name;
+            selectedConfig.Path = configToEdit.Path;
+            selectedConfig.RemoveDiacritics = configToEdit.RemoveDiacritics;
+            selectedConfig.RemoveEditionSuffix = configToEdit.RemoveEditionSuffix;
+            selectedConfig.RemoveHyphens = configToEdit.RemoveHyphens;
+            selectedConfig.RemoveSpecialChars = configToEdit.RemoveSpecialChars;
+            selectedConfig.RemoveWhitespaces = configToEdit.RemoveWhitespaces;
+            selectedConfig.UnderscoresToWhitespaces = configToEdit.UnderscoresToWhitespaces;
+            selectedConfig.WhitespacesToHyphens = configToEdit.WhitespacesToHyphens;
+            selectedConfig.WhitespacesToUnderscores = configToEdit.WhitespacesToUnderscores;
+        });
 
-        public RelayCommand<IList<object>> RemoveFolderConfigCommand => new RelayCommand<IList<object>>(items =>
-                                {
-                                    foreach (var item in items.ToList().Cast<FolderConfig>())
-                                    {
-                                        Settings.FolderConfigs.Remove(item);
-                                    }
-                                }, items => items?.Any() ?? false);
+        public RelayCommand<object> RemoveFolderConfigCommand => new RelayCommand<object>(item => Settings.FolderConfigs.Remove(item as FolderConfig));
 
         public FolderConfig SelectedItem
         {
@@ -75,7 +80,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             set
             {
                 _selectedItem = value;
-                ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty;
                 OnPropertyChanged();
             }
         }
@@ -92,9 +96,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
 
         public RelayCommand SortFolderConfigsCommand => new RelayCommand(SortFolderConfigs);
 
-        public RelayCommand TestFolderConfigCommand => new RelayCommand(() =>
-            ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty);
-
         private SettingsModel EditingClone { get; set; }
 
         public void BeginEdit() =>
@@ -108,6 +109,26 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             _plugin.SavePluginSettings(Settings);
 
             Settings.FolderConfigs.ForEach(c => c.StringExpander = _plugin.StringExpander);
+        }
+
+        public bool OpenEditDialog(ref FolderConfig configToEdit)
+        {
+            try
+            {
+                configToEdit.StringExpander = _plugin.StringExpander;
+
+                var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit"), 1200, 800);
+                window.Content = new EditFolderConfigView();
+                window.DataContext = new EditFolderConfigViewModel(configToEdit);
+
+                return window.ShowDialog() ?? false;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing edit folder config dialog", true);
+
+                return false;
+            }
         }
 
         public bool VerifySettings(out List<string> errors)

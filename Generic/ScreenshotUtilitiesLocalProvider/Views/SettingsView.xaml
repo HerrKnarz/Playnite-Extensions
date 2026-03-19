@@ -14,43 +14,15 @@
     </UserControl.Resources>
     <DockPanel Margin="10"
                d:Background="LightGray">
-        <Grid DockPanel.Dock="Top" Margin="0,10,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap"
-               Text="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription}" />
-            <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
-            Command="{Binding HelpPlaceholderCommand}" Margin="10,0,0,0" />
-        </Grid>
-
-        <StackPanel Orientation="Horizontal"
-                    DockPanel.Dock="Bottom"
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Left">
-            <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut}" />
-            <TextBox Text="{Binding ExampleName}"
-                     Width="150"
-                     Margin="10,0,0,0" />
-            <Button Content="&#xEA5D;"
-                    FontFamily="{DynamicResource FontIcoFont}"
-                    Command="{Binding TestFolderConfigCommand}"
-                    Margin="10,0,0,0" />
-            <TextBox Text="{Binding ExampleResult}"
-                     Width="150"
-                     Margin="10,0,0,0" />
-        </StackPanel>
+        <TextBlock DockPanel.Dock="Top"
+                   TextWrapping="Wrap"
+                   Text="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription}" />
         <StackPanel Orientation="Horizontal"
                     DockPanel.Dock="Bottom"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Left">
             <Button Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsButtonAdd}"
                     Command="{Binding AddFolderConfigCommand}" />
-            <Button Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove}"
-                    Margin="10,0,0,0"
-                    Command="{Binding RemoveFolderConfigCommand}"
-                    CommandParameter="{Binding SelectedItems, ElementName=GridFolderConfigs}" />
             <Button Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsButtonSort}"
                     Margin="10,0,0,0"
                     Command="{Binding SortFolderConfigsCommand}" />
@@ -63,41 +35,6 @@
                   SelectedItem="{Binding SelectedItem}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="150"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                                         VerticalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="300"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <DockPanel>
-                                    <Button Content="&#xec5b;"
-                                            FontFamily="{DynamicResource FontIcoFont}"
-                                            ToolTip="Select folder"
-                                            Margin="10,0,0,0"
-                                            DockPanel.Dock="Right"
-                                            Command="{Binding SelectFolderCommand}" />
-                                    <TextBox Text="{Binding Path}"
-                                             DockPanel.Dock="Left" />
-                                </DockPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="100"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Text="{Binding FileMask, UpdateSourceTrigger=PropertyChanged}"
-                                         VerticalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
                     <GridViewColumn Width="Auto"
                                     Header="{DynamicResource LOCEnabledTitle}">
                         <GridViewColumn.CellTemplate>
@@ -109,94 +46,31 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigReplaceInvalidCharsWith}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Text="{Binding InvalidCharReplacement, UpdateSourceTrigger=PropertyChanged}"
-                                         ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith}"
-                                          VerticalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName}"
+                                    DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveSpecialChars}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding RemoveSpecialChars, UpdateSourceTrigger=PropertyChanged}"
-                                          Margin="0,0,-15,0"
-                                          ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveSpecialChars}"
-                                          HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath}"
+                                    DisplayMemberBinding="{Binding Path}" />
                     <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveHyphens}">
+                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask}"
+                                    DisplayMemberBinding="{Binding FileMask}" />
+                    <GridViewColumn Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding RemoveHyphens, UpdateSourceTrigger=PropertyChanged}"
-                                          Margin="0,0,-15,0"
-                                          HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveWhitespaces}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding RemoveWhitespaces, UpdateSourceTrigger=PropertyChanged}"
-                                          Margin="0,0,-15,0"
-                                          HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveDiacritics}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding RemoveDiacritics, UpdateSourceTrigger=PropertyChanged}"
-                                          Margin="0,0,-15,0"
-                                          HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveEditionSuffix}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding RemoveEditionSuffix, UpdateSourceTrigger=PropertyChanged}"
-                                          Margin="0,0,-15,0"
-                                          ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix}"
-                                          HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigWhitespacesToHyphens}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding WhitespacesToHyphens, UpdateSourceTrigger=PropertyChanged}"
-                                          Margin="0,0,-15,0"
-                                          HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigUnderscoresToWhitespaces}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding UnderscoresToWhitespaces, UpdateSourceTrigger=PropertyChanged}"
-                                          Margin="0,0,-15,0"
-                                          HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto"
-                                    Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigWhitespacesToUnderscores}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding WhitespacesToUnderscores, UpdateSourceTrigger=PropertyChanged}"
-                                          Margin="0,0,-15,0"
-                                          HorizontalAlignment="Center" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="&#xec55;"
+                                            FontFamily="{DynamicResource FontIcoFont}"
+                                            Margin="0,5,0,5"
+                                            ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit}"
+                                            Command="{Binding Path=DataContext.EditFolderConfigCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=Content}" />
+                                    <Button Content="&#xec53;"
+                                            FontFamily="{DynamicResource FontIcoFont}"
+                                            Margin="10,5,0,5"
+                                            ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove}"
+                                            Command="{Binding Path=DataContext.RemoveFolderConfigCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=Content}" />
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

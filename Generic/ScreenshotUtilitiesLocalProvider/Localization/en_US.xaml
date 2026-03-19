@@ -6,9 +6,11 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderName">Local screenshots</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonAdd">Add</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit">Edit</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove">Remove</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonSort">Sort</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Here you can add your screenshot folders. Path and File mask both can contain several placeholders like environment variables, playnite placeholders and some custom ones. A full list is available via the help button on the top right. The placeholder {GameName} can be modified by the checkboxes to fit the path scheme. The file mask can also contain the usual placeholders for a file mask under DOS/Windows (* and ?).</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsDescription">Description</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Here you can add your screenshot folders. Path and File mask both can contain several placeholders like environment variables, playnite placeholders and some custom ones. A full list can be found in the edit dialog.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName">Name</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath">Path</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask">File mask</sys:String>
@@ -25,4 +27,10 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix">Removes stuff like "Special Edition" or HD from the end of a game name.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith">Replaces characters not allowed for filenames in the game name after applying the other rules. Can be left empty to simply remove the characters.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut">Try out game name formatting</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription">Using these check boxes you can format how the name of the game will be added to the path via the placeholder {GameName}.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholder">Placeholder</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription">These are all placeholders supported in the path and file mask fields. Grouped under ENV are all windows environment variables available on your PC. You can copy the currently selected placeholder with CTRL+C to paste it into the text boxes.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsSelectFolder">Select folder</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsTabGameNameConfig">Format game name</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsTabPlaceholderLegend">Placeholder legend</sys:String>
 </ResourceDictionary>
