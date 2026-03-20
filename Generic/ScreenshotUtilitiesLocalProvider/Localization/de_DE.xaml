@@ -28,6 +28,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription">Mit diesen Kontrollkästchen können Sie formatieren, wie der Name des Spiels über den Platzhalter {GameName} zum Pfad hinzugefügt wird.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholder">Platzhalter</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription">Dies sind alle Platzhalter, die in den Feldern Pfad- und Dateimaske unterstützt werden. Unter ENV sind alle Windows-Umgebungsvariablen auf Ihrem PC. Sie können den aktuell ausgewählten Platzhalter mit Strg+C kopieren, um ihn in die Textfelder einzufügen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsResult">Ergebnis</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsSelectFolder">Ordner auswählen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsTabGameNameConfig">Spielname formatieren</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsTabPlaceholderLegend">Platzhalter-Legende</sys:String>
