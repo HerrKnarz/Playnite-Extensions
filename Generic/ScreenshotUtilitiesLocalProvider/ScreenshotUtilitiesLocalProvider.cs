@@ -58,7 +58,11 @@ namespace ScreenshotUtilitiesLocalProvider
             {
                 MenuSection = "Screenshot Utilities",
                 Description = "Local Provider Placeholder Test",
-                Action = a => StringExpander.TestExpansions(args.Games.FirstOrDefault())
+                Action = a =>
+                {
+                    StringExpander.ResetCache();
+                    StringExpander.TestExpansions(args.Games.FirstOrDefault(), true);
+                }
             };
         }
 

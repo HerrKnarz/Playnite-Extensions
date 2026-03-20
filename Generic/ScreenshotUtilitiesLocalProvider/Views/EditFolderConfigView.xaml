@@ -109,11 +109,17 @@
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsPlaceholder}"
+                                                        Width="Auto">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Placeholder}"
+                                                               ToolTip="{Binding Description}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsResult}"
                                                         Width="Auto"
-                                                        DisplayMemberBinding="{Binding Placeholder}" />
-                                        <GridViewColumn Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsDescription}"
-                                                        Width="Auto"
-                                                        DisplayMemberBinding="{Binding Description}" />
+                                                        DisplayMemberBinding="{Binding Result}" />
                                     </GridView>
                                 </ListView.View>
                                 <ListView.GroupStyle>

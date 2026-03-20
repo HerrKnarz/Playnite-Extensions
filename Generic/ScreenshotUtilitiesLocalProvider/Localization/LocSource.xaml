@@ -30,6 +30,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription">Using these check boxes you can format how the name of the game will be added to the path via the placeholder {GameName}.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholder">Placeholder</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription">These are all placeholders supported in the path and file mask fields. Grouped under ENV are all windows environment variables available on your PC. You can copy the currently selected placeholder with CTRL+C to paste it into the text boxes.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsResult">Result</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsSelectFolder">Select folder</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsTabGameNameConfig">Format game name</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsTabPlaceholderLegend">Placeholder legend</sys:String>
