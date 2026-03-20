@@ -16,7 +16,7 @@ namespace MetadataUtilities.Actions
 
         public Settings Settings => ControlCenter.Instance.Settings;
 
-        public void DoForAll(List<MyGame> games, bool showDialog = false,
+        public void DoForAll(List<GameExMeta> games, bool showDialog = false,
             ActionModifierType actionModifier = ActionModifierType.None, object item = null)
         {
             ControlCenter.Instance.IsUpdating = true;
@@ -113,7 +113,7 @@ namespace MetadataUtilities.Actions
             }
         }
 
-        public virtual bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null,
+        public virtual bool Execute(GameExMeta game, ActionModifierType actionModifier = ActionModifierType.None, object item = null,
             bool isBulkAction = true) => isBulkAction || Prepare(actionModifier, item, false);
 
         public virtual void FollowUp(ActionModifierType actionModifier = ActionModifierType.None, object item = null,

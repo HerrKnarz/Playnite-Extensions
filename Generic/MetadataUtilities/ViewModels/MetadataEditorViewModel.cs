@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using KNARZhelper.Enum;
+using KNARZhelper.GamesCommon;
 using KNARZhelper.MetadataCommon;
 using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
 using KNARZhelper.MetadataCommon.Enum;
@@ -26,7 +27,7 @@ namespace MetadataUtilities.ViewModels
         private bool _filterHideUnused;
         private string _filterPrefix = string.Empty;
         private ObservableCollection<FilterType> _filterTypes;
-        private ObservableCollection<MyGame> _games = new ObservableCollection<MyGame>();
+        private ObservableCollection<GameExMeta> _games = new ObservableCollection<GameExMeta>();
         private CollectionViewSource _gamesViewSource;
         private bool _groupMatches;
         private CollectionViewSource _metadataViewSource;
@@ -118,7 +119,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            var viewModel = new SearchGameViewModel(SelectedItems);
+            var viewModel = new SearchGameViewModel(ControlCenter.Instance.Settings, AddGamesAction);
 
             var searchGameView = new SearchGameView();
 
@@ -128,6 +129,8 @@ namespace MetadataUtilities.ViewModels
             window.DataContext = viewModel;
 
             window.ShowDialog();
+            ControlCenter.Instance.SavePluginSettings();
+
             LoadRelatedGames();
 
             foreach (var item in SelectedItems)
@@ -299,7 +302,7 @@ namespace MetadataUtilities.ViewModels
             ? Visibility.Visible
             : Visibility.Collapsed;
 
-        public ObservableCollection<MyGame> Games
+        public ObservableCollection<GameExMeta> Games
         {
             get => _games;
             set => SetValue(ref _games, value);
@@ -342,49 +345,66 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
+        public RelayCommand<IList<object>> LoadGameCommand => new RelayCommand<IList<object>>(items =>
         {
-            if (items == null || items.Count < 2)
+            if (SelectedItems == null || SelectedItems.Count == 0)
             {
-                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMultipleSelected"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            try
+            var game = items.Cast<GameExMeta>().Select(x => x.Game).First();
+
+            if (game == null)
             {
-                ControlCenter.Instance.IsUpdating = true;
+                return;
+            }
 
-                var mergeItems = new MetadataObjects();
+            API.Instance.MainView.SelectGame(game.Id);
+        }, items => items != null && items.Count > 0);
 
-                mergeItems.AddMissing(items.ToList().Cast<MetadataObject>());
-
-                var viewModel = new MergeDialogViewModel(mergeItems);
-
-                var mergeView = new MergeDialogView();
-
-                var window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesEditorMerge"));
-                window.Content = mergeView;
-                window.DataContext = viewModel;
-
-                if (!(window.ShowDialog() ?? false))
+        public RelayCommand<IList<object>> MergeItemsCommand => new RelayCommand<IList<object>>(items =>
                 {
-                    return;
-                }
+                    if (items == null || items.Count < 2)
+                    {
+                        API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCMetadataUtilitiesDialogMultipleSelected"), ResourceProvider.GetString("LOCMetadataUtilitiesName"), MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
 
-                RemoveItems(mergeItems);
+                    try
+                    {
+                        ControlCenter.Instance.IsUpdating = true;
 
-                LoadRelatedGames();
-            }
-            catch (Exception exception)
-            {
-                Log.Error(exception, "Error during initializing merge dialog", true);
-            }
-            finally
-            {
-                ControlCenter.Instance.IsUpdating = false;
-                Cursor.Current = Cursors.Default;
-            }
-        }, items => items?.Count > 1);
+                        var mergeItems = new MetadataObjects();
+
+                        mergeItems.AddMissing(items.ToList().Cast<MetadataObject>());
+
+                        var viewModel = new MergeDialogViewModel(mergeItems);
+
+                        var mergeView = new MergeDialogView();
+
+                        var window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesEditorMerge"));
+                        window.Content = mergeView;
+                        window.DataContext = viewModel;
+
+                        if (!(window.ShowDialog() ?? false))
+                        {
+                            return;
+                        }
+
+                        RemoveItems(mergeItems);
+
+                        LoadRelatedGames();
+                    }
+                    catch (Exception exception)
+                    {
+                        Log.Error(exception, "Error during initializing merge dialog", true);
+                    }
+                    finally
+                    {
+                        ControlCenter.Instance.IsUpdating = false;
+                        Cursor.Current = Cursors.Default;
+                    }
+                }, items => items?.Count > 1);
 
         public RelayCommand<IList<object>> MergeRenameCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -399,7 +419,8 @@ namespace MetadataUtilities.ViewModels
 
                 var itemsToMerge = new MetadataObjects();
 
-                // We clone the items, so we can add them to the merge rule while the originals get changed here.
+                // We clone the items, so we can add them to the merge rule while the originals get
+                // changed here.
                 itemsToMerge.AddMissing(items.ToList().Cast<MetadataObject>());
 
                 var mergeItems = itemsToMerge.DeepClone();
@@ -447,31 +468,6 @@ namespace MetadataUtilities.ViewModels
             }
         }, items => items?.Count > 0);
 
-        public void RemoveItems(MetadataObjects mergeItems)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-
-            using (MetadataViewSource.DeferRefresh())
-            {
-                foreach (var itemToRemove in mergeItems)
-                {
-                    if (!itemToRemove.ExistsInDb())
-                    {
-                        CompleteMetadata.Remove(itemToRemove, true);
-                    }
-                    else
-                    {
-                        itemToRemove.GetGameCount();
-
-                        CompleteMetadata.GetSibling(itemToRemove)?.GetGameCount();
-                    }
-                }
-
-                UpdateGroupDisplay();
-                CalculateItemCount();
-            }
-        }
-
         public CollectionViewSource MetadataViewSource
         {
             get => _metadataViewSource;
@@ -484,23 +480,6 @@ namespace MetadataUtilities.ViewModels
             ? Visibility.Visible
             : Visibility.Collapsed;
 
-        public RelayCommand<IList<object>> LoadGameCommand => new RelayCommand<IList<object>>(items =>
-        {
-            if (SelectedItems == null || SelectedItems.Count == 0)
-            {
-                return;
-            }
-
-            var game = items.Cast<MyGame>().Select(x => x.Game).First();
-
-            if (game == null)
-            {
-                return;
-            }
-
-            API.Instance.MainView.SelectGame(game.Id);
-        }, items => items != null && items.Count > 0);
-
         public RelayCommand<IList<object>> RemoveGamesCommand => new RelayCommand<IList<object>>(items =>
         {
             Cursor.Current = Cursors.WaitCursor;
@@ -512,7 +491,7 @@ namespace MetadataUtilities.ViewModels
                     return;
                 }
 
-                var games = items.Cast<MyGame>().Select(x => x.Game).ToList();
+                var games = items.Cast<GameExMeta>().Select(x => x.Game).ToList();
 
                 if (games.Count == 0)
                 {
@@ -738,6 +717,46 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
+        public void AddGamesAction(List<GameEx> gamesEx)
+        {
+            if (SelectedItems == null || SelectedItems.Count == 0)
+            {
+                return;
+            }
+
+            Cursor.Current = Cursors.WaitCursor;
+
+            try
+            {
+                if (gamesEx.Count == 0)
+                {
+                    return;
+                }
+
+                var gamesAffected = new List<Game>();
+
+                foreach (var game in gamesEx.Select(x => x.Game).ToList()
+                             .Select(game => new
+                             {
+                                 game,
+                                 mustUpdate =
+                                     SelectedItems.Aggregate(false,
+                                         (current, item) => current | item.AddToGame(game))
+                             })
+                             .Where(t => t.mustUpdate)
+                             .Select(t => t.game))
+                {
+                    gamesAffected.AddMissing(game);
+                }
+
+                ControlCenter.UpdateGames(gamesAffected);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
         public void CalculateItemCount()
         {
             if (FilterTypes == null)
@@ -748,6 +767,31 @@ namespace MetadataUtilities.ViewModels
             foreach (var type in FilterTypes)
             {
                 type.UpdateCount();
+            }
+        }
+
+        public void RemoveItems(MetadataObjects mergeItems)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+
+            using (MetadataViewSource.DeferRefresh())
+            {
+                foreach (var itemToRemove in mergeItems)
+                {
+                    if (!itemToRemove.ExistsInDb())
+                    {
+                        CompleteMetadata.Remove(itemToRemove, true);
+                    }
+                    else
+                    {
+                        itemToRemove.GetGameCount();
+
+                        CompleteMetadata.GetSibling(itemToRemove)?.GetGameCount();
+                    }
+                }
+
+                UpdateGroupDisplay();
+                CalculateItemCount();
             }
         }
 
@@ -793,7 +837,7 @@ namespace MetadataUtilities.ViewModels
 
                     if (addGame)
                     {
-                        Games.Add(new MyGame
+                        Games.Add(new GameExMeta
                         {
                             Game = game,
                             Platforms = string.Join(", ",
@@ -833,13 +877,16 @@ namespace MetadataUtilities.ViewModels
                 {
                     case MessageBoxResult.Cancel:
                         return false;
+
                     case MessageBoxResult.Yes:
                         renameOther = true;
 
                         break;
+
                     case MessageBoxResult.No:
                         splitCompany = true;
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -854,6 +901,7 @@ namespace MetadataUtilities.ViewModels
                         item.TypeLabel));
 
                     return false;
+
                 case DbInteractionResult.Updated:
                     {
                         // We simply rename the object in the editor, since its original was already renamed.
@@ -870,7 +918,8 @@ namespace MetadataUtilities.ViewModels
 
                             RefreshView();
                         }
-                        // If the other company type's name is supposed to stay the same, we create a new one with the old name and change all games to it.
+                        // If the other company type's name is supposed to stay the same, we create
+                        // a new one with the old name and change all games to it.
                         else if (splitCompany && (otherType is IEditableObjectType objectType))
                         {
                             var newId = objectType.AddDbObject(oldName);
@@ -882,8 +931,9 @@ namespace MetadataUtilities.ViewModels
 
                             ControlCenter.UpdateGames(gamesAffected.ToList());
 
-                            // We now have the renamed company and the other type with the old name still. We need to remove the other
-                            // and add three new ones: A renamed other type and a developer and publisher with the old name.
+                            // We now have the renamed company and the other type with the old name
+                            // still. We need to remove the other and add three new ones: A renamed
+                            // other type and a developer and publisher with the old name.
 
                             AddNewItem(item.Type, oldName, newId);
 
@@ -912,8 +962,8 @@ namespace MetadataUtilities.ViewModels
 
         private void PrepareFilterTypes()
         {
-            // We copy the settings, so we won't overwrite them when closing the window
-            // without using the close command
+            // We copy the settings, so we won't overwrite them when closing the window without
+            // using the close command
             _filterTypes = _settings.TypeConfigs.Where(x => x.Selected)
                 .Select(x => new FilterType() { Selected = false, Type = x.Type }).OrderBy(x => x.Label).ToObservable();
 

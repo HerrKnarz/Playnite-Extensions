@@ -22,7 +22,7 @@ namespace MetadataUtilities.Actions
 
         public static AfterGameUpdateAction Instance() => _instance ?? (_instance = new AfterGameUpdateAction());
 
-        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(GameExMeta game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (Settings.WriteDebugLog)
             {

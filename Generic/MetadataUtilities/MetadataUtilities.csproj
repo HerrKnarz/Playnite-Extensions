@@ -69,6 +69,19 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Enum\DbInteractionResult.cs">
       <Link>Shared\DbInteractionResult.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\GameEx.cs">
+      <Link>Shared\GamesCommon\GameEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\IGameSearchSettings.cs">
+      <Link>Shared\GamesCommon\IGameSearchSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\SearchGameView.xaml.cs">
+      <Link>Shared\GamesCommon\SearchGameView.xaml.cs</Link>
+      <DependentUpon>SearchGameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\SearchGameViewModel.cs">
+      <Link>Shared\GamesCommon\SearchGameViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>
@@ -296,7 +309,7 @@
     <Compile Include="Models\MergeRules.cs" />
     <Compile Include="Models\MetadataObject.cs" />
     <Compile Include="Models\MetadataObjects.cs" />
-    <Compile Include="Models\MyGame.cs" />
+    <Compile Include="Models\GameExMeta.cs" />
     <Compile Include="Models\PrefixItemList.cs" />
     <Compile Include="Models\QuickAddObject.cs" />
     <Compile Include="Models\TypeConfig.cs" />
@@ -309,7 +322,6 @@
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\MergeRuleEditorViewModel.cs" />
     <Compile Include="ViewModels\PrefixItemControlViewModel.cs" />
-    <Compile Include="ViewModels\SearchGameViewModel.cs" />
     <Compile Include="ViewModels\SelectDateViewModel.cs" />
     <Compile Include="ViewModels\SelectIntViewModel.cs" />
     <Compile Include="Views\ConditionalActionEditorView.xaml.cs">
@@ -317,9 +329,6 @@
     </Compile>
     <Compile Include="Views\CopyMetadataView.xaml.cs">
       <DependentUpon>CopyMetadataView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SearchGameView.xaml.cs">
-      <DependentUpon>SearchGameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Settings.cs" />
     <Compile Include="ViewModels\MetadataEditorViewModel.cs" />
@@ -364,6 +373,11 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\SearchGameView.xaml">
+      <Link>Shared\GamesCommon\SearchGameView.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Views\SelectMetadataView.xaml">
       <Link>Shared\MetadataCommon\Views\SelectMetadataView.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
@@ -378,10 +392,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CopyMetadataView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SearchGameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

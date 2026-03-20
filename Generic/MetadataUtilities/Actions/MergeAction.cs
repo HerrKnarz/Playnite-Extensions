@@ -25,7 +25,7 @@ namespace MetadataUtilities.Actions
 
         public static MergeAction Instance() => _instance ?? (_instance = new MergeAction());
 
-        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None,
+        public override bool Execute(GameExMeta game, ActionModifierType actionModifier = ActionModifierType.None,
             object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))

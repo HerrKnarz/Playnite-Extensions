@@ -120,7 +120,7 @@ namespace MetadataUtilities
                   !new HashSet<Guid>(item.OldData.TagIds).SetEquals(item.NewData.TagIds))))
                 .Select(item => item.NewData.Id).Distinct().ToHashSet();
 
-            var myGames = args.UpdatedItems.Select(x => new MyGame()
+            var myGames = args.UpdatedItems.Select(x => new GameExMeta()
             {
                 Game = x.NewData,
                 ExecuteConditionalActions = true,
@@ -148,7 +148,7 @@ namespace MetadataUtilities
             var conditionalSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsTabConditionalActions");
             var menuItems = new List<GameMenuItem>();
             var games = args.Games.Distinct().ToList();
-            var myGames = games.Select(x => new MyGame() { Game = x }).ToList();
+            var myGames = games.Select(x => new GameExMeta() { Game = x }).ToList();
 
             if (Settings.Settings.ShowUserScoreMenu)
             {
@@ -405,7 +405,7 @@ namespace MetadataUtilities
                 return menuItems;
             }
 
-            var myGames = games.Select(x => new MyGame() { Game = x }).ToList();
+            var myGames = games.Select(x => new GameExMeta() { Game = x }).ToList();
 
             // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var dbObject in dbObjects
