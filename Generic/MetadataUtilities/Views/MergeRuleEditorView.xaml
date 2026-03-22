@@ -6,18 +6,16 @@
              xmlns:metadataUtilities="clr-namespace:MetadataUtilities"
              d:DataContext="{d:DesignInstance Type=viewModels:MergeRuleEditorViewModel}"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:helper="clr-namespace:KNARZhelper.Enum"
+             xmlns:helper="clr-namespace:KNARZhelper.MetadataCommon.Enum"
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              xmlns:local="clr-namespace:MetadataUtilities.Models"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="PrefixesFilter" Source="{Binding Prefixes}" />
+        <CollectionViewSource x:Key="PrefixesFilter"
+                              Source="{Binding Prefixes}" />
         <metadataUtilities:FieldTypeConverter x:Key="FieldTypeConverter" />
-        <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="TextAlignment" Value="Right" />
-        </Style>
         <ObjectDataProvider MethodName="GetValues"
                             ObjectType="{x:Type sys:Enum}"
                             x:Key="FieldTypeValues">
@@ -26,16 +24,45 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
-    <DockPanel FocusManager.FocusedElement="{Binding ElementName=SearchBox}">
-        <Border DockPanel.Dock="Top" BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,0,0,0" />
-        <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource WindowPanelSeparatorBrush}" BorderThickness="0,1,0,0" Margin="0,10,0,0">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                <Button Content="{DynamicResource LOCSaveLabel}" Command="{Binding SaveCommand}" Style="{StaticResource BottomButton}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" IsDefault="True" />
-                <Button Content="{DynamicResource LOCCancelLabel}" Style="{StaticResource BottomButton}" IsCancel="True" />
+    <DockPanel FocusManager.FocusedElement="{Binding ElementName=SearchBox}"
+               d:Background="AliceBlue">
+        <DockPanel.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="/MetadataUtilities;component/Shared/Controls/CommonStyles.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </DockPanel.Resources>
+
+        <Border DockPanel.Dock="Top"
+                BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
+                d:BorderBrush="{DynamicResource KNARZDummyBrush}"
+                BorderThickness="0,1,0,0"
+                Margin="0,0,0,0" />
+        <Border DockPanel.Dock="Bottom"
+                BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
+                d:BorderBrush="{DynamicResource KNARZDummyBrush}"
+                BorderThickness="0,1,0,0"
+                Margin="0,10,0,0">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="10">
+                <Button Content="{DynamicResource LOCSaveLabel}"
+                        d:Content="Save"
+                        Command="{Binding SaveCommand}"
+                        Style="{StaticResource BottomButton}"
+                        d:Style="{StaticResource KNARZBottomButton}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                        IsDefault="True" />
+                <Button Content="{DynamicResource LOCCancelLabel}"
+                        d:Content="Cancel"
+                        Style="{StaticResource BottomButton}"
+                        d:Style="{StaticResource KNARZBottomButton}"
+                        IsCancel="True" />
             </StackPanel>
         </Border>
-        <Grid DockPanel.Dock="Top" Margin="10,10, 10, 0">
+        <Grid DockPanel.Dock="Top"
+              Margin="10,10, 10, 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" />
                 <ColumnDefinition Width="*" />
@@ -44,74 +71,129 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <DockPanel LastChildFill="False" Margin="0, 0, 10, 0">
-                <GroupBox DockPanel.Dock="Top" Header="{DynamicResource LOCMetadataUtilitiesEditorRuleTarget}"
-                          HorizontalAlignment="Stretch" Padding="10" Margin="0, 0, 0, 10">
-                    <StackPanel Margin="0,5,0,0" HorizontalAlignment="Stretch">
+            <DockPanel LastChildFill="False"
+                       Margin="0, 0, 10, 0">
+                <GroupBox DockPanel.Dock="Top"
+                          Header="{DynamicResource LOCMetadataUtilitiesEditorRuleTarget}"
+                          d:Header="Rule target"
+                          HorizontalAlignment="Stretch"
+                          Padding="10"
+                          Margin="0, 0, 0, 10">
+                    <StackPanel Margin="0,5,0,0"
+                                HorizontalAlignment="Stretch">
                         <ComboBox SelectedValue="{Binding RuleType}"
                                   ItemsSource="{Binding FieldValuePairs}"
-                                  SelectedValuePath="Key" DisplayMemberPath="Value" />
-                        <TextBox Text="{Binding RuleName, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" />
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value" />
+                        <TextBox Text="{Binding RuleName, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,10,0,0" />
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox DockPanel.Dock="Top" Header="{DynamicResource LOCFilter}"  HorizontalAlignment="Stretch" Padding="10">
-                    <StackPanel Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <GroupBox DockPanel.Dock="Top"
+                          Header="{DynamicResource LOCFilter}"
+                          d:Header="Filter"
+                          HorizontalAlignment="Stretch"
+                          Padding="10">
+                    <StackPanel Margin="0,5,0,0"
+                                HorizontalAlignment="Stretch">
                         <DockPanel VerticalAlignment="Center">
-                            <Button Content="&#xef00;" FontFamily="{DynamicResource FontIcoFont}" Click="ClearSearchBox" DockPanel.Dock="Right"
-                                    Margin="5,0,0,0" Padding="5,5,8,5" />
-                            <TextBox Name="SearchBox" DockPanel.Dock="Left"  Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
+                            <Button Content="&#xef00;"
+                                    Style="{DynamicResource KNARZIconButton}"
+                                    Click="ClearSearchBox"
+                                    DockPanel.Dock="Right"
+                                    Margin="5,0,0,0"
+                                    Padding="5,5,8,5" />
+                            <TextBox Name="SearchBox"
+                                     DockPanel.Dock="Left"
+                                     Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
                         </DockPanel>
-                        <DockPanel VerticalAlignment="Center" Margin="0,10,0,0" Visibility="{Binding PrefixVisibility}">
-                            <Label Content="{DynamicResource LOCMetadataUtilitiesPrefixLabel}" DockPanel.Dock="Right" Margin="10,0,0,0" />
-                            <ComboBox Name="PrefixFilterBox" DockPanel.Dock="Left" ItemsSource="{Binding Source={StaticResource PrefixesFilter}}"
+                        <DockPanel VerticalAlignment="Center"
+                                   Margin="0,10,0,0"
+                                   Visibility="{Binding PrefixVisibility}">
+                            <Label Content="{DynamicResource LOCMetadataUtilitiesPrefixLabel}"
+                                   d:Content="Prefix"
+                                   DockPanel.Dock="Right"
+                                   Margin="10,0,0,0" />
+                            <ComboBox Name="PrefixFilterBox"
+                                      DockPanel.Dock="Left"
+                                      ItemsSource="{Binding Source={StaticResource PrefixesFilter}}"
                                       SelectedItem="{Binding FilterPrefix, UpdateSourceTrigger=PropertyChanged}" />
                         </DockPanel>
 
                         <ItemsControl ItemsSource="{Binding FilterTypes}">
                             <ItemsControl.Resources>
                                 <DataTemplate DataType="{x:Type local:FilterType}">
-                                    <CheckBox IsChecked="{Binding Selected}" Content="{Binding Label}" Margin="0,10,0,0" />
+                                    <CheckBox IsChecked="{Binding Selected}"
+                                              Content="{Binding Label}"
+                                              Margin="0,10,0,0" />
                                 </DataTemplate>
                             </ItemsControl.Resources>
                         </ItemsControl>
 
-                        <CheckBox IsChecked="{Binding FilterSelected}" Content="{DynamicResource LOCMetadataUtilitiesEditorFilterSelected}"
+                        <CheckBox IsChecked="{Binding FilterSelected}"
+                                  Content="{DynamicResource LOCMetadataUtilitiesEditorFilterSelected}"
+                                  d:Content="Filter selected"
                                   Margin="0,20,0,0" />
                     </StackPanel>
                 </GroupBox>
             </DockPanel>
-            <DockPanel Margin="0,0,0,10" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0">
-                <FrameworkElement x:Name="DummyElement" Visibility="Collapsed" />
-                <DataGrid Name="MetadataGrid" ItemsSource="{Binding MetadataViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top"
-                          CanUserAddRows="False" HeadersVisibility="Column" ColumnWidth="*" CanUserSortColumns="True"
-                          SelectionMode="Single" EnableRowVirtualization="True">
+            <DockPanel Margin="0,0,0,10"
+                       HorizontalAlignment="Stretch"
+                       Grid.Column="1"
+                       Grid.Row="0">
+                <FrameworkElement x:Name="DummyElement"
+                                  Visibility="Collapsed" />
+                <DataGrid Name="MetadataGrid"
+                          ItemsSource="{Binding MetadataViewSource.View}"
+                          AutoGenerateColumns="False"
+                          DockPanel.Dock="Top"
+                          CanUserAddRows="False"
+                          HeadersVisibility="Column"
+                          ColumnWidth="*"
+                          CanUserSortColumns="True"
+                          SelectionMode="Single"
+                          EnableRowVirtualization="True">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Width="SizeToCells" CanUserSort="False">
+                        <DataGridTemplateColumn Width="SizeToCells"
+                                                CanUserSort="False">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="&#xedea;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{Binding SetAsTargetCommand}"
+                                    <Button Content="&#xedea;"
+                                            Style="{StaticResource KNARZIconButton}"
+                                            ToolTip="{Binding SetAsTargetCommand}"
                                             Command="{Binding DataContext.SetAsTargetCommand, Source={x:Reference DummyElement}}"
                                             CommandParameter="{Binding SelectedItem, ElementName=MetadataGrid}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn SortDirection="Ascending" Header="{DynamicResource LOCNameLabel}" SortMemberPath="TypeAndName">
+                        <DataGridTemplateColumn SortDirection="Ascending"
+                                                Header="{DynamicResource LOCNameLabel}"
+                                                d:Header="Name"
+                                                SortMemberPath="TypeAndName">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Content="{Binding TypeAndName}" />
+                                    <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}"
+                                              Content="{Binding TypeAndName}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Header="{DynamicResource LOCMetadataUtilitiesEditorGameCount}"
+                                            d:Header="Game count"
                                             ElementStyle="{StaticResource RightCell}"
                                             Binding="{Binding GameCount, UpdateSourceTrigger=PropertyChanged}"
-                                            IsReadOnly="True" Width="SizeToHeader" />
+                                            IsReadOnly="True"
+                                            Width="SizeToHeader" />
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
-            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        Margin="0,0,0,10">
                 <Button Content="{DynamicResource LOCAddNewItem}"
+                        d:Content="Add new item"
                         Command="{Binding AddNewCommand}" />
             </StackPanel>
         </Grid>

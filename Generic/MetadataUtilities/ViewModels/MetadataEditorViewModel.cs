@@ -119,7 +119,7 @@ namespace MetadataUtilities.ViewModels
                 return;
             }
 
-            var viewModel = new SearchGameViewModel(ControlCenter.Instance.Settings, AddGamesAction);
+            var viewModel = new SearchGameViewModel(ControlCenter.Instance.Settings, AddGamesAction, true, ResourceProvider.GetString("LOCCloseLabel"));
 
             var searchGameView = new SearchGameView();
 

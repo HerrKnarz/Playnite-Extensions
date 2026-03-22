@@ -6,24 +6,38 @@
              d:DataContext="{d:DesignInstance Type=viewModels:SelectIntViewModel}"
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="250" d:DesignWidth="400">
+             d:DesignHeight="120"
+             d:DesignWidth="400">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <d:ResourceDictionary Source="/MetadataUtilities;component/Localization/en_US.xaml" />
+                <ResourceDictionary Source="/MetadataUtilities;component/Shared/Controls/CommonStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=DateValue}">
+    <DockPanel Margin="15"
+               d:Background="AliceBlue"
+               FocusManager.FocusedElement="{Binding ElementName=DateValue}">
         <DockPanel DockPanel.Dock="Top">
-            <DatePicker Name="DateValue" SelectedDate="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+            <DatePicker Name="DateValue"
+                        SelectedDate="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,15,0,0" HorizontalAlignment="Center">
-            <Button Content="{DynamicResource LOCOKLabel}" IsDefault="True"
-                    Style="{StaticResource BottomButton}" Command="{Binding OkCommand}"
+        <StackPanel DockPanel.Dock="Bottom"
+                    Orientation="Horizontal"
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Center">
+            <Button Content="{DynamicResource LOCOKLabel}"
+                    d:Content="OK"
+                    IsDefault="True"
+                    Style="{StaticResource BottomButton}"
+                    d:Style="{StaticResource KNARZBottomButton}"
+                    Command="{Binding OkCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-            <Button Content="{DynamicResource LOCCancelLabel}" IsCancel="True"
-                    Style="{StaticResource BottomButton}" />
+            <Button Content="{DynamicResource LOCCancelLabel}"
+                    d:Content="Cancel"
+                    IsCancel="True"
+                    Style="{StaticResource BottomButton}"
+                    d:Style="{StaticResource KNARZBottomButton}" />
         </StackPanel>
     </DockPanel>
 </UserControl>

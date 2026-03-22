@@ -373,6 +373,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\CommonStyles.xaml">
+      <Link>Shared\Controls\CommonStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\SearchGameView.xaml">
       <Link>Shared\GamesCommon\SearchGameView.xaml</Link>
       <Generator>MSBuild:Compile</Generator>

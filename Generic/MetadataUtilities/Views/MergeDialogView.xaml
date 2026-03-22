@@ -6,18 +6,28 @@
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:MergeDialogViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="150"
+             d:DesignWidth="420">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <d:ResourceDictionary Source="/MetadataUtilities;component/Localization/en_US.xaml" />
+                <ResourceDictionary Source="/MetadataUtilities;component/Shared/Controls/CommonStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=CB}">
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
-            <Label Content="{DynamicResource LOCMetadataUtilitiesDialogMergeAs}" />
-            <ComboBox Name="CB" Margin="10,0,0,0" ItemsSource="{Binding MetadataObjects}" SelectedItem="{Binding MergeTarget}" Width="300">
+    <DockPanel Margin="15"
+               d:Background="AliceBlue"
+               FocusManager.FocusedElement="{Binding ElementName=CB}">
+        <StackPanel Orientation="Horizontal"
+                    DockPanel.Dock="Top"
+                    HorizontalAlignment="Left">
+            <Label Content="{DynamicResource LOCMetadataUtilitiesDialogMergeAs}"
+                   d:Content="Merge as" />
+            <ComboBox Name="CB"
+                      Margin="10,0,0,0"
+                      ItemsSource="{Binding MetadataObjects}"
+                      SelectedItem="{Binding MergeTarget}"
+                      Width="300">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -27,13 +37,27 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding SaveAsRule}" Content="{DynamicResource LOCMetadataUtilitiesDialogSaveAsRule}" Margin="0,10,0,0" />
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0" HorizontalAlignment="Center">
-            <Button Content="{DynamicResource LOCOKLabel}" Style="{StaticResource BottomButton}"
+        <CheckBox DockPanel.Dock="Top"
+                  IsChecked="{Binding SaveAsRule}"
+                  Content="{DynamicResource LOCMetadataUtilitiesDialogSaveAsRule}"
+                  d:Content="Save as rule"
+                  Margin="0,10,0,0" />
+        <StackPanel Orientation="Horizontal"
+                    DockPanel.Dock="Bottom"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center">
+            <Button Content="{DynamicResource LOCOKLabel}"
+                    d:Content="OK"
+                    Style="{StaticResource BottomButton}"
+                    d:Style="{StaticResource KNARZBottomButton}"
                     Command="{Binding OkCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-            <Button Content="{DynamicResource LOCCancelLabel}" Style="{StaticResource BottomButton}"
-                    Command="{Binding CancelCommand}" IsCancel="True" />
+            <Button Content="{DynamicResource LOCCancelLabel}"
+                    d:Content="Cancel"
+                    Style="{StaticResource BottomButton}"
+                    d:Style="{StaticResource KNARZBottomButton}"
+                    Command="{Binding CancelCommand}"
+                    IsCancel="True" />
         </StackPanel>
     </DockPanel>
 </UserControl>

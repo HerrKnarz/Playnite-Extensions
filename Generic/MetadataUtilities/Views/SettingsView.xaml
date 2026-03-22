@@ -6,72 +6,106 @@
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="600">
+             d:DesignHeight="400"
+             d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ContextMenu x:Key="WhitelistContextMenu" ItemsSource="{Binding FieldTypeButtons}">
+            <ContextMenu x:Key="WhitelistContextMenu"
+                         ItemsSource="{Binding FieldTypeButtons}">
                 <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header" Value="{Binding Name}" />
-                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddUnusedCommand}" />
-                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    <Style TargetType="MenuItem"
+                           BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header"
+                                Value="{Binding Name}" />
+                        <Setter Property="Command"
+                                Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddUnusedCommand}" />
+                        <Setter Property="CommandParameter"
+                                Value="{Binding FieldType}" />
                     </Style>
                 </ContextMenu.ItemContainerStyle>
             </ContextMenu>
-            <ContextMenu x:Key="QuickAddContextMenu" ItemsSource="{Binding FieldTypeButtonsExtended}">
+            <ContextMenu x:Key="QuickAddContextMenu"
+                         ItemsSource="{Binding FieldTypeButtonsExtended}">
                 <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header" Value="{Binding Name}" />
-                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddQuickAddCommand}" />
-                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    <Style TargetType="MenuItem"
+                           BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header"
+                                Value="{Binding Name}" />
+                        <Setter Property="Command"
+                                Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddQuickAddCommand}" />
+                        <Setter Property="CommandParameter"
+                                Value="{Binding FieldType}" />
                     </Style>
                 </ContextMenu.ItemContainerStyle>
             </ContextMenu>
-            <ContextMenu x:Key="UnwantedContextMenu" ItemsSource="{Binding FieldTypeButtonsUnwanted}">
+            <ContextMenu x:Key="UnwantedContextMenu"
+                         ItemsSource="{Binding FieldTypeButtonsUnwanted}">
                 <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header" Value="{Binding Name}" />
-                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddUnwantedCommand}" />
-                        <Setter Property="CommandParameter" Value="{Binding FieldType}" />
+                    <Style TargetType="MenuItem"
+                           BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Header"
+                                Value="{Binding Name}" />
+                        <Setter Property="Command"
+                                Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=DataContext.AddUnwantedCommand}" />
+                        <Setter Property="CommandParameter"
+                                Value="{Binding FieldType}" />
                     </Style>
                 </ContextMenu.ItemContainerStyle>
             </ContextMenu>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/MetadataUtilities;component/Shared/Controls/CommonStyles.xaml" />
                 <d:ResourceDictionary Source="/MetadataUtilities;component/Localization/en_US.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
+    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabGeneral}">
             <ScrollViewer>
-                <DockPanel Margin="10" LastChildFill="False">
+                <DockPanel Margin="10"
+                           LastChildFill="False">
                     <StackPanel DockPanel.Dock="Top">
-                        <CheckBox IsChecked="{Binding Settings.ShowTopPanelButton}" Margin="0,0,0,0"
+                        <CheckBox IsChecked="{Binding Settings.ShowTopPanelButton}"
+                                  Margin="0,0,0,0"
                                   Content="{DynamicResource LOCMetadataUtilitiesSettingsShowTopPanelButton}"
                                   Command="{Binding RestartRequired}"
                                   CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
-                        <CheckBox IsChecked="{Binding Settings.ShowTopPanelSettingsButton}" Margin="0,10,0,0"
+                        <CheckBox IsChecked="{Binding Settings.ShowTopPanelSettingsButton}"
+                                  Margin="0,10,0,0"
                                   Content="{DynamicResource LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton}"
                                   Command="{Binding RestartRequired}"
                                   CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
-                        <CheckBox IsChecked="{Binding Settings.ShowUserScoreMenu}" Margin="0,10,0,0"
+                        <CheckBox IsChecked="{Binding Settings.ShowUserScoreMenu}"
+                                  Margin="0,10,0,0"
                                   Content="{DynamicResource LOCMetadataUtilitiesSettingsShowUserScoreMenu}" />
-                        <CheckBox IsChecked="{Binding Settings.IgnoreHiddenGamesInGameCount}" Margin="0,10,0,0"
-                              Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount}" />
-                        <CheckBox IsChecked="{Binding Settings.WriteDebugLog}" Margin="0,10,0,0"
-                              Content="{DynamicResource LOCMetadataUtilitiesSettingsWriteDebugLog}" />
-                        <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsColumnsInGameGrid}" Padding="10" DockPanel.Dock="Top"
+                        <CheckBox IsChecked="{Binding Settings.IgnoreHiddenGamesInGameCount}"
+                                  Margin="0,10,0,0"
+                                  Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount}" />
+                        <CheckBox IsChecked="{Binding Settings.WriteDebugLog}"
+                                  Margin="0,10,0,0"
+                                  Content="{DynamicResource LOCMetadataUtilitiesSettingsWriteDebugLog}" />
+                        <GroupBox Header="{DynamicResource LOCMetadataUtilitiesSettingsColumnsInGameGrid}"
+                                  Padding="10"
+                                  DockPanel.Dock="Top"
                                   Margin="0,10,0,0">
                             <StackPanel>
-                                <CheckBox IsChecked="{Binding Settings.GameGridShowCompletionStatus}" Margin="0,0,0,0"
-                                          Content="{DynamicResource LOCCompletionStatus}" />
-                                <CheckBox IsChecked="{Binding Settings.GameGridShowHidden}" Margin="0,10,0,0"
-                                          Content="{DynamicResource LOCGameHiddenTitle}" />
-                                <CheckBox IsChecked="{Binding Settings.GameGridShowPlatform}" Margin="0,10,0,0"
-                                          Content="{DynamicResource LOCPlatformsTitle}" />
-                                <CheckBox IsChecked="{Binding Settings.GameGridShowReleaseYear}" Margin="0,10,0,0"
-                                      Content="{DynamicResource LOCGameReleaseYearTitle}" />
+                                <CheckBox IsChecked="{Binding Settings.GameGridShowCompletionStatus}"
+                                          Margin="0,0,0,0"
+                                          Content="{DynamicResource LOCCompletionStatus}"
+                                          d:Content="Completion Status" />
+                                <CheckBox IsChecked="{Binding Settings.GameGridShowHidden}"
+                                          Margin="0,10,0,0"
+                                          Content="{DynamicResource LOCGameHiddenTitle}"
+                                          d:Content="Hidden" />
+                                <CheckBox IsChecked="{Binding Settings.GameGridShowPlatform}"
+                                          Margin="0,10,0,0"
+                                          Content="{DynamicResource LOCPlatformsTitle}"
+                                          d:Content="Platform" />
+                                <CheckBox IsChecked="{Binding Settings.GameGridShowReleaseYear}"
+                                          Margin="0,10,0,0"
+                                          Content="{DynamicResource LOCGameReleaseYearTitle}"
+                                          d:Content="Release Year" />
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
@@ -80,19 +114,32 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabTypeConfig}">
             <Grid Margin="10">
-                <ListView Name="LvTypeConfig" DockPanel.Dock="Top" ItemsSource="{Binding Settings.TypeConfigs}" HorizontalContentAlignment="Stretch"
-                          VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView Name="LvTypeConfig"
+                          DockPanel.Dock="Top"
+                          ItemsSource="{Binding Settings.TypeConfigs}"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+                          VerticalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCNameLabel}"
-                                DisplayMemberBinding="{Binding Label}" />
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCSettingsLabel}">
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCNameLabel}"
+                                            d:Header="Name"
+                                            DisplayMemberBinding="{Binding Label}" />
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCSettingsLabel}"
+                                            d:Header="Settings">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Margin="0,5">
-                                            <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsShowInEditor}" Margin="0,0,0,3" />
-                                            <CheckBox IsChecked="{Binding RemoveUnusedItems, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}" Margin="0,0,0,3" />
-                                            <CheckBox IsChecked="{Binding HiddenAsUnused, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}" />
+                                            <CheckBox IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}"
+                                                      Content="{DynamicResource LOCMetadataUtilitiesSettingsShowInEditor}"
+                                                      Margin="0,0,0,3" />
+                                            <CheckBox IsChecked="{Binding RemoveUnusedItems, UpdateSourceTrigger=PropertyChanged}"
+                                                      Content="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup}"
+                                                      Margin="0,0,0,3" />
+                                            <CheckBox IsChecked="{Binding HiddenAsUnused, UpdateSourceTrigger=PropertyChanged}"
+                                                      Content="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -110,20 +157,34 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <DockPanel>
-                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.AlwaysSaveManualMergeRules}">
-                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules}" TextWrapping="Wrap" />
+                        <CheckBox DockPanel.Dock="Top"
+                                  IsChecked="{Binding Settings.AlwaysSaveManualMergeRules}">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules}"
+                                       TextWrapping="Wrap" />
                         </CheckBox>
-                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.MergeMetadataOnMetadataUpdate}" Margin="0,10,0,0">
-                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate}" TextWrapping="Wrap" />
+                        <CheckBox DockPanel.Dock="Top"
+                                  IsChecked="{Binding Settings.MergeMetadataOnMetadataUpdate}"
+                                  Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate}"
+                                       TextWrapping="Wrap" />
                         </CheckBox>
-                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameMergeRules}" Margin="0,10,0,0">
-                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameMergeRules}" TextWrapping="Wrap" />
+                        <CheckBox DockPanel.Dock="Top"
+                                  IsChecked="{Binding Settings.RenameMergeRules}"
+                                  Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameMergeRules}"
+                                       TextWrapping="Wrap" />
                         </CheckBox>
                     </DockPanel>
-                    <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
-                            Command="{Binding HelpMergingCommand}" Margin="10,0,0,0" ToolTip="{DynamicResource LOCMenuHelpTitle}" />
+                    <Button Content="&#xEFCA;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            Grid.Column="1"
+                            VerticalAlignment="Top"
+                            Command="{Binding HelpMergingCommand}"
+                            Margin="10,0,0,0"
+                            ToolTip="{DynamicResource LOCMenuHelpTitle}" />
                 </Grid>
-                <Grid DockPanel.Dock="Top" Margin="0,20,0,0">
+                <Grid DockPanel.Dock="Top"
+                      Margin="0,20,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -132,60 +193,133 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <DockPanel Margin="0,0,5,0" VerticalAlignment="Stretch">
-                        <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsMergeRules}" Margin="0,0,0,5" />
-                        <DockPanel VerticalAlignment="Center" DockPanel.Dock="Top" Margin="0,10,0,0">
-                            <Button Content="&#xef00;" FontFamily="{DynamicResource FontIcoFont}" Click="ClearSearchBox" DockPanel.Dock="Right"
-                                    Margin="5,0,0,0" Padding="5,5,8,5" />
-                            <TextBox Name="SearchBox" DockPanel.Dock="Left"  Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
+                    <DockPanel Margin="0,0,5,0"
+                               VerticalAlignment="Stretch">
+                        <Label DockPanel.Dock="Top"
+                               Content="{DynamicResource LOCMetadataUtilitiesSettingsMergeRules}"
+                               Margin="0,0,0,5" />
+                        <DockPanel VerticalAlignment="Center"
+                                   DockPanel.Dock="Top"
+                                   Margin="0,10,0,0">
+                            <Button Content="&#xef00;"
+                                    Style="{DynamicResource KNARZIconButton}"
+                                    Click="ClearSearchBox"
+                                    DockPanel.Dock="Right"
+                                    Margin="5,0,0,0"
+                                    Padding="5,5,8,5" />
+                            <TextBox Name="SearchBox"
+                                     DockPanel.Dock="Left"
+                                     Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
                         </DockPanel>
 
-                        <DataGrid Name="DgRules" ItemsSource="{Binding MergeRuleViewSource.View}" AutoGenerateColumns="False" DockPanel.Dock="Top"
-                                  Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column" SelectionMode="Single"
-                                  SelectedItem="{Binding SelectedMergeRule}" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                        <DataGrid Name="DgRules"
+                                  ItemsSource="{Binding MergeRuleViewSource.View}"
+                                  AutoGenerateColumns="False"
+                                  DockPanel.Dock="Top"
+                                  Margin="0,10,0,0"
+                                  CanUserAddRows="False"
+                                  HeadersVisibility="Column"
+                                  SelectionMode="Single"
+                                  SelectedItem="{Binding SelectedMergeRule}"
+                                  HorizontalContentAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
                                   ColumnWidth="*">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"
-                                                    SortDirection="Ascending" Width="SizeToCells" MinWidth="50" />
-                                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name}" MinWidth="100" IsReadOnly="True"
+                                <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"
+                                                    d:Header="Type"
+                                                    Binding="{Binding TypeLabel}"
+                                                    IsReadOnly="True"
+                                                    SortDirection="Ascending"
+                                                    Width="SizeToCells"
+                                                    MinWidth="50" />
+                                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}"
+                                                    d:Header="Name"
+                                                    Binding="{Binding Name}"
+                                                    MinWidth="100"
+                                                    IsReadOnly="True"
                                                     SortDirection="Ascending" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
 
-                    <StackPanel Margin="0,10,5,0" Grid.Column="0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
+                    <StackPanel Margin="0,10,5,0"
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Left">
+                        <Button Content="&#xec3e;"
+                                Style="{DynamicResource KNARZIconButton}"
+                                ToolTip="{DynamicResource LOCAddNewItem}"
                                 Command="{Binding AddNewMergeRuleCommand}" />
-                        <Button Content="&#xef10;" FontFamily="{DynamicResource FontIcoFont}" Margin="10,0,0,0"
-                                ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsEdit}" Command="{Binding EditMergeRuleCommand}"
+                        <Button Content="&#xef10;"
+                                Style="{DynamicResource KNARZIconButton}"
+                                Margin="10,0,0,0"
+                                ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsEdit}"
+                                Command="{Binding EditMergeRuleCommand}"
                                 CommandParameter="{Binding SelectedItem, ElementName=DgRules}" />
-                        <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
-                                Margin="10,0,0,0" Command="{Binding RemoveMergeRuleCommand}"
+                        <Button Content="&#xec53;"
+                                Style="{DynamicResource KNARZIconButton}"
+                                ToolTip="{DynamicResource LOCRemoveTitle}"
+                                Margin="10,0,0,0"
+                                Command="{Binding RemoveMergeRuleCommand}"
                                 CommandParameter="{Binding SelectedItem, ElementName=DgRules}" />
-                        <Button Content="{DynamicResource LOCMetadataUtilitiesEditorMerge}" Margin="10,0,0,0"
-                                Command="{Binding MergeItemsCommand}" CommandParameter="{Binding SelectedItem, ElementName=DgRules}" />
+                        <Button Content="{DynamicResource LOCMetadataUtilitiesEditorMerge}"
+                                Margin="10,0,0,0"
+                                Command="{Binding MergeItemsCommand}"
+                                CommandParameter="{Binding SelectedItem, ElementName=DgRules}" />
                     </StackPanel>
 
-                    <DockPanel Grid.Column="1" Grid.Row="0" Margin="5,0,0,0" VerticalAlignment="Stretch">
-                        <Label DockPanel.Dock="Top" Content="{DynamicResource LOCMetadataUtilitiesSettingsValuesToMerge}" Margin="0,0,0,5" />
-                        <DataGrid Name="DgSources" ItemsSource="{Binding SourceObjectsViewSource.View}" AutoGenerateColumns="False"
-                                DockPanel.Dock="Top" Margin="0,10,0,0" CanUserAddRows="False" HeadersVisibility="Column"
-                                HorizontalContentAlignment="Stretch"  VerticalAlignment="Stretch" ColumnWidth="*">
+                    <DockPanel Grid.Column="1"
+                               Grid.Row="0"
+                               Margin="5,0,0,0"
+                               VerticalAlignment="Stretch">
+                        <Label DockPanel.Dock="Top"
+                               Content="{DynamicResource LOCMetadataUtilitiesSettingsValuesToMerge}"
+                               Margin="0,0,0,5" />
+                        <DataGrid Name="DgSources"
+                                  ItemsSource="{Binding SourceObjectsViewSource.View}"
+                                  AutoGenerateColumns="False"
+                                  DockPanel.Dock="Top"
+                                  Margin="0,10,0,0"
+                                  CanUserAddRows="False"
+                                  HeadersVisibility="Column"
+                                  HorizontalContentAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  ColumnWidth="*">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"  Binding="{Binding TypeLabel}" IsReadOnly="True"
-                                                    SortDirection="Ascending" Width="SizeToCells" MinWidth="50" />
-                                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}" Binding="{Binding Name}" MinWidth="100" IsReadOnly="True"
+                                <DataGridTextColumn Header="{DynamicResource LOCTypeLabel}"
+                                                    d:Header="Type"
+                                                    Binding="{Binding TypeLabel}"
+                                                    IsReadOnly="True"
+                                                    SortDirection="Ascending"
+                                                    Width="SizeToCells"
+                                                    MinWidth="50" />
+                                <DataGridTextColumn Header="{DynamicResource LOCNameLabel}"
+                                                    d:Header="Name"
+                                                    Binding="{Binding Name}"
+                                                    MinWidth="100"
+                                                    IsReadOnly="True"
                                                     SortDirection="Ascending" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
 
-                    <StackPanel Margin="5,10,0,0"  Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
-                                Command="{Binding AddNewMergeSourceCommand}" CommandParameter="{Binding SelectedItem, ElementName=DgRules}" />
-                        <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
+                    <StackPanel Margin="5,10,0,0"
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Left">
+                        <Button Content="&#xec3e;"
+                                Style="{DynamicResource KNARZIconButton}"
+                                ToolTip="{DynamicResource LOCAddNewItem}"
+                                Command="{Binding AddNewMergeSourceCommand}"
+                                CommandParameter="{Binding SelectedItem, ElementName=DgRules}" />
+                        <Button Content="&#xec53;"
+                                Style="{DynamicResource KNARZIconButton}"
+                                ToolTip="{DynamicResource LOCRemoveTitle}"
                                 Margin="10,0,0,0"
-                                Command="{Binding RemoveMergeSourceCommand}" CommandParameter="{Binding SelectedItems, ElementName=DgSources}" />
+                                Command="{Binding RemoveMergeSourceCommand}"
+                                CommandParameter="{Binding SelectedItems, ElementName=DgSources}" />
                     </StackPanel>
                 </Grid>
             </DockPanel>
@@ -197,29 +331,56 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <CheckBox IsChecked="{Binding Settings.RenameConditionalActions}" VerticalAlignment="Top">
-                        <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameConditionalActions}" TextWrapping="Wrap" />
+                    <CheckBox IsChecked="{Binding Settings.RenameConditionalActions}"
+                              VerticalAlignment="Top">
+                        <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameConditionalActions}"
+                                   TextWrapping="Wrap" />
                     </CheckBox>
-                    <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
-                            Command="{Binding HelpConActionCommand}" Margin="10,0,0,0" ToolTip="{DynamicResource LOCMenuHelpTitle}" />
+                    <Button Content="&#xEFCA;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            Grid.Column="1"
+                            VerticalAlignment="Top"
+                            Command="{Binding HelpConActionCommand}"
+                            Margin="10,0,0,0"
+                            ToolTip="{DynamicResource LOCMenuHelpTitle}" />
                 </Grid>
-                <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
-                    <Button Content="&#xec3e;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
+                <DockPanel DockPanel.Dock="Bottom"
+                           Margin="0,10,0,0"
+                           LastChildFill="False">
+                    <Button Content="&#xec3e;"
+                            DockPanel.Dock="Left"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCAddNewItem}"
                             Command="{Binding AddConActionCommand}" />
-                    <Button Content="&#xec55;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsEdit}" Margin="10,0,0,0"
+                    <Button Content="&#xec55;"
+                            DockPanel.Dock="Left"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsEdit}"
+                            Margin="10,0,0,0"
                             Command="{Binding EditConActionCommand}"
                             CommandParameter="{Binding SelectedItem, ElementName=LvConAction}" />
-                    <Button Content="&#xec53;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}" Margin="10,0,0,0"
+                    <Button Content="&#xec53;"
+                            DockPanel.Dock="Left"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCRemoveTitle}"
+                            Margin="10,0,0,0"
                             Command="{Binding RemoveConActionCommand}"
                             CommandParameter="{Binding SelectedItems, ElementName=LvConAction}" />
                 </DockPanel>
-                <ListView Name="LvConAction" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0, 10, 0, 0"
-                          ItemsSource="{Binding Settings.ConditionalActions}" VerticalContentAlignment="Stretch">
+                <ListView Name="LvConAction"
+                          SelectionMode="Extended"
+                          DockPanel.Dock="Top"
+                          Margin="0, 10, 0, 0"
+                          ItemsSource="{Binding Settings.ConditionalActions}"
+                          VerticalContentAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCNameLabel}"
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCNameLabel}"
+                                            d:Header="Name"
                                             DisplayMemberBinding="{Binding Name}" />
-                            <GridViewColumn Width="50" Header="{DynamicResource LOCMetadataUtilitiesSettingsPosition}">
+                            <GridViewColumn Width="50"
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsPosition}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding SortNo, UpdateSourceTrigger=PropertyChanged}"
@@ -227,44 +388,54 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCTypeLabel}"
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCTypeLabel}"
+                                            d:Header="Type"
                                             DisplayMemberBinding="{Binding TypeString}" />
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCEnabledTitle}">
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCEnabledTitle}"
+                                            d:Header="Enabled">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Enabled, UpdateSourceTrigger=PropertyChanged}"
-                                                  Margin="0,0,-15,0" HorizontalAlignment="Center" />
+                                                  Style="{DynamicResource KNARZGridCheckBox}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsOnNewGame}">
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsOnNewGame}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding ExecuteOnNewBeforeMetadata, UpdateSourceTrigger=PropertyChanged}"
-                                                  Margin="0,0,-15,0" HorizontalAlignment="Center" />
+                                                  Style="{DynamicResource KNARZGridCheckBox}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCGameManualTitle}">
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCGameManualTitle}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding CanBeExecutedManually, UpdateSourceTrigger=PropertyChanged}"
-                                                  Margin="0,0,-15,0" HorizontalAlignment="Center" />
+                                                  Style="{DynamicResource KNARZGridCheckBox}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreConditions}">
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreConditions}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding IgnoreConditionOnManual, UpdateSourceTrigger=PropertyChanged}"
-                                                  Margin="0,0,-15,0" HorizontalAlignment="Center"
+                                                  Style="{DynamicResource KNARZGridCheckBox}"
                                                   ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsConditions}"
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsConditions}"
                                             DisplayMemberBinding="{Binding ConditionString}" />
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCActionsLabel}"
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCActionsLabel}"
+                                            d:Header="Actions"
                                             DisplayMemberBinding="{Binding ActionString}" />
                         </GridView>
                     </ListView.View>
@@ -272,47 +443,75 @@
             </DockPanel>
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabWhitelist}">
-            <DockPanel Margin="10" Name="DpUnusedSettings">
-                <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
-                    <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
-                            Margin="0,0,10,0" Command="{Binding AddNewUnusedCommand}"
+            <DockPanel Margin="10"
+                       Name="DpUnusedSettings">
+                <DockPanel DockPanel.Dock="Bottom"
+                           Margin="0,10,0,0"
+                           LastChildFill="False">
+                    <Button Content="&#xec3e;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCAddNewItem}"
+                            Margin="0,0,10,0"
+                            Command="{Binding AddNewUnusedCommand}"
                             DockPanel.Dock="Left" />
-                    <Button Content="&#xec3e; &#xEF75;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
-                            Margin="0,0,10,0" ContextMenu="{StaticResource WhitelistContextMenu}" Click="ButtonContextClick"
+                    <Button Content="&#xec3e; &#xEF75;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
+                            Margin="0,0,10,0"
+                            ContextMenu="{StaticResource WhitelistContextMenu}"
+                            Click="ButtonContextClick"
                             DockPanel.Dock="Left" />
-                    <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
-                            Margin="0,0,20,0" Command="{Binding RemoveUnusedFromListCommand}"
-                            CommandParameter="{Binding SelectedItems, ElementName=LvUnusedWhiteList}" DockPanel.Dock="Left" />
-                    <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddDefaults}" Margin="0,0,0,0"
-                            Command="{Binding AddDefaultWhiteListItemsCommand}" DockPanel.Dock="Left" />
+                    <Button Content="&#xec53;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCRemoveTitle}"
+                            Margin="0,0,20,0"
+                            Command="{Binding RemoveUnusedFromListCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=LvUnusedWhiteList}"
+                            DockPanel.Dock="Left" />
+                    <Button Content="{DynamicResource LOCMetadataUtilitiesSettingsAddDefaults}"
+                            Command="{Binding AddDefaultWhiteListItemsCommand}"
+                            DockPanel.Dock="Left" />
                 </DockPanel>
 
-                <Label Content="{DynamicResource LOCMetadataUtilitiesSettingsWhiteListInfo}" DockPanel.Dock="Top" />
+                <Label Content="{DynamicResource LOCMetadataUtilitiesSettingsWhiteListInfo}"
+                       DockPanel.Dock="Top" />
 
-                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameWhiteList}" Margin="0,10,0,0">
-                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameWhitelist}" TextWrapping="Wrap" />
+                <CheckBox DockPanel.Dock="Top"
+                          IsChecked="{Binding Settings.RenameWhiteList}"
+                          Margin="0,10,0,0">
+                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameWhitelist}"
+                               TextWrapping="Wrap" />
                 </CheckBox>
 
-                <ListView Name="LvUnusedWhiteList" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0"
-                          ItemsSource="{Binding Settings.UnusedItemsWhiteList}" HorizontalContentAlignment="Stretch"
-                          VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView Name="LvUnusedWhiteList"
+                          SelectionMode="Extended"
+                          DockPanel.Dock="Top"
+                          Margin="0,10,0,0"
+                          ItemsSource="{Binding Settings.UnusedItemsWhiteList}"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+                          VerticalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCNameLabel}"
-                                DisplayMemberBinding="{Binding TypeAndName}" />
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsHideInDetails}">
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCNameLabel}"
+                                            d:Header="Name"
+                                            DisplayMemberBinding="{Binding TypeAndName}" />
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsHideInDetails}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding HideInDetails, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
-                                      HorizontalAlignment="Center" />
+                                        <CheckBox IsChecked="{Binding HideInDetails, UpdateSourceTrigger=PropertyChanged}"
+                                                  Style="{DynamicResource KNARZGridCheckBox}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsHideInEditor}">
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsHideInEditor}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding HideInEditor, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
-                                      HorizontalAlignment="Center" />
+                                        <CheckBox IsChecked="{Binding HideInEditor, UpdateSourceTrigger=PropertyChanged}"
+                                                  Style="{DynamicResource KNARZGridCheckBox}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -323,25 +522,48 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabRemoveUnwanted}">
             <DockPanel Margin="10">
-                <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
-                    <Button Content="&#xec3e;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
-                            Margin="0,0,10,0" Command="{Binding AddNewUnwantedCommand}"
+                <DockPanel DockPanel.Dock="Bottom"
+                           Margin="0,10,0,0"
+                           LastChildFill="False">
+                    <Button Content="&#xec3e;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCAddNewItem}"
+                            Margin="0,0,10,0"
+                            Command="{Binding AddNewUnwantedCommand}"
                             DockPanel.Dock="Left" />
-                    <Button Content="&#xec3e; &#xEF75;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
-                            Margin="0,0,10,0" ContextMenu="{StaticResource UnwantedContextMenu}" Click="ButtonContextClick"
+                    <Button Content="&#xec3e; &#xEF75;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
+                            Margin="0,0,10,0"
+                            ContextMenu="{StaticResource UnwantedContextMenu}"
+                            Click="ButtonContextClick"
                             DockPanel.Dock="Left" />
-                    <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
-                            Margin="0,0,0,0" Command="{Binding RemoveUnwantedFromListCommand}"
-                            CommandParameter="{Binding SelectedItems, ElementName=LbItemsToRemove}" DockPanel.Dock="Left" />
+                    <Button Content="&#xec53;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCRemoveTitle}"
+                            Margin="0,0,0,0"
+                            Command="{Binding RemoveUnwantedFromListCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=LbItemsToRemove}"
+                            DockPanel.Dock="Left" />
                 </DockPanel>
-                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RemoveUnwantedOnMetadataUpdate}">
-                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate}" TextWrapping="Wrap" />
+                <CheckBox DockPanel.Dock="Top"
+                          IsChecked="{Binding Settings.RemoveUnwantedOnMetadataUpdate}">
+                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate}"
+                               TextWrapping="Wrap" />
                 </CheckBox>
-                <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.AddRemovedToUnwanted}" Margin="0,10,0,0">
-                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsAddRemovedToUnwanted}" TextWrapping="Wrap" />
+                <CheckBox DockPanel.Dock="Top"
+                          IsChecked="{Binding Settings.AddRemovedToUnwanted}"
+                          Margin="0,10,0,0">
+                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsAddRemovedToUnwanted}"
+                               TextWrapping="Wrap" />
                 </CheckBox>
-                <ListBox Name="LbItemsToRemove" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                         Margin="0,10,0,0" DockPanel.Dock="Top" VerticalAlignment="Stretch" SelectionMode="Extended"
+                <ListBox Name="LbItemsToRemove"
+                         HorizontalContentAlignment="Stretch"
+                         VerticalContentAlignment="Stretch"
+                         Margin="0,10,0,0"
+                         DockPanel.Dock="Top"
+                         VerticalAlignment="Stretch"
+                         SelectionMode="Extended"
                          ItemsSource="{Binding Settings.UnwantedItems}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -353,14 +575,26 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabPrefixes}">
             <DockPanel Margin="10">
-                <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
-                    <Button Content="&#xec3e;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCAddNewItem}"
+                <DockPanel DockPanel.Dock="Bottom"
+                           Margin="0,10,0,0"
+                           LastChildFill="False">
+                    <Button Content="&#xec3e;"
+                            DockPanel.Dock="Left"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCAddNewItem}"
                             Command="{Binding AddPrefixCommand}" />
-                    <Button Content="&#xec53;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
-                            Command="{Binding RemovePrefixCommand}" Margin="10,0,0,0"
+                    <Button Content="&#xec53;"
+                            DockPanel.Dock="Left"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCRemoveTitle}"
+                            Command="{Binding RemovePrefixCommand}"
+                            Margin="10,0,0,0"
                             CommandParameter="{Binding SelectedItems, ElementName=LvPrefixes}" />
-                    <Button Content="&#xEFEE;" DockPanel.Dock="Left" FontFamily="{DynamicResource FontIcoFont}"
-                            Command="{Binding SortPrefixesCommand}" Margin="10,0,0,0" />
+                    <Button Content="&#xEFEE;"
+                            DockPanel.Dock="Left"
+                            Style="{DynamicResource KNARZIconButton}"
+                            Command="{Binding SortPrefixesCommand}"
+                            Margin="10,0,0,0" />
                 </DockPanel>
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
@@ -369,32 +603,50 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel>
                         <CheckBox IsChecked="{Binding Settings.PrefixControlDisplayAddButton}">
-                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsDisplayAddButton}" TextWrapping="Wrap" />
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsDisplayAddButton}"
+                                       TextWrapping="Wrap" />
                         </CheckBox>
-                        <CheckBox IsChecked="{Binding Settings.PrefixControlDisplayDeleteButton}" Margin="0,10,0,0">
-                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsDisplayDeleteButton}" TextWrapping="Wrap" />
+                        <CheckBox IsChecked="{Binding Settings.PrefixControlDisplayDeleteButton}"
+                                  Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsDisplayDeleteButton}"
+                                       TextWrapping="Wrap" />
                         </CheckBox>
-                        <CheckBox IsChecked="{Binding Settings.PrefixControlConfirmDeletion}" Margin="0,10,0,0">
-                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsConfirmDeletion}" TextWrapping="Wrap" />
+                        <CheckBox IsChecked="{Binding Settings.PrefixControlConfirmDeletion}"
+                                  Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsConfirmDeletion}"
+                                       TextWrapping="Wrap" />
                         </CheckBox>
                     </StackPanel>
-                    <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
-                            Command="{Binding HelpPrefixesCommand}" Margin="10,0,0,0" ToolTip="{DynamicResource LOCMenuHelpTitle}" />
+                    <Button Content="&#xEFCA;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            Grid.Column="1"
+                            VerticalAlignment="Top"
+                            Command="{Binding HelpPrefixesCommand}"
+                            Margin="10,0,0,0"
+                            ToolTip="{DynamicResource LOCMenuHelpTitle}" />
                 </Grid>
-                <ListView Name="LvPrefixes" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0"
-                          ItemsSource="{Binding Settings.PrefixItemTypes}" HorizontalContentAlignment="Stretch"
-                          VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView Name="LvPrefixes"
+                          SelectionMode="Extended"
+                          DockPanel.Dock="Top"
+                          Margin="0,10,0,0"
+                          ItemsSource="{Binding Settings.PrefixItemTypes}"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+                          VerticalAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="50" Header="{DynamicResource LOCMetadataUtilitiesSettingsPosition}">
+                            <GridViewColumn Width="50"
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsPosition}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
-                                                 VerticalAlignment="Center" HorizontalContentAlignment="Right" />
+                                                 VerticalAlignment="Center"
+                                                 HorizontalContentAlignment="Right" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="200" Header="{DynamicResource LOCMetadataUtilitiesPrefixLabel}">
+                            <GridViewColumn Width="200"
+                                            Header="{DynamicResource LOCMetadataUtilitiesPrefixLabel}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding Prefix, UpdateSourceTrigger=PropertyChanged}"
@@ -402,7 +654,9 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="100" Header="{DynamicResource LOCGameIconTitle}">
+                            <GridViewColumn Width="100"
+                                            Header="{DynamicResource LOCGameIconTitle}"
+                                            d:Header="Icon">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding Icon, UpdateSourceTrigger=PropertyChanged}"
@@ -410,7 +664,9 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="200" Header="{DynamicResource LOCNameLabel}">
+                            <GridViewColumn Width="200"
+                                            Header="{DynamicResource LOCNameLabel}"
+                                            d:Header="Name">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
@@ -418,12 +674,15 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="200" Header="{DynamicResource LOCTypeLabel}">
+                            <GridViewColumn Width="200"
+                                            Header="{DynamicResource LOCTypeLabel}"
+                                            d:Header="Type">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox SelectedValue="{Binding FieldType}"
                                                   ItemsSource="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}, Path=DataContext.FieldValuePairs}"
-                                                  SelectedValuePath="Key" DisplayMemberPath="Value" />
+                                                  SelectedValuePath="Key"
+                                                  DisplayMemberPath="Value" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -434,13 +693,23 @@
         </TabItem>
         <TabItem Header="{DynamicResource LOCMetadataUtilitiesSettingsTabQuickAdd}">
             <DockPanel Margin="10">
-                <DockPanel DockPanel.Dock="Bottom" Margin="0,10,0,0" LastChildFill="False">
-                    <Button Content="&#xec3e; &#xEF75;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
-                            Margin="0,0,10,0" ContextMenu="{StaticResource QuickAddContextMenu}" Click="ButtonContextClick"
+                <DockPanel DockPanel.Dock="Bottom"
+                           Margin="0,10,0,0"
+                           LastChildFill="False">
+                    <Button Content="&#xec3e; &#xEF75;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCMetadataUtilitiesSettingsAddExistingItems}"
+                            Margin="0,0,10,0"
+                            ContextMenu="{StaticResource QuickAddContextMenu}"
+                            Click="ButtonContextClick"
                             DockPanel.Dock="Left" />
-                    <Button Content="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" ToolTip="{DynamicResource LOCRemoveTitle}"
-                            Margin="0,0,0,0" Command="{Binding RemoveQuickAddFromListCommand}"
-                            CommandParameter="{Binding SelectedItems, ElementName=LvQuickAdd}" DockPanel.Dock="Left" />
+                    <Button Content="&#xec53;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCRemoveTitle}"
+                            Margin="0,0,0,0"
+                            Command="{Binding RemoveQuickAddFromListCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=LvQuickAdd}"
+                            DockPanel.Dock="Left" />
                 </DockPanel>
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
@@ -448,60 +717,92 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <DockPanel>
-                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.QuickAddSingleMenuEntry}" Margin="0,0,0,0">
-                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsSingleMenuEntry}" TextWrapping="Wrap" />
+                        <CheckBox DockPanel.Dock="Top"
+                                  IsChecked="{Binding Settings.QuickAddSingleMenuEntry}">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsSingleMenuEntry}"
+                                       TextWrapping="Wrap" />
                         </CheckBox>
-                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.QuickAddShowDialog}" Margin="0,10,0,0">
-                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsShowDialog}" TextWrapping="Wrap" />
+                        <CheckBox DockPanel.Dock="Top"
+                                  IsChecked="{Binding Settings.QuickAddShowDialog}"
+                                  Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsShowDialog}"
+                                       TextWrapping="Wrap" />
                         </CheckBox>
-                        <CheckBox DockPanel.Dock="Top" IsChecked="{Binding Settings.RenameQuickAdd}" Margin="0,10,0,0">
-                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameQuickAdd}" TextWrapping="Wrap" />
+                        <CheckBox DockPanel.Dock="Top"
+                                  IsChecked="{Binding Settings.RenameQuickAdd}"
+                                  Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsRenameQuickAdd}"
+                                       TextWrapping="Wrap" />
                         </CheckBox>
-                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,10,0,0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal"
+                                    DockPanel.Dock="Top"
+                                    Margin="0,10,0,0"
+                                    HorizontalAlignment="Left">
                             <Label Content="{DynamicResource LOCMetadataUtilitiesSettingsDefaultCustomPath}" />
-                            <TextBox Text="{Binding Settings.QuickAddCustomPath}" Width="200" Margin="10,0,0,0" />
+                            <TextBox Text="{Binding Settings.QuickAddCustomPath}"
+                                     Width="200"
+                                     Margin="10,0,0,0" />
                         </StackPanel>
                     </DockPanel>
-                    <Button Content="&#xEFCA;" FontFamily="{DynamicResource FontIcoFont}" Grid.Column="1" VerticalAlignment="Top"
-                            Command="{Binding HelpQuickAddCommand}" Margin="10,0,0,0" ToolTip="{DynamicResource LOCMenuHelpTitle}" />
+                    <Button Content="&#xEFCA;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            Grid.Column="1"
+                            VerticalAlignment="Top"
+                            Command="{Binding HelpQuickAddCommand}"
+                            Margin="10,0,0,0"
+                            ToolTip="{DynamicResource LOCMenuHelpTitle}" />
                 </Grid>
-                <ListView Name="LvQuickAdd" SelectionMode="Extended" DockPanel.Dock="Top" Margin="0,10,0,0"
-                          ItemsSource="{Binding Settings.QuickAddObjects}" HorizontalContentAlignment="Stretch"
-                          VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedQuickAddItem}"
+                <ListView Name="LvQuickAdd"
+                          SelectionMode="Extended"
+                          DockPanel.Dock="Top"
+                          Margin="0,10,0,0"
+                          ItemsSource="{Binding Settings.QuickAddObjects}"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          SelectedItem="{Binding SelectedQuickAddItem}"
                           SelectionChanged="LvQuickAdd_OnSelectionChanged">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCNameLabel}"
-                                                DisplayMemberBinding="{Binding TypeAndName}" />
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCAddTitle}">
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCNameLabel}"
+                                            d:Header="Name"
+                                            DisplayMemberBinding="{Binding TypeAndName}" />
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCAddTitle}"
+                                            d:Header="Add">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
-                                                      HorizontalAlignment="Center" />
+                                        <CheckBox IsChecked="{Binding Add, UpdateSourceTrigger=PropertyChanged}"
+                                                  Style="{DynamicResource KNARZGridCheckBox}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCRemoveLabel}">
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCRemoveLabel}"
+                                            d:Header="Remove">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
-                                                      HorizontalAlignment="Center" />
+                                        <CheckBox IsChecked="{Binding Remove, UpdateSourceTrigger=PropertyChanged}"
+                                                  Style="{DynamicResource KNARZGridCheckBox}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCMetadataUtilitiesSettingsToggle}">
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsToggle}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-15,0"
-                                                      HorizontalAlignment="Center" />
+                                        <CheckBox IsChecked="{Binding Toggle, UpdateSourceTrigger=PropertyChanged}"
+                                                  Style="{DynamicResource KNARZGridCheckBox}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="300" Header="{DynamicResource LOCMetadataUtilitiesSettingsCustomPath}">
+                            <GridViewColumn Width="300"
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsCustomPath}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding CustomPath, UpdateSourceTrigger=PropertyChanged}"
-                                                     VerticalAlignment="Center" />
+                                                 VerticalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

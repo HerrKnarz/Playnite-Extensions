@@ -90,25 +90,42 @@ namespace MetadataUtilities.ViewModels
             SourceObjectsViewSource.IsLiveSortingRequested = true;
         }
 
+        public static RelayCommand<object> RestartRequired => new RelayCommand<object>((sender) =>
+                {
+                    try
+                    {
+                        var winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
+
+                        if (winParent.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
+                        {
+                            ((dynamic)winParent.DataContext).IsRestartRequired = true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                });
+
         public RelayCommand AddConActionCommand => new RelayCommand(() =>
-        {
-            var conditionalAction = new ConditionalAction();
+                {
+                    var conditionalAction = new ConditionalAction();
 
-            var window = ConditionalActionEditorViewModel.GetWindow(conditionalAction);
+                    var window = ConditionalActionEditorViewModel.GetWindow(conditionalAction);
 
-            if (window == null)
-            {
-                return;
-            }
+                    if (window == null)
+                    {
+                        return;
+                    }
 
-            if (!(window.ShowDialog() ?? false))
-            {
-                return;
-            }
+                    if (!(window.ShowDialog() ?? false))
+                    {
+                        return;
+                    }
 
-            Settings.ConditionalActions.Add(conditionalAction);
-            Settings.ConditionalActions.Sort(x => x.Name);
-        });
+                    Settings.ConditionalActions.Add(conditionalAction);
+                    Settings.ConditionalActions.Sort(x => x.Name);
+                });
 
         public RelayCommand AddDefaultWhiteListItemsCommand => new RelayCommand(AddDefaultWhiteListItems);
 
@@ -178,8 +195,6 @@ namespace MetadataUtilities.ViewModels
 
             Settings.ConditionalActions.Sort(x => x.Name);
         }, conAction => conAction != null);
-
-        private Settings EditingClone { get; set; }
 
         public RelayCommand<object> EditMergeRuleCommand
             => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
@@ -278,23 +293,6 @@ namespace MetadataUtilities.ViewModels
             new RelayCommand<IList<object>>(items => RemoveFromList(items, Settings.UnwantedItems),
                 items => items?.Count != 0);
 
-        public static RelayCommand<object> RestartRequired => new RelayCommand<object>((sender) =>
-                {
-                    try
-                    {
-                        var winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
-
-                        if (winParent.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
-                        {
-                            ((dynamic)winParent.DataContext).IsRestartRequired = true;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                    }
-                });
-
         public string SearchTerm
         {
             get => _searchTerm;
@@ -350,45 +348,7 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public void BeginEdit()
-        {
-            MergeRules = Settings.MergeRules;
-            MergeRuleViewSource.Source = MergeRules;
-
-            if (MergeRuleViewSource.View != null)
-            {
-                MergeRuleViewSource.View.Filter = Filter;
-            }
-
-            EditingClone = Serialization.GetClone(Settings);
-        }
-
-        public void CancelEdit()
-        {
-            Settings = EditingClone;
-            Settings.SetMissingTypes();
-        }
-
-        public void EndEdit()
-        {
-            Settings.Prefixes.Clear();
-
-            Settings.Prefixes.AddMissing(Settings.PrefixItemTypes.Select(p => p.Prefix).Distinct());
-
-            _plugin.SavePluginSettings(Settings);
-        }
-
-        public bool VerifySettings(out List<string> errors)
-        {
-            errors = new List<string>();
-
-            if (Settings.PrefixItemTypes.Any(p => p.Prefix?.Length == 0 || p.Name?.Length == 0))
-            {
-                errors.Add($"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}: {ResourceProvider.GetString("LOCMetadataUtilitiesSettingsErrorEmptyPrefix")}");
-            }
-
-            return errors.Count == 0;
-        }
+        private Settings EditingClone { get; set; }
 
         public void AddDefaultWhiteListItems()
         {
@@ -491,7 +451,47 @@ namespace MetadataUtilities.ViewModels
             AddItemsToWhiteList(items);
         }
 
+        public void BeginEdit()
+        {
+            MergeRules = Settings.MergeRules;
+            MergeRuleViewSource.Source = MergeRules;
+
+            if (MergeRuleViewSource.View != null)
+            {
+                MergeRuleViewSource.View.Filter = Filter;
+            }
+
+            EditingClone = Serialization.GetClone(Settings);
+        }
+
+        public void CancelEdit()
+        {
+            Settings = EditingClone;
+            Settings.SetMissingTypes();
+        }
+
+        public void EndEdit()
+        {
+            Settings.Prefixes.Clear();
+
+            Settings.Prefixes.AddMissing(Settings.PrefixItemTypes.Select(p => p.Prefix).Distinct());
+
+            _plugin.SavePluginSettings(Settings);
+        }
+
         public void RemoveFromList(IList<object> items, MetadataObjects list) => list.RemoveItems(items.ToList().Cast<MetadataObject>());
+
+        public bool VerifySettings(out List<string> errors)
+        {
+            errors = new List<string>();
+
+            if (Settings.PrefixItemTypes.Any(p => p.Prefix?.Length == 0 || p.Name?.Length == 0))
+            {
+                errors.Add($"{ResourceProvider.GetString("LOCMetadataUtilitiesName")}: {ResourceProvider.GetString("LOCMetadataUtilitiesSettingsErrorEmptyPrefix")}");
+            }
+
+            return errors.Count == 0;
+        }
 
         private void EditMergeRule(MergeRule rule = null)
         {
@@ -555,7 +555,7 @@ namespace MetadataUtilities.ViewModels
                 var editorView = new MergeRuleEditorView();
 
                 var window = WindowHelper.CreateSizedWindow(
-                    ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 700, 700, false, true);
+                    ResourceProvider.GetString("LOCMetadataUtilitiesMergeRuleEditor"), 800, 800, false, false);
                 window.Content = editorView;
                 window.DataContext = viewModel;
 
