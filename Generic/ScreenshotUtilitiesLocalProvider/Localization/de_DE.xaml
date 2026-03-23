@@ -24,8 +24,11 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveSpecialChars">Entfernt alle Zeichen, die nicht zum Alphabet, einer Zahl, einem Leerzeichen oder einem Bindestrich gehören.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix">Entfernt Gegenstände wie &quot;Special Edition&quot; oder HD vom Ende eines Spielnamens.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith">Ersetzt Zeichen, die nicht für Dateinamen im Spielnamen erlaubt sind, nachdem die anderen Regeln angewendet wurden. Kann leer gelassen werden, um einfach die Zeichen zu entfernen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigSelectGame">Spiel auswählen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig">Test-Konfiguration</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut">Probiere die Formatierung des Spielnamens aus</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription">Mit diesen Kontrollkästchen können Sie formatieren, wie der Name des Spiels über den Platzhalter {GameName} zum Pfad hinzugefügt wird.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist">Der Pfad existiert nicht.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholder">Platzhalter</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription">Dies sind alle Platzhalter, die in den Feldern Pfad- und Dateimaske unterstützt werden. Unter ENV sind alle Windows-Umgebungsvariablen auf Ihrem PC. Sie können den aktuell ausgewählten Platzhalter mit Strg+C kopieren, um ihn in die Textfelder einzufügen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsResult">Ergebnis</sys:String>
