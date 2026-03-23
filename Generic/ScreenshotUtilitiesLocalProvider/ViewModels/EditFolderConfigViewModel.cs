@@ -67,7 +67,7 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
                 return;
             }
 
-            if (_folderConfig != null)
+            if (_folderConfig != null && tempGame?.Game != null)
             {
                 _folderConfig.TestGame = tempGame;
             }

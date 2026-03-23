@@ -15,13 +15,13 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel Margin="15"
-               d:Background="AliceBlue"
-               FocusManager.FocusedElement="{Binding ElementName=DateValue}">
-        <DockPanel DockPanel.Dock="Top">
-            <DatePicker Name="DateValue"
-                        SelectedDate="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
+    <DockPanel FocusManager.FocusedElement="{Binding ElementName=DateValue}"
+               Margin="15"
+               d:Background="AliceBlue">
+        <DatePicker Name="DateValue"
+                    DockPanel.Dock="Top"
+                    SelectedDate="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+
         <StackPanel DockPanel.Dock="Bottom"
                     Orientation="Horizontal"
                     Margin="0,15,0,0"

@@ -54,11 +54,13 @@
         </Border>
         <UniformGrid Columns="2"
                      DockPanel.Dock="Top"
-                     d:Background="AliceBlue">
+                     d:Background="AliceBlue"
+                     FocusManager.FocusedElement="{Binding ElementName=txtName}">
             <StackPanel Margin="15"
                         Orientation="Vertical">
                 <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName}" />
-                <TextBox Text="{Binding FolderConfig.Name}" />
+                <TextBox Text="{Binding FolderConfig.Name}"
+                         Name="txtName" />
 
                 <Label Margin="0,15,0,0"
                        Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath}" />

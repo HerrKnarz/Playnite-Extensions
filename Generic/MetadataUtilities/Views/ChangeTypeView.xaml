@@ -49,7 +49,6 @@
                     d:Content="Cancel"
                     Style="{StaticResource BottomButton}"
                     d:Style="{StaticResource KNARZBottomButton}"
-                    Command="{Binding CancelCommand}"
                     IsCancel="True" />
         </StackPanel>
     </DockPanel>

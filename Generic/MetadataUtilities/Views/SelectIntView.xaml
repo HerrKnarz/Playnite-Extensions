@@ -18,12 +18,11 @@
     <DockPanel Margin="15"
                d:Background="AliceBlue"
                FocusManager.FocusedElement="{Binding ElementName=TxtValue}">
-        <DockPanel DockPanel.Dock="Top">
-            <TextBox Name="TxtValue"
-                     Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
-                     PreviewTextInput="PreviewInput"
-                     DataObject.Pasting="PastingHandler" />
-        </DockPanel>
+        <TextBox Name="TxtValue"
+                 DockPanel.Dock="Top"
+                 Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                 PreviewTextInput="PreviewInput"
+                 DataObject.Pasting="PastingHandler" />
         <StackPanel DockPanel.Dock="Bottom"
                     Orientation="Horizontal"
                     Margin="0,15,0,0"
