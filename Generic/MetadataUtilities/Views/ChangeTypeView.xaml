@@ -6,7 +6,15 @@
              d:DataContext="{d:DesignInstance Type=viewModels:ChangeTypeViewModel}"
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="120" d:DesignWidth="400">
+             d:DesignHeight="140"
+             d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/MetadataUtilities;component/Shared/Controls/CommonStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <DockPanel Margin="15"
                FocusManager.FocusedElement="{Binding ElementName=txtName}"
                d:Background="AliceBlue">
@@ -34,11 +42,13 @@
             <Button Content="{DynamicResource LOCOKLabel}"
                     d:Content="OK"
                     Style="{StaticResource BottomButton}"
+                    d:Style="{StaticResource KNARZBottomButton}"
                     Command="{Binding OkCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
             <Button Content="{DynamicResource LOCCancelLabel}"
                     d:Content="Cancel"
                     Style="{StaticResource BottomButton}"
+                    d:Style="{StaticResource KNARZBottomButton}"
                     Command="{Binding CancelCommand}"
                     IsCancel="True" />
         </StackPanel>
