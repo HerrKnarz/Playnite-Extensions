@@ -44,28 +44,6 @@ namespace ScreenshotUtilitiesLocalProvider
 
         public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
 
-        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
-        {
-            var game = args.Games.FirstOrDefault();
-
-            yield return new GameMenuItem
-            {
-                MenuSection = "Screenshot Utilities",
-                Description = "-"
-            };
-
-            yield return new GameMenuItem
-            {
-                MenuSection = "Screenshot Utilities",
-                Description = "Local Provider Placeholder Test",
-                Action = a =>
-                {
-                    StringExpander.ResetCache();
-                    StringExpander.TestExpansions(args.Games.FirstOrDefault(), true);
-                }
-            };
-        }
-
         public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate) => await FetchScreenshotsAsync(game, daysSinceLastUpdate, forceUpdate);
 
         public string GetScreenshotSearchResult(Game game, string searchTerm) => throw new NotImplementedException();

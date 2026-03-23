@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.GamesCommon;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using ScreenshotUtilitiesLocalProvider.Models;
@@ -36,7 +37,10 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
 
         public RelayCommand AddFolderConfigCommand => new RelayCommand(() =>
         {
-            var configToEdit = new FolderConfig();
+            var configToEdit = new FolderConfig
+            {
+                TestGame = new GameEx(API.Instance.MainView.SelectedGames.FirstOrDefault())
+            };
 
             if (!OpenEditDialog(ref configToEdit))
             {
@@ -51,6 +55,7 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             var selectedConfig = item as FolderConfig;
 
             var configToEdit = selectedConfig.DeepClone();
+            configToEdit.TestGame = new GameEx(API.Instance.MainView.SelectedGames.FirstOrDefault());
 
             if (!OpenEditDialog(ref configToEdit))
             {

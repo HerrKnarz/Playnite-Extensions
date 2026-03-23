@@ -72,6 +72,19 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs">
       <Link>Shared\FilesCommon\FileHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\GameEx.cs">
+      <Link>Shared\GamesCommon\GameEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\IGameSearchSettings.cs">
+      <Link>Shared\GamesCommon\IGameSearchSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\SearchGameView.xaml.cs">
+      <Link>Shared\GamesCommon\SearchGameView.xaml.cs</Link>
+      <DependentUpon>SearchGameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\SearchGameViewModel.cs">
+      <Link>Shared\GamesCommon\SearchGameViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>
@@ -136,6 +149,15 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\CommonStyles.xaml">
+      <Link>Shared\Controls\CommonStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\SearchGameView.xaml">
+      <Link>Shared\GamesCommon\SearchGameView.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -1,10 +1,12 @@
 ﻿using KNARZhelper;
+using KNARZhelper.GamesCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -12,9 +14,9 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 {
     public class FolderConfig : ObservableObject
     {
-        // TODO: Add option to set the currently selected game and display how the path would look for that game. Maybe even add a button to open the folder with the example path. Useful for settings and edit dialogs.
-
         private bool _active = true;
+        private string _exampleName = "Baldur's Gate 3";
+        private string _exampleResult = "";
         private string _fileMask = "*.jpg";
         private string _invalidCharReplacement = "_";
         private string _name = string.Empty;
@@ -24,6 +26,9 @@ namespace ScreenshotUtilitiesLocalProvider.Models
         private bool _removeHyphens = false;
         private bool _removeSpecialChars = false;
         private bool _removeWhitespaces = false;
+        private string _resolvedFileMask = string.Empty;
+        private string _resolvedPath = string.Empty;
+        private GameEx _testGame = new GameEx();
         private bool _underscoresToWhitespaces = false;
         private bool _whitespacesToHyphens = false;
         private bool _whitespacesToUnderscores = false;
@@ -31,92 +36,105 @@ namespace ScreenshotUtilitiesLocalProvider.Models
         public bool Active
         {
             get => _active;
+            set => SetValue(ref _active, value);
+        }
+
+        [DontSerialize]
+        public string ExampleName
+        {
+            get => _exampleName;
             set
             {
-                _active = value;
-                OnPropertyChanged();
+                SetValue(ref _exampleName, value);
+                ResolveFormat();
             }
+        }
+
+        [DontSerialize]
+        public string ExampleResult
+        {
+            get => _exampleResult;
+            set => SetValue(ref _exampleResult, value);
         }
 
         public string FileMask
         {
-            get => _fileMask; set
-            {
-                _fileMask = value;
-                OnPropertyChanged();
-            }
+            get => _fileMask;
+            set => SetValue(ref _fileMask, value);
         }
 
         public string InvalidCharReplacement
         {
-            get => _invalidCharReplacement; set
-            {
-                _invalidCharReplacement = value;
-                OnPropertyChanged();
-            }
+            get => _invalidCharReplacement;
+            set => SetValue(ref _invalidCharReplacement, value);
         }
 
         public string Name
         {
-            get => _name; set
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
+            get => _name;
+            set => SetValue(ref _name, value);
         }
+
+        public RelayCommand OpenResolvedFolderCommand => new RelayCommand(() =>
+        {
+            if (new FileInfo(ResolvedPath).Directory.Exists)
+            {
+                Process.Start("explorer.exe", ResolvedPath);
+
+                return;
+            }
+
+            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist"));
+        });
 
         public string Path
         {
-            get => _path; set
-            {
-                _path = value;
-                OnPropertyChanged();
-            }
+            get => _path;
+            set => SetValue(ref _path, value);
         }
 
         public bool RemoveDiacritics
         {
-            get => _removeDiacritics; set
-            {
-                _removeDiacritics = value;
-                OnPropertyChanged();
-            }
+            get => _removeDiacritics;
+            set => SetValue(ref _removeDiacritics, value);
         }
 
         public bool RemoveEditionSuffix
         {
-            get => _removeEditionSuffix; set
-            {
-                _removeEditionSuffix = value;
-                OnPropertyChanged();
-            }
+            get => _removeEditionSuffix;
+            set => SetValue(ref _removeEditionSuffix, value);
         }
 
         public bool RemoveHyphens
         {
-            get => _removeHyphens; set
-            {
-                _removeHyphens = value;
-                OnPropertyChanged();
-            }
+            get => _removeHyphens;
+            set => SetValue(ref _removeHyphens, value);
         }
 
         public bool RemoveSpecialChars
         {
-            get => _removeSpecialChars; set
-            {
-                _removeSpecialChars = value;
-                OnPropertyChanged();
-            }
+            get => _removeSpecialChars;
+            set => SetValue(ref _removeSpecialChars, value);
         }
 
         public bool RemoveWhitespaces
         {
-            get => _removeWhitespaces; set
-            {
-                _removeWhitespaces = value;
-                OnPropertyChanged();
-            }
+            get => _removeWhitespaces;
+            set => SetValue(ref _removeWhitespaces, value);
+        }
+
+        [DontSerialize]
+        public string ResolvedFileMask
+        {
+            get => _resolvedFileMask;
+            set => SetValue(ref _resolvedFileMask, value);
+        }
+
+        [DontSerialize]
+        public string ResolvedPath
+        {
+            get => _resolvedPath;
+            set => SetValue(ref _resolvedPath, value);
         }
 
         public RelayCommand SelectFolderCommand => new RelayCommand(() =>
@@ -132,31 +150,34 @@ namespace ScreenshotUtilitiesLocalProvider.Models
         [DontSerialize]
         public StringExpander StringExpander { get; set; }
 
+        [DontSerialize]
+        public GameEx TestGame
+        {
+            get => _testGame;
+            set
+            {
+                SetValue(ref _testGame, value);
+                ExampleName = _testGame.Game.Name;
+                ResolveConfig();
+            }
+        }
+
         public bool UnderscoresToWhitespaces
         {
-            get => _underscoresToWhitespaces; set
-            {
-                _underscoresToWhitespaces = value;
-                OnPropertyChanged();
-            }
+            get => _underscoresToWhitespaces;
+            set => SetValue(ref _underscoresToWhitespaces, value);
         }
 
         public bool WhitespacesToHyphens
         {
-            get => _whitespacesToHyphens; set
-            {
-                _whitespacesToHyphens = value;
-                OnPropertyChanged();
-            }
+            get => _whitespacesToHyphens;
+            set => SetValue(ref _whitespacesToHyphens, value);
         }
 
         public bool WhitespacesToUnderscores
         {
-            get => _whitespacesToUnderscores; set
-            {
-                _whitespacesToUnderscores = value;
-                OnPropertyChanged();
-            }
+            get => _whitespacesToUnderscores;
+            set => SetValue(ref _whitespacesToUnderscores, value);
         }
 
         public string FormatGameName(string gameName)
@@ -217,5 +238,13 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 
             return result;
         }
+
+        public void ResolveConfig()
+        {
+            ResolvedPath = StringExpander?.ReplaceAllPlaceholders(Path, TestGame?.Game, ExampleResult);
+            ResolvedFileMask = StringExpander?.ReplaceAllPlaceholders(FileMask, TestGame?.Game, ExampleResult); ;
+        }
+
+        public void ResolveFormat() => ExampleResult = FormatGameName(ExampleName) ?? string.Empty;
     }
 }

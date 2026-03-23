@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.GamesCommon;
 using Playnite.SDK;
 using ScreenshotUtilitiesLocalProvider.Models;
 using System.Collections.Generic;
@@ -10,8 +11,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
     {
         // TODO: Make list of placeholders translatable.
 
-        private string _exampleName = "Baldur's Gate 3";
-        private string _exampleResult = "";
         private FolderConfig _folderConfig;
         private StringPlaceholder _selectedItem;
 
@@ -30,27 +29,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             Clipboard.SetText(SelectedPlaceholder.Placeholder);
         });
 
-        public string ExampleName
-        {
-            get => _exampleName;
-            set
-            {
-                _exampleName = value;
-                ExampleResult = _folderConfig?.FormatGameName(_exampleName) ?? string.Empty;
-                OnPropertyChanged();
-            }
-        }
-
-        public string ExampleResult
-        {
-            get => _exampleResult;
-            set
-            {
-                _exampleResult = value;
-                OnPropertyChanged();
-            }
-        }
-
         public FolderConfig FolderConfig
         {
             get => _folderConfig;
@@ -66,14 +44,49 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
         public StringPlaceholder SelectedPlaceholder
         {
             get => _selectedItem;
-            set
-            {
-                _selectedItem = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref _selectedItem, value);
         }
 
-        public RelayCommand TestFolderConfigCommand => new RelayCommand(() =>
-            ExampleResult = _folderConfig?.FormatGameName(_exampleName) ?? string.Empty);
+        public RelayCommand SelectGameCommand => new RelayCommand(() =>
+            {
+                var settings = new GameSearchSettings();
+
+                var tempGame = new GameEx();
+
+                var viewModel = new SearchGameViewModel(settings, null, false, ResourceProvider.GetString("LOCOKLabel"), tempGame);
+
+                var searchGameView = new SearchGameView();
+
+                var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
+                    settings.GameSearchWindowWidth, settings.GameSearchWindowHeight);
+                window.Content = searchGameView;
+                window.DataContext = viewModel;
+
+                if (!window.ShowDialog() ?? true)
+                {
+                    return;
+                }
+
+                if (_folderConfig != null)
+                {
+                    _folderConfig.TestGame = tempGame;
+                }
+            });
+
+        public RelayCommand TestConfigCommand => new RelayCommand(() =>
+                {
+                    _folderConfig?.ResolveFormat();
+                    _folderConfig?.ResolveConfig();
+                });
+
+        private class GameSearchSettings : IGameSearchSettings
+        {
+            public bool GameGridShowCompletionStatus { get; set; } = true;
+            public bool GameGridShowHidden { get; set; } = true;
+            public bool GameGridShowPlatform { get; set; } = true;
+            public bool GameGridShowReleaseYear { get; set; } = true;
+            public int GameSearchWindowHeight { get; set; } = 700;
+            public int GameSearchWindowWidth { get; set; } = 700;
+        }
     }
 }

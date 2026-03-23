@@ -6,11 +6,12 @@
              xmlns:vm="clr-namespace:ScreenshotUtilitiesLocalProvider.ViewModels"
              d:DataContext="{d:DesignInstance Type=vm:EditFolderConfigViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="1000">
+             d:DesignHeight="600"
+             d:DesignWidth="1000">
     <UserControl.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key='GroupedItems'
-                      Source="{Binding FolderConfig.StringExpander.Placeholders}">
+                                  Source="{Binding FolderConfig.StringExpander.Placeholders}">
                 <CollectionViewSource.GroupDescriptions>
                     <PropertyGroupDescription PropertyName="Type" />
                 </CollectionViewSource.GroupDescriptions>
@@ -18,16 +19,19 @@
 
             <ResourceDictionary.MergedDictionaries>
                 <d:ResourceDictionary Source="/ScreenshotUtilitiesLocalProvider;component/Localization/en_US.xaml" />
+                <ResourceDictionary Source="/ScreenshotUtilitiesLocalProvider;component/Shared/Controls/CommonStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
         <Border DockPanel.Dock="Top"
                 BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
+                d:BorderBrush="{DynamicResource KNARZDummyBrush}"
                 BorderThickness="0,1,0,0"
                 Margin="0,0,0,0" />
         <Border DockPanel.Dock="Bottom"
                 BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
+                d:BorderBrush="{DynamicResource KNARZDummyBrush}"
                 BorderThickness="0,1,0,0"
                 Margin="0,10,0,0"
                 d:Background="AliceBlue">
@@ -38,11 +42,13 @@
                         d:Content="Save"
                         Command="{Binding SaveCommand}"
                         Style="{DynamicResource BottomButton}"
+                        d:Style="{DynamicResource KNARZBottomButton}"
                         CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                         IsDefault="True" />
                 <Button Content="{DynamicResource LOCCancelLabel}"
                         d:Content="Cancel"
                         Style="{DynamicResource BottomButton}"
+                        d:Style="{DynamicResource KNARZBottomButton}"
                         IsCancel="True" />
             </StackPanel>
         </Border>
@@ -58,7 +64,7 @@
                        Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath}" />
                 <DockPanel Margin="0, 5, 0, 0">
                     <Button Content="&#xec5b;"
-                            FontFamily="{DynamicResource FontIcoFont}"
+                            Style="{DynamicResource KNARZIconButton}"
                             ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsSelectFolder}"
                             Margin="10,0,0,0"
                             DockPanel.Dock="Right"
@@ -76,6 +82,75 @@
                           Content="{DynamicResource LOCEnabledTitle}"
                           d:Content="Enabled"
                           IsChecked="{Binding FolderConfig.Active}" />
+
+                <GroupBox Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig}"
+                          d:Header="Test config"
+                          HorizontalAlignment="Stretch"
+                          Padding="10"
+                          Margin="0, 25, 0, 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath}"
+                               d:Content="Path"
+                               Grid.Row="0"
+                               Grid.Column="0" />
+                        <DockPanel Grid.Row="0"
+                                   Grid.Column="1"
+                                   Margin="10, 0, 0, 0">
+                            <Button Content="&#xec5b;"
+                                    Style="{DynamicResource KNARZIconButton}"
+                                    Margin="10,0,0,0"
+                                    DockPanel.Dock="Right"
+                                    Command="{Binding FolderConfig.OpenResolvedFolderCommand}" />
+                            <Label Content="{Binding FolderConfig.ResolvedPath}"
+                                   DockPanel.Dock="Left" />
+                        </DockPanel>
+
+                        <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask}"
+                               d:Content="File mask"
+                               Margin="0, 15, 0, 0"
+                               Grid.Row="1"
+                               Grid.Column="0" />
+                        <Label Grid.Row="1"
+                               Grid.Column="1"
+                               Margin="10, 15, 0, 0"
+                               Content="{Binding FolderConfig.ResolvedFileMask}" />
+
+                        <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName}"
+                               d:Content="Name"
+                               Margin="0, 15, 0, 0"
+                               Grid.Row="2"
+                               Grid.Column="0" />
+                        <Label Grid.Row="2"
+                               Grid.Column="1"
+                               Margin="10, 15, 0, 0"
+                               Content="{Binding FolderConfig.ExampleResult}" />
+
+                        <StackPanel Grid.Row="3"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0, 15, 0, 0"
+                                    Orientation="Horizontal">
+                            <Button Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigSelectGame}"
+                                    d:Content="Select game"
+                                    Command="{Binding SelectGameCommand}" />
+                            <Button DockPanel.Dock="Top"
+                                    Margin="10, 0, 0, 0"
+                                    Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig}"
+                                    d:Content="Test config"
+                                    Command="{Binding TestConfigCommand}" />
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
             </StackPanel>
             <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
                         HorizontalContentAlignment="Stretch"
@@ -88,9 +163,9 @@
                             d:BorderThickness="1">
                         <DockPanel>
                             <TextBlock DockPanel.Dock="Top"
-                                   Margin="10"
-                                   TextWrapping="Wrap"
-                                   Text="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription}" />
+                                       Margin="10"
+                                       TextWrapping="Wrap"
+                                       Text="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription}" />
                             <ListView Name="GridPlaceholder"
                                       DockPanel.Dock="Top"
                                       SelectionMode="Single"
@@ -151,8 +226,8 @@
                 </TabItem>
                 <TabItem Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsTabGameNameConfig}">
                     <Border BorderBrush="{DynamicResource NormalBorderBrush}"
+                            d:BorderBrush="{DynamicResource KNARZDummyBrush}"
                             BorderThickness="{DynamicResource ControlBorderThickness}"
-                            d:BorderBrush="Blue"
                             d:BorderThickness="1">
                         <StackPanel Margin="15"
                                     Grid.Column="1"
@@ -198,21 +273,6 @@
                             <TextBox Margin="0, 5, 0, 0"
                                      Text="{Binding FolderConfig.InvalidCharReplacement}"
                                      ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith}" />
-
-                            <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut}"
-                                   Margin="0, 25, 0, 0" />
-                            <TextBox Text="{Binding ExampleName}"
-                                     Margin="0, 5, 0, 0" />
-
-                            <DockPanel Margin="0, 10, 0, 0">
-                                <Button Content="&#xEA5D;"
-                                        FontFamily="{DynamicResource FontIcoFont}"
-                                        Margin="0,0,10,0"
-                                        DockPanel.Dock="Left"
-                                        Command="{Binding TestFolderConfigCommand}" />
-                                <TextBox Text="{Binding ExampleResult}"
-                                         DockPanel.Dock="Left" />
-                            </DockPanel>
                         </StackPanel>
                     </Border>
                 </TabItem>
