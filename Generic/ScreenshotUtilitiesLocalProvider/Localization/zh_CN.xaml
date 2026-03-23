@@ -24,8 +24,11 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveSpecialChars">Removes all characters that aren't part of the alphabet, a number, a whitespace or a hyphen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix">Removes stuff like &quot;Special Edition&quot; or HD from the end of a game name.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith">Replaces characters not allowed for filenames in the game name after applying the other rules. Can be left empty to simply remove the characters.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigSelectGame">Select game</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig">Test config</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut">Try out game name formatting</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription">Using these check boxes you can format how the name of the game will be added to the path via the placeholder {GameName}.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist">The path doesn't exist.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholder">Placeholder</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription">These are all placeholders supported in the path and file mask fields. Grouped under ENV are all windows environment variables available on your PC. You can copy the currently selected placeholder with CTRL+C to paste it into the text boxes.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsResult">Result</sys:String>
