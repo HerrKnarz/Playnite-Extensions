@@ -111,9 +111,15 @@
                                     Style="{DynamicResource KNARZIconButton}"
                                     Margin="10,0,0,0"
                                     DockPanel.Dock="Right"
+                                    VerticalAlignment="Center"
                                     Command="{Binding FolderConfig.OpenResolvedFolderCommand}" />
-                            <Label Content="{Binding FolderConfig.ResolvedPath}"
-                                   DockPanel.Dock="Left" />
+                            <TextBlock Text="{Binding FolderConfig.ResolvedPath}"
+                                       d:Text="This is a path that is very long and has to wrap at the end somewhere"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextBrush}"
+                                       d:Foreground="Black"
+                                       TextWrapping="Wrap"
+                                       DockPanel.Dock="Left" />
                         </DockPanel>
 
                         <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask}"
@@ -121,20 +127,30 @@
                                Margin="0, 15, 0, 0"
                                Grid.Row="1"
                                Grid.Column="0" />
-                        <Label Grid.Row="1"
-                               Grid.Column="1"
-                               Margin="10, 15, 0, 0"
-                               Content="{Binding FolderConfig.ResolvedFileMask}" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Margin="10, 15, 0, 0"
+                                   Text="{Binding FolderConfig.ResolvedFileMask}"
+                                   d:Text="Thisisafilemaskasaverylongwordwithoutspacestoseeifitstillwrapslookslikeitdoes"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextBrush}"
+                                   d:Foreground="Black"
+                                   TextWrapping="Wrap" />
 
                         <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName}"
                                d:Content="Name"
                                Margin="0, 15, 0, 0"
                                Grid.Row="2"
                                Grid.Column="0" />
-                        <Label Grid.Row="2"
-                               Grid.Column="1"
-                               Margin="10, 15, 0, 0"
-                               Content="{Binding FolderConfig.ExampleResult}" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Margin="10, 15, 0, 0"
+                                   Text="{Binding FolderConfig.ExampleResult}"
+                                   d:Text="This is a game name"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextBrush}"
+                                   d:Foreground="Black"
+                                   TextWrapping="Wrap" />
 
                         <StackPanel Grid.Row="3"
                                     Grid.ColumnSpan="2"

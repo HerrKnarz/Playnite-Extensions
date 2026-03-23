@@ -48,36 +48,36 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
         }
 
         public RelayCommand SelectGameCommand => new RelayCommand(() =>
+        {
+            var settings = new GameSearchSettings();
+
+            var tempGame = new GameEx();
+
+            var viewModel = new SearchGameViewModel(settings, null, false, ResourceProvider.GetString("LOCOKLabel"), tempGame);
+
+            var searchGameView = new SearchGameView();
+
+            var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
+                settings.GameSearchWindowWidth, settings.GameSearchWindowHeight);
+            window.Content = searchGameView;
+            window.DataContext = viewModel;
+
+            if (!window.ShowDialog() ?? true)
             {
-                var settings = new GameSearchSettings();
+                return;
+            }
 
-                var tempGame = new GameEx();
-
-                var viewModel = new SearchGameViewModel(settings, null, false, ResourceProvider.GetString("LOCOKLabel"), tempGame);
-
-                var searchGameView = new SearchGameView();
-
-                var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
-                    settings.GameSearchWindowWidth, settings.GameSearchWindowHeight);
-                window.Content = searchGameView;
-                window.DataContext = viewModel;
-
-                if (!window.ShowDialog() ?? true)
-                {
-                    return;
-                }
-
-                if (_folderConfig != null)
-                {
-                    _folderConfig.TestGame = tempGame;
-                }
-            });
+            if (_folderConfig != null)
+            {
+                _folderConfig.TestGame = tempGame;
+            }
+        });
 
         public RelayCommand TestConfigCommand => new RelayCommand(() =>
-                {
-                    _folderConfig?.ResolveFormat();
-                    _folderConfig?.ResolveConfig();
-                });
+        {
+            _folderConfig?.ResolveFormat();
+            _folderConfig?.ResolveConfig();
+        });
 
         private class GameSearchSettings : IGameSearchSettings
         {

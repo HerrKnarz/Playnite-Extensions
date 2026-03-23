@@ -37,10 +37,7 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
 
         public RelayCommand AddFolderConfigCommand => new RelayCommand(() =>
         {
-            var configToEdit = new FolderConfig
-            {
-                TestGame = new GameEx(API.Instance.MainView.SelectedGames.FirstOrDefault())
-            };
+            var configToEdit = new FolderConfig();
 
             if (!OpenEditDialog(ref configToEdit))
             {
@@ -55,7 +52,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             var selectedConfig = item as FolderConfig;
 
             var configToEdit = selectedConfig.DeepClone();
-            configToEdit.TestGame = new GameEx(API.Instance.MainView.SelectedGames.FirstOrDefault());
 
             if (!OpenEditDialog(ref configToEdit))
             {
@@ -121,6 +117,7 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             try
             {
                 configToEdit.StringExpander = _plugin.StringExpander;
+                configToEdit.TestGame = new GameEx(API.Instance.MainView.SelectedGames.FirstOrDefault());
 
                 var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit"), 1200, 800);
                 window.Content = new EditFolderConfigView();
