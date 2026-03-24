@@ -211,6 +211,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\CommonStyles.xaml">
+      <Link>Shared\Controls\CommonStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Views\SelectMetadataView.xaml">
       <Link>Shared\MetadataCommon\Views\SelectMetadataView.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
