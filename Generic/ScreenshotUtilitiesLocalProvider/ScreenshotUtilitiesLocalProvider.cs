@@ -108,14 +108,14 @@ namespace ScreenshotUtilitiesLocalProvider
 
                 if (gameProfile != null)
                 {
-                    folderConfigs.AddRange(gameProfile.FolderConfigs.Where(c => c.Active));
+                    folderConfigs.AddRange(gameProfile.FolderConfigs?.Where(c => c.Active));
                 }
 
                 if (!gameProfile?.OverrideGlobalConfigs ?? true)
                 {
                     var globalProfile = Settings.Settings.GameProfiles.FirstOrDefault(p => p.GameId.Equals(default));
 
-                    folderConfigs.AddRange(globalProfile.FolderConfigs.Where(c => c.Active));
+                    folderConfigs.AddRange(globalProfile.FolderConfigs?.Where(c => c.Active));
                 }
 
                 foreach (var folderConfig in folderConfigs)
@@ -125,10 +125,9 @@ namespace ScreenshotUtilitiesLocalProvider
                 }
 
                 var screenshotsToRemove = _screenshotGroup.Screenshots.Where(s => !screenshots.Any(f => f.Path == s.Path)).ToList();
-                var screenshotsToAdd = screenshots.Where(s => !_screenshotGroup.Screenshots.Any(f => f.Path == s.Path)).ToList();
+                var screenshotsToAdd = screenshots.Where(s => !_screenshotGroup.Screenshots.Any(f => f.Path == s.Path)).GroupBy(s => s.Path).Select(s => s.First()).ToList();
 
                 _screenshotGroup.Screenshots.RemoveRange(screenshotsToRemove);
-
                 _screenshotGroup.Screenshots.AddRange(screenshotsToAdd);
 
                 var sortOrder = 0;

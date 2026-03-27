@@ -27,7 +27,7 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
 
             Settings = savedSettings ?? new SettingsModel();
 
-            if (Settings.GameProfiles is null)
+            if (Settings.GameProfiles?.Count == 0)
             {
                 Settings.GameProfiles = new ObservableCollection<GameProfile>
                 {
