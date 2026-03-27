@@ -8,7 +8,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit">Bearbeiten</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove">Entfernen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsDescription">Beschreibung</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Hier können Sie Ihre Screenshot-Ordner hinzufügen. Pfad und Dateimaske können beide verschiedene Platzhalter wie Umgebungsvariablen, Playnite Platzhalter und einige benutzerdefinierte enthalten. Eine vollständige Liste finden Sie im Bearbeitungsdialog.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Hier können Sie Ihren Screenshot-Ordner hinzufügen. Fügen Sie alle Ordner hinzu, die Sie für alle Spiele überprüfen möchten, indem Sie die + Schaltfläche in Globale Konfiguration verwenden. Sie können auch bestimmte Spiele hinzufügen, um Ordner hinzuzufügen, die nur auf diese Spiele überprüft werden. Wenn Sie das Kontrollkästchen Überschreibung aktivieren, werden globale Ordner übersprungen. Pfad und Dateimaske jeder Konfiguration können mehrere Platzhalter wie Umgebungsvariablen, Playnite Platzhalter und einige benutzerdefinierte enthalten. Eine vollständige Liste finden Sie im Bearbeitungsdialog.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName">Name</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath">Pfad</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask">Datei-Maske</sys:String>
