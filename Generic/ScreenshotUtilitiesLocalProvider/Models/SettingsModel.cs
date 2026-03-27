@@ -5,10 +5,14 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 {
     public class SettingsModel : ObservableObject
     {
-        private ObservableCollection<FolderConfig> _folderConfigs = new ObservableCollection<FolderConfig>();
+        private ObservableCollection<FolderConfig> _folderConfigs;
 
         private ObservableCollection<GameProfile> _gameProfiles = new ObservableCollection<GameProfile>();
 
+        /// <summary>
+        /// Deprecated - will be removed in a later version, once user had a chance to migrate to
+        /// the new GameProfile logic.
+        /// </summary>
         public ObservableCollection<FolderConfig> FolderConfigs
         {
             // TODO: Remove once I fully migrated to GameProfiles

@@ -5,6 +5,7 @@ using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using ScreenshotUtilitiesLocalProvider.Models;
 using ScreenshotUtilitiesLocalProvider.ViewModels;
 using ScreenshotUtilitiesLocalProvider.Views;
 using System;
@@ -28,8 +29,6 @@ namespace ScreenshotUtilitiesLocalProvider
             {
                 HasSettings = true
             };
-
-            Settings.Settings.FolderConfigs.ForEach(c => c.StringExpander = StringExpander);
         }
 
         public override Guid Id { get; } = Guid.Parse("a049eff8-fd41-4dbc-9e35-01acc6b1a0cb");
@@ -103,8 +102,25 @@ namespace ScreenshotUtilitiesLocalProvider
 
                 var screenshots = new List<Screenshot>();
 
-                foreach (var folderConfig in Settings.Settings.FolderConfigs.Where(c => c.Active))
+                var folderConfigs = new List<FolderConfig>();
+
+                var gameProfile = Settings.Settings.GameProfiles.FirstOrDefault(p => p.GameId.Equals(_game.Id));
+
+                if (gameProfile != null)
                 {
+                    folderConfigs.AddRange(gameProfile.FolderConfigs.Where(c => c.Active));
+                }
+
+                if (!gameProfile?.OverrideGlobalConfigs ?? true)
+                {
+                    var globalProfile = Settings.Settings.GameProfiles.FirstOrDefault(p => p.GameId.Equals(default));
+
+                    folderConfigs.AddRange(globalProfile.FolderConfigs.Where(c => c.Active));
+                }
+
+                foreach (var folderConfig in folderConfigs)
+                {
+                    // TODO: Try to distinct images by path here.
                     screenshots.AddRange(folderConfig.LoadScreenshots(_game));
                 }
 

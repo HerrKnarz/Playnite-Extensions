@@ -37,7 +37,17 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             else
             {
                 SortGameProfiles();
-                SelectedGameProfile = Settings.GameProfiles.FirstOrDefault();
+            }
+
+            SelectedGameProfile = Settings.GameProfiles.FirstOrDefault();
+
+            if (Settings.FolderConfigs?.Any() ?? false)
+            {
+                SelectedGameProfile.FolderConfigs.AddMissing(Settings.FolderConfigs);
+
+                Settings.FolderConfigs = null;
+
+                _plugin.SavePluginSettings(Settings);
             }
         }
 
@@ -167,15 +177,12 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
         public void BeginEdit() =>
             EditingClone = Serialization.GetClone(Settings);
 
-        public void CancelEdit() =>
-                        Settings.FolderConfigs = EditingClone.FolderConfigs;
-
-        public void EndEdit()
+        public void CancelEdit()
         {
-            _plugin.SavePluginSettings(Settings);
-
-            Settings.FolderConfigs.ForEach(c => c.StringExpander = _plugin.StringExpander);
+            return;
         }
+
+        public void EndEdit() => _plugin.SavePluginSettings(Settings);
 
         public bool OpenEditDialog(ref FolderConfig configToEdit, Game game = null)
         {
