@@ -11,12 +11,14 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
     {
         // TODO: Make list of placeholders translatable.
 
+        private readonly bool _specificGame;
         private FolderConfig _folderConfig;
         private StringPlaceholder _selectedItem;
 
-        public EditFolderConfigViewModel(FolderConfig folderConfig)
+        public EditFolderConfigViewModel(FolderConfig folderConfig, bool specificGame = true)
         {
             FolderConfig = folderConfig;
+            _specificGame = specificGame;
         }
 
         public RelayCommand CopyPlaceholderCommand => new RelayCommand(() =>
@@ -34,6 +36,8 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             get => _folderConfig;
             set => SetValue(ref _folderConfig, value);
         }
+
+        public Visibility HiddenForSpecificGame => _specificGame ? Visibility.Collapsed : Visibility.Visible;
 
         public RelayCommand<Window> SaveCommand => new RelayCommand<Window>(win =>
         {
@@ -78,15 +82,5 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             _folderConfig?.ResolveFormat();
             _folderConfig?.ResolveConfig();
         });
-
-        private class GameSearchSettings : IGameSearchSettings
-        {
-            public bool GameGridShowCompletionStatus { get; set; } = true;
-            public bool GameGridShowHidden { get; set; } = true;
-            public bool GameGridShowPlatform { get; set; } = true;
-            public bool GameGridShowReleaseYear { get; set; } = true;
-            public int GameSearchWindowHeight { get; set; } = 700;
-            public int GameSearchWindowWidth { get; set; } = 700;
-        }
     }
 }

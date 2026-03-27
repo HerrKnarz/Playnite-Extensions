@@ -5,12 +5,21 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 {
     public class SettingsModel : ObservableObject
     {
-        private ObservableCollection<FolderConfig> folderConfigs = new ObservableCollection<FolderConfig>();
+        private ObservableCollection<FolderConfig> _folderConfigs = new ObservableCollection<FolderConfig>();
+
+        private ObservableCollection<GameProfile> _gameProfiles = new ObservableCollection<GameProfile>();
 
         public ObservableCollection<FolderConfig> FolderConfigs
         {
-            get => folderConfigs;
-            set => SetValue(ref folderConfigs, value);
+            // TODO: Remove once I fully migrated to GameProfiles
+            get => _folderConfigs;
+            set => SetValue(ref _folderConfigs, value);
+        }
+
+        public ObservableCollection<GameProfile> GameProfiles
+        {
+            get => _gameProfiles;
+            set => SetValue(ref _gameProfiles, value);
         }
     }
 }

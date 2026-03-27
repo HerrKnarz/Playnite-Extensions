@@ -63,7 +63,11 @@ namespace ScreenshotUtilitiesLocalProvider
                 var notificationMessage = new NotificationMessage("Screenshot Utilities Local Provider", "Screenshot Utilities has to be installed for this addon to work!", NotificationType.Error);
 
                 PlayniteApi.Notifications.Add(notificationMessage);
+
+                return;
             }
+
+            Settings.Settings.GameProfiles.ForEach(p => p.PrepareProfile(StringExpander, p.GameId));
         }
 
         private async Task<bool> FetchScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate)

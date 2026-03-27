@@ -2,6 +2,7 @@
 using KNARZhelper.GamesCommon;
 using Playnite.SDK;
 using Playnite.SDK.Data;
+using Playnite.SDK.Models;
 using ScreenshotUtilitiesLocalProvider.Models;
 using ScreenshotUtilitiesLocalProvider.Views;
 using System;
@@ -14,7 +15,8 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
     public class SettingsViewModel : ObservableObject, ISettings
     {
         private readonly ScreenshotUtilitiesLocalProvider _plugin;
-        private FolderConfig _selectedItem;
+        private FolderConfig _selectedFolderConfig;
+        private GameProfile _selectedGameProfile;
         private SettingsModel _settings;
 
         public SettingsViewModel(ScreenshotUtilitiesLocalProvider plugin)
@@ -25,26 +27,79 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
 
             Settings = savedSettings ?? new SettingsModel();
 
-            if (Settings.FolderConfigs is null)
+            if (Settings.GameProfiles is null)
             {
-                Settings.FolderConfigs = new ObservableCollection<FolderConfig>();
+                Settings.GameProfiles = new ObservableCollection<GameProfile>
+                {
+                    new GameProfile(default)
+                };
             }
             else
             {
-                SortFolderConfigs();
+                SortGameProfiles();
+                SelectedGameProfile = Settings.GameProfiles.FirstOrDefault();
             }
         }
 
-        public RelayCommand AddFolderConfigCommand => new RelayCommand(() =>
+        public RelayCommand<object> AddFolderConfigCommand => new RelayCommand<object>(item =>
         {
-            var configToEdit = new FolderConfig();
-
-            if (!OpenEditDialog(ref configToEdit))
+            if (item == null)
             {
                 return;
             }
 
-            Settings.FolderConfigs.Add(configToEdit);
+            SelectedGameProfile = item as GameProfile;
+
+            var configToEdit = new FolderConfig();
+
+            if (!OpenEditDialog(ref configToEdit, SelectedGameProfile.Game))
+            {
+                return;
+            }
+
+            SelectedGameProfile.FolderConfigs.Add(configToEdit);
+
+            SelectedGameProfile.FolderConfigs.Sort(x => x.Name);
+
+            SelectedFolderConfig = configToEdit;
+        });
+
+        public RelayCommand AddGameProfileCommand => new RelayCommand(() =>
+        {
+            var settings = new GameSearchSettings();
+
+            var tempGame = new GameEx();
+
+            var viewModel = new SearchGameViewModel(settings, null, false, ResourceProvider.GetString("LOCOKLabel"), tempGame);
+
+            var searchGameView = new SearchGameView();
+
+            var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
+                settings.GameSearchWindowWidth, settings.GameSearchWindowHeight);
+
+            window.Content = searchGameView;
+            window.DataContext = viewModel;
+
+            if (!window.ShowDialog() ?? true)
+            {
+                return;
+            }
+
+            var ProfileToAdd = Settings.GameProfiles.FirstOrDefault(p => p.GameId == tempGame.Game.Id);
+
+            if (ProfileToAdd == null)
+            {
+                ProfileToAdd = new GameProfile
+                {
+                    GameId = tempGame.Game.Id
+                };
+
+                Settings.GameProfiles.Add(ProfileToAdd);
+
+                SortGameProfiles(false);
+            }
+
+            SelectedGameProfile = ProfileToAdd;
         });
 
         public RelayCommand<object> EditFolderConfigCommand => new RelayCommand<object>(item =>
@@ -53,7 +108,7 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
 
             var configToEdit = selectedConfig.DeepClone();
 
-            if (!OpenEditDialog(ref configToEdit))
+            if (!OpenEditDialog(ref configToEdit, SelectedGameProfile.Game))
             {
                 return;
             }
@@ -73,14 +128,26 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             selectedConfig.WhitespacesToUnderscores = configToEdit.WhitespacesToUnderscores;
         });
 
-        public RelayCommand<object> RemoveFolderConfigCommand => new RelayCommand<object>(item => Settings.FolderConfigs.Remove(item as FolderConfig));
+        public RelayCommand<object> RemoveFolderConfigCommand => new RelayCommand<object>(item => SelectedGameProfile.FolderConfigs.Remove(item as FolderConfig));
 
-        public FolderConfig SelectedItem
+        public RelayCommand<object> RemoveGameProfileCommand => new RelayCommand<object>(item => Settings.GameProfiles.Remove(item as GameProfile));
+
+        public FolderConfig SelectedFolderConfig
         {
-            get => _selectedItem;
+            get => _selectedFolderConfig;
             set
             {
-                _selectedItem = value;
+                _selectedFolderConfig = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public GameProfile SelectedGameProfile
+        {
+            get => _selectedGameProfile;
+            set
+            {
+                _selectedGameProfile = value;
                 OnPropertyChanged();
             }
         }
@@ -94,8 +161,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public RelayCommand SortFolderConfigsCommand => new RelayCommand(SortFolderConfigs);
 
         private SettingsModel EditingClone { get; set; }
 
@@ -112,16 +177,16 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             Settings.FolderConfigs.ForEach(c => c.StringExpander = _plugin.StringExpander);
         }
 
-        public bool OpenEditDialog(ref FolderConfig configToEdit)
+        public bool OpenEditDialog(ref FolderConfig configToEdit, Game game = null)
         {
             try
             {
                 configToEdit.StringExpander = _plugin.StringExpander;
-                configToEdit.TestGame = new GameEx(API.Instance.MainView.SelectedGames.FirstOrDefault());
+                configToEdit.TestGame = new GameEx(game);
 
                 var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit"), 1200, 800);
                 window.Content = new EditFolderConfigView();
-                window.DataContext = new EditFolderConfigViewModel(configToEdit);
+                window.DataContext = new EditFolderConfigViewModel(configToEdit, SelectedGameProfile.GameId != default);
 
                 return window.ShowDialog() ?? false;
             }
@@ -139,11 +204,14 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             return true;
         }
 
-        private void SortFolderConfigs()
+        private void SortGameProfiles(bool sortConfigs = true)
         {
-            Settings.FolderConfigs = new ObservableCollection<FolderConfig>(Settings.FolderConfigs
-                .OrderBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
-                .ToList());
+            Settings.GameProfiles.Sort(p => $"{(p.GameId == default ? 1 : 2)}#{p.Game?.Name ?? string.Empty}");
+
+            if (sortConfigs)
+            {
+                Settings.GameProfiles.ForEach(p => p.FolderConfigs.Sort(x => x.Name));
+            }
         }
     }
 }

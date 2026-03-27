@@ -77,7 +77,12 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 
         public RelayCommand OpenResolvedFolderCommand => new RelayCommand(() =>
         {
-            if (new FileInfo(ResolvedPath).Directory.Exists)
+            if (ResolvedPath == null)
+            {
+                ResolveConfig();
+            }
+
+            if (Directory.Exists(ResolvedPath))
             {
                 Process.Start("explorer.exe", ResolvedPath);
 
@@ -157,8 +162,9 @@ namespace ScreenshotUtilitiesLocalProvider.Models
             set
             {
                 SetValue(ref _testGame, value);
-                ExampleName = _testGame.Game.Name;
+                ExampleName = _testGame?.Game?.Name ?? string.Empty;
                 ResolveConfig();
+                OnPropertyChanged();
             }
         }
 
@@ -241,6 +247,10 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 
         public void ResolveConfig()
         {
+            StringExpander?.ResetCache();
+
+            StringExpander?.TestExpansions(TestGame?.Game);
+
             ResolvedPath = StringExpander?.ReplaceAllPlaceholders(Path, TestGame?.Game, ExampleResult);
             ResolvedFileMask = StringExpander?.ReplaceAllPlaceholders(FileMask, TestGame?.Game, ExampleResult); ;
         }

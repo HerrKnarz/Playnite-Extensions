@@ -160,9 +160,10 @@
                                     Orientation="Horizontal">
                             <Button Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigSelectGame}"
                                     d:Content="Select game"
-                                    Command="{Binding SelectGameCommand}" />
+                                    Margin="0, 0, 10, 0"
+                                    Command="{Binding SelectGameCommand}"
+                                    Visibility="{Binding HiddenForSpecificGame}" />
                             <Button DockPanel.Dock="Top"
-                                    Margin="10, 0, 0, 0"
                                     Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig}"
                                     d:Content="Test config"
                                     Command="{Binding TestConfigCommand}" />
