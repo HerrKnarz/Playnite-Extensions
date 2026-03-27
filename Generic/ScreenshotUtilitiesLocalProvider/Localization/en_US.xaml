@@ -10,7 +10,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit">Edit</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove">Remove</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsDescription">Description</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Here you can add your screenshot folders. Path and File mask both can contain several placeholders like environment variables, playnite placeholders and some custom ones. A full list can be found in the edit dialog.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Here you can add your screenshot folders. Add all folders you want to check for all games using the + button in Global config. You can also add specific games to add folders that will only be checked for these games. Using the override check box global folders will be skipped. Path and File mask of each config can contain several placeholders like environment variables, playnite placeholders and some custom ones. A full list can be found in the edit dialog.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName">Name</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath">Path</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask">File mask</sys:String>
