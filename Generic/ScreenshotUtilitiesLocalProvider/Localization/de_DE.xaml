@@ -4,9 +4,9 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderName">Lokale Screenshots</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonAdd">Neu</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonAddGame">Spiel hinzufügen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit">Bearbeiten</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove">Entfernen</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonSort">Sortieren</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsDescription">Beschreibung</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Hier können Sie Ihre Screenshot-Ordner hinzufügen. Pfad und Dateimaske können beide verschiedene Platzhalter wie Umgebungsvariablen, Playnite Platzhalter und einige benutzerdefinierte enthalten. Eine vollständige Liste finden Sie im Bearbeitungsdialog.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName">Name</sys:String>
@@ -28,6 +28,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig">Test-Konfiguration</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut">Probiere die Formatierung des Spielnamens aus</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription">Mit diesen Kontrollkästchen können Sie formatieren, wie der Name des Spiels über den Platzhalter {GameName} zum Pfad hinzugefügt wird.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsGlobalConfig">Globale Konfiguration</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist">Der Pfad existiert nicht.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholder">Platzhalter</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription">Dies sind alle Platzhalter, die in den Feldern Pfad- und Dateimaske unterstützt werden. Unter ENV sind alle Windows-Umgebungsvariablen auf Ihrem PC. Sie können den aktuell ausgewählten Platzhalter mit Strg+C kopieren, um ihn in die Textfelder einzufügen.</sys:String>
