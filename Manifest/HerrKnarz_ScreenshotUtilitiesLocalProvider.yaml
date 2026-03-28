@@ -1,5 +1,14 @@
 AddonId: ScreenshotUtilitiesLocalProvider_a049eff8-fd41-4dbc-9e35-01acc6b1a0cb
 Packages:
+  - Version: 0.5.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-03-28
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-03-28/ScreenshotUtilitiesLocalProvider_a049eff8-fd41-4dbc-9e35-01acc6b1a0cb_0_5_0.pext
+    Changelog:
+      - Completely remade the addon settings.
+      - You can now add folder configurations for specific games and optionally override the global ones for these games.
+      - Added most placeholders supported by Screenshot Visualizer, so you can use them here, too. Includes Playnite variables and Environment variables.
+      - Added basic Steam config as default when first loading the addon.
   - Version: 0.1.1
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2026-03-13

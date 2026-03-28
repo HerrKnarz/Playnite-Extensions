@@ -94,7 +94,6 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/Solution Items/Manifests/">
-    <File Path="HerrKnarz_ScreenshotUtilitiesLocalProvider.yaml" />
     <File Path="Manifest/HerrKnarz_CompanyCompanion.yaml" />
     <File Path="Manifest/HerrKnarz_LinkUtilities.yaml" />
     <File Path="Manifest/HerrKnarz_MetadataUtilities.yaml" />
@@ -103,6 +102,7 @@
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesArcadeDatabaseProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesGOGProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesKLOVProvider.yaml" />
+    <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesLocalProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesSteamProvider.yaml" />
     <File Path="Manifest/HerrKnarz_WikipediaMetadata.yaml" />
   </Folder>
