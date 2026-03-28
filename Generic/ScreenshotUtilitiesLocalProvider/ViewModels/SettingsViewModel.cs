@@ -29,9 +29,18 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
 
             if (Settings.GameProfiles?.Count == 0)
             {
+                var defaultProfile = new GameProfile(default);
+
+                defaultProfile.FolderConfigs.Add(new FolderConfig
+                {
+                    Name = "Steam",
+                    FileMask = "*.jpg",
+                    Path = "{SteamScreenshotsDir}\\{SteamId}\\screenshots"
+                });
+
                 Settings.GameProfiles = new ObservableCollection<GameProfile>
                 {
-                    new GameProfile(default)
+                    defaultProfile
                 };
             }
             else

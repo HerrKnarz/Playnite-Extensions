@@ -75,6 +75,7 @@ namespace ScreenshotUtilitiesLocalProvider.Models
             set => SetValue(ref _name, value);
         }
 
+        [DontSerialize]
         public RelayCommand OpenResolvedFolderCommand => new RelayCommand(() =>
         {
             if (ResolvedPath == null)
@@ -142,6 +143,7 @@ namespace ScreenshotUtilitiesLocalProvider.Models
             set => SetValue(ref _resolvedPath, value);
         }
 
+        [DontSerialize]
         public RelayCommand SelectFolderCommand => new RelayCommand(() =>
         {
             var path = API.Instance.Dialogs.SelectFolder(Path);
