@@ -5,6 +5,7 @@ using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using ScreenshotUtilitiesLocalProvider.Models;
 using ScreenshotUtilitiesLocalProvider.ViewModels;
 using ScreenshotUtilitiesLocalProvider.Views;
 using System;
@@ -17,6 +18,7 @@ namespace ScreenshotUtilitiesLocalProvider
 {
     public class ScreenshotUtilitiesLocalProvider : GenericPlugin, IScreenshotProviderPlugin
     {
+        public StringExpander StringExpander = new StringExpander();
         private Game _game;
         private ScreenshotGroup _screenshotGroup;
 
@@ -51,6 +53,8 @@ namespace ScreenshotUtilitiesLocalProvider
 
         public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
 
+        public async Task<bool> HandleGameStoppedAsync(Game game) => await FetchScreenshotsAsync(game, 0, true);
+
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled)
@@ -58,16 +62,11 @@ namespace ScreenshotUtilitiesLocalProvider
                 var notificationMessage = new NotificationMessage("Screenshot Utilities Local Provider", "Screenshot Utilities has to be installed for this addon to work!", NotificationType.Error);
 
                 PlayniteApi.Notifications.Add(notificationMessage);
+
+                return;
             }
-        }
 
-        public override void OnGameStopped(OnGameStoppedEventArgs args)
-        {
-            base.OnGameStopped(args);
-
-            FetchScreenshotsAsync(args.Game, 0, true);
-
-            // TODO: Add method to refresh screenshots in the main addon after this one finished.
+            Settings.Settings.GameProfiles.ForEach(p => p.PrepareProfile(StringExpander, p.GameId));
         }
 
         private async Task<bool> FetchScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate)
@@ -103,16 +102,32 @@ namespace ScreenshotUtilitiesLocalProvider
 
                 var screenshots = new List<Screenshot>();
 
-                foreach (var folderConfig in Settings.Settings.FolderConfigs.Where(c => c.Active))
+                var folderConfigs = new List<FolderConfig>();
+
+                var gameProfile = Settings.Settings.GameProfiles.FirstOrDefault(p => p.GameId.Equals(_game.Id));
+
+                if (gameProfile != null)
                 {
+                    folderConfigs.AddRange(gameProfile.FolderConfigs?.Where(c => c.Active));
+                }
+
+                if (!gameProfile?.OverrideGlobalConfigs ?? true)
+                {
+                    var globalProfile = Settings.Settings.GameProfiles.FirstOrDefault(p => p.GameId.Equals(default));
+
+                    folderConfigs.AddRange(globalProfile.FolderConfigs?.Where(c => c.Active));
+                }
+
+                foreach (var folderConfig in folderConfigs)
+                {
+                    // TODO: Try to distinct images by path here.
                     screenshots.AddRange(folderConfig.LoadScreenshots(_game));
                 }
 
                 var screenshotsToRemove = _screenshotGroup.Screenshots.Where(s => !screenshots.Any(f => f.Path == s.Path)).ToList();
-                var screenshotsToAdd = screenshots.Where(s => !_screenshotGroup.Screenshots.Any(f => f.Path == s.Path)).ToList();
+                var screenshotsToAdd = screenshots.Where(s => !_screenshotGroup.Screenshots.Any(f => f.Path == s.Path)).GroupBy(s => s.Path).Select(s => s.First()).ToList();
 
                 _screenshotGroup.Screenshots.RemoveRange(screenshotsToRemove);
-
                 _screenshotGroup.Screenshots.AddRange(screenshotsToAdd);
 
                 var sortOrder = 0;

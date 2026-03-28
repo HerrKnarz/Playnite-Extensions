@@ -1,94 +1,217 @@
 ﻿using KNARZhelper;
+using KNARZhelper.GamesCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
+using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
 namespace ScreenshotUtilitiesLocalProvider.Models
 {
-    public class FolderConfig
+    public class FolderConfig : ObservableObject
     {
-        private readonly Guid _gogId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
-        private readonly Guid _gogOssId = Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C");
-        private readonly string _placeholderGameName = "{GameName}";
-        private readonly string _placeholderGogId = "{GogId}";
-        private readonly string _placeholderRomName = "{RomName}";
-        private readonly string _placeholderSteamId = "{SteamId}";
-        public bool Active { get; set; } = true;
-        public bool EscapeDataString { get; set; } = false;
-        public string FileMask { get; set; } = "*.jpg";
-        public string Name { get; set; }
-        public string Path { get; set; }
-        public bool RemoveDiacritics { get; set; } = false;
-        public bool RemoveEditionSuffix { get; set; } = false;
-        public bool RemoveHyphens { get; set; } = false;
-        public bool RemoveSpecialChars { get; set; } = false;
-        public bool RemoveWhitespaces { get; set; } = false;
-        public bool ReturnsSameUrl { get; set; } = false;
-        public bool UnderscoresToWhitespaces { get; set; } = false;
-        public bool UrlEncode { get; set; } = false;
-        public bool WhitespacesToHyphens { get; set; } = false;
-        public bool WhitespacesToUnderscores { get; set; } = false;
+        private bool _active = true;
+        private string _exampleName = "Baldur's Gate 3";
+        private string _exampleResult = "";
+        private string _fileMask = "*.jpg";
+        private string _invalidCharReplacement = "_";
+        private string _name = string.Empty;
+        private string _path = string.Empty;
+        private bool _removeDiacritics = false;
+        private bool _removeEditionSuffix = false;
+        private bool _removeHyphens = false;
+        private bool _removeSpecialChars = false;
+        private bool _removeWhitespaces = false;
+        private string _resolvedFileMask = string.Empty;
+        private string _resolvedPath = string.Empty;
+        private GameEx _testGame = new GameEx();
+        private bool _underscoresToWhitespaces = false;
+        private bool _whitespacesToHyphens = false;
+        private bool _whitespacesToUnderscores = false;
+
+        public bool Active
+        {
+            get => _active;
+            set => SetValue(ref _active, value);
+        }
+
+        [DontSerialize]
+        public string ExampleName
+        {
+            get => _exampleName;
+            set
+            {
+                SetValue(ref _exampleName, value);
+                ResolveFormat();
+            }
+        }
+
+        [DontSerialize]
+        public string ExampleResult
+        {
+            get => _exampleResult;
+            set => SetValue(ref _exampleResult, value);
+        }
+
+        public string FileMask
+        {
+            get => _fileMask;
+            set => SetValue(ref _fileMask, value);
+        }
+
+        public string InvalidCharReplacement
+        {
+            get => _invalidCharReplacement;
+            set => SetValue(ref _invalidCharReplacement, value);
+        }
+
+        public string Name
+        {
+            get => _name;
+            set => SetValue(ref _name, value);
+        }
+
+        [DontSerialize]
+        public RelayCommand OpenResolvedFolderCommand => new RelayCommand(() =>
+        {
+            if (ResolvedPath == null)
+            {
+                ResolveConfig();
+            }
+
+            if (Directory.Exists(ResolvedPath))
+            {
+                Process.Start("explorer.exe", ResolvedPath);
+
+                return;
+            }
+
+            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist"));
+        });
+
+        public string Path
+        {
+            get => _path;
+            set => SetValue(ref _path, value);
+        }
+
+        public bool RemoveDiacritics
+        {
+            get => _removeDiacritics;
+            set => SetValue(ref _removeDiacritics, value);
+        }
+
+        public bool RemoveEditionSuffix
+        {
+            get => _removeEditionSuffix;
+            set => SetValue(ref _removeEditionSuffix, value);
+        }
+
+        public bool RemoveHyphens
+        {
+            get => _removeHyphens;
+            set => SetValue(ref _removeHyphens, value);
+        }
+
+        public bool RemoveSpecialChars
+        {
+            get => _removeSpecialChars;
+            set => SetValue(ref _removeSpecialChars, value);
+        }
+
+        public bool RemoveWhitespaces
+        {
+            get => _removeWhitespaces;
+            set => SetValue(ref _removeWhitespaces, value);
+        }
+
+        [DontSerialize]
+        public string ResolvedFileMask
+        {
+            get => _resolvedFileMask;
+            set => SetValue(ref _resolvedFileMask, value);
+        }
+
+        [DontSerialize]
+        public string ResolvedPath
+        {
+            get => _resolvedPath;
+            set => SetValue(ref _resolvedPath, value);
+        }
+
+        [DontSerialize]
+        public RelayCommand SelectFolderCommand => new RelayCommand(() =>
+        {
+            var path = API.Instance.Dialogs.SelectFolder(Path);
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                Path = path;
+            }
+        });
+
+        [DontSerialize]
+        public StringExpander StringExpander { get; set; }
+
+        [DontSerialize]
+        public GameEx TestGame
+        {
+            get => _testGame;
+            set
+            {
+                SetValue(ref _testGame, value);
+                ExampleName = _testGame?.Game?.Name ?? string.Empty;
+                ResolveConfig();
+                OnPropertyChanged();
+            }
+        }
+
+        public bool UnderscoresToWhitespaces
+        {
+            get => _underscoresToWhitespaces;
+            set => SetValue(ref _underscoresToWhitespaces, value);
+        }
+
+        public bool WhitespacesToHyphens
+        {
+            get => _whitespacesToHyphens;
+            set => SetValue(ref _whitespacesToHyphens, value);
+        }
+
+        public bool WhitespacesToUnderscores
+        {
+            get => _whitespacesToUnderscores;
+            set => SetValue(ref _whitespacesToUnderscores, value);
+        }
 
         public string FormatGameName(string gameName)
         {
-            if (RemoveEditionSuffix)
+            var formatParameters = new StringFormatParameters
             {
-                gameName = gameName.RemoveEditionSuffix();
-            }
+                InvalidCharReplacement = InvalidCharReplacement,
+                RemoveDiacritics = RemoveDiacritics,
+                RemoveEditionSuffix = RemoveEditionSuffix,
+                RemoveHyphens = RemoveHyphens,
+                RemoveSpecialChars = RemoveSpecialChars,
+                RemoveWhitespaces = RemoveWhitespaces,
+                ReplaceInvalidFileNameChars = true,
+                UnderscoresToWhitespaces = UnderscoresToWhitespaces,
+                WhitespacesToHyphens = WhitespacesToHyphens,
+                WhitespacesToUnderscores = WhitespacesToUnderscores
+            };
 
-            if (RemoveHyphens)
-            {
-                gameName = gameName.Replace("-", "");
-            }
-
-            if (UnderscoresToWhitespaces)
-            {
-                gameName = gameName.Replace("_", " ");
-            }
-
-            if (RemoveSpecialChars)
-            {
-                gameName = gameName.RemoveSpecialChars();
-            }
-
-            if (RemoveDiacritics)
-            {
-                gameName = gameName.RemoveDiacritics();
-            }
-
-            gameName = RemoveWhitespaces ? gameName.Replace(" ", "") : gameName.CollapseWhitespaces();
-
-            if (WhitespacesToHyphens)
-            {
-                gameName = gameName.Replace(" ", "-");
-            }
-
-            if (WhitespacesToUnderscores)
-            {
-                gameName = gameName.Replace(" ", "_");
-            }
-
-            if (EscapeDataString)
-            {
-                gameName = gameName.EscapeDataString();
-            }
-
-            if (UrlEncode)
-            {
-                gameName = gameName.UrlEncode();
-            }
-
-            return gameName;
+            return gameName.FormatString(formatParameters);
         }
 
         public List<Screenshot> LoadScreenshots(Game game)
         {
-            var folder = ReplacePlaceholders(Path, game);
-            var fileMask = ReplacePlaceholders(FileMask, game);
-
+            var gameName = FormatGameName(game.Name);
+            var folder = StringExpander.ReplaceAllPlaceholders(Path, game, gameName);
+            var fileMask = StringExpander.ReplaceAllPlaceholders(FileMask, game, gameName);
             var result = new List<Screenshot>();
 
             try
@@ -124,57 +247,16 @@ namespace ScreenshotUtilitiesLocalProvider.Models
             return result;
         }
 
-        private string ReplacePlaceholders(string path, Game game)
+        public void ResolveConfig()
         {
-            var result = path;
+            StringExpander?.ResetCache();
 
-            if (result.Contains(_placeholderGameName))
-            {
-                var gameName = FormatGameName(game.Name);
+            StringExpander?.TestExpansions(TestGame?.Game);
 
-                if (string.IsNullOrEmpty(gameName))
-                {
-                    return string.Empty;
-                }
-
-                result = result.Replace(_placeholderGameName, gameName);
-            }
-
-            if (result.Contains(_placeholderSteamId))
-            {
-                var steamId = SteamHelper.GetSteamId(game);
-
-                if (string.IsNullOrEmpty(steamId))
-                {
-                    return string.Empty;
-                }
-
-                result = result.Replace(_placeholderSteamId, steamId);
-            }
-
-            if (result.Contains(_placeholderGogId))
-            {
-                if (!game.PluginId.IsOneOf(_gogId, _gogOssId))
-                {
-                    return string.Empty;
-                }
-
-                result = result.Replace(_placeholderGogId, game.GameId);
-            }
-
-            if (result.Contains(_placeholderRomName))
-            {
-                if (game.IsInstalled && (game.Roms?.Any() ?? false))
-                {
-                    result = result.Replace(_placeholderRomName, System.IO.Path.GetFileNameWithoutExtension(game.Roms[0].Path));
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-
-            return result;
+            ResolvedPath = StringExpander?.ReplaceAllPlaceholders(Path, TestGame?.Game, ExampleResult);
+            ResolvedFileMask = StringExpander?.ReplaceAllPlaceholders(FileMask, TestGame?.Game, ExampleResult); ;
         }
+
+        public void ResolveFormat() => ExampleResult = FormatGameName(ExampleName) ?? string.Empty;
     }
 }

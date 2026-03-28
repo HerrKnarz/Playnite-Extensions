@@ -6,38 +6,59 @@
              d:DataContext="{d:DesignInstance Type=viewModels:AddNewObjectViewModel}"
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="120"
+             d:DesignWidth="560">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <d:ResourceDictionary Source="/MetadataUtilities;component/Localization/en_US.xaml" />
+                <ResourceDictionary Source="/MetadataUtilities;component/Shared/Controls/CommonStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel Margin="15" FocusManager.FocusedElement="{Binding ElementName=TxtName}">
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left">
+    <DockPanel Margin="15"
+               FocusManager.FocusedElement="{Binding ElementName=TxtName}"
+               d:Background="AliceBlue">
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left">
             <ComboBox SelectedValue="{Binding NewObject.Type}"
                       ItemsSource="{Binding FieldValuePairs}"
-                      SelectedValuePath="Key" DisplayMemberPath="Value"
-                      Width="100" IsEnabled="{Binding EnableTypeSelection}" />
-            <ComboBox SelectedItem="{Binding NewObject.Prefix}" ItemsSource="{Binding Prefixes}"
-                      Margin="10,0,0,0" Width="100" Visibility="{Binding PrefixVisibility}" />
-            <TextBox Name="TxtName" Margin="10,0,0,0" Width="300" AcceptsReturn="False"
+                      SelectedValuePath="Key"
+                      DisplayMemberPath="Value"
+                      Width="100"
+                      IsEnabled="{Binding EnableTypeSelection}" />
+            <ComboBox SelectedItem="{Binding NewObject.Prefix}"
+                      ItemsSource="{Binding Prefixes}"
+                      Margin="10,0,0,0"
+                      Width="100"
+                      Visibility="{Binding PrefixVisibility}" />
+            <TextBox Name="TxtName"
+                     Margin="10,0,0,0"
+                     Width="300"
+                     AcceptsReturn="False"
                      Text="{Binding NewObject.EditName, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
-                    <KeyBinding
-                        Key="Enter"
-                        Command="{Binding OkCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                    <KeyBinding Key="Enter"
+                                Command="{Binding OkCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
                 </TextBox.InputBindings>
             </TextBox>
         </StackPanel>
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,15,0,0" HorizontalAlignment="Center">
-            <Button Content="{DynamicResource LOCOKLabel}" Style="{StaticResource BottomButton}"
+        <StackPanel DockPanel.Dock="Bottom"
+                    Orientation="Horizontal"
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Center">
+            <Button Content="{DynamicResource LOCOKLabel}"
+                    d:Content="OK"
+                    Style="{StaticResource BottomButton}"
+                    d:Style="{StaticResource KNARZBottomButton}"
                     Command="{Binding OkCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-            <Button Content="{DynamicResource LOCCancelLabel}" IsCancel="True"
-                    Style="{StaticResource BottomButton}" />
+            <Button Content="{DynamicResource LOCCancelLabel}"
+                    d:Content="Cancel"
+                    IsCancel="True"
+                    Style="{StaticResource BottomButton}"
+                    d:Style="{StaticResource KNARZBottomButton}" />
         </StackPanel>
     </DockPanel>
 </UserControl>

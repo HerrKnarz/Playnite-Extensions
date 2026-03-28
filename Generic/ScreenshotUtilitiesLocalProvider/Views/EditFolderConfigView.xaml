@@ -1,0 +1,301 @@
+﻿<UserControl x:Class="ScreenshotUtilitiesLocalProvider.Views.EditFolderConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:ScreenshotUtilitiesLocalProvider.ViewModels"
+             d:DataContext="{d:DesignInstance Type=vm:EditFolderConfigViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="1000">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <CollectionViewSource x:Key='GroupedItems'
+                                  Source="{Binding FolderConfig.StringExpander.Placeholders}">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Type" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+
+            <ResourceDictionary.MergedDictionaries>
+                <d:ResourceDictionary Source="/ScreenshotUtilitiesLocalProvider;component/Localization/en_US.xaml" />
+                <ResourceDictionary Source="/ScreenshotUtilitiesLocalProvider;component/Shared/Controls/CommonStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel>
+        <Border DockPanel.Dock="Top"
+                BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
+                d:BorderBrush="{DynamicResource KNARZDummyBrush}"
+                BorderThickness="0,1,0,0"
+                Margin="0,0,0,0" />
+        <Border DockPanel.Dock="Bottom"
+                BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
+                d:BorderBrush="{DynamicResource KNARZDummyBrush}"
+                BorderThickness="0,1,0,0"
+                Margin="0,10,0,0"
+                d:Background="AliceBlue">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="10">
+                <Button Content="{DynamicResource LOCSaveLabel}"
+                        d:Content="Save"
+                        Command="{Binding SaveCommand}"
+                        Style="{DynamicResource BottomButton}"
+                        d:Style="{DynamicResource KNARZBottomButton}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                        IsDefault="True" />
+                <Button Content="{DynamicResource LOCCancelLabel}"
+                        d:Content="Cancel"
+                        Style="{DynamicResource BottomButton}"
+                        d:Style="{DynamicResource KNARZBottomButton}"
+                        IsCancel="True" />
+            </StackPanel>
+        </Border>
+        <UniformGrid Columns="2"
+                     DockPanel.Dock="Top"
+                     d:Background="AliceBlue"
+                     FocusManager.FocusedElement="{Binding ElementName=txtName}">
+            <StackPanel Margin="15"
+                        Orientation="Vertical">
+                <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName}" />
+                <TextBox Text="{Binding FolderConfig.Name}"
+                         Name="txtName" />
+
+                <Label Margin="0,15,0,0"
+                       Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath}" />
+                <DockPanel Margin="0, 5, 0, 0">
+                    <Button Content="&#xec5b;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsSelectFolder}"
+                            Margin="10,0,0,0"
+                            DockPanel.Dock="Right"
+                            Command="{Binding FolderConfig.SelectFolderCommand}" />
+                    <TextBox Text="{Binding FolderConfig.Path}"
+                             DockPanel.Dock="Left" />
+                </DockPanel>
+
+                <Label Margin="0,15,0,0"
+                       Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask}" />
+                <TextBox Margin="0, 5, 0, 0"
+                         Text="{Binding FolderConfig.FileMask}" />
+
+                <CheckBox Margin="0,15,0,0"
+                          Content="{DynamicResource LOCEnabledTitle}"
+                          d:Content="Enabled"
+                          IsChecked="{Binding FolderConfig.Active}" />
+
+                <GroupBox Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig}"
+                          d:Header="Test config"
+                          HorizontalAlignment="Stretch"
+                          Padding="10"
+                          Margin="0, 25, 0, 0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath}"
+                               d:Content="Path"
+                               Grid.Row="0"
+                               Grid.Column="0" />
+                        <DockPanel Grid.Row="0"
+                                   Grid.Column="1"
+                                   Margin="10, 0, 0, 0">
+                            <Button Content="&#xec5b;"
+                                    Style="{DynamicResource KNARZIconButton}"
+                                    Margin="10,0,0,0"
+                                    DockPanel.Dock="Right"
+                                    VerticalAlignment="Center"
+                                    Command="{Binding FolderConfig.OpenResolvedFolderCommand}" />
+                            <TextBlock Text="{Binding FolderConfig.ResolvedPath}"
+                                       d:Text="This is a path that is very long and has to wrap at the end somewhere"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextBrush}"
+                                       d:Foreground="Black"
+                                       TextWrapping="Wrap"
+                                       DockPanel.Dock="Left" />
+                        </DockPanel>
+
+                        <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask}"
+                               d:Content="File mask"
+                               Margin="0, 15, 0, 0"
+                               Grid.Row="1"
+                               Grid.Column="0" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Margin="10, 15, 0, 0"
+                                   Text="{Binding FolderConfig.ResolvedFileMask}"
+                                   d:Text="Thisisafilemaskasaverylongwordwithoutspacestoseeifitstillwrapslookslikeitdoes"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextBrush}"
+                                   d:Foreground="Black"
+                                   TextWrapping="Wrap" />
+
+                        <Label Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName}"
+                               d:Content="Name"
+                               Margin="0, 15, 0, 0"
+                               Grid.Row="2"
+                               Grid.Column="0" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Margin="10, 15, 0, 0"
+                                   Text="{Binding FolderConfig.ExampleResult}"
+                                   d:Text="This is a game name"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextBrush}"
+                                   d:Foreground="Black"
+                                   TextWrapping="Wrap" />
+
+                        <StackPanel Grid.Row="3"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0, 15, 0, 0"
+                                    Orientation="Horizontal">
+                            <Button Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigSelectGame}"
+                                    d:Content="Select game"
+                                    Margin="0, 0, 10, 0"
+                                    Command="{Binding SelectGameCommand}"
+                                    Visibility="{Binding HiddenForSpecificGame}" />
+                            <Button DockPanel.Dock="Top"
+                                    Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig}"
+                                    d:Content="Test config"
+                                    Command="{Binding TestConfigCommand}" />
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+            <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        Margin="0, 0, 15, 5">
+                <TabItem Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsTabPlaceholderLegend}">
+                    <Border BorderBrush="{DynamicResource NormalBorderBrush}"
+                            BorderThickness="{DynamicResource ControlBorderThickness}"
+                            d:BorderBrush="Blue"
+                            d:BorderThickness="1">
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Top"
+                                       Margin="10"
+                                       TextWrapping="Wrap"
+                                       Text="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription}" />
+                            <ListView Name="GridPlaceholder"
+                                      DockPanel.Dock="Top"
+                                      SelectionMode="Single"
+                                      ItemsSource="{Binding Source={StaticResource GroupedItems}}"
+                                      SelectedItem="{Binding SelectedPlaceholder}"
+                                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                      ScrollViewer.CanContentScroll="False"
+                                      VirtualizingPanel.ScrollUnit="Pixel"
+                                      VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                      VirtualizingPanel.VirtualizationMode="Recycling">
+                                <ListView.InputBindings>
+                                    <KeyBinding Gesture="CTRL+C"
+                                                Command="{Binding Path=DataContext.CopyPlaceholderCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                </ListView.InputBindings>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsPlaceholder}"
+                                                        Width="Auto">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Placeholder}"
+                                                               ToolTip="{Binding Description}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsResult}"
+                                                        Width="Auto"
+                                                        DisplayMemberBinding="{Binding Result}" />
+                                    </GridView>
+                                </ListView.View>
+                                <ListView.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.ContainerStyle>
+                                            <Style TargetType="{x:Type GroupItem}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <Expander IsExpanded="True">
+                                                                <Expander.Header>
+                                                                    <TextBlock Text="{Binding Name}"
+                                                                               FontWeight="Bold"
+                                                                               Foreground="{DynamicResource TextBrush}"
+                                                                               VerticalAlignment="Bottom" />
+                                                                </Expander.Header>
+                                                                <ItemsPresenter />
+                                                            </Expander>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </GroupStyle.ContainerStyle>
+                                    </GroupStyle>
+                                </ListView.GroupStyle>
+                            </ListView>
+                        </DockPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsTabGameNameConfig}">
+                    <Border BorderBrush="{DynamicResource NormalBorderBrush}"
+                            d:BorderBrush="{DynamicResource KNARZDummyBrush}"
+                            BorderThickness="{DynamicResource ControlBorderThickness}"
+                            d:BorderThickness="1">
+                        <StackPanel Margin="15"
+                                    Grid.Column="1"
+                                    Orientation="Vertical">
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription}" />
+                            <CheckBox Margin="0, 15, 0, 0"
+                                      IsChecked="{Binding FolderConfig.RemoveSpecialChars}"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveSpecialChars}"
+                                      ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveSpecialChars}" />
+
+                            <CheckBox Margin="0, 15, 0, 0"
+                                      IsChecked="{Binding FolderConfig.RemoveHyphens}"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveHyphens}" />
+
+                            <CheckBox Margin="0, 15, 0, 0"
+                                      IsChecked="{Binding FolderConfig.RemoveWhitespaces}"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveWhitespaces}" />
+
+                            <CheckBox Margin="0, 15, 0, 0"
+                                      IsChecked="{Binding FolderConfig.RemoveDiacritics}"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveDiacritics}" />
+
+                            <CheckBox Margin="0, 15, 0, 0"
+                                      IsChecked="{Binding FolderConfig.RemoveEditionSuffix}"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveEditionSuffix}"
+                                      ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix}" />
+
+                            <CheckBox Margin="0, 15, 0, 0"
+                                      IsChecked="{Binding FolderConfig.WhitespacesToHyphens}"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigWhitespacesToHyphens}" />
+
+                            <CheckBox Margin="0, 15, 0, 0"
+                                      IsChecked="{Binding FolderConfig.UnderscoresToWhitespaces}"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigUnderscoresToWhitespaces}" />
+
+                            <CheckBox Margin="0, 15, 0, 0"
+                                      IsChecked="{Binding FolderConfig.WhitespacesToUnderscores}"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigWhitespacesToUnderscores}" />
+
+                            <Label Margin="0,15,0,0"
+                                   Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigReplaceInvalidCharsWith}" />
+                            <TextBox Margin="0, 5, 0, 0"
+                                     Text="{Binding FolderConfig.InvalidCharReplacement}"
+                                     ToolTip="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith}" />
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+            </TabControl>
+        </UniformGrid>
+    </DockPanel>
+</UserControl>

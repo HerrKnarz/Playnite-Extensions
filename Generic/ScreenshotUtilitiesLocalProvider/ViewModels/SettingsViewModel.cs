@@ -1,6 +1,10 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using KNARZhelper.GamesCommon;
+using Playnite.SDK;
 using Playnite.SDK.Data;
+using Playnite.SDK.Models;
 using ScreenshotUtilitiesLocalProvider.Models;
+using ScreenshotUtilitiesLocalProvider.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,9 +15,8 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
     public class SettingsViewModel : ObservableObject, ISettings
     {
         private readonly ScreenshotUtilitiesLocalProvider _plugin;
-        private string _exampleName = "Baldur's Gate 3";
-        private string _exampleResult = "";
-        private FolderConfig _selectedItem;
+        private FolderConfig _selectedFolderConfig;
+        private GameProfile _selectedGameProfile;
         private SettingsModel _settings;
 
         public SettingsViewModel(ScreenshotUtilitiesLocalProvider plugin)
@@ -24,67 +27,149 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
 
             Settings = savedSettings ?? new SettingsModel();
 
-            if (Settings.FolderConfigs is null)
+            if (Settings.GameProfiles?.Count == 0)
             {
-                Settings.FolderConfigs = new ObservableCollection<FolderConfig>();
+                var defaultProfile = new GameProfile(default);
+
+                defaultProfile.FolderConfigs.Add(new FolderConfig
+                {
+                    Name = "Steam",
+                    FileMask = "*.jpg",
+                    Path = "{SteamScreenshotsDir}\\{SteamId}\\screenshots"
+                });
+
+                Settings.GameProfiles = new ObservableCollection<GameProfile>
+                {
+                    defaultProfile
+                };
             }
             else
             {
-                SortFolderConfigs();
+                SortGameProfiles();
+            }
+
+            SelectedGameProfile = Settings.GameProfiles.FirstOrDefault();
+
+            if (Settings.FolderConfigs?.Any() ?? false)
+            {
+                SelectedGameProfile.FolderConfigs.AddMissing(Settings.FolderConfigs);
+
+                Settings.FolderConfigs = null;
+
+                _plugin.SavePluginSettings(Settings);
             }
         }
 
-        public RelayCommand AddFolderConfigCommand => new RelayCommand(() => Settings.FolderConfigs.Add(new FolderConfig()));
-
-        public string ExampleName
+        public RelayCommand<object> AddFolderConfigCommand => new RelayCommand<object>(item =>
         {
-            get => _exampleName;
+            if (item == null)
+            {
+                return;
+            }
+
+            SelectedGameProfile = item as GameProfile;
+
+            var configToEdit = new FolderConfig();
+
+            if (!OpenEditDialog(ref configToEdit, SelectedGameProfile.Game))
+            {
+                return;
+            }
+
+            SelectedGameProfile.FolderConfigs.Add(configToEdit);
+
+            SelectedGameProfile.FolderConfigs.Sort(x => x.Name);
+
+            SelectedFolderConfig = configToEdit;
+        });
+
+        public RelayCommand AddGameProfileCommand => new RelayCommand(() =>
+        {
+            var settings = new GameSearchSettings();
+
+            var tempGame = new GameEx();
+
+            var viewModel = new SearchGameViewModel(settings, null, false, ResourceProvider.GetString("LOCOKLabel"), tempGame);
+
+            var searchGameView = new SearchGameView();
+
+            var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCSearchLabel"),
+                settings.GameSearchWindowWidth, settings.GameSearchWindowHeight);
+
+            window.Content = searchGameView;
+            window.DataContext = viewModel;
+
+            if (!window.ShowDialog() ?? true)
+            {
+                return;
+            }
+
+            var ProfileToAdd = Settings.GameProfiles.FirstOrDefault(p => p.GameId == tempGame.Game.Id);
+
+            if (ProfileToAdd == null)
+            {
+                ProfileToAdd = new GameProfile
+                {
+                    GameId = tempGame.Game.Id
+                };
+
+                Settings.GameProfiles.Add(ProfileToAdd);
+
+                SortGameProfiles(false);
+            }
+
+            SelectedGameProfile = ProfileToAdd;
+        });
+
+        public RelayCommand<object> EditFolderConfigCommand => new RelayCommand<object>(item =>
+        {
+            var selectedConfig = item as FolderConfig;
+
+            var configToEdit = selectedConfig.DeepClone();
+
+            if (!OpenEditDialog(ref configToEdit, SelectedGameProfile.Game))
+            {
+                return;
+            }
+
+            selectedConfig.Active = configToEdit.Active;
+            selectedConfig.FileMask = configToEdit.FileMask;
+            selectedConfig.InvalidCharReplacement = configToEdit.InvalidCharReplacement;
+            selectedConfig.Name = configToEdit.Name;
+            selectedConfig.Path = configToEdit.Path;
+            selectedConfig.RemoveDiacritics = configToEdit.RemoveDiacritics;
+            selectedConfig.RemoveEditionSuffix = configToEdit.RemoveEditionSuffix;
+            selectedConfig.RemoveHyphens = configToEdit.RemoveHyphens;
+            selectedConfig.RemoveSpecialChars = configToEdit.RemoveSpecialChars;
+            selectedConfig.RemoveWhitespaces = configToEdit.RemoveWhitespaces;
+            selectedConfig.UnderscoresToWhitespaces = configToEdit.UnderscoresToWhitespaces;
+            selectedConfig.WhitespacesToHyphens = configToEdit.WhitespacesToHyphens;
+            selectedConfig.WhitespacesToUnderscores = configToEdit.WhitespacesToUnderscores;
+        });
+
+        public RelayCommand<object> RemoveFolderConfigCommand => new RelayCommand<object>(item => SelectedGameProfile.FolderConfigs.Remove(item as FolderConfig));
+
+        public RelayCommand<object> RemoveGameProfileCommand => new RelayCommand<object>(item => Settings.GameProfiles.Remove(item as GameProfile));
+
+        public FolderConfig SelectedFolderConfig
+        {
+            get => _selectedFolderConfig;
             set
             {
-                _exampleName = value;
-                ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty;
+                _selectedFolderConfig = value;
                 OnPropertyChanged();
             }
         }
 
-        public string ExampleResult
+        public GameProfile SelectedGameProfile
         {
-            get => _exampleResult;
+            get => _selectedGameProfile;
             set
             {
-                _exampleResult = value;
+                _selectedGameProfile = value;
                 OnPropertyChanged();
             }
         }
-
-        public RelayCommand<IList<object>> RemoveFolderConfigCommand => new RelayCommand<IList<object>>(items =>
-                        {
-                            foreach (var item in items.ToList().Cast<FolderConfig>())
-                            {
-                                Settings.FolderConfigs.Remove(item);
-                            }
-                        }, items => items?.Any() ?? false);
-
-        public FolderConfig SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                _selectedItem = value;
-                ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty;
-                OnPropertyChanged();
-            }
-        }
-
-        public RelayCommand SelectFolderCommand => new RelayCommand(() =>
-                                                                {
-                                                                    var path = API.Instance.Dialogs.SelectFolder(_selectedItem.Path);
-
-                                                                    if (string.IsNullOrEmpty(path))
-                                                                    {
-                                                                        _selectedItem.Path = path;
-                                                                    }
-                                                                });
 
         public SettingsModel Settings
         {
@@ -96,21 +181,38 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             }
         }
 
-        public RelayCommand SortFolderConfigsCommand => new RelayCommand(SortFolderConfigs);
-
-        public RelayCommand TestFolderConfigCommand => new RelayCommand(() =>
-            ExampleResult = _selectedItem?.FormatGameName(_exampleName) ?? string.Empty);
-
         private SettingsModel EditingClone { get; set; }
 
         public void BeginEdit() =>
             EditingClone = Serialization.GetClone(Settings);
 
-        public void CancelEdit() =>
-                        Settings.FolderConfigs = EditingClone.FolderConfigs;
+        public void CancelEdit()
+        {
+            return;
+        }
 
-        public void EndEdit() =>
-            _plugin.SavePluginSettings(Settings);
+        public void EndEdit() => _plugin.SavePluginSettings(Settings);
+
+        public bool OpenEditDialog(ref FolderConfig configToEdit, Game game = null)
+        {
+            try
+            {
+                configToEdit.StringExpander = _plugin.StringExpander;
+                configToEdit.TestGame = new GameEx(game);
+
+                var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit"), 1200, 800);
+                window.Content = new EditFolderConfigView();
+                window.DataContext = new EditFolderConfigViewModel(configToEdit, SelectedGameProfile.GameId != default);
+
+                return window.ShowDialog() ?? false;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception, "Error during initializing edit folder config dialog", true);
+
+                return false;
+            }
+        }
 
         public bool VerifySettings(out List<string> errors)
         {
@@ -118,11 +220,14 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             return true;
         }
 
-        private void SortFolderConfigs()
+        private void SortGameProfiles(bool sortConfigs = true)
         {
-            Settings.FolderConfigs = new ObservableCollection<FolderConfig>(Settings.FolderConfigs
-                .OrderBy(x => x.Name, StringComparer.CurrentCultureIgnoreCase)
-                .ToList());
+            Settings.GameProfiles.Sort(p => $"{(p.GameId == default ? 1 : 2)}#{p.Game?.Name ?? string.Empty}");
+
+            if (sortConfigs)
+            {
+                Settings.GameProfiles.ForEach(p => p.FolderConfigs.Sort(x => x.Name));
+            }
         }
     }
 }

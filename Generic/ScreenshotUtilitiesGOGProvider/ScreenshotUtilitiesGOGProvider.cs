@@ -69,6 +69,8 @@ namespace ScreenshotUtilitiesGOGProvider
 
         public override UserControl GetSettingsView(bool firstRunSettings) => null;
 
+        public async Task<bool> HandleGameStoppedAsync(Game game) => false;
+
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             if (!ScreenshotHelper.IsScreenshotUtilitiesInstalled)

@@ -17,7 +17,7 @@ namespace MetadataUtilities.Actions
         /// </summary>
         string ResultMessage { get; }
 
-        void DoForAll(List<MyGame> games,
+        void DoForAll(List<GameExMeta> games,
             bool showDialog = false, ActionModifierType actionModifier = ActionModifierType.None, object item = null);
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace MetadataUtilities.Actions
         /// be executed here!
         /// </param>
         /// <returns>true, if the action was successful</returns>
-        bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true);
+        bool Execute(GameExMeta game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true);
 
         /// <summary>
         /// Executes follow-up steps after the execute method was run. Should be executed after a

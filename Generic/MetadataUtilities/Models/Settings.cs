@@ -1,11 +1,12 @@
-﻿using KNARZhelper.MetadataCommon;
+﻿using KNARZhelper.GamesCommon;
+using KNARZhelper.MetadataCommon;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace MetadataUtilities.Models
 {
-    public class Settings : ObservableObject
+    public class Settings : ObservableObject, IGameSearchSettings
     {
         private bool _addRemovedToUnwanted;
         private bool _alwaysSaveManualMergeRules;

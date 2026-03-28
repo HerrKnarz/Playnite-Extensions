@@ -160,6 +160,8 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
 
         public async Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => await FetchScreenshotsAsync(game, 0, true, gameIdentifier);
 
+        public async Task<bool> HandleGameStoppedAsync(Game game) => false;
+
         public async Task<bool> LoadScreenshotsFromSourceAsync()
         {
             var url = $"{_pageUrl}{_screenshotGroup.GameIdentifier}";

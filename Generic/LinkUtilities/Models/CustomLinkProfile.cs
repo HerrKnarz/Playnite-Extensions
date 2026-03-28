@@ -26,64 +26,23 @@ namespace LinkUtilities.Models
 
         public string FormatGameName(string gameName)
         {
-            if (RemoveEditionSuffix)
+            var formatParameters = new StringFormatParameters
             {
-                gameName = gameName.RemoveEditionSuffix();
-            }
+                EscapeDataString = EscapeDataString,
+                RemoveDiacritics = RemoveDiacritics,
+                RemoveEditionSuffix = RemoveEditionSuffix,
+                RemoveHyphens = RemoveHyphens,
+                RemoveSpecialChars = RemoveSpecialChars,
+                RemoveWhitespaces = RemoveWhitespaces,
+                ToLower = ToLower,
+                ToTitleCase = ToTitleCase,
+                UnderscoresToWhitespaces = UnderscoresToWhitespaces,
+                UrlEncode = UrlEncode,
+                WhitespacesToHyphens = WhitespacesToHyphens,
+                WhitespacesToUnderscores = WhitespacesToUnderscores
+            };
 
-            if (RemoveHyphens)
-            {
-                gameName = gameName.Replace("-", "");
-            }
-
-            if (UnderscoresToWhitespaces)
-            {
-                gameName = gameName.Replace("_", " ");
-            }
-
-            if (RemoveSpecialChars)
-            {
-                gameName = gameName.RemoveSpecialChars();
-            }
-
-            if (RemoveDiacritics)
-            {
-                gameName = gameName.RemoveDiacritics();
-            }
-
-            if (ToTitleCase)
-            {
-                gameName = gameName.ToTitleCase();
-            }
-
-            if (ToLower)
-            {
-                gameName = gameName.ToLower();
-            }
-
-            gameName = RemoveWhitespaces ? gameName.Replace(" ", "") : gameName.CollapseWhitespaces();
-
-            if (WhitespacesToHyphens)
-            {
-                gameName = gameName.Replace(" ", "-");
-            }
-
-            if (WhitespacesToUnderscores)
-            {
-                gameName = gameName.Replace(" ", "_");
-            }
-
-            if (EscapeDataString)
-            {
-                gameName = gameName.EscapeDataString();
-            }
-
-            if (UrlEncode)
-            {
-                gameName = gameName.UrlEncode();
-            }
-
-            return gameName;
+            return gameName.FormatString(formatParameters);
         }
     }
 }

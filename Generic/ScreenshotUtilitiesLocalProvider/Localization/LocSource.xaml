@@ -6,14 +6,14 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderName">Local screenshots</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonAdd">Add</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonAddGame">Add game</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit">Edit</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove">Remove</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonSort">Sort</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Here you can add your screenshot folders. Path and File mask both can contain the following placeholders {GameName}, {RomName}, {SteamId} and {GogId}. The following checkboxes define, how the game name will be modified to fit the path scheme. The file mask can contain the usual placeholders for a file mask (* and ?).</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsConfigName">Name</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPath">Path</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFileMask">File mask</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription4">Here</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription5">Here</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsDescription">Description</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Here you can add your screenshot folders. Add all folders you want to check for all games using the + button in Global config. You can also add specific games to add folders that will only be checked for these games. Using the override check box global folders will be skipped. Path and File mask of each config can contain several placeholders like environment variables, playnite placeholders and some custom ones. A full list can be found in the edit dialog.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName">Name</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath">Path</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask">File mask</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveSpecialChars">Remove special chars</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveHyphens">Remove hyphens</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveWhitespaces">Remove whitespaces</sys:String>
@@ -22,11 +22,20 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigWhitespacesToHyphens">Whitespaces to hyphens</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigUnderscoresToWhitespaces">Underscores to whitespaces</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigWhitespacesToUnderscores">Whitespaces to underscores</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigEscapeDataString">Escape data string</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigUrlEncode">Url encode</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigReplaceInvalidCharsWith">Replace invalid chars with</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveSpecialChars">Removes all characters that aren't part of the alphabet, a number, a whitespace or a hyphen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix">Removes stuff like "Special Edition" or HD from the end of a game name.</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionEscapeDataString">Escapes a string to be used in a URL.</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionUrlEncode">Encodes the game name to be valid for a url</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith">Replaces characters not allowed for filenames in the game name after applying the other rules. Can be left empty to simply remove the characters.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigSelectGame">Select game</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig">Test config</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut">Try out game name formatting</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription">Using these check boxes you can format how the name of the game will be added to the path via the placeholder {GameName}.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsGlobalConfig">Global Config</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist">The path doesn't exist.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholder">Placeholder</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPlaceholderDescription">These are all placeholders supported in the path and file mask fields. Grouped under ENV are all windows environment variables available on your PC. You can copy the currently selected placeholder with CTRL+C to paste it into the text boxes.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsResult">Result</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsSelectFolder">Select folder</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsTabGameNameConfig">Format game name</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsTabPlaceholderLegend">Placeholder legend</sys:String>
 </ResourceDictionary>

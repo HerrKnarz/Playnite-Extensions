@@ -26,7 +26,7 @@ namespace MetadataUtilities.Actions
 
         public static ExecuteConditionalActionsAction Instance() => _instance ?? (_instance = new ExecuteConditionalActionsAction());
 
-        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(GameExMeta game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {

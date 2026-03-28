@@ -94,6 +94,7 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/Solution Items/Manifests/">
+    <File Path="HerrKnarz_ScreenshotUtilitiesLocalProvider.yaml" />
     <File Path="Manifest/HerrKnarz_CompanyCompanion.yaml" />
     <File Path="Manifest/HerrKnarz_LinkUtilities.yaml" />
     <File Path="Manifest/HerrKnarz_MetadataUtilities.yaml" />

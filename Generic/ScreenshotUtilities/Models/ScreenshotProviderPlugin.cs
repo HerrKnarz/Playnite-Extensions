@@ -17,6 +17,7 @@ namespace ScreenshotUtilities.Models
         private readonly MethodInfo _methodInfoGetScreenshotsAsync = null;
         private readonly MethodInfo _methodInfoGetScreenshotSearchResults = null;
         private readonly MethodInfo _methodInfoGetScreenshotsManualAsync = null;
+        private readonly MethodInfo _methodInfoHandleGameStoppedAsync = null;
         private readonly Plugin _plugin;
         private Game _game = null;
         private ScreenshotSearchResult _screenshotSearchResult = null;
@@ -35,6 +36,7 @@ namespace ScreenshotUtilities.Models
             _methodInfoGetScreenshotsAsync = type.GetMethod("GetScreenshotsAsync");
             _methodInfoGetScreenshotSearchResults = type.GetMethod("GetScreenshotSearchResult");
             _methodInfoGetScreenshotsManualAsync = type.GetMethod("GetScreenshotsManualAsync");
+            _methodInfoHandleGameStoppedAsync = type.GetMethod("HandleGameStoppedAsync");
 
             var propertyInfoAutomaticScreenshots = type.GetProperty("SupportsAutomaticScreenshots");
 
@@ -126,6 +128,20 @@ namespace ScreenshotUtilities.Models
             genericResult.AddRange(searchResult);
 
             return genericResult;
+        }
+
+        public async Task<bool> HandleGameStoppedAsync(Game game)
+        {
+            if (_methodInfoHandleGameStoppedAsync == null)
+            {
+                return false;
+            }
+
+            var parametersArray = new object[] { game };
+
+            var resultTask = (Task<bool>)_methodInfoHandleGameStoppedAsync.Invoke(_plugin, parametersArray);
+
+            return await resultTask;
         }
 
         public void Search(Game game)

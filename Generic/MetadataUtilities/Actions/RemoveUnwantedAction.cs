@@ -33,7 +33,7 @@ namespace MetadataUtilities.Actions
 
         public static RemoveUnwantedAction Instance() => _instance ?? (_instance = new RemoveUnwantedAction());
 
-        public override bool Execute(MyGame game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
+        public override bool Execute(GameExMeta game, ActionModifierType actionModifier = ActionModifierType.None, object item = null, bool isBulkAction = true)
         {
             if (!base.Execute(game, actionModifier, item, isBulkAction))
             {
