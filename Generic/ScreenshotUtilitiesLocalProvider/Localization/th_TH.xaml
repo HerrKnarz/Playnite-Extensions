@@ -1,7 +1,5 @@
-<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderName">Local screenshots</sys:String>
 
@@ -24,7 +22,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigWhitespacesToUnderscores">Whitespaces to underscores</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigReplaceInvalidCharsWith">Replace invalid chars with</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveSpecialChars">Removes all characters that aren't part of the alphabet, a number, a whitespace or a hyphen.</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix">Removes stuff like "Special Edition" or HD from the end of a game name.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix">Removes stuff like &quot;Special Edition&quot; or HD from the end of a game name.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith">Replaces characters not allowed for filenames in the game name after applying the other rules. Can be left empty to simply remove the characters.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigSelectGame">Select game</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig">Test config</sys:String>
