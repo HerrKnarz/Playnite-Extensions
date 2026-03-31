@@ -1,8 +1,6 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
-using AngleSharp.Html;
-using AngleSharp.Html.Dom;
-using AngleSharp.Text;
+using AngleSharp.Dom.Html;
 using KNARZhelper;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK.Data;
@@ -43,8 +41,8 @@ namespace ScreenshotUtilitiesHG101Provider
                 {
                     var result = new ScreenshotSearchResult
                     {
-                        Name = WebUtility.HtmlDecode(node.QuerySelector("h2 a")?.Text()),
-                        Description = WebUtility.HtmlDecode(node.QuerySelector(".entry-excerpt p")?.Text()),
+                        Name = WebUtility.HtmlDecode(node.QuerySelector("h2 a")?.TextContent),
+                        Description = WebUtility.HtmlDecode(node.QuerySelector(".entry-excerpt p")?.TextContent),
                         Identifier = ((IHtmlAnchorElement)node.QuerySelector("h2 a"))?.Href
                     };
 
@@ -172,7 +170,7 @@ namespace ScreenshotUtilitiesHG101Provider
             {
                 var sources = SourceSet.Parse(((IHtmlImageElement)node.QuerySelector("img")).SourceSet);
 
-                var imagePath = sources?.OrderByDescending(s => (s.Descriptor?.Replace("w", "")).ToInteger(0)).FirstOrDefault().Url;
+                var imagePath = sources?.OrderByDescending(s => GetWidth(s.Descriptor)).FirstOrDefault().Url;
 
                 if (imagePath == null)
                 {
@@ -239,6 +237,8 @@ namespace ScreenshotUtilitiesHG101Provider
 
             return true;
         }
+
+        private int GetWidth(string descriptor) => Int32.TryParse(descriptor?.Replace("w", ""), out var result) ? result : 0;
 
         private void ProcessNode(ScreenshotGroup screenshotGroup, string path, string name, IHtmlImageElement thumbNode, MediaType mediaType, bool refreshOld = true)
         {
