@@ -168,21 +168,25 @@ namespace ScreenshotUtilitiesHG101Provider
 
             foreach (var node in cells)
             {
-                var sources = SourceSet.Parse(((IHtmlImageElement)node.QuerySelector("img")).SourceSet);
-
-                var imagePath = sources?.OrderByDescending(s => GetWidth(s.Descriptor)).FirstOrDefault().Url;
+                var imagePath = SourceSet.Parse(((IHtmlImageElement)node.QuerySelector("img")).SourceSet)?
+                    .OrderByDescending(s => s.Descriptor).FirstOrDefault().Url;
 
                 if (imagePath == null)
                 {
                     continue;
                 }
 
-                var name = node.QuerySelector("figcaption")?.TextContent.Trim();
+                var name = node.QuerySelector("figcaption")?.TextContent.Trim() ?? string.Empty;
+
                 var mediaType = MediaType.Artwork;
 
-                if (name != null && name.Contains("cover"))
+                if (name.Contains("cover", StringComparison.CurrentCultureIgnoreCase))
                 {
                     mediaType = MediaType.BoxFront;
+                }
+                else if (name.Contains("flyer", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    mediaType = MediaType.Advertisement;
                 }
 
                 ProcessNode(screenshotGroup,
@@ -237,8 +241,6 @@ namespace ScreenshotUtilitiesHG101Provider
 
             return true;
         }
-
-        private int GetWidth(string descriptor) => Int32.TryParse(descriptor?.Replace("w", ""), out var result) ? result : 0;
 
         private void ProcessNode(ScreenshotGroup screenshotGroup, string path, string name, IHtmlImageElement thumbNode, MediaType mediaType, bool refreshOld = true)
         {
