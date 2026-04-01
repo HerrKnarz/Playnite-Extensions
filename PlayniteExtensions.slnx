@@ -105,6 +105,7 @@
     <File Path="Manifest/HerrKnarz_ScreenshotUtilities.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesArcadeDatabaseProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesGOGProvider.yaml" />
+    <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesHG101Provider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesKLOVProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesLocalProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesSteamProvider.yaml" />
