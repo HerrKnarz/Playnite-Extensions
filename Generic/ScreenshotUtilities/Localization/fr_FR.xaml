@@ -40,7 +40,7 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Télécharger les captures d'écran automatiquement lors de la première vue</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Ratio d'aspect par défaut</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Afficher le bouton pour ouvrir la visionneuse autonome dans le thème</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Days until next refresh</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Afficher le contrôle de la visionneuse de capture d'écran dans le thème</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Téléchargez uniquement des captures d'écran pour les jeux avec l'une des catégories ou des tags suivantes. De aucune d'entre elles sont définies, les captures d'écran seront toujours téléchargées.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Hauteur de la miniature</sys:String>
