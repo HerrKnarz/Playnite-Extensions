@@ -7,7 +7,8 @@
              d:DataContext="{d:DesignInstance Type=screenshotutilities:ScreenshotUtilitiesSettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400"
-             d:DesignWidth="600">
+             d:DesignWidth="600"
+             d:Background="AliceBlue">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -40,29 +41,66 @@
                     DockPanel.Dock="Left" />
         </DockPanel>
 
-        <StackPanel Orientation="Horizontal"
-                    Margin="5"
-                    DockPanel.Dock="Top">
-            <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatio}"
-                   Margin="0,0,10,0" />
-            <TextBox Text="{Binding Settings.AspectWidth}"
-                     Width="40"
-                     Margin="0,0,5,0" />
-            <Label Content=":"
-                   Margin="0,0,5,0" />
-            <TextBox Text="{Binding Settings.AspectHeight}"
-                     Width="40" />
-        </StackPanel>
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal"
-                    Margin="5"
-                    DockPanel.Dock="Top">
+            <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatio}"
+                   Grid.Column="0"
+                   Grid.Row="0"
+                   Margin="5" />
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Margin="5"
+                        DockPanel.Dock="Top">
+                <TextBox Text="{Binding Settings.AspectWidth}"
+                         Width="40"
+                         Margin="0,0,5,0" />
+                <Label Content=":"
+                       Margin="0,0,5,0" />
+                <TextBox Text="{Binding Settings.AspectHeight}"
+                         Width="40" />
+            </StackPanel>
+
             <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsThumbnailHeight}"
-                   Margin="0,0,10,0" />
-            <TextBox Text="{Binding Settings.ThumbnailHeight}"
-                     Width="40"
-                     Margin="0,0,5,0" />
-        </StackPanel>
+                   Grid.Column="0"
+                   Grid.Row="1"
+                   Margin="5" />
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Margin="5"
+                        DockPanel.Dock="Top">
+                <TextBox Text="{Binding Settings.ThumbnailHeight}"
+                         Width="40"
+                         Margin="0,0,5,0" />
+            </StackPanel>
+
+            <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsDaysRefresh}"
+                   Grid.Column="0"
+                   Grid.Row="2"
+                   Margin="5" />
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Margin="5"
+                        DockPanel.Dock="Top">
+                <TextBox Text="{Binding Settings.DaysUntilRefresh}"
+                         Width="40"
+                         Margin="0,0,5,0" />
+            </StackPanel>
+        </Grid>
 
         <CheckBox IsChecked="{Binding Settings.DisplayViewerControl}"
                   Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayViewerControl}"

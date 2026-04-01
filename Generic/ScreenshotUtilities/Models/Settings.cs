@@ -11,6 +11,7 @@ namespace ScreenshotUtilities.Models
         private int _aspectWidth = 16;
         private bool _automaticDownload = false;
         private ScreenshotGroups _currentScreenshotGroups = new ScreenshotGroups();
+        private int _daysUntilRefresh = 5;
         private bool _debug = true;
         private bool _displayButtonControl = true;
         private bool _displayViewerControl = true;
@@ -60,6 +61,20 @@ namespace ScreenshotUtilities.Models
         {
             get => _currentScreenshotGroups;
             set => SetValue(ref _currentScreenshotGroups, value);
+        }
+
+        public int DaysUntilRefresh
+        {
+            get => _daysUntilRefresh;
+            set
+            {
+                if (value < 1)
+                {
+                    value = 1;
+                }
+
+                SetValue(ref _daysUntilRefresh, value);
+            }
         }
 
         public bool Debug

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:String x:Key="LOCScreenshotUtilitiesName">Screenshot Utilities</sys:String>
 
@@ -40,6 +42,7 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically on first view</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Default aspect ratio</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Days until next refresh</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Display button to open the standalone viewer in the theme</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Display screenshot viewer control in the theme</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Only download screenshots for games with one of the following categories or tags. Of none are defined, screenshots will always be downloaded.</sys:String>

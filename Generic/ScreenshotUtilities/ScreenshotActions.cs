@@ -13,8 +13,6 @@ namespace ScreenshotUtilities
 {
     internal static class ScreenshotActions
     {
-        internal static int DaysSinceLastUpdate = 5;
-
         internal static async Task<bool> DownloadScreenshotsAsync(Game game, ScreenshotUtilities plugin, Guid providerGuid = default)
         {
             var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
@@ -41,14 +39,14 @@ namespace ScreenshotUtilities
                 {
                     if (existingGroup.IgnoreGame || (!forceUpdate
                         && existingGroup.LastUpdate != null
-                        && (existingGroup.LastUpdate > DateTime.Now.AddDays(DaysSinceLastUpdate * -1))))
+                        && (existingGroup.LastUpdate > DateTime.Now.AddDays(plugin.Settings.Settings.DaysUntilRefresh * -1))))
                     {
                         continue;
                     }
                 }
 
                 needsRefresh |= await provider.CleanUpAsync(game);
-                needsRefresh |= await provider.GetScreenshotsAsync(game, DaysSinceLastUpdate, forceUpdate);
+                needsRefresh |= await provider.GetScreenshotsAsync(game, plugin.Settings.Settings.DaysUntilRefresh, forceUpdate);
             }
 
             return needsRefresh;
