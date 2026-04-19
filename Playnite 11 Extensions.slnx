@@ -8,5 +8,8 @@
     <File Path="nuget.config" />
     <File Path="settings.VisualStudio.json" />
   </Folder>
+  <Folder Name="/Submodules/">
+    <Project Path="Playnite-Extension-Helpers/PlayniteExensionHelpers/PlayniteExtensionHelpers.csproj" />
+  </Folder>
   <Project Path="LinkUtilities/LinkUtilities.csproj" />
 </Solution>
