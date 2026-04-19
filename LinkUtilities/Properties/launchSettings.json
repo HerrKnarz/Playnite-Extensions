@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Test Extensions": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Games\\Playnite 11 alpha\\Playnite11.Desktop.exe"
+    }
+  }
+}

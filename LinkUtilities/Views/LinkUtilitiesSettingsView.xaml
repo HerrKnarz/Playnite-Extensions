@@ -1,0 +1,198 @@
+﻿<UserControl x:Class="LinkUtilities.Views.LinkUtilitiesSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:LinkUtilities.ViewModels"
+             xmlns:p="clr-namespace:Playnite"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:LinkUtilitiesSettingsHandler}"
+             d:DesignHeight="600"
+             d:DesignWidth="800">
+    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch">
+        <TabItem Header="{p:LocalizedString {x:Static p:LocId.settings_tab_general}}">
+            <DockPanel Margin="10">
+                <StackPanel DockPanel.Dock="Top"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                    <Label Content="{p:LocalizedString {x:Static p:LocId.settings_duplicates_remove_type}}" />
+                    <ComboBox Margin="10,0,0,0"
+                              ItemsSource="{Binding Path=Settings.DuplicateTypesWithCaptions}"
+                              DisplayMemberPath="Value"
+                              SelectedValuePath="Key"
+                              SelectedValue="{Binding Path=Settings.RemoveDuplicatesType}" />
+                </StackPanel>
+                <CheckBox DockPanel.Dock="Top"
+                          IsChecked="{Binding Settings.RemoveDuplicatesAfterChange}"
+                          Content="{p:LocalizedString {x:Static p:LocId.settings_duplicates_remove_after_change}}"
+                          Margin="0,10,0,0" />
+                <CheckBox DockPanel.Dock="Top"
+                          IsChecked="{Binding Settings.AddLinksToNewGames}"
+                          Content="{p:LocalizedString {x:Static p:LocId.settings_add_links_to_new_games}}"
+                          Margin="0,10,0,0" />
+                <CheckBox DockPanel.Dock="Top"
+                          IsChecked="{Binding Settings.DebugMode}"
+                          Content="{p:LocalizedString {x:Static p:LocId.settings_debug_mode}}"
+                          Margin="0,10,0,0" />
+                <Label DockPanel.Dock="Top"
+                       Margin="0,20,0,0"
+                       Content="{p:LocalizedString {x:Static p:LocId.settings_configure_websites}}" />
+                <ListView Name="LinkSources"
+                          SelectionMode="Single"
+                          DockPanel.Dock="Top"
+                          Margin="0,10,0,0"
+                          ItemsSource="{Binding Settings.LinkSettings}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="Auto"
+                                            Header="{p:LocalizedString {x:Static p:LocId.settings_link_source}}"
+                                            DisplayMemberBinding="{Binding LinkName}" />
+                            <GridViewColumn Width="Auto"
+                                            Header="{p:LocalizedString {x:Static p:LocId.settings_add_link}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsAddable, UpdateSourceTrigger=PropertyChanged}"
+                                                  Margin="0,0,-15,0"
+                                                  Visibility="{Binding IsAddableVisible}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto"
+                                            Header="{p:LocalizedString {x:Static p:LocId.settings_search_link}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsSearchable, UpdateSourceTrigger=PropertyChanged}"
+                                                  Margin="0,0,-15,0"
+                                                  Visibility="{Binding IsSearchableVisible}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto"
+                                            Header="{p:LocalizedString {x:Static p:LocId.settings_show_in_menus}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding ShowInMenus, UpdateSourceTrigger=PropertyChanged}"
+                                                  Margin="0,0,-15,0"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="200"
+                                            Header="{p:LocalizedString {x:Static p:LocId.settings_api_key}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,-15,0"
+                                                 Visibility="{Binding IsApiKeyVisible}"
+                                                 VerticalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="{p:LocalizedString {x:Static p:LocId.settings_tab_bookmarklet_clipboard}}">
+            <DockPanel Margin="10">
+                <Grid DockPanel.Dock="Top"
+                      Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock DockPanel.Dock="Top"
+                               TextWrapping="Wrap"
+                               Text="{p:LocalizedString {x:Static p:LocId.settings_bookmarklet_description}}" />
+                    <Button Content="&#xf02d6;"
+                            FontFamily="{DynamicResource NerdFont}"
+                            Grid.Column="1"
+                            VerticalAlignment="Top"
+                            Command="{Binding HelpBookmarkletCommand}"
+                            Margin="10,0,0,0" />
+                </Grid>
+                <StackPanel Orientation="Horizontal"
+                            DockPanel.Dock="Bottom"
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Left">
+                    <Button Content="&#xea60;"
+                            ToolTip="{p:LocalizedString {x:Static p:LocId.settings_button_add}}"
+                            FontFamily="{DynamicResource NerdFont}"
+                            Command="{Binding AddLinkNamePatternCommand}" />
+                    <Button Content="&#xf48e;"
+                            ToolTip="{p:LocalizedString {x:Static p:LocId.settings_button_remove}}"
+                            FontFamily="{DynamicResource NerdFont}"
+                            Margin="10,0,0,0"
+                            Command="{Binding RemoveLinkNamePatternsCommand}"
+                            CommandParameter="{Binding SelectedItems, ElementName=GridLinkNamePatterns}" />
+                    <Button Content="{p:LocalizedString {x:Static p:LocId.settings_button_add_defaults}}"
+                            Margin="10,0,0,0"
+                            Command="{Binding AddDefaultLinkNamePatternsCommand}" />
+                    <Button Content="&#xf04ba;"
+                            ToolTip="{p:LocalizedString {x:Static p:LocId.settings_button_sort}}"
+                            FontFamily="{DynamicResource NerdFont}"
+                            Margin="10,0,0,0"
+                            Command="{Binding SortBookmarkletItemsCommand}" />
+                </StackPanel>
+                <TextBlock DockPanel.Dock="Top"
+                           TextWrapping="Wrap"
+                           Margin="0,20,0,0"
+                           Text="{p:LocalizedString {x:Static p:LocId.settings_configure_link_name_patterns}}" />
+                <ListView Name="GridLinkNamePatterns"
+                          SelectionMode="Extended"
+                          Margin="0,10,0,0"
+                          DockPanel.Dock="Top"
+                          SelectedItem="{Binding SelectedPattern}"
+                          ItemsSource="{Binding Settings.LinkNamePatterns}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="150"
+                                            Header="{p:LocalizedString {x:Static p:LocId.settings_link_source}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding LinkName, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="180"
+                                            Header="{p:LocalizedString {x:Static p:LocId.settings_name_pattern}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding NamePattern, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="180"
+                                            Header="{p:LocalizedString {x:Static p:LocId.settings_url_pattern}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding UrlPattern, UpdateSourceTrigger=PropertyChanged}"
+                                                 VerticalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto"
+                                            Header="{p:LocalizedString {x:Static p:LocId.settings_partial_match}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding PartialMatch, UpdateSourceTrigger=PropertyChanged}"
+                                                  Margin="0,0,-15,0"
+                                                  ToolTip="{p:LocalizedString {x:Static p:LocId.settings_partial_match_hint}}"
+                                                  HorizontalAlignment="Center" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </DockPanel>
+        </TabItem>
+    </TabControl>
+</UserControl>

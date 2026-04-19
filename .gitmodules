@@ -1,6 +1,0 @@
-[submodule "KNARZhelper"]
-	path = KNARZhelper
-	url = https://github.com/HerrKnarz/Playnite-KNARZhelper
-[submodule "Jeshibu"]
-	path = Jeshibu
-	url = https://github.com/Jeshibu/PlayniteExtensions.git

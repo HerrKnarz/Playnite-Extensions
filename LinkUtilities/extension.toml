@@ -1,0 +1,16 @@
+﻿id = "HerrKnarz.LinkUtilities"
+name = "LinkUtilities"
+author = "HerrKnarz"
+version = "11.0"
+module = "LinkUtilities.dll"
+
+# Troubleshooting link to be shown on addons view
+#help_link = "https://knarzwerk.de/en/playnite-extensions/link-utilities"
+
+# Source code link to be shown on addons view
+#source_link = "https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities"
+
+# Sponsor links to be shown on addons view
+#[[sponsor_links]]
+#name = "Ko-fi"
+#url = "https://ko-fi.com/herrknarz"

@@ -366,3 +366,4 @@ FodyWeavers.xsd
 /Source/Constants.cs
 **/Common/Metadata/Views/
 .idea/
+/LinkUtilities/GenerateLoc.bat
