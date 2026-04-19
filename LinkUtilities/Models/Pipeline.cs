@@ -1,6 +1,6 @@
 ﻿using Playnite;
-using PlayniteCommon;
-using PlayniteCommon.WebCommon;
+using PlayniteExtensionHelpers;
+using PlayniteExtensionHelpers.WebCommon;
 using System.Net;
 
 namespace LinkUtilities.Models;

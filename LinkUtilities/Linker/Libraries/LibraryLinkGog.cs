@@ -3,9 +3,9 @@ using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using Playnite;
-using PlayniteCommon;
-using PlayniteCommon.MetadataCommon;
-using PlayniteCommon.WebCommon;
+using PlayniteExtensionHelpers;
+using PlayniteExtensionHelpers.MetadataCommon;
+using PlayniteExtensionHelpers.WebCommon;
 
 namespace LinkUtilities.Linker.Libraries;
 

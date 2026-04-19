@@ -1,7 +1,7 @@
 ﻿using LinkUtilities.Helper;
 using LinkUtilities.Models;
 using Playnite;
-using PlayniteCommon.GamesCommon;
+using PlayniteExtensionHelpers.GamesCommon;
 using System.Net;
 
 namespace LinkUtilities.LinkActions;

@@ -3,13 +3,12 @@ using LinkUtilities.Interfaces;
 using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using Playnite;
-using PlayniteCommon;
-using PlayniteCommon.GamesCommon;
-using PlayniteCommon.MetadataCommon;
-using PlayniteCommon.WebCommon;
+using PlayniteExtensionHelpers;
+using PlayniteExtensionHelpers.GamesCommon;
+using PlayniteExtensionHelpers.MetadataCommon;
+using PlayniteExtensionHelpers.WebCommon;
 using System.Diagnostics;
 using System.Net;
-using BaseAction = PlayniteCommon.GamesCommon.BaseAction;
 
 namespace LinkUtilities.BaseClasses;
 

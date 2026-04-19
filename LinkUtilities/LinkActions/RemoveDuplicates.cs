@@ -1,9 +1,8 @@
 ﻿using LinkUtilities.Models;
 using Playnite;
-using PlayniteCommon.GamesCommon;
-using PlayniteCommon.WebCommon;
+using PlayniteExtensionHelpers.GamesCommon;
+using PlayniteExtensionHelpers.WebCommon;
 using System.Collections.ObjectModel;
-using BaseAction = PlayniteCommon.GamesCommon.BaseAction;
 
 namespace LinkUtilities.LinkActions;
 

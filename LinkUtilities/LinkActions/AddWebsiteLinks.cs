@@ -3,10 +3,9 @@ using LinkUtilities.Interfaces;
 using LinkUtilities.Linker;
 using LinkUtilities.Models;
 using Playnite;
-using PlayniteCommon;
-using PlayniteCommon.GamesCommon;
+using PlayniteExtensionHelpers;
+using PlayniteExtensionHelpers.GamesCommon;
 using System.Collections.Concurrent;
-using BaseAction = PlayniteCommon.GamesCommon.BaseAction;
 
 namespace LinkUtilities.LinkActions;
 

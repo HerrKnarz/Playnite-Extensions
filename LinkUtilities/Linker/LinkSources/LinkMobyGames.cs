@@ -2,7 +2,7 @@
 using LinkUtilities.Interfaces;
 using LinkUtilities.Models;
 using Playnite;
-using PlayniteCommon;
+using PlayniteExtensionHelpers;
 using System.Net;
 
 namespace LinkUtilities.Linker.LinkSources;

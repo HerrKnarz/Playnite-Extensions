@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Playnite;
-using PlayniteCommon.WebCommon;
+using PlayniteExtensionHelpers.WebCommon;
 
 namespace LinkUtilities.Models;
 

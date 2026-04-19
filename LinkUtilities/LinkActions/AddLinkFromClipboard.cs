@@ -1,7 +1,6 @@
 ﻿using LinkUtilities.Helper;
 using Playnite;
-using PlayniteCommon.GamesCommon;
-using BaseAction = PlayniteCommon.GamesCommon.BaseAction;
+using PlayniteExtensionHelpers.GamesCommon;
 
 namespace LinkUtilities.LinkActions;
 

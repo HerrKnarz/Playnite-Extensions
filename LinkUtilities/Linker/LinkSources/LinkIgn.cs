@@ -1,5 +1,5 @@
 ﻿using Playnite;
-using PlayniteCommon;
+using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 

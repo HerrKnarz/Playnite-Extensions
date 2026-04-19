@@ -1,8 +1,4 @@
 <Solution>
-  <Folder Name="/Common/">
-    <Project Path="../Playnite 11 Extension Example/ExamplePlugin.csproj" />
-    <Project Path="PlayniteCommon/PlayniteCommon.csproj" />
-  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path="nuget.config" />

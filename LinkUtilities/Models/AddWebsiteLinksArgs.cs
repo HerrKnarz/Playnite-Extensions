@@ -1,5 +1,5 @@
 ﻿using Playnite;
-using PlayniteCommon.GamesCommon;
+using PlayniteExtensionHelpers.GamesCommon;
 
 namespace LinkUtilities.Models;
 

@@ -1,6 +1,6 @@
 ﻿using LinkUtilities.Helper;
 using Playnite;
-using PlayniteCommon;
+using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.BaseClasses;
 

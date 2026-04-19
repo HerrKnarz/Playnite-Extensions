@@ -1,5 +1,5 @@
 ﻿using Playnite;
-using PlayniteCommon;
+using PlayniteExtensionHelpers;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;

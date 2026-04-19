@@ -1,6 +1,6 @@
 ﻿using Playnite;
-using PlayniteCommon;
-using PlayniteCommon.MetadataCommon;
+using PlayniteExtensionHelpers;
+using PlayniteExtensionHelpers.MetadataCommon;
 using System.Collections.ObjectModel;
 
 namespace LinkUtilities.Helper;

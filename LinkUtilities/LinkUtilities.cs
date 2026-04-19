@@ -2,7 +2,7 @@
 using LinkUtilities.Models;
 using LinkUtilities.ViewModels;
 using Playnite;
-using PlayniteCommon.GamesCommon;
+using PlayniteExtensionHelpers.GamesCommon;
 using System.Windows.Media;
 
 namespace LinkUtilities;
