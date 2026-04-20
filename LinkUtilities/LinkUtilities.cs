@@ -1,4 +1,5 @@
-﻿using LinkUtilities.LinkActions;
+﻿using LinkUtilities.DataHandlers;
+using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using LinkUtilities.ViewModels;
 using Playnite;
@@ -10,6 +11,7 @@ namespace LinkUtilities;
 public class LinkUtilitiesPlugin : Plugin
 {
     public const string Id = "HerrKnarz.LinkUtilities";
+    public const string LinkPropertyId = "LinkUtilities.LinkPropery";
     public static string? InstallDir { get; set; }
 
     /// <summary>
@@ -21,6 +23,36 @@ public class LinkUtilitiesPlugin : Plugin
     public static IPlayniteApi? PlayniteApi { get; private set; } = null!;
     public static LinkUtilitiesPlugin? Plugin { get; private set; } = null!;
     public static LinkUtilitiesPluginSettings Settings { get; set; } = new();
+
+    public override GameExplorer? GetGameExplorer(GetGameExplorersArgs args) => args.ItemId == LinkPropertyId ? new LinkPropertyGameExplorer() : (GameExplorer?)null;
+
+    public override ICollection<GameExplorerDescriptor> GetGameExplorerDescriptors(GetGameExplorerDescriptorsArgs args)
+    {
+        return
+        [
+            new GameExplorerDescriptor(LinkPropertyId, Loc.caption_link_type())
+        ];
+    }
+
+    public override ICollection<GameFiltererDescriptor> GetGameFilterDescriptors(GetGameFiltereDescriptorsArgs args)
+    {
+        return
+        [
+            new GameFiltererDescriptor(LinkPropertyId, Loc.caption_link_type())
+        ];
+    }
+
+    public override GameFilterer? GetGameFilterer(GetGameFilterersArgs args) => args.ItemId == LinkPropertyId ? new LinkPropertyGameFilterer(this, args) : (GameFilterer?)null;
+
+    public override GameGrouper? GetGameGrouper(GetGameGroupersArgs args) => args.ItemId == LinkPropertyId ? new LinkPropertyGrouper(this) : (GameGrouper?)null;
+
+    public override ICollection<GameGrouperDescriptor> GetGameGrouperDescriptors(GetGameGrouperDescriptorsArgs args)
+    {
+        return
+        [
+            new GameGrouperDescriptor(LinkPropertyId, Loc.caption_link_type())
+        ];
+    }
 
     public override ICollection<MenuItemDescriptor> GetGameMenuItemDescriptors(GetGameMenuItemDescriptorsArgs args)
     {
@@ -210,6 +242,16 @@ public class LinkUtilitiesPlugin : Plugin
         }
 
         return null;
+    }
+
+    public override GameSorter? GetGameSorter(GetGameSortersArgs args) => args.ItemId == LinkPropertyId ? new LinkPropertySorter(this) : (GameSorter?)null;
+
+    public override ICollection<GameSorterDescriptor> GetGameSorterDescriptors(GetGameSorterDescriptorsArgs args)
+    {
+        return
+        [
+            new GameSorterDescriptor(LinkPropertyId, Loc.caption_link_type())
+        ];
     }
 
     public override async Task<PluginSettingsHandler?> GetSettingsHandlerAsync(GetSettingsHandlerArgs args)

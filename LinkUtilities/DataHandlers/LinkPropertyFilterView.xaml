@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="LinkUtilities.DataHandlers.LinkPropertyFilterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:LinkUtilities.DataHandlers"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:LinkPropertyGameFilterer}"
+             d:DesignHeight="100"
+             d:DesignWidth="600">
+    <StackPanel>
+        <ComboBox ItemsSource="{Binding Settings.LinkTypes}"
+                  IsEditable="True"
+                  IsReadOnly="True"
+                  Text="{Binding Settings.SelectedText}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox IsChecked="{Binding IsSelected}"
+                              Content="{Binding ObjectData.Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </StackPanel>
+</UserControl>

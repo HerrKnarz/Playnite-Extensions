@@ -2,6 +2,8 @@ example_string = Fluent test string
 
 link_utilities_name = Link Utilities
 
+caption_link_type = Link Type
+
 dialog_added_links_message = Added links to {$gameCount} games!
 dialog_converted_steam_links_message = Converted Steam links of {$gameCount} games!
 dialog_enter_link_name = Please enter a name for the link!

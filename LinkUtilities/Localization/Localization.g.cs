@@ -18,6 +18,13 @@ public static partial class Loc
         return GetString("link_utilities_name");
     }
     /// <summary>
+    /// Link Type
+    /// </summary>
+    public static string caption_link_type()
+    {
+        return GetString("caption_link_type");
+    }
+    /// <summary>
     /// Added links to {$gameCount} games!
     /// </summary>
     public static string dialog_added_links_message(object gameCount)
@@ -368,6 +375,7 @@ public static partial class LocId
     {
         "example_string", 
         "link_utilities_name", 
+        "caption_link_type", 
         "dialog_added_links_message", 
         "dialog_converted_steam_links_message", 
         "dialog_enter_link_name", 
@@ -427,6 +435,10 @@ public static partial class LocId
     /// Link Utilities
     /// </summary>
     public const string link_utilities_name = "link_utilities_name";
+    /// <summary>
+    /// Link Type
+    /// </summary>
+    public const string caption_link_type = "caption_link_type";
     /// <summary>
     /// Added links to {$gameCount} games!
     /// </summary>

@@ -27,6 +27,7 @@
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\MiscHelper.cs" Link="Shared\MiscHelper.cs" />
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\SteamHelper.cs" Link="Shared\SteamHelper.cs" />
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\StringHelper.cs" Link="Shared\StringHelper.cs" />
+    <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\UICommon\SelectableObject.cs" Link="Shared\UICommon\SelectableObject.cs" />
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\WebCommon\HttpClientWrapper.cs" Link="Shared\WebCommon\HttpClientWrapper.cs" />
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\WebCommon\WebHelper.cs" Link="Shared\WebCommon\WebHelper.cs" />
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\WebCommon\WebWorker.cs" Link="Shared\WebCommon\WebWorker.cs" />
@@ -66,6 +67,7 @@
     <Folder Include="Shared\FilesCommon\" />
     <Folder Include="Shared\GamesCommon\" />
     <Folder Include="Shared\MetadataCommon\" />
+    <Folder Include="Shared\UICommon\" />
     <Folder Include="Shared\WebCommon\" />
   </ItemGroup>
 </Project>

@@ -69,6 +69,13 @@ internal static class LinkHelper
 
     public static ExternalIdentifier? GetExternalId(Game game, string id) => game?.ExternalIdentifiers?.FirstOrDefault(e => e.TypeId == id);
 
+    public static string? LinkNames(Game game)
+    {
+        return LinkUtilitiesPlugin.PlayniteApi is null || game is null || !game.Links.HasItems()
+            ? null
+            : string.Join(',', game.Links.Select(l => LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes.First(t => t.Id.Equals(l.TypeId)).Name).Distinct().OrderBy(s => s));
+    }
+
     /// <summary>
     /// Adds a link to a game.
     /// </summary>
