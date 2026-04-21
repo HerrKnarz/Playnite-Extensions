@@ -103,7 +103,7 @@ internal class HandleUriActions : BaseAction
 
         var games = LinkUtilitiesPlugin.PlayniteApi.MainView.GetSelectedGames().Distinct().Select(g => new GameEx(g)).ToList();
 
-        var actionArgs = new BaseActionArgs(LinkUtilitiesPlugin.PlayniteApi)
+        var actionArgs = new BaseActionArgs(LinkUtilitiesPlugin.PlayniteApi, games, Loc.link_utilities_name())
         {
             ShowDialogs = true
         };

@@ -4,7 +4,7 @@ using PlayniteExtensionHelpers.GamesCommon;
 
 namespace LinkUtilities.LinkActions;
 
-internal class ConvertSteamLinksArgs(IPlayniteApi api) : BaseActionArgs(api)
+internal class ConvertSteamLinksArgs(IPlayniteApi api, List<GameEx> games, string pluginName) : BaseActionArgs(api, games, pluginName)
 {
     public bool ToClient { get; set; } = true;
 }

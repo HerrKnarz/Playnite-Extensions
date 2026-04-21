@@ -14,7 +14,7 @@ public enum AddWebsiteLinkTypes
     SearchInBrowser,
 }
 
-public class AddWebsiteLinksArgs(IPlayniteApi api) : BaseActionArgs(api)
+public class AddWebsiteLinksArgs(IPlayniteApi api, List<GameEx> games, string pluginName) : BaseActionArgs(api, games, pluginName)
 {
     public AddWebsiteLinkTypes AddType { get; set; } = AddWebsiteLinkTypes.None;
 }

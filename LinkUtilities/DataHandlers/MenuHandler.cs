@@ -54,11 +54,9 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
     private ICollection<MenuItemImpl>? GetAddFromClipboardItems(List<GameEx> games)
     {
-        var addLinksArgs = new AddWebsiteLinksArgs(playniteApi)
+        var addLinksArgs = new AddWebsiteLinksArgs(playniteApi, games, Loc.link_utilities_name())
         {
             AddType = AddWebsiteLinkTypes.Add,
-            IsBulkAction = games.Count > 1,
-            PluginName = Loc.link_utilities_name()
         };
 
         return [
@@ -70,11 +68,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
     private ICollection<MenuItemImpl>? GetAddLibraryLinksItems(List<GameEx> games)
     {
-        var addLibraryLinksArgs = new BaseActionArgs(playniteApi)
-        {
-            IsBulkAction = games.Count > 1,
-            PluginName = Loc.link_utilities_name()
-        };
+        var addLibraryLinksArgs = new BaseActionArgs(playniteApi, games, Loc.link_utilities_name());
 
         return [
             new(Loc.menu_add_library_links(),
@@ -85,11 +79,9 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
     private ICollection<MenuItemImpl>? GetAddLinksItems(List<GameEx> games)
     {
-        var addLinksArgs = new AddWebsiteLinksArgs(playniteApi)
+        var addLinksArgs = new AddWebsiteLinksArgs(playniteApi, games, Loc.link_utilities_name())
         {
             AddType = AddWebsiteLinkTypes.Add,
-            IsBulkAction = games.Count > 1,
-            PluginName = Loc.link_utilities_name()
         };
 
         var subItems = new List<MenuItemImpl>
@@ -116,11 +108,9 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
     private ICollection<MenuItemImpl>? GetBrowserSearchItems(List<GameEx> games)
     {
-        var searchBrowserArgs = new AddWebsiteLinksArgs(playniteApi)
+        var searchBrowserArgs = new AddWebsiteLinksArgs(playniteApi, games, Loc.link_utilities_name())
         {
             AddType = AddWebsiteLinkTypes.SearchInBrowser,
-            IsBulkAction = games.Count > 1,
-            PluginName = Loc.link_utilities_name()
         };
 
         var subItems = new List<MenuItemImpl>();
@@ -138,11 +128,9 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
     private ICollection<MenuItemImpl>? GetConvertSteamlinksItems(List<GameEx> games, bool toClient = true)
     {
-        var convertArgs = new ConvertSteamLinksArgs(playniteApi)
+        var convertArgs = new ConvertSteamLinksArgs(playniteApi, games, Loc.link_utilities_name())
         {
             ToClient = toClient,
-            IsBulkAction = games.Count > 1,
-            PluginName = Loc.link_utilities_name()
         };
 
         return [
@@ -157,11 +145,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
     private ICollection<MenuItemImpl>? GetRemoveDuplicatesItems(List<GameEx> games)
     {
-        var baseArgs = new BaseActionArgs(playniteApi)
-        {
-            IsBulkAction = games.Count > 1,
-            PluginName = Loc.link_utilities_name()
-        };
+        var baseArgs = new BaseActionArgs(playniteApi, games, Loc.link_utilities_name());
 
         return [
             new(Loc.menu_remove_duplicate_links(),
@@ -172,18 +156,14 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
     private ICollection<MenuItemImpl>? GetSearchLinksItems(List<GameEx> games)
     {
-        var searchLinksArgs = new AddWebsiteLinksArgs(playniteApi)
+        var searchLinksArgs = new AddWebsiteLinksArgs(playniteApi, games, Loc.link_utilities_name())
         {
             AddType = AddWebsiteLinkTypes.Search,
-            IsBulkAction = games.Count > 1,
-            PluginName = Loc.link_utilities_name()
         };
 
-        var searchMissingArgs = new AddWebsiteLinksArgs(playniteApi)
+        var searchMissingArgs = new AddWebsiteLinksArgs(playniteApi, games, Loc.link_utilities_name())
         {
             AddType = AddWebsiteLinkTypes.SearchMissing,
-            IsBulkAction = games.Count > 1,
-            PluginName = Loc.link_utilities_name()
         };
 
         var subItems = new List<MenuItemImpl>
