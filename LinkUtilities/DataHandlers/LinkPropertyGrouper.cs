@@ -33,7 +33,7 @@ public class LinkPropertyGrouper(LinkUtilitiesPlugin plugin) : GameGrouper([Buil
                 continue;
             }
 
-            var group = new GameGroup(link.TypeId, LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes.First(t => t.Id.Equals(link.TypeId)).Name);
+            var group = new GameGroup(link.TypeId, LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes.Get(link.TypeId)?.Name ?? string.Empty);
 
             groups.Add(group);
         }
