@@ -13,9 +13,9 @@ internal class RemoveDuplicates : BaseAction
     private RemoveDuplicates()
     { }
 
-    public override string ProgressMessage => Loc.progress_removing_duplicates();
+    public override string Id => "linkutilities.remove.duplicates";
 
-    public override string ResultMessageId => LocId.dialog_removed_duplicates_message;
+    public override string Name => "Remove duplicate links";
 
     public static RemoveDuplicates Instance() => _instance ??= new RemoveDuplicates();
 
@@ -46,15 +46,16 @@ internal class RemoveDuplicates : BaseAction
     }
 
     public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
+        => RemoveDuplicateLinks(game.Game, LinkUtilitiesPlugin.Settings.RemoveDuplicatesType);
+
+    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
     {
-        if (RemoveDuplicateLinks(game.Game, LinkUtilitiesPlugin.Settings.RemoveDuplicatesType))
-        {
-            _gamesAffected.Add(game.Game);
+        var args = base.GetActionArgs(api, games, pluginName);
 
-            return true;
-        }
+        args.ProgressMessage = Loc.progress_removing_duplicates();
+        args.ResultMessageId = LocId.dialog_removed_duplicates_message;
 
-        return false;
+        return args;
     }
 
     /// <summary>

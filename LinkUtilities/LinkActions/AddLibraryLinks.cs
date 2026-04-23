@@ -23,8 +23,8 @@ internal class AddLibraryLinks : BaseAction
         LibraryLinks = [];
     }
 
-    public override string ProgressMessage => Loc.progress_adding_library_links();
-    public override string ResultMessageId => LocId.dialog_added_links_message;
+    public override string Id => "linkutilities.library.links";
+    public override string Name => "Library links";
 
     public static AddLibraryLinks Instance() => _instance ??= new AddLibraryLinks();
 
@@ -37,13 +37,7 @@ internal class AddLibraryLinks : BaseAction
 
         var (links, result) = await lib.FindLinksAsync(game.Game);
 
-        if (result && links.HasItems() && await LinkHelper.AddLinksAsync(game.Game, links))
-        {
-            _gamesAffected.Add(game.Game);
-            return true;
-        }
-
-        return false;
+        return result && links.HasItems() && await LinkHelper.AddLinksAsync(game.Game, links);
     }
 
     public override async Task FollowUpAsync(BaseActionArgs args)
@@ -55,6 +49,16 @@ internal class AddLibraryLinks : BaseAction
             linker.Value.Pipeline?.Dispose();
             linker.Value.Pipeline = null;
         }
+    }
+
+    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
+    {
+        var args = base.GetActionArgs(api, games, pluginName);
+
+        args.ProgressMessage = Loc.progress_adding_library_links();
+        args.ResultMessageId = LocId.dialog_added_links_message;
+
+        return args;
     }
 
     public override async Task<bool> PrepareAsync(BaseActionArgs args)

@@ -20,36 +20,26 @@ public abstract class Linker : BaseAction, ILinker
     public virtual bool AcceptSingleSearchResult => true;
 
     public virtual LinkAddTypes AddType => LinkAddTypes.UrlMatch;
-
     public virtual HashSet<string> AllowedCallbackUrls { get; set; } = [];
-
     public virtual bool AllowRedirects { get; set; } = true;
-
     public virtual string BaseUrl => string.Empty;
-
     public virtual string BrowserSearchUrl => SearchUrl;
     public virtual bool CanBeBrowserSearched => !BrowserSearchUrl.IsNullOrWhiteSpace();
     public virtual bool CanBeSearched => !SearchUrl.IsNullOrWhiteSpace();
     public virtual string CheckForContent { get; set; } = string.Empty;
     public virtual int Delay => 0;
     public virtual string? ExternalIdType => null;
+    public override string Id => $"linkutilities.{ExternalIdType}.link";
     public bool Initialized { get; set; } = false;
-
     public abstract string LinkName { get; }
-
     public virtual string LinkTypeId { get; set; } = string.Empty;
-
     public virtual string LinkUrl { get; set; } = string.Empty;
-
+    public override string Name => $"{LinkName} link";
     public virtual bool NeedsToBeChecked { get; set; } = true;
 
     public virtual Pipeline? Pipeline { get; set; }
 
     public virtual int Priority => 1;
-
-    public override string ProgressMessage => Loc.progress_adding_single_website_links();
-
-    public override string ResultMessageId => LocId.dialog_added_links_message;
 
     public virtual bool ReturnsSameUrl { get; set; } = false;
 
@@ -128,7 +118,7 @@ public abstract class Linker : BaseAction, ILinker
             return await AddLinkAsync(game.Game);
         }
 
-        var added = addArgs.AddType switch
+        return addArgs.AddType switch
         {
             AddWebsiteLinkTypes.Add
             or AddWebsiteLinkTypes.AddSelected
@@ -142,13 +132,6 @@ public abstract class Linker : BaseAction, ILinker
                 => StartBrowserSearch(game.Game),
             _ => throw new ArgumentOutOfRangeException(nameof(args), addArgs.AddType, null),
         };
-
-        if (added)
-        {
-            _gamesAffected.Add(game.Game);
-        }
-
-        return added;
     }
 
     public virtual async Task<(List<WebLink> links, bool result)> FindLinksAsync(Game game)
@@ -222,6 +205,15 @@ public abstract class Linker : BaseAction, ILinker
 
         Pipeline?.Dispose();
         Pipeline = null;
+    }
+
+    public override AddWebsiteLinksArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
+    {
+        return new AddWebsiteLinksArgs(Id, Name, api, games, pluginName)
+        {
+            ProgressMessage = Loc.progress_adding_single_website_links(),
+            ResultMessageId = LocId.dialog_added_links_message
+        };
     }
 
     public virtual string GetBrowserSearchLink(Game game) => BrowserSearchUrl + (game.Name.UrlEncode() ?? string.Empty);

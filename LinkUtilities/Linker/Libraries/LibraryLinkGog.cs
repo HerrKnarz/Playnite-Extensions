@@ -34,7 +34,7 @@ internal class LibraryLinkGog : LibraryLinker
     /// <summary>
     /// ID of the game library to identify it in Playnite.
     /// </summary>
-    public override string Id { get; } = LinkHelper.GogId;
+    public override string LibraryId { get; } = LinkHelper.GogId;
 
     public override string LinkName => "GOG";
     public override bool ReturnsSameUrl { get; set; } = true;

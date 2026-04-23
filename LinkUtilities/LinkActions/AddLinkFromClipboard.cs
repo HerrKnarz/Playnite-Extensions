@@ -11,6 +11,8 @@ internal class AddLinkFromClipboard : BaseAction
     private AddLinkFromClipboard()
     { }
 
+    public override string Id => "linkutilities.clipboard.link";
+
     /// <summary>
     /// Name of the link to be added in the "AddLink" action
     /// </summary>
@@ -21,22 +23,21 @@ internal class AddLinkFromClipboard : BaseAction
     /// </summary>
     public string? LinkUrl { get; set; }
 
-    public override string ProgressMessage => Loc.progress_adding_website_links();
-
-    public override string ResultMessageId => LocId.dialog_added_links_message;
+    public override string Name => "Clipboard link";
 
     public static AddLinkFromClipboard Instance() => _instance ??= new AddLinkFromClipboard();
 
     public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
+        => await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl, null, false);
+
+    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
     {
-        if (await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl, null, false))
-        {
-            _gamesAffected.Add(game.Game);
+        var args = base.GetActionArgs(api, games, pluginName);
 
-            return true;
-        }
+        args.ProgressMessage = Loc.progress_adding_website_links();
+        args.ResultMessageId = LocId.dialog_added_links_message;
 
-        return false;
+        return args;
     }
 
     public override async Task<bool> PrepareAsync(BaseActionArgs args)

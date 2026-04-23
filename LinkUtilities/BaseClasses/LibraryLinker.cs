@@ -6,7 +6,7 @@ namespace LinkUtilities.BaseClasses;
 
 internal abstract class LibraryLinker : Linker
 {
-    public abstract string Id { get; }
+    public abstract string LibraryId { get; }
 
     /// <summary>
     /// Adds a link to the specific game page of the library.
@@ -22,7 +22,7 @@ internal abstract class LibraryLinker : Linker
     {
         string? gameId = null;
 
-        if (game.LibraryId == Id)
+        if (game.LibraryId == LibraryId)
         {
             gameId = game.LibraryGameId;
         }

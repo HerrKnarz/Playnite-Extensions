@@ -37,16 +37,17 @@ internal class AddWebsiteLinks : BaseAction
         }
     } = new List<CustomLinkProfile>();*/
 
+    public override string Id => "linkutilities.website.links";
     public Links Links { get; }
 
-    public override string ProgressMessage => Loc.progress_adding_website_links();
-
-    public override string ResultMessageId => LocId.dialog_added_links_message;
+    //NEXT: Probably add name string to localization file for all linkers.
+    public override string Name => "Website links";
 
     public string SteamId { get; set; } = string.Empty;
 
     public static AddWebsiteLinks Instance() => _instance ??= new AddWebsiteLinks();
 
+    //NEXT: Check if the SteamId can be removed, since it's now set directly when adding a steam link.
     public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
     {
         if (args is not AddWebsiteLinksArgs addArgs)
@@ -63,7 +64,7 @@ internal class AddWebsiteLinks : BaseAction
 
             SteamId = string.Empty;
 
-            var added = addArgs.AddType switch
+            return addArgs.AddType switch
             {
                 AddWebsiteLinkTypes.Add
                 or AddWebsiteLinkTypes.AddSelected
@@ -76,13 +77,6 @@ internal class AddWebsiteLinks : BaseAction
                     => await SearchLinksInBrowserAsync(game.Game, addArgs.IsBulkAction),
                 _ => throw new ArgumentOutOfRangeException(nameof(args), addArgs.AddType, null),
             };
-
-            if (added)
-            {
-                _gamesAffected.Add(game.Game);
-            }
-
-            return added;
         }
         finally
         {
@@ -100,6 +94,15 @@ internal class AddWebsiteLinks : BaseAction
         await base.FollowUpAsync(args);
 
         Pipelines?.CleanUp();
+    }
+
+    public override AddWebsiteLinksArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
+    {
+        return new AddWebsiteLinksArgs(Id, Name, api, games, pluginName)
+        {
+            ProgressMessage = Loc.progress_adding_website_links(),
+            ResultMessageId = LocId.dialog_added_links_message
+        };
     }
 
     public override async Task<bool> PrepareAsync(BaseActionArgs args)
@@ -159,13 +162,15 @@ internal class AddWebsiteLinks : BaseAction
             return await AddAsync(game);
         }
 
+        //NEXT: Check if the blocking one is really needed anymore and don't use when running in background.
+
         if (LinkUtilitiesPlugin.PlayniteApi is null)
         {
             return false;
         }
 
         var globalProgressOptions = new GlobalProgressOptions(
-            $"{Loc.link_utilities_name()}{Environment.NewLine}{ProgressMessage}",
+            $"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}",
             true
         )
         {
@@ -294,6 +299,7 @@ internal class AddWebsiteLinks : BaseAction
                 result |= await link.AddSearchedLinkAsync(game, addType == AddWebsiteLinkTypes.SearchMissing, false);
             }
         }
+        //NEXT: Check if the blocking one is really needed anymore and don't use when running in background.
         else
         {
             if (LinkUtilitiesPlugin.PlayniteApi is null)
@@ -301,7 +307,7 @@ internal class AddWebsiteLinks : BaseAction
                 return false;
             }
 
-            var globalProgressOptions = new GlobalProgressOptions($"{Loc.link_utilities_name()}{Environment.NewLine}{ProgressMessage}", true)
+            var globalProgressOptions = new GlobalProgressOptions($"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}", true)
             {
                 IsIndeterminate = false
             };
@@ -323,7 +329,7 @@ internal class AddWebsiteLinks : BaseAction
                                 break;
                             }
 
-                            args.SetText($"{Loc.link_utilities_name()}{Environment.NewLine}{ProgressMessage}{Environment.NewLine}{link.LinkName}");
+                            args.SetText($"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}{Environment.NewLine}{link.LinkName}");
 
                             result |= await link.AddSearchedLinkAsync(game, addType == AddWebsiteLinkTypes.SearchMissing, false);
 
@@ -373,6 +379,7 @@ internal class AddWebsiteLinks : BaseAction
                 result = true;
             }
         }
+        //NEXT: Check if the blocking one is really needed anymore and don't use when running in background.
         else
         {
             if (LinkUtilitiesPlugin.PlayniteApi is null)
@@ -380,7 +387,7 @@ internal class AddWebsiteLinks : BaseAction
                 return false;
             }
 
-            var globalProgressOptions = new GlobalProgressOptions($"{Loc.link_utilities_name()}{Environment.NewLine}{ProgressMessage}", true)
+            var globalProgressOptions = new GlobalProgressOptions($"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}", true)
             {
                 IsIndeterminate = false
             };
@@ -397,7 +404,7 @@ internal class AddWebsiteLinks : BaseAction
 
                         foreach (var link in linksToSearch)
                         {
-                            args.SetText($"{Loc.link_utilities_name()}{Environment.NewLine}{ProgressMessage}{Environment.NewLine}{link.LinkName}");
+                            args.SetText($"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}{Environment.NewLine}{link.LinkName}");
                             if (args.CancelToken.IsCancellationRequested)
                             {
                                 break;

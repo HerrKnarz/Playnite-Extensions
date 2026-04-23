@@ -17,6 +17,8 @@ internal class HandleUriActions : BaseAction
     private HandleUriActions()
     { }
 
+    public override string Id => "linkutilities.handle.uri.actions";
+
     /// <summary>
     /// Name of the link to be added in the "AddLink" action
     /// </summary>
@@ -32,22 +34,21 @@ internal class HandleUriActions : BaseAction
     /// </summary>
     public string? LinkUrl { get; set; }
 
-    public override string ProgressMessage => Loc.progress_adding_website_links();
-
-    public override string ResultMessageId => LocId.dialog_added_links_message;
+    public override string Name => "Add links from Uri";
 
     public static HandleUriActions Instance() => _instance ??= new HandleUriActions();
 
     public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
+        => await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl);
+
+    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
     {
-        if (await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl))
-        {
-            _gamesAffected.Add(game.Game);
+        var args = base.GetActionArgs(api, games, pluginName);
 
-            return true;
-        }
+        args.ProgressMessage = Loc.progress_adding_website_links();
+        args.ResultMessageId = LocId.dialog_added_links_message;
 
-        return false;
+        return args;
     }
 
     /// <summary>
@@ -103,11 +104,10 @@ internal class HandleUriActions : BaseAction
 
         var games = LinkUtilitiesPlugin.PlayniteApi.MainView.GetSelectedGames().Distinct().Select(g => new GameEx(g)).ToList();
 
-        var actionArgs = new BaseActionArgs(LinkUtilitiesPlugin.PlayniteApi, games, Loc.link_utilities_name())
-        {
-            ShowDialogs = true
-        };
+        var actionArgs = GetActionArgs(LinkUtilitiesPlugin.PlayniteApi, games, Loc.link_utilities_name());
 
-        await DoForAllAsync(games, actionArgs);
+        actionArgs.ShowDialogs = true;
+
+        await DoForAllAsync(actionArgs);
     }
 }
