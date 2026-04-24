@@ -6,8 +6,6 @@ using Playnite;
 
 namespace LinkUtilities;
 
-//NEXT: Think about adding a property to the BaseAction if an action should be allowed to run in the background.
-//NEXT: Think about renaming Action to Task. It's even more fitting now everything is async anyway.
 public class LinkUtilitiesPlugin : Plugin
 {
     public const string Id = "HerrKnarz.LinkUtilities";

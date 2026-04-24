@@ -52,15 +52,19 @@ public class MenuHandler(IPlayniteApi playniteApi)
         };
     }
 
+    //TODO: Check if this needs to change once themes are supported in Playnite 11.0
+    private static SolidColorBrush GetIconColor() =>
+            (SolidColorBrush?)System.Windows.Application.Current?.TryFindResource("TextBrush") ?? new SolidColorBrush(Colors.White);
+
     private ICollection<MenuItemImpl>? GetAddFromClipboardItems(List<GameEx> games)
     {
         var addLinksArgs = AddLinkFromClipboard.Instance().GetActionArgs(playniteApi, games, Loc.link_utilities_name());
 
         return [
             new(Loc.menu_add_link_from_clipboard(),
-            () => AddLinkFromClipboard.Instance().DoForAllBackground(addLinksArgs),
-            false,
-            UIIcon.FromFontIcon("f07f", Playnite.Fonts.NerdFont, new SolidColorBrush(Colors.White)))];
+                () => AddLinkFromClipboard.Instance().DoForAllAsync(addLinksArgs),
+                false,
+                UIIcon.FromFontIcon("f07f", Playnite.Fonts.NerdFont, GetIconColor()))];
     }
 
     private ICollection<MenuItemImpl>? GetAddLibraryLinksItems(List<GameEx> games)
@@ -69,9 +73,9 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
         return [
             new(Loc.menu_add_library_links(),
-            () => AddLibraryLinks.Instance().DoForAllBackground(addLibraryLinksArgs),
-            false,
-            UIIcon.FromFontIcon("eb9c", Playnite.Fonts.NerdFont, new SolidColorBrush(Colors.White)))];
+                async () => await AddLibraryLinks.Instance().DoForAllBackgroundOrAsync(addLibraryLinksArgs),
+                false,
+                UIIcon.FromFontIcon("eb9c", Playnite.Fonts.NerdFont, GetIconColor()))];
     }
 
     private ICollection<MenuItemImpl>? GetAddLinksItems(List<GameEx> games)
@@ -84,8 +88,8 @@ public class MenuHandler(IPlayniteApi playniteApi)
                 new(Loc.menu_add_link_to_all_enabled_websites(),
                     () => AddWebsiteLinks.Instance().DoForAllBackground(addLinksArgs),
                     false,
-                    UIIcon.FromFontIcon("f0c1", Playnite.Fonts.NerdFont, new SolidColorBrush(Colors.White))),
-                    //TODO: Change icon colors once themes are supported in Playnite 11.0
+                    UIIcon.FromFontIcon("f0c1", Playnite.Fonts.NerdFont, GetIconColor())),
+
                 MenuItemImpl.Separator
             };
 
@@ -95,7 +99,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
             addSingleLinksArgs.AddType = AddWebsiteLinkTypes.Add;
 
             var subItem = new MenuItemImpl(link.LinkName,
-                () => link.DoForAllBackground(addSingleLinksArgs));
+                async () => await link.DoForAllBackgroundOrAsync(addSingleLinksArgs));
 
             subItems.Add(subItem);
         }
@@ -132,9 +136,9 @@ public class MenuHandler(IPlayniteApi playniteApi)
         return [
             new(
                 toClient ? Loc.menu_convert_steam_links_to_client() : Loc.menu_convert_steam_links_to_website(),
-                () => ConvertSteamLinks.Instance().DoForAllBackground(convertArgs),
+                async () => await ConvertSteamLinks.Instance().DoForAllBackgroundOrAsync(convertArgs),
                 false,
-                UIIcon.FromFontIcon("f1b6", Playnite.Fonts.NerdFont, new SolidColorBrush(Colors.White)))];
+                UIIcon.FromFontIcon("f1b6", Playnite.Fonts.NerdFont, GetIconColor()))];
     }
 
     private ICollection<MenuItemImpl>? GetRemoveDuplicatesItems(List<GameEx> games)
@@ -145,7 +149,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
             new(Loc.menu_remove_duplicate_links(),
                 () => RemoveDuplicates.Instance().DoForAllBackground( baseArgs),
                 false,
-                UIIcon.FromFontIcon("f0a96", Playnite.Fonts.NerdFont, new SolidColorBrush(Colors.White)))];
+                UIIcon.FromFontIcon("f0a96", Playnite.Fonts.NerdFont, GetIconColor()))];
     }
 
     private ICollection<MenuItemImpl>? GetSearchLinksItems(List<GameEx> games)
@@ -161,13 +165,13 @@ public class MenuHandler(IPlayniteApi playniteApi)
                 new(Loc.menu_add_link_to_all_enabled_websites(),
                     async () => await AddWebsiteLinks.Instance().DoForAllAsync(searchLinksArgs),
                     false,
-                    UIIcon.FromFontIcon("f002", Playnite.Fonts.NerdFont, new SolidColorBrush(Colors.White))),
+                    UIIcon.FromFontIcon("f002", Playnite.Fonts.NerdFont, GetIconColor())),
                     //TODO: Change icon colors once themes are supported in Playnite 11.0
 
                 new(Loc.menu_search_link_to_all_missing_websites(),
                     async () => await AddWebsiteLinks.Instance().DoForAllAsync(searchMissingArgs),
                     false,
-                    UIIcon.FromFontIcon("f002", Playnite.Fonts.NerdFont, new SolidColorBrush(Colors.White))),
+                    UIIcon.FromFontIcon("f002", Playnite.Fonts.NerdFont, GetIconColor())),
                     //TODO: Change icon colors once themes are supported in Playnite 11.0
 
                 MenuItemImpl.Separator
