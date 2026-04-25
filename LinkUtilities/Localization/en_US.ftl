@@ -2,6 +2,13 @@ example_string = Fluent test string
 
 link_utilities_name = Link Utilities
 
+action_name_clipboard_links = Link from clipboard
+action_name_convert_steam_links = Steam links converter
+action_name_library_links = Library links
+action_name_remove_duplicates = Remove duplicate links
+action_name_uri_links = Link from uri
+action_name_website_links = Website links
+
 caption_link_type = Link Type
 
 dialog_added_links_message = Added links to {$gameCount} games!

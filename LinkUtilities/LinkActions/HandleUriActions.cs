@@ -34,7 +34,7 @@ internal class HandleUriActions : BaseAction
     /// </summary>
     public string? LinkUrl { get; set; }
 
-    public override string Name => "Add links from Uri";
+    public override string Name => Loc.action_name_uri_links();
 
     public static HandleUriActions Instance() => _instance ??= new HandleUriActions();
 

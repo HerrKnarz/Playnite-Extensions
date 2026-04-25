@@ -18,6 +18,48 @@ public static partial class Loc
         return GetString("link_utilities_name");
     }
     /// <summary>
+    /// Link from clipboard
+    /// </summary>
+    public static string action_name_clipboard_links()
+    {
+        return GetString("action_name_clipboard_links");
+    }
+    /// <summary>
+    /// Steam links converter
+    /// </summary>
+    public static string action_name_convert_steam_links()
+    {
+        return GetString("action_name_convert_steam_links");
+    }
+    /// <summary>
+    /// Library links
+    /// </summary>
+    public static string action_name_library_links()
+    {
+        return GetString("action_name_library_links");
+    }
+    /// <summary>
+    /// Remove duplicate links
+    /// </summary>
+    public static string action_name_remove_duplicates()
+    {
+        return GetString("action_name_remove_duplicates");
+    }
+    /// <summary>
+    /// Link from uri
+    /// </summary>
+    public static string action_name_uri_links()
+    {
+        return GetString("action_name_uri_links");
+    }
+    /// <summary>
+    /// Website links
+    /// </summary>
+    public static string action_name_website_links()
+    {
+        return GetString("action_name_website_links");
+    }
+    /// <summary>
     /// Link Type
     /// </summary>
     public static string caption_link_type()
@@ -375,6 +417,12 @@ public static partial class LocId
     {
         "example_string", 
         "link_utilities_name", 
+        "action_name_clipboard_links", 
+        "action_name_convert_steam_links", 
+        "action_name_library_links", 
+        "action_name_remove_duplicates", 
+        "action_name_uri_links", 
+        "action_name_website_links", 
         "caption_link_type", 
         "dialog_added_links_message", 
         "dialog_converted_steam_links_message", 
@@ -435,6 +483,30 @@ public static partial class LocId
     /// Link Utilities
     /// </summary>
     public const string link_utilities_name = "link_utilities_name";
+    /// <summary>
+    /// Link from clipboard
+    /// </summary>
+    public const string action_name_clipboard_links = "action_name_clipboard_links";
+    /// <summary>
+    /// Steam links converter
+    /// </summary>
+    public const string action_name_convert_steam_links = "action_name_convert_steam_links";
+    /// <summary>
+    /// Library links
+    /// </summary>
+    public const string action_name_library_links = "action_name_library_links";
+    /// <summary>
+    /// Remove duplicate links
+    /// </summary>
+    public const string action_name_remove_duplicates = "action_name_remove_duplicates";
+    /// <summary>
+    /// Link from uri
+    /// </summary>
+    public const string action_name_uri_links = "action_name_uri_links";
+    /// <summary>
+    /// Website links
+    /// </summary>
+    public const string action_name_website_links = "action_name_website_links";
     /// <summary>
     /// Link Type
     /// </summary>

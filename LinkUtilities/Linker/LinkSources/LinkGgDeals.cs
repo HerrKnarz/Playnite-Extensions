@@ -1,4 +1,5 @@
 ﻿using Playnite;
+using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
@@ -12,5 +13,5 @@ internal class LinkGgDeals : BaseClasses.Linker
     public override int Priority => 10;
 
     // GG.deals only works with steam ids, since the website won't let us verify the links.
-    public override async Task<string?> GetGamePathAsync(Game game, string? gameName = null) => GetSteamId(game);
+    public override async Task<string?> GetGamePathAsync(Game game, string? gameName = null) => SteamHelper.GetSteamId(game);
 }

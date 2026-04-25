@@ -19,8 +19,8 @@ internal class ConvertSteamLinks : BaseAction
     private ConvertSteamLinks()
     { }
 
-    public override string Id => "linkutilities.convert.steam.client";
-    public override string Name => "Convert steam links to client";
+    public override string Id => "linkutilities.convert.steam";
+    public override string Name => Loc.action_name_convert_steam_links();
 
     public static ConvertSteamLinks Instance() => _instance ??= new ConvertSteamLinks();
 

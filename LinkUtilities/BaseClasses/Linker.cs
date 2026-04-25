@@ -1,6 +1,5 @@
 ﻿using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
-using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using Playnite;
 using PlayniteExtensionHelpers;
@@ -34,7 +33,7 @@ public abstract class Linker : BaseAction, ILinker
     public abstract string LinkName { get; }
     public virtual string LinkTypeId { get; set; } = string.Empty;
     public virtual string LinkUrl { get; set; } = string.Empty;
-    public override string Name => $"{LinkName} link";
+    public override string Name => LinkName;
     public virtual bool NeedsToBeChecked { get; set; } = true;
 
     public virtual Pipeline? Pipeline { get; set; }
@@ -108,12 +107,7 @@ public abstract class Linker : BaseAction, ILinker
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
     {
-        if (args is not AddWebsiteLinksArgs addArgs)
-        {
-            return false;
-        }
-
-        return addArgs.AddType switch
+        return args is AddWebsiteLinksArgs addArgs && addArgs.AddType switch
         {
             AddWebsiteLinkTypes.Add
             or AddWebsiteLinkTypes.AddSelected
@@ -307,13 +301,6 @@ public abstract class Linker : BaseAction, ILinker
         var process = Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
 
         return process is not null;
-    }
-
-    internal static string? GetSteamId(Game game)
-    {
-        var steamId = SteamHelper.GetSteamId(game);
-
-        return steamId.IsNullOrEmpty() ? AddWebsiteLinks.Instance().SteamId : steamId;
     }
 
     internal async Task<(bool Result, string? PageText)> LoadDocumentAsync(string url, string checkForContent = "", bool ignoreStatus = false)

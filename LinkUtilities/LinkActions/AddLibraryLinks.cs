@@ -25,7 +25,7 @@ internal class AddLibraryLinks : BaseAction
 
     public override string Id => "linkutilities.library.links";
 
-    public override string Name => "Library links";
+    public override string Name => Loc.action_name_library_links();
 
     public static AddLibraryLinks Instance() => _instance ??= new AddLibraryLinks();
 

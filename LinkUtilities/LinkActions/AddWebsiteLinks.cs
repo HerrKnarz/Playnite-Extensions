@@ -41,14 +41,10 @@ internal class AddWebsiteLinks : BaseAction
 
     public Links Links { get; }
 
-    //NEXT: Probably add name string to localization file for all linkers.
-    public override string Name => "Website links";
-
-    public string SteamId { get; set; } = string.Empty;
+    public override string Name => Loc.action_name_website_links();
 
     public static AddWebsiteLinks Instance() => _instance ??= new AddWebsiteLinks();
 
-    //NEXT: Check if the SteamId can be removed, since it's now set directly when adding a steam link.
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
     {
         if (args is not AddWebsiteLinksArgs addArgs)
@@ -63,13 +59,11 @@ internal class AddWebsiteLinks : BaseAction
                 Log.Debug($"Starting {GetType().Name}{(addArgs.IsBulkAction ? " (Bulk)" : string.Empty)} of type {addArgs.AddType} for game {game.Game.Name}.");
             }
 
-            SteamId = string.Empty;
-
             return addArgs.AddType switch
             {
                 AddWebsiteLinkTypes.Add
                 or AddWebsiteLinkTypes.AddSelected
-                    => await AddLinksAsync(game.Game, addArgs.IsBulkAction),
+                    => await AddLinksAsync(game.Game),
                 AddWebsiteLinkTypes.Search
                 or AddWebsiteLinkTypes.SearchMissing
                 or AddWebsiteLinkTypes.SearchSelected
@@ -81,8 +75,6 @@ internal class AddWebsiteLinks : BaseAction
         }
         finally
         {
-            SteamId = string.Empty;
-
             if (LinkUtilitiesPlugin.Settings.DebugMode)
             {
                 Log.Debug($"Finishing {GetType().Name}{(addArgs.IsBulkAction ? " (Bulk)" : string.Empty)} of type {addArgs.AddType} for game {game.Game.Name}.");
@@ -144,13 +136,6 @@ internal class AddWebsiteLinks : BaseAction
     public override bool ProcessUpdateData(Game gameToUpdate, BaseActionGame processedGame)
                                             => LinkHelper.UpdateGameInLibrary(gameToUpdate, processedGame);
 
-    private async Task<bool> AddAsync(Game game)
-    {
-        var result = await FindLinksAsync(game);
-
-        return result.result && result.links.HasItems() && await LinkHelper.AddLinksAsync(game, result.links);
-    }
-
     /// <summary>
     /// Adds links to all configured websites
     /// </summary>
@@ -159,44 +144,11 @@ internal class AddWebsiteLinks : BaseAction
     /// If true, the method already is used in a progress bar and no new one has to be started.
     /// </param>
     /// <returns>True, if new links were added.</returns>
-    private async Task<bool> AddLinksAsync(Game game, bool isBulkAction = true)
+    private async Task<bool> AddLinksAsync(Game game)
     {
-        if (isBulkAction)
-        {
-            return await AddAsync(game);
-        }
+        var result = await FindLinksAsync(game);
 
-        //NEXT: Check if the blocking one is really needed anymore and don't use when running in background.
-
-        if (LinkUtilitiesPlugin.PlayniteApi is null)
-        {
-            return false;
-        }
-
-        var globalProgressOptions = new GlobalProgressOptions(
-            $"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}",
-            true
-        )
-        {
-            IsIndeterminate = true
-        };
-
-        var result = false;
-
-        await LinkUtilitiesPlugin.PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions,
-            async (args) =>
-            {
-                try
-                {
-                    result = await AddAsync(game);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                }
-            });
-
-        return result;
+        return result.result && result.links.HasItems() && await LinkHelper.AddLinksAsync(game, result.links);
     }
 
     private void DisposePipelines()
@@ -302,7 +254,6 @@ internal class AddWebsiteLinks : BaseAction
                 result |= await link.AddSearchedLinkAsync(game, addType == AddWebsiteLinkTypes.SearchMissing, false);
             }
         }
-        //NEXT: Check if the blocking one is really needed anymore and don't use when running in background.
         else
         {
             if (LinkUtilitiesPlugin.PlayniteApi is null)
@@ -373,56 +324,7 @@ internal class AddWebsiteLinks : BaseAction
 
         var linksToSearch = _linkers.Where(link => !LinkHelper.LinkExists(game, link.LinkName)).ToList();
 
-        if (isBulkAction)
-        {
-            foreach (var link in linksToSearch)
-            {
-                link.StartBrowserSearch(game);
-                result = true;
-            }
-        }
-        //NEXT: Check if the blocking one is really needed anymore and don't use when running in background.
-        else
-        {
-            if (LinkUtilitiesPlugin.PlayniteApi is null)
-            {
-                return false;
-            }
-
-            var globalProgressOptions = new GlobalProgressOptions($"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}", true)
-            {
-                IsIndeterminate = false
-            };
-
-            await LinkUtilitiesPlugin.PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions,
-                async (args) =>
-                {
-                    try
-                    {
-                        args.SetProgressMaxValue(linksToSearch.Count);
-
-                        var counter = 0;
-
-                        foreach (var link in linksToSearch)
-                        {
-                            args.SetText($"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}{Environment.NewLine}{link.LinkName}");
-                            if (args.CancelToken.IsCancellationRequested)
-                            {
-                                break;
-                            }
-
-                            link.StartBrowserSearch(game);
-                            result = true;
-
-                            args.SetCrrentProgressValue(++counter);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                    }
-                });
-        }
+        linksToSearch.ForEach(l => result |= l.StartBrowserSearch(game));
 
         return result;
     }

@@ -23,7 +23,7 @@ internal class AddLinkFromClipboard : BaseAction
     /// </summary>
     public string? LinkUrl { get; set; }
 
-    public override string Name => "Clipboard link";
+    public override string Name => Loc.action_name_clipboard_links();
 
     public static AddLinkFromClipboard Instance() => _instance ??= new AddLinkFromClipboard();
 
