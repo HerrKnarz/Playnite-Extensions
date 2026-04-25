@@ -49,13 +49,6 @@ public abstract class Linker : BaseAction, ILinker
 
     public virtual string WrongTitle { get; set; } = string.Empty;
 
-    public virtual async Task<bool> AddLinkAsync(Game game)
-    {
-        var result = await FindLinksAsync(game);
-
-        return result.result && await LinkHelper.AddLinksAsync(game, result.links);
-    }
-
     public virtual async Task<bool> AddLinkFromSearchAsync(Game game, LinkSearchResult result, bool cleanUpAfterAdding = true)
     {
         if (!result.Id.IsNullOrEmpty())
@@ -64,6 +57,18 @@ public abstract class Linker : BaseAction, ILinker
         }
 
         return await LinkHelper.AddLinkAsync(game, LinkName, result.Url, LinkTypeId, false, cleanUpAfterAdding);
+    }
+
+    public virtual async Task<bool> AddLinksAsync(Game game, bool isBulkAction = true)
+    {
+        if (isBulkAction && (Delay > 0))
+        {
+            await Task.Delay(Delay);
+        }
+
+        var result = await FindLinksAsync(game);
+
+        return result.result && await LinkHelper.AddLinksAsync(game, result.links);
     }
 
     public virtual async Task<bool> AddSearchedLinkAsync(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true)
@@ -101,28 +106,18 @@ public abstract class Linker : BaseAction, ILinker
         => Pipeline is not null
         && await Pipeline.IsUrlOkAsync(link, ReturnsSameUrl, WrongTitle, LinkUtilitiesPlugin.Settings.DebugMode, CheckForContent, AllowedCallbackUrls);
 
-    public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
+    public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
     {
         if (args is not AddWebsiteLinksArgs addArgs)
         {
             return false;
         }
 
-        async Task<bool> AddLinks()
-        {
-            if (addArgs.IsBulkAction && (Delay > 0))
-            {
-                await Task.Delay(Delay);
-            }
-
-            return await AddLinkAsync(game.Game);
-        }
-
         return addArgs.AddType switch
         {
             AddWebsiteLinkTypes.Add
             or AddWebsiteLinkTypes.AddSelected
-                => await AddLinks(),
+                => await AddLinksAsync(game.Game, addArgs.IsBulkAction),
             AddWebsiteLinkTypes.Search
             or AddWebsiteLinkTypes.SearchSelected
                 => await AddSearchedLinkAsync(game.Game),
@@ -207,7 +202,7 @@ public abstract class Linker : BaseAction, ILinker
         Pipeline = null;
     }
 
-    public override AddWebsiteLinksArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
+    public override AddWebsiteLinksArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
     {
         return new AddWebsiteLinksArgs(Id, Name, api, games, pluginName)
         {
@@ -296,6 +291,9 @@ public abstract class Linker : BaseAction, ILinker
 
         return true;
     }
+
+    public override bool ProcessUpdateData(Game gameToUpdate, BaseActionGame processedGame)
+        => LinkHelper.UpdateGameInLibrary(gameToUpdate, processedGame);
 
     public virtual bool StartBrowserSearch(Game game)
     {

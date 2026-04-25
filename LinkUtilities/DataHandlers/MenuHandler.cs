@@ -36,7 +36,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
     public ICollection<MenuItemImpl>? GetGameMenuItems(GetGameMenuItemsArgs args)
     {
-        var games = args.Games.Select(g => new GameEx(g)).ToList();
+        var games = args.Games.Select(g => new BaseActionGame(g)).ToList();
 
         return args.ItemId switch
         {
@@ -56,7 +56,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
     private static SolidColorBrush GetIconColor() =>
             (SolidColorBrush?)System.Windows.Application.Current?.TryFindResource("TextBrush") ?? new SolidColorBrush(Colors.White);
 
-    private ICollection<MenuItemImpl>? GetAddFromClipboardItems(List<GameEx> games)
+    private ICollection<MenuItemImpl>? GetAddFromClipboardItems(List<BaseActionGame> games)
     {
         var addLinksArgs = AddLinkFromClipboard.Instance().GetActionArgs(playniteApi, games, Loc.link_utilities_name());
 
@@ -67,7 +67,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
                 UIIcon.FromFontIcon("f07f", Playnite.Fonts.NerdFont, GetIconColor()))];
     }
 
-    private ICollection<MenuItemImpl>? GetAddLibraryLinksItems(List<GameEx> games)
+    private ICollection<MenuItemImpl>? GetAddLibraryLinksItems(List<BaseActionGame> games)
     {
         var addLibraryLinksArgs = AddLibraryLinks.Instance().GetActionArgs(playniteApi, games, Loc.link_utilities_name());
 
@@ -78,7 +78,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
                 UIIcon.FromFontIcon("eb9c", Playnite.Fonts.NerdFont, GetIconColor()))];
     }
 
-    private ICollection<MenuItemImpl>? GetAddLinksItems(List<GameEx> games)
+    private ICollection<MenuItemImpl>? GetAddLinksItems(List<BaseActionGame> games)
     {
         var addLinksArgs = AddWebsiteLinks.Instance().GetActionArgs(playniteApi, games, Loc.link_utilities_name());
         addLinksArgs.AddType = AddWebsiteLinkTypes.Add;
@@ -107,7 +107,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
         return [new MenuItemImpl(Loc.menu_section_add_link(), subItems)];
     }
 
-    private ICollection<MenuItemImpl>? GetBrowserSearchItems(List<GameEx> games)
+    private ICollection<MenuItemImpl>? GetBrowserSearchItems(List<BaseActionGame> games)
     {
         var searchBrowserArgs = AddWebsiteLinks.Instance().GetActionArgs(playniteApi, games, Loc.link_utilities_name());
         searchBrowserArgs.AddType = AddWebsiteLinkTypes.SearchInBrowser;
@@ -128,7 +128,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
         return [new MenuItemImpl(Loc.menu_search_link_in_browser(), subItems)];
     }
 
-    private ICollection<MenuItemImpl>? GetConvertSteamlinksItems(List<GameEx> games, bool toClient = true)
+    private ICollection<MenuItemImpl>? GetConvertSteamlinksItems(List<BaseActionGame> games, bool toClient = true)
     {
         var convertArgs = ConvertSteamLinks.Instance().GetActionArgs(playniteApi, games, Loc.link_utilities_name());
         convertArgs.ToClient = toClient;
@@ -141,7 +141,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
                 UIIcon.FromFontIcon("f1b6", Playnite.Fonts.NerdFont, GetIconColor()))];
     }
 
-    private ICollection<MenuItemImpl>? GetRemoveDuplicatesItems(List<GameEx> games)
+    private ICollection<MenuItemImpl>? GetRemoveDuplicatesItems(List<BaseActionGame> games)
     {
         var baseArgs = RemoveDuplicates.Instance().GetActionArgs(playniteApi, games, Loc.link_utilities_name());
 
@@ -152,7 +152,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
                 UIIcon.FromFontIcon("f0a96", Playnite.Fonts.NerdFont, GetIconColor()))];
     }
 
-    private ICollection<MenuItemImpl>? GetSearchLinksItems(List<GameEx> games)
+    private ICollection<MenuItemImpl>? GetSearchLinksItems(List<BaseActionGame> games)
     {
         var searchLinksArgs = AddWebsiteLinks.Instance().GetActionArgs(playniteApi, games, Loc.link_utilities_name());
         searchLinksArgs.AddType = AddWebsiteLinkTypes.Search;
@@ -166,13 +166,11 @@ public class MenuHandler(IPlayniteApi playniteApi)
                     async () => await AddWebsiteLinks.Instance().DoForAllAsync(searchLinksArgs),
                     false,
                     UIIcon.FromFontIcon("f002", Playnite.Fonts.NerdFont, GetIconColor())),
-                    //TODO: Change icon colors once themes are supported in Playnite 11.0
 
                 new(Loc.menu_search_link_to_all_missing_websites(),
                     async () => await AddWebsiteLinks.Instance().DoForAllAsync(searchMissingArgs),
                     false,
                     UIIcon.FromFontIcon("f002", Playnite.Fonts.NerdFont, GetIconColor())),
-                    //TODO: Change icon colors once themes are supported in Playnite 11.0
 
                 MenuItemImpl.Separator
             };

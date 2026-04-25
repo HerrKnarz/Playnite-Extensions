@@ -24,11 +24,12 @@ internal class AddLibraryLinks : BaseAction
     }
 
     public override string Id => "linkutilities.library.links";
+
     public override string Name => "Library links";
 
     public static AddLibraryLinks Instance() => _instance ??= new AddLibraryLinks();
 
-    public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
+    public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
     {
         if (!LibraryLinks.TryGetValue(game.Game.LibraryId, out var lib))
         {
@@ -51,7 +52,7 @@ internal class AddLibraryLinks : BaseAction
         }
     }
 
-    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
+    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
     {
         var args = base.GetActionArgs(api, games, pluginName);
 
@@ -70,4 +71,7 @@ internal class AddLibraryLinks : BaseAction
 
         return true;
     }
+
+    public override bool ProcessUpdateData(Game gameToUpdate, BaseActionGame processedGame)
+                                    => LinkHelper.UpdateGameInLibrary(gameToUpdate, processedGame);
 }

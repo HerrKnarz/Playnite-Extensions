@@ -1,5 +1,6 @@
 ﻿using Playnite;
 using PlayniteExtensionHelpers;
+using PlayniteExtensionHelpers.GamesCommon;
 using PlayniteExtensionHelpers.MetadataCommon;
 using System.Collections.ObjectModel;
 
@@ -74,6 +75,41 @@ internal static class LinkHelper
         return LinkUtilitiesPlugin.PlayniteApi is null || game is null || !game.Links.HasItems()
             ? null
             : string.Join(',', game.Links.Select(l => LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes.First(t => t.Id.Equals(l.TypeId)).Name).Distinct().OrderBy(s => s));
+    }
+
+    public static bool UpdateGameInLibrary(Game gameToUpdate, BaseActionGame processedGame)
+    {
+        var needsUpdate = false;
+
+        if (processedGame.Game.ExternalIdentifiers.HasItems())
+        {
+            if (gameToUpdate.ExternalIdentifiers is null)
+            {
+                gameToUpdate.ExternalIdentifiers = processedGame.Game.ExternalIdentifiers;
+
+                needsUpdate = true;
+            }
+            else
+            {
+                needsUpdate = gameToUpdate.ExternalIdentifiers.AddMissing(processedGame.Game.ExternalIdentifiers.Where(s => !gameToUpdate.ExternalIdentifiers.Any(t => t.TypeId == s.TypeId)));
+            }
+        }
+
+        if (processedGame.Game.Links.HasItems())
+        {
+            if (gameToUpdate.Links is null)
+            {
+                gameToUpdate.Links = processedGame.Game.Links;
+
+                needsUpdate = true;
+            }
+            else
+            {
+                needsUpdate |= gameToUpdate.Links.AddMissing(processedGame.Game.Links.Where(l => !LinkHelper.LinkExists(gameToUpdate, l.TypeId)));
+            }
+        }
+
+        return needsUpdate;
     }
 
     /// <summary>

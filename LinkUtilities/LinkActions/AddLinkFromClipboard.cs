@@ -27,10 +27,10 @@ internal class AddLinkFromClipboard : BaseAction
 
     public static AddLinkFromClipboard Instance() => _instance ??= new AddLinkFromClipboard();
 
-    public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
+    public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
         => await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl, null, false);
 
-    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
+    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
     {
         var args = base.GetActionArgs(api, games, pluginName);
 

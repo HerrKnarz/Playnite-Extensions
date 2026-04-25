@@ -38,10 +38,10 @@ internal class HandleUriActions : BaseAction
 
     public static HandleUriActions Instance() => _instance ??= new HandleUriActions();
 
-    public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
+    public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
         => await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl);
 
-    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
+    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
     {
         var args = base.GetActionArgs(api, games, pluginName);
 
@@ -102,7 +102,7 @@ internal class HandleUriActions : BaseAction
             return;
         }
 
-        var games = LinkUtilitiesPlugin.PlayniteApi.MainView.GetSelectedGames().Distinct().Select(g => new GameEx(g)).ToList();
+        var games = LinkUtilitiesPlugin.PlayniteApi.MainView.GetSelectedGames().Distinct().Select(g => new BaseActionGame(g)).ToList();
 
         var actionArgs = GetActionArgs(LinkUtilitiesPlugin.PlayniteApi, games, Loc.link_utilities_name());
 

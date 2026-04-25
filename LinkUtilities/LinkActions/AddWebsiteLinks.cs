@@ -38,6 +38,7 @@ internal class AddWebsiteLinks : BaseAction
     } = new List<CustomLinkProfile>();*/
 
     public override string Id => "linkutilities.website.links";
+
     public Links Links { get; }
 
     //NEXT: Probably add name string to localization file for all linkers.
@@ -48,7 +49,7 @@ internal class AddWebsiteLinks : BaseAction
     public static AddWebsiteLinks Instance() => _instance ??= new AddWebsiteLinks();
 
     //NEXT: Check if the SteamId can be removed, since it's now set directly when adding a steam link.
-    public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
+    public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
     {
         if (args is not AddWebsiteLinksArgs addArgs)
         {
@@ -96,7 +97,7 @@ internal class AddWebsiteLinks : BaseAction
         Pipelines?.CleanUp();
     }
 
-    public override AddWebsiteLinksArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
+    public override AddWebsiteLinksArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
     {
         return new AddWebsiteLinksArgs(Id, Name, api, games, pluginName)
         {
@@ -140,6 +141,9 @@ internal class AddWebsiteLinks : BaseAction
         }
     }
 
+    public override bool ProcessUpdateData(Game gameToUpdate, BaseActionGame processedGame)
+                                            => LinkHelper.UpdateGameInLibrary(gameToUpdate, processedGame);
+
     private async Task<bool> AddAsync(Game game)
     {
         var result = await FindLinksAsync(game);
@@ -179,7 +183,6 @@ internal class AddWebsiteLinks : BaseAction
 
         var result = false;
 
-        // TODO: Think about making this a background task.
         await LinkUtilitiesPlugin.PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions,
             async (args) =>
             {
@@ -312,7 +315,6 @@ internal class AddWebsiteLinks : BaseAction
                 IsIndeterminate = false
             };
 
-            // TODO: Think about making this a background task.
             await LinkUtilitiesPlugin.PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions,
                 async (args) =>
                 {
@@ -392,7 +394,6 @@ internal class AddWebsiteLinks : BaseAction
                 IsIndeterminate = false
             };
 
-            // TODO: Think about making this a background task.
             await LinkUtilitiesPlugin.PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions,
                 async (args) =>
                 {

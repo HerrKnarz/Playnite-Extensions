@@ -45,10 +45,10 @@ internal class RemoveDuplicates : BaseAction
         }*/
     }
 
-    public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
+    public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
         => RemoveDuplicateLinks(game.Game, LinkUtilitiesPlugin.Settings.RemoveDuplicatesType);
 
-    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
+    public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
     {
         var args = base.GetActionArgs(api, games, pluginName);
 

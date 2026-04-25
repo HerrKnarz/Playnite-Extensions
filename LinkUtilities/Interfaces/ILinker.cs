@@ -131,11 +131,12 @@ public interface ILinker
     /// Adds a link to the specific game page of the specified website.
     /// </summary>
     /// <param name="game">Game the link will be added to</param>
+    /// <param name="isBulkAction">True if the method is called in a bulk action</param>
     /// <returns>
     /// True, if a link could be added. Returns false, if a link with that name was already present
     /// or couldn't be added.
     /// </returns>
-    Task<bool> AddLinkAsync(Game game);
+    Task<bool> AddLinksAsync(Game game, bool isBulkAction);
 
     /// <summary>
     /// Adds a link via search dialog.

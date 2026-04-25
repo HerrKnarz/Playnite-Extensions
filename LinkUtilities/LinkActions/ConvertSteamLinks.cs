@@ -4,7 +4,7 @@ using PlayniteExtensionHelpers.GamesCommon;
 
 namespace LinkUtilities.LinkActions;
 
-internal class ConvertSteamLinksArgs(string id, string name, IPlayniteApi api, List<GameEx> games, string pluginName) : BaseActionArgs(id, name, api, games, pluginName)
+internal class ConvertSteamLinksArgs(string id, string name, IPlayniteApi api, List<BaseActionGame> games, string pluginName) : BaseActionArgs(id, name, api, games, pluginName)
 {
     public bool ToClient { get; set; } = true;
 }
@@ -24,10 +24,10 @@ internal class ConvertSteamLinks : BaseAction
 
     public static ConvertSteamLinks Instance() => _instance ??= new ConvertSteamLinks();
 
-    public override async Task<bool> ExecuteAsync(GameEx game, BaseActionArgs args)
+    public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
         => await ConvertAsync(game.Game, args);
 
-    public override ConvertSteamLinksArgs GetActionArgs(IPlayniteApi api, List<GameEx> games, string pluginName)
+    public override ConvertSteamLinksArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
     {
         return new ConvertSteamLinksArgs(Id, Name, api, games, pluginName)
         {
