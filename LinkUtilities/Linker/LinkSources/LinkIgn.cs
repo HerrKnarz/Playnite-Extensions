@@ -1,10 +1,12 @@
-﻿using Playnite;
+﻿using LinkUtilities.LinkActions;
+using Playnite;
 using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkIgn : BaseClasses.Linker
+internal class LinkIgn(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
+    public static string ClassId => $"linkutilities.ign.link";
     public override string BaseUrl => "https://www.ign.com/games/";
     public override string LinkName => "IGN";
 

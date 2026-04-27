@@ -1,5 +1,4 @@
 ﻿using LinkUtilities.Helper;
-using LinkUtilities.Interfaces;
 using LinkUtilities.Linker;
 using LinkUtilities.Models;
 using Playnite;
@@ -14,11 +13,12 @@ namespace LinkUtilities.LinkActions;
 /// </summary>
 internal class AddWebsiteLinks : BaseAction
 {
-    private static AddWebsiteLinks? _instance;
     private readonly Pipelines Pipelines = [];
-    private List<BaseClasses.Linker>? _linkers;
+    private List<BaseLinkSource>? _linkers;
 
-    private AddWebsiteLinks()
+    //NEXT: Remove singleton logic from remaining action.
+
+    public AddWebsiteLinks()
     {
         Links = [];
     }
@@ -43,7 +43,22 @@ internal class AddWebsiteLinks : BaseAction
 
     public override string Name => Loc.action_name_website_links();
 
-    public static AddWebsiteLinks Instance() => _instance ??= new AddWebsiteLinks();
+    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, AddWebsiteLinkTypes addType)
+    {
+        var action = new AddWebsiteLinks();
+
+        var args = action.GetActionArgs(api, games, pluginName);
+        args.AddType = addType;
+
+        if (addType is AddWebsiteLinkTypes.Add or AddWebsiteLinkTypes.AddSelected)
+        {
+            args.DoForAllType = DoForAllTypes.BackgroundOperation;
+        }
+
+        //NEXT: Maybe make it several sub classes anyway...
+
+        await action.DoForAllAsync(args);
+    }
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
     {
@@ -104,6 +119,8 @@ internal class AddWebsiteLinks : BaseAction
         {
             return false;
         }
+
+        await Links.InitializeAsync();
 
         switch (addArgs.AddType)
         {
@@ -275,7 +292,7 @@ internal class AddWebsiteLinks : BaseAction
 
                         var counter = 0;
 
-                        foreach (ILinker link in _linkers)
+                        foreach (var link in _linkers)
                         {
                             if (args.CancelToken.IsCancellationRequested)
                             {
@@ -286,7 +303,7 @@ internal class AddWebsiteLinks : BaseAction
 
                             result |= await link.AddSearchedLinkAsync(game, addType == AddWebsiteLinkTypes.SearchMissing, false);
 
-                            args.SetCrrentProgressValue(++counter);
+                            args.SetCurrentProgressValue(++counter);
                         }
                     }
                     catch (Exception ex)

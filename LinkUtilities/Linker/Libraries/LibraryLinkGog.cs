@@ -1,5 +1,5 @@
-﻿using LinkUtilities.BaseClasses;
-using LinkUtilities.Helper;
+﻿using LinkUtilities.Helper;
+using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using Playnite;
@@ -11,11 +11,12 @@ namespace LinkUtilities.Linker.Libraries;
 
 internal class LibraryLinkGog : LibraryLinker
 {
-    public LibraryLinkGog() : base()
+    public LibraryLinkGog(string id, LinkSourceArgs args) : base(id, args)
     {
         AllowedCallbackUrls.Add("https://www.gog.com/games");
     }
 
+    public static string ClassId => $"linkutilities.gog.link";
     public override bool AllowRedirects { get; set; } = false;
     public override string BaseUrl => "https://www.gog.com/en/game/";
     public override string BrowserSearchUrl => "https://www.gog.com/en/games?query=";

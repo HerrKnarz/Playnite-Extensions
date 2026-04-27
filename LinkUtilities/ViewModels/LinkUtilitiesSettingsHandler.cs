@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using LinkUtilities.Views;
 using Playnite;
@@ -54,7 +53,11 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
 
         settings ??= new LinkUtilitiesPluginSettings();
 
-        settings.LinkSettings.RefreshLinkSources(AddWebsiteLinks.Instance().Links);
+        if (LinkUtilitiesPlugin.Plugin is not null)
+        {
+            settings.LinkSettings.RefreshLinkSources(LinkUtilitiesPlugin.Plugin.Links);
+        }
+
         settings.LinkSettings.RefreshLibraryLinkSettings();
         settings.LinkSettings = new LinkSourceSettings([.. settings.LinkSettings.OrderBy(x => x.LinkName)]);
 

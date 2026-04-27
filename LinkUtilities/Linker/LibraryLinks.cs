@@ -1,4 +1,4 @@
-﻿using LinkUtilities.BaseClasses;
+﻿using LinkUtilities.LinkActions;
 using LinkUtilities.Linker.Libraries;
 
 namespace LinkUtilities.Linker;
@@ -14,8 +14,7 @@ internal class LibraryLinks : Dictionary<string, LibraryLinker>
         //var steamLib = new LibraryLinkSteam();
         //Add(steamLib.Id, steamLib);
 
-        var gogLib = new LibraryLinkGog();
-        Add(gogLib.Id, gogLib);
+        Add(LibraryLinkGog.ClassId, new LibraryLinkGog(LibraryLinkGog.ClassId, new LinkSourceArgs()));
 
         //var itchLib = new LibraryLinkItch();
         //Add(itchLib.Id, itchLib);

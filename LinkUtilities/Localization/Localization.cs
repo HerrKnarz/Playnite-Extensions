@@ -3,13 +3,13 @@ using Playnite.Markup;
 
 namespace Playnite;
 
-public class LocalizedString : LocStringMarkup
+public class LocString : LocStringMarkup
 {
-    public LocalizedString() : base(LinkUtilitiesPlugin.Id)
+    public LocString() : base(LinkUtilitiesPlugin.Id)
     {
     }
 
-    public LocalizedString(string stringId) : base(LinkUtilitiesPlugin.Id, stringId)
+    public LocString(string stringId) : base(LinkUtilitiesPlugin.Id, stringId)
     {
     }
 }
@@ -23,5 +23,5 @@ public static partial class Loc
 
     public static string GetString(string stringId, params (string name, object value)[] args) => Api.GetLocalizedString(stringId, args);
 
-    public static bool IsStringId(string id) => LocId.StringIds.Contains(id);
+    public static bool IsStringId(string id) => Api.IsLocalizedStringId(id);
 }

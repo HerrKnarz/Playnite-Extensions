@@ -1,4 +1,4 @@
-﻿using LinkUtilities.Interfaces;
+﻿using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using Playnite;
@@ -6,8 +6,9 @@ using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkGameFaqs : BaseClasses.Linker
+internal class LinkGameFaqs(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
+    public static string ClassId => $"linkutilities.gamefaqs.link";
     public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
     public override string BaseUrl => "https://gamefaqs.gamespot.com/";
     public override string BrowserSearchUrl => $"{BaseUrl}search?game=";

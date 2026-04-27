@@ -1,10 +1,12 @@
-﻿using Playnite;
+﻿using LinkUtilities.LinkActions;
+using Playnite;
 using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkGgDeals : BaseClasses.Linker
+internal class LinkGgDeals(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
+    public static string ClassId => $"linkutilities.ggdeals.link";
     public override string BaseUrl => "https://gg.deals/steam/app/";
     public override string BrowserSearchUrl => "https://gg.deals/games/?title=";
     public override bool CanBeSearched => false;

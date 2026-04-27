@@ -58,6 +58,7 @@ internal class AddLibraryLinks : BaseAction
 
         args.ProgressMessage = Loc.progress_adding_library_links();
         args.ResultMessageId = LocId.dialog_added_links_message;
+        args.DoForAllType = DoForAllTypes.SingleBlockingMultiBackground;
 
         return args;
     }

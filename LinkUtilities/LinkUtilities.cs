@@ -1,5 +1,6 @@
 ﻿using LinkUtilities.DataHandlers;
 using LinkUtilities.LinkActions;
+using LinkUtilities.Linker;
 using LinkUtilities.Models;
 using LinkUtilities.ViewModels;
 using Playnite;
@@ -21,7 +22,7 @@ public class LinkUtilitiesPlugin : Plugin
     public static IPlayniteApi? PlayniteApi { get; private set; } = null!;
     public static LinkUtilitiesPlugin? Plugin { get; private set; } = null!;
     public static LinkUtilitiesPluginSettings Settings { get; set; } = new();
-
+    public Links Links { get; set; } = [];
     public MenuHandler? MenuHandler { get; set; }
 
     public override GameExplorer? GetGameExplorer(GetGameExplorersArgs args) => args.ItemId == LinkPropertyId ? new LinkPropertyGameExplorer() : (GameExplorer?)null;
@@ -65,7 +66,7 @@ public class LinkUtilitiesPlugin : Plugin
         MenuHandler = new MenuHandler(PlayniteApi);
         Plugin = this;
 
-        await AddWebsiteLinks.Instance().Links.InitializeAsync();
+        await Links.InitializeAsync();
 
         PlayniteApi.UriHandler.RegisterSource("LinkUtilities", HandleUriActions.Instance().UriHandlerAsync);
 

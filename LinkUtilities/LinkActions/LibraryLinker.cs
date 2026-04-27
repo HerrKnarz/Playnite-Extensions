@@ -1,10 +1,11 @@
 ﻿using LinkUtilities.Helper;
+using LinkUtilities.Linker;
 using Playnite;
 using PlayniteExtensionHelpers;
 
-namespace LinkUtilities.BaseClasses;
+namespace LinkUtilities.LinkActions;
 
-internal abstract class LibraryLinker : Linker
+internal abstract class LibraryLinker(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     public abstract string LibraryId { get; }
 

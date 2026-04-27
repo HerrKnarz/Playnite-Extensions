@@ -1,11 +1,13 @@
-﻿using Playnite;
+﻿using LinkUtilities.LinkActions;
+using Playnite;
 using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkProtonDb : BaseClasses.Linker
+internal class LinkProtonDb(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     private const string _baseUrl = "https://www.protondb.com";
+    public static string ClassId => $"linkutilities.protondb.link";
     public override string BaseUrl => _baseUrl + "/app/";
     public override string LinkName => "ProtonDB";
     public override int Priority => 10;

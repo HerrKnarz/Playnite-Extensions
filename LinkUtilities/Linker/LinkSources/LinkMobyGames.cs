@@ -1,5 +1,5 @@
 ﻿using AngleSharp;
-using LinkUtilities.Interfaces;
+using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using Playnite;
 using PlayniteExtensionHelpers;
@@ -7,10 +7,10 @@ using System.Net;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkMobyGames : BaseClasses.Linker
+internal class LinkMobyGames(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     private readonly IBrowsingContext _context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
-
+    public static string ClassId => $"linkutilities.mobygames.link";
     public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
     public override string LinkName => "MobyGames";
     public override string SearchUrl => "https://www.mobygames.com/search/?type=game&q=";

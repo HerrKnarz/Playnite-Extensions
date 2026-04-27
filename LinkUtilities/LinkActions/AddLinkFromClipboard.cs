@@ -36,6 +36,7 @@ internal class AddLinkFromClipboard : BaseAction
 
         args.ProgressMessage = Loc.progress_adding_website_links();
         args.ResultMessageId = LocId.dialog_added_links_message;
+        args.DoForAllType = DoForAllTypes.BlockingBulkUpdate;
 
         return args;
     }

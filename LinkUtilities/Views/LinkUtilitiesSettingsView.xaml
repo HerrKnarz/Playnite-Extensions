@@ -13,12 +13,12 @@
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Stretch">
-        <TabItem Header="{p:LocalizedString {x:Static p:LocId.settings_tab_general}}">
+        <TabItem Header="{p:LocString {x:Static p:LocId.settings_tab_general}}">
             <DockPanel Margin="10">
                 <StackPanel DockPanel.Dock="Top"
                             Orientation="Horizontal"
                             HorizontalAlignment="Left">
-                    <Label Content="{p:LocalizedString {x:Static p:LocId.settings_duplicates_remove_type}}" />
+                    <Label Content="{p:LocString {x:Static p:LocId.settings_duplicates_remove_type}}" />
                     <ComboBox Margin="10,0,0,0"
                               ItemsSource="{Binding Path=Settings.DuplicateTypesWithCaptions}"
                               DisplayMemberPath="Value"
@@ -27,19 +27,19 @@
                 </StackPanel>
                 <CheckBox DockPanel.Dock="Top"
                           IsChecked="{Binding Settings.RemoveDuplicatesAfterChange}"
-                          Content="{p:LocalizedString {x:Static p:LocId.settings_duplicates_remove_after_change}}"
+                          Content="{p:LocString {x:Static p:LocId.settings_duplicates_remove_after_change}}"
                           Margin="0,10,0,0" />
                 <CheckBox DockPanel.Dock="Top"
                           IsChecked="{Binding Settings.AddLinksToNewGames}"
-                          Content="{p:LocalizedString {x:Static p:LocId.settings_add_links_to_new_games}}"
+                          Content="{p:LocString {x:Static p:LocId.settings_add_links_to_new_games}}"
                           Margin="0,10,0,0" />
                 <CheckBox DockPanel.Dock="Top"
                           IsChecked="{Binding Settings.DebugMode}"
-                          Content="{p:LocalizedString {x:Static p:LocId.settings_debug_mode}}"
+                          Content="{p:LocString {x:Static p:LocId.settings_debug_mode}}"
                           Margin="0,10,0,0" />
                 <Label DockPanel.Dock="Top"
                        Margin="0,20,0,0"
-                       Content="{p:LocalizedString {x:Static p:LocId.settings_configure_websites}}" />
+                       Content="{p:LocString {x:Static p:LocId.settings_configure_websites}}" />
                 <ListView Name="LinkSources"
                           SelectionMode="Single"
                           DockPanel.Dock="Top"
@@ -48,10 +48,10 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="Auto"
-                                            Header="{p:LocalizedString {x:Static p:LocId.settings_link_source}}"
+                                            Header="{p:LocString {x:Static p:LocId.settings_link_source}}"
                                             DisplayMemberBinding="{Binding LinkName}" />
                             <GridViewColumn Width="Auto"
-                                            Header="{p:LocalizedString {x:Static p:LocId.settings_add_link}}">
+                                            Header="{p:LocString {x:Static p:LocId.settings_add_link}}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding IsAddable, UpdateSourceTrigger=PropertyChanged}"
@@ -62,7 +62,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Width="Auto"
-                                            Header="{p:LocalizedString {x:Static p:LocId.settings_search_link}}">
+                                            Header="{p:LocString {x:Static p:LocId.settings_search_link}}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding IsSearchable, UpdateSourceTrigger=PropertyChanged}"
@@ -73,7 +73,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Width="Auto"
-                                            Header="{p:LocalizedString {x:Static p:LocId.settings_show_in_menus}}">
+                                            Header="{p:LocString {x:Static p:LocId.settings_show_in_menus}}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding ShowInMenus, UpdateSourceTrigger=PropertyChanged}"
@@ -83,7 +83,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Width="200"
-                                            Header="{p:LocalizedString {x:Static p:LocId.settings_api_key}}">
+                                            Header="{p:LocString {x:Static p:LocId.settings_api_key}}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}"
@@ -98,7 +98,7 @@
                 </ListView>
             </DockPanel>
         </TabItem>
-        <TabItem Header="{p:LocalizedString {x:Static p:LocId.settings_tab_bookmarklet_clipboard}}">
+        <TabItem Header="{p:LocString {x:Static p:LocId.settings_tab_bookmarklet_clipboard}}">
             <DockPanel Margin="10">
                 <Grid DockPanel.Dock="Top"
                       Margin="0,10,0,0">
@@ -108,7 +108,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock DockPanel.Dock="Top"
                                TextWrapping="Wrap"
-                               Text="{p:LocalizedString {x:Static p:LocId.settings_bookmarklet_description}}" />
+                               Text="{p:LocString {x:Static p:LocId.settings_bookmarklet_description}}" />
                     <Button Content="&#xf02d6;"
                             FontFamily="{DynamicResource NerdFont}"
                             Grid.Column="1"
@@ -121,20 +121,20 @@
                             Margin="0,10,0,0"
                             HorizontalAlignment="Left">
                     <Button Content="&#xea60;"
-                            ToolTip="{p:LocalizedString {x:Static p:LocId.settings_button_add}}"
+                            ToolTip="{p:LocString {x:Static p:LocId.settings_button_add}}"
                             FontFamily="{DynamicResource NerdFont}"
                             Command="{Binding AddLinkNamePatternCommand}" />
                     <Button Content="&#xf48e;"
-                            ToolTip="{p:LocalizedString {x:Static p:LocId.settings_button_remove}}"
+                            ToolTip="{p:LocString {x:Static p:LocId.settings_button_remove}}"
                             FontFamily="{DynamicResource NerdFont}"
                             Margin="10,0,0,0"
                             Command="{Binding RemoveLinkNamePatternsCommand}"
                             CommandParameter="{Binding SelectedItems, ElementName=GridLinkNamePatterns}" />
-                    <Button Content="{p:LocalizedString {x:Static p:LocId.settings_button_add_defaults}}"
+                    <Button Content="{p:LocString {x:Static p:LocId.settings_button_add_defaults}}"
                             Margin="10,0,0,0"
                             Command="{Binding AddDefaultLinkNamePatternsCommand}" />
                     <Button Content="&#xf04ba;"
-                            ToolTip="{p:LocalizedString {x:Static p:LocId.settings_button_sort}}"
+                            ToolTip="{p:LocString {x:Static p:LocId.settings_button_sort}}"
                             FontFamily="{DynamicResource NerdFont}"
                             Margin="10,0,0,0"
                             Command="{Binding SortBookmarkletItemsCommand}" />
@@ -142,7 +142,7 @@
                 <TextBlock DockPanel.Dock="Top"
                            TextWrapping="Wrap"
                            Margin="0,20,0,0"
-                           Text="{p:LocalizedString {x:Static p:LocId.settings_configure_link_name_patterns}}" />
+                           Text="{p:LocString {x:Static p:LocId.settings_configure_link_name_patterns}}" />
                 <ListView Name="GridLinkNamePatterns"
                           SelectionMode="Extended"
                           Margin="0,10,0,0"
@@ -152,7 +152,7 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="150"
-                                            Header="{p:LocalizedString {x:Static p:LocId.settings_link_source}}">
+                                            Header="{p:LocString {x:Static p:LocId.settings_link_source}}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding LinkName, UpdateSourceTrigger=PropertyChanged}"
@@ -161,7 +161,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Width="180"
-                                            Header="{p:LocalizedString {x:Static p:LocId.settings_name_pattern}}">
+                                            Header="{p:LocString {x:Static p:LocId.settings_name_pattern}}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding NamePattern, UpdateSourceTrigger=PropertyChanged}"
@@ -170,7 +170,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Width="180"
-                                            Header="{p:LocalizedString {x:Static p:LocId.settings_url_pattern}}">
+                                            Header="{p:LocString {x:Static p:LocId.settings_url_pattern}}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding UrlPattern, UpdateSourceTrigger=PropertyChanged}"
@@ -179,12 +179,12 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Width="Auto"
-                                            Header="{p:LocalizedString {x:Static p:LocId.settings_partial_match}}">
+                                            Header="{p:LocString {x:Static p:LocId.settings_partial_match}}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding PartialMatch, UpdateSourceTrigger=PropertyChanged}"
                                                   Margin="0,0,-15,0"
-                                                  ToolTip="{p:LocalizedString {x:Static p:LocId.settings_partial_match_hint}}"
+                                                  ToolTip="{p:LocString {x:Static p:LocId.settings_partial_match_hint}}"
                                                   HorizontalAlignment="Center" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>

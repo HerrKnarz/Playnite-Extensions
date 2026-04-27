@@ -1,11 +1,13 @@
-﻿using Playnite;
+﻿using LinkUtilities.LinkActions;
+using Playnite;
 using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkSteamPeek : BaseClasses.Linker
+internal class LinkSteamPeek(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     private const string _baseUrl = "https://steampeek.hu";
+    public static string ClassId => $"linkutilities.steampeek.link";
     public override string BaseUrl => _baseUrl + "/?appid=";
     public override string LinkName => "SteamPeek";
     public override bool NeedsToBeChecked => false;

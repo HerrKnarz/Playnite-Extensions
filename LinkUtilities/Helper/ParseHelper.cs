@@ -1,4 +1,5 @@
-﻿using LinkUtilities.Models;
+﻿using LinkUtilities.LinkActions;
+using LinkUtilities.Models;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -18,7 +19,7 @@ internal static class ParseHelper
     /// <param name="searchTerm">Term to search for. Will be encoded in the function!</param>
     /// <param name="linkName">Name of the site for the error message</param>
     /// <returns>Search results for the search dialog. Will be an empty list in case of an error.</returns>
-    internal static List<LinkSearchResult> GetMediaWikiResultsFromApi(string searchUrl, string searchTerm, string linkName, BaseClasses.Linker? linker = null)
+    internal static List<LinkSearchResult> GetMediaWikiResultsFromApi(string searchUrl, string searchTerm, string linkName, BaseLinkSource? linker = null)
     {
         var result = new List<LinkSearchResult>();
 
@@ -77,7 +78,7 @@ internal static class ParseHelper
     /// Minimum of slashes in the relative URL to indicate, if it's a subpage
     /// </param>
     /// <returns>Search results for the search dialog. Will be an empty list in case of an error.</returns>
-    internal static List<LinkSearchResult> GetMediaWikiResultsFromHtml(BaseClasses.Linker linker, string searchUrl, string searchTerm, string websiteUrl, string linkName, int slashCount = 2)
+    internal static List<LinkSearchResult> GetMediaWikiResultsFromHtml(BaseLinkSource linker, string searchUrl, string searchTerm, string websiteUrl, string linkName, int slashCount = 2)
     {
         var result = new List<LinkSearchResult>();
 

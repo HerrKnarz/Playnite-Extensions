@@ -12,6 +12,8 @@ public class LinkSourceSettings : ObservableCollection<LinkSourceSetting>
         this.AddMissing(items);
     }
 
+    //NEXT: Check if the settings are applied correctly every time.
+
     public LinkSourceSettings()
     { }
 
@@ -62,6 +64,7 @@ public class LinkSourceSettings : ObservableCollection<LinkSourceSetting>
     {
         var newSources = GetLinkSources(links);
 
+        //NEXT: Check if it might be better to have the list of links as a dict as well and apply the settings by link id.
         foreach (var item in this.Where(x1 => newSources.All(x2 => x2.LinkName != x1.LinkName)).ToList())
         {
             Remove(item);

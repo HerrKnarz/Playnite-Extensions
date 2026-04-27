@@ -32,7 +32,8 @@ internal class ConvertSteamLinks : BaseAction
         return new ConvertSteamLinksArgs(Id, Name, api, games, pluginName)
         {
             ProgressMessage = Loc.progress_converting_steam_links(),
-            ResultMessageId = LocId.dialog_converted_steam_links_message
+            ResultMessageId = LocId.dialog_converted_steam_links_message,
+            DoForAllType = DoForAllTypes.BlockingBulkUpdate
         };
     }
 
