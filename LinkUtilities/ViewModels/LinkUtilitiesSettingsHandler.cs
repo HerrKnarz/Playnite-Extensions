@@ -58,7 +58,6 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
             settings.LinkSettings.RefreshLinkSources(LinkUtilitiesPlugin.Plugin.Links);
         }
 
-        settings.LinkSettings.RefreshLibraryLinkSettings();
         settings.LinkSettings = new LinkSourceSettings([.. settings.LinkSettings.OrderBy(x => x.LinkName)]);
 
         return settings;

@@ -12,7 +12,14 @@ public class LinkSourceSetting
     /// API key needed for the specific website. Can be empty if no key is needed.
     /// </summary>
     [JsonPropertyName("apiKey")]
-    public string? ApiKey { get; set; }
+    public string? ApiKey { get; set; } = null;
+
+    /// <summary>
+    /// Name of the link. Is a bit redundant, but it's needed to find the right settings from the
+    /// config file.
+    /// </summary>
+    [JsonPropertyName("id")]
+    public string Id { get; set; } = string.Empty;
 
     /// <summary>
     /// Specifies if the link will be automatically added when clicking "all configured websites".
@@ -57,23 +64,20 @@ public class LinkSourceSetting
     public Visibility IsSearchableVisible => IsSearchable != null ? Visibility.Visible : Visibility.Hidden;
 
     /// <summary>
-    /// Name of the link. Is a bit redundant, but it's needed to find the right settings from the
-    /// config file.
+    /// Name of the link. Is a bit redundant, but it's used to display the name in the settings.
     /// </summary>
     [JsonPropertyName("linkName")]
-    public string? LinkName { get; set; }
-
-    // NEXT: Check if it isn't smarter to use the TypeID here instead or in addition to the name.
+    public string LinkName { get; set; } = string.Empty;
 
     /// <summary>
     /// Indicates if the websites needs an APIKey to function
     /// </summary>
     [JsonIgnore]
-    public bool NeedsApiKey { get; set; }
+    public bool NeedsApiKey { get; set; } = false;
 
     /// <summary>
     /// Indicates if the link source will be visible in the game menu.
     /// </summary>
     [JsonPropertyName("showInMenus")]
-    public bool ShowInMenus { get; set; }
+    public bool ShowInMenus { get; set; } = true;
 }

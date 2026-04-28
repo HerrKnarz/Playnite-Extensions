@@ -16,9 +16,7 @@ internal class AddLibraryLinks : BaseAction
     /// </summary>
     public readonly LibraryLinks LibraryLinks;
 
-    private static AddLibraryLinks? _instance;
-
-    private AddLibraryLinks()
+    public AddLibraryLinks()
     {
         LibraryLinks = [];
     }
@@ -27,7 +25,11 @@ internal class AddLibraryLinks : BaseAction
 
     public override string Name => Loc.action_name_library_links();
 
-    public static AddLibraryLinks Instance() => _instance ??= new AddLibraryLinks();
+    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
+    {
+        var action = new AddLibraryLinks();
+        await action.DoForAllAsync(action.GetActionArgs(api, games, pluginName));
+    }
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
     {

@@ -8,16 +8,18 @@ namespace LinkUtilities.LinkActions;
 
 internal class RemoveDuplicates : BaseAction
 {
-    private static RemoveDuplicates? _instance;
-
-    private RemoveDuplicates()
+    public RemoveDuplicates()
     { }
 
     public override string Id => "linkutilities.remove.duplicates";
 
     public override string Name => Loc.action_name_remove_duplicates();
 
-    public static RemoveDuplicates Instance() => _instance ??= new RemoveDuplicates();
+    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
+    {
+        var action = new RemoveDuplicates();
+        await action.DoForAllAsync(action.GetActionArgs(api, games, pluginName));
+    }
 
     public static void ShowReviewDuplicatesView(List<Game> games)
     {

@@ -12,9 +12,7 @@ namespace LinkUtilities.LinkActions;
 /// </summary>
 internal class HandleUriActions : BaseAction
 {
-    private static HandleUriActions? _instance;
-
-    private HandleUriActions()
+    public HandleUriActions()
     { }
 
     public override string Id => "linkutilities.handle.uri.actions";
@@ -35,8 +33,6 @@ internal class HandleUriActions : BaseAction
     public string? LinkUrl { get; set; }
 
     public override string Name => Loc.action_name_uri_links();
-
-    public static HandleUriActions Instance() => _instance ??= new HandleUriActions();
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
         => await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl);
@@ -97,7 +93,7 @@ internal class HandleUriActions : BaseAction
 
     public async Task UriHandlerAsync(PlayniteUriEventArgs args)
     {
-        if (LinkUtilitiesPlugin.PlayniteApi is null || !await HandleUriActions.Instance().ProcessArgsAsync(args))
+        if (LinkUtilitiesPlugin.PlayniteApi is null || !await ProcessArgsAsync(args))
         {
             return;
         }

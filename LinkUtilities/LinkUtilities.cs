@@ -11,6 +11,7 @@ public class LinkUtilitiesPlugin : Plugin
 {
     public const string Id = "HerrKnarz.LinkUtilities";
     public const string LinkPropertyId = "LinkUtilities.LinkPropery";
+    private HandleUriActions? _handleUriActions;
     public static string? InstallDir { get; set; }
 
     /// <summary>
@@ -68,7 +69,9 @@ public class LinkUtilitiesPlugin : Plugin
 
         await Links.InitializeAsync();
 
-        PlayniteApi.UriHandler.RegisterSource("LinkUtilities", HandleUriActions.Instance().UriHandlerAsync);
+        _handleUriActions = new HandleUriActions();
+
+        PlayniteApi.UriHandler.RegisterSource("LinkUtilities", _handleUriActions.UriHandlerAsync);
 
         Settings = LinkUtilitiesSettingsHandler.LoadSettings();
     }

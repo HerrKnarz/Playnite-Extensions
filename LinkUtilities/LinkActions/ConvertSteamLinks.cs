@@ -14,15 +14,20 @@ internal class ConvertSteamLinksArgs(string id, string name, IPlayniteApi api, L
 /// </summary>
 internal class ConvertSteamLinks : BaseAction
 {
-    private static ConvertSteamLinks? _instance;
-
-    private ConvertSteamLinks()
+    public ConvertSteamLinks()
     { }
 
     public override string Id => "linkutilities.convert.steam";
     public override string Name => Loc.action_name_convert_steam_links();
 
-    public static ConvertSteamLinks Instance() => _instance ??= new ConvertSteamLinks();
+    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, bool toClient = true)
+    {
+        var action = new ConvertSteamLinks();
+        var args = action.GetActionArgs(api, games, pluginName);
+        args.ToClient = toClient;
+
+        await action.DoForAllAsync(args);
+    }
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
         => await ConvertAsync(game.Game, args);

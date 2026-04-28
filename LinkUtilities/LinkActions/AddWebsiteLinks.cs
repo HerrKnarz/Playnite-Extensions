@@ -16,8 +16,6 @@ internal class AddWebsiteLinks : BaseAction
     private readonly Pipelines Pipelines = [];
     private List<BaseLinkSource>? _linkers;
 
-    //NEXT: Remove singleton logic from remaining action.
-
     public AddWebsiteLinks()
     {
         Links = [];

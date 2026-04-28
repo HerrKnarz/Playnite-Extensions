@@ -1,5 +1,4 @@
-﻿using LinkUtilities.LinkActions;
-using LinkUtilities.Linker;
+﻿using LinkUtilities.Linker;
 using Playnite;
 using System.Collections.ObjectModel;
 
@@ -11,8 +10,6 @@ public class LinkSourceSettings : ObservableCollection<LinkSourceSetting>
     {
         this.AddMissing(items);
     }
-
-    //NEXT: Check if the settings are applied correctly every time.
 
     public LinkSourceSettings()
     { }
@@ -40,22 +37,6 @@ public class LinkSourceSettings : ObservableCollection<LinkSourceSetting>
     }
 
     /// <summary>
-    /// Refreshes the settings of library links
-    /// </summary>
-    internal void RefreshLibraryLinkSettings()
-    {
-        foreach (var item in AddLibraryLinks.Instance().LibraryLinks)
-        {
-            var itemFound = this.FirstOrDefault(x => x.LinkName == item.Value.LinkName);
-
-            if (itemFound != null)
-            {
-                item.Value.Settings.ApiKey = itemFound.ApiKey;
-            }
-        }
-    }
-
-    /// <summary>
     /// Refreshes a LinkSourceCollection with the actual link sources present in the plugin. Is
     /// needed after updates when link sources get added or had to be removed.
     /// </summary>
@@ -64,15 +45,14 @@ public class LinkSourceSettings : ObservableCollection<LinkSourceSetting>
     {
         var newSources = GetLinkSources(links);
 
-        //NEXT: Check if it might be better to have the list of links as a dict as well and apply the settings by link id.
-        foreach (var item in this.Where(x1 => newSources.All(x2 => x2.LinkName != x1.LinkName)).ToList())
+        foreach (var item in this.Where(x1 => newSources.All(x2 => x2.Id != x1.Id)).ToList())
         {
             Remove(item);
         }
 
         foreach (var itemNew in newSources)
         {
-            var itemOld = this.FirstOrDefault(x => x.LinkName == itemNew.LinkName);
+            var itemOld = this.FirstOrDefault(x => x.Id == itemNew.Id);
 
             if (itemOld != null)
             {

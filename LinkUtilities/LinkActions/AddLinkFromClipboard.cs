@@ -6,9 +6,7 @@ namespace LinkUtilities.LinkActions;
 
 internal class AddLinkFromClipboard : BaseAction
 {
-    private static AddLinkFromClipboard? _instance;
-
-    private AddLinkFromClipboard()
+    public AddLinkFromClipboard()
     { }
 
     public override string Id => "linkutilities.clipboard.link";
@@ -25,7 +23,11 @@ internal class AddLinkFromClipboard : BaseAction
 
     public override string Name => Loc.action_name_clipboard_links();
 
-    public static AddLinkFromClipboard Instance() => _instance ??= new AddLinkFromClipboard();
+    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
+    {
+        var action = new AddLinkFromClipboard();
+        await action.DoForAllAsync(action.GetActionArgs(api, games, pluginName));
+    }
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
         => await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl, null, false);

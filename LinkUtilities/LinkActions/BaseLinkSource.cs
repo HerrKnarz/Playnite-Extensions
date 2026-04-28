@@ -425,12 +425,19 @@ public class BaseLinkSource(string id, LinkSourceArgs args) : BaseAction
             return;
         }
 
+        Settings.Id = Id;
         Settings.LinkName = LinkName;
         Settings.IsAddable = AddType != LinkAddTypes.None ? true : null;
         Settings.IsSearchable = CanBeSearched ? true : null;
-        Settings.ShowInMenus = true;
-        Settings.ApiKey = null;
-        Settings.NeedsApiKey = false;
+
+        var linkSettings = LinkUtilitiesPlugin.Settings?.LinkSettings.First(s => s.Id == Id);
+
+        if (linkSettings is not null)
+        {
+            Settings.ShowInMenus = linkSettings.ShowInMenus;
+            Settings.ApiKey = linkSettings.ApiKey;
+            Settings.NeedsApiKey = linkSettings.NeedsApiKey;
+        }
 
         if (LinkTypeId.IsNullOrEmpty())
         {
