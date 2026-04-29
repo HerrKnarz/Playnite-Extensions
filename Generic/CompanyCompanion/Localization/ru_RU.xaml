@@ -15,7 +15,7 @@
     <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Использовать в качестве названия</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Объединить дубликаты</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Remove business entity descriptors</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Удалить дескрипторы бизнес-сущностей</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Объединение компаний</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionSettingsAdd">Добавить</sys:String>
@@ -29,7 +29,7 @@
     <sys:String x:Key="LOCCompanyCompanionProgressUpdating">обновление игр</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Добавить значение</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">Компании с дескрипторами бизнес-структур не найдены.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">Компании с дескрипторами бизнес-сущностей не найдены.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">Повторяющиеся компании не найдены.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Обновлены компании в {0} играх и объединены {1}</sys:String>
 </ResourceDictionary>
