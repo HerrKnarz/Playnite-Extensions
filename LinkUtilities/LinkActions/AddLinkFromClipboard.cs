@@ -4,12 +4,12 @@ using PlayniteExtensionHelpers.GamesCommon;
 
 namespace LinkUtilities.LinkActions;
 
-internal class AddLinkFromClipboard : BaseAction
+public class AddLinkFromClipboard : BaseAction
 {
     public AddLinkFromClipboard()
     { }
 
-    public override string Id => "linkutilities.clipboard.link";
+    public override string Id => ActionIds.TypeAddFromClipboard;
 
     /// <summary>
     /// Name of the link to be added in the "AddLink" action

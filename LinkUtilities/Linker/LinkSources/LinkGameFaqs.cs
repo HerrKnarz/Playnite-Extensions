@@ -6,7 +6,7 @@ using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkGameFaqs(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
+public class LinkGameFaqs(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     public static string ClassId => $"linkutilities.gamefaqs.link";
     public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;

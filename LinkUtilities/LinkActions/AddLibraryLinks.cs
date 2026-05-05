@@ -9,7 +9,7 @@ namespace LinkUtilities.LinkActions;
 /// <summary>
 /// Adds a link to the game store page of the library (e.g. Steam or GOG) the game is part of.
 /// </summary>
-internal class AddLibraryLinks : BaseAction
+public class AddLibraryLinks : BaseAction
 {
     /// <summary>
     /// contains all game LibraryLinks that have a link to a store page that can be added.
@@ -21,7 +21,7 @@ internal class AddLibraryLinks : BaseAction
         LibraryLinks = [];
     }
 
-    public override string Id => "linkutilities.library.links";
+    public override string Id => ActionIds.TypeAddLibraryLinks;
 
     public override string Name => Loc.action_name_library_links();
 

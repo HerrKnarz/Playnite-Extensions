@@ -4,7 +4,7 @@ using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkGgDeals(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
+public class LinkGgDeals(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     public static string ClassId => $"linkutilities.ggdeals.link";
     public override string BaseUrl => "https://gg.deals/steam/app/";

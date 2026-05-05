@@ -17,7 +17,7 @@ internal class ConvertSteamLinks : BaseAction
     public ConvertSteamLinks()
     { }
 
-    public override string Id => "linkutilities.convert.steam";
+    public override string Id => ActionIds.TypeConvertSteamClient;
     public override string Name => Loc.action_name_convert_steam_links();
 
     public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, bool toClient = true)

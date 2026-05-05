@@ -4,7 +4,7 @@ using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkProtonDb(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
+public class LinkProtonDb(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     private const string _baseUrl = "https://www.protondb.com";
     public static string ClassId => $"linkutilities.protondb.link";

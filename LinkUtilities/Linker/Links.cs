@@ -1,7 +1,6 @@
 ﻿using LinkUtilities.LinkActions;
 using LinkUtilities.Linker.Libraries;
 using LinkUtilities.Linker.LinkSources;
-using LinkUtilities.Models;
 using Playnite;
 using PlayniteExtensionHelpers.GamesCommon;
 
@@ -21,7 +20,7 @@ public class LinkDict : Dictionary<string, Func<BaseLinkSource>>
         Add(LinkSteamPeek.ClassId, () => new LinkSteamPeek(LinkSteamPeek.ClassId, new LinkSourceArgs()));
     }
 
-    public async Task CreateAndExecuteAsync(string id, IPlayniteApi api, List<BaseActionGame> games, string pluginName, AddWebsiteLinkTypes addType)
+    public async Task CreateAndExecuteAsync(string id, IPlayniteApi api, List<BaseActionGame> games, string pluginName, LinkActionType actionType)
     {
         if (!ContainsKey(id))
         {
@@ -33,9 +32,9 @@ public class LinkDict : Dictionary<string, Func<BaseLinkSource>>
         await action.InitializeAsync();
 
         var args = action.GetActionArgs(api, games, pluginName);
-        args.AddType = addType;
+        args.ActionType = actionType;
 
-        if (addType is AddWebsiteLinkTypes.Add or AddWebsiteLinkTypes.AddSelected)
+        if (actionType == LinkActionType.Add)
         {
             args.DoForAllType = DoForAllTypes.BackgroundOperation;
         }

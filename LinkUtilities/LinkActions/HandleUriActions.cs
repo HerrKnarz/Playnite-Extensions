@@ -15,7 +15,7 @@ internal class HandleUriActions : BaseAction
     public HandleUriActions()
     { }
 
-    public override string Id => "linkutilities.handle.uri.actions";
+    public override string Id => ActionIds.TypeHandleUriActions;
 
     /// <summary>
     /// Name of the link to be added in the "AddLink" action

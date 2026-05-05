@@ -4,7 +4,7 @@ using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkSteamDb(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
+public class LinkSteamDb(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     private const string _baseUrl = "https://steamdb.info";
     public static string ClassId => $"linkutilities.steamdb.link";

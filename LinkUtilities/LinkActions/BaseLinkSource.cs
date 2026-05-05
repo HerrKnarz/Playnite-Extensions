@@ -6,6 +6,7 @@ using PlayniteExtensionHelpers;
 using PlayniteExtensionHelpers.GamesCommon;
 using PlayniteExtensionHelpers.MetadataCommon;
 using PlayniteExtensionHelpers.WebCommon;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Net;
 
@@ -24,8 +25,10 @@ public enum LinkAddTypes
 /// <summary>
 /// Base class for a website link
 /// </summary>
-public class BaseLinkSource(string id, LinkSourceArgs args) : BaseAction
+public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseAction
 {
+    public ConcurrentQueue<string> TestResultQueue = new();
+
     /// <summary>
     /// Determines if a searched link should return a link if exactly one was found.
     /// </summary>
@@ -156,6 +159,18 @@ public class BaseLinkSource(string id, LinkSourceArgs args) : BaseAction
     public LinkSourceSetting Settings { get; set; } = new();
 
     /// <summary>
+    /// List of test cases to test the link source. Must be implemented in the derived class or the
+    /// result will be an empty list.
+    /// </summary>
+    public virtual List<TestCase> TestCases => [];
+
+    /// <summary>
+    /// Determines if the link source is in test mode. In that case the test cases will be executed
+    /// instead of the actual game.
+    /// </summary>
+    public virtual bool TestMode { get; set; } = false;
+
+    /// <summary>
     /// Website title that is returned if the link wasn't valid. Can be used for websites that
     /// return status code 200 and still load a generic search or index page that isn't tied to the game.
     /// </summary>
@@ -248,19 +263,15 @@ public class BaseLinkSource(string id, LinkSourceArgs args) : BaseAction
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
     {
-        return args is AddWebsiteLinksArgs addArgs && addArgs.AddType switch
+        return args is WebsiteLinksArgs addArgs && addArgs.ActionType switch
         {
-            AddWebsiteLinkTypes.Add
-            or AddWebsiteLinkTypes.AddSelected
+            LinkActionType.Add
                 => await AddLinksAsync(game.Game, addArgs.IsBulkAction),
-            AddWebsiteLinkTypes.Search
-            or AddWebsiteLinkTypes.SearchSelected
-                => await AddSearchedLinkAsync(game.Game),
-            AddWebsiteLinkTypes.SearchMissing
-                => await AddSearchedLinkAsync(game.Game, true),
-            AddWebsiteLinkTypes.SearchInBrowser
+            LinkActionType.Search
+                => await AddSearchedLinkAsync(game.Game, addArgs.OnlyMissingLinks),
+            LinkActionType.BrowserSearch
                 => StartBrowserSearch(game.Game),
-            _ => throw new ArgumentOutOfRangeException(nameof(args), addArgs.AddType, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(args), addArgs.ActionType, null),
         };
     }
 
@@ -271,58 +282,89 @@ public class BaseLinkSource(string id, LinkSourceArgs args) : BaseAction
     /// <returns>List of found links and True, if a link was found</returns>
     public virtual async Task<(List<WebLink> links, bool result)> FindLinksAsync(Game game)
     {
+        async Task<string?> GetLinkUrl()
+        {
+            switch (AddType)
+            {
+                case LinkAddTypes.SingleSearchResult:
+                    LinkUrl = await GetGamePathAsync(game) ?? string.Empty;
+                    return LinkUrl;
+
+                case LinkAddTypes.UrlMatch:
+                    var gameName = await GetGamePathAsync(game);
+
+                    if (gameName.IsNullOrEmpty())
+                    {
+                        return gameName;
+                    }
+
+                    if (!NeedsToBeChecked || await CheckLinkAsync($"{BaseUrl}{gameName}"))
+                    {
+                        LinkUrl = $"{BaseUrl}{gameName}";
+
+                        return gameName;
+                    }
+                    else
+                    {
+                        var baseName = game.Name.RemoveEditionSuffix();
+
+                        if (baseName == game.Name)
+                        {
+                            return baseName;
+                        }
+
+                        gameName = await GetGamePathAsync(game, baseName);
+
+                        if (!NeedsToBeChecked || await CheckLinkAsync($"{BaseUrl}{gameName}"))
+                        {
+                            LinkUrl = $"{BaseUrl}{gameName}";
+                        }
+                    }
+
+                    return gameName;
+
+                case LinkAddTypes.None:
+                    return null;
+
+                default:
+                    return null;
+            }
+        }
+
         LinkUrl = string.Empty;
 
         var links = new List<WebLink>();
+
+        if (TestMode)
+        {
+            foreach (var testCase in TestCases)
+            {
+                if (testCase.GameName.IsNullOrEmpty())
+                { continue; }
+
+                game.Name = testCase.GameName;
+
+                testCase.GamePath = await GetLinkUrl();
+
+                testCase.Url = LinkUrl;
+
+                TestResultQueue.Enqueue($"\n============================ Test case {testCase.CaseName} ============================ " +
+                            $"\nGamePathExp = {testCase.GamePathExpected}" +
+                            $"\nGamePathGot = {testCase.GamePath}" +
+                            $"\nUrlExp = {testCase.UrlExpected}" +
+                            $"\nUrlGot = {testCase.Url}" +
+                            $"\n======================================================== ");
+            }
+
+            return (links, true);
+        }
 
         if (LinkHelper.LinkExists(game, LinkTypeId))
         {
             return (links, false);
         }
 
-        switch (AddType)
-        {
-            case LinkAddTypes.SingleSearchResult:
-                LinkUrl = await GetGamePathAsync(game) ?? string.Empty;
-                break;
-
-            case LinkAddTypes.UrlMatch:
-                var gameName = await GetGamePathAsync(game);
-
-                if (gameName.IsNullOrEmpty())
-                {
-                    break;
-                }
-
-                if (!NeedsToBeChecked || await CheckLinkAsync($"{BaseUrl}{gameName}"))
-                {
-                    LinkUrl = $"{BaseUrl}{gameName}";
-                }
-                else
-                {
-                    var baseName = game.Name.RemoveEditionSuffix();
-
-                    if (baseName == game.Name)
-                    {
-                        break;
-                    }
-
-                    gameName = await GetGamePathAsync(game, baseName);
-
-                    if (!NeedsToBeChecked || await CheckLinkAsync($"{BaseUrl}{gameName}"))
-                    {
-                        LinkUrl = $"{BaseUrl}{gameName}";
-                    }
-                }
-
-                break;
-
-            case LinkAddTypes.None:
-                break;
-
-            default:
-                break;
-        }
+        await GetLinkUrl();
 
         if (LinkUrl.IsNullOrEmpty())
         {
@@ -349,9 +391,9 @@ public class BaseLinkSource(string id, LinkSourceArgs args) : BaseAction
     /// <param name="games">List of games to process</param>
     /// <param name="pluginName">Name of the plugin</param>
     /// <returns></returns>
-    public override AddWebsiteLinksArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
+    public override WebsiteLinksArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
     {
-        return new AddWebsiteLinksArgs(Id, Name, api, games, pluginName)
+        return new WebsiteLinksArgs(Id, Name, api, games, pluginName)
         {
             ProgressMessage = Loc.progress_adding_single_website_links(),
             ResultMessageId = LocId.dialog_added_links_message,
@@ -430,7 +472,7 @@ public class BaseLinkSource(string id, LinkSourceArgs args) : BaseAction
         Settings.IsAddable = AddType != LinkAddTypes.None ? true : null;
         Settings.IsSearchable = CanBeSearched ? true : null;
 
-        var linkSettings = LinkUtilitiesPlugin.Settings?.LinkSettings.First(s => s.Id == Id);
+        var linkSettings = LinkUtilitiesPlugin.Settings?.LinkSettings.FirstOrDefault(s => s.Id == Id);
 
         if (linkSettings is not null)
         {

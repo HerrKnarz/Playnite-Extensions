@@ -7,7 +7,7 @@ namespace LinkUtilities.Linker;
 /// List of all game library link associations. Is used to get the specific library of the game via
 /// the GUID.
 /// </summary>
-internal class LibraryLinks : Dictionary<string, LibraryLinker>
+public class LibraryLinks : Dictionary<string, LibraryLinker>
 {
     public LibraryLinks()
     {

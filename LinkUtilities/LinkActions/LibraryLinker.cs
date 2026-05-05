@@ -5,7 +5,7 @@ using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.LinkActions;
 
-internal abstract class LibraryLinker(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
+public abstract class LibraryLinker(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     public abstract string LibraryId { get; }
 

@@ -2,7 +2,7 @@
 
 namespace LinkUtilities.Models;
 
-internal class Pipelines : List<Pipeline>
+public class Pipelines : List<Pipeline>
 {
     private readonly int _maxPipelines = 10;
 

@@ -4,7 +4,7 @@ using PlayniteExtensionHelpers;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkSteamPeek(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
+public class LinkSteamPeek(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     private const string _baseUrl = "https://steampeek.hu";
     public static string ClassId => $"linkutilities.steampeek.link";

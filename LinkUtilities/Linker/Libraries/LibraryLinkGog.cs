@@ -9,7 +9,7 @@ using PlayniteExtensionHelpers.WebCommon;
 
 namespace LinkUtilities.Linker.Libraries;
 
-internal class LibraryLinkGog : LibraryLinker
+public class LibraryLinkGog : LibraryLinker
 {
     public LibraryLinkGog(string id, LinkSourceArgs args) : base(id, args)
     {
@@ -17,9 +17,13 @@ internal class LibraryLinkGog : LibraryLinker
     }
 
     public static string ClassId => $"linkutilities.gog.link";
+
     public override bool AllowRedirects { get; set; } = false;
+
     public override string BaseUrl => "https://www.gog.com/en/game/";
+
     public override string BrowserSearchUrl => "https://www.gog.com/en/games?query=";
+
     public override string ExternalIdType => "gog";
 
     public IHttpClient HttpClient
@@ -38,8 +42,20 @@ internal class LibraryLinkGog : LibraryLinker
     public override string LibraryId { get; } = LinkHelper.GogId;
 
     public override string LinkName => "GOG";
+
     public override bool ReturnsSameUrl { get; set; } = true;
+
     public override string SearchUrl => "https://catalog.gog.com/v1/catalog?limit=100&locale=en&order=desc:score&page=1&productType=in:game,pack&query=like:";
+
+    public override List<TestCase> TestCases =>
+    [
+        new TestCase(){
+            CaseName = "GOG Blade Runner",
+            GameName = "Blade Runner",
+            GamePathExpected = "blade_runner",
+            SearchedUrlExpected = "https://www.gog.com/en/game/blade_runner",
+            UrlExpected = "https://www.gog.com/en/game/blade_runner" }
+    ];
 
     public override async Task<(List<WebLink> links, bool result)> FindLibraryLinkAsync(Game game, string? gameId)
     {

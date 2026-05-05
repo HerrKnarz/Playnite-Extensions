@@ -1,6 +1,5 @@
 ﻿using LinkUtilities.LinkActions;
 using LinkUtilities.Linker;
-using LinkUtilities.Models;
 using Playnite;
 using PlayniteExtensionHelpers.GamesCommon;
 using System.Windows.Media;
@@ -10,29 +9,21 @@ namespace LinkUtilities.DataHandlers;
 
 public class MenuHandler(IPlayniteApi playniteApi)
 {
-    public const string TypeAddFromClipboard = "link.utilities.add.clipboard";
-    public const string TypeAddLibraryLinks = "link.utilities.add.library.links";
-    public const string TypeAddLinks = "link.utilities.add.links";
-    public const string TypeBrowserSearch = "link.utilities.search.browser";
-    public const string TypeConvertSteamClient = "link.utilities.convert.steam.client";
-    public const string TypeConvertSteamWeb = "link.utilities.convert.steam.web";
-    public const string TypeRemoveDuplicates = "link.utilities.remove.duplicates";
-    public const string TypeSearchLinks = "link.utilities.search.links";
-
     public ICollection<MenuItemDescriptor> MenuItemDescriptors
     {
         get;
         private set;
     } =
         [
-            new MenuItemDescriptor(TypeAddLinks, Loc.menu_section_add_link()),
-            new MenuItemDescriptor(TypeAddLibraryLinks, Loc.menu_add_library_links()),
-            new MenuItemDescriptor(TypeSearchLinks, Loc.menu_section_search_link()),
-            new MenuItemDescriptor(TypeBrowserSearch, Loc.menu_search_link_in_browser()),
-            new MenuItemDescriptor(TypeRemoveDuplicates, Loc.menu_remove_duplicate_links()),
-            new MenuItemDescriptor(TypeAddFromClipboard, Loc.menu_add_link_from_clipboard()),
-            new MenuItemDescriptor(TypeConvertSteamClient, Loc.menu_convert_steam_links_to_client()),
-            new MenuItemDescriptor(TypeConvertSteamWeb, Loc.menu_convert_steam_links_to_website()),
+            new MenuItemDescriptor(ActionIds.TypeAddLinks, Loc.menu_section_add_link()),
+            new MenuItemDescriptor(ActionIds.TypeAddLibraryLinks, Loc.menu_add_library_links()),
+            new MenuItemDescriptor(ActionIds.TypeSearchLinks, Loc.menu_section_search_link()),
+            new MenuItemDescriptor(ActionIds.TypeBrowserSearch, Loc.menu_search_link_in_browser()),
+            new MenuItemDescriptor(ActionIds.TypeRemoveDuplicates, Loc.menu_remove_duplicate_links()),
+            new MenuItemDescriptor(ActionIds.TypeAddFromClipboard, Loc.menu_add_link_from_clipboard()),
+            new MenuItemDescriptor(ActionIds.TypeConvertSteamClient, Loc.menu_convert_steam_links_to_client()),
+            new MenuItemDescriptor(ActionIds.TypeConvertSteamWeb, Loc.menu_convert_steam_links_to_website()),
+            new MenuItemDescriptor(ActionIds.TypeTestAdd, "Test Add Links"),
         ];
 
     public ICollection<MenuItemImpl>? GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -41,14 +32,15 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
         return args.ItemId switch
         {
-            TypeAddFromClipboard => GetAddFromClipboardItems(games),
-            TypeAddLibraryLinks => GetAddLibraryLinksItems(games),
-            TypeAddLinks => GetAddLinksItems(games),
-            TypeBrowserSearch => GetBrowserSearchItems(games),
-            TypeConvertSteamClient => GetConvertSteamlinksItems(games),
-            TypeConvertSteamWeb => GetConvertSteamlinksItems(games, false),
-            TypeRemoveDuplicates => GetRemoveDuplicatesItems(games),
-            TypeSearchLinks => GetSearchLinksItems(games),
+            ActionIds.TypeAddFromClipboard => GetAddFromClipboardItems(games),
+            ActionIds.TypeAddLibraryLinks => GetAddLibraryLinksItems(games),
+            ActionIds.TypeAddLinks => GetAddLinksItems(games),
+            ActionIds.TypeBrowserSearch => GetBrowserSearchItems(games),
+            ActionIds.TypeConvertSteamClient => GetConvertSteamlinksItems(games),
+            ActionIds.TypeConvertSteamWeb => GetConvertSteamlinksItems(games, false),
+            ActionIds.TypeRemoveDuplicates => GetRemoveDuplicatesItems(games),
+            ActionIds.TypeSearchLinks => GetSearchLinksItems(games),
+            ActionIds.TypeTestAdd => GetTestAddItems(games),
             _ => throw new ArgumentOutOfRangeException(nameof(args), args.ItemId, null)
         };
     }
@@ -87,7 +79,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
         var subItems = new List<MenuItemImpl>
             {
                 new(Loc.menu_add_link_to_all_enabled_websites(),
-                    async (clickArgs) => await AddWebsiteLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), AddWebsiteLinkTypes.Add),
+                    async (clickArgs) => await AddWebsiteLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), false),
                     false,
                     UIIcon.FromFontIcon("f0c1", Playnite.Fonts.NerdFont, GetIconColor())),
 
@@ -97,7 +89,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
         foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.Settings.ShowInMenus).OrderBy(x => x.LinkName))
         {
             var subItem = new MenuItemImpl(link.LinkName,
-                async (clickArgs) => await linkDict.CreateAndExecuteAsync(link.Id, playniteApi, games, Loc.link_utilities_name(), AddWebsiteLinkTypes.Add));
+                async (clickArgs) => await linkDict.CreateAndExecuteAsync(link.Id, playniteApi, games, Loc.link_utilities_name(), LinkActionType.Add));
 
             subItems.Add(subItem);
         }
@@ -118,11 +110,8 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
         foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.CanBeBrowserSearched).OrderBy(x => x.LinkName))
         {
-            var searchSingleBrowserArgs = link.GetActionArgs(playniteApi, games, Loc.link_utilities_name());
-            searchSingleBrowserArgs.AddType = AddWebsiteLinkTypes.SearchInBrowser;
-
             var subItem = new MenuItemImpl(link.LinkName,
-                async (clickArgs) => await linkDict.CreateAndExecuteAsync(link.Id, playniteApi, games, Loc.link_utilities_name(), AddWebsiteLinkTypes.SearchInBrowser));
+                async (clickArgs) => await linkDict.CreateAndExecuteAsync(link.Id, playniteApi, games, Loc.link_utilities_name(), LinkActionType.BrowserSearch));
 
             subItems.Add(subItem);
         }
@@ -154,12 +143,12 @@ public class MenuHandler(IPlayniteApi playniteApi)
         var subItems = new List<MenuItemImpl>
             {
                 new(Loc.menu_add_link_to_all_enabled_websites(),
-                    async (clickArgs) => await AddWebsiteLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), AddWebsiteLinkTypes.Search),
+                    async (clickArgs) => await SearchWebsiteLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), false),
                     false,
                     UIIcon.FromFontIcon("f002", Playnite.Fonts.NerdFont, GetIconColor())),
 
                 new(Loc.menu_search_link_to_all_missing_websites(),
-                    async (clickArgs) => await AddWebsiteLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), AddWebsiteLinkTypes.SearchMissing),
+                    async (clickArgs) => await SearchWebsiteLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), true),
                     false,
                     UIIcon.FromFontIcon("f002", Playnite.Fonts.NerdFont, GetIconColor())),
 
@@ -175,15 +164,21 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
         foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.CanBeSearched && l.Settings.ShowInMenus).OrderBy(x => x.LinkName))
         {
-            var searchSingleLinksArgs = link.GetActionArgs(playniteApi, games, Loc.link_utilities_name());
-            searchSingleLinksArgs.AddType = AddWebsiteLinkTypes.Search;
-
             var subItem = new MenuItemImpl(link.LinkName,
-                async (clickArgs) => await linkDict.CreateAndExecuteAsync(link.Id, playniteApi, games, Loc.link_utilities_name(), AddWebsiteLinkTypes.Search));
+                async (clickArgs) => await linkDict.CreateAndExecuteAsync(link.Id, playniteApi, games, Loc.link_utilities_name(), LinkActionType.Search));
 
             subItems.Add(subItem);
         }
 
         return [new MenuItemImpl(Loc.menu_section_search_link(), subItems)];
+    }
+
+    private List<MenuItemImpl>? GetTestAddItems(List<BaseActionGame> games)
+    {
+        return [
+            new("Test Add Link",
+                (clickArgs) => AddWebsiteLinks.CreateAndTestAsync(playniteApi, Loc.link_utilities_name()),
+                false,
+                UIIcon.FromFontIcon("f0c1", Playnite.Fonts.NerdFont, GetIconColor()))];
     }
 }

@@ -7,13 +7,24 @@ using System.Net;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-internal class LinkMobyGames(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
+public class LinkMobyGames(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
     private readonly IBrowsingContext _context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
     public static string ClassId => $"linkutilities.mobygames.link";
     public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
     public override string LinkName => "MobyGames";
     public override string SearchUrl => "https://www.mobygames.com/search/?type=game&q=";
+
+    public override List<TestCase> TestCases =>
+        [
+        new TestCase(){
+            CaseName = "MobyGames Dragon Age: Inquisition",
+            GameName = "Dragon Age: Inquisition",
+            GamePathExpected = "https://www.mobygames.com/game/70317/dragon-age-inquisition/",
+            SearchedUrlExpected = "https://www.mobygames.com/game/70317/dragon-age-inquisition/",
+            UrlExpected = "https://www.mobygames.com/game/70317/dragon-age-inquisition/"
+        }
+    ];
 
     public override async Task<IEnumerable<ChooseDialogItem>> GetSearchResultsAsync(ChooseItemWithSearchAsyncArgs searchArgs)
     {

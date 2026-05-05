@@ -11,171 +11,79 @@ namespace LinkUtilities.LinkActions;
 /// <summary>
 /// Class to add a link to all available websites in the Links list, if a definitive link was found.
 /// </summary>
-internal class AddWebsiteLinks : BaseAction
+public class AddWebsiteLinks : BaseWebsiteLinks
 {
-    private readonly Pipelines Pipelines = [];
-    private List<BaseLinkSource>? _linkers;
+    public override string Id => ActionIds.TypeAddLinks;
 
-    public AddWebsiteLinks()
+    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, bool onlySelectedLinks = false)
     {
-        Links = [];
+        var action = new AddWebsiteLinks();
+        var args = action.GetActionArgs(api, games, pluginName);
+        args.SelectedLinks = onlySelectedLinks;
+        args.DoForAllType = DoForAllTypes.BackgroundOperation;
+
+        await action.DoForAllAsync(args);
     }
 
-    /*
-     * NEXT: Implement custom link profiles
-     * public List<CustomLinkProfile> CustomLinkProfiles
-    {
-        get;
-        set
-        {
-            field.Clear();
-            field.AddRange(value);
-
-            Links.RefreshCustomLinkProfiles(field);
-        }
-    } = new List<CustomLinkProfile>();*/
-
-    public override string Id => "linkutilities.website.links";
-
-    public Links Links { get; }
-
-    public override string Name => Loc.action_name_website_links();
-
-    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, AddWebsiteLinkTypes addType)
+    public static async Task CreateAndTestAsync(IPlayniteApi api, string pluginName)
     {
         var action = new AddWebsiteLinks();
 
-        var args = action.GetActionArgs(api, games, pluginName);
-        args.AddType = addType;
-
-        if (addType is AddWebsiteLinkTypes.Add or AddWebsiteLinkTypes.AddSelected)
+        var games = new List<BaseActionGame>()
         {
-            args.DoForAllType = DoForAllTypes.BackgroundOperation;
-        }
+            new(new ("TestGame"))
+        };
 
-        //NEXT: Maybe make it several sub classes anyway...
+        var args = action.GetActionArgs(api, games, pluginName);
+        args.DoForAllType = DoForAllTypes.BackgroundOperation;
+        args.TestMode = true;
 
         await action.DoForAllAsync(args);
     }
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
     {
-        if (args is not AddWebsiteLinksArgs addArgs)
-        {
-            return false;
-        }
-
         try
         {
-            if (addArgs.DebugMode)
+            if (args.DebugMode)
             {
-                Log.Debug($"Starting {GetType().Name}{(addArgs.IsBulkAction ? " (Bulk)" : string.Empty)} of type {addArgs.AddType} for game {game.Game.Name}.");
+                Log.Debug($"Starting {GetType().Name}{(args.IsBulkAction ? " (Bulk)" : string.Empty)} for game {game.Game.Name}.");
             }
 
-            return addArgs.AddType switch
-            {
-                AddWebsiteLinkTypes.Add
-                or AddWebsiteLinkTypes.AddSelected
-                    => await AddLinksAsync(game.Game),
-                AddWebsiteLinkTypes.Search
-                or AddWebsiteLinkTypes.SearchMissing
-                or AddWebsiteLinkTypes.SearchSelected
-                    => await SearchLinksAsync(game.Game, addArgs.AddType, addArgs.IsBulkAction),
-                AddWebsiteLinkTypes.SearchInBrowser
-                    => await SearchLinksInBrowserAsync(game.Game, addArgs.IsBulkAction),
-                _ => throw new ArgumentOutOfRangeException(nameof(args), addArgs.AddType, null),
-            };
+            //NEXT: Add test mode here!
+
+            var result = await FindLinksAsync(game.Game);
+
+            return result.result && result.links.HasItems() && await LinkHelper.AddLinksAsync(game.Game, result.links);
         }
         finally
         {
             if (LinkUtilitiesPlugin.Settings.DebugMode)
             {
-                Log.Debug($"Finishing {GetType().Name}{(addArgs.IsBulkAction ? " (Bulk)" : string.Empty)} of type {addArgs.AddType} for game {game.Game.Name}.");
+                Log.Debug($"Finishing {GetType().Name}{(args.IsBulkAction ? " (Bulk)" : string.Empty)} for game {game.Game.Name}.");
             }
         }
     }
 
-    public override async Task FollowUpAsync(BaseActionArgs args)
-    {
-        await base.FollowUpAsync(args);
-
-        Pipelines?.CleanUp();
-    }
-
-    public override AddWebsiteLinksArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
-    {
-        return new AddWebsiteLinksArgs(Id, Name, api, games, pluginName)
-        {
-            ProgressMessage = Loc.progress_adding_website_links(),
-            ResultMessageId = LocId.dialog_added_links_message
-        };
-    }
-
     public override async Task<bool> PrepareAsync(BaseActionArgs args)
     {
-        if (args is not AddWebsiteLinksArgs addArgs)
+        if (!await base.PrepareAsync(args) || args is not WebsiteLinksArgs addArgs)
         {
             return false;
         }
 
         await Links.InitializeAsync();
 
-        switch (addArgs.AddType)
+        if (addArgs.SelectedLinks)
         {
-            case AddWebsiteLinkTypes.Add:
-                _linkers = [.. Links.Where(x => x.Settings.IsAddable == true || (x.Settings.IsCustomSource && x.AddType != LinkAddTypes.None))];
-                InitializePipelines();
-                return true;
-
-            case AddWebsiteLinkTypes.AddSelected:
-                return SelectLinks();
-
-            case AddWebsiteLinkTypes.Search:
-            case AddWebsiteLinkTypes.SearchMissing:
-                _linkers = [.. Links.Where(x => x.Settings.IsSearchable == true)];
-                InitializePipelines(1);
-                return true;
-
-            case AddWebsiteLinkTypes.SearchInBrowser:
-                _linkers = [.. Links.Where(x => x.CanBeBrowserSearched)];
-                return true;
-
-            case AddWebsiteLinkTypes.SearchSelected:
-                return SelectLinks(false);
-
-            default:
-                throw new ArgumentOutOfRangeException(nameof(args), addArgs.AddType, null);
+            return SelectLinks();
         }
-    }
-
-    public override bool ProcessUpdateData(Game gameToUpdate, BaseActionGame processedGame)
-                                            => LinkHelper.UpdateGameInLibrary(gameToUpdate, processedGame);
-
-    /// <summary>
-    /// Adds links to all configured websites
-    /// </summary>
-    /// <param name="game">game the links will be added to.</param>
-    /// <param name="isBulkAction">
-    /// If true, the method already is used in a progress bar and no new one has to be started.
-    /// </param>
-    /// <returns>True, if new links were added.</returns>
-    private async Task<bool> AddLinksAsync(Game game)
-    {
-        var result = await FindLinksAsync(game);
-
-        return result.result && result.links.HasItems() && await LinkHelper.AddLinksAsync(game, result.links);
-    }
-
-    private void DisposePipelines()
-    {
-        if (Pipelines.Count == 0)
+        else
         {
-            return;
+            LinksToProcess = [.. Links.Where(x => x.Settings.IsAddable == true || (x.Settings.IsCustomSource && x.AddType != LinkAddTypes.None))];
+            InitializePipelines();
+            return true;
         }
-
-        _linkers?.ForEach(l => l.Pipeline = null);
-
-        Pipelines.CleanUp();
     }
 
     /// <summary>
@@ -188,20 +96,26 @@ internal class AddWebsiteLinks : BaseAction
     {
         var links = new List<WebLink>();
 
-        if (!_linkers.HasItems())
+        if (!LinksToProcess.HasItems())
         {
             return (links, false);
         }
 
         var linksQueue = new ConcurrentQueue<WebLink>();
 
-        foreach (var priority in _linkers.Select(l => l.Priority).Distinct())
+        foreach (var priority in LinksToProcess.Select(l => l.Priority).Distinct())
         {
             await Parallel.ForEachAsync(Pipelines, Pipelines.ParallelOptions, async (pipeline, cancellationToken) =>
             {
-                foreach (var linker in _linkers.Where(x => x.Priority == priority && x.Pipeline == pipeline).OrderBy(l => l.LinkName))
+                foreach (var linker in LinksToProcess.Where(x => x.Priority == priority && x.Pipeline == pipeline).OrderBy(l => l.LinkName))
                 {
-                    var result = await linker.FindLinksAsync(game);
+                    var gameToProcess = game;
+                    if (TestMode)
+                    {
+                        gameToProcess = new Game(game.Name);
+                    }
+
+                    var result = await linker.FindLinksAsync(gameToProcess);
 
                     if (!result.result || !result.links.HasItems())
                     {
@@ -217,157 +131,4 @@ internal class AddWebsiteLinks : BaseAction
 
         return (links, linksAdded);
     }
-
-    private void InitializePipelines(int count = 0)
-    {
-        DisposePipelines();
-
-        if (!_linkers.HasItems())
-        {
-            return;
-        }
-
-        Pipelines.Initialize(count == 0 ? _linkers.Count : count);
-
-        var pipelineId = 0;
-
-        foreach (var linker in _linkers)
-        {
-            linker.Pipeline = Pipelines[pipelineId];
-
-            pipelineId++;
-
-            if (pipelineId >= Pipelines.Count)
-            {
-                pipelineId = 0;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Searches links for all configured websites
-    /// </summary>
-    /// <param name="game">game the links will be searched for.</param>
-    /// <param name="actionModifier">Kind of search (e.g. Search or SearchMissing)</param>
-    /// <param name="isBulkAction">
-    /// If true, the method already is used in a progress bar and no new one has to be started.
-    /// </param>
-    /// <returns>True, if new links were added.</returns>
-    private async Task<bool> SearchLinksAsync(Game game, AddWebsiteLinkTypes addType = AddWebsiteLinkTypes.None, bool isBulkAction = true)
-    {
-        if (!_linkers.HasItems())
-        {
-            return false;
-        }
-
-        var result = false;
-
-        if (isBulkAction)
-        {
-            foreach (var link in _linkers)
-            {
-                result |= await link.AddSearchedLinkAsync(game, addType == AddWebsiteLinkTypes.SearchMissing, false);
-            }
-        }
-        else
-        {
-            if (LinkUtilitiesPlugin.PlayniteApi is null)
-            {
-                return false;
-            }
-
-            var globalProgressOptions = new GlobalProgressOptions($"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}", true)
-            {
-                IsIndeterminate = false
-            };
-
-            await LinkUtilitiesPlugin.PlayniteApi.Dialogs.ShowAsyncBlockingProgressAsync(globalProgressOptions,
-                async (args) =>
-                {
-                    try
-                    {
-                        args.SetProgressMaxValue(_linkers.Count);
-
-                        var counter = 0;
-
-                        foreach (var link in _linkers)
-                        {
-                            if (args.CancelToken.IsCancellationRequested)
-                            {
-                                break;
-                            }
-
-                            args.SetText($"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}{Environment.NewLine}{link.LinkName}");
-
-                            result |= await link.AddSearchedLinkAsync(game, addType == AddWebsiteLinkTypes.SearchMissing, false);
-
-                            args.SetCurrentProgressValue(++counter);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                    }
-                });
-        }
-
-        if (result)
-        {
-            //NEXT: Implement DoAfterChange
-            //await DoAfterChange.Instance().ExecuteAsync(game, actionModifier, isBulkAction);
-        }
-
-        return result;
-    }
-
-    /// <summary>
-    /// Opens the search page for all configured websites in the standard web browser
-    /// </summary>
-    /// <param name="game">game the links will be searched for.</param>
-    /// <param name="isBulkAction">
-    /// If true, the method already is used in a progress bar and no new one has to be started.
-    /// </param>
-    /// <returns>True, if pages were opened.</returns>
-    private async Task<bool> SearchLinksInBrowserAsync(Game game, bool isBulkAction = true)
-    {
-        if (!_linkers.HasItems())
-        {
-            return false;
-        }
-
-        var result = false;
-
-        var linksToSearch = _linkers.Where(link => !LinkHelper.LinkExists(game, link.LinkName)).ToList();
-
-        linksToSearch.ForEach(l => result |= l.StartBrowserSearch(game));
-
-        return result;
-    }
-
-    private bool SelectLinks(bool add = true) => false;/* NEXT: Implement SelectLinks
-
-            try
-            {
-                var viewModel = new SelectedLinksViewModel(Links, add);
-                var window = WindowHelper.CreateSizeToContentWindow(ResourceProvider.GetString("LOCLinkUtilitiesSelectLinksWindowName"));
-                var view = new SelectedLinksView(window) { DataContext = viewModel };
-
-                window.Content = view;
-                if (window.ShowDialog() != true)
-                {
-                    return false;
-                }
-
-                _linkers = viewModel.Links.Where(x => x.Selected).Select(x => x.Linker).ToList();
-
-                InitializePipelines(add ? 0 : 1);
-
-                return true;
-            }
-            catch (Exception exception)
-            {
-                Log.Error(exception, "Error during initializing SelectedLinksView", true);
-
-                return false;
-            }*/
 }

@@ -11,7 +11,7 @@ internal class RemoveDuplicates : BaseAction
     public RemoveDuplicates()
     { }
 
-    public override string Id => "linkutilities.remove.duplicates";
+    public override string Id => ActionIds.TypeRemoveDuplicates;
 
     public override string Name => Loc.action_name_remove_duplicates();
 
