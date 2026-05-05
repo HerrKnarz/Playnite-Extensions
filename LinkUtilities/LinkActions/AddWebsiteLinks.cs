@@ -50,8 +50,6 @@ public class AddWebsiteLinks : BaseWebsiteLinks
                 Log.Debug($"Starting {GetType().Name}{(args.IsBulkAction ? " (Bulk)" : string.Empty)} for game {game.Game.Name}.");
             }
 
-            //NEXT: Add test mode here!
-
             var result = await FindLinksAsync(game.Game);
 
             return result.result && result.links.HasItems() && await LinkHelper.AddLinksAsync(game.Game, result.links);

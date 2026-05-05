@@ -348,6 +348,7 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseActio
 
                 testCase.Url = LinkUrl;
 
+                // TODO: Refine testing with better logging and/or even a window with the results.
                 TestResultQueue.Enqueue($"\n============================ Test case {testCase.CaseName} ============================ " +
                             $"\nGamePathExp = {testCase.GamePathExpected}" +
                             $"\nGamePathGot = {testCase.GamePath}" +

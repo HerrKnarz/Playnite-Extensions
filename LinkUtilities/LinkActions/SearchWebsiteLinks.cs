@@ -7,6 +7,8 @@ namespace LinkUtilities.LinkActions;
 
 public class SearchWebsiteLinks : BaseWebsiteLinks
 {
+    // NEXT: Think about adding test cases for search results.
+
     public override string Id => ActionIds.TypeSearchLinks;
 
     public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, bool onlyMissingLinks)
