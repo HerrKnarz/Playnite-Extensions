@@ -34,6 +34,10 @@
                           Content="{p:LocString {x:Static p:LocId.settings_add_links_to_new_games}}"
                           Margin="0,10,0,0" />
                 <CheckBox DockPanel.Dock="Top"
+                          IsChecked="{Binding Settings.ConvertSteamLinksAfterChange}"
+                          Content="{p:LocString {x:Static p:LocId.settings_convert_steam_links_after_change}}"
+                          Margin="0,10,0,0" />
+                <CheckBox DockPanel.Dock="Top"
                           IsChecked="{Binding Settings.DebugMode}"
                           Content="{p:LocString {x:Static p:LocId.settings_debug_mode}}"
                           Margin="0,10,0,0" />

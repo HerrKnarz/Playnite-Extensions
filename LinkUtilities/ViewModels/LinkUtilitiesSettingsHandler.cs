@@ -48,7 +48,7 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
         if (File.Exists(setFile))
         {
             using var json = File.OpenRead(setFile);
-            settings = JsonSerializer.Deserialize<LinkUtilitiesPluginSettings>(json);
+            settings = JsonSerializer.Deserialize<LinkUtilitiesPluginSettings>(json, WebHelper.DefaultJsonSerializerOptions);
         }
 
         settings ??= new LinkUtilitiesPluginSettings();

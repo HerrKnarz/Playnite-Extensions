@@ -75,6 +75,6 @@ public class AddLibraryLinks : BaseAction
         return true;
     }
 
-    public override bool ProcessUpdateData(Game gameToUpdate, BaseActionGame processedGame)
-                                    => LinkHelper.UpdateGameInLibrary(gameToUpdate, processedGame);
+    public override async Task<bool> ProcessUpdateDataAsync(Game gameToUpdate, BaseActionGame processedGame)
+        => await LinkHelper.UpdateGameInLibraryAsync(gameToUpdate, processedGame);
 }

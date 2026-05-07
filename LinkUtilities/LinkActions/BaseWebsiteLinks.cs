@@ -128,8 +128,8 @@ public abstract class BaseWebsiteLinks : BaseAction
         return true;
     }
 
-    public override bool ProcessUpdateData(Game gameToUpdate, BaseActionGame processedGame)
-        => TestMode || LinkHelper.UpdateGameInLibrary(gameToUpdate, processedGame);
+    public override async Task<bool> ProcessUpdateDataAsync(Game gameToUpdate, BaseActionGame processedGame)
+        => TestMode || await LinkHelper.UpdateGameInLibraryAsync(gameToUpdate, processedGame);
 
     public bool SelectLinks(bool add = true) => false;
 

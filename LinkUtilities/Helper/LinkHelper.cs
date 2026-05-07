@@ -1,4 +1,5 @@
-﻿using Playnite;
+﻿using LinkUtilities.LinkActions;
+using Playnite;
 using PlayniteExtensionHelpers;
 using PlayniteExtensionHelpers.GamesCommon;
 using PlayniteExtensionHelpers.MetadataCommon;
@@ -9,7 +10,7 @@ namespace LinkUtilities.Helper;
 /// <summary>
 /// Helper class containing functions used in the link utilities extension
 /// </summary>
-internal static class LinkHelper
+public static class LinkHelper
 {
     /// <summary>
     /// Removes specific links from one or more games.
@@ -68,50 +69,6 @@ internal static class LinkHelper
         return true;
     }
 
-    public static ExternalIdentifier? GetExternalId(Game game, string id) => game?.ExternalIdentifiers?.FirstOrDefault(e => e.TypeId == id);
-
-    public static string? LinkNames(Game game)
-    {
-        return LinkUtilitiesPlugin.PlayniteApi is null || game is null || !game.Links.HasItems()
-            ? null
-            : string.Join(',', game.Links.Select(l => LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes.First(t => t.Id.Equals(l.TypeId)).Name).Distinct().OrderBy(s => s));
-    }
-
-    public static bool UpdateGameInLibrary(Game gameToUpdate, BaseActionGame processedGame)
-    {
-        var needsUpdate = false;
-
-        if (processedGame.Game.ExternalIdentifiers.HasItems())
-        {
-            if (gameToUpdate.ExternalIdentifiers is null)
-            {
-                gameToUpdate.ExternalIdentifiers = processedGame.Game.ExternalIdentifiers;
-
-                needsUpdate = true;
-            }
-            else
-            {
-                needsUpdate = gameToUpdate.ExternalIdentifiers.AddMissing(processedGame.Game.ExternalIdentifiers.Where(s => !gameToUpdate.ExternalIdentifiers.Any(t => t.TypeId == s.TypeId)));
-            }
-        }
-
-        if (processedGame.Game.Links.HasItems())
-        {
-            if (gameToUpdate.Links is null)
-            {
-                gameToUpdate.Links = processedGame.Game.Links;
-
-                needsUpdate = true;
-            }
-            else
-            {
-                needsUpdate |= gameToUpdate.Links.AddMissing(processedGame.Game.Links.Where(l => !LinkHelper.LinkExists(gameToUpdate, l.TypeId)));
-            }
-        }
-
-        return needsUpdate;
-    }
-
     /// <summary>
     /// Adds a link to a game.
     /// </summary>
@@ -123,16 +80,14 @@ internal static class LinkHelper
     /// exist already if specified.
     /// </param>
     /// <param name="ignoreExisting">if true existing links of the same name will be ignored</param>
-    /// <param name="cleanUpAfterAdding">if true, the links will be cleaned up afterward</param>
     /// <returns>
     /// True, if a link could be added. Returns false, if a link with that name was already present
     /// or couldn't be added.
     /// </returns>
-    internal static async Task<bool> AddLinkAsync(Game game, string? linkName, string? linkUrl, string? linkTypeId = null, bool ignoreExisting = true, bool cleanUpAfterAdding = true)
+    public static async Task<bool> AddLinkAsync(Game game, string? linkName, string? linkUrl, string? linkTypeId = null, bool ignoreExisting = true)
     {
         var mustUpdate = false;
         var addNewLink = false;
-        var replaceUrl = true;
 
         if (linkName.IsNullOrEmpty() || linkUrl.IsNullOrEmpty())
         {
@@ -214,7 +169,6 @@ internal static class LinkHelper
 
                     link.TypeId = type.Id;
                     addNewLink = true;
-                    replaceUrl = false;
                 }
                 else
                 {
@@ -238,13 +192,6 @@ internal static class LinkHelper
             }
         }
 
-        // Updates the game in the database if we added a new link.
-        if (mustUpdate)
-        {
-            //NEXT: See how I can combine them all, since the games won't be updated in the loop anymore,
-            await DoAfterAddAsync(game, cleanUpAfterAdding, replaceUrl);
-        }
-
         return mustUpdate;
     }
 
@@ -253,12 +200,11 @@ internal static class LinkHelper
     /// </summary>
     /// <param name="game">Game the links will be added to</param>
     /// <param name="links">the links to add</param>
-    /// <param name="cleanUpAfterAdding">if true, the links will be cleaned up afterward</param>
     /// <returns>
     /// True, if at least one link could be added. Returns false, if the links already existed or
     /// couldn't be added.
     /// </returns>
-    internal static async Task<bool> AddLinksAsync(Game game, List<WebLink> links, bool cleanUpAfterAdding = true)
+    public static async Task<bool> AddLinksAsync(Game game, List<WebLink> links)
     {
         if (!links.HasItems())
         {
@@ -283,14 +229,10 @@ internal static class LinkHelper
             });
         }
 
-        // Updates the game in the database if we added a new link.
-        if (mustUpdate)
-        {
-            await DoAfterAddAsync(game, cleanUpAfterAdding);
-        }
-
         return mustUpdate;
     }
+
+    public static ExternalIdentifier? GetExternalId(Game game, string id) => game?.ExternalIdentifiers?.FirstOrDefault(e => e.TypeId == id);
 
     /// <summary>
     /// Checks if the game already has a link of the given type
@@ -298,20 +240,57 @@ internal static class LinkHelper
     /// <param name="game">Game for which the Links will be checked</param>
     /// <param name="typeId">Type of the link</param>
     /// <returns>True, if a link with that type exists</returns>
-    internal static bool LinkExists(Game game, string? typeId) => !typeId.IsNullOrEmpty() && (game.Links?.Any(x => x.TypeId == typeId) ?? false);
+    public static bool LinkExists(Game game, string? typeId) => !typeId.IsNullOrEmpty() && (game.Links?.Any(x => x.TypeId == typeId) ?? false);
 
-    /// <summary>
-    /// Things to do after adding one or more links
-    /// </summary>
-    /// <param name="game">game to process</param>
-    /// <param name="cleanUp">if true, the links will be cleaned up afterward</param>
-    /// <param name="renameLinks">If True, newly added links will be renamed.</param>
-    private static async Task DoAfterAddAsync(Game game, bool cleanUp = true, bool renameLinks = true)
+    public static string? LinkNames(Game game)
     {
-        if (cleanUp)
+        return LinkUtilitiesPlugin.PlayniteApi is null || game is null || !game.Links.HasItems()
+            ? null
+            : string.Join(',', game.Links.Select(l => LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes.First(t => t.Id.Equals(l.TypeId)).Name).Distinct().OrderBy(s => s));
+    }
+
+    public static async Task<bool> UpdateGameInLibraryAsync(Game gameToUpdate, BaseActionGame processedGame, bool cleanUpAfterAdding = true)
+    {
+        var needsUpdate = false;
+
+        if (processedGame.Game.ExternalIdentifiers.HasItems())
         {
-            //NEXT: Implement DoAfterChange
-            //DoAfterChange.Instance().Execute(game, renameLinks ? ActionModifierTypes.None : ActionModifierTypes.DontRename);
+            if (gameToUpdate.ExternalIdentifiers is null)
+            {
+                gameToUpdate.ExternalIdentifiers = processedGame.Game.ExternalIdentifiers;
+
+                needsUpdate = true;
+            }
+            else
+            {
+                needsUpdate = gameToUpdate.ExternalIdentifiers.AddMissing(processedGame.Game.ExternalIdentifiers.Where(s => !gameToUpdate.ExternalIdentifiers.Any(t => t.TypeId == s.TypeId)));
+            }
         }
+
+        if (processedGame.Game.Links.HasItems())
+        {
+            if (gameToUpdate.Links is null)
+            {
+                gameToUpdate.Links = processedGame.Game.Links;
+
+                needsUpdate = true;
+            }
+            else
+            {
+                needsUpdate |= gameToUpdate.Links.AddMissing(processedGame.Game.Links.Where(l => !LinkHelper.LinkExists(gameToUpdate, l.TypeId)));
+            }
+        }
+
+        if (!cleanUpAfterAdding || LinkUtilitiesPlugin.PlayniteApi is null)
+        {
+            return needsUpdate;
+        }
+
+        var doAfterChange = new DoAfterChange();
+        var args = doAfterChange.GetActionArgs(LinkUtilitiesPlugin.PlayniteApi, [], Loc.link_utilities_name());
+
+        needsUpdate |= await doAfterChange.ExecuteAsync(new BaseActionGame(gameToUpdate), args);
+
+        return needsUpdate;
     }
 }

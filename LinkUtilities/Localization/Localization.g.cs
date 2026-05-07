@@ -32,6 +32,13 @@ public static partial class Loc
         return GetString("action_name_convert_steam_links");
     }
     /// <summary>
+    /// Do after change
+    /// </summary>
+    public static string action_name_do_after_change()
+    {
+        return GetString("action_name_do_after_change");
+    }
+    /// <summary>
     /// Library links
     /// </summary>
     public static string action_name_library_links()
@@ -93,6 +100,13 @@ public static partial class Loc
     public static string dialog_name_link_caption()
     {
         return GetString("dialog_name_link_caption");
+    }
+    /// <summary>
+    /// Processed links of {$gameCount} games!
+    /// </summary>
+    public static string dialog_processed_links_message(object gameCount)
+    {
+        return GetString("dialog_processed_links_message", ("gameCount", gameCount));
     }
     /// <summary>
     /// Removed duplicate links from {$gameCount} games!
@@ -242,6 +256,13 @@ public static partial class Loc
         return GetString("progress_converting_steam_links");
     }
     /// <summary>
+    /// Processing links...
+    /// </summary>
+    public static string progress_processing_links()
+    {
+        return GetString("progress_processing_links");
+    }
+    /// <summary>
     /// Removing duplicate links...
     /// </summary>
     public static string progress_removing_duplicates()
@@ -324,6 +345,13 @@ public static partial class Loc
     public static string settings_configure_websites()
     {
         return GetString("settings_configure_websites");
+    }
+    /// <summary>
+    /// Automatically convert steam web links to steam client links on library update.
+    /// </summary>
+    public static string settings_convert_steam_links_after_change()
+    {
+        return GetString("settings_convert_steam_links_after_change");
     }
     /// <summary>
     /// Log debug messages
@@ -413,67 +441,6 @@ public static partial class Loc
 
 public static partial class LocId
 {
-    public static readonly HashSet<string> StringIds = new()
-    {
-        "example_string", 
-        "link_utilities_name", 
-        "action_name_clipboard_links", 
-        "action_name_convert_steam_links", 
-        "action_name_library_links", 
-        "action_name_remove_duplicates", 
-        "action_name_uri_links", 
-        "action_name_website_links", 
-        "caption_link_type", 
-        "dialog_added_links_message", 
-        "dialog_converted_steam_links_message", 
-        "dialog_enter_link_name", 
-        "dialog_name_link_caption", 
-        "dialog_removed_duplicates_message", 
-        "dialog_replace_link", 
-        "dialog_search_game", 
-        "dialog_select_option", 
-        "enum_duplicate_types_type_url", 
-        "enum_duplicate_types_type", 
-        "enum_duplicate_types_url", 
-        "menu_add_library_links", 
-        "menu_add_link_from_clipboard", 
-        "menu_add_link_to_all_enabled_websites", 
-        "menu_convert_steam_links_to_client", 
-        "menu_convert_steam_links_to_website", 
-        "menu_remove_duplicate_links", 
-        "menu_search_link_to_all_missing_websites", 
-        "menu_search_link_in_browser", 
-        "menu_section_add_link", 
-        "menu_section_search_link", 
-        "progress_adding_library_links", 
-        "progress_adding_single_website_links", 
-        "progress_adding_website_links", 
-        "progress_converting_steam_links", 
-        "progress_removing_duplicates", 
-        "settings_add_link", 
-        "settings_add_links_to_new_games", 
-        "settings_api_key", 
-        "settings_bookmarklet_description", 
-        "settings_button_add", 
-        "settings_button_add_defaults", 
-        "settings_button_help", 
-        "settings_button_remove", 
-        "settings_button_sort", 
-        "settings_configure_link_name_patterns", 
-        "settings_configure_websites", 
-        "settings_debug_mode", 
-        "settings_duplicates_remove_after_change", 
-        "settings_duplicates_remove_type", 
-        "settings_link_source", 
-        "settings_name_pattern", 
-        "settings_partial_match", 
-        "settings_partial_match_hint", 
-        "settings_search_link", 
-        "settings_show_in_menus", 
-        "settings_tab_bookmarklet_clipboard", 
-        "settings_tab_general", 
-        "settings_url_pattern"
-    };
 
     /// <summary>
     /// Fluent test string
@@ -491,6 +458,10 @@ public static partial class LocId
     /// Steam links converter
     /// </summary>
     public const string action_name_convert_steam_links = "action_name_convert_steam_links";
+    /// <summary>
+    /// Do after change
+    /// </summary>
+    public const string action_name_do_after_change = "action_name_do_after_change";
     /// <summary>
     /// Library links
     /// </summary>
@@ -527,6 +498,10 @@ public static partial class LocId
     /// Name the link
     /// </summary>
     public const string dialog_name_link_caption = "dialog_name_link_caption";
+    /// <summary>
+    /// Processed links of {$gameCount} games!
+    /// </summary>
+    public const string dialog_processed_links_message = "dialog_processed_links_message";
     /// <summary>
     /// Removed duplicate links from {$gameCount} games!
     /// </summary>
@@ -612,6 +587,10 @@ public static partial class LocId
     /// </summary>
     public const string progress_converting_steam_links = "progress_converting_steam_links";
     /// <summary>
+    /// Processing links...
+    /// </summary>
+    public const string progress_processing_links = "progress_processing_links";
+    /// <summary>
     /// Removing duplicate links...
     /// </summary>
     public const string progress_removing_duplicates = "progress_removing_duplicates";
@@ -659,6 +638,10 @@ public static partial class LocId
     /// Configure websites
     /// </summary>
     public const string settings_configure_websites = "settings_configure_websites";
+    /// <summary>
+    /// Automatically convert steam web links to steam client links on library update.
+    /// </summary>
+    public const string settings_convert_steam_links_after_change = "settings_convert_steam_links_after_change";
     /// <summary>
     /// Log debug messages
     /// </summary>

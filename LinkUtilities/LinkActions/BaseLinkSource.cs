@@ -181,16 +181,15 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseActio
     /// </summary>
     /// <param name="game">Game the link will be added to</param>
     /// <param name="result">Search result with the link</param>
-    /// <param name="cleanUpAfterAdding">Determines if the clean up routines will be executed afterwards</param>
     /// <returns>True if the link and/or external id was added</returns>
-    public virtual async Task<bool> AddLinkFromSearchAsync(Game game, LinkSearchResult result, bool cleanUpAfterAdding = true)
+    public virtual async Task<bool> AddLinkFromSearchAsync(Game game, LinkSearchResult result)
     {
         if (!result.Id.IsNullOrEmpty())
         {
             await LinkHelper.AddExternalIdAsync(game, ExternalIdType, result.Id, LinkName);
         }
 
-        return await LinkHelper.AddLinkAsync(game, LinkName, result.Url, LinkTypeId, false, cleanUpAfterAdding);
+        return await LinkHelper.AddLinkAsync(game, LinkName, result.Url, LinkTypeId, false);
     }
 
     /// <summary>
@@ -219,9 +218,8 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseActio
     /// </summary>
     /// <param name="game">Game the link will be searched for and added to</param>
     /// <param name="skipExistingLinks">When true already existing links will be skipped.</param>
-    /// <param name="cleanUpAfterAdding">if true, the links will be cleaned up afterward</param>
     /// <returns>True, if a link was added</returns>
-    public virtual async Task<bool> AddSearchedLinkAsync(Game game, bool skipExistingLinks = false, bool cleanUpAfterAdding = true)
+    public virtual async Task<bool> AddSearchedLinkAsync(Game game, bool skipExistingLinks = false)
     {
         if (LinkUtilitiesPlugin.PlayniteApi is null)
         {
@@ -249,7 +247,7 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseActio
                 $"{Loc.dialog_search_game()} ({LinkName})");
         }
 
-        return result != null && await AddLinkFromSearchAsync(game, (LinkSearchResult)result, cleanUpAfterAdding);
+        return result != null && await AddLinkFromSearchAsync(game, (LinkSearchResult)result);
     }
 
     /// <summary>
@@ -512,8 +510,8 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseActio
         return true;
     }
 
-    public override bool ProcessUpdateData(Game gameToUpdate, BaseActionGame processedGame)
-        => LinkHelper.UpdateGameInLibrary(gameToUpdate, processedGame);
+    public override async Task<bool> ProcessUpdateDataAsync(Game gameToUpdate, BaseActionGame processedGame)
+        => await LinkHelper.UpdateGameInLibraryAsync(gameToUpdate, processedGame);
 
     /// <summary>
     /// Opens a browser with the browser search url.

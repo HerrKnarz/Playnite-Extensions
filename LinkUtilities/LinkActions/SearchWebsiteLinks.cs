@@ -89,7 +89,7 @@ public class SearchWebsiteLinks : BaseWebsiteLinks
         {
             foreach (var link in LinksToProcess)
             {
-                result |= await link.AddSearchedLinkAsync(game, onlyMissingLinks, false);
+                result |= await link.AddSearchedLinkAsync(game, onlyMissingLinks);
             }
         }
         else
@@ -122,7 +122,7 @@ public class SearchWebsiteLinks : BaseWebsiteLinks
 
                             args.SetText($"{Loc.link_utilities_name()}{Environment.NewLine}{Loc.progress_adding_website_links()}{Environment.NewLine}{link.LinkName}");
 
-                            result |= await link.AddSearchedLinkAsync(game, onlyMissingLinks, false);
+                            result |= await link.AddSearchedLinkAsync(game, onlyMissingLinks);
 
                             args.SetCurrentProgressValue(++counter);
                         }
@@ -132,12 +132,6 @@ public class SearchWebsiteLinks : BaseWebsiteLinks
                         Log.Error(ex);
                     }
                 });
-        }
-
-        if (result)
-        {
-            //NEXT: Implement DoAfterChange
-            //await DoAfterChange.Instance().ExecuteAsync(game, actionModifier, isBulkAction);
         }
 
         return result;

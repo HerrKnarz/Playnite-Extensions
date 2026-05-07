@@ -4,6 +4,7 @@ using LinkUtilities.Linker;
 using LinkUtilities.Models;
 using LinkUtilities.ViewModels;
 using Playnite;
+using PlayniteExtensionHelpers.GamesCommon;
 
 namespace LinkUtilities;
 
@@ -76,9 +77,15 @@ public class LinkUtilitiesPlugin : Plugin
         Settings = LinkUtilitiesSettingsHandler.LoadSettings();
     }
 
-    public override async Task OnGameCollectionChange(DataCollectionChangeArgs<Game> args)
+    public override async Task OnMetadataDownloadFinishedAsync(OnMetadataDownloadFinishedArgs args)
     {
-        // This is called when data in the collection are changed. args.AddedItems,
-        // args.RemovedItems, args.UpdatedItems
+        if (!Settings.AddLinksToNewGames || args.StartReason != MetadataDownloadStartReason.OnNewGameImport || !args.Games.HasItems() || PlayniteApi is null)
+        {
+            return;
+        }
+
+        var games = args.Games.Select(g => new BaseActionGame(g)).ToList();
+
+        await AddWebsiteLinks.CreateAndExecuteAsync(PlayniteApi, games, Loc.link_utilities_name(), false);
     }
 }
