@@ -3,16 +3,21 @@ using PlayniteExtensionHelpers.GamesCommon;
 
 namespace LinkUtilities.LinkActions;
 
-public class DoAfterChange : BaseAction
+public class CleanUpLinks : BaseAction
 {
-    public override string Id => ActionIds.TypeDoAfterChange;
+    public override string Id => ActionIds.TypeCleanUpLinks;
 
-    public override string Name => Loc.action_name_do_after_change();
+    public override string Name => Loc.action_name_clean_up_links();
 
-    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
+    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, bool showDialogs = false)
     {
-        var action = new DoAfterChange();
+        var action = new CleanUpLinks();
         var args = action.GetActionArgs(api, games, pluginName);
+
+        args.DoForAllType = DoForAllTypes.BlockingBulkUpdate;
+
+        args.ShowDialogs = showDialogs;
+
         await action.DoForAllAsync(args);
     }
 

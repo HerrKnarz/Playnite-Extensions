@@ -286,7 +286,7 @@ public static class LinkHelper
             return needsUpdate;
         }
 
-        var doAfterChange = new DoAfterChange();
+        var doAfterChange = new CleanUpLinks();
         var args = doAfterChange.GetActionArgs(LinkUtilitiesPlugin.PlayniteApi, [], Loc.link_utilities_name());
 
         needsUpdate |= await doAfterChange.ExecuteAsync(new BaseActionGame(gameToUpdate), args);

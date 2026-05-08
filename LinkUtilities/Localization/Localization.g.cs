@@ -32,11 +32,11 @@ public static partial class Loc
         return GetString("action_name_convert_steam_links");
     }
     /// <summary>
-    /// Do after change
+    /// Clean up links
     /// </summary>
-    public static string action_name_do_after_change()
+    public static string action_name_clean_up_links()
     {
-        return GetString("action_name_do_after_change");
+        return GetString("action_name_clean_up_links");
     }
     /// <summary>
     /// Library links
@@ -177,6 +177,13 @@ public static partial class Loc
     public static string menu_add_link_to_all_enabled_websites()
     {
         return GetString("menu_add_link_to_all_enabled_websites");
+    }
+    /// <summary>
+    /// Clean up links (convert, remove)
+    /// </summary>
+    public static string menu_clean_up_links()
+    {
+        return GetString("menu_clean_up_links");
     }
     /// <summary>
     /// Convert Steam links to client links
@@ -459,9 +466,9 @@ public static partial class LocId
     /// </summary>
     public const string action_name_convert_steam_links = "action_name_convert_steam_links";
     /// <summary>
-    /// Do after change
+    /// Clean up links
     /// </summary>
-    public const string action_name_do_after_change = "action_name_do_after_change";
+    public const string action_name_clean_up_links = "action_name_clean_up_links";
     /// <summary>
     /// Library links
     /// </summary>
@@ -542,6 +549,10 @@ public static partial class LocId
     /// All enabled websites
     /// </summary>
     public const string menu_add_link_to_all_enabled_websites = "menu_add_link_to_all_enabled_websites";
+    /// <summary>
+    /// Clean up links (convert, remove)
+    /// </summary>
+    public const string menu_clean_up_links = "menu_clean_up_links";
     /// <summary>
     /// Convert Steam links to client links
     /// </summary>

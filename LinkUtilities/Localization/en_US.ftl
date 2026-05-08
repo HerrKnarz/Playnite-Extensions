@@ -4,7 +4,7 @@ link_utilities_name = Link Utilities
 
 action_name_clipboard_links = Link from clipboard
 action_name_convert_steam_links = Steam links converter
-action_name_do_after_change = Do after change
+action_name_clean_up_links = Clean up links
 action_name_library_links = Library links
 action_name_remove_duplicates = Remove duplicate links
 action_name_uri_links = Link from uri
@@ -29,6 +29,7 @@ enum_duplicate_types_url = URL
 menu_add_library_links = Add library links
 menu_add_link_from_clipboard = Add link from clipboard
 menu_add_link_to_all_enabled_websites = All enabled websites
+menu_clean_up_links = Clean up links (convert, remove)
 menu_convert_steam_links_to_client = Convert Steam links to client links
 menu_convert_steam_links_to_website = Convert Steam links to web links
 menu_remove_duplicate_links = Remove duplicate links

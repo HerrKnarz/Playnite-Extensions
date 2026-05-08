@@ -20,6 +20,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
             new MenuItemDescriptor(ActionIds.TypeSearchLinks, Loc.menu_section_search_link()),
             new MenuItemDescriptor(ActionIds.TypeBrowserSearch, Loc.menu_search_link_in_browser()),
             new MenuItemDescriptor(ActionIds.TypeRemoveDuplicates, Loc.menu_remove_duplicate_links()),
+            new MenuItemDescriptor(ActionIds.TypeCleanUpLinks, Loc.menu_clean_up_links()),
             new MenuItemDescriptor(ActionIds.TypeAddFromClipboard, Loc.menu_add_link_from_clipboard()),
             new MenuItemDescriptor(ActionIds.TypeConvertSteamClient, Loc.menu_convert_steam_links_to_client()),
             new MenuItemDescriptor(ActionIds.TypeConvertSteamWeb, Loc.menu_convert_steam_links_to_website()),
@@ -36,6 +37,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
             ActionIds.TypeAddLibraryLinks => GetAddLibraryLinksItems(games),
             ActionIds.TypeAddLinks => GetAddLinksItems(games),
             ActionIds.TypeBrowserSearch => GetBrowserSearchItems(games),
+            ActionIds.TypeCleanUpLinks => GetCleanUpLinksItems(games),
             ActionIds.TypeConvertSteamClient => GetConvertSteamlinksItems(games),
             ActionIds.TypeConvertSteamWeb => GetConvertSteamlinksItems(games, false),
             ActionIds.TypeRemoveDuplicates => GetRemoveDuplicatesItems(games),
@@ -117,6 +119,15 @@ public class MenuHandler(IPlayniteApi playniteApi)
         }
 
         return [new MenuItemImpl(Loc.menu_search_link_in_browser(), subItems)];
+    }
+
+    private ICollection<MenuItemImpl>? GetCleanUpLinksItems(List<BaseActionGame> games)
+    {
+        return [
+            new(Loc.menu_clean_up_links(),
+                (clickArgs) => CleanUpLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), true),
+                false,
+                UIIcon.FromFontIcon("f19a1", Playnite.Fonts.NerdFont, GetIconColor()))];
     }
 
     private ICollection<MenuItemImpl>? GetConvertSteamlinksItems(List<BaseActionGame> games, bool toClient = true)

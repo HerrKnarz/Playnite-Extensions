@@ -9,6 +9,9 @@ public partial class LinkUtilitiesPluginSettings : ObservableObject
     public partial bool AddLinksToNewGames { get; set; } = false;
 
     [ObservableProperty]
+    public partial bool CleanUpAfterChange { get; set; } = true;
+
+    [ObservableProperty]
     public partial bool ConvertSteamLinksAfterChange { get; set; } = false;
 
     [ObservableProperty]
