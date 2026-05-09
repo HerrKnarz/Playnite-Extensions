@@ -1,6 +1,12 @@
-example_string = Fluent test string
+## terms used in other translations
 
-link_utilities_name = Link Utilities
+-link_utilities_name = Link Utilities
+-link_type = Link Type
+-url = URL
+
+## messages
+
+link_utilities_name = { -link_utilities_name }
 
 action_name_clipboard_links = Link from clipboard
 action_name_convert_steam_links = Steam links converter
@@ -10,7 +16,7 @@ action_name_remove_duplicates = Remove duplicate links
 action_name_uri_links = Link from uri
 action_name_website_links = Website links
 
-caption_link_type = Link Type
+caption_link_type = { -link_type }
 
 dialog_added_links_message = Added links to {$gameCount} games!
 dialog_converted_steam_links_message = Converted Steam links of {$gameCount} games!
@@ -22,9 +28,9 @@ dialog_replace_link = A link to {$linkType} already exists. You can replace the 
 dialog_search_game = Search game
 dialog_select_option = Select option
 
-enum_duplicate_types_type_url = link type and URL
-enum_duplicate_types_type = link type
-enum_duplicate_types_url = URL
+enum_duplicate_types_type_url = { -link_type } and { -url }
+enum_duplicate_types_type = { -link_type }
+enum_duplicate_types_url = { -url }
 
 menu_add_library_links = Add library links
 menu_add_link_from_clipboard = Add link from clipboard

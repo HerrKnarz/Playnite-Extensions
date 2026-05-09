@@ -524,14 +524,24 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseActio
         return process is not null;
     }
 
-    internal async Task<(bool Result, string? PageText)> LoadDocumentAsync(string url, string checkForContent = "", bool ignoreStatus = false)
+    internal async Task<(bool Result, string? PageText)> LoadDocumentAsync(string url, string checkForContent = "", bool ignoreStatus = false, int delay = 0)
     {
         if (Pipeline is null)
         {
             return (false, null);
         }
 
-        var urlLoadResult = await Pipeline.LoadUrlAsync(url, DocumentType.Source, LinkUtilitiesPlugin.Settings.DebugMode, checkForContent, AllowedCallbackUrls);
+        var loadUrlArgs = new LoadUrlArgs()
+        {
+            Url = url,
+            DocumentType = DocumentType.Source,
+            DebugMode = LinkUtilitiesPlugin.Settings.DebugMode,
+            CheckForContent = checkForContent,
+            AllowedCallbackUrls = AllowedCallbackUrls,
+            DelayAfterNavigation = delay
+        };
+
+        var urlLoadResult = await Pipeline.LoadUrlAsync(loadUrlArgs);
 
         if ((!ignoreStatus && urlLoadResult.StatusCode != HttpStatusCode.OK) || urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.PageText.IsNullOrEmpty())
         {

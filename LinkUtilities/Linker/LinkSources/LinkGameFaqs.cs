@@ -10,11 +10,21 @@ public class LinkGameFaqs(string id, LinkSourceArgs args) : BaseLinkSource(id, a
 {
     public static string ClassId => $"linkutilities.gamefaqs.link";
     public override LinkAddTypes AddType => LinkAddTypes.SingleSearchResult;
-    public override string BaseUrl => "https://gamefaqs.gamespot.com/";
-    public override string BrowserSearchUrl => $"{BaseUrl}search?game=";
+    public override string BaseUrl => "https://gamefaqs.gamespot.com";
+    public override string BrowserSearchUrl => $"{BaseUrl}/search?game=";
     public override string ExternalIdType => "gamefaqs";
     public override string LinkName => "GameFAQs";
-    public override string SearchUrl => $"{BaseUrl}ajax/home_game_search?term=&term=";
+    public override string SearchUrl => $"{BaseUrl}/ajax/home_game_search?term=&term=";
+
+    public override List<TestCase> TestCases =>
+    [
+        new TestCase(){
+            CaseName = "GameFAQs Monkey Island 2: LeChuck's Revenge",
+            GameName = "Monkey Island 2: LeChuck's Revenge",
+            GamePathExpected = "https://gamefaqs.gamespot.com/amiga/584295-monkey-island-2-lechucks-revenge",
+            SearchedUrlExpected = "not found!",
+            UrlExpected = "https://gamefaqs.gamespot.com/amiga/584295-monkey-island-2-lechucks-revenge" }
+    ];
 
     public override async Task<IEnumerable<ChooseDialogItem>> GetSearchResultsAsync(ChooseItemWithSearchAsyncArgs searchArgs)
     {

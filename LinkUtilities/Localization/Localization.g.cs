@@ -4,13 +4,6 @@ public static partial class Loc
 {
 
     /// <summary>
-    /// Fluent test string
-    /// </summary>
-    public static string example_string()
-    {
-        return GetString("example_string");
-    }
-    /// <summary>
     /// Link Utilities
     /// </summary>
     public static string link_utilities_name()
@@ -137,14 +130,14 @@ public static partial class Loc
         return GetString("dialog_select_option");
     }
     /// <summary>
-    /// link type and URL
+    /// Link Type and URL
     /// </summary>
     public static string enum_duplicate_types_type_url()
     {
         return GetString("enum_duplicate_types_type_url");
     }
     /// <summary>
-    /// link type
+    /// Link Type
     /// </summary>
     public static string enum_duplicate_types_type()
     {
@@ -450,10 +443,6 @@ public static partial class LocId
 {
 
     /// <summary>
-    /// Fluent test string
-    /// </summary>
-    public const string example_string = "example_string";
-    /// <summary>
     /// Link Utilities
     /// </summary>
     public const string link_utilities_name = "link_utilities_name";
@@ -526,11 +515,11 @@ public static partial class LocId
     /// </summary>
     public const string dialog_select_option = "dialog_select_option";
     /// <summary>
-    /// link type and URL
+    /// Link Type and URL
     /// </summary>
     public const string enum_duplicate_types_type_url = "enum_duplicate_types_type_url";
     /// <summary>
-    /// link type
+    /// Link Type
     /// </summary>
     public const string enum_duplicate_types_type = "enum_duplicate_types_type";
     /// <summary>

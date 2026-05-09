@@ -27,7 +27,15 @@ public class Pipeline(int id) : WebWorker(id, LinkUtilitiesPlugin.PlayniteApi)
                 continue;
             }
 
-            var linkCheckResult = await LoadUrlAsync(link.Url, DocumentType.Empty, LinkUtilitiesPlugin.Settings.DebugMode, waitForCallback: false);
+            var loadUrlArgs = new LoadUrlArgs
+            {
+                Url = link.Url,
+                DocumentType = DocumentType.Empty,
+                DebugMode = LinkUtilitiesPlugin.Settings.DebugMode,
+                WaitForCallback = false
+            };
+
+            var linkCheckResult = await LoadUrlAsync(loadUrlArgs);
 
             if (!hideOkOnLinkCheck || linkCheckResult.StatusCode != HttpStatusCode.OK)
             {

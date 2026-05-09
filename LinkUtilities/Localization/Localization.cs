@@ -14,6 +14,8 @@ public class LocString : LocStringMarkup
     }
 }
 
+//NEXT: Replace generic strings with the ones from Playnite's localization file.
+
 public static partial class Loc
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2211:Non-constant fields should not be visible", Justification = "<Pending>")]
