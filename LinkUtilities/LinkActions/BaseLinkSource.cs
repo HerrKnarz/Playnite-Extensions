@@ -46,12 +46,6 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseActio
     public virtual HashSet<string> AllowedCallbackUrls { get; set; } = [];
 
     /// <summary>
-    /// Specifies, if a redirect is allowed while checking the URL. Some sites redirect to the
-    /// homepage if the link isn't valid. In that case this should be set to false.
-    /// </summary>
-    public virtual bool AllowRedirects { get; set; } = true;
-
-    /// <summary>
     /// Base URL of the link before adding the specific path to the game itself. Only used if applicable.
     /// </summary>
     public virtual string BaseUrl => string.Empty;

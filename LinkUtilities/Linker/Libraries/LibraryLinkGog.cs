@@ -18,8 +18,6 @@ public class LibraryLinkGog : LibraryLinker
 
     public static string ClassId => $"linkutilities.gog.link";
 
-    public override bool AllowRedirects { get; set; } = false;
-
     public override string BaseUrl => "https://www.gog.com/en/game/";
 
     public override string BrowserSearchUrl => "https://www.gog.com/en/games?query=";
