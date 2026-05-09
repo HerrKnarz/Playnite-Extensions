@@ -1,5 +1,8 @@
 ﻿using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
+using LinkUtilities.Models.ApiResults;
+using PlayniteExtensionHelpers;
+using PlayniteExtensionHelpers.WebCommon;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -10,7 +13,7 @@ namespace LinkUtilities.Helper;
 /// <summary>
 /// Helper functions for parsing strings
 /// </summary>
-internal static class ParseHelper
+public static class ParseHelper
 {
     /// <summary>
     /// Gets the search results from a MediaWiki website via OpenSearch.
@@ -19,49 +22,55 @@ internal static class ParseHelper
     /// <param name="searchTerm">Term to search for. Will be encoded in the function!</param>
     /// <param name="linkName">Name of the site for the error message</param>
     /// <returns>Search results for the search dialog. Will be an empty list in case of an error.</returns>
-    internal static List<LinkSearchResult> GetMediaWikiResultsFromApi(string searchUrl, string searchTerm, string linkName, BaseLinkSource? linker = null)
+    public static async Task<List<LinkSearchResult>> GetMediaWikiResultsFromApiAsync(string searchUrl, string? searchTerm, string linkName, BaseLinkSource linker)
     {
         var result = new List<LinkSearchResult>();
 
-        /*try
+        if (linker.Pipeline is null)
+        {
+            return result;
+        }
+
+        try
         {
             var xml = string.Empty;
 
-            if (linker == null)
+            var loadUrlArgs = new LoadUrlArgs
             {
-                var client = new WebClient();
+                Url = string.Format(searchUrl, searchTerm.UrlEncode()),
+                DocumentType = DocumentType.Text,
+                DebugMode = LinkUtilitiesPlugin.Settings.DebugMode
+            };
 
-                client.Headers.Add("Accept", "application/xml");
+            var urlLoadResult = await linker.Pipeline.LoadUrlAsync(loadUrlArgs);
 
-                xml = client.DownloadString(string.Format(searchUrl, searchTerm.UrlEncode()));
-            }
-            else
+            if (urlLoadResult is null)
             {
-                var urlLoadResult = linker.Pipeline.LoadUrl(string.Format(searchUrl, searchTerm.UrlEncode()), DocumentType.Text, GlobalSettings.Instance().DebugMode);
-
-                if (urlLoadResult == null)
-                {
-                    return result;
-                }
-
-                xml = urlLoadResult.PageText;
-
-                xml = xml.Replace("This XML file does not appear to have any style information associated with it. The document tree is shown below.", "");
+                return result;
             }
+
+            xml = urlLoadResult.PageText;
+
+            xml = xml.Replace("This XML file does not appear to have any style information associated with it. The document tree is shown below.", "");
 
             var searchResults = xml.ParseXml<SearchSuggestion>();
 
-            result.AddRange(searchResults.Section.Select(item => new SearchResult
+            if (searchResults?.Section is null)
             {
-                Name = item.Text.Value,
-                Url = item.Url.Value,
-                Description = item.Url.Value
+                return result;
+            }
+
+            result.AddRange(searchResults.Section.Select(item => new LinkSearchResult
+            {
+                Name = item.Text?.Value,
+                Url = item.Url?.Value,
+                Description = item.Url?.Value
             }));
         }
         catch (Exception ex)
         {
             Log.Error(ex, $"Error loading data from {linkName} - {searchUrl}");
-        }*/
+        }
 
         return result;
     }

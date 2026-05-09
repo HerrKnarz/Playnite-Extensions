@@ -52,7 +52,8 @@ public class LibraryLinkGog : LibraryLinker
             GameName = "Blade Runner",
             GamePathExpected = "blade_runner",
             SearchedUrlExpected = "https://www.gog.com/en/game/blade_runner",
-            UrlExpected = "https://www.gog.com/en/game/blade_runner" }
+            UrlExpected = "https://www.gog.com/en/game/blade_runner"
+        }
     ];
 
     public override async Task<(List<WebLink> links, bool result)> FindLibraryLinkAsync(Game game, string? gameId)

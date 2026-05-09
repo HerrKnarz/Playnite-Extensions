@@ -24,14 +24,15 @@ public class LinkAdventureGamers(string id, LinkSourceArgs args) : BaseLinkSourc
             GameName = "Monkey Island 2: LeChuck's Revenge",
             GamePathExpected = "monkey-island-2-lechucks-revenge",
             SearchedUrlExpected = "not found!",
-            UrlExpected = "https://adventuregamers.com/games/monkey-island-2-lechucks-revenge" }
+            UrlExpected = "https://adventuregamers.com/games/monkey-island-2-lechucks-revenge"
+        }
     ];
 
     public override async Task<string?> GetGamePathAsync(Game game, string? gameName = null)
                 => (gameName ?? game.Name).RemoveSpecialChars()
-                .CollapseWhitespaces()?
-                .Replace(" ", "-")
-                .ToLower();
+                    .CollapseWhitespaces()?
+                    .Replace(" ", "-")
+                    .ToLower();
 
     public override async Task<IEnumerable<ChooseDialogItem>> GetSearchResultsAsync(ChooseItemWithSearchAsyncArgs searchArgs)
     {

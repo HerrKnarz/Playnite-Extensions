@@ -23,7 +23,8 @@ public class LinkGameFaqs(string id, LinkSourceArgs args) : BaseLinkSource(id, a
             GameName = "Monkey Island 2: LeChuck's Revenge",
             GamePathExpected = "https://gamefaqs.gamespot.com/amiga/584295-monkey-island-2-lechucks-revenge",
             SearchedUrlExpected = "not found!",
-            UrlExpected = "https://gamefaqs.gamespot.com/amiga/584295-monkey-island-2-lechucks-revenge" }
+            UrlExpected = "https://gamefaqs.gamespot.com/amiga/584295-monkey-island-2-lechucks-revenge"
+        }
     ];
 
     public override async Task<IEnumerable<ChooseDialogItem>> GetSearchResultsAsync(ChooseItemWithSearchAsyncArgs searchArgs)

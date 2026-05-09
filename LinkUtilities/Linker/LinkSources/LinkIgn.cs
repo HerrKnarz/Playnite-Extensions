@@ -18,7 +18,8 @@ public class LinkIgn(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
             GameName = "Monkey Island 2: LeChuck's Revenge",
             GamePathExpected = "monkey-island-2-lechucks-revenge",
             SearchedUrlExpected = "not found!",
-            UrlExpected = "https://www.ign.com/games/monkey-island-2-lechucks-revenge" }
+            UrlExpected = "https://www.ign.com/games/monkey-island-2-lechucks-revenge"
+        }
     ];
 
     // IGN Links need the result name in lowercase without special characters and hyphens instead of

@@ -11,22 +11,23 @@ namespace LinkUtilities.Linker.LinkSources;
 
 public class LinkBackloggd(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
-    private const string _websiteUrl = "https://backloggd.com";
+    private const string _baseUrl = "https://backloggd.com";
     private readonly IBrowsingContext _context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
     public static string ClassId => $"linkutilities.backloggd.link";
-    public override string BaseUrl => $"{_websiteUrl}/games/";
+    public override string BaseUrl => $"{_baseUrl}/games/";
     public override string ExternalIdType => "backloggd";
     public override string LinkName => "Backloggd";
-    public override string SearchUrl => $"{_websiteUrl}/search/games/";
+    public override string SearchUrl => $"{_baseUrl}/search/games/";
 
     public override List<TestCase> TestCases =>
         [
             new TestCase(){
-            CaseName = "Backloggd Monkey Island 2: LeChuck's Revenge",
-            GameName = "Monkey Island 2: LeChuck's Revenge",
-            GamePathExpected = "monkey-island-2-lechucks-revenge",
-            SearchedUrlExpected = "not found!",
-            UrlExpected = "https://backloggd.com/games/monkey-island-2-lechucks-revenge" }
+                CaseName = "Backloggd Monkey Island 2: LeChuck's Revenge",
+                GameName = "Monkey Island 2: LeChuck's Revenge",
+                GamePathExpected = "monkey-island-2-lechucks-revenge",
+                SearchedUrlExpected = "not found!",
+                UrlExpected = "https://backloggd.com/games/monkey-island-2-lechucks-revenge"
+            }
         ];
 
     // Since Backloggd always returns the status code OK and the same url, even if that leads to a
@@ -35,10 +36,10 @@ public class LinkBackloggd(string id, LinkSourceArgs args) : BaseLinkSource(id, 
     public override string WrongTitle => "404 Not Found";
 
     public override async Task<string?> GetGamePathAsync(Game game, string? gameName = null)
-                => (gameName ?? game.Name).RemoveSpecialChars()
-                .CollapseWhitespaces()?
-                .Replace(" ", "-")
-                .ToLower();
+        => (gameName ?? game.Name).RemoveSpecialChars()
+            .CollapseWhitespaces()?
+            .Replace(" ", "-")
+            .ToLower();
 
     public override async Task<IEnumerable<ChooseDialogItem>> GetSearchResultsAsync(ChooseItemWithSearchAsyncArgs searchArgs)
     {
@@ -98,7 +99,7 @@ public class LinkBackloggd(string id, LinkSourceArgs args) : BaseLinkSource(id, 
                 var result = new LinkSearchResult
                 {
                     Name = WebUtility.HtmlDecode(nameHtml.QuerySelector("h3")?.GetDirectText()),
-                    Url = $"{_websiteUrl}{nameHtml.Href}",
+                    Url = $"{_baseUrl}{nameHtml.Href}",
                     Description = description
                 };
 
