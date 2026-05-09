@@ -13,7 +13,7 @@ public class SearchWebsiteLinks : BaseWebsiteLinks
 
     public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, bool onlyMissingLinks)
     {
-        var action = new AddWebsiteLinks();
+        var action = new SearchWebsiteLinks();
 
         var args = action.GetActionArgs(api, games, pluginName);
         args.OnlyMissingLinks = onlyMissingLinks;

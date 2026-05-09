@@ -375,14 +375,6 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseActio
         return (links, true);
     }
 
-    public override async Task FollowUpAsync(BaseActionArgs args)
-    {
-        await base.FollowUpAsync(args);
-
-        Pipeline?.Dispose();
-        Pipeline = null;
-    }
-
     /// <summary>
     /// Creates the action arguments suiting this specific class.
     /// </summary>

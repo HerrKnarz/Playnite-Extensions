@@ -23,9 +23,25 @@ public class MenuHandler(IPlayniteApi playniteApi)
             new MenuItemDescriptor(ActionIds.TypeCleanUpLinks, Loc.menu_clean_up_links()),
             new MenuItemDescriptor(ActionIds.TypeAddFromClipboard, Loc.menu_add_link_from_clipboard()),
             new MenuItemDescriptor(ActionIds.TypeConvertSteamClient, Loc.menu_convert_steam_links_to_client()),
-            new MenuItemDescriptor(ActionIds.TypeConvertSteamWeb, Loc.menu_convert_steam_links_to_website()),
-            new MenuItemDescriptor(ActionIds.TypeTestAdd, "Test Add Links"),
+            new MenuItemDescriptor(ActionIds.TypeConvertSteamWeb, Loc.menu_convert_steam_links_to_website())
         ];
+
+    public ICollection<MenuItemDescriptor> GetGameMenuItemDescriptors()
+    {
+        var descriptors = MenuItemDescriptors;
+
+        if (!LinkUtilitiesPlugin.Settings.DebugMode)
+        {
+            return descriptors;
+        }
+
+        //TODO: Add translation
+        descriptors.Add(new MenuItemDescriptor(ActionIds.TypeTestAdd, "Test Add Links", "Debug"));
+        //TODO: Remove test menu items before release
+        descriptors.Add(new MenuItemDescriptor("link:utilities.test.method", "Test stuff", "Debug"));
+
+        return descriptors;
+    }
 
     public ICollection<MenuItemImpl>? GetGameMenuItems(GetGameMenuItemsArgs args)
     {
@@ -42,7 +58,8 @@ public class MenuHandler(IPlayniteApi playniteApi)
             ActionIds.TypeConvertSteamWeb => GetConvertSteamlinksItems(games, false),
             ActionIds.TypeRemoveDuplicates => GetRemoveDuplicatesItems(games),
             ActionIds.TypeSearchLinks => GetSearchLinksItems(games),
-            ActionIds.TypeTestAdd => GetTestAddItems(games),
+            ActionIds.TypeTestAdd => GetTestAddItems(),
+            "link:utilities.test.method" => GetTestMethodItems(games),
             _ => throw new ArgumentOutOfRangeException(nameof(args), args.ItemId, null)
         };
     }
@@ -50,6 +67,15 @@ public class MenuHandler(IPlayniteApi playniteApi)
     //TODO: Check if this needs to change once themes are supported in Playnite 11.0
     private static SolidColorBrush GetIconColor() =>
             (SolidColorBrush?)System.Windows.Application.Current?.TryFindResource("TextBrush") ?? new SolidColorBrush(Colors.White);
+
+    private static List<MenuItemImpl>? GetTestMethodItems(List<BaseActionGame> games)
+    {
+        return [
+            new("Test stuff",
+                (clickArgs) => LinkUtilitiesPlugin.TestMethod(games),
+                false,
+                UIIcon.FromFontIcon("f0668", Playnite.Fonts.NerdFont, GetIconColor()))];
+    }
 
     private ICollection<MenuItemImpl>? GetAddFromClipboardItems(List<BaseActionGame> games)
     {
@@ -184,7 +210,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
         return [new MenuItemImpl(Loc.menu_section_search_link(), subItems)];
     }
 
-    private List<MenuItemImpl>? GetTestAddItems(List<BaseActionGame> games)
+    private List<MenuItemImpl>? GetTestAddItems()
     {
         return [
             new("Test Add Link",

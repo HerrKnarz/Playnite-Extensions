@@ -28,6 +28,14 @@ public class LinkUtilitiesPlugin : Plugin
     public Links Links { get; set; } = [];
     public MenuHandler? MenuHandler { get; set; }
 
+#pragma warning disable IDE0060 // Remove unused parameter
+
+    public static async Task TestMethod(List<BaseActionGame> games)
+#pragma warning restore IDE0060 // Remove unused parameter
+    {
+        return;
+    }
+
     public override GameExplorer? GetGameExplorer(GetGameExplorersArgs args) => args.ItemId == LinkPropertyId ? new LinkPropertyGameExplorer() : (GameExplorer?)null;
 
     public override ICollection<GameExplorerDescriptor> GetGameExplorerDescriptors(GetGameExplorerDescriptorsArgs args)
@@ -46,7 +54,7 @@ public class LinkUtilitiesPlugin : Plugin
         => [new GameGrouperDescriptor(LinkPropertyId, Loc.caption_link_type())];
 
     public override ICollection<MenuItemDescriptor> GetGameMenuItemDescriptors(GetGameMenuItemDescriptorsArgs args)
-        => MenuHandler?.MenuItemDescriptors ?? [];
+        => MenuHandler?.GetGameMenuItemDescriptors() ?? [];
 
     public override ICollection<MenuItemImpl>? GetGameMenuItems(GetGameMenuItemsArgs args)
         => MenuHandler?.GetGameMenuItems(args);
@@ -85,12 +93,12 @@ public class LinkUtilitiesPlugin : Plugin
             return;
         }
 
-        var games = args.UpdatedItems.Where(item =>
-                item.OldData == null ||
-                (item.NewData.Links != null &&
-                 item.NewData.Links.Count > 0 &&
-                 (item.OldData.Links == null ||
-                 !item.OldData.Links.IsListEqualExact(item.NewData.Links))))
+        var games = args.UpdatedItems.Where(item
+            => item.OldData == null
+                || (item.NewData.Links != null
+                    && item.NewData.Links.Count > 0
+                    && (item.OldData.Links == null
+                        || !item.OldData.Links.IsListEqualExact(item.NewData.Links))))
             .Select(item => item.NewData).Distinct().Select(g => new BaseActionGame(g)).ToList();
 
         if (!games.HasItems())
