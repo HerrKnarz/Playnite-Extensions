@@ -338,7 +338,9 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseActio
             foreach (var testCase in TestCases)
             {
                 if (testCase.GameName.IsNullOrEmpty())
-                { continue; }
+                {
+                    continue;
+                }
 
                 game.Name = testCase.GameName;
 
@@ -346,12 +348,15 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args) : BaseActio
 
                 testCase.Url = LinkUrl;
 
+                var gamePathOk = testCase.GamePath == testCase.GamePathExpected;
+                var urlOk = testCase.Url == testCase.UrlExpected;
+
                 // TODO: Refine testing with better logging and/or even a window with the results.
                 TestResultQueue.Enqueue($"\n============================ Test case {testCase.CaseName} ============================ " +
                             $"\nGamePathExp = {testCase.GamePathExpected}" +
-                            $"\nGamePathGot = {testCase.GamePath}" +
+                            $"\nGamePathGot = {testCase.GamePath} => {gamePathOk}" +
                             $"\nUrlExp = {testCase.UrlExpected}" +
-                            $"\nUrlGot = {testCase.Url}" +
+                            $"\nUrlGot = {testCase.Url} => {urlOk}" +
                             $"\n======================================================== ");
             }
 
