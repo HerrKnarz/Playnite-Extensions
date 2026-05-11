@@ -38,23 +38,15 @@ public class LinkGameFaqs(string id, LinkSourceArgs args) : BaseLinkSource(id, a
         {
             var searchResults = await Pipeline.GetJsonFromApiAsync<List<GameFaqsSearchResult>>($"{SearchUrl}{searchArgs.SearchTerm.UrlEncode()}", LinkName, LinkUtilitiesPlugin.Settings.DebugMode);
 
-            if (searchResults?.Count == 0)
-            {
-                if (LinkUtilitiesPlugin.Settings.DebugMode)
+            return searchResults?.Count == 0
+                ? await base.GetSearchResultsAsync(searchArgs)
+                : searchResults!.Where(n => n.GameName?.Length > 0).ToList().Select(n => new LinkSearchResult
                 {
-                    Log.Info($"No results found for {searchArgs.SearchTerm} from {LinkName}");
-                }
-
-                return await base.GetSearchResultsAsync(searchArgs);
-            }
-
-            return searchResults!.Where(n => n.GameName?.Length > 0).ToList().Select(n => new LinkSearchResult
-            {
-                Name = n.GameName,
-                Url = $"{BaseUrl}{n.Url}",
-                Description = n.DateReleased,
-                Id = n.GameId
-            });
+                    Name = n.GameName,
+                    Url = $"{BaseUrl}{n.Url}",
+                    Description = n.DateReleased,
+                    Id = n.GameId
+                });
         }
         catch (Exception ex)
         {

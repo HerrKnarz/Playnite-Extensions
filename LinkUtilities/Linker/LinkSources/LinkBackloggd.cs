@@ -99,7 +99,7 @@ public class LinkBackloggd(string id, LinkSourceArgs args) : BaseLinkSource(id, 
                 var result = new LinkSearchResult
                 {
                     Name = WebUtility.HtmlDecode(nameHtml.QuerySelector("h3")?.GetDirectText()),
-                    Url = $"{_baseUrl}{nameHtml.Href}",
+                    Url = $"{_baseUrl}{nameHtml.PathName}",
                     Description = description
                 };
 
