@@ -56,7 +56,6 @@ internal class RemoveDuplicates : BaseAction
 
         args.ProgressMessage = Loc.progress_removing_duplicates();
         args.ResultMessageId = LocId.dialog_removed_duplicates_message;
-        args.DoForAllType = DoForAllTypes.BlockingBulkUpdate;
 
         return args;
     }

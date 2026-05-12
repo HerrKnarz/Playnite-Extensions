@@ -1,4 +1,4 @@
-﻿using LinkUtilities.LinkActions;
+﻿using LinkUtilities.Linker;
 using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using PlayniteExtensionHelpers;
@@ -38,8 +38,7 @@ public static class ParseHelper
             var loadUrlArgs = new LoadUrlArgs
             {
                 Url = string.Format(searchUrl, searchTerm.UrlEncode()),
-                DocumentType = DocumentType.Text,
-                DebugMode = LinkUtilitiesPlugin.Settings.DebugMode
+                DocumentType = DocumentType.Text
             };
 
             var urlLoadResult = await linker.Pipeline.LoadUrlAsync(loadUrlArgs);

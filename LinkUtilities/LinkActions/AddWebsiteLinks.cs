@@ -15,12 +15,13 @@ public class AddWebsiteLinks : BaseWebsiteLinks
 {
     public override string Id => ActionIds.TypeAddLinks;
 
-    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, bool onlySelectedLinks = false)
+    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, bool onlySelectedLinks = false, List<BaseLinkSource>? links = null)
     {
         var action = new AddWebsiteLinks();
         var args = action.GetActionArgs(api, games, pluginName);
         args.SelectedLinks = onlySelectedLinks;
         args.DoForAllType = DoForAllTypes.BackgroundOperation;
+        args.Links = links;
 
         await action.DoForAllAsync(args);
     }
@@ -47,7 +48,7 @@ public class AddWebsiteLinks : BaseWebsiteLinks
         {
             if (args.DebugMode)
             {
-                Log.Debug($"Starting {GetType().Name}{(args.IsBulkAction ? " (Bulk)" : string.Empty)} for game {game.Game.Name}.");
+                Log.Debug($"Starting {GetType().Name} for game {game.Game.Name}.");
             }
 
             var result = await FindLinksAsync(game.Game);
@@ -58,30 +59,33 @@ public class AddWebsiteLinks : BaseWebsiteLinks
         {
             if (LinkUtilitiesPlugin.Settings.DebugMode)
             {
-                Log.Debug($"Finishing {GetType().Name}{(args.IsBulkAction ? " (Bulk)" : string.Empty)} for game {game.Game.Name}.");
+                Log.Debug($"Finishing {GetType().Name} for game {game.Game.Name}.");
             }
         }
     }
 
     public override async Task<bool> PrepareAsync(BaseActionArgs args)
     {
-        if (!await base.PrepareAsync(args) || args is not WebsiteLinksArgs addArgs)
+        if (!await base.PrepareAsync(args) || args is not WebsiteLinksArgs websiteArgs)
         {
             return false;
         }
 
-        await Links.InitializeAsync();
-
-        if (addArgs.SelectedLinks)
+        if (websiteArgs.SelectedLinks)
         {
             return SelectLinks();
         }
-        else
+
+        if (!LinksToProcess.HasItems())
         {
-            LinksToProcess = [.. Links.Where(x => x.Settings.IsAddable == true || (x.Settings.IsCustomSource && x.AddType != LinkAddTypes.None))];
-            InitializePipelines();
-            return true;
+            return false;
         }
+
+        LinksToProcess = [.. LinksToProcess.Where(x => x.Settings.IsAddable == true || (x.Settings.IsCustomSource && x.AddType != LinkAddTypes.None))];
+
+        InitializePipelines();
+
+        return true;
     }
 
     /// <summary>
@@ -107,6 +111,14 @@ public class AddWebsiteLinks : BaseWebsiteLinks
             {
                 foreach (var linker in LinksToProcess.Where(x => x.Priority == priority && x.Pipeline == pipeline).OrderBy(l => l.LinkName))
                 {
+                    // If we fetch links for only one site and a delay is configured, we wait before
+                    // fetching the links. This is to avoid potential issues with rate limits or
+                    // temporary blocks from the website when fetching links for multiple games in a row.
+                    if ((links.Count == 1) && (linker.Delay > 0))
+                    {
+                        await Task.Delay(linker.Delay, cancellationToken);
+                    }
+
                     var gameToProcess = game;
                     if (TestMode)
                     {

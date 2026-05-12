@@ -18,7 +18,7 @@ public partial class GameLink : ObservableObject
             return;
         }
 
-        await UIDispatcher.Invoke(async delegate
+        await UIDispatcher.InvokeAsync(async delegate
         {
             if (!Game.Links?.Remove(Link) ?? true)
             {

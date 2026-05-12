@@ -5,7 +5,7 @@ using System.Net;
 
 namespace LinkUtilities.Models;
 
-public class Pipeline(int id) : WebWorker(id, LinkUtilitiesPlugin.PlayniteApi)
+public class Pipeline(int id) : WebWorker(id, LinkUtilitiesPlugin.PlayniteApi, LinkUtilitiesPlugin.Settings.DebugMode)
 {
     public List<CheckGameLink> CheckedLinks { get; set; } = [];
     public Game? Game { get; set; }
@@ -31,7 +31,6 @@ public class Pipeline(int id) : WebWorker(id, LinkUtilitiesPlugin.PlayniteApi)
             {
                 Url = link.Url,
                 DocumentType = DocumentType.Empty,
-                DebugMode = LinkUtilitiesPlugin.Settings.DebugMode,
                 WaitForCallback = false
             };
 

@@ -38,7 +38,6 @@ internal class ConvertSteamLinks : BaseAction
         {
             ProgressMessage = Loc.progress_converting_steam_links(),
             ResultMessageId = LocId.dialog_converted_steam_links_message,
-            DoForAllType = DoForAllTypes.BlockingBulkUpdate
         };
     }
 

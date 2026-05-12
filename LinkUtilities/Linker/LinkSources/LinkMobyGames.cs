@@ -1,5 +1,4 @@
 ﻿using AngleSharp;
-using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using Playnite;
 using PlayniteExtensionHelpers;

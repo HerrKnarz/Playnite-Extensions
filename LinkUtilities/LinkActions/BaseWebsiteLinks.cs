@@ -7,17 +7,9 @@ using PlayniteExtensionHelpers.GamesCommon;
 
 namespace LinkUtilities.LinkActions;
 
-public enum LinkActionType
-{
-    Default,
-    Add,
-    Search,
-    BrowserSearch
-}
-
 public class WebsiteLinksArgs(string id, string name, IPlayniteApi api, List<BaseActionGame> games, string pluginName) : BaseActionArgs(id, name, api, games, pluginName)
 {
-    public LinkActionType ActionType { get; set; } = LinkActionType.Default;
+    public List<BaseLinkSource>? Links { get; set; }
     public bool OnlyMissingLinks { get; set; } = false;
     public bool SelectedLinks { get; set; } = false;
     public bool TestMode { get; set; } = false;
@@ -27,12 +19,9 @@ public abstract class BaseWebsiteLinks : BaseAction
 {
     public BaseWebsiteLinks()
     {
-        Links = [];
     }
 
     public override string Id => "linkutilities.website.links";
-
-    public Links Links { get; }
 
     public List<BaseLinkSource>? LinksToProcess { get; set; }
 
@@ -111,18 +100,29 @@ public abstract class BaseWebsiteLinks : BaseAction
 
     public override async Task<bool> PrepareAsync(BaseActionArgs args)
     {
-        if (args is not WebsiteLinksArgs addArgs)
+        if (args is not WebsiteLinksArgs websiteArgs)
         {
             return false;
         }
 
-        await Links.InitializeAsync();
+        if (websiteArgs.Links.HasItems())
+        {
+            LinksToProcess = [.. websiteArgs.Links];
 
-        if (addArgs.TestMode)
+            await LinksToProcess.ForEachAsync(async link => await link.InitializeAsync());
+            return true;
+        }
+        else
+        {
+            LinksToProcess = [.. new Links()];
+            await LinksToProcess.ForEachAsync(async link => await link.InitializeAsync());
+        }
+
+        if (websiteArgs.TestMode)
         {
             TestMode = true;
 
-            Links.ForEach(l => l.TestMode = true);
+            LinksToProcess.ForEach(l => l.TestMode = true);
         }
 
         return true;

@@ -14,8 +14,6 @@ public class CleanUpLinks : BaseAction
         var action = new CleanUpLinks();
         var args = action.GetActionArgs(api, games, pluginName);
 
-        args.DoForAllType = DoForAllTypes.BlockingBulkUpdate;
-
         args.ShowDialogs = showDialogs;
 
         await action.DoForAllAsync(args);
@@ -52,8 +50,7 @@ public class CleanUpLinks : BaseAction
         return new BaseActionArgs(Id, Name, api, games, pluginName)
         {
             ProgressMessage = Loc.progress_processing_links(),
-            ResultMessageId = LocId.dialog_processed_links_message,
-            DoForAllType = DoForAllTypes.BackgroundOperation
+            ResultMessageId = LocId.dialog_processed_links_message
         };
     }
 }

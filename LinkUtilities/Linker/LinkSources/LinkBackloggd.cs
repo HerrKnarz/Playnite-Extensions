@@ -1,6 +1,5 @@
 ﻿using AngleSharp;
 using AngleSharp.Html.Dom;
-using LinkUtilities.LinkActions;
 using LinkUtilities.Models;
 using Playnite;
 using PlayniteExtensionHelpers;

@@ -1,5 +1,4 @@
-﻿using LinkUtilities.LinkActions;
-using LinkUtilities.Models;
+﻿using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using Playnite;
 using PlayniteExtensionHelpers;
@@ -36,9 +35,9 @@ public class LinkGameFaqs(string id, LinkSourceArgs args) : BaseLinkSource(id, a
 
         try
         {
-            var searchResults = await Pipeline.GetJsonFromApiAsync<List<GameFaqsSearchResult>>($"{SearchUrl}{searchArgs.SearchTerm.UrlEncode()}", LinkName, LinkUtilitiesPlugin.Settings.DebugMode);
+            var searchResults = await Pipeline.GetJsonFromApiAsync<List<GameFaqsSearchResult>>($"{SearchUrl}{searchArgs.SearchTerm.UrlEncode()}", LinkName);
 
-            return searchResults?.Count == 0
+            return !searchResults.HasItems()
                 ? await base.GetSearchResultsAsync(searchArgs)
                 : searchResults!.Where(n => n.GameName?.Length > 0).ToList().Select(n => new LinkSearchResult
                 {

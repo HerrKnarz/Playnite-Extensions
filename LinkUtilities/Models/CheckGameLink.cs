@@ -19,7 +19,7 @@ public partial class CheckGameLink : GameLink
             return;
         }
 
-        await UIDispatcher.Invoke(async delegate
+        await UIDispatcher.InvokeAsync(async delegate
         {
             Game.Links?.Single(x => x.Matches(Link)).Url = LinkCheckResult.ResponseUrl;
 

@@ -1,5 +1,4 @@
-﻿using LinkUtilities.LinkActions;
-using LinkUtilities.Models;
+﻿using LinkUtilities.Models;
 using LinkUtilities.Models.ApiResults;
 using Playnite;
 using PlayniteExtensionHelpers;
@@ -54,7 +53,7 @@ public class LinkEpic(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
                 .Replace("{SearchString}", searchArgs.SearchTerm.UrlEncode())
                 .Replace("{DateUntil}", DateTime.Now.AddDays(1000).ToString("yyyy-MM-dd"));
 
-            var epicSearchResult = await Pipeline.GetJsonFromApiAsync<EpicSearchResult>(url, LinkName, LinkUtilitiesPlugin.Settings.DebugMode);
+            var epicSearchResult = await Pipeline.GetJsonFromApiAsync<EpicSearchResult>(url, LinkName);
 
             var validResults = epicSearchResult?.Data?.Catalog?.SearchStore?.Elements?.Where(n => !n.Title.IsNullOrEmpty() && !n.ProductSlug.IsNullOrEmpty()).ToList();
 

@@ -1,5 +1,4 @@
-﻿using LinkUtilities.LinkActions;
-using LinkUtilities.Models;
+﻿using LinkUtilities.Models;
 using Playnite;
 using PlayniteExtensionHelpers;
 

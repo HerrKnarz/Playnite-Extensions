@@ -102,8 +102,6 @@ public class MenuHandler(IPlayniteApi playniteApi)
             return null;
         }
 
-        var linkDict = new LinkDict();
-
         var subItems = new List<MenuItemImpl>
             {
                 new(Loc.menu_add_link_to_all_enabled_websites(),
@@ -117,7 +115,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
         foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.Settings.ShowInMenus).OrderBy(x => x.LinkName))
         {
             var subItem = new MenuItemImpl(link.LinkName,
-                async (clickArgs) => await linkDict.CreateAndExecuteAsync(link.Id, playniteApi, games, Loc.link_utilities_name(), LinkActionType.Add));
+                async (clickArgs) => await AddWebsiteLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), false, [link]));
 
             subItems.Add(subItem);
         }
@@ -132,14 +130,12 @@ public class MenuHandler(IPlayniteApi playniteApi)
             return null;
         }
 
-        var linkDict = new LinkDict();
-
         var subItems = new List<MenuItemImpl>();
 
         foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.CanBeBrowserSearched).OrderBy(x => x.LinkName))
         {
             var subItem = new MenuItemImpl(link.LinkName,
-                async (clickArgs) => await linkDict.CreateAndExecuteAsync(link.Id, playniteApi, games, Loc.link_utilities_name(), LinkActionType.BrowserSearch));
+                (clickArgs) => link.StartBrowserSearch([.. games.Select(g => g.Game)]));
 
             subItems.Add(subItem);
         }
@@ -202,7 +198,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
         foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.CanBeSearched && l.Settings.ShowInMenus).OrderBy(x => x.LinkName))
         {
             var subItem = new MenuItemImpl(link.LinkName,
-                async (clickArgs) => await linkDict.CreateAndExecuteAsync(link.Id, playniteApi, games, Loc.link_utilities_name(), LinkActionType.Search));
+                async (clickArgs) => await SearchWebsiteLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), false, [link]));
 
             subItems.Add(subItem);
         }

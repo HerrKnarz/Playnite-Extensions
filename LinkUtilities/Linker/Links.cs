@@ -1,8 +1,5 @@
-﻿using LinkUtilities.LinkActions;
-using LinkUtilities.Linker.Libraries;
+﻿using LinkUtilities.Linker.Libraries;
 using LinkUtilities.Linker.LinkSources;
-using Playnite;
-using PlayniteExtensionHelpers.GamesCommon;
 
 namespace LinkUtilities.Linker;
 
@@ -23,28 +20,6 @@ public class LinkDict : Dictionary<string, Func<BaseLinkSource>>
         Add(LinkSteamDb.ClassId, () => new LinkSteamDb(LinkSteamDb.ClassId, new LinkSourceArgs()));
         Add(LinkSteamPeek.ClassId, () => new LinkSteamPeek(LinkSteamPeek.ClassId, new LinkSourceArgs()));
     }
-
-    public async Task CreateAndExecuteAsync(string id, IPlayniteApi api, List<BaseActionGame> games, string pluginName, LinkActionType actionType)
-    {
-        if (!ContainsKey(id))
-        {
-            return;
-        }
-
-        var action = this[id]();
-
-        await action.InitializeAsync();
-
-        var args = action.GetActionArgs(api, games, pluginName);
-        args.ActionType = actionType;
-
-        if (actionType == LinkActionType.Add)
-        {
-            args.DoForAllType = DoForAllTypes.BackgroundOperation;
-        }
-
-        await action.DoForAllAsync(args);
-    }
 }
 
 public class LinkSourceArgs
@@ -53,11 +28,18 @@ public class LinkSourceArgs
 
 public class Links : List<BaseLinkSource>
 {
-    public Links()
+    public Links(List<BaseLinkSource>? links = null)
     {
-        var linkDict = new LinkDict();
+        if (links is null)
+        {
+            var linkDict = new LinkDict();
 
-        AddRange(linkDict.Select(l => l.Value()));
+            AddRange(linkDict.Select(l => l.Value()));
+        }
+        else
+        {
+            AddRange(links);
+        }
 
         /* Add(new LinkArcadeDatabase());       */
         /* Add(new LinkCoOptimus());            */

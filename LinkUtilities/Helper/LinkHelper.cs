@@ -172,22 +172,14 @@ public static class LinkHelper
                 }
                 else
                 {
-                    UIDispatcher.Invoke(delegate
-                    {
-                        game.Links.First(x => x.TypeId == link.TypeId).Url = link.Url;
-                    });
-
+                    game.Links.First(x => x.TypeId == link.TypeId).Url = link.Url;
                     mustUpdate = true;
                 }
             }
 
             if (addNewLink)
             {
-                UIDispatcher.Invoke(delegate
-                {
-                    game.Links.Add(link);
-                });
-
+                game.Links.Add(link);
                 mustUpdate = true;
             }
         }
@@ -204,7 +196,7 @@ public static class LinkHelper
     /// True, if at least one link could be added. Returns false, if the links already existed or
     /// couldn't be added.
     /// </returns>
-    public static async Task<bool> AddLinksAsync(Game game, List<WebLink> links)
+    public static async Task<bool> AddLinksAsync(Game game, List<WebLink> links, bool useUIDispatcher = true)
     {
         if (!links.HasItems())
         {
@@ -223,10 +215,14 @@ public static class LinkHelper
         // missing ones and return true if at least one was added.
         else
         {
-            UIDispatcher.Invoke(delegate
+            if (useUIDispatcher)
+            {
+                UIDispatcher.Invoke(() => mustUpdate = game.Links.AddMissing(links.Where(l => !LinkExists(game, l.TypeId))));
+            }
+            else
             {
                 mustUpdate = game.Links.AddMissing(links.Where(l => !LinkExists(game, l.TypeId)));
-            });
+            }
         }
 
         return mustUpdate;
