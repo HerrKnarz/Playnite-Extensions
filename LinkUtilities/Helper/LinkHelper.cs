@@ -84,7 +84,7 @@ public static class LinkHelper
     /// True, if a link could be added. Returns false, if a link with that name was already present
     /// or couldn't be added.
     /// </returns>
-    public static async Task<bool> AddLinkAsync(Game game, string? linkName, string? linkUrl, string? linkTypeId = null, bool ignoreExisting = true)
+    public static async Task<bool> AddLinkAsync(Game game, string? linkName, string? linkUrl, string? linkTypeId = null, bool ignoreExisting = true, bool useUIDispatcher = false)
     {
         var mustUpdate = false;
         var addNewLink = false;
@@ -172,14 +172,30 @@ public static class LinkHelper
                 }
                 else
                 {
-                    game.Links.First(x => x.TypeId == link.TypeId).Url = link.Url;
+                    if (useUIDispatcher)
+                    {
+                        UIDispatcher.Invoke(() => game.Links.First(x => x.TypeId == link.TypeId).Url = link.Url);
+                    }
+                    else
+                    {
+                        game.Links.First(x => x.TypeId == link.TypeId).Url = link.Url;
+                    }
+
                     mustUpdate = true;
                 }
             }
 
             if (addNewLink)
             {
-                game.Links.Add(link);
+                if (useUIDispatcher)
+                {
+                    UIDispatcher.Invoke(() => game.Links.Add(link));
+                }
+                else
+                {
+                    game.Links.Add(link);
+                }
+
                 mustUpdate = true;
             }
         }

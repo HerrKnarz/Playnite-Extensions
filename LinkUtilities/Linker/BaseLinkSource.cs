@@ -177,7 +177,7 @@ public abstract class BaseLinkSource(string id, LinkSourceArgs args)
             await LinkHelper.AddExternalIdAsync(game, ExternalIdType, result.Id, LinkName);
         }
 
-        return await LinkHelper.AddLinkAsync(game, LinkName, result.Url, LinkTypeId, false);
+        return await LinkHelper.AddLinkAsync(game, LinkName, result.Url, LinkTypeId, false, true);
     }
 
     /// <summary>
