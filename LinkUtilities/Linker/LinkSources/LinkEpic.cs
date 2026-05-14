@@ -21,7 +21,7 @@ public class LinkEpic(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
             GameName = "The Last Campfire",
             GamePathExpected = "the-last-campfire",
             SearchedUrlExpected = "not found!",
-            UrlExpected = "https://store.epicgames.com/p/the-last-campfire?lang=en-US"
+            UrlExpected = "https://store.epicgames.com/p/the-last-campfire"
         }
     ];
 

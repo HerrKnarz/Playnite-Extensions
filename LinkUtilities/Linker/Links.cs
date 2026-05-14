@@ -13,6 +13,7 @@ public class LinkDict : Dictionary<string, Func<BaseLinkSource>>
         Add(LinkEpic.ClassId, () => new LinkEpic(LinkEpic.ClassId, new LinkSourceArgs()));
         Add(LinkFamilyGamingDatabase.ClassId, () => new LinkFamilyGamingDatabase(LinkFamilyGamingDatabase.ClassId, new LinkSourceArgs()));
         Add(LinkGameFaqs.ClassId, () => new LinkGameFaqs(LinkGameFaqs.ClassId, new LinkSourceArgs()));
+        Add(LinkGamePressureGuides.ClassId, () => new LinkGamePressureGuides(LinkGamePressureGuides.ClassId, new LinkSourceArgs()));
         Add(LinkGgDeals.ClassId, () => new LinkGgDeals(LinkGgDeals.ClassId, new LinkSourceArgs()));
         Add(LibraryLinkGog.ClassId, () => new LibraryLinkGog(LibraryLinkGog.ClassId, new LinkSourceArgs()));
         Add(LinkIgn.ClassId, () => new LinkIgn(LinkIgn.ClassId, new LinkSourceArgs()));
@@ -44,7 +45,6 @@ public class Links : List<BaseLinkSource>
 
         /* Add(new LinkArcadeDatabase());       */
         /* Add(new LinkCoOptimus());            */
-        /* Add(new LinkGamePressureGuides());     */
         /* Add(new LinkGamerGuides());            */
         /* Add(new LinkGiantBomb());              */
         /* Add(new LinkGogDb());                  */
