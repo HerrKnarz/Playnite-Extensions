@@ -6,7 +6,7 @@ namespace LinkUtilities.Linker.LinkSources;
 
 public class LinkGamePressureGuides(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
-    public static string ClassId => $"linkutilities.gamepressure.guides.link";
+    public static string ClassId => $"linkutilities.gamepressureguides.link";
     public override HashSet<string> AllowedCallbackUrls => ["https://www.gamepressure.com/guides/"];
     public override string BaseUrl => "https://www.gamepressure.com/";
     public override string LinkName => "gamepressure Guides";

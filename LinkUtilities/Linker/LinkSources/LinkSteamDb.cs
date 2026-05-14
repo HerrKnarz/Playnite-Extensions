@@ -13,7 +13,8 @@ public class LinkSteamDb(string id, LinkSourceArgs args) : BaseLinkSource(id, ar
     public override int Priority => 10;
 
     // SteamDB Links need the steam game id.
-    public override async Task<string?> GetGamePathAsync(Game game, string? gameName = null) => SteamHelper.GetSteamId(game);
+    public override async Task<string?> GetGamePathAsync(Game game, string? gameName = null)
+        => SteamHelper.GetSteamId(game);
 
     //LATER: Maybe add a search function via steam later.
 }

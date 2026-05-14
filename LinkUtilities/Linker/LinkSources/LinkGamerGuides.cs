@@ -6,7 +6,7 @@ namespace LinkUtilities.Linker.LinkSources;
 
 internal class LinkGamerGuides(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
-    public static string ClassId => $"linkutilities.gamerguides.guides.link";
+    public static string ClassId => $"linkutilities.gamerguides.link";
     public override string BaseUrl => "https://www.gamerguides.com/";
     public override string LinkName => "Gamer Guides";
     public override bool ReturnsSameUrl => true;

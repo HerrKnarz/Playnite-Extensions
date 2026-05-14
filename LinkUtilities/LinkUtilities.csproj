@@ -22,6 +22,7 @@
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\GamesCommon\BaseActionBackgroundOp.cs" Link="Shared\GamesCommon\BaseActionBackgroundOp.cs" />
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\GamesCommon\BaseActionGame.cs" Link="Shared\GamesCommon\BaseActionGame.cs" />
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\GamesCommon\GameUpdater.cs" Link="Shared\GamesCommon\GameUpdater.cs" />
+    <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\GogHelper.cs" Link="Shared\GogHelper.cs" />
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\Log.cs" Link="Shared\Log.cs" />
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\MetadataCommon\LibraryObjectHelper.cs" Link="Shared\MetadataCommon\LibraryObjectHelper.cs" />
     <Compile Include="..\Playnite-Extension-Helpers\PlayniteExensionHelpers\MiscHelper.cs" Link="Shared\MiscHelper.cs" />

@@ -13,7 +13,8 @@ public class LinkSteamPeek(string id, LinkSourceArgs args) : BaseLinkSource(id, 
     public override int Priority => 10;
 
     // SteamPeek Links need the steam game id.
-    public override async Task<string?> GetGamePathAsync(Game game, string? gameName = null) => SteamHelper.GetSteamId(game);
+    public override async Task<string?> GetGamePathAsync(Game game, string? gameName = null)
+        => SteamHelper.GetSteamId(game);
 
     //LATER: Maybe add a search function via steam later.
 }

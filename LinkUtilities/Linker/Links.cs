@@ -16,6 +16,7 @@ public class LinkDict : Dictionary<string, Func<BaseLinkSource>>
         Add(LinkGamePressureGuides.ClassId, () => new LinkGamePressureGuides(LinkGamePressureGuides.ClassId, new LinkSourceArgs()));
         Add(LinkGamerGuides.ClassId, () => new LinkGamerGuides(LinkGamerGuides.ClassId, new LinkSourceArgs()));
         Add(LinkGgDeals.ClassId, () => new LinkGgDeals(LinkGgDeals.ClassId, new LinkSourceArgs()));
+        Add(LinkGogDb.ClassId, () => new LinkGogDb(LinkGogDb.ClassId, new LinkSourceArgs()));
         Add(LibraryLinkGog.ClassId, () => new LibraryLinkGog(LibraryLinkGog.ClassId, new LinkSourceArgs()));
         Add(LinkIgn.ClassId, () => new LinkIgn(LinkIgn.ClassId, new LinkSourceArgs()));
         Add(LinkMobyGames.ClassId, () => new LinkMobyGames(LinkMobyGames.ClassId, new LinkSourceArgs()));
