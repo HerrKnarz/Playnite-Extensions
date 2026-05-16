@@ -18,6 +18,7 @@ public class LinkDict : Dictionary<string, Func<BaseLinkSource>>
         Add(LinkGgDeals.ClassId, () => new LinkGgDeals(LinkGgDeals.ClassId, new LinkSourceArgs()));
         Add(LinkGogDb.ClassId, () => new LinkGogDb(LinkGogDb.ClassId, new LinkSourceArgs()));
         Add(LibraryLinkGog.ClassId, () => new LibraryLinkGog(LibraryLinkGog.ClassId, new LinkSourceArgs()));
+        Add(LinkGrouvee.ClassId, () => new LinkGrouvee(LinkGrouvee.ClassId, new LinkSourceArgs()));
         Add(LinkIgn.ClassId, () => new LinkIgn(LinkIgn.ClassId, new LinkSourceArgs()));
         Add(LinkMobyGames.ClassId, () => new LinkMobyGames(LinkMobyGames.ClassId, new LinkSourceArgs()));
         Add(LinkProtonDb.ClassId, () => new LinkProtonDb(LinkProtonDb.ClassId, new LinkSourceArgs()));
@@ -47,10 +48,7 @@ public class Links : List<BaseLinkSource>
 
         /* Add(new LinkArcadeDatabase());       */
         /* Add(new LinkCoOptimus());            */
-        /* Add(new LinkGamerGuides());            */
         /* Add(new LinkGiantBomb());              */
-        /* Add(new LinkGogDb());                  */
-        /* Add(new LinkGrouvee());                */
         /* Add(new LinkHg101());                  */
         /* Add(new LinkIGDB());                   */
         /* Add(new LinkIgnGuides());              */

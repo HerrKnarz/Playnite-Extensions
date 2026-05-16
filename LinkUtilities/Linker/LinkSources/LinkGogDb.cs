@@ -9,6 +9,7 @@ internal class LinkGogDb(string id, LinkSourceArgs args) : BaseLinkSource(id, ar
     public override string BaseUrl => "https://www.gogdb.org/product/";
     public override string LinkName => "GOG Database";
     public override bool NeedsToBeChecked => false;
+    public override int Priority => 10;
 
     public override async Task<string?> GetGamePathAsync(Game game, string? gameName = null)
         => GogHelper.GetGogId(game);

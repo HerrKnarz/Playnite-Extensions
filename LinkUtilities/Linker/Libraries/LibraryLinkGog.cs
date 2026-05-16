@@ -37,6 +37,7 @@ public class LibraryLinkGog : LibraryLinker
     /// <summary>
     /// ID of the game library to identify it in Playnite.
     /// </summary>
+    /// TODO: Add option to use more than one id to also support GOG OSS, once it was ported to P11.
     public override string LibraryId { get; } = LinkHelper.GogId;
 
     public override string LinkName => "GOG";
