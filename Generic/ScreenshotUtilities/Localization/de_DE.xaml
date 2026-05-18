@@ -38,6 +38,18 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots-Ordner konnte nicht gelöscht werden, nachdem das Spiel {0} entfernt wurde. Bitte lösche es manuell. Klicke auf diese Nachricht, um den Ordner zu öffnen.</sys:String>
 
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">Screenshots werden heruntergeladen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">Screenshots aktualisieren</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">Aktualisiere Vorschaubilder</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">Screenshots zurücksetzen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressDisable">Deaktiviere Bildschirmfotos</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesResultDownload">Heruntergeladene Screenshots für {0} Spiele</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultRefreshScreenshots">Screenshots für {0} Spiele aktualisiert</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultRefreshThumbnails">Miniaturansichten für {0} Spiele aktualisiert</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultReset">Screenshots für {0} Spiele zurücksetzen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultDisable">Screenshots für {0} Spiele deaktiviert</sys:String>
+
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Screenshots automatisch bei der ersten Ansicht herunterladen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Standard-Seitenverhältnis</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Tage bis zur nächsten Aktualisierung</sys:String>
