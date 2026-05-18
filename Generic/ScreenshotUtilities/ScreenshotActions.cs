@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace ScreenshotUtilities
@@ -26,7 +27,7 @@ namespace ScreenshotUtilities
     internal static class ScreenshotActions
     {
         internal static void DoForAll(List<Game> games, ScreenshotUtilities plugin,
-            ActionModifierType actionModifier = ActionModifierType.None, Guid providerId = default)
+            ActionModifierType actionModifier = ActionModifierType.None, Guid providerId = default, bool completeLibrary = false)
         {
             if (games == null || games.Count == 0)
             {
@@ -73,27 +74,38 @@ namespace ScreenshotUtilities
                 {
                     case ActionModifierType.Download:
                         progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressDownload");
-                        resultMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesResultDownload");
+                        resultMessage = "LOCScreenshotUtilitiesResultDownload";
                         break;
 
                     case ActionModifierType.RefreshScreenshots:
                         progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressRefreshScreenshots");
-                        resultMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesResultRefreshScreenshots");
+                        resultMessage = "LOCScreenshotUtilitiesResultRefreshScreenshots";
                         break;
 
                     case ActionModifierType.RefreshThumbnails:
                         progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressRefreshThumbnails");
-                        resultMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesResultRefreshThumbnails");
+                        resultMessage = "LOCScreenshotUtilitiesResultRefreshThumbnails";
                         break;
 
                     case ActionModifierType.Reset:
                         progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressReset");
-                        resultMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesResultReset");
+                        resultMessage = "LOCScreenshotUtilitiesResultReset";
+
+                        var warningMessage = completeLibrary
+                            ? ResourceProvider.GetString("LOCScreenshotUtilitiesDialogResetScreenshotsAll")
+                            : ResourceProvider.GetString("LOCScreenshotUtilitiesDialogResetScreenshots");
+
+                        if (API.Instance.Dialogs.ShowMessage(warningMessage, string.Empty, MessageBoxButton.YesNo, MessageBoxImage.Question)
+                            == MessageBoxResult.No)
+                        {
+                            return;
+                        }
+
                         break;
 
                     case ActionModifierType.Ignore:
                         progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressDisable");
-                        resultMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesResultDisable");
+                        resultMessage = "LOCScreenshotUtilitiesResultDisable";
                         break;
                 }
 
@@ -142,7 +154,8 @@ namespace ScreenshotUtilities
                                         break;
 
                                     case ActionModifierType.RefreshThumbnails:
-                                        if (AsyncHelper.RunSync(async () => await RefreshThumbnailsAsync(game, plugin, providerId)))
+                                        if (AsyncHelper.RunSync(async () =>
+                                            await RefreshThumbnailsAsync(game, plugin, providerId)))
                                         {
                                             gamesAffected++;
                                         }
@@ -150,7 +163,9 @@ namespace ScreenshotUtilities
                                         break;
 
                                     case ActionModifierType.Reset:
-                                        if (AsyncHelper.RunSync(async () => await ResetScreenshotsAsync(game, plugin, providerId)))
+                                        var isSelected = game.Id == API.Instance.MainView.SelectedGames.FirstOrDefault().Id;
+
+                                        if (AsyncHelper.RunSync(async () => await ResetScreenshotsAsync(game, plugin, providerId, isSelected)))
                                         {
                                             gamesAffected++;
                                         }
@@ -358,14 +373,17 @@ namespace ScreenshotUtilities
             return await groups.RefreshAllThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight, providerId);
         }
 
-        internal static async Task<bool> ResetScreenshotsAsync(Game game, ScreenshotUtilities plugin, Guid providerId = default)
+        internal static async Task<bool> ResetScreenshotsAsync(Game game, ScreenshotUtilities plugin, Guid providerId = default, bool refreshScreenshots = true)
         {
             if (!ScreenshotHelper.RemoveScreenshots(game, true, providerId))
             {
                 return false;
             }
 
-            await PrepareScreenshotsAsync(game, plugin, true);
+            if (refreshScreenshots)
+            {
+                await PrepareScreenshotsAsync(game, plugin, true);
+            }
 
             return true;
         }

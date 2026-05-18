@@ -135,7 +135,7 @@ namespace ScreenshotUtilities
 
             menuItems.AddRange(GetRefreshThumbnailsMenuItems(args.Games, providers));
 
-            menuItems.AddRange(GetResetMenuItems(args.Games, providers));
+            menuItems.AddRange(GetResetGameMenuItems(args.Games, providers));
 
             menuItems.AddRange(GetSearchMenuItems(args.Games.FirstOrDefault()));
 
@@ -164,6 +164,19 @@ namespace ScreenshotUtilities
             }
 
             return null;
+        }
+
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            var menuItems = new List<MainMenuItem>();
+
+            var games = PlayniteApi.Database.Games.ToList();
+
+            var providers = ScreenshotProviders.Select(p => new ScreenshotProvider(p.ProviderName, p.Id)).OrderBy(p => p.Name).ToList();
+
+            menuItems.AddRange(GetResetMainMenuItems(games, providers));
+
+            return menuItems;
         }
 
         public async Task GetScreenshotsAsync(Game game, Guid providerId = default)
@@ -498,7 +511,7 @@ namespace ScreenshotUtilities
             }
         }
 
-        private IEnumerable<GameMenuItem> GetResetMenuItems(List<Game> games, List<ScreenshotProvider> providers)
+        private IEnumerable<GameMenuItem> GetResetGameMenuItems(List<Game> games, List<ScreenshotProvider> providers)
         {
             if (providers?.Count == 0)
             {
@@ -539,6 +552,51 @@ namespace ScreenshotUtilities
                     MenuSection = menuSection,
                     Icon = icon,
                     Action = a => ScreenshotActions.DoForAll(games, this, ActionModifierType.Reset, provider.Id)
+                };
+            }
+        }
+
+        private IEnumerable<MainMenuItem> GetResetMainMenuItems(List<Game> games, List<ScreenshotProvider> providers)
+        {
+            if (providers?.Count == 0)
+            {
+                yield break;
+            }
+
+            var menuCaption = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuResetFromAll");
+            var menuSection = $"@{_defaultGameMenuSection}";
+            var icon = "suRefreshIcon";
+            var captionPrefix = $"{menuCaption} ";
+
+            if (providers.Count > 1)
+            {
+                menuSection = $"@{_defaultGameMenuSection}|{menuCaption}...";
+                icon = null;
+                captionPrefix = string.Empty;
+
+                yield return new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuResetScreenshotsAll"),
+                    MenuSection = menuSection,
+                    Icon = "suRefreshIcon",
+                    Action = a => ScreenshotActions.DoForAll(games, this, ActionModifierType.Reset, default, true)
+                };
+
+                yield return new MainMenuItem
+                {
+                    Description = "-",
+                    MenuSection = menuSection
+                };
+            }
+
+            foreach (var provider in providers)
+            {
+                yield return new MainMenuItem
+                {
+                    Description = $"{captionPrefix}{provider.Name}",
+                    MenuSection = menuSection,
+                    Icon = icon,
+                    Action = a => ScreenshotActions.DoForAll(games, this, ActionModifierType.Reset, provider.Id, true)
                 };
             }
         }

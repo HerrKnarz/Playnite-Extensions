@@ -7,7 +7,8 @@
 
     <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Screenshots</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshots">Do you really want to reset the screenshots? This will delete all screenshots from this game and loads them again from their sources.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshots">Do you really want to reset the screenshots? This will delete all screenshots from the selected game(s) and loads them again from their sources.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshotsAll">Do you really want to reset the screenshots? This will delete all screenshots from all games in your library and loads them again from their sources. This can take some time for big libraries.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesDialogSearchGame">Search game</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Copy to clipboard</sys:String>
@@ -27,7 +28,9 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom">Refresh thumbnails from</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Refreshing thumbnails for</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFrom">Reset screenshots from</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFromAll">Reset screenshots for all games from</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Reset screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshotsAll">Reset screenshots for all games</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchFrom">Search screenshots from</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Search screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsBackground">Set as background</sys:String>
