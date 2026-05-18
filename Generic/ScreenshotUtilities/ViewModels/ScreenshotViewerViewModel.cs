@@ -66,19 +66,26 @@ namespace ScreenshotUtilities.ViewModels
 
         public RelayCommand<object> OpenInFullScreenCommand => new RelayCommand<object>(a =>
         {
-            if (!(SelectedGroup?.Screenshots?.Count > 0) || SelectedGroup.SelectedScreenshot == null)
+            try
             {
-                return;
+                if (!(SelectedGroup?.Screenshots?.Count > 0) || SelectedGroup.SelectedScreenshot == null)
+                {
+                    return;
+                }
+
+                var window = FullScreenViewModel.GetWindow(_plugin, SelectedGroup);
+
+                if (window == null)
+                {
+                    return;
+                }
+
+                window?.ShowDialog();
             }
-
-            var window = FullScreenViewModel.GetWindow(_plugin, SelectedGroup);
-
-            if (window == null)
+            catch (Exception ex)
             {
-                return;
+                Log.Error(ex, "Error opening screenshot in full screen");
             }
-
-            window?.ShowDialog();
         });
 
         public ScreenshotGroups ScreenshotGroups => _plugin.Settings.Settings.CurrentScreenshotGroups is null ? new ScreenshotGroups() : _plugin.Settings.Settings.CurrentScreenshotGroups;
