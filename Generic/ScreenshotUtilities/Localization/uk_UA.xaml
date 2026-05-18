@@ -38,6 +38,18 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Теку зі знімками екрану не вдалося видалити після видалення гри {0}. Видаліть теку вручну. Натисніть на це повідомлення, щоб її відкрити.</sys:String>
 
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">Downloading screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">Refreshing screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">Refreshing thumbnails</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">Resetting screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressDisable">Disabling screenshots</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesResultDownload">Downloaded screenshots for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultRefreshScreenshots">Refreshed screenshots for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultRefreshThumbnails">Refreshed thumbnails for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultReset">Reset screenshots for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultDisable">Disabled screenshots for {0} games</sys:String>
+
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Автоматично завантажувати знімки екрану при першому перегляді</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Типове співвідношення сторін</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Days until next refresh</sys:String>
