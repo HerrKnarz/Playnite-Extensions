@@ -14,8 +14,32 @@ namespace ScreenshotUtilitiesSteamProvider
 
     public class Data
     {
+        [JsonProperty("movies")]
+        public List<Movie> Movies { get; set; }
+
         [JsonProperty("screenshots")]
         public List<Screenshot> Screenshots { get; set; }
+    }
+
+    public class Movie
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("mp4")]
+        public Mp4 Mp4 { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("thumbnail")]
+        public string Thumbnail { get; set; }
+    }
+
+    public class Mp4
+    {
+        [JsonProperty("max")]
+        public string Max { get; set; }
     }
 
     public class Screenshot
