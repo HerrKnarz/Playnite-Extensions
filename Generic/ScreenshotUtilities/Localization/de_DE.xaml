@@ -5,7 +5,8 @@
 
     <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Screenshots</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshots">Willst du wirklich die Screenshots zurücksetzen? Dadurch werden alle Screenshots dieses Spiels gelöscht und wieder aus ihren Quellen geladen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshots">Willst du wirklich die Screenshots zurücksetzen? Dadurch werden alle Screenshots der ausgewählten Spiele(n) gelöscht und wieder aus ihren Quellen geladen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshotsAll">Möchten Sie wirklich die Screenshots zurücksetzen? Dies löscht alle Screenshots aus allen Spielen in deiner Bibliothek und lädt sie erneut aus ihren Quellen. Dies kann große Bibliotheken einige Zeit in Anspruch nehmen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesDialogSearchGame">Spiel suchen</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">In Zwischenablage kopieren</sys:String>
@@ -25,7 +26,9 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom">Vorschaubilder aktualisieren von</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Aktualisiere Vorschaubilder für</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFrom">Screenshots zurücksetzen von</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFromAll">Screenshots für alle Spiele zurücksetzen von</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Screenshots zurücksetzen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshotsAll">Screenshots für alle Spiele zurücksetzen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchFrom">Suche Screenshots von</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Screenshots suchen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsBackground">Als Hintergrund festlegen</sys:String>
