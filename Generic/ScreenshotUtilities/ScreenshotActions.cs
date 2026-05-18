@@ -6,13 +6,187 @@ using Playnite.SDK.Models;
 using ScreenshotUtilities.Models;
 using ScreenshotUtilities.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ScreenshotUtilities
 {
+    public enum ActionModifierType
+    {
+        None,
+        Download,
+        RefreshScreenshots,
+        RefreshThumbnails,
+        Reset,
+        Ignore
+    }
+
     internal static class ScreenshotActions
     {
+        internal static void DoForAll(List<Game> games, ScreenshotUtilities plugin,
+            ActionModifierType actionModifier = ActionModifierType.None, Guid providerId = default)
+        {
+            if (games == null || games.Count == 0)
+            {
+                return;
+            }
+
+            if (games.Count == 1)
+            {
+                switch (actionModifier)
+                {
+                    case ActionModifierType.Download:
+                        plugin.DownloadScreenshotsAsync(games[0], providerId);
+                        break;
+
+                    case ActionModifierType.RefreshScreenshots:
+                        plugin.ResetScreenshotsAsync(games[0], providerId);
+                        break;
+
+                    case ActionModifierType.RefreshThumbnails:
+                        plugin.RefreshThumbnailsAsync(games[0], providerId);
+                        break;
+
+                    case ActionModifierType.Reset:
+                        plugin.ResetScreenshotsAsync(games[0], providerId);
+                        break;
+
+                    case ActionModifierType.Ignore:
+                        SetGameToIgnore(games[0], plugin, providerId);
+                        break;
+                }
+
+                return;
+            }
+
+            var gamesAffected = 0;
+
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                var progressMessage = string.Empty;
+                var resultMessage = string.Empty;
+
+                switch (actionModifier)
+                {
+                    case ActionModifierType.Download:
+                        progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressDownload");
+                        resultMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesResultDownload");
+                        break;
+
+                    case ActionModifierType.RefreshScreenshots:
+                        progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressRefreshScreenshots");
+                        resultMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesResultRefreshScreenshots");
+                        break;
+
+                    case ActionModifierType.RefreshThumbnails:
+                        progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressRefreshThumbnails");
+                        resultMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesResultRefreshThumbnails");
+                        break;
+
+                    case ActionModifierType.Reset:
+                        progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressReset");
+                        resultMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesResultReset");
+                        break;
+
+                    case ActionModifierType.Ignore:
+                        progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressDisable");
+                        resultMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesResultDisable");
+                        break;
+                }
+
+                using (API.Instance.Database.BufferedUpdate())
+                {
+                    var globalProgressOptions = new GlobalProgressOptions(
+                        $"{ResourceProvider.GetString("LOCScreenshotUtilitiesName")} - {progressMessage}",
+                        true
+                    )
+                    {
+                        IsIndeterminate = false
+                    };
+
+                    API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+                    {
+                        try
+                        {
+                            activateGlobalProgress.ProgressMaxValue = games.Count;
+
+                            foreach (var game in games)
+                            {
+                                activateGlobalProgress.Text =
+                                    $"{ResourceProvider.GetString("LOCScreenshotUtilitiesName")}{Environment.NewLine}{progressMessage}{Environment.NewLine}{game.Name}";
+
+                                if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                                {
+                                    break;
+                                }
+
+                                switch (actionModifier)
+                                {
+                                    case ActionModifierType.Download:
+                                        if (AsyncHelper.RunSync(async () => await DownloadScreenshotsAsync(game, plugin, providerId)))
+                                        {
+                                            gamesAffected++;
+                                        }
+
+                                        break;
+
+                                    case ActionModifierType.RefreshScreenshots:
+                                        if (AsyncHelper.RunSync(async () => await GetScreenshotsAsync(game, plugin, true, providerId)))
+                                        {
+                                            gamesAffected++;
+                                        }
+
+                                        break;
+
+                                    case ActionModifierType.RefreshThumbnails:
+                                        if (AsyncHelper.RunSync(async () => await RefreshThumbnailsAsync(game, plugin, providerId)))
+                                        {
+                                            gamesAffected++;
+                                        }
+
+                                        break;
+
+                                    case ActionModifierType.Reset:
+                                        if (AsyncHelper.RunSync(async () => await ResetScreenshotsAsync(game, plugin, providerId)))
+                                        {
+                                            gamesAffected++;
+                                        }
+
+                                        break;
+
+                                    case ActionModifierType.Ignore:
+                                        SetGameToIgnore(game, plugin, providerId, false);
+                                        gamesAffected++;
+                                        break;
+                                }
+
+                                activateGlobalProgress.CurrentProgressValue++;
+                            }
+
+                            if (gamesAffected > 0)
+                            {
+                                plugin.RefreshControls();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex);
+                        }
+                    }, globalProgressOptions);
+                }
+
+                Cursor.Current = Cursors.Default;
+                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(resultMessage), gamesAffected));
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
         internal static async Task<bool> DownloadScreenshotsAsync(Game game, ScreenshotUtilities plugin, Guid providerGuid = default)
         {
             var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
@@ -184,7 +358,7 @@ namespace ScreenshotUtilities
             return await groups.RefreshAllThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight, providerId);
         }
 
-        internal static async Task<bool> ResetScreenshots(Game game, ScreenshotUtilities plugin, Guid providerId = default)
+        internal static async Task<bool> ResetScreenshotsAsync(Game game, ScreenshotUtilities plugin, Guid providerId = default)
         {
             if (!ScreenshotHelper.RemoveScreenshots(game, true, providerId))
             {
@@ -225,21 +399,26 @@ namespace ScreenshotUtilities
             return needsRefresh;
         }
 
-        internal static void SetGameToIgnore(ScreenshotUtilities plugin, Guid providerId = default)
+        internal static void SetGameToIgnore(Game game, ScreenshotUtilities plugin, Guid providerId = default, bool refreshCotrols = true)
         {
-            if (plugin.Settings.Settings.CurrentScreenshotGroups == null || plugin.Settings.Settings.CurrentScreenshotGroups.Count == 0)
+            var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
+
+            if (groups == null || groups.Count == 0)
             {
                 return;
             }
 
-            foreach (var group in plugin.Settings.Settings.CurrentScreenshotGroups.Where(g => providerId == default || g.Provider.Id == providerId))
+            foreach (var group in groups.Where(g => providerId == default || g.Provider.Id == providerId))
             {
                 group.IgnoreGame = true;
                 group.Screenshots.Clear();
                 group.Save();
             }
 
-            plugin.RefreshControls();
+            if (!refreshCotrols)
+            {
+                plugin.RefreshControls();
+            }
         }
     }
 }

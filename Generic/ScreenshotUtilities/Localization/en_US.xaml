@@ -40,6 +40,18 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots folder couldn't be deleted after the game {0} was removed. Please delete it manually. Click on this message to open the folder.</sys:String>
 
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">Downloading screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">Refreshing screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">Refreshing thumbnails</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">Resetting screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressDisable">Disabling screenshots</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesResultDownload">Downloaded screenshots for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultRefreshScreenshots">Refreshed screenshots for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultRefreshThumbnails">Refreshed thumbnails for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultReset">Reset screenshots for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultDisable">Disabled screenshots for {0} games</sys:String>
+
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically on first view</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Default aspect ratio</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Days until next refresh</sys:String>
