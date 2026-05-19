@@ -53,10 +53,20 @@
     <sys:String x:Key="LOCScreenshotUtilitiesResultReset">Reset screenshots for {0} games</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesResultDisable">Disabled screenshots for {0} games</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically on first view</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnails">Always create thumbnails</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Default aspect ratio</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Days until next refresh</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically on first view</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Refresh interval</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Display button to open the standalone viewer in the theme</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Display screenshot viewer control in the theme</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Only download screenshots for games with one of the following categories or tags. Of none are defined, screenshots will always be downloaded.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Only download screenshots for games with one of the following categories or tags. If none are defined, screenshots will always be downloaded for providers with that option set.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchMode">Fetch mode</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeAlways">Always, ignoring priority</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeOnlyIfFirst">Only if first in priority to find screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeOnlyManually">Only manually</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsPriority">Priority</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSelect">Select</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSortOrder">Sort order</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots">Tag with</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Thumbnail height</sys:String>
 </ResourceDictionary>
