@@ -16,6 +16,7 @@ namespace ScreenshotUtilities
     public class ScreenshotUtilitiesSettingsViewModel : ObservableObject, ISettings
     {
         private readonly ScreenshotUtilities plugin;
+        private object selectedProviderSetting;
         private Settings settings;
 
         public ScreenshotUtilitiesSettingsViewModel(ScreenshotUtilities plugin)
@@ -47,6 +48,12 @@ namespace ScreenshotUtilities
                 }
             }, items => items?.Count != 0);
 
+        public object SelectedProviderSetting
+        {
+            get => selectedProviderSetting;
+            set => SetValue(ref selectedProviderSetting, value);
+        }
+
         public Settings Settings
         {
             get => settings;
@@ -68,6 +75,15 @@ namespace ScreenshotUtilities
             {
                 ScreenshotActions.InitializeProviders(plugin);
             }
+
+            if (Settings.ProviderSettings.Count == 0)
+            {
+                return;
+            }
+
+            Settings.ProviderSettings = Settings.ProviderSettings.OrderBy(p => p.Value.SortOrder).ThenBy(p => p.Key).ToDictionary(p => p.Key, p => p.Value);
+
+            SelectedProviderSetting = Settings.ProviderSettings.First();
         }
 
         public void CancelEdit() =>

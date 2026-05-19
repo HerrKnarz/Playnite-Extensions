@@ -228,14 +228,14 @@ namespace ScreenshotUtilities
                 {
                     if (existingGroup.IgnoreGame || (!forceUpdate
                         && existingGroup.LastUpdate != null
-                        && (existingGroup.LastUpdate > DateTime.Now.AddDays(plugin.Settings.Settings.DaysUntilRefresh * -1))))
+                        && (existingGroup.LastUpdate > DateTime.Now.AddDays(plugin.Settings.Settings.ProviderSettings[provider.ProviderName].DaysUntilRefresh * -1))))
                     {
                         continue;
                     }
                 }
 
                 needsRefresh |= await provider.CleanUpAsync(game);
-                needsRefresh |= await provider.GetScreenshotsAsync(game, plugin.Settings.Settings.DaysUntilRefresh, forceUpdate);
+                needsRefresh |= await provider.GetScreenshotsAsync(game, plugin.Settings.Settings.ProviderSettings[provider.ProviderName].DaysUntilRefresh, forceUpdate);
             }
 
             return needsRefresh;
@@ -330,7 +330,7 @@ namespace ScreenshotUtilities
                     return;
                 }
 
-                if (plugin.Settings.Settings.AutomaticDownload)
+                if (1 == 2) //NEXT: Implement per provider addon!   plugin.Settings.Settings.ProviderSettings[provider.ProviderName].AutomaticDownload)
                 {
                     if (plugin.Settings.Settings.Debug)
                     {
