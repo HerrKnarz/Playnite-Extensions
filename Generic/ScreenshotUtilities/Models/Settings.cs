@@ -18,6 +18,7 @@ namespace ScreenshotUtilities.Models
         private ObservableCollection<MetadataObject> _downloadFilter = new ObservableCollection<MetadataObject>();
         private bool _isButtonControlVisible = false;
         private bool _isViewerControlVisible = false;
+        private Dictionary<string, ProviderSettings> _providerSettings = new Dictionary<string, ProviderSettings>();
         private int _thumbnailHeight = 120;
         private int _viewerWindowHeight = 700;
         private int _viewerWindowWidth = 800;
@@ -113,6 +114,12 @@ namespace ScreenshotUtilities.Models
         {
             get => _isViewerControlVisible;
             set => SetValue(ref _isViewerControlVisible, value);
+        }
+
+        public Dictionary<string, ProviderSettings> ProviderSettings
+        {
+            get => _providerSettings;
+            set => SetValue(ref _providerSettings, value);
         }
 
         public int ThumbnailHeight

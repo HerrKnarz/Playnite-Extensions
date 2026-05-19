@@ -186,6 +186,7 @@
       <DependentUpon>ScreenshotViewerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\MetadataObject.cs" />
+    <Compile Include="Models\ProviderSettings.cs" />
     <Compile Include="Models\ScreenshotProviderPlugin.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="ScreenshotActions.cs" />

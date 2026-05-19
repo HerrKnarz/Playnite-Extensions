@@ -265,6 +265,8 @@ namespace ScreenshotUtilities
 
             plugin.ScreenshotProviders.Clear();
 
+            plugin.Settings.Settings.ProviderSettings = plugin.Settings.Settings.ProviderSettings ?? new Dictionary<string, ProviderSettings>();
+
             foreach (var provider in API.Instance.Addons.Plugins)
             {
                 var type = provider.GetType();
@@ -274,8 +276,17 @@ namespace ScreenshotUtilities
                     continue;
                 }
 
-                plugin.ScreenshotProviders.Add(new ScreenshotProviderPlugin(provider));
+                var screenshotProvider = new ScreenshotProviderPlugin(provider);
+
+                plugin.ScreenshotProviders.Add(screenshotProvider);
+
+                if (!plugin.Settings.Settings.ProviderSettings.ContainsKey(screenshotProvider.ProviderName))
+                {
+                    plugin.Settings.Settings.ProviderSettings[screenshotProvider.ProviderName] = new ProviderSettings();
+                }
             }
+
+            plugin.Settings.Settings.ProviderSettings.RemoveAll(x => plugin.ScreenshotProviders.All(p => p.ProviderName != x.Key));
 
             plugin.ProvidersInitialized = true;
         }

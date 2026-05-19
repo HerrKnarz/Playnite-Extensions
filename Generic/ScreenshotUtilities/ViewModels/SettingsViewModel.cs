@@ -59,9 +59,16 @@ namespace ScreenshotUtilities
 
         private Settings EditingClone { get; set; }
 
-        public void BeginEdit() =>
+        public void BeginEdit()
+        {
             // Code executed when settings view is opened and user starts editing values.
             EditingClone = Serialization.GetClone(Settings);
+
+            if (!plugin.ProvidersInitialized)
+            {
+                ScreenshotActions.InitializeProviders(plugin);
+            }
+        }
 
         public void CancelEdit() =>
             // Code executed when user decides to cancel any changes made since BeginEdit was
