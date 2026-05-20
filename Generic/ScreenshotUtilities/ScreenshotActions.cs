@@ -206,7 +206,7 @@ namespace ScreenshotUtilities
         {
             var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
 
-            return await groups.DownloadAllAsync(plugin.Settings.Settings.ThumbnailHeight, providerGuid);
+            return await groups.DownloadAllAsync(plugin.Settings.Settings.ThumbnailHeight, new HashSet<Guid> { providerGuid });
         }
 
         internal static async Task<bool> GetScreenshotsAsync(Game game, ScreenshotUtilities plugin, bool forceUpdate = false, Guid providerId = default)
@@ -330,7 +330,12 @@ namespace ScreenshotUtilities
                     return;
                 }
 
-                if (1 == 2) //NEXT: Implement per provider addon!   plugin.Settings.Settings.ProviderSettings[provider.ProviderName].AutomaticDownload)
+                var providersToDownload = plugin.ScreenshotProviders
+                    .Where(p => plugin.Settings.Settings.ProviderSettings[p.ProviderName].DownloadAutomatically)
+                    .Select(p => p.Id)
+                    .ToHashSet();
+
+                if (providersToDownload.Count > 0)
                 {
                     if (plugin.Settings.Settings.Debug)
                     {
@@ -341,7 +346,7 @@ namespace ScreenshotUtilities
                         || plugin.Settings.Settings.DownloadFilter.Any(f => f.ExistsInGame(game)))
                         && !groups.IsEverythingDownloaded)
                     {
-                        await groups.DownloadAllAsync(plugin.Settings.Settings.ThumbnailHeight);
+                        await groups.DownloadAllAsync(plugin.Settings.Settings.ThumbnailHeight, providersToDownload);
                     }
                 }
 
@@ -355,6 +360,10 @@ namespace ScreenshotUtilities
                         {
                             Log.Debug($"PrepareScreenshots {game.Name}: Setting current groups: {groups?.Count}");
                         }
+
+                        groups.ForEach(g => g.SortOrder = plugin.Settings.Settings.ProviderSettings[g.Provider.Name].SortOrder);
+                        groups.Sort(g => g.Name);
+                        groups.Sort(g => g.SortOrder);
 
                         plugin.Settings.Settings.CurrentScreenshotGroups = groups;
 

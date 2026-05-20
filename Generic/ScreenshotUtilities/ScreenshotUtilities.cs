@@ -121,11 +121,15 @@ namespace ScreenshotUtilities
                         .Where(g => g.Screenshots?.Count > 0)
                         .Select(g => g.Provider)
                         .Distinct()
-                        .OrderBy(p => p.Name));
+                        .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
+                        .ThenBy(p => p.Name));
                 }
                 else
                 {
-                    providers.AddRange(ScreenshotProviders.Select(p => new ScreenshotProvider(p.ProviderName, p.Id)).OrderBy(p => p.Name));
+                    providers.AddRange(ScreenshotProviders
+                        .Select(p => new ScreenshotProvider(p.ProviderName, p.Id))
+                        .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
+                        .ThenBy(p => p.Name));
                 }
             }
 
@@ -172,7 +176,10 @@ namespace ScreenshotUtilities
 
             var games = PlayniteApi.Database.Games.ToList();
 
-            var providers = ScreenshotProviders.Select(p => new ScreenshotProvider(p.ProviderName, p.Id)).OrderBy(p => p.Name).ToList();
+            var providers = ScreenshotProviders.Select(p => new ScreenshotProvider(p.ProviderName, p.Id))
+                .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
+                .ThenBy(p => p.Name)
+                .ToList();
 
             menuItems.AddRange(GetResetMainMenuItems(games, providers));
 
@@ -355,7 +362,8 @@ namespace ScreenshotUtilities
         private IEnumerable<GameMenuItem> GetIgnoreMenuItems(List<Game> games)
         {
             var providers = ScreenshotProviders
-                .OrderBy(p => p.ProviderName)
+                .OrderBy(p => Settings.Settings.ProviderSettings[p.ProviderName].SortOrder)
+                .ThenBy(p => p.ProviderName)
                 .ToList();
 
             if (providers?.Count == 0)
@@ -405,7 +413,8 @@ namespace ScreenshotUtilities
         {
             var providers = ScreenshotProviders
                 .Where(p => p.SupportsAutomaticScreenshots)
-                .OrderBy(p => p.ProviderName)
+                .OrderBy(p => Settings.Settings.ProviderSettings[p.ProviderName].SortOrder)
+                .ThenBy(p => p.ProviderName)
                 .ToList();
 
             if (providers?.Count == 0)
@@ -461,11 +470,12 @@ namespace ScreenshotUtilities
             if (games.Count == 1)
             {
                 providers = Settings.Settings.CurrentScreenshotGroups
-                                .Where(g => g.Screenshots?.Count(s => s.IsDownloaded) > 0)
-                                .Select(g => g.Provider)
-                                .Distinct()
-                                .OrderBy(p => p.Name)
-                                .ToList();
+                    .Where(g => g.Screenshots?.Count(s => s.IsDownloaded) > 0)
+                    .Select(g => g.Provider)
+                    .Distinct()
+                    .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
+                    .ThenBy(p => p.Name)
+                    .ToList();
             }
 
             if (providers?.Count == 0)
@@ -605,7 +615,8 @@ namespace ScreenshotUtilities
         {
             var providers = ScreenshotProviders
                 .Where(p => p.SupportsScreenshotSearch)
-                .OrderBy(p => p.ProviderName)
+                .OrderBy(p => Settings.Settings.ProviderSettings[p.ProviderName].SortOrder)
+                .ThenBy(p => p.ProviderName)
                 .ToList();
 
             if (providers?.Count == 0)
