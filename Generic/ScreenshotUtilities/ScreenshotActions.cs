@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
 using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
@@ -43,7 +44,7 @@ namespace ScreenshotUtilities
                         break;
 
                     case ActionModifierType.RefreshScreenshots:
-                        plugin.ResetScreenshotsAsync(games[0], providerId);
+                        plugin.GetScreenshotsAsync(games[0], providerId);
                         break;
 
                     case ActionModifierType.RefreshThumbnails:
@@ -220,18 +221,49 @@ namespace ScreenshotUtilities
 
             var screenshotGroups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
 
-            foreach (var provider in plugin.ScreenshotProviders.Where(p => p.SupportsAutomaticScreenshots && (providerId == default || p.Id == providerId)))
+            var firstProviderWithScreenshots = Guid.Empty;
+
+            foreach (var provider in plugin.ScreenshotProviders
+                .Where(p => p.SupportsAutomaticScreenshots && (providerId == default || p.Id == providerId))
+                .OrderBy(p => plugin.Settings.Settings.ProviderSettings[p.ProviderName].Priority)
+                .ThenBy(p => p.ProviderName))
             {
+                // Skip providers that are set to only fetch manually if this is not a forced update
+                if (plugin.Settings.Settings.ProviderSettings[provider.ProviderName].FetchMode == ScreenshotFetchMode.OnlyManually && !forceUpdate)
+                {
+                    continue;
+                }
+
                 var existingGroup = screenshotGroups.FirstOrDefault(g => g.Provider?.Id == provider.Id);
 
                 if (existingGroup?.Provider?.Id == provider.Id)
                 {
+                    // Remember the first provider with screenshots to allow skipping providers that
+                    // are set to only fetch if first if they don't have any screenshots and aren't
+                    // the first provider with screenshots
+                    if (existingGroup.Screenshots.Count > 0 && firstProviderWithScreenshots == Guid.Empty)
+                    {
+                        firstProviderWithScreenshots = provider.Id;
+                    }
+
+                    // Skip providers that are set to ignore the game or the last update is within
+                    // the refresh interval if it's not a forced update
                     if (existingGroup.IgnoreGame || (!forceUpdate
                         && existingGroup.LastUpdate != null
                         && (existingGroup.LastUpdate > DateTime.Now.AddDays(plugin.Settings.Settings.ProviderSettings[provider.ProviderName].DaysUntilRefresh * -1))))
                     {
                         continue;
                     }
+                }
+
+                // Skip providers that are set to only fetch if first if they don't have any
+                // screenshots and aren't the first provider with screenshots
+                if ((existingGroup?.Screenshots.Count ?? 0) == 0
+                    && firstProviderWithScreenshots != provider.Id
+                    && firstProviderWithScreenshots != Guid.Empty
+                    && plugin.Settings.Settings.ProviderSettings[provider.ProviderName].FetchMode == ScreenshotFetchMode.OnlyIfFirst)
+                {
+                    continue;
                 }
 
                 needsRefresh |= await provider.CleanUpAsync(game);
@@ -351,19 +383,26 @@ namespace ScreenshotUtilities
                 }
 
                 groups.DeleteOrphanedFiles();
+                groups.ForEach(g => g.SortOrder = plugin.Settings.Settings.ProviderSettings[g.Provider.Name].SortOrder);
+                groups.Sort(g => g.Name);
+                groups.Sort(g => g.SortOrder);
+
+                var updateGame = false;
+                updateGame = SetTags(game, plugin, groups);
+
+                if (plugin.Settings.Settings.Debug)
+                {
+                    Log.Debug($"PrepareScreenshots {game.Name}: Setting current groups: {groups?.Count}");
+                }
 
                 API.Instance.MainView.UIDispatcher.Invoke(() =>
                 {
                     try
                     {
-                        if (plugin.Settings.Settings.Debug)
+                        if (updateGame)
                         {
-                            Log.Debug($"PrepareScreenshots {game.Name}: Setting current groups: {groups?.Count}");
+                            API.Instance.Database.Games.Update(game);
                         }
-
-                        groups.ForEach(g => g.SortOrder = plugin.Settings.Settings.ProviderSettings[g.Provider.Name].SortOrder);
-                        groups.Sort(g => g.Name);
-                        groups.Sort(g => g.SortOrder);
 
                         plugin.Settings.Settings.CurrentScreenshotGroups = groups;
 
@@ -457,6 +496,41 @@ namespace ScreenshotUtilities
             {
                 plugin.RefreshControls();
             }
+        }
+
+        private static bool SetTags(Game game, ScreenshotUtilities plugin, ScreenshotGroups groups)
+        {
+            var updateGame = false;
+
+            foreach (var provider in plugin.ScreenshotProviders)
+            {
+                var tagToSet = plugin.Settings.Settings.ProviderSettings[provider.ProviderName].TagWhenHavingScreenshots;
+
+                if (string.IsNullOrEmpty(tagToSet))
+                {
+                    continue;
+                }
+
+                var tagId = new TypeTag().AddDbObject(tagToSet);
+
+                var group = groups.FirstOrDefault(g => g.Provider.Id == provider.Id);
+
+                if (group == null || group.Screenshots.Count == 0)
+                {
+                    updateGame |= game.TagIds.Remove(tagId);
+                }
+                else
+                {
+                    if (!game.TagIds.Contains(tagId))
+                    {
+                        game.TagIds.Add(tagId);
+
+                        updateGame = true;
+                    }
+                }
+            }
+
+            return updateGame;
         }
     }
 }
