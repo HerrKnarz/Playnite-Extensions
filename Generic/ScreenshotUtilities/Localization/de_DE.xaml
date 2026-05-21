@@ -54,19 +54,26 @@
     <sys:String x:Key="LOCScreenshotUtilitiesResultDisable">Screenshots für {0} Spiele deaktiviert</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnails">Vorschaubilder immer erstellen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription">Wenn aktiviert, werden Thumbnails immer auch für noch nicht heruntergeladene Screenshots erstellt. Dies ist nützlich für die Leistungsoptimierung.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Standard-Seitenverhältnis</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Screenshots automatisch bei der ersten Ansicht herunterladen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Screenshots automatisch herunterladen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription">Wenn eingestellt, werden Screenshots automatisch heruntergeladen, wenn ein Spiel ausgewählt ist. Du kannst filtern, welche Spiele betroffen sind, indem du Kategorien oder Tags unten verwendest.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Aktualisierungsintervall</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefreshDescription">Das Intervall in Tagen, an denen Screenshots aktualisiert werden. Setzen Sie es auf 0 wird immer nach neuen Screenshots suchen, wenn Sie ein Spiel auswählen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Schaltfläche für den Standalone-Viewer im Theme anzeigen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Screenshot-Viewer im Theme anzeigen</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Lade nur Screenshots für Spiele mit einer der folgenden Kategorien oder Tags herunter. Wenn keines definiert ist, werden Screenshots immer für Anbieter mit dieser Option heruntergeladen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Screenshots werden nur für Spiele mit mindestens einer der hier festgelegten Kategorien oder Tags heruntergeladen. Wenn keines definiert ist, werden Screenshots immer für Anbieter mit der Download-Option heruntergeladen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchMode">Modus abrufen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeDescription">Dies legt fest, ob Screenshots automatisch oder manuell abgerufen werden. Wenn auf &quot;Nur wenn die erste Priorität gesetzt wird&quot;, wird es nur dann Screenshots holen, wenn kein anderer Anbieter mit höherer Priorität bereits Screenshots hat.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeAlways">Immer ignorieren Priorität</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeOnlyIfFirst">Nur wenn die erste Priorität besteht, um Screenshots zu finden</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeOnlyManually">Nur manuell</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsPriority">Priorität</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsPriorityDescription">Die Priorität bestimmt die Reihenfolge, in der Anbieter aufgerufen werden, Screenshots zu holen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsSelect">Auswählen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsSortOrder">Sortierung</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSortOrderDescription">Die Anbieter werden in dieser Reihenfolge in Menüs und der Kontrolle des Betrachters angezeigt.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots">Tag mit</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription">Spiele werden dieses Tag hinzugefügt, wenn sie Screenshots vom Anbieter haben. Es wird entfernt, wenn die Screenshots gelöscht werden.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Höhe der Miniaturansicht</sys:String>
 </ResourceDictionary>
