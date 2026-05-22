@@ -79,6 +79,10 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\LocalFileImageConverter.cs">
       <Link>Shared\Controls\LocalFileImageConverter.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.xaml.cs">
+      <Link>Shared\Controls\SettingsOption.xaml.cs</Link>
+      <DependentUpon>SettingsOption.xaml</DependentUpon>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Enum\DbInteractionResult.cs">
       <Link>Shared\DbInteractionResult.cs</Link>
     </Compile>
@@ -218,6 +222,11 @@
     <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\CommonStyles.xaml">
       <Link>Shared\Controls\CommonStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.xaml">
+      <Link>Shared\Controls\SettingsOption.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Views\SelectMetadataView.xaml">
       <Link>Shared\MetadataCommon\Views\SelectMetadataView.xaml</Link>

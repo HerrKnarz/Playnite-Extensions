@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:screenshotutilities="clr-namespace:ScreenshotUtilities"
              xmlns:models="clr-namespace:ScreenshotUtilities.Models"
+             xmlns:c="clr-namespace:KNARZHelper.Controls"
              d:DataContext="{d:DesignInstance Type=screenshotutilities:ScreenshotUtilitiesSettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="950"
@@ -28,7 +29,7 @@
                     BorderBrush="{StaticResource NormalBorderBrush}"
                     d:BorderBrush="WhiteSmoke"
                     BorderThickness="2">
-                <DockPanel>
+                <StackPanel>
                     <Label Content="General"
                            DockPanel.Dock="Top"
                            FontSize="{StaticResource FontSizeLarge}"
@@ -36,25 +37,8 @@
                            FontWeight="Bold"
                            Margin="0, 0, 0, 15" />
 
-                    <Grid DockPanel.Dock="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatio}"
-                               Grid.Column="0"
-                               Grid.Row="0"
-                               Margin="0, 0, 0, 10" />
-
-                        <StackPanel Orientation="Horizontal"
-                                    Grid.Column="1"
-                                    Grid.Row="0"
-                                    Margin="10, 0, 0, 10">
+                    <c:SettingsOption Title="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatio}">
+                        <StackPanel Orientation="Horizontal">
                             <TextBox Text="{Binding Settings.AspectWidth}"
                                      Width="40"
                                      Margin="0,0,5,0" />
@@ -63,29 +47,20 @@
                             <TextBox Text="{Binding Settings.AspectHeight}"
                                      Width="40" />
                         </StackPanel>
+                    </c:SettingsOption>
 
-                        <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsThumbnailHeight}"
-                               Grid.Column="0"
-                               Grid.Row="1"
-                               Margin="0, 0, 0, 10" />
+                    <c:SettingsOption Title="{DynamicResource LOCScreenshotUtilitiesSettingsThumbnailHeight}">
                         <TextBox Text="{Binding Settings.ThumbnailHeight}"
-                                 Width="40"
-                                 Grid.Column="1"
-                                 Grid.Row="1"
-                                 Margin="10, 0, 0, 10"
-                                 HorizontalAlignment="Left" />
-                    </Grid>
+                                 Width="40" />
+                    </c:SettingsOption>
 
                     <CheckBox IsChecked="{Binding Settings.DisplayViewerControl}"
                               Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayViewerControl}"
-                              DockPanel.Dock="Top"
-                              Margin="0, 0, 0, 10" />
+                              Margin="0, 0, 0, 15" />
 
                     <CheckBox IsChecked="{Binding Settings.DisplayButtonControl}"
-                              Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayButtonControl}"
-                              DockPanel.Dock="Top"
-                              Margin="0, 0, 0, 10" />
-                </DockPanel>
+                              Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayButtonControl}" />
+                </StackPanel>
             </Border>
 
             <Border DockPanel.Dock="Top"
@@ -124,112 +99,60 @@
                                     d:DataContext="{d:DesignInstance Type=models:ProviderSettings}"
                                     DataContext="{Binding SelectedValue, ElementName=LbProviderSettings}"
                                     VerticalAlignment="Top">
-                            <DockPanel>
-                                <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsSortOrder}" />
+                            <c:SettingsOption Title="{DynamicResource LOCScreenshotUtilitiesSettingsSortOrder}"
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsSortOrderDescription}">
                                 <TextBox Text="{Binding SortOrder}"
                                          Width="40"
-                                         Margin="10, 0, 0, 0"
-                                         HorizontalAlignment="Right"
                                          HorizontalContentAlignment="Right" />
-                            </DockPanel>
-                            <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsSortOrderDescription}"
-                                       TextWrapping="Wrap"
-                                       FontSize="{StaticResource FontSizeSmall}"
-                                       d:FontSize="12"
-                                       Foreground="{StaticResource TextBrushDarker}"
-                                       d:Foreground="DarkSlateGray"
-                                       Margin="0, 0, 0, 15" />
+                            </c:SettingsOption>
 
-                            <DockPanel>
-                                <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsPriority}" />
+                            <c:SettingsOption Title="{DynamicResource LOCScreenshotUtilitiesSettingsPriority}"
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsPriorityDescription}">
                                 <TextBox Text="{Binding Priority}"
                                          Width="40"
-                                         Margin="10, 0, 0, 0"
-                                         DockPanel.Dock="Right"
-                                         HorizontalAlignment="Right"
                                          HorizontalContentAlignment="Right" />
-                            </DockPanel>
-                            <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsPriorityDescription}"
-                                       TextWrapping="Wrap"
-                                       FontSize="{StaticResource FontSizeSmall}"
-                                       d:FontSize="12"
-                                       Foreground="{StaticResource TextBrushDarker}"
-                                       d:Foreground="DarkSlateGray"
-                                       Margin="0, 0, 0, 15" />
+                            </c:SettingsOption>
 
-                            <DockPanel>
-                                <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsFetchMode}" />
+                            <c:SettingsOption Title="{DynamicResource LOCScreenshotUtilitiesSettingsFetchMode}"
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsFetchModeDescription}">
                                 <ComboBox ItemsSource="{Binding Path=ScreenshotFetchModesWithCaptions}"
                                           DisplayMemberPath="Value"
                                           SelectedValuePath="Key"
                                           SelectedValue="{Binding Path=FetchMode}"
-                                          Margin="10, 0, 0, 0"
-                                          MinWidth="200"
-                                          HorizontalAlignment="Right" />
-                            </DockPanel>
-                            <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsFetchModeDescription}"
-                                       TextWrapping="Wrap"
-                                       FontSize="{StaticResource FontSizeSmall}"
-                                       d:FontSize="12"
-                                       Foreground="{StaticResource TextBrushDarker}"
-                                       d:Foreground="DarkSlateGray"
-                                       Margin="0, 0, 0, 15" />
+                                          MinWidth="200" />
+                            </c:SettingsOption>
 
-                            <DockPanel>
-                                <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsDaysRefresh}" />
+                            <c:SettingsOption Title="{DynamicResource LOCScreenshotUtilitiesSettingsDaysRefresh}"
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsDaysRefreshDescription}">
                                 <TextBox Text="{Binding DaysUntilRefresh}"
                                          Width="40"
-                                         Margin="10, 0, 0, 0"
-                                         HorizontalAlignment="Right"
                                          HorizontalContentAlignment="Right" />
-                            </DockPanel>
-                            <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsDaysRefreshDescription}"
-                                       TextWrapping="Wrap"
-                                       FontSize="{StaticResource FontSizeSmall}"
-                                       d:FontSize="12"
-                                       Foreground="{StaticResource TextBrushDarker}"
-                                       d:Foreground="DarkSlateGray"
-                                       Margin="0, 0, 0, 15" />
+                            </c:SettingsOption>
 
-                            <DockPanel>
-                                <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots}" />                                    
+                            <c:SettingsOption Title="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots}"
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription}">
+                                <DockPanel>
                                     <Button Content="{DynamicResource LOCScreenshotUtilitiesSettingsSelect}"
                                             DockPanel.Dock="Right"
                                             Margin="10, 0, 0, 0"
                                             Command="{Binding AddTagToAddWhenHavingScreenshotsCommand}"
                                             CommandParameter="{Binding TagWhenHavingScreenshots}" />
-                                <TextBox Text="{Binding TagWhenHavingScreenshots}"
-                                         Margin="10, 0, 0, 0" />
-                            </DockPanel>
-                            <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription}"
-                                       TextWrapping="Wrap"
-                                       FontSize="{StaticResource FontSizeSmall}"
-                                       d:FontSize="12"
-                                       Foreground="{StaticResource TextBrushDarker}"
-                                       d:Foreground="DarkSlateGray"
-                                       Margin="0, 0, 0, 15" />
+                                    <TextBox Text="{Binding TagWhenHavingScreenshots}" />
+                                </DockPanel>
+                            </c:SettingsOption>
 
-                                    <CheckBox IsChecked="{Binding DownloadAutomatically}"
-                                              Margin="0, 0, 0, 5"
-                                              Content="{DynamicResource LOCScreenshotUtilitiesSettingsAutomaticDownload}" />
-                                    <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription}"
-                                               TextWrapping="Wrap"
-                                               FontSize="{StaticResource FontSizeSmall}"
-                                               d:FontSize="12"
-                                               Foreground="{StaticResource TextBrushDarker}"
-                                               d:Foreground="DarkSlateGray"
-                                               Margin="0, 0, 0, 15" />
+                            <CheckBox IsChecked="{Binding DownloadAutomatically}"
+                                      Margin="0, 0, 0, 5"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesSettingsAutomaticDownload}" />
+                            <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription}"
+                                       Style="{StaticResource SettingsDescription}"
+                                       Margin="0, 0, 0, 15" />
 
                             <CheckBox IsChecked="{Binding AlwaysCreateThumbnails}"
                                       Margin="0, 0, 0, 5"
                                       Content="{DynamicResource LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnails}" />
                             <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription}"
-                                       TextWrapping="Wrap"
-                                       FontSize="{StaticResource FontSizeSmall}"
-                                       d:FontSize="12"
-                                       Foreground="{StaticResource TextBrushDarker}"
-                                       d:Foreground="DarkSlateGray" />
-
+                                       Style="{StaticResource SettingsDescription}" />
                         </StackPanel>
                     </DockPanel>
                 </DockPanel>
@@ -248,14 +171,10 @@
                            DockPanel.Dock="Top"
                            FontSize="{StaticResource FontSizeLarge}"
                            d:FontSize="15"
-                           FontWeight="Bold"
-                           Margin="0, 0, 0, 5" />
+                           Margin="0, 0, 0, 5"
+                           FontWeight="Bold" />
                     <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsDownloadFilterInfo}"
-                               TextWrapping="Wrap"
-                               FontSize="{StaticResource FontSizeSmall}"
-                               d:FontSize="12"
-                               Foreground="{StaticResource TextBrushDarker}"
-                               d:Foreground="DarkSlateGray"
+                               Style="{StaticResource SettingsDescription}"
                                Margin="0, 0, 0, 15"
                                DockPanel.Dock="Top" />
                     <DockPanel DockPanel.Dock="Bottom"
