@@ -54,15 +54,16 @@
     <sys:String x:Key="LOCScreenshotUtilitiesResultDisable">Disabled screenshots for {0} games</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnails">Always create thumbnails</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription">When set, thumbnails will always be created even for not yet downloaded screenshots. This is useful for performance optimization.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription">When enabled, thumbnails will always be created even for not yet downloaded screenshots. This is useful for performance optimization.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Default aspect ratio</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatioDescription">The aspect ratio is used to maintain a consistent width and height in the screenshot viewer. It doesn't affect the original screenshots.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription">When set screenshots will be downloaded automatically when a game is selected. You can filter which games are affected using categories or tags below.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription">When enabled, screenshots will be downloaded automatically when a game is selected. You can filter which games are affected using categories or tags below.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Refresh interval</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefreshDescription">The interval in days at which screenshots are refreshed. Setting it to 0 will always look for new screenshots when selecting a game.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Display button to open the standalone viewer in the theme</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayDescription">Your theme has to support ScreenshotUtilities to display the control.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Display screenshot viewer control in the theme</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Screenshots are only downloaded for games with at least one of the categories or tags set here. If none are defined, screenshots will always be downloaded for providers with the download option set.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchMode">Fetch mode</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeDescription">This determines if screenshots are fetched automatically or manually. When set to &quot;Only if first in priority&quot;, it will only fetch screenshots if no other provider with a higher priority already has screenshots.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeAlways">Always, ignoring priority</sys:String>
@@ -70,10 +71,16 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeOnlyManually">Only manually</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsPriority">Priority</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsPriorityDescription">The priority determines the order in which providers are called to fetch screenshots.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSectionDownloadFilter">Download Filter</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSectionDownloadFilterDescription">Screenshots are only downloaded for games with at least one of the categories or tags set here. If none are defined, screenshots will always be downloaded for providers with the download option enabled.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSectionGeneralSettings">General Settings</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSectionProviderSettings">Provider Settings</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSectionProviderSettingsDescription">Here you can configure settings for each screenshot provider separately.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsSelect">Select</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsSortOrder">Sort order</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsSortOrderDescription">The providers will be shown in this order in menus and the viewer control.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots">Tag with</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription">Games will have this tag added when they have screenshots from the provider. It will be removed, when the screenshots are deleted.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Thumbnail height</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeightDescription">The height of the created thumbnails in pixels. The width is calculated based on the aspect ratio. Thumbnails will only be created for downloaded screenshots or when &quot;Always create screenshots&quot; is enabled.</sys:String>
 </ResourceDictionary>
