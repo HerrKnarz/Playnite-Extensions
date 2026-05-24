@@ -9,6 +9,33 @@
     <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshotsAll">Do you really want to reset the screenshots? This will delete all screenshots from all games in your library and loads them again from their sources. This can take some time for big libraries.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesDialogSearchGame">Шукати Гру</sys:String>
 
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeUnknown">Unknown</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeScreenshot">Screenshot</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeSelfmadeScreenshot">Private screenshot</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypePromoshot">Promotion screenshot</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBackground">Background</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeIcon">Icon</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeLogo">Logo</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBoxFront">Box (front)</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBoxBack">Box(back)</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBoxSpine">Box (spine)</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBox3D">Box (3D)</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeDisc">Disc</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeCartridge">Cartridge</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArcadeCabinet">Arcade cabinet</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArcadeCircuit">Arcade circuit</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArcadeControlPanel">Acrade control panel</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArcadeControlsInfo">Arcade controls info</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArcadeMarquee">Marquee</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBanner">Banner</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypePoster">Poster</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeDecal">Decal</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeAdvertisement">Advertisement</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArtwork">Artwork</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeManual">Manual</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypePromoVideo">Promo video</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypePrivateVideo">Private video</sys:String>
+
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Копіювати в буфер обміну</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Видалити скріншот</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDownloadFrom">Завантажити знімки екрану з</sys:String>
