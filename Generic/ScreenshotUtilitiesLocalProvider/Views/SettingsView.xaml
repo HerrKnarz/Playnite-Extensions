@@ -21,7 +21,7 @@
     <DockPanel Margin="15"
                d:Background="LightGray">
         <TextBlock DockPanel.Dock="Top"
-                   TextWrapping="Wrap"
+                   Style="{StaticResource SettingsDescription}"
                    Text="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription}" />
 
         <Button Content="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsButtonAddGame}"

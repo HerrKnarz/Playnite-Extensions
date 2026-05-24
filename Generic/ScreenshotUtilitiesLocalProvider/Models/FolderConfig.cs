@@ -19,6 +19,7 @@ namespace ScreenshotUtilitiesLocalProvider.Models
         private string _exampleResult = "";
         private string _fileMask = "*.jpg";
         private string _invalidCharReplacement = "_";
+        private MediaType _mediaType = MediaType.SelfmadeScreenshot;
         private string _name = string.Empty;
         private string _path = string.Empty;
         private bool _removeDiacritics = false;
@@ -28,6 +29,7 @@ namespace ScreenshotUtilitiesLocalProvider.Models
         private bool _removeWhitespaces = false;
         private string _resolvedFileMask = string.Empty;
         private string _resolvedPath = string.Empty;
+        private bool _scanSubFolders = false;
         private GameEx _testGame = new GameEx();
         private bool _underscoresToWhitespaces = false;
         private bool _whitespacesToHyphens = false;
@@ -69,6 +71,12 @@ namespace ScreenshotUtilitiesLocalProvider.Models
             set => SetValue(ref _invalidCharReplacement, value);
         }
 
+        public MediaType MediaType
+        {
+            get => _mediaType;
+            set => SetValue(ref _mediaType, value);
+        }
+
         public string Name
         {
             get => _name;
@@ -77,21 +85,21 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 
         [DontSerialize]
         public RelayCommand OpenResolvedFolderCommand => new RelayCommand(() =>
-        {
-            if (ResolvedPath == null)
-            {
-                ResolveConfig();
-            }
+                                                {
+                                                    if (ResolvedPath == null)
+                                                    {
+                                                        ResolveConfig();
+                                                    }
 
-            if (Directory.Exists(ResolvedPath))
-            {
-                Process.Start("explorer.exe", ResolvedPath);
+                                                    if (Directory.Exists(ResolvedPath))
+                                                    {
+                                                        Process.Start("explorer.exe", ResolvedPath);
 
-                return;
-            }
+                                                        return;
+                                                    }
 
-            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist"));
-        });
+                                                    API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist"));
+                                                });
 
         public string Path
         {
@@ -143,16 +151,22 @@ namespace ScreenshotUtilitiesLocalProvider.Models
             set => SetValue(ref _resolvedPath, value);
         }
 
+        public bool ScanSubFolders
+        {
+            get => _scanSubFolders;
+            set => SetValue(ref _scanSubFolders, value);
+        }
+
         [DontSerialize]
         public RelayCommand SelectFolderCommand => new RelayCommand(() =>
-        {
-            var path = API.Instance.Dialogs.SelectFolder(Path);
+                                                {
+                                                    var path = API.Instance.Dialogs.SelectFolder(Path);
 
-            if (!string.IsNullOrEmpty(path))
-            {
-                Path = path;
-            }
-        });
+                                                    if (!string.IsNullOrEmpty(path))
+                                                    {
+                                                        Path = path;
+                                                    }
+                                                });
 
         [DontSerialize]
         public StringExpander StringExpander { get; set; }
@@ -223,19 +237,18 @@ namespace ScreenshotUtilitiesLocalProvider.Models
                     return result;
                 }
 
-                var files = dirInfo.GetFiles(fileMask).OrderBy(f => f.Name).ToList();
+                var files = dirInfo.GetFiles(fileMask, ScanSubFolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).OrderBy(f => f.Name).ToList();
 
                 if (files.Count == 0)
                 {
                     return result;
                 }
 
-                // TODO: Think about a good way to allow separate thumbnails without two paths and file masks if possible.
                 result.AddRange(files.Select(file => new Screenshot(file.FullName)
                 {
                     ThumbnailPath = file.FullName,
                     SortOrder = files.IndexOf(file),
-                    Type = MediaType.SelfmadeScreenshot,
+                    Type = MediaType,
                     Name = $"{Name}: {file.Name}"
                 }));
             }

@@ -99,7 +99,9 @@
                             </c:SettingsOption>
 
                             <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsFetchMode}"
-                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsFetchModeDescription}">
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsFetchModeDescription}"
+                                              HorizontalControlAlignment="Stretch"
+                                              MinLabelWidth="100">
                                 <ComboBox ItemsSource="{Binding Path=ScreenshotFetchModesWithCaptions}"
                                           DisplayMemberPath="Value"
                                           SelectedValuePath="Key"
@@ -115,7 +117,9 @@
                             </c:SettingsOption>
 
                             <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots}"
-                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription}">
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription}"
+                                              HorizontalControlAlignment="Stretch"
+                                              MinLabelWidth="100">
                                 <DockPanel>
                                     <Button Content="{DynamicResource LOCScreenshotUtilitiesSettingsSelect}"
                                             DockPanel.Dock="Right"

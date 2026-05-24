@@ -137,6 +137,8 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             selectedConfig.InvalidCharReplacement = configToEdit.InvalidCharReplacement;
             selectedConfig.Name = configToEdit.Name;
             selectedConfig.Path = configToEdit.Path;
+            selectedConfig.MediaType = configToEdit.MediaType;
+            selectedConfig.ScanSubFolders = configToEdit.ScanSubFolders;
             selectedConfig.RemoveDiacritics = configToEdit.RemoveDiacritics;
             selectedConfig.RemoveEditionSuffix = configToEdit.RemoveEditionSuffix;
             selectedConfig.RemoveHyphens = configToEdit.RemoveHyphens;

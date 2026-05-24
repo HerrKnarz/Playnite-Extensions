@@ -26,9 +26,13 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveSpecialChars">Removes all characters that aren't part of the alphabet, a number, a whitespace or a hyphen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix">Removes stuff like "Special Edition" or HD from the end of a game name.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith">Replaces characters not allowed for filenames in the game name after applying the other rules. Can be left empty to simply remove the characters.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigMediaType">Media type</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigMediaTypeDescription">Select the type of media this folder config contains. The most common type is "private screenshot". Selecting one of the video options plays the video in the viewer instead of displaying a screenshot.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigScanSubFolders">Scan sub folders</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigScanSubFoldersDescription">When enabled the addon will also fetch screenshots located in sub folders of the configured path.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigSelectGame">Select game</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig">Test config</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut">Try out game name formatting</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfigDescription">You can test the configuration here and see how the folder and file mask for your selected game will look with all placeholders replaced.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription">Using these check boxes you can format how the name of the game will be added to the path via the placeholder {GameName}.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsGlobalConfig">Global Config</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist">The path doesn't exist.</sys:String>

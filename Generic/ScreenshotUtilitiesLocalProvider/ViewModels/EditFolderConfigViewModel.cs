@@ -1,5 +1,6 @@
 ﻿using KNARZhelper;
 using KNARZhelper.GamesCommon;
+using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using ScreenshotUtilitiesLocalProvider.Models;
 using System.Collections.Generic;
@@ -38,6 +39,8 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
         }
 
         public Visibility HiddenForSpecificGame => _specificGame ? Visibility.Collapsed : Visibility.Visible;
+
+        public MediaTypesWithCaptions MediaTypesWithCaptions { get; } = new MediaTypesWithCaptions();
 
         public RelayCommand<Window> SaveCommand => new RelayCommand<Window>(win =>
         {

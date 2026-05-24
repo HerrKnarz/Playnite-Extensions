@@ -72,6 +72,12 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\GameToIconConverter.cs">
       <Link>Shared\Controls\GameToIconConverter.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs">
+      <Link>Shared\Controls\SettingsOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsSection.cs">
+      <Link>Shared\Controls\SettingsSection.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs">
       <Link>Shared\FilesCommon\FileHelper.cs</Link>
     </Compile>
@@ -127,6 +133,11 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsStyles.xaml">
+      <Link>Shared\Controls\SettingsStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\FolderConfigTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
