@@ -382,6 +382,27 @@ namespace ScreenshotUtilities
                     }
                 }
 
+                var providersToCreateThumbnails = plugin.ScreenshotProviders
+                    .Where(p => plugin.Settings.Settings.ProviderSettings[p.ProviderName].AlwaysCreateThumbnails && !plugin.Settings.Settings.ProviderSettings[p.ProviderName].DownloadAutomatically)
+                    .Select(p => p.Id)
+                    .ToHashSet();
+
+                if (providersToCreateThumbnails.Count > 0)
+                {
+                    if (plugin.Settings.Settings.Debug)
+                    {
+                        API.Instance.MainView.UIDispatcher.Invoke(() => Log.Debug($"PrepareScreenshots {game.Name}: Creating thumbnails"));
+                    }
+
+                    foreach (var group in groups)
+                    {
+                        if (providersToCreateThumbnails.Contains(group.Provider.Id))
+                        {
+                            await group.RefreshThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight, false, true);
+                        }
+                    }
+                }
+
                 groups.DeleteOrphanedFiles();
                 groups.ForEach(g => g.SortOrder = plugin.Settings.Settings.ProviderSettings[g.Provider.Name].SortOrder);
                 groups.Sort(g => g.Name);
@@ -429,7 +450,9 @@ namespace ScreenshotUtilities
         {
             var groups = new ScreenshotGroups(plugin.GetPluginUserDataPath(), game.Id);
 
-            return await groups.RefreshAllThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight, providerId);
+            return await groups.RefreshAllThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight,
+                providerId,
+                plugin.Settings.Settings.ProviderSettings[plugin.ScreenshotProviders.First(p => p.Id == providerId).ProviderName].AlwaysCreateThumbnails);
         }
 
         internal static async Task<bool> ResetScreenshotsAsync(Game game, ScreenshotUtilities plugin, Guid providerId = default, bool refreshScreenshots = true)

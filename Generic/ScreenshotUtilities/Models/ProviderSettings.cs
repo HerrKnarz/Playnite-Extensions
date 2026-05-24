@@ -42,7 +42,6 @@ namespace ScreenshotUtilities.Models
 
                     items.Sort(i => i.Name);
 
-                    //NEXT: Add option to only select one item, hiding the check boxes in the process.
                     SelectMetadataViewModel.GetWindow(items, label, false)?.ShowDialog();
 
                     if (items.Count(i => i.Selected) == 0)
