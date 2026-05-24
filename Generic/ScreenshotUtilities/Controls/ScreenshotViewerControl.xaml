@@ -159,6 +159,9 @@
                                           Command="{Binding DataContext.SetAsCoverCommand}" />
                                 <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsIcon}"
                                           Command="{Binding DataContext.SetAsIconCommand}" />
+                                <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsLogo}"
+                                          Command="{Binding DataContext.SetAsLogoCommand}"
+                                          Visibility="{Binding DataContext.SetAsLogoVisibility}" />
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>
