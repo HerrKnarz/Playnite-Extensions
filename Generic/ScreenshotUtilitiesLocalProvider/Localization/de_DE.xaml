@@ -24,9 +24,13 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveSpecialChars">Entfernt alle Zeichen, die nicht zum Alphabet gehören, eine Zahl, ein Leerzeichen oder ein Bindestrich.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionRemoveEditionSuffix">Entfernt Dinge wie &quot;Special Edition&quot; oder HD vom Ende eines Spielnamens.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith">Ersetzt Zeichen, die nicht für Dateinamen im Spielnamen erlaubt sind, nachdem die anderen Regeln angewendet wurden. Kann leer gelassen werden, um einfach die Zeichen zu entfernen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigMediaType">Medientyp</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigMediaTypeDescription">Wählen Sie die Art der Medien, die diese Ordnerkonfiguration enthält. Der gebräuchlichste Typ ist &quot;privates Screenshot&quot;. Das Auswählen einer der Videooptionen spielt das Video im Betrachter ab, anstatt einen Screenshot anzuzeigen.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigScanSubFolders">Unterordner durchsuchen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigScanSubFoldersDescription">Wenn aktiviert, holt das Addon auch Screenshots in Unterordnern des konfigurierten Pfades.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigSelectGame">Spiel wählen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfig">Test-Konfiguration</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTryOut">Probiere die Formatierung des Spielnamens aus</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigTestConfigDescription">Sie können die Konfiguration hier testen und sehen, wie die Ordner- und Dateimaske für Ihr ausgewähltes Spiel aussieht und alle Platzhalter ersetzt werden.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFormattingDescription">Mit diesen Kontrollkästchen kannst du formatieren, wie der Name des Spiels über den Platzhalter {GameName} zum Pfad hinzugefügt wird.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsGlobalConfig">Globale Konfiguration</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist">Der Pfad existiert nicht.</sys:String>
