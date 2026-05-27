@@ -11,9 +11,14 @@
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsButtonRemove">Remove</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsDescription">Description</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescription">Here you can add your screenshot folders. Add all folders you want to check for all games using the + button in Global config. You can also add specific games to add folders that will only be checked for these games. Using the override check box global folders will be skipped. Path and File mask of each config can contain several placeholders like environment variables, playnite placeholders and some custom ones. A full list can be found in the edit dialog.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigActive">Active</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigActiveDescription">Disabling this will skip the folder config when fetching new screenshots. Already fetched shots will still be displayed in the viewer.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName">Name</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigNameDescription">Give the config a descriptive name. It will show up in the settings and be used as a prefix for screenshot names from this config.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath">Path</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPathDescription">Define the path where the screenshots can be found. You can use any placeholder here.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask">File mask</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMaskDescription">File mask to search for files in the defined path. Can include any of the placeholders and also the windows default wildcards like *.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveSpecialChars">Remove special chars</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveHyphens">Remove hyphens</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigRemoveWhitespaces">Remove whitespaces</sys:String>
