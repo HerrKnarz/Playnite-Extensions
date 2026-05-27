@@ -1,7 +1,9 @@
 ﻿using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK.Data;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ScreenshotUtilities.Models
 {
@@ -50,10 +52,13 @@ namespace ScreenshotUtilities.Models
         }
 
         [DontSerialize]
+        public ScreenshotGroup CurrentLocalScreenshotGroup
+            => _currentScreenshotGroups.FirstOrDefault(g => g.Provider.Id == Guid.Parse("a049eff8-fd41-4dbc-9e35-01acc6b1a0cb"));
+
+        [DontSerialize]
         public ScreenshotGroups CurrentScreenshotGroups
         {
-            get => _currentScreenshotGroups;
-            set => SetValue(ref _currentScreenshotGroups, value);
+            get => _currentScreenshotGroups; set => SetValue(ref _currentScreenshotGroups, value);
         }
 
         public bool Debug
