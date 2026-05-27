@@ -61,7 +61,7 @@ namespace ScreenshotUtilities.Models
         public int DaysUntilRefresh
         {
             get => _daysUntilRefresh;
-            set => SetValue(ref _daysUntilRefresh, value < 1 ? 1 : value);
+            set => SetValue(ref _daysUntilRefresh, value < 0 ? 0 : value);
         }
 
         public bool DownloadAutomatically
