@@ -84,22 +84,23 @@ namespace ScreenshotUtilitiesLocalProvider.Models
         }
 
         [DontSerialize]
-        public RelayCommand OpenResolvedFolderCommand => new RelayCommand(() =>
-                                                {
-                                                    if (ResolvedPath == null)
-                                                    {
-                                                        ResolveConfig();
-                                                    }
+        public RelayCommand OpenResolvedFolderCommand =>
+            new RelayCommand(() =>
+            {
+                if (ResolvedPath == null)
+                {
+                    ResolveConfig();
+                }
 
-                                                    if (Directory.Exists(ResolvedPath))
-                                                    {
-                                                        Process.Start("explorer.exe", ResolvedPath);
+                if (Directory.Exists(ResolvedPath))
+                {
+                    Process.Start("explorer.exe", ResolvedPath);
 
-                                                        return;
-                                                    }
+                    return;
+                }
 
-                                                    API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist"));
-                                                });
+                API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsPathDoesntExist"));
+            });
 
         public string Path
         {
@@ -158,15 +159,16 @@ namespace ScreenshotUtilitiesLocalProvider.Models
         }
 
         [DontSerialize]
-        public RelayCommand SelectFolderCommand => new RelayCommand(() =>
-                                                {
-                                                    var path = API.Instance.Dialogs.SelectFolder(Path);
+        public RelayCommand SelectFolderCommand =>
+            new RelayCommand(() =>
+            {
+                var path = API.Instance.Dialogs.SelectFolder(Path);
 
-                                                    if (!string.IsNullOrEmpty(path))
-                                                    {
-                                                        Path = path;
-                                                    }
-                                                });
+                if (!string.IsNullOrEmpty(path))
+                {
+                    Path = path;
+                }
+            });
 
         [DontSerialize]
         public StringExpander StringExpander { get; set; }

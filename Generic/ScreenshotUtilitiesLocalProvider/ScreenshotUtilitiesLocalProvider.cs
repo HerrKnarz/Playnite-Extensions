@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.Controls;
 using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
@@ -10,7 +11,9 @@ using ScreenshotUtilitiesLocalProvider.ViewModels;
 using ScreenshotUtilitiesLocalProvider.Views;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -29,6 +32,8 @@ namespace ScreenshotUtilitiesLocalProvider
             {
                 HasSettings = true
             };
+
+            ResourceHelper.LoadIconFont(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
         }
 
         public override Guid Id { get; } = Guid.Parse("a049eff8-fd41-4dbc-9e35-01acc6b1a0cb");

@@ -72,6 +72,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\GameToIconConverter.cs">
       <Link>Shared\Controls\GameToIconConverter.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\ResourceHelper.cs">
+      <Link>Shared\Controls\ResourceHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs">
       <Link>Shared\Controls\SettingsOption.cs</Link>
     </Compile>
@@ -141,6 +144,7 @@
     <Page Include="Controls\FolderConfigTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="Models\DefaultFolderConfig.cs" />
     <Compile Include="Models\FolderConfig.cs" />
     <Compile Include="Models\GameProfile.cs" />
     <Compile Include="Models\GameSearchSettings.cs" />
@@ -161,6 +165,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <Content Include="Resources\KNARZIconFont.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="Localization\*.xaml">

@@ -31,13 +31,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             {
                 var defaultProfile = new GameProfile(default);
 
-                defaultProfile.FolderConfigs.Add(new FolderConfig
-                {
-                    Name = "Steam",
-                    FileMask = "*.jpg",
-                    Path = "{SteamScreenshotsDir}\\{SteamId}\\screenshots"
-                });
-
                 Settings.GameProfiles = new ObservableCollection<GameProfile>
                 {
                     defaultProfile
@@ -62,18 +55,21 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
 
         public RelayCommand<object> AddFolderConfigCommand => new RelayCommand<object>(item =>
         {
-            if (item == null)
+            if (item == null || SelectedGameProfile == null)
             {
                 return;
             }
 
-            SelectedGameProfile = item as GameProfile;
+            var selectedConfig = item as DefaultFolderConfig;
 
-            var configToEdit = new FolderConfig();
+            var configToEdit = (selectedConfig as FolderConfig).DeepClone();
 
-            if (!OpenEditDialog(ref configToEdit, SelectedGameProfile.Game))
+            if (selectedConfig.IsCustom)
             {
-                return;
+                if (!OpenEditDialog(ref configToEdit, SelectedGameProfile.Game))
+                {
+                    return;
+                }
             }
 
             SelectedGameProfile.FolderConfigs.Add(configToEdit);
@@ -121,33 +117,35 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             SelectedGameProfile = ProfileToAdd;
         });
 
+        public CommonConfigs CommonConfigs => new CommonConfigs();
+
         public RelayCommand<object> EditFolderConfigCommand => new RelayCommand<object>(item =>
-        {
-            var selectedConfig = item as FolderConfig;
+                {
+                    var selectedConfig = item as FolderConfig;
 
-            var configToEdit = selectedConfig.DeepClone();
+                    var configToEdit = selectedConfig.DeepClone();
 
-            if (!OpenEditDialog(ref configToEdit, SelectedGameProfile.Game))
-            {
-                return;
-            }
+                    if (!OpenEditDialog(ref configToEdit, SelectedGameProfile.Game))
+                    {
+                        return;
+                    }
 
-            selectedConfig.Active = configToEdit.Active;
-            selectedConfig.FileMask = configToEdit.FileMask;
-            selectedConfig.InvalidCharReplacement = configToEdit.InvalidCharReplacement;
-            selectedConfig.Name = configToEdit.Name;
-            selectedConfig.Path = configToEdit.Path;
-            selectedConfig.MediaType = configToEdit.MediaType;
-            selectedConfig.ScanSubFolders = configToEdit.ScanSubFolders;
-            selectedConfig.RemoveDiacritics = configToEdit.RemoveDiacritics;
-            selectedConfig.RemoveEditionSuffix = configToEdit.RemoveEditionSuffix;
-            selectedConfig.RemoveHyphens = configToEdit.RemoveHyphens;
-            selectedConfig.RemoveSpecialChars = configToEdit.RemoveSpecialChars;
-            selectedConfig.RemoveWhitespaces = configToEdit.RemoveWhitespaces;
-            selectedConfig.UnderscoresToWhitespaces = configToEdit.UnderscoresToWhitespaces;
-            selectedConfig.WhitespacesToHyphens = configToEdit.WhitespacesToHyphens;
-            selectedConfig.WhitespacesToUnderscores = configToEdit.WhitespacesToUnderscores;
-        });
+                    selectedConfig.Active = configToEdit.Active;
+                    selectedConfig.FileMask = configToEdit.FileMask;
+                    selectedConfig.InvalidCharReplacement = configToEdit.InvalidCharReplacement;
+                    selectedConfig.Name = configToEdit.Name;
+                    selectedConfig.Path = configToEdit.Path;
+                    selectedConfig.MediaType = configToEdit.MediaType;
+                    selectedConfig.ScanSubFolders = configToEdit.ScanSubFolders;
+                    selectedConfig.RemoveDiacritics = configToEdit.RemoveDiacritics;
+                    selectedConfig.RemoveEditionSuffix = configToEdit.RemoveEditionSuffix;
+                    selectedConfig.RemoveHyphens = configToEdit.RemoveHyphens;
+                    selectedConfig.RemoveSpecialChars = configToEdit.RemoveSpecialChars;
+                    selectedConfig.RemoveWhitespaces = configToEdit.RemoveWhitespaces;
+                    selectedConfig.UnderscoresToWhitespaces = configToEdit.UnderscoresToWhitespaces;
+                    selectedConfig.WhitespacesToHyphens = configToEdit.WhitespacesToHyphens;
+                    selectedConfig.WhitespacesToUnderscores = configToEdit.WhitespacesToUnderscores;
+                });
 
         public RelayCommand<object> RemoveFolderConfigCommand => new RelayCommand<object>(item => SelectedGameProfile.FolderConfigs.Remove(item as FolderConfig));
 
