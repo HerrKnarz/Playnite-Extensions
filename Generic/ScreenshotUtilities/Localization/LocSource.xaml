@@ -87,7 +87,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Default aspect ratio</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatioDescription">The aspect ratio is used to maintain a consistent width and height in the screenshot viewer. It doesn't affect the original screenshots.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription">When enabled, screenshots will be downloaded automatically when a game is selected. You can filter which games are affected using categories or tags below.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription">When enabled, screenshots will be downloaded automatically when a game is selected to make viewing them faster afterwards. You can filter which games are affected using categories or tags below. Not downloaded screenshots will be loaded from the source when viewed.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Refresh interval</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefreshDescription">The interval in days at which screenshots are refreshed. Setting it to 0 will always look for new screenshots when selecting a game.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Display button to open the standalone viewer in the theme</sys:String>
@@ -111,5 +111,5 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots">Tag with</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription">Games will have this tag added when they have screenshots from the provider. It will be removed, when the screenshots are deleted.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Thumbnail height</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeightDescription">The height of the created thumbnails in pixels. The width is calculated based on the aspect ratio. Thumbnails will only be created for downloaded screenshots or when "Always create screenshots" is enabled.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeightDescription">The height of the created thumbnails in pixels. The width is calculated based on the aspect ratio of the image. Thumbnails will only be created for downloaded screenshots or when "Always create screenshots" is enabled.</sys:String>
 </ResourceDictionary>

@@ -7,7 +7,7 @@
              xmlns:c="clr-namespace:KNARZhelper.Controls"
              d:DataContext="{d:DesignInstance Type=vm:EditFolderConfigViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="700"
+             d:DesignHeight="850"
              d:DesignWidth="1200">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -29,13 +29,11 @@
         <Border DockPanel.Dock="Top"
                 BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
                 d:BorderBrush="{DynamicResource KNARZDummyBrush}"
-                BorderThickness="0,1,0,0"
-                Margin="0,0,0,0" />
+                BorderThickness="0,1,0,0" />
         <Border DockPanel.Dock="Bottom"
                 BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
                 d:BorderBrush="{DynamicResource KNARZDummyBrush}"
                 BorderThickness="0,1,0,0"
-                Margin="0,10,0,0"
                 d:Background="AliceBlue">
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
@@ -58,7 +56,7 @@
                      DockPanel.Dock="Top"
                      d:Background="AliceBlue"
                      FocusManager.FocusedElement="{Binding ElementName=txtName}">
-            <StackPanel Margin="15"
+            <StackPanel Margin="15, 15, 10, 10"
                         Orientation="Vertical">
                 <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName}"
                                   Description="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigNameDescription}"
@@ -206,7 +204,7 @@
             <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
-                        Margin="0, 0, 15, 5">
+                        Margin="10, 0, 15, 15">
                 <TabItem Header="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsTabPlaceholderLegend}">
                     <Border BorderBrush="{DynamicResource NormalBorderBrush}"
                             BorderThickness="{DynamicResource ControlBorderThickness}"

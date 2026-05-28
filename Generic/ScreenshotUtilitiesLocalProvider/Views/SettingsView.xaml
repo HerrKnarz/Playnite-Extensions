@@ -43,11 +43,12 @@
                  Grid.Row="1"
                  SelectionMode="Single"
                  Width="Auto"
-                 MaxWidth="500"
+                 MaxWidth="400"
                  MinWidth="100"
                  ItemsSource="{Binding Settings.GameProfiles}"
                  ItemTemplate="{StaticResource GameProfileTemplate}"
-                 SelectedItem="{Binding SelectedGameProfile}">
+                 SelectedItem="{Binding SelectedGameProfile}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem"
                        BasedOn="{StaticResource {x:Type ListBoxItem}}">
