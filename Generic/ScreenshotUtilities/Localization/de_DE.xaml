@@ -86,7 +86,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Standard-Seitenverhältnis</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatioDescription">Das Seitenverhältnis wird verwendet, um eine konsistente Breite und Höhe im Screenshot-Viewer zu erhalten. Es wirkt sich nicht auf die ursprünglichen Screenshots aus.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Screenshots automatisch herunterladen</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription">Wenn aktiviert, werden Screenshots automatisch heruntergeladen, wenn ein Spiel ausgewählt ist. Du kannst filtern, welche Spiele betroffen sind, indem du Kategorien oder Tags unten verwendest.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription">Wenn aktiviert, werden Screenshots automatisch heruntergeladen, wenn ein Spiel ausgewählt wird, um die Anzeige danach zu beschleunigen. Du kannst filtern, welche Spiele betroffen sind, indem du unten Kategorien oder Tags verwendest. Nicht heruntergeladene Screenshots werden beim Betrachten von der Quelle geladen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Aktualisierungsintervall</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefreshDescription">Das Intervall in Tagen, an denen Screenshots aktualisiert werden. Setzen Sie es auf 0 wird immer nach neuen Screenshots suchen, wenn Sie ein Spiel auswählen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Schaltfläche für den Standalone-Viewer im Theme anzeigen</sys:String>
@@ -110,5 +110,5 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots">Tag mit</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription">Spiele werden dieses Tag hinzugefügt, wenn sie Screenshots vom Anbieter haben. Es wird entfernt, wenn die Screenshots gelöscht werden.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Höhe der Miniaturansicht</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeightDescription">Die Höhe der erstellten Thumbnails in Pixeln. Die Breite wird anhand des Seitenverhältnisses berechnet. Thumbnails werden nur für heruntergeladene Screenshots erstellt oder wenn &quot;Immer Screenshots erstellen&quot; aktiviert ist.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeightDescription">Die Höhe der erstellten Thumbnails in Pixeln. Die Breite wird anhand des Seitenverhältnisses des Bildes berechnet. Thumbnails werden nur für heruntergeladene Screenshots erstellt oder wenn &quot;Immer Screenshots erstellen&quot; aktiviert ist.</sys:String>
 </ResourceDictionary>
