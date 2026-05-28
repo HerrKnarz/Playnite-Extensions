@@ -170,6 +170,17 @@ namespace ScreenshotUtilitiesSteamProvider
                        Type = MediaType.Promoshot
                    }));
 
+                _screenshotGroup.Screenshots
+                .AddRange(result[_screenshotGroup.GameIdentifier].Data.Movies
+                .Where(m => m.Mp4?.Max != null && !_screenshotGroup.Screenshots.Any(es => es.Path.StripUriParams().Equals(m.Mp4.Max.StripUriParams())))
+                .Select(m =>
+               new KNARZhelper.ScreenshotsCommon.Models.Screenshot(m.Mp4.Max.StripUriParams(), m.Name)
+               {
+                   ThumbnailPath = m.Thumbnail.StripUriParams(),
+                   SortOrder = m.Id,
+                   Type = MediaType.PromoVideo
+               }));
+
                 updated = true;
             }
 

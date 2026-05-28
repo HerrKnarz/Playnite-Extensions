@@ -9,19 +9,29 @@
                    xmlns:viewModels="clr-namespace:ScreenshotUtilities.ViewModels"
                    d:DataContext="{d:DesignInstance Type=viewModels:ScreenshotViewerViewModel}"
                    mc:Ignorable="d"
-                   d:DesignHeight="450" d:DesignWidth="800"
+                   d:DesignHeight="450"
+                   d:DesignWidth="800"
                    Focusable="True">
     <PluginUserControl.Resources>
-        <Style TargetType="Button" x:Key="SolidScreenshotButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Padding" Value="5, 0" />
-            <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="Height" Value="{Binding ButtonHeight}" />
+        <Style TargetType="Button"
+               x:Key="SolidScreenshotButtonStyle"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontSize"
+                    Value="20" />
+            <Setter Property="Padding"
+                    Value="5, 0" />
+            <Setter Property="FontFamily"
+                    Value="{DynamicResource FontIcoFont}" />
+            <Setter Property="VerticalAlignment"
+                    Value="Top" />
+            <Setter Property="Height"
+                    Value="{Binding ButtonHeight}" />
         </Style>
 
-        <DataTemplate x:Key="TabHeaderTemplate" DataType="{x:Type viewModels:ScreenshotViewerViewModel}">
-            <TextBlock Text="{Binding DisplayName}" FontWeight="Bold" />
+        <DataTemplate x:Key="TabHeaderTemplate"
+                      DataType="{x:Type viewModels:ScreenshotViewerViewModel}">
+            <TextBlock Text="{Binding DisplayName}"
+                       FontWeight="Bold" />
         </DataTemplate>
         <DataTemplate x:Key="TabContentTemplate"
                       DataType="{x:Type viewModels:ScreenshotViewerViewModel}">
@@ -82,10 +92,13 @@
                                    Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, Path=DataContext.ThumbnailHeight}">
                                 <Image.Style>
                                     <Style TargetType="Image">
-                                        <Setter Property="ToolTip" Value="{Binding Name}" />
+                                        <Setter Property="ToolTip"
+                                                Value="{Binding Name}" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Name}" Value="">
-                                                <Setter Property="ToolTip" Value="{x:Null}" />
+                                            <DataTrigger Binding="{Binding Name}"
+                                                         Value="">
+                                                <Setter Property="ToolTip"
+                                                        Value="{x:Null}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -102,40 +115,77 @@
             <knarzHelperControls:AspectRatioLayoutDecorator AspectRatio="{Binding AspectRatio}"
                                                             DockPanel.Dock="Top"
                                                             Margin="0, 10">
-
-                <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath, Converter={StaticResource LocalFileImageConverter}}"
-                       RenderOptions.BitmapScalingMode="Fant"
-                       Stretch="Uniform"
-                       Cursor="Hand">
-                    <Image.InputBindings>
-                        <MouseBinding Gesture="LeftClick"
-                                      Command="{Binding OpenInFullScreenCommand}" />
-                    </Image.InputBindings>
-                    <Image.ContextMenu>
-                        <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
-                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInFullScreen}"
-                                      Command="{Binding DataContext.OpenInFullScreenCommand}" />
-                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuCopyToClipboard}"
-                                      Command="{Binding DataContext.CopyToClipboardCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.CanBeOpened, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInAssociatedApplication}"
-                                      Command="{Binding DataContext.OpenInAssociatedApplicationCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.CanBeOpened, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenContainingFolder}"
-                                      Command="{Binding DataContext.OpenContainingFolderCommand}" />
-                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInBrowser}"
-                                      Command="{Binding DataContext.OpenInBrowserCommand}"
-                                      Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.PathIsUrl, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            <Separator />
-                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsBackground}"
-                                      Command="{Binding DataContext.SetAsBackgroundCommand}" />
-                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsCover}"
-                                      Command="{Binding DataContext.SetAsCoverCommand}" />
-                            <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsIcon}"
-                                      Command="{Binding DataContext.SetAsIconCommand}" />
-                        </ContextMenu>
-                    </Image.ContextMenu>
-                </Image>
+                <Grid>
+                    <Image Source="{Binding SelectedGroup.SelectedScreenshot.DisplayPath, Converter={StaticResource LocalFileImageConverter}}"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Stretch="Uniform"
+                           Cursor="Hand">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Visibility"
+                                        Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedGroup.SelectedScreenshot.IsVideo}"
+                                                 Value="True">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                        <Image.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding OpenInFullScreenCommand}" />
+                        </Image.InputBindings>
+                        <Image.ContextMenu>
+                            <ContextMenu DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInFullScreen}"
+                                          Command="{Binding DataContext.OpenInFullScreenCommand}" />
+                                <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuCopyToClipboard}"
+                                          Command="{Binding DataContext.CopyToClipboardCommand}"
+                                          Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.CanBeOpened, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInAssociatedApplication}"
+                                          Command="{Binding DataContext.OpenInAssociatedApplicationCommand}"
+                                          Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.CanBeOpened, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenContainingFolder}"
+                                          Command="{Binding DataContext.OpenContainingFolderCommand}" />
+                                <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuOpenInBrowser}"
+                                          Command="{Binding DataContext.OpenInBrowserCommand}"
+                                          Visibility="{Binding DataContext.SelectedGroup.SelectedScreenshot.PathIsUrl, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                <Separator />
+                                <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsBackground}"
+                                          Command="{Binding DataContext.SetAsBackgroundCommand}" />
+                                <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsCover}"
+                                          Command="{Binding DataContext.SetAsCoverCommand}" />
+                                <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsIcon}"
+                                          Command="{Binding DataContext.SetAsIconCommand}" />
+                                <MenuItem Header="{DynamicResource LOCScreenshotUtilitiesMenuSetAsLogo}"
+                                          Command="{Binding DataContext.SetAsLogoCommand}"
+                                          Visibility="{Binding DataContext.SetAsLogoVisibility}" />
+                            </ContextMenu>
+                        </Image.ContextMenu>
+                    </Image>
+                    <MediaElement x:Name="mediaElement"
+                                  Source="{Binding SelectedGroup.SelectedScreenshot.VideoPath}"
+                                  LoadedBehavior="Play"
+                                  UnloadedBehavior="Manual"
+                                  Stretch="Uniform"
+                                  Margin="0">
+                        <MediaElement.Style>
+                            <Style TargetType="MediaElement">
+                                <Setter Property="Visibility"
+                                        Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedGroup.SelectedScreenshot.IsVideo}"
+                                                 Value="False">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MediaElement.Style>
+                    </MediaElement>
+                </Grid>
             </knarzHelperControls:AspectRatioLayoutDecorator>
         </DockPanel>
     </Grid>

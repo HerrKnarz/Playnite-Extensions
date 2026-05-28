@@ -1,8 +1,8 @@
 ﻿using KNARZhelper;
+using KNARZhelper.MetadataCommon.Enum;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using Playnite.SDK.Plugins;
 using ScreenshotUtilities.Controls;
 using System;
 using System.Collections.Generic;
@@ -66,19 +66,26 @@ namespace ScreenshotUtilities.ViewModels
 
         public RelayCommand<object> OpenInFullScreenCommand => new RelayCommand<object>(a =>
         {
-            if (!(SelectedGroup?.Screenshots?.Count > 0) || SelectedGroup.SelectedScreenshot == null)
+            try
             {
-                return;
+                if (!(SelectedGroup?.Screenshots?.Count > 0) || SelectedGroup.SelectedScreenshot == null)
+                {
+                    return;
+                }
+
+                var window = FullScreenViewModel.GetWindow(_plugin, SelectedGroup);
+
+                if (window == null)
+                {
+                    return;
+                }
+
+                window?.ShowDialog();
             }
-
-            var window = FullScreenViewModel.GetWindow(_plugin, SelectedGroup);
-
-            if (window == null)
+            catch (Exception ex)
             {
-                return;
+                Log.Error(ex, "Error opening screenshot in full screen");
             }
-
-            window?.ShowDialog();
         });
 
         public ScreenshotGroups ScreenshotGroups => _plugin.Settings.Settings.CurrentScreenshotGroups is null ? new ScreenshotGroups() : _plugin.Settings.Settings.CurrentScreenshotGroups;
@@ -93,11 +100,20 @@ namespace ScreenshotUtilities.ViewModels
 
         public RelayCommand<object> SelectPreviousScreenshotCommand => new RelayCommand<object>(a => SelectedGroup?.SelectPreviousScreenshot());
 
-        public RelayCommand<object> SetAsBackgroundCommand => new RelayCommand<object>(a => SetAs(MetadataField.BackgroundImage));
+        public RelayCommand<object> SetAsBackgroundCommand => new RelayCommand<object>(a => SetAs(FieldType.Background));
 
-        public RelayCommand<object> SetAsCoverCommand => new RelayCommand<object>(a => SetAs(MetadataField.CoverImage));
+        public RelayCommand<object> SetAsCoverCommand => new RelayCommand<object>(a => SetAs(FieldType.Cover));
 
-        public RelayCommand<object> SetAsIconCommand => new RelayCommand<object>(a => SetAs(MetadataField.Icon));
+        public RelayCommand<object> SetAsIconCommand => new RelayCommand<object>(a => SetAs(FieldType.Icon));
+
+        public RelayCommand<object> SetAsLogoCommand => new RelayCommand<object>(a => SetAs(FieldType.Logo));
+
+        public Visibility SetAsLogoVisibility
+            => AddonInteractions.IsExtraMetadataLoaderInstalled()
+                && SelectedGroup?.SelectedScreenshot != null
+                && SelectedGroup.SelectedScreenshot.DisplayPath.EndsWith(".png")
+                ? Visibility.Visible
+                : Visibility.Collapsed;
 
         public double ThumbnailHeight => _plugin.Settings.Settings.ThumbnailHeight;
 
@@ -149,7 +165,7 @@ namespace ScreenshotUtilities.ViewModels
 
         public void ResetViewModel() => SelectedGroup = null;
 
-        public async Task SetAs(MetadataField type)
+        public async Task SetAs(FieldType type)
         {
             if (SelectedGroup?.SelectedScreenshot is null || _gameId == default)
             {

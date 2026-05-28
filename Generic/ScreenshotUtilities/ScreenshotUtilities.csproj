@@ -67,6 +67,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\AddonInteractions.cs">
+      <Link>Shared\AddonInteractions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\AsyncHelper.cs">
+      <Link>Shared\AsyncHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\AspectRatioLayoutDecorator.cs">
       <Link>Shared\Controls\AspectRatioLayoutDecorator.cs</Link>
     </Compile>
@@ -75,6 +81,12 @@
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\LocalFileImageConverter.cs">
       <Link>Shared\Controls\LocalFileImageConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs">
+      <Link>Shared\Controls\SettingsOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsSection.cs">
+      <Link>Shared\Controls\SettingsSection.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Enum\DbInteractionResult.cs">
       <Link>Shared\DbInteractionResult.cs</Link>
@@ -183,6 +195,7 @@
       <DependentUpon>ScreenshotViewerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\MetadataObject.cs" />
+    <Compile Include="Models\ProviderSettings.cs" />
     <Compile Include="Models\ScreenshotProviderPlugin.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="ScreenshotActions.cs" />
@@ -214,6 +227,11 @@
     <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\CommonStyles.xaml">
       <Link>Shared\Controls\CommonStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsStyles.xaml">
+      <Link>Shared\Controls\SettingsStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Views\SelectMetadataView.xaml">
       <Link>Shared\MetadataCommon\Views\SelectMetadataView.xaml</Link>
@@ -248,13 +266,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Magick.NET-Q8-x86">
-      <Version>14.10.3</Version>
+      <Version>14.13.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
       <Version>1.1.39</Version>
     </PackageReference>
     <PackageReference Include="PlayniteSDK">
-      <Version>6.13.0</Version>
+      <Version>6.16.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />

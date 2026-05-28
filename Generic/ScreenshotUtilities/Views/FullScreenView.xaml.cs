@@ -1,5 +1,6 @@
 ﻿using KNARZhelper.ScreenshotsCommon.Models;
 using ScreenshotUtilities.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace ScreenshotUtilities.Views
             InitializeComponent();
             DataContext = new FullScreenViewModel(plugin, selectedGroup);
             AddKeyBindings();
+            mediaElement.MediaEnded += MediaElement_OnMediaEnded;
         }
 
         private void AddKeyBindings()
@@ -51,6 +53,12 @@ namespace ScreenshotUtilities.Views
         {
             Focus();
             Keyboard.Focus(this);
+        }
+
+        private void MediaElement_OnMediaEnded(object sender, RoutedEventArgs e)
+        {
+            mediaElement.Position = new TimeSpan(0, 0, 1);
+            mediaElement.Play();
         }
 
         private void WheelHandler(object s, MouseWheelEventArgs e)

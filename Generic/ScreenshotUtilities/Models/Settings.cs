@@ -1,7 +1,9 @@
 ﻿using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK.Data;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ScreenshotUtilities.Models
 {
@@ -9,7 +11,6 @@ namespace ScreenshotUtilities.Models
     {
         private int _aspectHeight = 9;
         private int _aspectWidth = 16;
-        private bool _automaticDownload = false;
         private ScreenshotGroups _currentScreenshotGroups = new ScreenshotGroups();
         private bool _debug = true;
         private bool _displayButtonControl = true;
@@ -17,6 +18,7 @@ namespace ScreenshotUtilities.Models
         private ObservableCollection<MetadataObject> _downloadFilter = new ObservableCollection<MetadataObject>();
         private bool _isButtonControlVisible = false;
         private bool _isViewerControlVisible = false;
+        private Dictionary<string, ProviderSettings> _providerSettings = new Dictionary<string, ProviderSettings>();
         private int _thumbnailHeight = 120;
         private int _viewerWindowHeight = 700;
         private int _viewerWindowWidth = 800;
@@ -49,17 +51,14 @@ namespace ScreenshotUtilities.Models
             }
         }
 
-        public bool AutomaticDownload
-        {
-            get => _automaticDownload;
-            set => SetValue(ref _automaticDownload, value);
-        }
+        [DontSerialize]
+        public ScreenshotGroup CurrentLocalScreenshotGroup
+            => _currentScreenshotGroups.FirstOrDefault(g => g.Provider.Id == Guid.Parse("a049eff8-fd41-4dbc-9e35-01acc6b1a0cb"));
 
         [DontSerialize]
         public ScreenshotGroups CurrentScreenshotGroups
         {
-            get => _currentScreenshotGroups;
-            set => SetValue(ref _currentScreenshotGroups, value);
+            get => _currentScreenshotGroups; set => SetValue(ref _currentScreenshotGroups, value);
         }
 
         public bool Debug
@@ -98,6 +97,12 @@ namespace ScreenshotUtilities.Models
         {
             get => _isViewerControlVisible;
             set => SetValue(ref _isViewerControlVisible, value);
+        }
+
+        public Dictionary<string, ProviderSettings> ProviderSettings
+        {
+            get => _providerSettings;
+            set => SetValue(ref _providerSettings, value);
         }
 
         public int ThumbnailHeight

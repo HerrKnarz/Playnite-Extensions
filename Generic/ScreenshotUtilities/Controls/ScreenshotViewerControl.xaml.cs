@@ -3,6 +3,7 @@ using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
 using ScreenshotUtilities.ViewModels;
 using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ScreenshotUtilities.Controls
@@ -17,6 +18,7 @@ namespace ScreenshotUtilities.Controls
             InitializeComponent();
             DataContext = new ScreenshotViewerViewModel(plugin, game);
             AddKeyBindings();
+            mediaElement.MediaEnded += MediaElement_OnMediaEnded;
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -75,6 +77,12 @@ namespace ScreenshotUtilities.Controls
             InputBindings.Add(rightKeyBinding);
 
             ScreenshotListBox.PreviewMouseWheel += WheelHandler;
+        }
+
+        private void MediaElement_OnMediaEnded(object sender, RoutedEventArgs e)
+        {
+            mediaElement.Position = new TimeSpan(0, 0, 1);
+            mediaElement.Play();
         }
 
         private void WheelHandler(object s, MouseWheelEventArgs e)

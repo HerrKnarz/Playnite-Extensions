@@ -1,5 +1,13 @@
 AddonId: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Packages:
+  - Version: 0.7.3
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-04-01
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-04-01.2/ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90_0_7_3.pext
+    Changelog:
+      - Added setting to define how many days the addon waits to look for new screenshots after the last time.
+      - Hopefully fixed fullscreen view opening on another display as the one Playnite is on.
+      - Fixed accidental deletion of json files for provider addons without screenshots. The deletion caused providers that don't have screenshots for a game to search for new ones every time the game is selected again. It now respects the newly added setting.
   - Version: 0.7.2
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2026-03-28

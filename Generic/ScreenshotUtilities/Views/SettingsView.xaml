@@ -4,99 +4,191 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:screenshotutilities="clr-namespace:ScreenshotUtilities"
+             xmlns:models="clr-namespace:ScreenshotUtilities.Models"
+             xmlns:c="clr-namespace:KNARZhelper.Controls"
              d:DataContext="{d:DesignInstance Type=screenshotutilities:ScreenshotUtilitiesSettingsViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="400"
-             d:DesignWidth="600">
+             d:DesignHeight="1100"
+             d:DesignWidth="700"
+             d:Background="LightGray"
+             Padding="15, 10">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <d:ResourceDictionary Source="/ScreenshotUtilities;component/Localization/en_US.xaml" />
+                <ResourceDictionary Source="/ScreenshotUtilities;component/Shared/Controls/CommonStyles.xaml" />
+                <ResourceDictionary Source="/ScreenshotUtilities;component/Shared/Controls/SettingsStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel Margin="10">
-        <DockPanel DockPanel.Dock="Bottom"
-                   Margin="0,10,0,0"
-                   LastChildFill="False">
-            <Button Content="&#xec3e; &#xef36;"
-                    FontFamily="{DynamicResource FontIcoFont}"
-                    ToolTip="{DynamicResource LOCCategoryLabel}"
-                    Margin="0,0,10,0"
-                    Command="{Binding AddCategoryCommand}"
-                    DockPanel.Dock="Left" />
-            <Button Content="&#xec3e; &#xf004;"
-                    FontFamily="{DynamicResource FontIcoFont}"
-                    ToolTip="{DynamicResource LOCTagLabel}"
-                    Margin="0,0,10,0"
-                    Command="{Binding AddTagCommand}"
-                    DockPanel.Dock="Left" />
-            <Button Content="&#xec53;"
-                    FontFamily="{DynamicResource FontIcoFont}"
-                    ToolTip="{DynamicResource LOCRemoveTitle}"
-                    Margin="0,0,0,0"
-                    Command="{Binding RemoveFromListCommand}"
-                    CommandParameter="{Binding SelectedItems, ElementName=LbDownloadFilter}"
-                    DockPanel.Dock="Left" />
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <DockPanel>
+            <c:SettingsSection Heading="{DynamicResource LOCScreenshotUtilitiesSettingsSectionGeneralSettings}"
+                               DockPanel.Dock="Top">
+                <StackPanel>
+                    <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatio}"
+                                      Description="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatioDescription}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding Settings.AspectWidth}"
+                                     Width="40"
+                                     Margin="0,0,5,0" />
+                            <Label Content=":"
+                                   Margin="0,0,5,0" />
+                            <TextBox Text="{Binding Settings.AspectHeight}"
+                                     Width="40" />
+                        </StackPanel>
+                    </c:SettingsOption>
+
+                    <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsThumbnailHeight}"
+                                      Description="{DynamicResource LOCScreenshotUtilitiesSettingsThumbnailHeightDescription}">
+                        <TextBox Text="{Binding Settings.ThumbnailHeight}"
+                                 Width="40" />
+                    </c:SettingsOption>
+
+                    <CheckBox IsChecked="{Binding Settings.DisplayViewerControl}"
+                              Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayViewerControl}"
+                              Margin="0, 0, 0, 5" />
+                    <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayDescription}"
+                               Style="{StaticResource SettingsDescription}"
+                               Margin="0, 0, 0, 15" />
+
+                    <CheckBox IsChecked="{Binding Settings.DisplayButtonControl}"
+                              Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayButtonControl}"
+                              Margin="0, 0, 0, 5" />
+                    <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayDescription}"
+                               Style="{StaticResource SettingsDescription}" />
+                </StackPanel>
+            </c:SettingsSection>
+
+            <c:SettingsSection Heading="{DynamicResource LOCScreenshotUtilitiesSettingsSectionProviderSettings}"
+                               Description="{DynamicResource LOCScreenshotUtilitiesSettingsSectionProviderSettingsDescription}"
+                               DockPanel.Dock="Top">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
+                        <ListBox Name="LbProviderSettings"
+                                 DockPanel.Dock="Left"
+                                 MinWidth="150"
+                                 VerticalAlignment="Stretch"
+                                 ItemsSource="{Binding Settings.ProviderSettings}"
+                                 SelectedValuePath="Value"
+                                 SelectedItem="{Binding SelectedProviderSetting}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Key}"
+                                               Margin="5" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel DockPanel.Dock="Right"
+                                    Margin="15, 0, 0, 0"
+                                    d:DataContext="{d:DesignInstance Type=models:ProviderSettings}"
+                                    DataContext="{Binding SelectedValue, ElementName=LbProviderSettings}"
+                                    VerticalAlignment="Top">
+                            <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsSortOrder}"
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsSortOrderDescription}">
+                                <TextBox Text="{Binding SortOrder}"
+                                         Width="40"
+                                         HorizontalContentAlignment="Right" />
+                            </c:SettingsOption>
+
+                            <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsPriority}"
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsPriorityDescription}">
+                                <TextBox Text="{Binding Priority}"
+                                         Width="40"
+                                         HorizontalContentAlignment="Right" />
+                            </c:SettingsOption>
+
+                            <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsFetchMode}"
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsFetchModeDescription}"
+                                              HorizontalControlAlignment="Stretch"
+                                              MinLabelWidth="100">
+                                <ComboBox ItemsSource="{Binding Path=ScreenshotFetchModesWithCaptions}"
+                                          DisplayMemberPath="Value"
+                                          SelectedValuePath="Key"
+                                          SelectedValue="{Binding Path=FetchMode}"
+                                          MinWidth="200" />
+                            </c:SettingsOption>
+
+                            <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsDaysRefresh}"
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsDaysRefreshDescription}">
+                                <TextBox Text="{Binding DaysUntilRefresh}"
+                                         Width="40"
+                                         HorizontalContentAlignment="Right" />
+                            </c:SettingsOption>
+
+                            <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots}"
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription}"
+                                              HorizontalControlAlignment="Stretch"
+                                              MinLabelWidth="100">
+                                <DockPanel>
+                                    <Button Content="{DynamicResource LOCScreenshotUtilitiesSettingsSelect}"
+                                            DockPanel.Dock="Right"
+                                            Margin="10, 0, 0, 0"
+                                            Command="{Binding AddTagToAddWhenHavingScreenshotsCommand}"
+                                            CommandParameter="{Binding TagWhenHavingScreenshots}" />
+                                    <TextBox Text="{Binding TagWhenHavingScreenshots}"
+                                             MinWidth="100" />
+                                </DockPanel>
+                            </c:SettingsOption>
+
+                            <CheckBox IsChecked="{Binding DownloadAutomatically}"
+                                      Margin="0, 0, 0, 5"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesSettingsAutomaticDownload}" />
+                            <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription}"
+                                       Style="{StaticResource SettingsDescription}"
+                                       Margin="0, 0, 0, 15" />
+
+                            <CheckBox IsChecked="{Binding AlwaysCreateThumbnails}"
+                                      Margin="0, 0, 0, 5"
+                                      Content="{DynamicResource LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnails}" />
+                            <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription}"
+                                       Style="{StaticResource SettingsDescription}" />
+                        </StackPanel>
+                    </DockPanel>
+                </DockPanel>
+            </c:SettingsSection>
+
+            <c:SettingsSection Heading="{DynamicResource LOCScreenshotUtilitiesSettingsSectionDownloadFilter}"
+                               Description="{DynamicResource LOCScreenshotUtilitiesSettingsSectionDownloadFilterDescription}"
+                               DockPanel.Dock="Top">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal"
+                                DockPanel.Dock="Bottom">
+                        <Button Content="&#xec3e; &#xef36;"
+                                Style="{StaticResource KNARZIconButton}"
+                                ToolTip="{DynamicResource LOCCategoryLabel}"
+                                Margin="0,0,10,0"
+                                Command="{Binding AddCategoryCommand}" />
+                        <Button Content="&#xec3e; &#xf004;"
+                                Style="{StaticResource KNARZIconButton}"
+                                ToolTip="{DynamicResource LOCTagLabel}"
+                                Margin="0,0,10,0"
+                                Command="{Binding AddTagCommand}" />
+                        <Button Content="&#xec53;"
+                                Style="{StaticResource KNARZIconButton}"
+                                ToolTip="{DynamicResource LOCRemoveTitle}"
+                                Margin="0,0,0,0"
+                                Command="{Binding RemoveFromListCommand}"
+                                CommandParameter="{Binding SelectedItems, ElementName=LbDownloadFilter}" />
+                    </StackPanel>
+                    <ListBox Name="LbDownloadFilter"
+                             HorizontalContentAlignment="Stretch"
+                             VerticalContentAlignment="Stretch"
+                             Margin="0, 0, 0, 10"
+                             MinHeight="100"
+                             DockPanel.Dock="Top"
+                             VerticalAlignment="Stretch"
+                             SelectionMode="Extended"
+                             ItemsSource="{Binding Settings.DownloadFilter}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TypeAndName}"
+                                           Margin="5" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </c:SettingsSection>
         </DockPanel>
-
-        <StackPanel Orientation="Horizontal"
-                    Margin="5"
-                    DockPanel.Dock="Top">
-            <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatio}"
-                   Margin="0,0,10,0" />
-            <TextBox Text="{Binding Settings.AspectWidth}"
-                     Width="40"
-                     Margin="0,0,5,0" />
-            <Label Content=":"
-                   Margin="0,0,5,0" />
-            <TextBox Text="{Binding Settings.AspectHeight}"
-                     Width="40" />
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal"
-                    Margin="5"
-                    DockPanel.Dock="Top">
-            <Label Content="{DynamicResource LOCScreenshotUtilitiesSettingsThumbnailHeight}"
-                   Margin="0,0,10,0" />
-            <TextBox Text="{Binding Settings.ThumbnailHeight}"
-                     Width="40"
-                     Margin="0,0,5,0" />
-        </StackPanel>
-
-        <CheckBox IsChecked="{Binding Settings.DisplayViewerControl}"
-                  Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayViewerControl}"
-                  DockPanel.Dock="Top"
-                  Margin="5" />
-
-        <CheckBox IsChecked="{Binding Settings.DisplayButtonControl}"
-                  Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayButtonControl}"
-                  DockPanel.Dock="Top"
-                  Margin="5" />
-
-        <CheckBox IsChecked="{Binding Settings.AutomaticDownload}"
-                  Content="{DynamicResource LOCScreenshotUtilitiesSettingsAutomaticDownload}"
-                  DockPanel.Dock="Top"
-                  Margin="5" />
-
-        <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsDownloadFilterInfo}"
-                   TextWrapping="Wrap"
-                   Margin="5"
-                   DockPanel.Dock="Top" />
-
-        <ListBox Name="LbDownloadFilter"
-                 HorizontalContentAlignment="Stretch"
-                 VerticalContentAlignment="Stretch"
-                 Margin="0,10,0,0"
-                 DockPanel.Dock="Top"
-                 VerticalAlignment="Stretch"
-                 SelectionMode="Extended"
-                 ItemsSource="{Binding Settings.DownloadFilter}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding TypeAndName}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </DockPanel>
+    </ScrollViewer>
 </UserControl>
