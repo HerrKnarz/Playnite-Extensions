@@ -230,6 +230,11 @@ namespace ScreenshotUtilitiesLocalProvider.Models
             var fileMask = StringExpander.ReplaceAllPlaceholders(FileMask, game, gameName);
             var result = new List<Screenshot>();
 
+            if (string.IsNullOrEmpty(folder))
+            {
+                return result;
+            }
+
             try
             {
                 var dirInfo = new DirectoryInfo(folder);

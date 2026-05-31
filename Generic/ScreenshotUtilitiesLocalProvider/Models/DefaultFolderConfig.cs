@@ -74,7 +74,7 @@ namespace ScreenshotUtilitiesLocalProvider.Models
                 Icon = "\xf006",
                 IconColor = Color.FromRgb(16, 124, 16),
                 Path = "{XboxGamebarScreenshotsDir}",
-                FileMask = "{GameName} *",
+                FileMask = "{GameName} *.png",
                 InvalidCharReplacement = ""
             });
         }

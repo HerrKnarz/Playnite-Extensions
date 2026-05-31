@@ -523,6 +523,16 @@ namespace ScreenshotUtilities
 
         private IEnumerable<GameMenuItem> GetResetGameMenuItems(List<Game> games, List<ScreenshotProvider> providers)
         {
+            if (games.Count > 1)
+            {
+                providers.Clear();
+                providers.AddRange(Settings.Settings.CurrentScreenshotGroups
+                    .Select(g => g.Provider)
+                    .Distinct()
+                    .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
+                    .ThenBy(p => p.Name));
+            }
+
             if (providers?.Count == 0)
             {
                 yield break;
