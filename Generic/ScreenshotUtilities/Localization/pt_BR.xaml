@@ -5,8 +5,36 @@
 
     <sys:String x:Key="LOC_ScreenshotUtilities_ControlLabel">Capturas de Tela</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshots">Do you really want to reset the screenshots? This will delete all screenshots from this game and loads them again from their sources.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshots">Do you really want to reset the screenshots? This will delete all screenshots from the selected game(s) and loads them again from their sources.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesDialogResetScreenshotsAll">Do you really want to reset the screenshots? This will delete all screenshots from all games in your library and loads them again from their sources. This can take some time for big libraries.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesDialogSearchGame">Search game</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeUnknown">Unknown</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeScreenshot">Screenshot</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeSelfmadeScreenshot">Private screenshot</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypePromoshot">Promotion screenshot</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBackground">Background</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeIcon">Icon</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeLogo">Logo</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBoxFront">Box (front)</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBoxBack">Box(back)</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBoxSpine">Box (spine)</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBox3D">Box (3D)</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeDisc">Disc</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeCartridge">Cartridge</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArcadeCabinet">Arcade cabinet</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArcadeCircuit">Arcade circuit</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArcadeControlPanel">Acrade control panel</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArcadeControlsInfo">Arcade controls info</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArcadeMarquee">Marquee</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeBanner">Banner</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypePoster">Poster</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeDecal">Decal</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeAdvertisement">Advertisement</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeArtwork">Artwork</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypeManual">Manual</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypePromoVideo">Promo video</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMediaTypePrivateVideo">Private video</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMenuCopyToClipboard">Copiar para a área de transferência</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuDeleteScreenshot">Excluir captura de tela</sys:String>
@@ -25,12 +53,15 @@
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshThumbnailsFrom">Refresh thumbnails from</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuRefreshingThumbnails">Refreshing thumbnails for</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFrom">Reset screenshots from</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetFromAll">Reset screenshots for all games from</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshots">Reset screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuResetScreenshotsAll">Reset screenshots for all games</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchFrom">Search screenshots from</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSearchScreenshots">Search screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsBackground">Set as background</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsCover">Set as cover</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsIcon">Set as icon</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesMenuSetAsLogo">Set as logo</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesMenuShowScreenshots">Show screenshots</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesMessageNoGameSelected">Nenhum jogo selecionado</sys:String>
@@ -38,10 +69,46 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots folder couldn't be deleted after the game {0} was removed. Please delete it manually. Click on this message to open the folder.</sys:String>
 
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Baixar capturas de tela automaticamente na primeira visualização</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">Downloading screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">Refreshing screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">Refreshing thumbnails</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">Resetting screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressDisable">Disabling screenshots</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesResultDownload">Downloaded screenshots for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultRefreshScreenshots">Refreshed screenshots for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultRefreshThumbnails">Refreshed thumbnails for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultReset">Reset screenshots for {0} games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesResultDisable">Disabled screenshots for {0} games</sys:String>
+
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnails">Always create thumbnails</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription">When enabled, thumbnails will always be created even for not yet downloaded screenshots. This is useful for performance optimization.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Proporção de aspecto padrão</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatioDescription">The aspect ratio is used to maintain a consistent width and height in the screenshot viewer. It doesn't affect the original screenshots.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription">When enabled, screenshots will be downloaded automatically when a game is selected to make viewing them faster afterwards. You can filter which games are affected using categories or tags below. Not downloaded screenshots will be loaded from the source when viewed.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefresh">Refresh interval</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDaysRefreshDescription">The interval in days at which screenshots are refreshed. Setting it to 0 will always look for new screenshots when selecting a game.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Exibir botão para abrir o visualizador independente no tema</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayDescription">Your theme has to support ScreenshotUtilities to display the control.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Display screenshot viewer control in the theme</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsDownloadFilterInfo">Only download screenshots for games with one of the following categories or tags. Of none are defined, screenshots will always be downloaded.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchMode">Fetch mode</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeDescription">This determines if screenshots are fetched automatically or manually. When set to &quot;Only if first in priority&quot;, it will only fetch screenshots if no other provider with a higher priority already has screenshots.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeAlways">Always, ignoring priority</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeOnlyIfFirst">Only if first in priority to find screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeOnlyManually">Only manually</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsPriority">Priority</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsPriorityDescription">The priority determines the order in which providers are called to fetch screenshots.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSectionDownloadFilter">Download Filter</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSectionDownloadFilterDescription">Screenshots are only downloaded for games with at least one of the categories or tags set here. If none are defined, screenshots will always be downloaded for providers with the download option enabled.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSectionGeneralSettings">General Settings</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSectionProviderSettings">Provider Settings</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSectionProviderSettingsDescription">Here you can configure settings for each screenshot provider separately.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSelect">Select</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSortOrder">Sort order</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsSortOrderDescription">The providers will be shown in this order in menus and the viewer control.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots">Tag with</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription">Games will have this tag added when they have screenshots from the provider. It will be removed, when the screenshots are deleted.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Thumbnail height</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeightDescription">The height of the created thumbnails in pixels. The width is calculated based on the aspect ratio of the image. Thumbnails will only be created for downloaded screenshots or when &quot;Always create thumbnails&quot; is enabled.</sys:String>
 </ResourceDictionary>
