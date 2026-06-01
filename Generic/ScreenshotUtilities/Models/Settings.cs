@@ -86,6 +86,10 @@ namespace ScreenshotUtilities.Models
         }
 
         [DontSerialize]
+        public bool HasLocalScreenshots
+           => !(CurrentLocalScreenshotGroup is null) && CurrentLocalScreenshotGroup.HasScreenshots;
+
+        [DontSerialize]
         public bool IsButtonControlVisible
         {
             get => _isButtonControlVisible;
