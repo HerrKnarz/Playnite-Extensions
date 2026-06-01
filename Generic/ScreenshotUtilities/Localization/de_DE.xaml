@@ -110,5 +110,5 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots">Setze folgenden Tag</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription">Spielen wird dieser Tag hinzugefügt, wenn sie Screenshots vom Anbieter haben. Er wird wieder entfernt, wenn die Screenshots gelöscht werden.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Höhe der Miniaturansicht</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeightDescription">Die Höhe der erstellten Thumbnails in Pixeln. Die Breite wird anhand des Seitenverhältnisses des Bildes berechnet. Thumbnails werden nur für heruntergeladene Screenshots erstellt oder wenn &quot;Immer Thumbnails erstellen&quot; aktiviert ist.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeightDescription">Die Höhe der erstellten Vorschaubilder in Pixeln. Die Breite wird anhand des Seitenverhältnisses des Bildes berechnet. Vorschaubilder werden nur für heruntergeladene Screenshots erstellt oder wenn &quot;Immer Vorschaubilder erstellen&quot; aktiviert ist.</sys:String>
 </ResourceDictionary>
