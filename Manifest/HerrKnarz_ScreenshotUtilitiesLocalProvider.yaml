@@ -1,5 +1,16 @@
 AddonId: ScreenshotUtilitiesLocalProvider_a049eff8-fd41-4dbc-9e35-01acc6b1a0cb
 Packages:
+  - Version: 0.6.3
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-06-01
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-06-01/ScreenshotUtilitiesLocalProvider_a049eff8-fd41-4dbc-9e35-01acc6b1a0cb_0_6_3.pext
+    Changelog:
+      - Reworked folder config settings to be more user friendly and easy to understand.
+      - Added buttons to set up several common folder configs with one click. This includes the default folders for Steam, GOG Galaxy, Ubisoft Connect, Retroarch, ScummVM and XBox Game Bar.
+      - Added option to include subfolders to the folder config settings.
+      - Added option to specify a media type for each folder config to distinguish between different types of media like screenshot, promo shot, box art, arcade cabinet etc.. When set to one of the new video types, the files will be handled as videos and played in the viewer.
+      - The placeholder for XBox Game Bar screenshots now also works if the user changed the location on the hard disc.
+      - Updated localizations
   - Version: 0.5.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2026-03-28

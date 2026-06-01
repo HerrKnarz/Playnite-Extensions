@@ -1,5 +1,25 @@
 AddonId: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Packages:
+  - Version: 0.8.3
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-06-01
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-06-01/ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90_0_8_3.pext
+    Changelog:
+      - Added basic support for videos as a new media type. Currently only plays them in a loop in the viewer without playback controls, yet. Will be expanded in the future.
+      - Reworked extension settings to be more user friendly and added some new options. Due to the changes some settings have been reset. Please check your settings after updating!
+      - Added option to always create thumbnails for screenshots per provider, even if the screenshot isn't downloaded. This also includes videos.
+      - Added option to set a sort order for the providers, so they appear in a defined order in the viewer and menus.
+      - Options to automatically download screenshots and refresh interval can now be set per provider.
+      - Added option to set a priority and fetch mode for each provider. Screenshots will fetched in that order and based on the fetch mode can be left out if a provider with a higher priority already has screenshots.
+      - Added option to only fetch screenshots for a provider manually (via the aforementioned fetch mode).
+      - Added option to add a custom tag to a game with screenshots for each of the providers.
+      - Added option to the viewer context menu to set an image as the logo for the game if Extra Metadata is installed and the image is a PNG.
+      - Added CurrentLocalScreenshotGroup property to the settings to make it easier for themes to display local screenshots together.
+      - Added boolean HasScreenshots property to the screenshot groups to make it easier for themes to check if there are any screenshots for the current game.
+      - Added boolean HasLocalScreenshots property to the settings to make it easier for themes to check if there are any local screenshots for the current game.
+      - Added option to reset screenshots for all games to the main menu. Also changed the reset to only reload screenshots for the currently selected game instead of all to speed things up. The other games will reload their screenshots when being selected anyway.
+      - Updated localizations
+      - Updated ImageMagick to the newest version.
   - Version: 0.7.3
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2026-04-01
