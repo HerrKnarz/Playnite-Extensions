@@ -1,9 +1,11 @@
-﻿using KNARZhelper.ScreenshotsCommon.Models;
+﻿using KNARZhelper;
+using KNARZhelper.ScreenshotsCommon.Models;
 using ScreenshotUtilities.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ScreenshotUtilities.Views
 {
@@ -19,6 +21,7 @@ namespace ScreenshotUtilities.Views
             DataContext = new FullScreenViewModel(plugin, selectedGroup);
             AddKeyBindings();
             mediaElement.MediaEnded += MediaElement_OnMediaEnded;
+            Application.Current.DispatcherUnhandledException += OnDispatcherUnhandledException;
         }
 
         private void AddKeyBindings()
@@ -59,6 +62,18 @@ namespace ScreenshotUtilities.Views
         {
             mediaElement.Position = new TimeSpan(0, 0, 1);
             mediaElement.Play();
+        }
+
+        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            if (!(DataContext is ScreenshotViewerViewModel viewModel))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            Log.Error(e.Exception, $"Error displaying file {viewModel.SelectedGroup?.SelectedScreenshot?.DisplayPath}");
+            e.Handled = true;
         }
 
         private void WheelHandler(object s, MouseWheelEventArgs e)

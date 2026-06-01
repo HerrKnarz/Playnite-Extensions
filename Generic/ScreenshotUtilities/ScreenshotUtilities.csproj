@@ -271,6 +271,9 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
       <Version>1.1.39</Version>
     </PackageReference>
+    <PackageReference Include="NReco.VideoConverter">
+      <Version>1.2.1</Version>
+    </PackageReference>
     <PackageReference Include="PlayniteSDK">
       <Version>6.16.0</Version>
     </PackageReference>

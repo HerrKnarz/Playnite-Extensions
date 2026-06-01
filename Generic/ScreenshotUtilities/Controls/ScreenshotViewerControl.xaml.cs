@@ -5,6 +5,7 @@ using ScreenshotUtilities.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ScreenshotUtilities.Controls
 {
@@ -19,6 +20,7 @@ namespace ScreenshotUtilities.Controls
             DataContext = new ScreenshotViewerViewModel(plugin, game);
             AddKeyBindings();
             mediaElement.MediaEnded += MediaElement_OnMediaEnded;
+            Application.Current.DispatcherUnhandledException += OnDispatcherUnhandledException;
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -83,6 +85,18 @@ namespace ScreenshotUtilities.Controls
         {
             mediaElement.Position = new TimeSpan(0, 0, 1);
             mediaElement.Play();
+        }
+
+        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            if (!(DataContext is ScreenshotViewerViewModel viewModel))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            Log.Error(e.Exception, $"Error displaying file {viewModel.SelectedGroup?.SelectedScreenshot?.DisplayPath}");
+            e.Handled = true;
         }
 
         private void WheelHandler(object s, MouseWheelEventArgs e)

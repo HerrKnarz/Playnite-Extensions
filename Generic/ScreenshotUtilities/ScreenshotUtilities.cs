@@ -24,6 +24,7 @@ namespace ScreenshotUtilities
         private static readonly string _controlNameViewer = "ScreenshotViewerControl";
         private static readonly string _defaultGameMenuSection = ResourceProvider.GetString("LOCScreenshotUtilitiesName");
         private static readonly string _pluginSourceName = "ScreenshotUtilities";
+        private Guid _lastSelectedGame = default;
 
         public ScreenshotUtilities(IPlayniteAPI api) : base(api)
         {
@@ -209,9 +210,10 @@ namespace ScreenshotUtilities
 
                 base.OnGameSelected(args);
 
-                if (args?.NewValue?.Count == 1)
+                if (args?.NewValue?.Count == 1 && args.NewValue[0].Id != _lastSelectedGame)
                 {
                     Timer.Change(Timeout.Infinite, Timeout.Infinite);
+                    _lastSelectedGame = args.NewValue[0].Id;
 
                     if (Settings.Settings.Debug)
                     {
