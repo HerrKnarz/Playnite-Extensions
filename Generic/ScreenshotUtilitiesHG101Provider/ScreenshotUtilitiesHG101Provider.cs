@@ -26,6 +26,7 @@ namespace ScreenshotUtilitiesHG101Provider
         }
 
         public override Guid Id { get; } = Guid.Parse("dde4dbbb-d889-4b48-aeda-e663a6e11c1a");
+        public bool IsLocalProvider { get; set; } = false;
         public string ProviderName { get; set; } = _websiteName;
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = true;

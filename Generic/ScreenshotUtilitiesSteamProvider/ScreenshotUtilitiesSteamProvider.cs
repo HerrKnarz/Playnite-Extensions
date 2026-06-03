@@ -29,6 +29,7 @@ namespace ScreenshotUtilitiesSteamProvider
         }
 
         public override Guid Id { get; } = Guid.Parse("074c1cc0-a3ec-4ea2-a136-b6a01fbf0fae");
+        public bool IsLocalProvider { get; set; } = false;
         public string ProviderName { get; set; } = "Steam";
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = true;

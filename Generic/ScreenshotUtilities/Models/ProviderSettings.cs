@@ -7,6 +7,7 @@ using Playnite.SDK.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace ScreenshotUtilities.Models
 {
@@ -19,7 +20,7 @@ namespace ScreenshotUtilities.Models
 
     public class ProviderSettings : ObservableObject
     {
-        private bool _alwaysCreateThumbnails = false;
+        private bool? _alwaysCreateThumbnails = false;
         private int _daysUntilRefresh = 5;
         private bool _downloadAutomatically = false;
         private ScreenshotFetchMode _fetchMode = ScreenshotFetchMode.Always;
@@ -54,7 +55,7 @@ namespace ScreenshotUtilities.Models
 
         public bool AlwaysCreateThumbnails
         {
-            get => _alwaysCreateThumbnails;
+            get => _alwaysCreateThumbnails ?? IsLocal;
             set => SetValue(ref _alwaysCreateThumbnails, value);
         }
 
@@ -70,17 +71,26 @@ namespace ScreenshotUtilities.Models
             set => SetValue(ref _downloadAutomatically, value);
         }
 
+        [DontSerialize]
+        public Visibility DownloadAutomaticallyVisibility => IsLocal ? Visibility.Collapsed : Visibility.Visible;
+
         public ScreenshotFetchMode FetchMode
         {
             get => _fetchMode;
             set => SetValue(ref _fetchMode, value);
         }
 
+        [DontSerialize]
+        public bool IsLocal { get; set; }
+
         public int Priority
         {
             get => _priority;
             set => SetValue(ref _priority, value < 1 ? 1 : value);
         }
+
+        [DontSerialize]
+        public string ProviderIcon => IsLocal ? "\xf103" : "\xf102";
 
         [DontSerialize]
         public ScreenshotFetchModesWithCaptions ScreenshotFetchModesWithCaptions { get; } = new ScreenshotFetchModesWithCaptions();
@@ -96,6 +106,13 @@ namespace ScreenshotUtilities.Models
             get => _tagWhenHavingScreenshots;
             set => SetValue(ref _tagWhenHavingScreenshots, value);
         }
+
+        [DontSerialize]
+        public string ThumbnailDescription => IsLocal
+            ? ResourceProvider.GetString("LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescriptionLocal")
+            : ResourceProvider.GetString("LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription");
+
+        //NEXT Update font and use it here for the icons.
     }
 
     /// <summary>

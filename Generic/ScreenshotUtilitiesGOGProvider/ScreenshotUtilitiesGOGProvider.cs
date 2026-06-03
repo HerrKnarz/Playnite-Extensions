@@ -33,6 +33,7 @@ namespace ScreenshotUtilitiesGOGProvider
         }
 
         public override Guid Id { get; } = Guid.Parse("228c70e8-7c89-46fc-b2c8-6e97966d01a4");
+        public bool IsLocalProvider { get; set; } = false;
         public string ProviderName { get; set; } = "GOG";
         public bool SupportsAutomaticScreenshots { get; set; } = true;
         public bool SupportsScreenshotSearch { get; set; } = true;

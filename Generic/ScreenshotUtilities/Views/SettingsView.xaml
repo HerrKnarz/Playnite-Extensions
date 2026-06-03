@@ -74,8 +74,14 @@
                                  SelectedItem="{Binding SelectedProviderSetting}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Key}"
-                                               Margin="5" />
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="5">
+                                        <TextBlock Text="{Binding Value.ProviderIcon}"
+                                                   FontFamily="{StaticResource KNARZIconFont}"
+                                                   FontSize="{StaticResource FontSizeLarger}"
+                                                   Margin="0, 0, 10, 0" />
+                                        <TextBlock Text="{Binding Key}" />
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -133,15 +139,17 @@
 
                             <CheckBox IsChecked="{Binding DownloadAutomatically}"
                                       Margin="0, 0, 0, 5"
-                                      Content="{DynamicResource LOCScreenshotUtilitiesSettingsAutomaticDownload}" />
+                                      Content="{DynamicResource LOCScreenshotUtilitiesSettingsAutomaticDownload}"
+                                      Visibility="{Binding DownloadAutomaticallyVisibility}" />
                             <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsAutomaticDownloadDescription}"
                                        Style="{StaticResource SettingsDescription}"
+                                       Visibility="{Binding DownloadAutomaticallyVisibility}"
                                        Margin="0, 0, 0, 15" />
 
                             <CheckBox IsChecked="{Binding AlwaysCreateThumbnails}"
                                       Margin="0, 0, 0, 5"
                                       Content="{DynamicResource LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnails}" />
-                            <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription}"
+                            <TextBlock Text="{Binding ThumbnailDescription}"
                                        Style="{StaticResource SettingsDescription}" />
                         </StackPanel>
                     </DockPanel>

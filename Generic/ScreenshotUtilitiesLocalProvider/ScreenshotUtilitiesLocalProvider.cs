@@ -38,6 +38,8 @@ namespace ScreenshotUtilitiesLocalProvider
 
         public override Guid Id { get; } = Guid.Parse("a049eff8-fd41-4dbc-9e35-01acc6b1a0cb");
 
+        public bool IsLocalProvider { get; set; } = true;
+
         public string ProviderName { get; set; } = "Local";
 
         public bool SupportsAutomaticScreenshots { get; set; } = true;

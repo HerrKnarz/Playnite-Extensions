@@ -82,6 +82,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\LocalFileImageConverter.cs">
       <Link>Shared\Controls\LocalFileImageConverter.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\ResourceHelper.cs">
+      <Link>Shared\Controls\ResourceHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs">
       <Link>Shared\Controls\SettingsOption.cs</Link>
     </Compile>
@@ -213,6 +216,10 @@
     <Compile Include="ViewModels\ScreenshotViewerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\KNARZhelper\KNARZhelper\Resources\KNARZIconFont.ttf">
+      <Link>Resources\KNARZIconFont.ttf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

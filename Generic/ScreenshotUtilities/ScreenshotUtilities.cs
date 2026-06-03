@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.Controls;
 using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using Playnite.SDK;
@@ -10,7 +11,9 @@ using ScreenshotUtilities.Models;
 using ScreenshotUtilities.Views;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,6 +36,8 @@ namespace ScreenshotUtilities
             {
                 HasSettings = true
             };
+
+            ResourceHelper.LoadIconFont(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 
             Timer = new Timer(new TimerCallback(TimerCallbackPrepareScreenshots), null, Timeout.Infinite, Timeout.Infinite);
 
@@ -323,12 +328,19 @@ namespace ScreenshotUtilities
                 yield break;
             }
 
+            var providersWithDownloadSupport = providers.Where(p => ScreenshotProviders.Any(sp => sp.Id == p.Id && !sp.IsLocalProvider)).ToList();
+
+            if (providersWithDownloadSupport?.Count == 0)
+            {
+                yield break;
+            }
+
             var menuCaption = ResourceProvider.GetString("LOCScreenshotUtilitiesMenuDownloadFrom");
             var menuSection = _defaultGameMenuSection;
             var icon = "suDownloadIcon";
             var captionPrefix = $"{menuCaption} ";
 
-            if (providers.Count > 1)
+            if (providersWithDownloadSupport.Count > 1)
             {
                 menuSection = $"{_defaultGameMenuSection}|{menuCaption}...";
                 icon = null;
@@ -349,7 +361,7 @@ namespace ScreenshotUtilities
                 };
             }
 
-            foreach (var provider in providers)
+            foreach (var provider in providersWithDownloadSupport)
             {
                 yield return new GameMenuItem
                 {

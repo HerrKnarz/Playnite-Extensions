@@ -363,7 +363,8 @@ namespace ScreenshotUtilities
                 }
 
                 var providersToDownload = plugin.ScreenshotProviders
-                    .Where(p => plugin.Settings.Settings.ProviderSettings[p.ProviderName].DownloadAutomatically)
+                    .Where(p => plugin.Settings.Settings.ProviderSettings[p.ProviderName].DownloadAutomatically
+                        && plugin.ScreenshotProviders.Any(sp => sp.Id == p.Id && !sp.IsLocalProvider))
                     .Select(p => p.Id)
                     .ToHashSet();
 
@@ -398,6 +399,8 @@ namespace ScreenshotUtilities
                     {
                         if (providersToCreateThumbnails.Contains(group.Provider.Id))
                         {
+                            //TODO: Temporary Logging! Remove later!
+                            Log.Debug($"PrepareScreenshots {game.Name}: THUMBDEBUG: found {group.Provider.Name}");
                             await group.RefreshThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight, false, true);
                         }
                     }

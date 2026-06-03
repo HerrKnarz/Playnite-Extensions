@@ -81,6 +81,8 @@ namespace ScreenshotUtilities
                 return;
             }
 
+            Settings.ProviderSettings.ForEach(ps => ps.Value.IsLocal = plugin.ScreenshotProviders.Any(sp => sp.ProviderName == ps.Key && sp.IsLocalProvider));
+
             Settings.ProviderSettings = Settings.ProviderSettings.OrderBy(p => p.Value.SortOrder).ThenBy(p => p.Key).ToDictionary(p => p.Key, p => p.Value);
 
             SelectedProviderSetting = Settings.ProviderSettings.First();

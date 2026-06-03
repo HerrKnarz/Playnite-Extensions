@@ -38,6 +38,13 @@ namespace ScreenshotUtilities.Models
             _methodInfoGetScreenshotsManualAsync = type.GetMethod("GetScreenshotsManualAsync");
             _methodInfoHandleGameStoppedAsync = type.GetMethod("HandleGameStoppedAsync");
 
+            var propertyInfoIsLocalProvider = type.GetProperty("IsLocalProvider");
+
+            if (propertyInfoIsLocalProvider != null)
+            {
+                IsLocalProvider = (bool)propertyInfoIsLocalProvider.GetValue(_plugin, null);
+            }
+
             var propertyInfoAutomaticScreenshots = type.GetProperty("SupportsAutomaticScreenshots");
 
             if (propertyInfoAutomaticScreenshots != null)
@@ -54,6 +61,7 @@ namespace ScreenshotUtilities.Models
         }
 
         public Guid Id => _plugin.Id;
+        public bool IsLocalProvider { get; set; } = false;
         public string ProviderName { get; set; } = null;
         public bool SupportsAutomaticScreenshots { get; set; } = false;
         public bool SupportsScreenshotSearch { get; set; } = false;
