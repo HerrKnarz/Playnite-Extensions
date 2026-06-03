@@ -253,7 +253,6 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 
                 result.AddRange(files.Select(file => new Screenshot(file.FullName)
                 {
-                    ThumbnailPath = file.FullName,
                     SortOrder = files.IndexOf(file),
                     Type = MediaType,
                     Name = $"{Name}: {file.Name}"
