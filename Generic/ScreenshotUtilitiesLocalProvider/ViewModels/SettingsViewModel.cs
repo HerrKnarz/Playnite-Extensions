@@ -42,15 +42,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
             }
 
             SelectedGameProfile = Settings.GameProfiles.FirstOrDefault();
-
-            if (Settings.FolderConfigs?.Any() ?? false)
-            {
-                SelectedGameProfile.FolderConfigs.AddMissing(Settings.FolderConfigs);
-
-                Settings.FolderConfigs = null;
-
-                _plugin.SavePluginSettings(Settings);
-            }
         }
 
         public RelayCommand<object> AddFolderConfigCommand => new RelayCommand<object>(item =>

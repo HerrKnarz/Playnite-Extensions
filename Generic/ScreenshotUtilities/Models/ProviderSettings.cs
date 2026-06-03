@@ -111,8 +111,6 @@ namespace ScreenshotUtilities.Models
         public string ThumbnailDescription => IsLocal
             ? ResourceProvider.GetString("LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescriptionLocal")
             : ResourceProvider.GetString("LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription");
-
-        //NEXT Update font and use it here for the icons.
     }
 
     /// <summary>
