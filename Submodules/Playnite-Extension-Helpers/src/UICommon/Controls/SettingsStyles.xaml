@@ -1,0 +1,140 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:local="clr-namespace:PlayniteExtensionHelpers.UICommon.Controls"
+                    mc:Ignorable="d">
+    <Style TargetType="local:SettingsSection">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:SettingsSection">
+                    <Border Margin="0, 5, 0, 5"
+                            Padding="15"
+                            CornerRadius="5"
+                            BorderBrush="{StaticResource NormalBorderBrush}"
+                            d:BorderBrush="WhiteSmoke"
+                            BorderThickness="2">
+                        <DockPanel>
+                            <StackPanel Margin="0, 0, 0, 15"
+                                        DockPanel.Dock="Top">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Content, ElementName=HeadingLabel}"
+                                                               Value="" />
+                                                    <Condition Binding="{Binding Text, ElementName=DescriptionTextBlock}"
+                                                               Value="" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility"
+                                                        Value="Collapsed" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+
+                                <Label x:Name="HeadingLabel"
+                                       Content="{TemplateBinding Heading}"
+                                       FontSize="{StaticResource FontSizeLarge}"
+                                       d:FontSize="15"
+                                       FontWeight="Bold"
+                                       Margin="0, 0, 0, 5">
+                                    <Label.Style>
+                                        <Style TargetType="Label"
+                                               BasedOn="{StaticResource {x:Type Label}}">
+                                            <Style.Triggers>
+                                                <Trigger Property="Content"
+                                                         Value="{x:Null}">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed" />
+                                                </Trigger>
+                                                <Trigger Property="Content"
+                                                         Value="">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+
+                                <TextBlock x:Name="DescriptionTextBlock"
+                                           Text="{TemplateBinding Description}"
+                                           TextWrapping="Wrap"
+                                           FontSize="{StaticResource FontSizeSmall}"
+                                           d:FontSize="12"
+                                           Foreground="{StaticResource TextBrushDarker}"
+                                           d:Foreground="DarkSlateGray"
+                                           Margin="0, 0, 0, 5">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <Trigger Property="Text"
+                                                         Value="{x:Null}">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed" />
+                                                </Trigger>
+                                                <Trigger Property="Text"
+                                                         Value="">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                            <ContentControl Content="{TemplateBinding Content}"
+                                            DockPanel.Dock="Top" />
+                        </DockPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:SettingsOption">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:SettingsOption">
+                    <StackPanel Margin="0, 0, 0, 15">
+                        <DockPanel>
+                            <Label DockPanel.Dock="Left"
+                                   Content="{TemplateBinding Heading}"
+                                   MinWidth="{TemplateBinding MinLabelWidth}" />
+                            <ContentControl Content="{TemplateBinding Content}"
+                                            DockPanel.Dock="Right"
+                                            Margin="10, 0, 0, 0"
+                                            MinWidth="40"
+                                            HorizontalAlignment="{TemplateBinding HorizontalControlAlignment}" />
+                        </DockPanel>
+                        <TextBlock Text="{TemplateBinding Description}"
+                                   TextWrapping="Wrap"
+                                   FontSize="{StaticResource FontSizeSmall}"
+                                   d:FontSize="12"
+                                   Foreground="{StaticResource TextBrushDarker}"
+                                   d:Foreground="DarkSlateGray">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <Trigger Property="Text"
+                                                 Value="{x:Null}">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed" />
+                                        </Trigger>
+                                        <Trigger Property="Text"
+                                                 Value="">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
