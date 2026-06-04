@@ -5,7 +5,7 @@
     <File Path="settings.VisualStudio.json" />
   </Folder>
   <Folder Name="/Submodules/">
-    <Project Path="Playnite-Extension-Helpers/src/PlayniteExtensionHelpers.csproj" />
+    <Project Path="Submodules/Playnite-Extension-Helpers/src/PlayniteExtensionHelpers.csproj" />
   </Folder>
   <Project Path="LinkUtilities/LinkUtilities.csproj" />
 </Solution>

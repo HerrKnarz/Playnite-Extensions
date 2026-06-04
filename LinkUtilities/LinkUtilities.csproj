@@ -14,25 +14,25 @@
     <SupportedPlatform Include="windows" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Playnite-Extension-Helpers\src\FilesCommon\FileHelper.cs" Link="Shared\FilesCommon\FileHelper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\ApiHelper.cs" Link="Shared\ApiHelper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\AsyncHelper.cs" Link="Shared\AsyncHelper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\GamesCommon\BaseAction.cs" Link="Shared\GamesCommon\BaseAction.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\GamesCommon\BaseActionArgs.cs" Link="Shared\GamesCommon\BaseActionArgs.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\GamesCommon\BaseActionBackgroundOp.cs" Link="Shared\GamesCommon\BaseActionBackgroundOp.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\GamesCommon\BaseActionGame.cs" Link="Shared\GamesCommon\BaseActionGame.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\GamesCommon\GameUpdater.cs" Link="Shared\GamesCommon\GameUpdater.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\GogHelper.cs" Link="Shared\GogHelper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\Log.cs" Link="Shared\Log.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\MetadataCommon\LibraryObjectHelper.cs" Link="Shared\MetadataCommon\LibraryObjectHelper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\MiscHelper.cs" Link="Shared\MiscHelper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\SteamHelper.cs" Link="Shared\SteamHelper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\StringHelper.cs" Link="Shared\StringHelper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\UICommon\SelectableObject.cs" Link="Shared\UICommon\SelectableObject.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\WebCommon\AngleSharpHelper.cs" Link="Shared\WebCommon\AngleSharpHelper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\WebCommon\HttpClientWrapper.cs" Link="Shared\WebCommon\HttpClientWrapper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\WebCommon\WebHelper.cs" Link="Shared\WebCommon\WebHelper.cs" />
-    <Compile Include="..\Playnite-Extension-Helpers\src\WebCommon\WebWorker.cs" Link="Shared\WebCommon\WebWorker.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\FilesCommon\FileHelper.cs" Link="Shared\FilesCommon\FileHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\ApiHelper.cs" Link="Shared\ApiHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\AsyncHelper.cs" Link="Shared\AsyncHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\GamesCommon\BaseAction.cs" Link="Shared\GamesCommon\BaseAction.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\GamesCommon\BaseActionArgs.cs" Link="Shared\GamesCommon\BaseActionArgs.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\GamesCommon\BaseActionBackgroundOp.cs" Link="Shared\GamesCommon\BaseActionBackgroundOp.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\GamesCommon\BaseActionGame.cs" Link="Shared\GamesCommon\BaseActionGame.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\GamesCommon\GameUpdater.cs" Link="Shared\GamesCommon\GameUpdater.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\GogHelper.cs" Link="Shared\GogHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\Log.cs" Link="Shared\Log.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\MetadataCommon\LibraryObjectHelper.cs" Link="Shared\MetadataCommon\LibraryObjectHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\MiscHelper.cs" Link="Shared\MiscHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\SteamHelper.cs" Link="Shared\SteamHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\StringHelper.cs" Link="Shared\StringHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\SelectableObject.cs" Link="Shared\UICommon\SelectableObject.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\WebCommon\AngleSharpHelper.cs" Link="Shared\WebCommon\AngleSharpHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\WebCommon\HttpClientWrapper.cs" Link="Shared\WebCommon\HttpClientWrapper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\WebCommon\WebHelper.cs" Link="Shared\WebCommon\WebHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\WebCommon\WebWorker.cs" Link="Shared\WebCommon\WebWorker.cs" />
   </ItemGroup>
 
   <ItemGroup>
