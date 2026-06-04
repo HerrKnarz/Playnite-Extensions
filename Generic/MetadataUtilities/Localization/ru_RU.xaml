@@ -3,8 +3,8 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Добавить новый объект</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">Вы хотите добавить элемент(ы) в нежелательный список?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">A {0} with that name already exists.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Change metadata type</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Conditional action editor</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogChangeType">Изменить тип метаданных</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogConditionalActionEditor">Редактор условного действия</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogCopiedMetadataMessage">Copied metadata to {0} games.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogEnterValue">Пожалуйста, введите значение</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogExecutedConditionalActions">Conditional actions changed {0} games!</sys:String>
@@ -15,9 +15,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoActionsSet">You need to set up at least one action.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoConditionsSet">Do you really want to save an enabled conditional action without conditions? It will then be executed for every game in your library, when its metadata is updated.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoItemsSelected">You need to select at least one source item to merge into the target.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">You need to enter a name.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoNameSet">Вы должны ввести имя.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogNoTargetSet">You need to add a Name for the rule target.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">No unused metadata items found.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogNoUnusedItemsFound">Неиспользуемые метаданные не найдены.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogOnlyIfEmpty">Только если пусто</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">элемент добавлен в {0} играх</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">элемент удален из {0} игр</sys:String>
@@ -55,12 +55,12 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nand">Any condition is false</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">All conditions are false</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">contains</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">doesn't contain</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">is empty</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">is not empty</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsBiggerThan">is bigger than</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsSmallerThan">is smaller than</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">содержит</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">не содержит</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">пусто</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">не пусто</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsBiggerThan">больше, чем</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_IsSmallerThan">меньше, чем</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">add</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">remove</sys:String>
@@ -82,7 +82,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationLibraryNotFound">The following library you use in a conditional action wasn't found:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removed the following unused metadata items:</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Prefix</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Префикс</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Copying metadata...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Executing conditional actions...</sys:String>
