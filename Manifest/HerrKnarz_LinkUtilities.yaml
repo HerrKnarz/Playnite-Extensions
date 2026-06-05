@@ -1,5 +1,13 @@
 AddonId: LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1
 Packages:
+  - Version: 4.3.1
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-06-05
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-06-05/LinkUtilties_f692b4bb-238d-4080-ae76-4aaefde6f7a1_4_3_1.pext
+    Changelog:
+      - Fixed possible deadlocks in several methods. I hope this finally fixes the freezing issues some users had, especially when adding links to several games at once.
+      - Fixed faulty URL generation for Arcade Database links for games with non MAME roms.
+      - Updated localization
   - Version: 4.3.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2026-02-12
