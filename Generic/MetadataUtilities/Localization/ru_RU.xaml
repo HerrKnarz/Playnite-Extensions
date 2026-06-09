@@ -84,19 +84,19 @@
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Removed the following unused metadata items:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Префикс</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Copying metadata...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Executing conditional actions...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Merging metadata...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressCopyingItems">Копирование метаданных...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressExecutingConditionalActions">Выполнение условных действий...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressMergingItems">Объединение метаданных...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddAdd">Добавление {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddRemove">Удаление {0}</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressQuickAddToggle">Переключение {0}</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingItems">Removing metadata items...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Removing unused metadata items...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Removing unwanted metadata items...</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Setting user score...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingItems">Удаление элементов метаданных...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">Удаление неиспользуемых элементов метаданных...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Удаление нежелательных элементов метаданных...</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Установка счёта пользователя...</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Add defaults</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Add existing items</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Добавить значения по умолчанию</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Добавить существующие элементы</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Always add items you remove in the Metadata Editor to the unwanted list without asking.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Always save manual merges as merge rules.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Может быть выполнено вручную</sys:String>
@@ -112,9 +112,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Execute only on new games before metadata download</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Скрыть в деталях</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Скрыть в редакторе</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignore conditions</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignore conditions when executing manually</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignore hidden games in game count</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Игнорировать условия</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Игнорировать условия при выполнении вручную</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Игнорировать скрытые игры в подсчете игр</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignore hidden games when removing unused metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Automatically execute merge rules on metadata update</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Merge rules</sys:String>
@@ -138,10 +138,10 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabPrefixes">Префиксы</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabQuickAdd">Быстрое добавление</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabRemoveUnwanted">Удалить неиспользуемые</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Field types</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsTabTypeConfig">Типы полей</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabWhitelist">Whitelist</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsToggle">Toggle</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Values to merge</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Write debug log messages (only use in case of suspected error!)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">Эти элементы никогда не будут удалены при удалении неиспользуемых элементов.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Записывать отладочные сообщения (используйте только в случае подозрительной ошибки!)</sys:String>
 </ResourceDictionary>
