@@ -21,8 +21,7 @@ public enum PatternMatchModes
 public enum PatternTypes
 {
     LinkNamePattern,
-    RemovePattern,
-    RenamePattern
+    RemovePattern
 }
 
 /// <summary>
@@ -30,25 +29,6 @@ public enum PatternTypes
 /// </summary>
 public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
 {
-    /// <summary>
-    /// Creates an empty instance
-    /// </summary>
-    public LinkNamePatterns()
-    {
-        SortByPosition = false;
-    }
-
-    /// <summary>
-    /// Creates an empty instance, but sets the SortByPosition property to the desired value.
-    /// </summary>
-    /// <param name="sortByPosition">If true the list is sorted by the position property.</param>
-    public LinkNamePatterns(bool sortByPosition = false)
-    {
-        SortByPosition = sortByPosition;
-    }
-
-    public bool SortByPosition { get; set; }
-
     /// <summary>
     /// Adds the default patterns to the list and sorts it afterward.
     /// </summary>
@@ -85,21 +65,10 @@ public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
         var patterns = this.ToList();
         Clear();
 
-        if (SortByPosition)
-        {
-            this.AddMissing([.. patterns.Distinct()
-                .OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
-                .ThenBy(x => x.NamePattern, StringComparer.CurrentCultureIgnoreCase)
-                .ThenBy(x => x.UrlPattern, StringComparer.CurrentCultureIgnoreCase)]);
-        }
-        else
-        {
-            this.AddMissing([.. patterns.Distinct()
-                .OrderBy(x => x.LinkName)
-                .ThenBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
-                .ThenBy(x => x.NamePattern, StringComparer.CurrentCultureIgnoreCase)
-                .ThenBy(x => x.UrlPattern, StringComparer.CurrentCultureIgnoreCase)]);
-        }
+        this.AddMissing([.. patterns.Distinct()
+            .OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
+            .ThenBy(x => x.NamePattern, StringComparer.CurrentCultureIgnoreCase)
+            .ThenBy(x => x.UrlPattern, StringComparer.CurrentCultureIgnoreCase)]);
     }
 
     /// <summary>
@@ -119,7 +88,6 @@ public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
         {
             PatternTypes.LinkNamePattern => "DefaultLinkNamePatterns.json",
             PatternTypes.RemovePattern => "DefaultRemovePatterns.json",
-            PatternTypes.RenamePattern => "DefaultRenamePatterns.json",
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
 

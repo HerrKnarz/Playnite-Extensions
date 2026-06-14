@@ -33,7 +33,9 @@ internal class LinkPropertyGameFilterer : GameFilterer
 
         Settings.LinkTypes.Clear();
 
-        Settings.LinkTypes.AddMissing(LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes.OrderBy(l => l.Name).Select(l => new SelectableObject<WebLinkType>(l)));
+        Settings.LinkTypes.AddMissing(LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes
+            .OrderBy(l => l.Name, StringComparer.CurrentCultureIgnoreCase)
+            .Select(l => new SelectableObject<WebLinkType>(l)));
 
         if (args.Settings is not null && !args.Settings.SerializedSettings.IsNullOrEmpty())
         {

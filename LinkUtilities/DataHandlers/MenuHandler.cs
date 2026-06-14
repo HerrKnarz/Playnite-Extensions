@@ -112,7 +112,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
                 MenuItemImpl.Separator
             };
 
-        foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.Settings.ShowInMenus).OrderBy(x => x.LinkName))
+        foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.Settings.ShowInMenus).OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase))
         {
             var subItem = new MenuItemImpl(link.LinkName,
                 async (clickArgs) => await AddWebsiteLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), false, [link]));
@@ -132,7 +132,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
         var subItems = new List<MenuItemImpl>();
 
-        foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.CanBeBrowserSearched).OrderBy(x => x.LinkName))
+        foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.CanBeBrowserSearched).OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase))
         {
             var subItem = new MenuItemImpl(link.LinkName,
                 (clickArgs) => link.StartBrowserSearch([.. games.Select(g => g.Game)]));
@@ -195,7 +195,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
 
         var linkDict = new LinkDict();
 
-        foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.CanBeSearched && l.Settings.ShowInMenus).OrderBy(x => x.LinkName))
+        foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.CanBeSearched && l.Settings.ShowInMenus).OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase))
         {
             var subItem = new MenuItemImpl(link.LinkName,
                 async (clickArgs) => await SearchWebsiteLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name(), false, [link]));

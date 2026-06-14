@@ -25,7 +25,7 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
         Settings.DuplicateTypesWithCaptions ??= [];
     }
 
-    public static List<WebLinkType> LinkTypes => LinkUtilitiesPlugin.PlayniteApi?.Library.WebLinkTypes?.OrderBy(t => t.Name).ToList() ?? [];
+    public static List<WebLinkType> LinkTypes => LinkUtilitiesPlugin.PlayniteApi?.Library.WebLinkTypes?.OrderBy(t => t.Name, StringComparer.CurrentCultureIgnoreCase).ToList() ?? [];
 
     [ObservableProperty]
     public partial LinkNamePattern? SelectedPattern { get; set; }
@@ -59,7 +59,7 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
             settings.LinkSettings.RefreshLinkSources(LinkUtilitiesPlugin.Plugin.Links);
         }
 
-        settings.LinkSettings = new LinkSourceSettings([.. settings.LinkSettings.OrderBy(x => x.LinkName)]);
+        settings.LinkSettings = new LinkSourceSettings([.. settings.LinkSettings.OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)]);
 
         return settings;
     }

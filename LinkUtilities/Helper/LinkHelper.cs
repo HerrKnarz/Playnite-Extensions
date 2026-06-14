@@ -258,7 +258,7 @@ public static class LinkHelper
     {
         return LinkUtilitiesPlugin.PlayniteApi is null || game is null || !game.Links.HasItems()
             ? null
-            : string.Join(',', game.Links.Select(l => LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes.First(t => t.Id.Equals(l.TypeId)).Name).Distinct().OrderBy(s => s));
+            : string.Join(',', game.Links.Select(l => LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes.First(t => t.Id.Equals(l.TypeId)).Name).Distinct().OrderBy(s => s, StringComparer.CurrentCultureIgnoreCase));
     }
 
     public static async Task<bool> UpdateGameInLibraryAsync(Game gameToUpdate, BaseActionGame processedGame, bool cleanUpAfterAdding = true)

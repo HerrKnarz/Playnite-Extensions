@@ -8,6 +8,8 @@ internal class LinkPropertyGameExplorer : GameExplorer
     {
         return LinkUtilitiesPlugin.PlayniteApi is null
             ? []
-            : [.. LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes.OrderBy(l => l.Name).Select(l => new GameExplorerItem(l.Id, l.Name, new GameExplorerFilterData(LinkUtilitiesPlugin.LinkPropertyId, l.Id)))];
+            : [.. LinkUtilitiesPlugin.PlayniteApi.Library.WebLinkTypes
+                .OrderBy(l => l.Name, StringComparer.CurrentCultureIgnoreCase)
+                .Select(l => new GameExplorerItem(l.Id, l.Name, new GameExplorerFilterData(LinkUtilitiesPlugin.LinkPropertyId, l.Id)))];
     }
 }

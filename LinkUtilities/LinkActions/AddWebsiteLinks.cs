@@ -109,7 +109,7 @@ public class AddWebsiteLinks : BaseWebsiteLinks
         {
             await Parallel.ForEachAsync(Pipelines, Pipelines.ParallelOptions, async (pipeline, cancellationToken) =>
             {
-                foreach (var linker in LinksToProcess.Where(x => x.Priority == priority && x.Pipeline == pipeline).OrderBy(l => l.LinkName))
+                foreach (var linker in LinksToProcess.Where(x => x.Priority == priority && x.Pipeline == pipeline).OrderBy(l => l.LinkName, StringComparer.CurrentCultureIgnoreCase))
                 {
                     // If we fetch links for only one site and a delay is configured, we wait before
                     // fetching the links. This is to avoid potential issues with rate limits or
