@@ -40,6 +40,11 @@ namespace LinkUtilities.Linker.LinkSources
         // Arcade Database needs the name of the game file, because it follows the MAME naming scheme.
         public override string GetGamePath(Game game, string gameName = null)
         {
+            if (!game.Roms?.Any() ?? true)
+            {
+                return string.Empty;
+            }
+
             var romName = Path.GetFileNameWithoutExtension(game.Roms[0].Path);
 
             if (string.IsNullOrEmpty(romName))
