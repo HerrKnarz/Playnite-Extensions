@@ -57,7 +57,7 @@ public class AddLinkFromClipboard : BaseAction
 
         LinkUrl = url;
 
-        if (LinkUtilitiesPlugin.Settings.LinkNamePatterns.LinkMatch(ref tempLinkName, url, true))
+        if (LinkUtilitiesPlugin.Settings.LinkNamePatterns.LinkMatch(ref tempLinkName, url, null, Models.PatternMatchModes.MatchByUrl))
         {
             LinkName = tempLinkName;
             return true;

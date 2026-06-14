@@ -6,6 +6,15 @@ using System.Text.Json;
 
 namespace LinkUtilities.Models;
 
+public enum PatternMatchModes
+{
+    MatchByUrl,
+    MatchByName,
+    MatchByUrlAndName,
+    MatchByType,
+    MatchByUrlAndType,
+}
+
 /// <summary>
 /// Types of patterns that can be matched.
 /// </summary>
@@ -54,11 +63,11 @@ public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
         SortPatterns();
     }
 
-    public bool LinkMatch(ref string linkName, string linkUrl, bool overridePartialMatch = false)
+    public bool LinkMatch(ref string linkName, string linkUrl, string? linkTypeIdentifier = null, PatternMatchModes matchMode = PatternMatchModes.MatchByUrlAndName)
     {
         var tempLinkName = linkName;
 
-        var pattern = this.FirstOrDefault(x => x.LinkMatch(tempLinkName, linkUrl, overridePartialMatch));
+        var pattern = this.FirstOrDefault(x => x.LinkMatch(tempLinkName, linkUrl, linkTypeIdentifier, matchMode));
 
         if (pattern == null)
         {
@@ -86,7 +95,7 @@ public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
         else
         {
             this.AddMissing([.. patterns.Distinct()
-                .OrderBy(x => x.Position)
+                .OrderBy(x => x.LinkName)
                 .ThenBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase)
                 .ThenBy(x => x.NamePattern, StringComparer.CurrentCultureIgnoreCase)
                 .ThenBy(x => x.UrlPattern, StringComparer.CurrentCultureIgnoreCase)]);

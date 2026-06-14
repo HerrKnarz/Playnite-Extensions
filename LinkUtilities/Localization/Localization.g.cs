@@ -291,13 +291,6 @@ public static partial class Loc
         return GetString("settings_api_key");
     }
     /// <summary>
-    /// Using a bookmarklet you can add the active website in your browser directly to the selected games in Playnite. To find a suiting link name, you can define patterns for the URL and link title here. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.
-    /// </summary>
-    public static string settings_bookmarklet_description()
-    {
-        return GetString("settings_bookmarklet_description");
-    }
-    /// <summary>
     /// Add
     /// </summary>
     public static string settings_button_add()
@@ -333,18 +326,18 @@ public static partial class Loc
         return GetString("settings_button_sort");
     }
     /// <summary>
-    /// Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)
-    /// </summary>
-    public static string settings_configure_link_name_patterns()
-    {
-        return GetString("settings_configure_link_name_patterns");
-    }
-    /// <summary>
     /// Configure websites
     /// </summary>
     public static string settings_configure_websites()
     {
         return GetString("settings_configure_websites");
+    }
+    /// <summary>
+    /// In this list you find all websites supported for automatic link addition. You can configure if they will be processed automatically when adding or searching links and if they show up in the menus. Some websites required an API key to work, that you can add for those links as well. For further info just click the help button.
+    /// </summary>
+    public static string settings_configure_websites_description()
+    {
+        return GetString("settings_configure_websites_description");
     }
     /// <summary>
     /// Automatically convert steam web links to steam client links on library update.
@@ -375,11 +368,39 @@ public static partial class Loc
         return GetString("settings_duplicates_remove_type");
     }
     /// <summary>
-    /// Link source
+    /// Regex
     /// </summary>
-    public static string settings_link_source()
+    public static string settings_is_regex()
     {
-        return GetString("settings_link_source");
+        return GetString("settings_is_regex");
+    }
+    /// <summary>
+    /// Link name
+    /// </summary>
+    public static string settings_link_name()
+    {
+        return GetString("settings_link_name");
+    }
+    /// <summary>
+    /// Name of the pattern. Will be used as the actual link name and type if no link type is specified.
+    /// </summary>
+    public static string settings_link_name_description()
+    {
+        return GetString("settings_link_name_description");
+    }
+    /// <summary>
+    /// Link type
+    /// </summary>
+    public static string settings_link_type()
+    {
+        return GetString("settings_link_type");
+    }
+    /// <summary>
+    /// Type the link will be assigned to when the patterns match. If no type is specified the link name will be used.
+    /// </summary>
+    public static string settings_link_type_description()
+    {
+        return GetString("settings_link_type_description");
     }
     /// <summary>
     /// Name pattern
@@ -387,6 +408,13 @@ public static partial class Loc
     public static string settings_name_pattern()
     {
         return GetString("settings_name_pattern");
+    }
+    /// <summary>
+    /// Pattern to match the link name. Tick the regex check box to treat the pattern as a regular expression. If left empty, the name will be ignored when matching.
+    /// </summary>
+    public static string settings_name_pattern_description()
+    {
+        return GetString("settings_name_pattern_description");
     }
     /// <summary>
     /// Partial match
@@ -398,9 +426,9 @@ public static partial class Loc
     /// <summary>
     /// When checked only one of both patterns has to match.
     /// </summary>
-    public static string settings_partial_match_hint()
+    public static string settings_partial_match_description()
     {
-        return GetString("settings_partial_match_hint");
+        return GetString("settings_partial_match_description");
     }
     /// <summary>
     /// Search link
@@ -417,11 +445,18 @@ public static partial class Loc
         return GetString("settings_show_in_menus");
     }
     /// <summary>
-    /// Bookmarklet/Clipboard
+    /// Assign link types
     /// </summary>
-    public static string settings_tab_bookmarklet_clipboard()
+    public static string settings_tab_assign_link_types()
     {
-        return GetString("settings_tab_bookmarklet_clipboard");
+        return GetString("settings_tab_assign_link_types");
+    }
+    /// <summary>
+    /// To better organize your links you can set up patterns here to assign specific link types to your links. For example have links from wikipedia.com assigned to the link type "Wikipedia" or all links with a name like "official" assigned to a link type "Official Website". These patterns work for automatically or manually assigned links after metadata updates as well as links added via the bookmarklet or the clipboard (only the url will be matched here, since we don't have a name in the clipboard). The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character. Alternatively you can use the "Regex" checkbox and treat the patterns as regular expressions.
+    /// </summary>
+    public static string settings_tab_assign_link_types_description()
+    {
+        return GetString("settings_tab_assign_link_types_description");
     }
     /// <summary>
     /// General settings
@@ -436,6 +471,13 @@ public static partial class Loc
     public static string settings_url_pattern()
     {
         return GetString("settings_url_pattern");
+    }
+    /// <summary>
+    /// Pattern to match the link url. Tick the regex check box to treat the pattern as a regular expression. If left empty, the url will be ignored when matching.
+    /// </summary>
+    public static string settings_url_pattern_description()
+    {
+        return GetString("settings_url_pattern_description");
     }
 }
 
@@ -607,10 +649,6 @@ public static partial class LocId
     /// </summary>
     public const string settings_api_key = "settings_api_key";
     /// <summary>
-    /// Using a bookmarklet you can add the active website in your browser directly to the selected games in Playnite. To find a suiting link name, you can define patterns for the URL and link title here. The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character.
-    /// </summary>
-    public const string settings_bookmarklet_description = "settings_bookmarklet_description";
-    /// <summary>
     /// Add
     /// </summary>
     public const string settings_button_add = "settings_button_add";
@@ -631,13 +669,13 @@ public static partial class LocId
     /// </summary>
     public const string settings_button_sort = "settings_button_sort";
     /// <summary>
-    /// Configure link name patterns (For clipboard links only the url pattern will be checked to find a name, since we have no name to begin with.)
-    /// </summary>
-    public const string settings_configure_link_name_patterns = "settings_configure_link_name_patterns";
-    /// <summary>
     /// Configure websites
     /// </summary>
     public const string settings_configure_websites = "settings_configure_websites";
+    /// <summary>
+    /// In this list you find all websites supported for automatic link addition. You can configure if they will be processed automatically when adding or searching links and if they show up in the menus. Some websites required an API key to work, that you can add for those links as well. For further info just click the help button.
+    /// </summary>
+    public const string settings_configure_websites_description = "settings_configure_websites_description";
     /// <summary>
     /// Automatically convert steam web links to steam client links on library update.
     /// </summary>
@@ -655,13 +693,33 @@ public static partial class LocId
     /// </summary>
     public const string settings_duplicates_remove_type = "settings_duplicates_remove_type";
     /// <summary>
-    /// Link source
+    /// Regex
     /// </summary>
-    public const string settings_link_source = "settings_link_source";
+    public const string settings_is_regex = "settings_is_regex";
+    /// <summary>
+    /// Link name
+    /// </summary>
+    public const string settings_link_name = "settings_link_name";
+    /// <summary>
+    /// Name of the pattern. Will be used as the actual link name and type if no link type is specified.
+    /// </summary>
+    public const string settings_link_name_description = "settings_link_name_description";
+    /// <summary>
+    /// Link type
+    /// </summary>
+    public const string settings_link_type = "settings_link_type";
+    /// <summary>
+    /// Type the link will be assigned to when the patterns match. If no type is specified the link name will be used.
+    /// </summary>
+    public const string settings_link_type_description = "settings_link_type_description";
     /// <summary>
     /// Name pattern
     /// </summary>
     public const string settings_name_pattern = "settings_name_pattern";
+    /// <summary>
+    /// Pattern to match the link name. Tick the regex check box to treat the pattern as a regular expression. If left empty, the name will be ignored when matching.
+    /// </summary>
+    public const string settings_name_pattern_description = "settings_name_pattern_description";
     /// <summary>
     /// Partial match
     /// </summary>
@@ -669,7 +727,7 @@ public static partial class LocId
     /// <summary>
     /// When checked only one of both patterns has to match.
     /// </summary>
-    public const string settings_partial_match_hint = "settings_partial_match_hint";
+    public const string settings_partial_match_description = "settings_partial_match_description";
     /// <summary>
     /// Search link
     /// </summary>
@@ -679,9 +737,13 @@ public static partial class LocId
     /// </summary>
     public const string settings_show_in_menus = "settings_show_in_menus";
     /// <summary>
-    /// Bookmarklet/Clipboard
+    /// Assign link types
     /// </summary>
-    public const string settings_tab_bookmarklet_clipboard = "settings_tab_bookmarklet_clipboard";
+    public const string settings_tab_assign_link_types = "settings_tab_assign_link_types";
+    /// <summary>
+    /// To better organize your links you can set up patterns here to assign specific link types to your links. For example have links from wikipedia.com assigned to the link type "Wikipedia" or all links with a name like "official" assigned to a link type "Official Website". These patterns work for automatically or manually assigned links after metadata updates as well as links added via the bookmarklet or the clipboard (only the url will be matched here, since we don't have a name in the clipboard). The patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character. Alternatively you can use the "Regex" checkbox and treat the patterns as regular expressions.
+    /// </summary>
+    public const string settings_tab_assign_link_types_description = "settings_tab_assign_link_types_description";
     /// <summary>
     /// General settings
     /// </summary>
@@ -690,4 +752,8 @@ public static partial class LocId
     /// URL pattern
     /// </summary>
     public const string settings_url_pattern = "settings_url_pattern";
+    /// <summary>
+    /// Pattern to match the link url. Tick the regex check box to treat the pattern as a regular expression. If left empty, the url will be ignored when matching.
+    /// </summary>
+    public const string settings_url_pattern_description = "settings_url_pattern_description";
 }

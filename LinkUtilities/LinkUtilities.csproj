@@ -28,6 +28,9 @@
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\MiscHelper.cs" Link="Shared\MiscHelper.cs" />
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\SteamHelper.cs" Link="Shared\SteamHelper.cs" />
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\StringHelper.cs" Link="Shared\StringHelper.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\Controls\SettingsBaseControl.cs" Link="Shared\UICommon\Controls\SettingsBaseControl.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\Controls\SettingsOption.cs" Link="Shared\UICommon\Controls\SettingsOption.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\Controls\SettingsSection.cs" Link="Shared\UICommon\Controls\SettingsSection.cs" />
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\SelectableObject.cs" Link="Shared\UICommon\SelectableObject.cs" />
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\WebCommon\AngleSharpHelper.cs" Link="Shared\WebCommon\AngleSharpHelper.cs" />
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\WebCommon\HttpClientWrapper.cs" Link="Shared\WebCommon\HttpClientWrapper.cs" />
@@ -69,7 +72,12 @@
     <Folder Include="Shared\FilesCommon\" />
     <Folder Include="Shared\GamesCommon\" />
     <Folder Include="Shared\MetadataCommon\" />
-    <Folder Include="Shared\UICommon\" />
+    <Folder Include="Shared\UICommon\Controls\" />
     <Folder Include="Shared\WebCommon\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\CommonStyles.xaml" Link="Shared\UICommon\CommonStyles.xaml" />
+    <Page Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\Controls\SettingsStyles.xaml" Link="Shared\UICommon\Controls\SettingsStyles.xaml" />
   </ItemGroup>
 </Project>

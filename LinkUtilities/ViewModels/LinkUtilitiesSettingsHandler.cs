@@ -25,8 +25,9 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
         Settings.DuplicateTypesWithCaptions ??= [];
     }
 
+    public static List<WebLinkType> LinkTypes => LinkUtilitiesPlugin.PlayniteApi?.Library.WebLinkTypes?.OrderBy(t => t.Name).ToList() ?? [];
+
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(RemoveLinkNamePatternsCommand))]
     public partial LinkNamePattern? SelectedPattern { get; set; }
 
     [ObservableProperty]
@@ -108,8 +109,10 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
     }
 
     [RelayCommand]
-    private static void HelpBookmarklet() =>
-        Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/link-utilities/url-handler-and-bookmarklet/"));
+    private static void PatternHelpClick() => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/link-utilities/url-handler-and-bookmarklet/") { UseShellExecute = true });
+
+    [RelayCommand]
+    private static void WebsiteHelpClick() => Process.Start(new ProcessStartInfo("https://knarzwerk.de/en/playnite-extensions/link-utilities/supported-websites-for-add-search-function/") { UseShellExecute = true });
 
     [RelayCommand]
     private void AddDefaultLinkNamePatterns() => Settings.LinkNamePatterns.AddDefaultPatterns(PatternTypes.LinkNamePattern);
@@ -117,15 +120,15 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
     [RelayCommand]
     private void AddLinkNamePattern() => Settings.LinkNamePatterns.Add(new LinkNamePattern());
 
-    private bool CanRemove(IList<object> items) => SelectedPattern is not null || items.HasItems();
-
-    [RelayCommand(CanExecute = nameof(CanRemove))]
-    private void RemoveLinkNamePatterns(IList<object> items)
+    [RelayCommand]
+    private void RemoveLinkNamePatterns(object item)
     {
-        foreach (var linkPattern in items.ToList().Cast<LinkNamePattern>())
+        if (item is not LinkNamePattern linkPattern)
         {
-            Settings.LinkNamePatterns.Remove(linkPattern);
+            return;
         }
+
+        Settings.LinkNamePatterns.Remove(linkPattern);
     }
 
     [RelayCommand]
