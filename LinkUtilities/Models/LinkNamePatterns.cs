@@ -43,11 +43,12 @@ public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
         SortPatterns();
     }
 
-    public bool LinkMatch(ref string linkName, string linkUrl, string? linkTypeIdentifier = null, PatternMatchModes matchMode = PatternMatchModes.MatchByUrlAndName)
+    public bool LinkMatch(ref string linkName, string linkUrl, ref string? linkTypeIdentifier, PatternMatchModes matchMode = PatternMatchModes.MatchByUrlAndName)
     {
         var tempLinkName = linkName;
+        var tempLinkTypeIdentifier = linkTypeIdentifier;
 
-        var pattern = this.FirstOrDefault(x => x.LinkMatch(tempLinkName, linkUrl, linkTypeIdentifier, matchMode));
+        var pattern = this.FirstOrDefault(x => x.LinkMatch(tempLinkName, linkUrl, tempLinkTypeIdentifier, matchMode));
 
         if (pattern == null)
         {
@@ -55,6 +56,8 @@ public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
         }
 
         linkName = pattern?.LinkName ?? string.Empty;
+        linkTypeIdentifier = pattern?.LinkTypeIdentifier;
+
         return true;
     }
 

@@ -126,7 +126,7 @@
                                 ToolTip="{p:LocString {x:Static p:LocId.settings_button_sort}}"
                                 FontFamily="{DynamicResource NerdFont}"
                                 Margin="10,0,0,0"
-                                Command="{Binding SortBookmarkletItemsCommand}" />
+                                Command="{Binding SortPatternsCommand}" />
                     </StackPanel>
 
                     <DockPanel DockPanel.Dock="Top">

@@ -17,6 +17,11 @@ public class AddLinkFromClipboard : BaseAction
     public string? LinkName { get; set; }
 
     /// <summary>
+    /// Type identifier of the link to be added in the "AddLink" action
+    /// </summary>
+    public string? LinkTypeIdentifier { get; set; } = null;
+
+    /// <summary>
     /// URL of the link to be added in the "AddLink" action
     /// </summary>
     public string? LinkUrl { get; set; }
@@ -30,7 +35,7 @@ public class AddLinkFromClipboard : BaseAction
     }
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
-        => await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl, null, false);
+        => await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl, LinkTypeIdentifier, false);
 
     public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
     {
@@ -46,26 +51,29 @@ public class AddLinkFromClipboard : BaseAction
     {
         LinkName = string.Empty;
         LinkUrl = string.Empty;
+        LinkTypeIdentifier = null;
 
-        var url = Clipboard.GetText();
         var tempLinkName = string.Empty;
+        var tempUrl = Clipboard.GetText();
+        string? tempLinkTypeIdentifier = null;
 
-        if (url.Length == 0 || !Uri.TryCreate(url, UriKind.Absolute, out _))
+        if (tempUrl.Length == 0 || !Uri.TryCreate(tempUrl, UriKind.Absolute, out _))
         {
             return false;
         }
 
-        LinkUrl = url;
+        LinkUrl = tempUrl;
 
-        if (LinkUtilitiesPlugin.Settings.LinkNamePatterns.LinkMatch(ref tempLinkName, url, null, Models.PatternMatchModes.MatchByUrl))
+        if (LinkUtilitiesPlugin.Settings.LinkNamePatterns.LinkMatch(ref tempLinkName, tempUrl, ref tempLinkTypeIdentifier, Models.PatternMatchModes.MatchByUrl))
         {
             LinkName = tempLinkName;
+            LinkTypeIdentifier = tempLinkTypeIdentifier;
             return true;
         }
 
         // NEXT: Implement special dialog with option to choose link type or add a new one.
         var selectResult = await args.Api.Dialogs.SelectStringAsync(
-            Loc.dialog_enter_link_name() + Environment.NewLine + url,
+            Loc.dialog_enter_link_name() + Environment.NewLine + tempUrl,
             Loc.dialog_name_link_caption(),
             tempLinkName);
 

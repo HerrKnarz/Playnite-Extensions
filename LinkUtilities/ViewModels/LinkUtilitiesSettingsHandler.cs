@@ -118,7 +118,14 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
     private void AddDefaultLinkNamePatterns() => Settings.LinkNamePatterns.AddDefaultPatterns(PatternTypes.LinkNamePattern);
 
     [RelayCommand]
-    private void AddLinkNamePattern() => Settings.LinkNamePatterns.Add(new LinkNamePattern());
+    private void AddLinkNamePattern()
+    {
+        var pattern = new LinkNamePattern();
+
+        Settings.LinkNamePatterns.Add(pattern);
+
+        SelectedPattern = pattern;
+    }
 
     [RelayCommand]
     private void RemoveLinkNamePatterns(object item)
@@ -132,5 +139,5 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
     }
 
     [RelayCommand]
-    private void SortBookmarkletItems() => Settings.LinkNamePatterns.SortPatterns();
+    private void SortPatterns() => Settings.LinkNamePatterns.SortPatterns();
 }

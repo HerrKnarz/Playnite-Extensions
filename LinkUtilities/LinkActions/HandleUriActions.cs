@@ -1,5 +1,4 @@
 ﻿using LinkUtilities.Helper;
-using LinkUtilities.Models;
 using Playnite;
 using PlayniteExtensionHelpers.GamesCommon;
 using System.Net;
@@ -23,9 +22,9 @@ internal class HandleUriActions : BaseAction
     public string? LinkName { get; set; }
 
     /// <summary>
-    /// List of patterns to find the right link name for a given set of URL and link title
+    /// Type identifier of the link to be added in the "AddLink" action
     /// </summary>
-    public LinkNamePatterns? LinkNamePatterns { get; set; }
+    public string? LinkTypeIdentifier { get; set; } = null;
 
     /// <summary>
     /// URL of the link to be added in the "AddLink" action
@@ -35,7 +34,7 @@ internal class HandleUriActions : BaseAction
     public override string Name => Loc.action_name_uri_links();
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
-        => await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl);
+        => await LinkHelper.AddLinkAsync(game.Game, LinkName, LinkUrl, LinkTypeIdentifier);
 
     public override BaseActionArgs GetActionArgs(IPlayniteApi api, List<BaseActionGame> games, string pluginName)
     {
@@ -64,10 +63,12 @@ internal class HandleUriActions : BaseAction
 
         var tempLinkName = args.Arguments[1];
         LinkUrl = WebUtility.UrlDecode(args.Arguments[2]);
+        string? tempLinkTypeIdentifier = null;
 
-        if (LinkNamePatterns?.LinkMatch(ref tempLinkName, LinkUrl) ?? false)
+        if (LinkUtilitiesPlugin.Settings.LinkNamePatterns?.LinkMatch(ref tempLinkName, LinkUrl, ref tempLinkTypeIdentifier) ?? false)
         {
             LinkName = tempLinkName;
+            LinkTypeIdentifier = tempLinkTypeIdentifier;
             return true;
         }
 
