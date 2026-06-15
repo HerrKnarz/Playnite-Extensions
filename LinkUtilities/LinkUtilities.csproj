@@ -31,6 +31,7 @@
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\Controls\SettingsBaseControl.cs" Link="Shared\UICommon\Controls\SettingsBaseControl.cs" />
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\Controls\SettingsOption.cs" Link="Shared\UICommon\Controls\SettingsOption.cs" />
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\Controls\SettingsSection.cs" Link="Shared\UICommon\Controls\SettingsSection.cs" />
+    <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\ListBoxScrollIntoViewBehavior.cs" Link="Shared\UICommon\ListBoxScrollIntoViewBehavior.cs" />
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\UICommon\SelectableObject.cs" Link="Shared\UICommon\SelectableObject.cs" />
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\WebCommon\AngleSharpHelper.cs" Link="Shared\WebCommon\AngleSharpHelper.cs" />
     <Compile Include="..\Submodules\Playnite-Extension-Helpers\src\WebCommon\HttpClientWrapper.cs" Link="Shared\WebCommon\HttpClientWrapper.cs" />
@@ -64,6 +65,7 @@
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.4.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.142" />
     <PackageReference Include="Playnite.SDK" Version="11.0.0-alpha11" />
   </ItemGroup>
 

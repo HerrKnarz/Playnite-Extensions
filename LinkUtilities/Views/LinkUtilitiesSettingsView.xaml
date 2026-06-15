@@ -8,6 +8,8 @@
              xmlns:c="clr-namespace:PlayniteExtensionHelpers.UICommon.Controls"
              xmlns:p="clr-namespace:Playnite"
              xmlns:models="clr-namespace:LinkUtilities.Models"
+             xmlns:ui="clr-namespace:PlayniteExtensionHelpers.UICommon"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=local:LinkUtilitiesSettingsHandler}"
              d:DesignHeight="600"
@@ -152,6 +154,9 @@
                                     </DockPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
+                            <i:Interaction.Behaviors>
+                                <ui:ScrollIntoViewBehavior />
+                            </i:Interaction.Behaviors>
                         </ListBox>
                         <StackPanel DockPanel.Dock="Right"
                                     Margin="15, 0, 0, 0"
