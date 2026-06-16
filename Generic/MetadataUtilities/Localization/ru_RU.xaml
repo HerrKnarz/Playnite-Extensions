@@ -109,14 +109,14 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsDisplayDeleteButton">Показать кнопку удаления</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Редактировать</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Префиксы не могут быть пустыми!</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Execute only on new games before metadata download</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Выполнять только в новых играх перед загрузкой метаданных</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Скрыть в деталях</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Скрыть в редакторе</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Игнорировать условия</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Игнорировать условия при выполнении вручную</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Игнорировать скрытые игры в подсчете игр</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignore hidden games when removing unused metadata</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Automatically execute merge rules on metadata update</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Игнорировать скрытые игры при удалении неиспользуемых метаданных</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Автоматически выполнять правила слияния при обновлении метаданных</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Merge rules</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsOnNewGame">Только в новых играх</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Положение</sys:String>
