@@ -25,17 +25,17 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Введённая строка может быть регулярным выражением.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Удалены ненужные метаданные из {0} игр!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Переименовать компанию</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">You are renaming a {0}. Do you want to rename the corresponding {1}, too?</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Вы переименовываете {0}. Хотите ли вы также переименовать соответствующий {1}?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogReplace">Заменить</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSaveAsRule">Сохранить как правило объединения</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogSelectNewType">Выберите новый тип</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Set user score in {0} games!</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogSetUserScoreMessage">Установить счёт пользователя в {0} играх!</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEditor">Редактор метаданных</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorAddToWhitelist">Добавить в белый список</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorChangeType">Изменить тип</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorFilterSelected">Только выбранные</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Metadata Editor for selected games</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorForGames">Редактор метаданных для выбранных игр</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGameCount">Количество игр</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorGroupMatches">Группировать совпадающие элементы</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorHideUnused">Скрыть неиспользуемые элементы</sys:String>
@@ -43,11 +43,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesEditorMergeRename">Объединить переименование</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRelatedGames">Похожие игры</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorRemoveUnused">Удалить неиспользуемые</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Rule target</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorRuleTarget">Цель правила</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorSetAsTarget">Установить как цель</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorStatistics">Статистика</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGame">Перейти к игре</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGameHint">Opens the details of the currently selected game in Playnite</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEditorJumpToGameHint">Открывает подробную информацию о выбранной игре в Playnite</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_And">Все условия верны</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Two">По крайней мере два условия верны</sys:String>
@@ -78,9 +78,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">Сбросить новые игры</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Игра новая</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Merge Rule Editor</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesNotificationLibraryNotFound">The following library you use in a conditional action wasn't found:</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Редактор правил объединения</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesName">Утилиты Метаданных</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesNotificationLibraryNotFound">Библиотека, используемая в условном действии, не найдена:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesNotificationRemovedItems">Удалены следующие неиспользуемые метаданные:</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesPrefixLabel">Префикс</sys:String>
 
@@ -97,8 +97,8 @@
 
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Добавить значения по умолчанию</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Добавить существующие элементы</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Always add items you remove in the Metadata Editor to the unwanted list without asking.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Always save manual merges as merge rules.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Всегда добавляйте в список ненужных элементы, удаленные в редакторе метаданных, без вашего согласия.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Всегда сохранять ручные объединения как правила объединения.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Может быть выполнено вручную</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Столбцы в таблице редактора метаданных</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Условия</sys:String>
@@ -117,21 +117,21 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Игнорировать скрытые игры в подсчете игр</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Игнорировать скрытые игры при удалении неиспользуемых метаданных</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Автоматически выполнять правила слияния при обновлении метаданных</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Merge rules</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeRules">Правила объединения</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsOnNewGame">Только в новых играх</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsPosition">Положение</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnusedOnStartup">Удалить неиспользуемые метаданные при запуске</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRemoveUnwantedOnMetadataUpdate">Удалить ненужные элементы при обновлении метаданных</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameConditionalActions">Автоматическое переименование элементов в условных действиях при переименовании соответствующего исходного элемента.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Automatically rename merge rule target when the corresponding original item is renamed.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Automatically rename quick add items when the corresponding original item is renamed.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameMergeRules">Автоматически переименовывать целевой элемент правила объединения при переименовании соответствующего исходного элемента.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameQuickAdd">Автоматическое переименование элементов быстрого добавления при переименовании соответствующего исходного элемента.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsRenameWhitelist">Автоматическое переименование элементов белого списка при переименовании соответствующего исходного элемента.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowDialog">Отображать диалоговое окно с результатами после установки значения для нескольких игр</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Показать в редакторе метаданных</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Показывать кнопку &quot;Настройки&quot; на верхней панели (требуется перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Показывать кнопку редактора метаданных в верхней панели (требуется перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowUserScoreMenu">Показать опцию для быстрой установки пользовательского счета в контекстном меню игры</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Put the sub menus under the Metadata Utilities menu entry</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Поместите все подменю в пункте меню Утилиты Метаданных</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Условные действия</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Основные</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabMerging">Объединение</sys:String>
