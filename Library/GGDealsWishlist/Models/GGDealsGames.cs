@@ -10,6 +10,14 @@ namespace GGDealsWishlist.Models
     {
         public List<GameMetadata> GetGameMetadataList() => this.Select(g => (GameMetadata)g).ToList();
 
-        public List<GameMetadata> GetNewGames() => this.Where(ng => !API.Instance.Database.Games.Any(g => g.GameId == ng.GameId && g.PluginId == GGDealsWishlist.PluginId)).Select(g => (GameMetadata)g).ToList();
+        public List<GameMetadata> GetNewGames(int maxGames = 0)
+        {
+            var list = this
+                .Where(ng => !API.Instance.Database.Games.Any(g => g.GameId == ng.GameId && g.PluginId == GGDealsWishlist.PluginId))
+                .Select(g => (GameMetadata)g)
+                .ToList();
+
+            return maxGames > 0 ? list.Take(maxGames).ToList() : list;
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace GGDealsWishlist
     public class GGDealsDataHandler
     {
         private readonly IBrowsingContext _context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
-        private readonly GGDealsWishlistSettings _settings;
+        private readonly Settings _settings;
 
         private readonly WebViewSettings _webViewSettings = new WebViewSettings
         {
@@ -22,7 +22,7 @@ namespace GGDealsWishlist
             UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         };
 
-        public GGDealsDataHandler(GGDealsWishlistSettings settings)
+        public GGDealsDataHandler(Settings settings)
         {
             _settings = settings;
         }
@@ -31,6 +31,8 @@ namespace GGDealsWishlist
 
         public void RetrieveGames(int page = 1)
         {
+            //TODO: Change this to optionally only fetch new games up to the max count, so the addon doesn't have to process them all every time. 
+
             if (string.IsNullOrEmpty(_settings.WishlistUrl))
             {
                 return;
@@ -95,19 +97,14 @@ namespace GGDealsWishlist
 
             foreach (var cell in cells)
             {
+                var platformHelper = new PlatformHelper(API.Instance.Database.Platforms);
+
+                var platformString = cell.QuerySelector(".game-info-wrapper .platform-link-icon span")?.TextContent?.Trim();
+
                 var game = new GGDealsGame()
                 {
                     Name = cell.Attributes["data-game-title"]?.Value,
                     GameId = cell.Attributes["data-container-game-id"]?.Value,
-                    GameActions = new List<GameAction>
-                    {
-                        new GameAction()
-                        {
-                            Type = GameActionType.URL,
-                            Path = $"https://gg.deals/game/{cell.Attributes["data-game-name"]?.Value}",
-                            IsPlayAction = true
-                        }
-                    },
                     Links = new List<Link>()
                     {
                         new Link()
@@ -116,9 +113,31 @@ namespace GGDealsWishlist
                             Url = $"https://gg.deals/game/{cell.Attributes["data-game-name"]?.Value}"
                         }
                     },
+                    Platforms = platformHelper.GetPlatforms(platformString).ToHashSet(),
                     Source = new MetadataNameProperty("GG.deals Wishlist"),
-                    IsInstalled = true
+                    IsInstalled = _settings.ImportGamesAsInstalled
                 };
+
+                if (!string.IsNullOrEmpty(_settings.DefaultCategory))
+                {
+                    game.Categories = new HashSet<MetadataProperty>()
+                    {
+                        new MetadataNameProperty(_settings.DefaultCategory)
+                    };
+                }
+
+                if (_settings.ImportGamesAsInstalled)
+                {
+                    game.GameActions = new List<GameAction>
+                    {
+                        new GameAction()
+                        {
+                            Type = GameActionType.URL,
+                            Path = $"https://gg.deals/game/{cell.Attributes["data-game-name"]?.Value}",
+                            IsPlayAction = true
+                        }
+                    };
+                }
 
                 if (string.IsNullOrEmpty(game.Name) || string.IsNullOrEmpty(game.GameId))
                 {

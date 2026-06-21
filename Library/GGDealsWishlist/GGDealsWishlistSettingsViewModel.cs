@@ -1,23 +1,20 @@
-﻿using Playnite.SDK;
+﻿using GGDealsWishlist.Models;
+using KNARZhelper;
+using KNARZhelper.MetadataCommon;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
+using KNARZhelper.MetadataCommon.ViewModels;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace GGDealsWishlist
 {
-    public class GGDealsWishlistSettings : ObservableObject
-    {
-        private string wishlistUrl = string.Empty;
-
-        public string WishlistUrl { get => wishlistUrl; set => SetValue(ref wishlistUrl, value); }
-
-        //TODO: Add option to set the game as installed or not
-        //TODO: Rework settings XAML and add descriptions.
-    }
-
     public class GGDealsWishlistSettingsViewModel : ObservableObject, ISettings
     {
         private readonly GGDealsWishlist plugin;
-        private GGDealsWishlistSettings settings;
+        private Settings settings;
 
         public GGDealsWishlistSettingsViewModel(GGDealsWishlist plugin)
         {
@@ -26,13 +23,38 @@ namespace GGDealsWishlist
             this.plugin = plugin;
 
             // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<GGDealsWishlistSettings>();
+            var savedSettings = plugin.LoadPluginSettings<Settings>();
 
             // LoadPluginSettings returns null if no saved data is available.
-            Settings = savedSettings ?? new GGDealsWishlistSettings();
+            Settings = savedSettings ?? new Settings();
         }
 
-        public GGDealsWishlistSettings Settings
+        public RelayCommand AddCategoryCommand
+            => new RelayCommand(() =>
+            {
+                var typeManager = new TypeCategory();
+                var label = typeManager.LabelPlural;
+                var items = new ObservableCollection<BaseMetadataObject>();
+
+                typeManager.LoadAllMetadata(new HashSet<System.Guid>()).ForEach(item => items.Add(
+                                new BaseMetadataObject(typeManager, typeManager.Type, item.Name)
+                                {
+                                    Id = item.Id
+                                }));
+
+                items.Sort(i => i.Name);
+
+                SelectMetadataViewModel.GetWindow(items, label, false)?.ShowDialog();
+
+                if (items.Count(i => i.Selected) == 0)
+                {
+                    return;
+                }
+
+                Settings.DefaultCategory = items.First(i => i.Selected).Name;
+            });
+
+        public Settings Settings
         {
             get => settings;
             set
@@ -42,7 +64,7 @@ namespace GGDealsWishlist
             }
         }
 
-        private GGDealsWishlistSettings EditingClone { get; set; }
+        private Settings EditingClone { get; set; }
 
         public void BeginEdit() =>
             // Code executed when settings view is opened and user starts editing values.

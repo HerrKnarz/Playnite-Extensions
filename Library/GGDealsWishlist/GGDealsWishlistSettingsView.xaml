@@ -4,12 +4,56 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:GGDealsWishlist"
+             xmlns:c="clr-namespace:KNARZhelper.Controls"
              d:DataContext="{d:DesignInstance Type=vm:GGDealsWishlistSettingsViewModel}"
              mc:Ignorable="d"
+             d:Background="LightGray"
+             Padding="15, 10"
              d:DesignHeight="400"
              d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <d:ResourceDictionary Source="/GGDealsWishlist;component/Localization/en_US.xaml" />
+                <ResourceDictionary Source="/GGDealsWishlist;component/Shared/Controls/CommonStyles.xaml" />
+                <ResourceDictionary Source="/GGDealsWishlist;component/Shared/Controls/SettingsStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <StackPanel>
-        <TextBlock Text="Wishlist URL" />
-        <TextBox Text="{Binding Settings.WishlistUrl}" />
+        <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsWishlistUrl}"
+                          Description="{DynamicResource LOCGGDealsWishlistSettingsWishlistUrlDescription}"
+                          HorizontalControlAlignment="Stretch"
+                          MinLabelWidth="150">
+            <TextBox Text="{Binding Settings.WishlistUrl}"
+                     MinWidth="200" />
+        </c:SettingsOption>
+
+        <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsDefaultCategory}"
+                          Description="{DynamicResource LOCGGDealsWishlistSettingsDefaultCategoryDescription}"
+                          HorizontalControlAlignment="Stretch"
+                          MinLabelWidth="150">
+            <DockPanel>
+                <Button Content="{DynamicResource LOCGGDealsWishlistSettingsSelect}"
+                        DockPanel.Dock="Right"
+                        Margin="10, 0, 0, 0"
+                        Command="{Binding AddCategoryCommand}"
+                        CommandParameter="{Binding Settings.DefaultCategory}" />
+                <TextBox Text="{Binding Settings.DefaultCategory}"
+                         MinWidth="100" />
+            </DockPanel>
+        </c:SettingsOption>
+
+        <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsMaxGamesToImport}"
+                          Description="{DynamicResource LOCGGDealsWishlistSettingsMaxGamesToImportDescription}">
+            <TextBox Text="{Binding Settings.MaxGamesToImport}"
+                     Width="40" />
+        </c:SettingsOption>
+
+        <CheckBox IsChecked="{Binding Settings.ImportGamesAsInstalled}"
+                  Content="{DynamicResource LOCGGDealsWishlistSettingsImportAsInstalled}"
+                  Margin="0, 0, 0, 5" />
+        <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsImportAsInstalledDescription}"
+                   Style="{StaticResource SettingsDescription}" />
     </StackPanel>
 </UserControl>

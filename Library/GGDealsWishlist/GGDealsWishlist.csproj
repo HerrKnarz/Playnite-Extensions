@@ -53,6 +53,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
@@ -68,23 +69,86 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\AsyncHelper.cs">
       <Link>Shared\AsyncHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs">
+      <Link>Shared\Controls\SettingsOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsSection.cs">
+      <Link>Shared\Controls\SettingsSection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Enum\DbInteractionResult.cs">
+      <Link>Shared\DbInteractionResult.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs">
       <Link>Shared\FilesCommon\FileHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\BaseMetadataObject.cs">
+      <Link>Shared\MetadataCommon\BaseMetadataObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseListType.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\BaseListType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseObjectType.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\BaseObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IClearAbleType.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\IClearAbleType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IEditableObjectType.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\IEditableObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IGameInfoType.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\IGameInfoType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IMetadataFieldType.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\IMetadataFieldType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IObjectType.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\IObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IValueType.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\IValueType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeCategory.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\TypeCategory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Enum\FieldType.cs">
+      <Link>Shared\MetadataCommon\Enum\FieldType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Enum\ItemValueType.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\ItemValueType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\MetadataHelper.cs">
+      <Link>Shared\MetadataCommon\MetadataHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\ViewModels\SelectMetadataViewModel.cs">
+      <Link>Shared\MetadataCommon\ViewModels\SelectMetadataViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Views\SelectMetadataView.xaml.cs">
+      <Link>Shared\MetadataCommon\Views\SelectMetadataView.xaml.cs</Link>
+      <DependentUpon>SelectMetadataView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs">
       <Link>Shared\MiscHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\PlatformHelper.cs">
+      <Link>Shared\PlatformHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WindowHelper.cs">
+      <Link>Shared\WindowHelper.cs</Link>
+    </Compile>
     <Compile Include="GGDealsDataHandler.cs" />
     <Compile Include="GGDealsWishlistClient.cs" />
-    <Compile Include="GGDealsWishlistSettings.cs" />
+    <Compile Include="Models\Settings.cs" />
+    <Compile Include="GGDealsWishlistSettingsViewModel.cs" />
     <Compile Include="GGDealsWishlistSettingsView.xaml.cs" />
     <Compile Include="GGDealsWishlist.cs" />
+    <Compile Include="GGDealsWishlistInstallController.cs" />
     <Compile Include="Models\GGDealsGame.cs" />
     <Compile Include="Models\GGDealsGames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +165,21 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\CommonStyles.xaml">
+      <Link>Shared\Controls\CommonStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsStyles.xaml">
+      <Link>Shared\Controls\SettingsStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Views\SelectMetadataView.xaml">
+      <Link>Shared\MetadataCommon\Views\SelectMetadataView.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
