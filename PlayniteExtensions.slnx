@@ -105,6 +105,7 @@
   </Folder>
   <Folder Name="/Solution Items/Manifests/">
     <File Path="Manifest/HerrKnarz_CompanyCompanion.yaml" />
+    <File Path="Manifest/HerrKnarz_GGDealsWishlist.yaml" />
     <File Path="Manifest/HerrKnarz_LinkUtilities.yaml" />
     <File Path="Manifest/HerrKnarz_MetadataUtilities.yaml" />
     <File Path="Manifest/HerrKnarz_QuickAdd.yaml" />

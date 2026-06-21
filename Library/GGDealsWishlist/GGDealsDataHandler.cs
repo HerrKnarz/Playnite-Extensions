@@ -6,6 +6,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Web;
 
@@ -29,9 +30,11 @@ namespace GGDealsWishlist
 
         public GGDealsGames Games { get; } = new GGDealsGames();
 
-        public void RetrieveGames(int page = 1)
+        public HashSet<string> ImportedGames => API.Instance.Database.Games.Where(g => g.PluginId == GGDealsWishlist.PluginId).Select(g => g.GameId).Distinct().ToHashSet();
+
+        public void RetrieveGames(bool onlyNewGames = true, int page = 1)
         {
-            //TODO: Change this to optionally only fetch new games up to the max count, so the addon doesn't have to process them all every time. 
+            //TODO: Change this to optionally only fetch new games up to the max count, so the addon doesn't have to process them all every time.
 
             if (string.IsNullOrEmpty(_settings.WishlistUrl))
             {
@@ -47,12 +50,17 @@ namespace GGDealsWishlist
 
             var document = LoadPage(ComposeUrl(page));
 
-            if (document.StatusCode != System.Net.HttpStatusCode.OK || GameCountReached(document))
+            if (document.StatusCode != System.Net.HttpStatusCode.OK || GameCountReached(document, onlyNewGames))
             {
                 return;
             }
 
-            GetGamesFromPage(document);
+            GetGamesFromPage(document, onlyNewGames);
+
+            if (onlyNewGames && Games.Count >= _settings.MaxGamesToImport)
+            {
+                return;
+            }
 
             if (IsLastPage(document))
             {
@@ -61,7 +69,7 @@ namespace GGDealsWishlist
 
             Thread.Sleep(200);
 
-            RetrieveGames(page + 1);
+            RetrieveGames(onlyNewGames, page + 1);
 
             return;
         }
@@ -80,14 +88,24 @@ namespace GGDealsWishlist
             return uriBuilder.Uri.ToString();
         }
 
-        private bool GameCountReached(IDocument document)
+        private bool GameCountReached(IDocument document, bool onlyNewGames = true)
         {
-            var gameCountString = document.QuerySelector("span.search-results-counter span:nth-of-type(2)")?.TextContent;
-            int.TryParse(gameCountString?.Trim().FirstPart(" "), out var count);
-            return count <= Games.Count;
+            var maxCount = _settings.MaxGamesToImport;
+
+            if (!onlyNewGames)
+            {
+                var gameCountString = document.QuerySelector("span.search-results-counter span:nth-of-type(2)")?.TextContent;
+
+                if (!int.TryParse(gameCountString?.Trim().FirstPart(" "), out maxCount))
+                {
+                    return false;
+                }
+            }
+
+            return maxCount <= Games.Count;
         }
 
-        private void GetGamesFromPage(IDocument document)
+        private void GetGamesFromPage(IDocument document, bool onlyNewGames = true)
         {
             var cells = document.QuerySelectorAll("#wishlist-list div.wishlist-item");
             if (!cells.HasItems())
@@ -97,14 +115,25 @@ namespace GGDealsWishlist
 
             foreach (var cell in cells)
             {
-                var platformHelper = new PlatformHelper(API.Instance.Database.Platforms);
+                if (onlyNewGames && Games.Count >= _settings.MaxGamesToImport)
+                {
+                    return;
+                }
 
+                var platformHelper = new PlatformHelper(API.Instance.Database.Platforms);
                 var platformString = cell.QuerySelector(".game-info-wrapper .platform-link-icon span")?.TextContent?.Trim();
+
+                var gameId = cell.Attributes["data-container-game-id"]?.Value;
+
+                if (string.IsNullOrEmpty(gameId) || (onlyNewGames && ImportedGames.Contains(gameId)))
+                {
+                    continue;
+                }
 
                 var game = new GGDealsGame()
                 {
                     Name = cell.Attributes["data-game-title"]?.Value,
-                    GameId = cell.Attributes["data-container-game-id"]?.Value,
+                    GameId = gameId,
                     Links = new List<Link>()
                     {
                         new Link()
@@ -139,7 +168,7 @@ namespace GGDealsWishlist
                     };
                 }
 
-                if (string.IsNullOrEmpty(game.Name) || string.IsNullOrEmpty(game.GameId))
+                if (string.IsNullOrEmpty(game.Name))
                 {
                     continue;
                 }
