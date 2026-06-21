@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategory">Standardkategorie</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategoryDescription">Die Standard-Kategorie für Spiele, die von Ihrem GDeals Wunschzettel importiert werden. Kann leer gelassen werden.</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsImportAsInstalled">Spiele als installiert importieren</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsImportAsInstalledDescription">Importieren Sie Spiele von Ihrer Wunschliste wie installiert. Mit einem Klick auf Play gelangen Sie auf die Spielseite auf GGDeals.</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsMaxGamesToImport">Max. zu importierende Spiele</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsMaxGamesToImportDescription">Die maximale Anzahl an Spielen, die von Ihrer GDeals Wunschliste pro Run importiert werden sollen. Nützlich für den ersten Import nach der Installation des Addons, so dass Sie keine Ratenzahlungen oder Sperrung von Metadatenanbietern treffen. Wenn auf 0 gesetzt wird das Addon alle Spiele auf einmal importieren.</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsSelect">Auswählen</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsWishlistUrl">Wunschlisten-URL</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsWishlistUrlDescription">Die URL Ihrer GDeals Wunschliste. Das Addon funktioniert nur mit dem teilbaren Link. Um es zu erhalten, müssen Sie auf der Wunschliste die Option &quot;Liste teilen&quot; aktivieren und auf &quot;Link kopieren&quot; klicken.</sys:String>
+</ResourceDictionary>
