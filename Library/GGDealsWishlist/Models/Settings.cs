@@ -7,6 +7,7 @@ namespace GGDealsWishlist.Models
         private string _defaultCategory = string.Empty;
         private bool _importGamesAsInstalled = false;
         private int _maxGamesToImport = 100;
+        private bool _onlyImportGames = true;
         private string _wishlistUrl = string.Empty;
 
         public string DefaultCategory
@@ -33,6 +34,12 @@ namespace GGDealsWishlist.Models
 
                 SetValue(ref _maxGamesToImport, value);
             }
+        }
+
+        public bool OnlyImportGames
+        {
+            get => _onlyImportGames;
+            set => SetValue(ref _onlyImportGames, value);
         }
 
         public string WishlistUrl

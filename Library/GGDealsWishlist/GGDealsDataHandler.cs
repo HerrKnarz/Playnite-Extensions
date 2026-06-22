@@ -34,8 +34,6 @@ namespace GGDealsWishlist
 
         public void RetrieveGames(bool onlyNewGames = true, int page = 1)
         {
-            //TODO: Change this to optionally only fetch new games up to the max count, so the addon doesn't have to process them all every time.
-
             if (string.IsNullOrEmpty(_settings.WishlistUrl))
             {
                 return;
@@ -118,6 +116,11 @@ namespace GGDealsWishlist
                 if (onlyNewGames && Games.Count >= _settings.MaxGamesToImport)
                 {
                     return;
+                }
+
+                if (_settings.OnlyImportGames && cell.Attributes["data-product-type"]?.Value.IsOneOf("Game", "Pack") == false)
+                {
+                    continue;
                 }
 
                 var platformHelper = new PlatformHelper(API.Instance.Database.Platforms);
