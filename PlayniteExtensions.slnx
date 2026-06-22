@@ -76,6 +76,12 @@
       <Platform Solution="Release|x86" Project="x86" />
     </Project>
   </Folder>
+  <Folder Name="/Library/">
+    <Project Path="Library/GGDealsWishlist/GGDealsWishlist.csproj" Id="b4aa34ee-fee3-491f-987c-913027738fbb">
+      <BuildType Solution="Deploy|*" Project="Release" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
   <Folder Name="/Metadata/">
     <Project Path="Metadata/WikipediaMetadata.Test/WikipediaMetadata.Test.csproj">
       <BuildType Solution="Deploy|Any CPU" Project="Debug" />
@@ -99,6 +105,7 @@
   </Folder>
   <Folder Name="/Solution Items/Manifests/">
     <File Path="Manifest/HerrKnarz_CompanyCompanion.yaml" />
+    <File Path="Manifest/HerrKnarz_GGDealsWishlist.yaml" />
     <File Path="Manifest/HerrKnarz_LinkUtilities.yaml" />
     <File Path="Manifest/HerrKnarz_MetadataUtilities.yaml" />
     <File Path="Manifest/HerrKnarz_QuickAdd.yaml" />

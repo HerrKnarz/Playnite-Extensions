@@ -399,8 +399,6 @@ namespace ScreenshotUtilities
                     {
                         if (providersToCreateThumbnails.Contains(group.Provider.Id))
                         {
-                            //TODO: Temporary Logging! Remove later!
-                            Log.Debug($"PrepareScreenshots {game.Name}: THUMBDEBUG: found {group.Provider.Name}");
                             await group.RefreshThumbnailsAsync(plugin.Settings.Settings.ThumbnailHeight, false, true);
                         }
                     }
