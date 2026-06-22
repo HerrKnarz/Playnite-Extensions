@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGGDealsWishlistPluginName">GG.deals Wishlist</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistPluginName">Список желаемого GG.deals</sys:String>
 
     <sys:String x:Key="LOCGGDealsWishlistConfigNotice">You need to add your wishlist url to the addon settings to be able to import games from GG.deals.</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategory">Default Category</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategory">Категория по умолчанию</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategoryDescription">The default category for games imported from your GG.deals wishlist. Can be left empty.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsFilterTip">💡Tip: To filter which items you want to import from your wishlist you can open the shareable link in your browser, change some of the filter settings on that page, and then copy the link with the added filter settings from the browser back into the wishlist URL field.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsImportAsInstalled">Import Games as Installed</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsImportAsInstalledDescription">Import games from your wishlist as installed. Clicking on Play sends you to the game's page on GGDeals.</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistSettingsMaxGamesToImport">Max Games to Import</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsMaxGamesToImport">Максимум игр для импорта</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsMaxGamesToImportDescription">The maximum number of games to import from your GG.deals wishlist per run. Useful for the initial import after installing the addon, so you don't hit rate limits or get blocked from metadata providers. When set to 0 the addon will import all games at once.</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistSettingsOnlyImportGames">Only import games</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsOnlyImportGames">Импорт только игр</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsOnlyImportGamesDescription">When active only wishlisted games and &quot;packs&quot; (several games in one) will be imported. Deactivate this if you also want to import DLC and other media on your wishlist.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsPluginWarning">⚠️ Warning: You also have the GG.deals generic addon installed. Please make sure to deactivate the GG.deals Wishlist library from export in that addon's settings. Otherwise the games added by the wishlist addon will be added to GG.deals as owned and removed from the wishlist!</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistSettingsSelect">Select</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistSettingsWishlistUrl">Wishlist URL</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsSelect">Выбрать</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsWishlistUrl">URL списка желаемого</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsWishlistUrlDescription">The URL of your GGDeals wishlist. The addon only works with the shareable link. To obtain it you need to activate &quot;Share list&quot; on the wishlist page and click &quot;copy shareable link&quot;.</sys:String>
 </ResourceDictionary>
