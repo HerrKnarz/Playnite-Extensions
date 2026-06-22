@@ -1,5 +1,15 @@
 AddonId: GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189
 Packages:
+  - Version: 0.2.0
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-06-22
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-06-22/GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189_0_2_0.pext
+    Changelog:
+      - Added option to leave out DLCs and similar media when importing wishlist items.
+      - Added warning to the settings with the advice to disable export of the wishlist library when the other gg.deals addon installed.
+      - Added info on how to filter the wishlist using the url to the settings.
+      - Added a notification when trying to import games without having set up a wishlist URL in the settings yet.
+      - Added localization and translated into German
   - Version: 0.1.0
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-06-21
