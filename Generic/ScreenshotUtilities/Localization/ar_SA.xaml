@@ -83,6 +83,7 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnails">Always create thumbnails</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription">When enabled, thumbnails will always be created even for not yet downloaded screenshots. This is useful for performance optimization.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescriptionLocal">When enabled, thumbnails will automatically be created for your local screenshots. This is useful for performance optimization.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Default aspect ratio</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatioDescription">The aspect ratio is used to maintain a consistent width and height in the screenshot viewer. It doesn't affect the original screenshots.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Download screenshots automatically</sys:String>

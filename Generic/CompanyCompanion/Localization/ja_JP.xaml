@@ -3,33 +3,33 @@
 
     <sys:String x:Key="LOCCompanyCompanionName">Company Companion</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">Clean up company names.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">Find companies to match</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">Find similar companies to match.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">game</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">games</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Merge group</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Untick, if this company shouldn't be merged with the others.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Company Merger</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">New name:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Use as name</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowCleanUpNames">会社名を整理します。</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindCompanies">一致させる会社を検索します</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowFindSimilar">一致候補となる類似会社を検索します。</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGame">ゲーム</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowGames">ゲーム</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">統合グループ</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">この会社を他の会社と統合しない場合は、チェックを外してください。</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowName">会社名の統合</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">新しい名前：</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">名前として使用</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Merge duplicates</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">Remove business entity descriptors</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">Show Company Merger</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">重複を統合</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuRemoveDescriptors">法人種別表記を削除</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMenuShowMerger">会社名の統合を表示</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionSettingsAdd">追加</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">Business entity descriptors:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">Words to ignore to find similar companies:</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">Remove</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">Show group key in merge window.</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsDescriptors">法人種別表記：</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsIngoreWords">類似会社を検索するときに無視する単語：</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsRemove">削除</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionSettingsShowKey">統合ウィンドウにグループキーを表示します。</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionProgressMerging">merging companies</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressSearching">searching companies to merge</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">updating games</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressMerging">会社を統合中</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressSearching">統合する会社を検索中</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionProgressUpdating">ゲームを更新中</sys:String>
 
-    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">Add value</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">No companies with business entity descriptors found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">No duplicate companies were found.</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">Updated companies in {0} games and merged {1} companies</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogAddValue">値を追加</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDescriptors">法人種別表記を含む会社は見つかりませんでした。</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogNoDuplicates">重複する会社は見つかりませんでした。</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionDialogUpdated">{0} 件のゲームで会社名を更新し、{1} 件の会社を統合しました</sys:String>
 </ResourceDictionary>

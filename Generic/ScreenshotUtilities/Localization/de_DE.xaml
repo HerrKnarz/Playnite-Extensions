@@ -83,6 +83,7 @@
 
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnails">Vorschaubilder immer erstellen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescription">Wenn aktiviert, werden Vorschaubilder immer auch für noch nicht heruntergeladene Screenshots erstellt. Dies ist nützlich für die Leistungsoptimierung.</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsAlwaysCreateThumbnailsDescriptionLocal">Wenn aktiviert, werden automatisch Thumbnails für Ihre lokalen Screenshots erstellt. Dies ist nützlich für die Leistungsoptimierung.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatio">Standard-Seitenverhältnis</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAspectRatioDescription">Das Seitenverhältnis wird verwendet, um eine konsistente Breite und Höhe im Screenshot-Viewer zu erhalten. Es wirkt sich nicht auf die ursprünglichen Screenshots aus.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsAutomaticDownload">Screenshots automatisch herunterladen</sys:String>
