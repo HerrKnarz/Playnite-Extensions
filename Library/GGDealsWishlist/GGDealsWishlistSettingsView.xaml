@@ -21,6 +21,23 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
+        <Border Margin="0, 5, 0, 15"
+                CornerRadius="5"
+                BorderBrush="{StaticResource WarningBrush}"
+                d:Background="DarkRed"
+                BorderThickness="2"
+                Visibility="{Binding GGDealsCollectionUpdaterWarningVisibility}">
+            <Border Padding="15"
+                    CornerRadius="5">
+                <Border.Background>
+                    <SolidColorBrush Opacity="0.3"
+                                     Color="DarkRed" />
+                </Border.Background>
+                <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsPluginWarning}"
+                           TextWrapping="Wrap" />
+            </Border>
+        </Border>
+
         <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsWishlistUrl}"
                           Description="{DynamicResource LOCGGDealsWishlistSettingsWishlistUrlDescription}"
                           HorizontalControlAlignment="Stretch"
@@ -28,6 +45,22 @@
             <TextBox Text="{Binding Settings.WishlistUrl}"
                      MinWidth="200" />
         </c:SettingsOption>
+
+        <Border Margin="0, 5, 0, 15"
+                CornerRadius="5"
+                BorderBrush="{StaticResource PositiveRatingBrush}"
+                d:Background="DarkGreen"
+                BorderThickness="2">
+            <Border Padding="15"
+                    CornerRadius="5">
+                <Border.Background>
+                    <SolidColorBrush Opacity="0.3"
+                                     Color="DarkGreen" />
+                </Border.Background>
+                <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsFilterTip}"
+                           TextWrapping="Wrap" />
+            </Border>
+        </Border>
 
         <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsDefaultCategory}"
                           Description="{DynamicResource LOCGGDealsWishlistSettingsDefaultCategoryDescription}"

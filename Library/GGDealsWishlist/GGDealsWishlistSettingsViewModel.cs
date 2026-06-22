@@ -5,9 +5,11 @@ using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
 using KNARZhelper.MetadataCommon.ViewModels;
 using Playnite.SDK;
 using Playnite.SDK.Data;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace GGDealsWishlist
 {
@@ -54,6 +56,8 @@ namespace GGDealsWishlist
                 Settings.DefaultCategory = items.First(i => i.Selected).Name;
             });
 
+        public Visibility GGDealsCollectionUpdaterWarningVisibility => IsGGDealsCollectionUpdaterInstalled ? Visibility.Visible : Visibility.Hidden;
+
         public Settings Settings
         {
             get => settings;
@@ -64,6 +68,7 @@ namespace GGDealsWishlist
             }
         }
 
+        internal static bool IsGGDealsCollectionUpdaterInstalled => API.Instance.Addons.Plugins.Exists(p => p.Id == Guid.Parse("2af05ded-085c-426b-a10e-8e03185092bf"));
         private Settings EditingClone { get; set; }
 
         public void BeginEdit() =>

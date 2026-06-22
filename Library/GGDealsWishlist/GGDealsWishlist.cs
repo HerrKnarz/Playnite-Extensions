@@ -69,6 +69,3 @@ namespace GGDealsWishlist
         public override UserControl GetSettingsView(bool firstRunSettings) => new GGDealsWishlistSettingsView();
     }
 }
-
-//TODO: Check if gg.deals addon is installed and add notice to the settings advising to uncheck the wishlist library from the addon's settings or else the games will get added as owned by it.
-//TODO: Add info box to settings to encourage users to open the wishlist in their browser, filter it like they want and then copy that url into the box for further customization.
