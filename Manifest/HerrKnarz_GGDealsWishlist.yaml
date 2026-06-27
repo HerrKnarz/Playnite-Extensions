@@ -1,5 +1,13 @@
 AddonId: GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189
 Packages:
+  - Version: 0.3.0
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-06-27
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-06-27/GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189_0_3_0.pext
+    Changelog:
+      - Fixed link and game type detection for not yet released or otherwise unavailable games
+      - Fixed import not working when there are two or more platforms with the same name in the library
+      - Added optional debug logging
   - Version: 0.2.0
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-06-22
