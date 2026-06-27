@@ -27,7 +27,9 @@
                                DockPanel.Dock="Top">
                 <StackPanel>
                     <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatio}"
-                                      Description="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatioDescription}">
+                                      Description="{DynamicResource LOCScreenshotUtilitiesSettingsAspectRatioDescription}"
+                                      MinLabelWidth="150"
+                                      HorizontalControlAlignment="Left">
                         <StackPanel Orientation="Horizontal">
                             <TextBox Text="{Binding Settings.AspectWidth}"
                                      Width="40"
@@ -40,7 +42,9 @@
                     </c:SettingsOption>
 
                     <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsThumbnailHeight}"
-                                      Description="{DynamicResource LOCScreenshotUtilitiesSettingsThumbnailHeightDescription}">
+                                      Description="{DynamicResource LOCScreenshotUtilitiesSettingsThumbnailHeightDescription}"
+                                      MinLabelWidth="150"
+                                      HorizontalControlAlignment="Left">
                         <TextBox Text="{Binding Settings.ThumbnailHeight}"
                                  Width="40" />
                     </c:SettingsOption>
@@ -91,14 +95,18 @@
                                     DataContext="{Binding SelectedValue, ElementName=LbProviderSettings}"
                                     VerticalAlignment="Top">
                             <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsSortOrder}"
-                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsSortOrderDescription}">
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsSortOrderDescription}"
+                                              MinLabelWidth="100"
+                                              HorizontalControlAlignment="Left">
                                 <TextBox Text="{Binding SortOrder}"
                                          Width="40"
                                          HorizontalContentAlignment="Right" />
                             </c:SettingsOption>
 
                             <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsPriority}"
-                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsPriorityDescription}">
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsPriorityDescription}"
+                                              MinLabelWidth="100"
+                                              HorizontalControlAlignment="Left">
                                 <TextBox Text="{Binding Priority}"
                                          Width="40"
                                          HorizontalContentAlignment="Right" />
@@ -106,7 +114,6 @@
 
                             <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsFetchMode}"
                                               Description="{DynamicResource LOCScreenshotUtilitiesSettingsFetchModeDescription}"
-                                              HorizontalControlAlignment="Stretch"
                                               MinLabelWidth="100">
                                 <ComboBox ItemsSource="{Binding Path=ScreenshotFetchModesWithCaptions}"
                                           DisplayMemberPath="Value"
@@ -116,7 +123,9 @@
                             </c:SettingsOption>
 
                             <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsDaysRefresh}"
-                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsDaysRefreshDescription}">
+                                              Description="{DynamicResource LOCScreenshotUtilitiesSettingsDaysRefreshDescription}"
+                                              MinLabelWidth="100"
+                                              HorizontalControlAlignment="Left">
                                 <TextBox Text="{Binding DaysUntilRefresh}"
                                          Width="40"
                                          HorizontalContentAlignment="Right" />
@@ -124,7 +133,6 @@
 
                             <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots}"
                                               Description="{DynamicResource LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription}"
-                                              HorizontalControlAlignment="Stretch"
                                               MinLabelWidth="100">
                                 <DockPanel>
                                     <Button Content="{DynamicResource LOCScreenshotUtilitiesSettingsSelect}"
