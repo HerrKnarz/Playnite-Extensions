@@ -46,6 +46,8 @@ namespace GGDealsWishlist
                 page = 1;
             }
 
+            Log.Debug(_settings.DebugMode, $"### PAGE {page}: STARTED LOADING GAMES ########################################");
+
             var document = LoadPage(ComposeUrl(page));
 
             if (document.StatusCode != System.Net.HttpStatusCode.OK || GameCountReached(document, onlyNewGames))
@@ -54,6 +56,8 @@ namespace GGDealsWishlist
             }
 
             GetGamesFromPage(document, onlyNewGames);
+
+            Log.Debug(_settings.DebugMode, $"### PAGE {page}: FINISHED LOADING GAMES ########################################");
 
             if (onlyNewGames && Games.Count >= _settings.MaxGamesToImport)
             {
@@ -76,6 +80,8 @@ namespace GGDealsWishlist
         {
             if (page <= 1 && !_settings.OnlyImportGames)
             {
+                Log.Debug(_settings.DebugMode, $"### LOADING URL: {_settings.WishlistUrl} ########################################");
+
                 return _settings.WishlistUrl;
             }
 
@@ -93,7 +99,12 @@ namespace GGDealsWishlist
             }
 
             uriBuilder.Query = paramValues.ToString();
-            return uriBuilder.Uri.ToString();
+
+            var url = uriBuilder.Uri.ToString();
+
+            Log.Debug(_settings.DebugMode, $"### LOADING URL: {url} ########################################");
+
+            return url;
         }
 
         private bool GameCountReached(IDocument document, bool onlyNewGames = true)
@@ -115,34 +126,47 @@ namespace GGDealsWishlist
 
         private void GetGamesFromPage(IDocument document, bool onlyNewGames = true)
         {
-            var cells = document.QuerySelectorAll("#wishlist-list div.wishlist-item");
-            if (!cells.HasItems())
+            try
             {
-                return;
-            }
-
-            foreach (var cell in cells)
-            {
-                if (onlyNewGames && Games.Count >= _settings.MaxGamesToImport)
+                var cells = document.QuerySelectorAll("#wishlist-list div.wishlist-item");
+                if (!cells.HasItems())
                 {
                     return;
                 }
 
+                Log.Debug(_settings.DebugMode, $"### {cells.Count()} GAMES FOUND ########################################");
+
                 var platformHelper = new PlatformHelper(API.Instance.Database.Platforms);
-                var platformString = cell.QuerySelector(".game-info-wrapper .platform-link-icon span")?.TextContent?.Trim();
 
-                var gameId = cell.Attributes["data-container-game-id"]?.Value;
-
-                if (string.IsNullOrEmpty(gameId) || (onlyNewGames && ImportedGames.Contains(gameId)))
+                foreach (var cell in cells)
                 {
-                    continue;
-                }
+                    var gameId = string.Empty;
 
-                var game = new GGDealsGame()
-                {
-                    Name = cell.Attributes["data-game-title"]?.Value,
-                    GameId = gameId,
-                    Links = new List<Link>()
+                    try
+                    {
+                        if (onlyNewGames && Games.Count >= _settings.MaxGamesToImport)
+                        {
+                            return;
+                        }
+
+                        var platformString = cell.QuerySelector(".game-info-wrapper .platform-link-icon span")?.TextContent?.Trim();
+
+                        gameId = cell.Attributes["data-container-game-id"]?.Value;
+
+                        Log.Debug(_settings.DebugMode, $"### GAME {gameId}: FETCHING DATA ########################################");
+
+                        if (string.IsNullOrEmpty(gameId) || (onlyNewGames && ImportedGames.Contains(gameId)))
+                        {
+                            Log.Debug(_settings.DebugMode, $"### GAME {gameId}: ALREADY IMPORTED ########################################");
+
+                            continue;
+                        }
+
+                        var game = new GGDealsGame()
+                        {
+                            Name = cell.Attributes["data-game-title"]?.Value,
+                            GameId = gameId,
+                            Links = new List<Link>()
                     {
                         new Link()
                         {
@@ -150,22 +174,22 @@ namespace GGDealsWishlist
                             Url = $"https://gg.deals{cell.QuerySelector("a.full-link")?.Attributes["href"]?.Value}"
                         }
                     },
-                    Platforms = platformHelper.GetPlatforms(platformString).ToHashSet(),
-                    Source = new MetadataNameProperty("GG.deals Wishlist"),
-                    IsInstalled = _settings.ImportGamesAsInstalled
-                };
+                            Platforms = platformHelper.GetPlatforms(platformString).ToHashSet(),
+                            Source = new MetadataNameProperty("GG.deals Wishlist"),
+                            IsInstalled = _settings.ImportGamesAsInstalled
+                        };
 
-                if (!string.IsNullOrEmpty(_settings.DefaultCategory))
-                {
-                    game.Categories = new HashSet<MetadataProperty>()
+                        if (!string.IsNullOrEmpty(_settings.DefaultCategory))
+                        {
+                            game.Categories = new HashSet<MetadataProperty>()
                     {
                         new MetadataNameProperty(_settings.DefaultCategory)
                     };
-                }
+                        }
 
-                if (_settings.ImportGamesAsInstalled)
-                {
-                    game.GameActions = new List<GameAction>
+                        if (_settings.ImportGamesAsInstalled)
+                        {
+                            game.GameActions = new List<GameAction>
                     {
                         new GameAction()
                         {
@@ -174,21 +198,37 @@ namespace GGDealsWishlist
                             IsPlayAction = true
                         }
                     };
-                }
+                        }
 
-                if (string.IsNullOrEmpty(game.Name))
-                {
-                    continue;
-                }
+                        Log.Debug(_settings.DebugMode, $"### GAME {gameId}: FETCHED DATA. GAME NAME: {game.Name} ########################################");
 
-                Games.Add(game);
+                        if (string.IsNullOrEmpty(game.Name))
+                        {
+                            continue;
+                        }
+
+                        Games.Add(game);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Error fetching game with ID: {gameId}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error fetching games");
             }
         }
 
         private bool IsLastPage(IDocument document)
         {
             var nextPage = document.QuerySelector("#wishlist-list-pagination-page-links li.selected + li");
-            return nextPage == null || nextPage.Attributes["class"]?.Value?.Contains("disabled") == true;
+            var isLastPage = nextPage == null || nextPage.Attributes["class"]?.Value?.Contains("disabled") == true;
+
+            Log.Debug(_settings.DebugMode, $"### LAST PAGED REACHED: {isLastPage} ########################################");
+
+            return isLastPage;
         }
 
         private IDocument LoadPage(string url)

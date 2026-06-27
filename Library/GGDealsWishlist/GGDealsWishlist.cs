@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
@@ -49,7 +50,11 @@ namespace GGDealsWishlist
                 return null;
             }
 
+            Log.Debug(Settings.Settings.DebugMode, "### STARTED RETRIEVING NEW GAMES ########################################");
+
             _dataHandler.RetrieveGames();
+
+            Log.Debug(Settings.Settings.DebugMode, "### FINISHED RETRIEVING NEW GAMES ########################################");
 
             return _dataHandler.Games.GetNewGames(Settings.Settings.MaxGamesToImport);
         }

@@ -4,11 +4,18 @@ namespace GGDealsWishlist.Models
 {
     public class Settings : ObservableObject
     {
+        private bool _debugMode = false;
         private string _defaultCategory = string.Empty;
         private bool _importGamesAsInstalled = false;
         private int _maxGamesToImport = 100;
         private bool _onlyImportGames = true;
         private string _wishlistUrl = string.Empty;
+
+        public bool DebugMode
+        {
+            get => _debugMode;
+            set => SetValue(ref _debugMode, value);
+        }
 
         public string DefaultCategory
         {
