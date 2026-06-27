@@ -56,7 +56,7 @@ namespace GGDealsWishlist
                 Settings.DefaultCategory = items.First(i => i.Selected).Name;
             });
 
-        public Visibility GGDealsCollectionUpdaterWarningVisibility => IsGGDealsCollectionUpdaterInstalled ? Visibility.Visible : Visibility.Hidden;
+        public Visibility GGDealsCollectionUpdaterWarningVisibility => IsGGDealsCollectionUpdaterInstalled ? Visibility.Visible : Visibility.Collapsed;
 
         public Settings Settings
         {

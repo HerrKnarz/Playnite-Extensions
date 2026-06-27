@@ -69,3 +69,5 @@ namespace GGDealsWishlist
         public override UserControl GetSettingsView(bool firstRunSettings) => new GGDealsWishlistSettingsView();
     }
 }
+
+//TODO: Add option to remove games that aren't on the wishlist anymore. Optionally on library update or manually.

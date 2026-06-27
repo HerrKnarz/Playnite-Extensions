@@ -74,14 +74,24 @@ namespace GGDealsWishlist
 
         private string ComposeUrl(int page)
         {
-            if (page <= 1)
+            if (page <= 1 && !_settings.OnlyImportGames)
             {
                 return _settings.WishlistUrl;
             }
 
             var uriBuilder = new UriBuilder(_settings.WishlistUrl);
             var paramValues = HttpUtility.ParseQueryString(uriBuilder.Query);
-            paramValues.Add("page", page.ToString());
+
+            if (page > 1)
+            {
+                paramValues.Set("page", page.ToString());
+            }
+
+            if (_settings.OnlyImportGames)
+            {
+                paramValues.Set("type", "1,3");
+            }
+
             uriBuilder.Query = paramValues.ToString();
             return uriBuilder.Uri.ToString();
         }
@@ -118,11 +128,6 @@ namespace GGDealsWishlist
                     return;
                 }
 
-                if (_settings.OnlyImportGames && cell.Attributes["data-product-type"]?.Value.IsOneOf("Game", "Pack") == false)
-                {
-                    continue;
-                }
-
                 var platformHelper = new PlatformHelper(API.Instance.Database.Platforms);
                 var platformString = cell.QuerySelector(".game-info-wrapper .platform-link-icon span")?.TextContent?.Trim();
 
@@ -142,7 +147,7 @@ namespace GGDealsWishlist
                         new Link()
                         {
                             Name = "GG.deals",
-                            Url = $"https://gg.deals/game/{cell.Attributes["data-game-name"]?.Value}"
+                            Url = $"https://gg.deals{cell.QuerySelector("a.full-link")?.Attributes["href"]?.Value}"
                         }
                     },
                     Platforms = platformHelper.GetPlatforms(platformString).ToHashSet(),
