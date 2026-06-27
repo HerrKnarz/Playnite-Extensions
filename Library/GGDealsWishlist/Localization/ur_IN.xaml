@@ -3,6 +3,8 @@
     <sys:String x:Key="LOCGGDealsWishlistPluginName">GG.deals Wishlist</sys:String>
 
     <sys:String x:Key="LOCGGDealsWishlistConfigNotice">You need to add your wishlist url to the addon settings to be able to import games from GG.deals.</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDebugMode">Debug mode</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDebugModeDescription">Enables verbose debug messages in the extensions.log</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategory">Default Category</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategoryDescription">The default category for games imported from your GG.deals wishlist. Can be left empty.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsFilterTip">💡Tip: To filter which items you want to import from your wishlist you can open the shareable link in your browser, change some of the filter settings on that page, and then copy the link with the added filter settings from the browser back into the wishlist URL field.</sys:String>
