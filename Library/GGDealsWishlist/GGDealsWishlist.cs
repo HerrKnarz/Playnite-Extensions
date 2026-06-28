@@ -1,4 +1,6 @@
-﻿using KNARZhelper;
+﻿using GGDealsWishlist.ViewModels;
+using GGDealsWishlist.Views;
+using KNARZhelper;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
@@ -16,7 +18,7 @@ namespace GGDealsWishlist
 
         public GGDealsWishlist(IPlayniteAPI api) : base(api)
         {
-            Settings = new GGDealsWishlistSettingsViewModel(this);
+            Settings = new SettingsViewModel(this);
             Properties = new LibraryPluginProperties
             {
                 HasSettings = true
@@ -33,7 +35,7 @@ namespace GGDealsWishlist
 
         public override string Name => "GG.deals Wishlist";
 
-        private GGDealsWishlistSettingsViewModel Settings { get; set; }
+        private SettingsViewModel Settings { get; set; }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
@@ -71,7 +73,7 @@ namespace GGDealsWishlist
 
         public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
-        public override UserControl GetSettingsView(bool firstRunSettings) => new GGDealsWishlistSettingsView();
+        public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
     }
 }
 

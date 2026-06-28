@@ -146,13 +146,15 @@
     <Compile Include="GGDealsWishlistClient.cs" />
     <Compile Include="Models\DiscountData.cs" />
     <Compile Include="Models\Settings.cs" />
-    <Compile Include="GGDealsWishlistSettingsViewModel.cs" />
-    <Compile Include="GGDealsWishlistSettingsView.xaml.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="GGDealsWishlist.cs" />
     <Compile Include="GGDealsWishlistInstallController.cs" />
     <Compile Include="Models\GGDealsGame.cs" />
     <Compile Include="Models\GGDealsGames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
@@ -185,9 +187,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GGDealsWishlistSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

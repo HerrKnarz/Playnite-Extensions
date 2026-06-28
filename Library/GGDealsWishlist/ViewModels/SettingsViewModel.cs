@@ -11,14 +11,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 
-namespace GGDealsWishlist
+namespace GGDealsWishlist.ViewModels
 {
-    public class GGDealsWishlistSettingsViewModel : ObservableObject, ISettings
+    public class SettingsViewModel : ObservableObject, ISettings
     {
         private readonly GGDealsWishlist plugin;
         private Settings settings;
 
-        public GGDealsWishlistSettingsViewModel(GGDealsWishlist plugin)
+        public SettingsViewModel(GGDealsWishlist plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite
             // saves data to a location based on what plugin requested the operation.
