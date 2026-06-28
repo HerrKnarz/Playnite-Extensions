@@ -144,6 +144,7 @@
     </Compile>
     <Compile Include="GGDealsDataHandler.cs" />
     <Compile Include="GGDealsWishlistClient.cs" />
+    <Compile Include="Models\DiscountData.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="GGDealsWishlistSettingsViewModel.cs" />
     <Compile Include="GGDealsWishlistSettingsView.xaml.cs" />

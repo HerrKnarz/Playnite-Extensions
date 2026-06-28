@@ -52,7 +52,7 @@ namespace GGDealsWishlist
 
             Log.Debug(Settings.Settings.DebugMode, "### STARTED RETRIEVING NEW GAMES ########################################");
 
-            _dataHandler.RetrieveGames();
+            _dataHandler.RefreshGames();
 
             Log.Debug(Settings.Settings.DebugMode, "### FINISHED RETRIEVING NEW GAMES ########################################");
 
