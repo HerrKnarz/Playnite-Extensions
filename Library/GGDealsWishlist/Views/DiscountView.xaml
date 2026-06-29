@@ -1,0 +1,166 @@
+﻿<UserControl x:Class="GGDealsWishlist.Views.DiscountView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:GGDealsWishlist.Views"
+             xmlns:knarzHelperControls="clr-namespace:KNARZhelper.Controls"
+             xmlns:models="clr-namespace:GGDealsWishlist.Models"
+             xmlns:vm="clr-namespace:GGDealsWishlist.ViewModels"
+             xmlns:c="clr-namespace:KNARZhelper.Controls"
+             d:DataContext="{d:DesignInstance Type=vm:DiscountViewModel}"
+             mc:Ignorable="d"
+             d:Background="LightGray"
+             Padding="15, 10"
+             d:DesignHeight="800"
+             d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <d:ResourceDictionary Source="/GGDealsWishlist;component/Localization/en_US.xaml" />
+                <ResourceDictionary Source="/GGDealsWishlist;component/Shared/Controls/CommonStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <knarzHelperControls:LocalFileImageConverter x:Key="LocalFileImageConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <ListBox Name="LbDiscountList"
+                 ItemsSource="{Binding Games}"
+                 d:ItemsSource="{d:SampleData}"
+                 SelectedItem="{Binding SelectedGame}"
+                 SelectionMode="Single"
+                 Background="{StaticResource NormalBrushDark}"
+                 d:Background="White"
+                 HorizontalContentAlignment="Stretch"
+                 VirtualizingPanel.IsVirtualizing="True"
+                 ScrollViewer.CanContentScroll="True"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem"
+                       BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                    <Setter Property="Margin"
+                            Value="0" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel Margin="10">
+                        <Image Source="{Binding DisplayImage, Converter={StaticResource LocalFileImageConverter}}"
+                               d:Source="/GGDealsWishlist;component/Resources/dummy-600x900.png"
+                               RenderOptions.BitmapScalingMode="Fant"
+                               Stretch="Uniform"
+                               MaxWidth="188"
+                               MaxHeight="188"
+                               DockPanel.Dock="Left" />
+                        <StackPanel DockPanel.Dock="Right"
+                                    VerticalAlignment="Center">
+                            <StackPanel DockPanel.Dock="Right"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Right">
+                                <TextBlock Margin="15, 3, 0, 3"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding DiscountData.RegularPrice}"
+                                           TextDecorations="Strikethrough"
+                                           Foreground="{StaticResource TextBrushDarker}"
+                                           d:Foreground="Gray"
+                                           Visibility="{Binding DiscountData.DiscountedVisibility}" />
+                                <Border Margin="15, 3, 0, 3"
+                                        VerticalAlignment="Center"
+                                        CornerRadius="5"
+                                        Padding="10, 3"
+                                        Visibility="{Binding DiscountData.DiscountedVisibility}">
+                                    <Border.Style>
+                                        <Style TargetType="Border"
+                                               BasedOn="{StaticResource {x:Type Border}}">
+                                            <Setter Property="Background"
+                                                    Value="{StaticResource NormalBrush}"
+                                                    d:Value="Aqua" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DiscountData.HistoricalLow}"
+                                                             Value="True">
+                                                    <Setter Property="Background"
+                                                            Value="DarkGreen" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <TextBlock Text="{Binding DiscountData.Discount}" />
+                                </Border>
+                                <TextBlock Margin="15, 3, 0, 3"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding DiscountData.DiscountedPrice}"
+                                           TextWrapping="Wrap"
+                                           FontSize="{DynamicResource FontSizeLargest}"
+                                           d:FontSize="16"
+                                           FontWeight="Bold">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock"
+                                               BasedOn="{StaticResource {x:Type TextBlock}}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DiscountData.HistoricalLow}"
+                                                             Value="True">
+                                                    <Setter Property="Foreground"
+                                                            Value="Green" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel DockPanel.Dock="Right"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Right">
+                                <Border Margin="10, 3, 0, 3"
+                                        VerticalAlignment="Center"
+                                        CornerRadius="5"
+                                        Padding="10, 2"
+                                        BorderBrush="{StaticResource NormalBrush}"
+                                        d:BorderBrush="Aqua"
+                                        BorderThickness="1"
+                                        Visibility="{Binding DiscountData.DiscountCodeVisibility}">
+                                    <TextBlock Text="{Binding DiscountData.DiscountCode}"
+                                               Foreground="{StaticResource TextBrushDarker}"
+                                               d:Foreground="Gray" />
+                                </Border>
+                                <Border Margin="15, 3, 0, 3"
+                                        VerticalAlignment="Center"
+                                        CornerRadius="5"
+                                        Padding="10, 2"
+                                        BorderBrush="DarkGreen"
+                                        BorderThickness="1"
+                                        Visibility="{Binding DiscountData.HistoricalLowVisibility}">
+                                    <Border.Background>
+                                        <SolidColorBrush Opacity="0.2"
+                                                         Color="DarkGreen" />
+                                    </Border.Background>
+                                    <TextBlock Text="{DynamicResource LOCGGDealsWishlistDiscountHistoricalLow}"
+                                               Foreground="Green" />
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel DockPanel.Dock="Left"
+                                    VerticalAlignment="Center">
+                            <TextBlock Margin="15, 3, 0, 3"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding DisplayName}"
+                                       TextWrapping="Wrap"
+                                       FontSize="{DynamicResource FontSizeLarger}"
+                                       d:FontSize="16"
+                                       FontWeight="Bold"
+                                       DockPanel.Dock="Left" />
+                            <TextBlock Margin="15, 3, 0, 3"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Game.CompletionStatus}"
+                                       TextWrapping="Wrap"
+                                       Foreground="{StaticResource TextBrushDarker}"
+                                       d:Foreground="Gray"
+                                       DockPanel.Dock="Left" />
+                        </StackPanel>
+                    </DockPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

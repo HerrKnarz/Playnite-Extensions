@@ -10,14 +10,14 @@ namespace GGDealsWishlist.Models
     {
         public DateTime LastRefresh { get; set; } = DateTime.MinValue;
 
-        public List<GameMetadata> GetGameMetadataList() => this.Select(g => (GameMetadata)g).ToList();
+        public List<GameMetadata> GetGameMetadataList() => this.Select(g => g.ImportedMetadata).ToList();
 
         public List<GameMetadata> GetNewGames(int maxGames = 0)
         {
             var list = this
                 .Where(ng => ng.Game is null)
                 .Take(maxGames)
-                .Select(g => (GameMetadata)g)
+                .Select(g => g.ImportedMetadata)
                 .ToList();
 
             return maxGames > 0 ? list.Take(maxGames).ToList() : list;

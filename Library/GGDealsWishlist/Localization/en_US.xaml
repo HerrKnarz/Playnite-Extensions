@@ -4,6 +4,9 @@
     <sys:String x:Key="LOCGGDealsWishlistPluginName">GG.deals Wishlist</sys:String>
 
     <sys:String x:Key="LOCGGDealsWishlistConfigNotice">You need to add your wishlist url to the addon settings to be able to import games from GG.deals.</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistDiscountHistoricalLow">Historical low</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistMenuDiscountView">Current discounts</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistProgessLoadingDiscountData">Loading discount data from GG.deals...</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDebugMode">Debug mode</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDebugModeDescription">Enables verbose debug messages in the extensions.log</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategory">Default Category</sys:String>

@@ -145,9 +145,8 @@ namespace GGDealsWishlist
 
                 discountData.Discounted = !string.IsNullOrEmpty(discountData.Discount);
 
-                var game = new GGDealsGame()
+                var metadata = new GameMetadata()
                 {
-                    Game = existingGame,
                     GameId = gameId,
                     Name = cell.Attributes["data-game-title"]?.Value,
                     Source = new MetadataNameProperty("GG.deals Wishlist"),
@@ -161,12 +160,11 @@ namespace GGDealsWishlist
                         }
                     },
                     Platforms = _platformHelper.GetPlatforms(cell.QuerySelector(".game-info-wrapper .platform-link-icon span")?.TextContent?.Trim()).ToHashSet(),
-                    GGDealsCoverLink = cell.QuerySelector("picture.game-picture img")?.Attributes["scr"]?.Value
                 };
 
                 if (!string.IsNullOrEmpty(_settings.DefaultCategory))
                 {
-                    game.Categories = new HashSet<MetadataProperty>()
+                    metadata.Categories = new HashSet<MetadataProperty>()
                     {
                         new MetadataNameProperty(_settings.DefaultCategory)
                     };
@@ -174,7 +172,7 @@ namespace GGDealsWishlist
 
                 if (_settings.ImportGamesAsInstalled)
                 {
-                    game.GameActions = new List<GameAction>
+                    metadata.GameActions = new List<GameAction>
                     {
                         new GameAction()
                         {
@@ -184,6 +182,14 @@ namespace GGDealsWishlist
                         }
                     };
                 }
+
+                var game = new GGDealsGame()
+                {
+                    DiscountData = discountData,
+                    Game = existingGame,
+                    GGDealsCoverLink = cell.QuerySelector("picture.game-picture img")?.Attributes["src"]?.Value,
+                    ImportedMetadata = metadata,
+                };
 
                 Log.Debug(_settings.DebugMode, $"### GAME {gameId} - {gameName}: FETCHED DATA. ########################################");
 
