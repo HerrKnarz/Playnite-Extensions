@@ -69,6 +69,7 @@
                          x:Name="ScreenshotListBox"
                          VerticalAlignment="Top"
                          ItemsSource="{Binding SelectedGroup.Screenshots}"
+                         d:ItemsSource="{d:SampleData}"
                          Background="Transparent"
                          BorderBrush="Transparent"
                          HorizontalAlignment="Stretch"
