@@ -19,6 +19,7 @@
     <sys:String x:Key="LOCGGDealsWishlistImageOptionIcon">Game icon</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistMenuDiscountView">Current discounts</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistProgessLoadingDiscountData">Loading discount data from GG.deals...</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistRefresh">Refresh</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDebugMode">Debug mode</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDebugModeDescription">Enables verbose debug messages in the extensions.log</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategory">Default Category</sys:String>

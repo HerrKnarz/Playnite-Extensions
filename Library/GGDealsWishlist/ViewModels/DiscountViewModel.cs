@@ -5,6 +5,7 @@ using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Data;
 
 namespace GGDealsWishlist.ViewModels
@@ -32,6 +33,16 @@ namespace GGDealsWishlist.ViewModels
 
             PrepareGamesViewSource();
         }
+
+        public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
+                {
+                    _plugin.Settings.Settings.DiscountViewWindowHeight = Convert.ToInt32(win.Height);
+                    _plugin.Settings.Settings.DiscountViewWindowWidth = Convert.ToInt32(win.Width);
+                    _plugin.SavePluginSettings(_plugin.Settings.Settings);
+
+                    win.DialogResult = true;
+                    win.Close();
+                });
 
         public SortOrder CurrentSortOrder
         {
@@ -73,6 +84,13 @@ namespace GGDealsWishlist.ViewModels
                 GamesViewSource.View.Filter = Filter;
             }
         }
+
+        public RelayCommand RefreshDiscountsCommand => new RelayCommand(() =>
+        {
+            RefreshGames();
+            GamesViewSource.View.Filter = Filter;
+            SortGames();
+        });
 
         public string SearchTerm
         {
@@ -118,8 +136,7 @@ namespace GGDealsWishlist.ViewModels
 
                 var window = WindowHelper.CreateSizedWindow(
                     ResourceProvider.GetString("LOCGGDealsWishlistMenuDiscountView"),
-                    1200,
-                    800);
+                    plugin.Settings.Settings.DiscountViewWindowWidth, plugin.Settings.Settings.DiscountViewWindowHeight);
 
                 window.Content = view;
                 window.DataContext = viewModel;
@@ -130,28 +147,6 @@ namespace GGDealsWishlist.ViewModels
             {
                 Log.Error(exception, "Error during initializing discount viewer", true);
             }
-        }
-
-        private static void RefreshGames(GGDealsWishlist plugin)
-        {
-            var globalProgressOptions = new GlobalProgressOptions(
-                                    ResourceProvider.GetString("LOCGGDealsWishlistProgessLoadingDiscountData"),
-                                    false)
-            {
-                IsIndeterminate = true
-            };
-
-            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-            {
-                try
-                {
-                    plugin.DataHandler.RefreshGames();
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                }
-            }, globalProgressOptions);
         }
 
         private bool Filter(object item)
@@ -166,7 +161,7 @@ namespace GGDealsWishlist.ViewModels
         {
             if (_plugin.DataHandler.Games is null || _plugin.DataHandler.Games.Count == 0 || _plugin.DataHandler.Games.LastRefresh < DateTime.Now.AddHours(-1))
             {
-                RefreshGames(_plugin);
+                RefreshGames();
             }
 
             Games = _plugin.DataHandler.Games;
@@ -178,6 +173,28 @@ namespace GGDealsWishlist.ViewModels
 
             GamesViewSource.View.Filter = Filter;
             SortGames();
+        }
+
+        private void RefreshGames()
+        {
+            var globalProgressOptions = new GlobalProgressOptions(
+                                    ResourceProvider.GetString("LOCGGDealsWishlistProgessLoadingDiscountData"),
+                                    false)
+            {
+                IsIndeterminate = true
+            };
+
+            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            {
+                try
+                {
+                    _plugin.DataHandler.RefreshGames();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            }, globalProgressOptions);
         }
 
         private void SortGames(bool sortByShop = false)
@@ -230,6 +247,6 @@ namespace GGDealsWishlist.ViewModels
     }
 }
 
-//TODO: Add options and window size to settings
+//TODO: Add options to settings
 //TODO: Add list of games to the settings for themes to use them. Have to ask if the sorting is important.
 //LATER: Maybe add option to just select a saved Playnite filter to filter the games.

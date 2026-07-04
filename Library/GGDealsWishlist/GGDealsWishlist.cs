@@ -49,7 +49,7 @@ namespace GGDealsWishlist
 
         public override string Name => "GG.deals Wishlist";
 
-        private SettingsViewModel Settings { get; set; }
+        public SettingsViewModel Settings { get; set; }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
