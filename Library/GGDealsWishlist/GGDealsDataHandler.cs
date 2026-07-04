@@ -54,7 +54,10 @@ namespace GGDealsWishlist
 
         public void RefreshGames()
         {
-            Games.Clear();
+            API.Instance.MainView.UIDispatcher.Invoke(delegate
+            {
+                Games.Clear();
+            });
 
             _platformHelper = new PlatformHelper(API.Instance.Database.Platforms);
 
@@ -132,18 +135,15 @@ namespace GGDealsWishlist
                 var discountData = new DiscountData()
                 {
                     Available = !cell.ClassList.Contains("Unavailable"),
-                    Discount = cell.QuerySelector(".price-inner-wrapper .discount")?.GetExclusiveText(),
+                    DiscountString = cell.QuerySelector(".price-inner-wrapper .discount")?.GetExclusiveText(),
                     DiscountCode = cell.QuerySelector(".code")?.TextContent,
                     DiscountCodeValue = discountCodeValue,
-                    DiscountedPrice = discountedPrice,
+                    DiscountedPriceString = discountedPrice,
                     HistoricalLow = cell.QuerySelector(".historical") != null,
-                    RegularPrice = cell.QuerySelector(".price-inner-wrapper .base-price")?.GetExclusiveText() ?? discountedPrice,
-                    ShopImage = cell.QuerySelector("img.shop-image-white")?.Attributes["src"]?.Value,
+                    RegularPriceString = cell.QuerySelector(".price-inner-wrapper .base-price")?.GetExclusiveText() ?? discountedPrice,
                     ShopLink = $"https://gg.deals{cell.QuerySelector("a.shop-link")?.Attributes["href"]?.Value}",
                     ShopName = cell.QuerySelector("img.shop-image-white")?.Attributes["alt"]?.Value,
                 };
-
-                discountData.Discounted = !string.IsNullOrEmpty(discountData.Discount);
 
                 var metadata = new GameMetadata()
                 {

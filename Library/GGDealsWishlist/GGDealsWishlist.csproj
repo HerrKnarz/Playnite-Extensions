@@ -149,6 +149,7 @@
     <Compile Include="GGDealsWishlistClient.cs" />
     <Compile Include="Models\DiscountData.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="SortableNameConverter.cs" />
     <Compile Include="ViewModels\DiscountViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="GGDealsWishlist.cs" />

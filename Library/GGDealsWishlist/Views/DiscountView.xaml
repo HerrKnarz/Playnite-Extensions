@@ -13,23 +13,73 @@
              d:Background="LightGray"
              Padding="15, 10"
              d:DesignHeight="800"
-             d:DesignWidth="800">
+             d:DesignWidth="1000">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <d:ResourceDictionary Source="/GGDealsWishlist;component/Localization/en_US.xaml" />
                 <ResourceDictionary Source="/GGDealsWishlist;component/Shared/Controls/CommonStyles.xaml" />
+                <ResourceDictionary Source="/GGDealsWishlist;component/Shared/Controls/SettingsStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <knarzHelperControls:LocalFileImageConverter x:Key="LocalFileImageConverter" />
+
+            <SolidColorBrush x:Key="GGDealsHoverBrush"
+                             Color="{DynamicResource TextColor}"
+                             Opacity="0.05" />
+            <SolidColorBrush x:Key="GGDealsSelectedBrush"
+                             Color="{DynamicResource TextColor}"
+                             Opacity="0.08" />
+            <SolidColorBrush x:Key="GGDealsHighlightBrush"
+                             Color="{DynamicResource TextColor}"
+                             Opacity="0.2" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <c:SettingsSection Heading="{Binding Source={StaticResource LOCGGDealsWishlistDiscountFilter}}"
+                           Grid.Column="0"
+                           Margin="0, 0, 15, 0">
+            <StackPanel>
+                <DockPanel Margin="0, 0, 0, 15">
+                    <Button Content="&#xef00;"
+                            Style="{DynamicResource KNARZIconButton}"
+                            Click="ClearSearchBox"
+                            DockPanel.Dock="Right"
+                            Margin="5,0,0,0"
+                            Padding="5,5,8,5" />
+                    <TextBox Name="SearchBox"
+                             Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+                <Label Content="{Binding Source={StaticResource LOCGGDealsWishlistDiscountSortBy}}"
+                       Margin="0, 0, 0, 5" />
+                <ComboBox Name="SortOrderComboBox"
+                          ItemsSource="{Binding Path=SortOrderWithCaptions}"
+                          DisplayMemberPath="Value"
+                          SelectedValuePath="Key"
+                          SelectedValue="{Binding CurrentSortOrder}"
+                          Margin="0, 0, 0, 15" />
+                <CheckBox Content="{Binding Source={StaticResource LOCGGDealsWishlistDiscountShowOnlyDiscounted}}"
+                          IsChecked="{Binding ShowOnlyDiscountedGames}"
+                          Margin="0, 0, 0, 15" />
+                <CheckBox Content="{Binding Source={StaticResource LOCGGDealsWishlistDiscountShowOnlyHistoricalLow}}"
+                          IsChecked="{Binding ShowOnlyHistoricalLowPrices}"
+                          Margin="0, 0, 0, 15" />
+                <CheckBox Content="{Binding Source={StaticResource LOCGGDealsWishlistDiscountGroupByShop}}"
+                          IsChecked="{Binding GroupByShop}"
+                          Margin="0, 0, 0, 15" />
+            </StackPanel>
+        </c:SettingsSection>
+
         <ListBox Name="LbDiscountList"
-                 ItemsSource="{Binding Games}"
+                 Grid.Column="1"
+                 ItemsSource="{Binding GamesViewSource.View}"
                  d:ItemsSource="{d:SampleData}"
                  SelectedItem="{Binding SelectedGame}"
                  SelectionMode="Single"
-                 Background="{StaticResource NormalBrushDark}"
+                 Background="{DynamicResource NormalBrushDark}"
                  d:Background="White"
                  HorizontalContentAlignment="Stretch"
                  VirtualizingPanel.IsVirtualizing="True"
@@ -39,12 +89,75 @@
                 <Style TargetType="ListBoxItem"
                        BasedOn="{StaticResource {x:Type ListBoxItem}}">
                     <Setter Property="Margin"
+                            Value="10, 10, 0, 0" />
+                    <Setter Property="Padding"
                             Value="0" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border Background="{DynamicResource NormalBrush}"
+                                        d:Background="White"
+                                        CornerRadius="{DynamicResource ControlCornerRadius}">
+                                    <Grid>
+                                        <Border x:Name="HoverRectangle"
+                                                IsHitTestVisible="False"
+                                                Visibility="Collapsed"
+                                                Background="{DynamicResource GGDealsHoverBrush}"
+                                                CornerRadius="{DynamicResource ControlCornerRadius}" />
+                                        <Border x:Name="SelectedRectangle"
+                                                IsHitTestVisible="False"
+                                                Visibility="Collapsed"
+                                                Background="{DynamicResource GGDealsSelectedBrush}"
+                                                CornerRadius="{DynamicResource ControlCornerRadius}" />
+                                        <Border Padding="{TemplateBinding Padding}"
+                                                Background="Transparent">
+                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                              Margin="0" />
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsFocused"
+                                             Value="True">
+                                        <Setter Property="Visibility"
+                                                Value="Visible"
+                                                TargetName="SelectedRectangle" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected"
+                                             Value="true">
+                                        <Setter Property="Visibility"
+                                                Value="Visible"
+                                                TargetName="SelectedRectangle" />
+                                    </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsMouseOver"
+                                                       Value="True" />
+                                            <Condition Property="Selector.IsSelected"
+                                                       Value="False" />
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="Visibility"
+                                                Value="Visible"
+                                                TargetName="HoverRectangle" />
+                                    </MultiTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="Selector.IsSelected"
+                                 Value="True">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource TextBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel Margin="10">
+
                         <Image Source="{Binding DisplayImage, Converter={StaticResource LocalFileImageConverter}}"
                                d:Source="/GGDealsWishlist;component/Resources/dummy-600x900.png"
                                RenderOptions.BitmapScalingMode="Fant"
@@ -52,28 +165,27 @@
                                MaxWidth="188"
                                MaxHeight="188"
                                DockPanel.Dock="Left" />
+
                         <StackPanel DockPanel.Dock="Right"
                                     VerticalAlignment="Center">
-                            <StackPanel DockPanel.Dock="Right"
-                                        Orientation="Horizontal"
+                            <StackPanel Orientation="Horizontal"
                                         HorizontalAlignment="Right">
                                 <TextBlock Margin="15, 3, 0, 3"
                                            VerticalAlignment="Center"
-                                           Text="{Binding DiscountData.RegularPrice}"
+                                           Text="{Binding DiscountData.RegularPriceString}"
                                            TextDecorations="Strikethrough"
                                            Foreground="{StaticResource TextBrushDarker}"
                                            d:Foreground="Gray"
                                            Visibility="{Binding DiscountData.DiscountedVisibility}" />
-                                <Border Margin="15, 3, 0, 3"
+                                <Border Margin="10, 3, 0, 3"
                                         VerticalAlignment="Center"
                                         CornerRadius="5"
                                         Padding="10, 3"
                                         Visibility="{Binding DiscountData.DiscountedVisibility}">
                                     <Border.Style>
-                                        <Style TargetType="Border"
-                                               BasedOn="{StaticResource {x:Type Border}}">
+                                        <Style TargetType="Border">
                                             <Setter Property="Background"
-                                                    Value="{StaticResource NormalBrush}"
+                                                    Value="{StaticResource GGDealsHighlightBrush}"
                                                     d:Value="Aqua" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding DiscountData.HistoricalLow}"
@@ -84,11 +196,11 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
-                                    <TextBlock Text="{Binding DiscountData.Discount}" />
+                                    <TextBlock Text="{Binding DiscountData.DiscountString}" />
                                 </Border>
-                                <TextBlock Margin="15, 3, 0, 3"
+                                <TextBlock Margin="10, 3, 0, 3"
                                            VerticalAlignment="Center"
-                                           Text="{Binding DiscountData.DiscountedPrice}"
+                                           Text="{Binding DiscountData.DiscountedPriceString}"
                                            TextWrapping="Wrap"
                                            FontSize="{DynamicResource FontSizeLargest}"
                                            d:FontSize="16"
@@ -108,14 +220,13 @@
                                 </TextBlock>
                             </StackPanel>
 
-                            <StackPanel DockPanel.Dock="Right"
-                                        Orientation="Horizontal"
+                            <StackPanel Orientation="Horizontal"
                                         HorizontalAlignment="Right">
                                 <Border Margin="10, 3, 0, 3"
                                         VerticalAlignment="Center"
                                         CornerRadius="5"
                                         Padding="10, 2"
-                                        BorderBrush="{StaticResource NormalBrush}"
+                                        BorderBrush="{StaticResource GGDealsHighlightBrush}"
                                         d:BorderBrush="Aqua"
                                         BorderThickness="1"
                                         Visibility="{Binding DiscountData.DiscountCodeVisibility}">
@@ -123,7 +234,8 @@
                                                Foreground="{StaticResource TextBrushDarker}"
                                                d:Foreground="Gray" />
                                 </Border>
-                                <Border Margin="15, 3, 0, 3"
+
+                                <Border Margin="10, 3, 0, 3"
                                         VerticalAlignment="Center"
                                         CornerRadius="5"
                                         Padding="10, 2"
@@ -137,6 +249,36 @@
                                     <TextBlock Text="{DynamicResource LOCGGDealsWishlistDiscountHistoricalLow}"
                                                Foreground="Green" />
                                 </Border>
+
+                                <TextBlock Margin="10, 3, 0, 3"
+                                           VerticalAlignment="Center"
+                                           Tag="{Binding DiscountData.ShopName}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock"
+                                               BasedOn="{StaticResource {x:Type TextBlock}}">
+                                            <Style.Triggers>
+                                                <Trigger Property="Tag"
+                                                         Value="{x:Null}">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed" />
+                                                </Trigger>
+                                                <Trigger Property="Tag"
+                                                         Value="">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                    <TextBlock Text="{DynamicResource LOCGGDealsWishlistDiscountBuyOn}"
+                                               TextWrapping="Wrap"
+                                               Foreground="{StaticResource TextBrushDarker}"
+                                               d:Foreground="Gray" />
+                                    <Hyperlink NavigateUri="{Binding DiscountData.ShopLink}"
+                                               RequestNavigate="Hyperlink_RequestNavigate">
+                                        <TextBlock Text="{Binding Path=DiscountData.ShopName}" />
+                                    </Hyperlink>
+                                </TextBlock>
                             </StackPanel>
                         </StackPanel>
 
@@ -148,15 +290,27 @@
                                        TextWrapping="Wrap"
                                        FontSize="{DynamicResource FontSizeLarger}"
                                        d:FontSize="16"
-                                       FontWeight="Bold"
-                                       DockPanel.Dock="Left" />
+                                       FontWeight="Bold" />
+
                             <TextBlock Margin="15, 3, 0, 3"
                                        VerticalAlignment="Center"
                                        Text="{Binding Game.CompletionStatus}"
                                        TextWrapping="Wrap"
                                        Foreground="{StaticResource TextBrushDarker}"
-                                       d:Foreground="Gray"
-                                       DockPanel.Dock="Left" />
+                                       d:Foreground="Gray" />
+
+                            <TextBlock Margin="15, 3, 0, 3"
+                                       VerticalAlignment="Center"
+                                       TextWrapping="Wrap">
+                                    <TextBlock Text="{DynamicResource LOCGGDealsWishlistDiscountGoTo}"
+                                               TextWrapping="Wrap"
+                                               Foreground="{StaticResource TextBrushDarker}"
+                                               d:Foreground="Gray" />
+                                    <Hyperlink NavigateUri="{Binding GGDealsLink}"
+                                               RequestNavigate="Hyperlink_RequestNavigate">
+                                        GG.deals
+                                    </Hyperlink>
+                                </TextBlock>
                         </StackPanel>
                     </DockPanel>
                 </DataTemplate>

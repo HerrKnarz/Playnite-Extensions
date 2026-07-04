@@ -2,6 +2,7 @@
 using Playnite.SDK.Models;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace GGDealsWishlist.Models
 {
@@ -47,10 +48,14 @@ namespace GGDealsWishlist.Models
             set => SetValue(ref _gGDealsCoverLink, value);
         }
 
+        public string GGDealsLink => ImportedMetadata.Links.FirstOrDefault()?.Url;
+
         public GameMetadata ImportedMetadata
         {
             get => _importedMetadata;
             set => SetValue(ref _importedMetadata, value);
         }
+
+        public string SortingName => Game?.SortingName ?? Game?.Name ?? new SortableNameConverter().Convert(ImportedMetadata.Name);
     }
 }
