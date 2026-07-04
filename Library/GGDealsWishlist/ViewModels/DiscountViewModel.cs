@@ -55,20 +55,19 @@ namespace GGDealsWishlist.ViewModels
             {
                 SetValue(ref _groupByShop, value);
 
+                SortGames(_groupByShop);
+
                 if (_groupByShop)
                 {
-                    SortGames(true);
-
                     GamesViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("DiscountData.ShopName"));
-                    ((IEditableCollectionView)GamesViewSource.View).CommitEdit();
-                    GamesViewSource.View.Filter = Filter;
                 }
                 else
                 {
                     GamesViewSource.View.GroupDescriptions.Clear();
-                    ((IEditableCollectionView)GamesViewSource.View).CommitEdit();
-                    GamesViewSource.View.Filter = Filter;
                 }
+
+                ((IEditableCollectionView)GamesViewSource.View).CommitEdit();
+                GamesViewSource.View.Filter = Filter;
             }
         }
 
