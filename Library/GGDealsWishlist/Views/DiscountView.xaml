@@ -82,9 +82,50 @@
                  Background="{DynamicResource NormalBrushDark}"
                  d:Background="White"
                  HorizontalContentAlignment="Stretch"
+                 VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                  VirtualizingPanel.IsVirtualizing="True"
                  ScrollViewer.CanContentScroll="True"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+            <ListBox.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Margin"
+                                    Value="0,5" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander IsExpanded="True"
+                                                  Background="{DynamicResource ExpanderBackgroundBrush}">
+                                            <Expander.Header>
+                                                <DockPanel Margin="10">
+                                                    <TextBlock FontWeight="Bold"
+                                                               Text="{Binding Name}"
+                                                               FontSize="{StaticResource FontSizeLarger}"
+                                                               VerticalAlignment="Center"
+                                                               Margin="0,0,5,0"
+                                                               Width="Auto"
+                                                               Foreground="{DynamicResource TextBrush}" />
+                                                    <TextBlock FontWeight="Bold"
+                                                               Text="{Binding ItemCount, StringFormat={}({0})}"
+                                                               VerticalAlignment="Center"
+                                                               HorizontalAlignment="Right"
+                                                               Foreground="{DynamicResource HighlightGlyphBrush}" />
+                                                </DockPanel>
+                                            </Expander.Header>
+                                            <Expander.Content>
+                                                <ItemsPresenter />
+                                            </Expander.Content>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListBox.GroupStyle>
+
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem"
                        BasedOn="{StaticResource {x:Type ListBoxItem}}">

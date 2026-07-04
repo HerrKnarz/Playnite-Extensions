@@ -20,6 +20,7 @@ namespace GGDealsWishlist.ViewModels
     {
         private SortOrder _currentSortOrder = SortOrder.Discount;
         private CollectionViewSource _gamesViewSource;
+        private bool _groupByShop;
         private string _searchTerm = string.Empty;
         private bool _showOnlyDiscountedGames = true;
         private bool _showOnlyHistoricalLowPrices = false;
@@ -47,7 +48,29 @@ namespace GGDealsWishlist.ViewModels
             set => SetValue(ref _gamesViewSource, value);
         }
 
-        public bool GroupByShop { get; set; }
+        public bool GroupByShop
+        {
+            get => _groupByShop;
+            set
+            {
+                SetValue(ref _groupByShop, value);
+
+                if (_groupByShop)
+                {
+                    SortGames(true);
+
+                    GamesViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("DiscountData.ShopName"));
+                    ((IEditableCollectionView)GamesViewSource.View).CommitEdit();
+                    GamesViewSource.View.Filter = Filter;
+                }
+                else
+                {
+                    GamesViewSource.View.GroupDescriptions.Clear();
+                    ((IEditableCollectionView)GamesViewSource.View).CommitEdit();
+                    GamesViewSource.View.Filter = Filter;
+                }
+            }
+        }
 
         public string SearchTerm
         {
@@ -153,11 +176,16 @@ namespace GGDealsWishlist.ViewModels
             SortGames();
         }
 
-        private void SortGames()
+        private void SortGames(bool sortByShop = false)
         {
             using (GamesViewSource.DeferRefresh())
             {
                 GamesViewSource.SortDescriptions.Clear();
+
+                if (sortByShop)
+                {
+                    GamesViewSource.SortDescriptions.Add(new SortDescription("DiscountData.ShopName", ListSortDirection.Ascending));
+                }
 
                 switch (CurrentSortOrder)
                 {
