@@ -5,6 +5,8 @@
 
     <sys:String x:Key="LOCGGDealsWishlistConfigNotice">You need to add your wishlist url to the addon settings to be able to import games from GG.deals.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountBuyOn">Buy on</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistDiscountClickToCopyCode">Click to copy code:</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistDiscountCodeCopied">Code copied!</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountFilter">Filter</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountGoTo">Go to</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountGroupByShop">Group by shop</sys:String>

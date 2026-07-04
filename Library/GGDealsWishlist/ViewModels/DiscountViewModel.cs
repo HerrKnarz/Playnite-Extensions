@@ -18,6 +18,7 @@ namespace GGDealsWishlist.ViewModels
 
     public class DiscountViewModel : ObservableObject
     {
+        private readonly GGDealsWishlist _plugin;
         private SortOrder _currentSortOrder = SortOrder.Discount;
         private CollectionViewSource _gamesViewSource;
         private bool _groupByShop;
@@ -25,8 +26,11 @@ namespace GGDealsWishlist.ViewModels
         private bool _showOnlyDiscountedGames = true;
         private bool _showOnlyHistoricalLowPrices = false;
 
-        public DiscountViewModel()
+        public DiscountViewModel(GGDealsWishlist plugin)
         {
+            _plugin = plugin;
+
+            PrepareGamesViewSource();
         }
 
         public SortOrder CurrentSortOrder
@@ -109,34 +113,7 @@ namespace GGDealsWishlist.ViewModels
         {
             try
             {
-                if (plugin.DataHandler.Games is null || plugin.DataHandler.Games.Count == 0)
-                {
-                    var globalProgressOptions = new GlobalProgressOptions(
-                        ResourceProvider.GetString("LOCGGDealsWishlistProgessLoadingDiscountData"),
-                        false)
-                    {
-                        IsIndeterminate = true
-                    };
-
-                    API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
-                    {
-                        try
-                        {
-                            plugin.DataHandler.RefreshGames();
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error(ex);
-                        }
-                    }, globalProgressOptions);
-                }
-
-                var viewModel = new DiscountViewModel
-                {
-                    Games = plugin.DataHandler.Games
-                };
-
-                viewModel.PrepareGamesViewSource();
+                var viewModel = new DiscountViewModel(plugin);
 
                 var view = new DiscountView();
 
@@ -156,6 +133,28 @@ namespace GGDealsWishlist.ViewModels
             }
         }
 
+        private static void RefreshGames(GGDealsWishlist plugin)
+        {
+            var globalProgressOptions = new GlobalProgressOptions(
+                                    ResourceProvider.GetString("LOCGGDealsWishlistProgessLoadingDiscountData"),
+                                    false)
+            {
+                IsIndeterminate = true
+            };
+
+            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            {
+                try
+                {
+                    plugin.DataHandler.RefreshGames();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                }
+            }, globalProgressOptions);
+        }
+
         private bool Filter(object item)
         {
             return item is GGDealsGame game &&
@@ -166,6 +165,13 @@ namespace GGDealsWishlist.ViewModels
 
         private void PrepareGamesViewSource()
         {
+            if (_plugin.DataHandler.Games is null || _plugin.DataHandler.Games.Count == 0 || _plugin.DataHandler.Games.LastRefresh < DateTime.Now.AddHours(-1))
+            {
+                RefreshGames(_plugin);
+            }
+
+            Games = _plugin.DataHandler.Games;
+
             GamesViewSource = new CollectionViewSource
             {
                 Source = Games
@@ -224,3 +230,7 @@ namespace GGDealsWishlist.ViewModels
         }
     }
 }
+
+//TODO: Add options and window size to settings
+//TODO: Add list of games to the settings for themes to use them. Have to ask if the sorting is important.
+//LATER: Maybe add option to just select a saved Playnite filter to filter the games.

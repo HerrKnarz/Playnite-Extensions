@@ -273,7 +273,21 @@
                                         Visibility="{Binding DiscountData.DiscountCodeVisibility}">
                                     <TextBlock Text="{Binding DiscountData.DiscountCode}"
                                                Foreground="{StaticResource TextBrushDarker}"
-                                               d:Foreground="Gray" />
+                                               d:Foreground="Gray">
+                                        <TextBlock.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock>
+                                                    <TextBlock Text="{DynamicResource LOCGGDealsWishlistDiscountClickToCopyCode}" />
+                                                    <TextBlock FontWeight="Bold"
+                                                               Text="{Binding DiscountData.DiscountCodeValue}" />
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </TextBlock.ToolTip>
+                                        <TextBlock.InputBindings>
+                                            <MouseBinding Command="{Binding CopyCodeCommand}"
+                                                          MouseAction="LeftClick" />
+                                        </TextBlock.InputBindings>
+                                    </TextBlock>
                                 </Border>
 
                                 <Border Margin="10, 3, 0, 3"

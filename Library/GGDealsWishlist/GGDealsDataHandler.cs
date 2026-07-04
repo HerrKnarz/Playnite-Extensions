@@ -128,9 +128,7 @@ namespace GGDealsWishlist
 
                 var discountedPrice = cell.QuerySelector(".price-inner-wrapper .price")?.GetExclusiveText();
 
-                var discountCodeCopy = cell.QuerySelector(".code")?.Attributes["data-tippy-content"]?.Value;
-
-                var discountCodeValue = discountCodeCopy?.TextBetween("<strong>", "</strong>");
+                var discountCodeValue = cell.QuerySelector(".code")?.Attributes["data-clipboard-text"]?.Value;
 
                 var discountData = new DiscountData()
                 {

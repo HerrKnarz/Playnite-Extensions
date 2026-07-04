@@ -3,6 +3,8 @@ using Playnite.SDK.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace GGDealsWishlist.Models
 {
@@ -12,6 +14,15 @@ namespace GGDealsWishlist.Models
         private Game _game;
         private string _gGDealsCoverLink;
         private GameMetadata _importedMetadata;
+
+        public RelayCommand CopyCodeCommand => new RelayCommand(() =>
+        {
+            if (!string.IsNullOrEmpty(DiscountData.DiscountCodeValue))
+            {
+                Clipboard.SetText(DiscountData.DiscountCodeValue);
+                DisplayCopySuccessNoticeAsync();
+            }
+        });
 
         public DiscountData DiscountData
         {
@@ -57,5 +68,14 @@ namespace GGDealsWishlist.Models
         }
 
         public string SortingName => Game?.SortingName ?? Game?.Name ?? new SortableNameConverter().Convert(ImportedMetadata.Name);
+
+        private async Task DisplayCopySuccessNoticeAsync()
+        {
+            var notificationMessage = ResourceProvider.GetString("LOCGGDealsWishlistDiscountCodeCopied");
+            var tempCode = DiscountData.DiscountCode;
+            DiscountData.DiscountCode = notificationMessage;
+            await Task.Delay(1000);
+            DiscountData.DiscountCode = tempCode;
+        }
     }
 }
