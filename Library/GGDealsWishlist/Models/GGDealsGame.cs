@@ -1,7 +1,8 @@
-﻿using Playnite.SDK;
+﻿using GGDealsWishlist.ViewModels;
+using KNARZhelper.GamesCommon;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,10 +11,19 @@ namespace GGDealsWishlist.Models
 {
     public class GGDealsGame : ObservableObject
     {
+        private readonly Settings _settings;
         private DiscountData _discountData;
         private Game _game;
         private string _gGDealsCoverLink;
         private GameMetadata _importedMetadata;
+
+        public GGDealsGame(Game game, GameMetadata importedMetadata, DiscountData discountData, Settings settings)
+        {
+            _game = game;
+            _importedMetadata = importedMetadata;
+            _discountData = discountData;
+            _settings = settings;
+        }
 
         public RelayCommand CopyCodeCommand => new RelayCommand(() =>
         {
@@ -34,14 +44,20 @@ namespace GGDealsWishlist.Models
         {
             get
             {
-                if (Game?.CoverImage is null)
+                switch (_settings.DiscountViewImage)
                 {
-                    return GGDealsCoverLink;
+                    case ImageOption.GGDealsBanner:
+                        return GGDealsCoverLink;
+
+                    case ImageOption.Cover:
+                        return GameEx.GetGameCoverPath(Game);
+
+                    case ImageOption.Icon:
+                        return GameEx.GetGameIconPath(Game);
+
+                    default:
+                        return GGDealsCoverLink;
                 }
-
-                var fileInfo = new FileInfo(API.Instance.Database.GetFullFilePath(Game.CoverImage));
-
-                return fileInfo.Exists ? fileInfo.FullName : GGDealsCoverLink;
             }
         }
 

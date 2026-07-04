@@ -14,12 +14,17 @@
     <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyDiscounted">Show only discounted games</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyHistoricalLow">Show only historical low prices</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountSortBy">Sort by</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistImageOptionGGDealsBanner">GG.deals banner</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistImageOptionCover">Game cover</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistImageOptionIcon">Game icon</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistMenuDiscountView">Current discounts</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistProgessLoadingDiscountData">Loading discount data from GG.deals...</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDebugMode">Debug mode</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDebugModeDescription">Enables verbose debug messages in the extensions.log</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategory">Default Category</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategoryDescription">The default category for games imported from your GG.deals wishlist. Can be left empty.</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountImageOption">Image in Discount View</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountImageOptionDescription">The image that will be displayed for each game in the Discount View. The GG.deals banner will be loaded live from the web when displayed.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsFilterTip">💡Tip: To filter which items you want to import from your wishlist you can open the shareable link in your browser, change some of the filter settings on that page, and then copy the link with the added filter settings from the browser back into the wishlist URL field.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsImportAsInstalled">Import Games as Installed</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsImportAsInstalledDescription">Import games from your wishlist as installed. Clicking on Play sends you to the game's page on GGDeals.</sys:String>

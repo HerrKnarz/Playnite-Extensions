@@ -96,7 +96,18 @@
                       Content="{DynamicResource LOCGGDealsWishlistSettingsDebugMode}"
                       Margin="0, 0, 0, 5" />
             <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsDebugModeDescription}"
-                       Style="{StaticResource SettingsDescription}" />
+                       Style="{StaticResource SettingsDescription}"
+                       Margin="0, 0, 0, 15" />
+
+            <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsDiscountImageOption}"
+                              Description="{DynamicResource LOCGGDealsWishlistSettingsDiscountImageOptionDescription}"
+                              MinLabelWidth="150">
+                <ComboBox Name="ImageOptionComboBox"
+                          ItemsSource="{Binding Path=ImageOptionWithCaptions}"
+                          DisplayMemberPath="Value"
+                          SelectedValuePath="Key"
+                          SelectedValue="{Binding Settings.DiscountViewImage}" />
+            </c:SettingsOption>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

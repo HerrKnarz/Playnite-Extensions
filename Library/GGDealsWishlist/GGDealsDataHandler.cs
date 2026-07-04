@@ -181,12 +181,9 @@ namespace GGDealsWishlist
                     };
                 }
 
-                var game = new GGDealsGame()
+                var game = new GGDealsGame(existingGame, metadata, discountData, _settings)
                 {
-                    DiscountData = discountData,
-                    Game = existingGame,
-                    GGDealsCoverLink = cell.QuerySelector("picture.game-picture img")?.Attributes["src"]?.Value,
-                    ImportedMetadata = metadata,
+                    GGDealsCoverLink = cell.QuerySelector("picture.game-picture img")?.Attributes["src"]?.Value
                 };
 
                 Log.Debug(_settings.DebugMode, $"### GAME {gameId} - {gameName}: FETCHED DATA. ########################################");

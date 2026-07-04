@@ -45,7 +45,6 @@ namespace GGDealsWishlist.ViewModels
 
         public GGDealsGames Games { get; set; }
 
-        //TODO: Add option to display either the cover, gg.deals image or icon in the discount view.
         public CollectionViewSource GamesViewSource
         {
             get => _gamesViewSource;
