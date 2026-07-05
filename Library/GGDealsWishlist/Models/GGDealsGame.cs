@@ -17,11 +17,11 @@ namespace GGDealsWishlist.Models
 
     public class GGDealsGame : ObservableObject
     {
-        private readonly Settings _settings;
         private DiscountData _discountData;
         private Game _game;
         private string _gGDealsCoverLink;
         private GameMetadata _importedMetadata;
+        private Settings _settings;
 
         public GGDealsGame(Game game, GameMetadata importedMetadata, DiscountData discountData, Settings settings)
         {
@@ -50,7 +50,7 @@ namespace GGDealsWishlist.Models
         {
             get
             {
-                switch (_settings.DiscountViewImage)
+                switch (Settings.DiscountViewImage)
                 {
                     case ImageOption.GGDealsBanner:
                         return GGDealsCoverLink;
@@ -87,6 +87,12 @@ namespace GGDealsWishlist.Models
         {
             get => _importedMetadata;
             set => SetValue(ref _importedMetadata, value);
+        }
+
+        public Settings Settings
+        {
+            get => _settings;
+            set => SetValue(ref _settings, value);
         }
 
         public string SortingName => Game?.SortingName ?? Game?.Name ?? new SortableNameConverter().Convert(ImportedMetadata.Name);

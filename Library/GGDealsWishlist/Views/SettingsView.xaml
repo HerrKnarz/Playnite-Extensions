@@ -108,6 +108,22 @@
                           SelectedValuePath="Key"
                           SelectedValue="{Binding Settings.DiscountViewImage}" />
             </c:SettingsOption>
+            <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsHistoricalLowColor}"
+                              Description="{DynamicResource LOCGGDealsWishlistSettingsHistoricalLowColorDescription}"
+                              MinLabelWidth="150"
+                              HorizontalControlAlignment="Left">
+                <DockPanel>
+                    <Button Content="{DynamicResource LOCGGDealsWishlistSettingsSelect}"
+                            DockPanel.Dock="Right"
+                            Margin="10, 0, 0, 0"
+                            Command="{Binding SetHistoricalLowColorCommand}" />
+                    <Border Background="{Binding Settings.HistoricalLowBrush}"
+                            d:Background="Green"
+                            Margin="0, 5"
+                            VerticalAlignment="Stretch"
+                            Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+                </DockPanel>
+            </c:SettingsOption>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

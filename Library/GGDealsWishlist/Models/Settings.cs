@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Playnite.SDK.Data;
+using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace GGDealsWishlist.Models
 {
@@ -7,6 +9,9 @@ namespace GGDealsWishlist.Models
         private bool _debugMode = false;
         private string _defaultCategory = string.Empty;
         private ImageOption _discountViewImage = ImageOption.GGDealsBanner;
+        private Brush _historicalLowBrush = new SolidColorBrush(Colors.DarkGreen);
+        private Color _historicalLowColor = Colors.DarkGreen;
+        private string _historicalLowColorHex = "#FF006400";
         private bool _importGamesAsInstalled = false;
         private int _maxGamesToImport = 100;
         private bool _onlyImportGames = true;
@@ -31,6 +36,38 @@ namespace GGDealsWishlist.Models
         }
 
         public DiscountViewSettings DiscountViewSettings { get; set; } = new DiscountViewSettings();
+
+        [DontSerialize]
+        public Brush HistoricalLowBrush
+        {
+            get => _historicalLowBrush;
+            set => SetValue(ref _historicalLowBrush, value);
+        }
+
+        [DontSerialize]
+        public Color HistoricalLowColor
+        {
+            get => _historicalLowColor;
+            set
+            {
+                SetValue(ref _historicalLowColor, value);
+
+                HistoricalLowBrush = new SolidColorBrush(HistoricalLowColor);
+            }
+        }
+
+        public string HistoricalLowColorHex
+        {
+            get => _historicalLowColorHex;
+            set
+            {
+                SetValue(ref _historicalLowColorHex, value);
+
+                HistoricalLowColor = string.IsNullOrEmpty(HistoricalLowColorHex)
+                    ? Colors.DarkGreen
+                    : (Color)ColorConverter.ConvertFromString(HistoricalLowColorHex);
+            }
+        }
 
         public bool ImportGamesAsInstalled
         {

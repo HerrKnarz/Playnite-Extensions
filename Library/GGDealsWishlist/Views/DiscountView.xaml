@@ -277,7 +277,8 @@
                                                     <DataTrigger Binding="{Binding DiscountData.HistoricalLow}"
                                                                  Value="True">
                                                         <Setter Property="Background"
-                                                                Value="DarkGreen" />
+                                                                Value="{Binding Settings.HistoricalLowBrush}"
+                                                                d:Value="DarkGreen" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -298,7 +299,8 @@
                                                     <DataTrigger Binding="{Binding DiscountData.HistoricalLow}"
                                                                  Value="True">
                                                         <Setter Property="Foreground"
-                                                                Value="Green" />
+                                                                Value="{Binding Settings.HistoricalLowBrush}"
+                                                                d:Value="DarkGreen" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -333,21 +335,23 @@
                                                               MouseAction="LeftClick" />
                                             </TextBlock.InputBindings>
                                         </TextBlock>
-                                </Border>
+                                    </Border>
 
                                     <Border Margin="10, 3, 0, 3"
                                             VerticalAlignment="Center"
                                             CornerRadius="5"
                                             Padding="10, 2"
-                                            BorderBrush="DarkGreen"
+                                            BorderBrush="{Binding Settings.HistoricalLowBrush}"
+                                            d:BorderBrush="DarkGreen"
                                             BorderThickness="1"
                                             Visibility="{Binding DiscountData.HistoricalLowVisibility}">
                                         <Border.Background>
-                                            <SolidColorBrush Opacity="0.2"
-                                                             Color="DarkGreen" />
+                                            <SolidColorBrush Opacity="0.1"
+                                                             Color="{Binding Settings.HistoricalLowColor}" />
                                         </Border.Background>
                                         <TextBlock Text="{DynamicResource LOCGGDealsWishlistDiscountHistoricalLow}"
-                                                   Foreground="Green" />
+                                                   Foreground="{Binding Settings.HistoricalLowBrush}"
+                                                   d:Foreground="DarkGreen" />
                                     </Border>
 
                                     <TextBlock Margin="10, 3, 0, 3"

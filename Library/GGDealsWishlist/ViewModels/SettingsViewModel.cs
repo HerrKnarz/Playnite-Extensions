@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace GGDealsWishlist.ViewModels
 {
@@ -31,34 +32,13 @@ namespace GGDealsWishlist.ViewModels
             Settings = savedSettings ?? new Settings();
         }
 
-        public RelayCommand AddCategoryCommand
-            => new RelayCommand(() =>
-            {
-                var typeManager = new TypeCategory();
-                var label = typeManager.LabelPlural;
-                var items = new ObservableCollection<BaseMetadataObject>();
-
-                typeManager.LoadAllMetadata(new HashSet<System.Guid>()).ForEach(item => items.Add(
-                                new BaseMetadataObject(typeManager, typeManager.Type, item.Name)
-                                {
-                                    Id = item.Id
-                                }));
-
-                items.Sort(i => i.Name);
-
-                SelectMetadataViewModel.GetWindow(items, label, false)?.ShowDialog();
-
-                if (items.Count(i => i.Selected) == 0)
-                {
-                    return;
-                }
-
-                Settings.DefaultCategory = items.First(i => i.Selected).Name;
-            });
+        public RelayCommand AddCategoryCommand => new RelayCommand(() => AddCategory());
 
         public Visibility GGDealsCollectionUpdaterWarningVisibility => IsGGDealsCollectionUpdaterInstalled ? Visibility.Visible : Visibility.Collapsed;
 
         public ImageOptionWithCaptions ImageOptionWithCaptions { get; } = new ImageOptionWithCaptions();
+
+        public RelayCommand SetHistoricalLowColorCommand => new RelayCommand(() => SetHistoricalLowColor());
 
         public Settings Settings
         {
@@ -71,6 +51,7 @@ namespace GGDealsWishlist.ViewModels
         }
 
         internal static bool IsGGDealsCollectionUpdaterInstalled => API.Instance.Addons.Plugins.Exists(p => p.Id == Guid.Parse("2af05ded-085c-426b-a10e-8e03185092bf"));
+
         private Settings EditingClone { get; set; }
 
         public void BeginEdit() =>
@@ -94,6 +75,42 @@ namespace GGDealsWishlist.ViewModels
             // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
+        }
+
+        private void AddCategory()
+        {
+            var typeManager = new TypeCategory();
+            var label = typeManager.LabelPlural;
+            var items = new ObservableCollection<BaseMetadataObject>();
+
+            typeManager.LoadAllMetadata(new HashSet<System.Guid>()).ForEach(item => items.Add(
+                            new BaseMetadataObject(typeManager, typeManager.Type, item.Name)
+                            {
+                                Id = item.Id
+                            }));
+
+            items.Sort(i => i.Name);
+
+            SelectMetadataViewModel.GetWindow(items, label, false)?.ShowDialog();
+
+            if (items.Count(i => i.Selected) == 0)
+            {
+                return;
+            }
+
+            Settings.DefaultCategory = items.First(i => i.Selected).Name;
+        }
+
+        private void SetHistoricalLowColor()
+        {
+            var colorDialog = new ColorDialog();
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                var color = colorDialog.Color;
+
+                Settings.HistoricalLowColorHex = $"#FF{color.R:X2}{color.G:X2}{color.B:X2}";
+            }
         }
     }
 }

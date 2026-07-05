@@ -27,6 +27,8 @@
     <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountImageOption">Image in Discount View</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountImageOptionDescription">The image that will be displayed for each game in the Discount View. The GG.deals banner will be loaded live from the web when displayed.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsFilterTip">💡Tip: To filter which items you want to import from your wishlist you can open the shareable link in your browser, change some of the filter settings on that page, and then copy the link with the added filter settings from the browser back into the wishlist URL field.</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsHistoricalLowColor">Historical Low Color</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsHistoricalLowColorDescription">The color used to highlight historical low prices in the discount view.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsImportAsInstalled">Import Games as Installed</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsImportAsInstalledDescription">Import games from your wishlist as installed. Clicking on Play sends you to the game's page on GGDeals.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsMaxGamesToImport">Max Games to Import</sys:String>

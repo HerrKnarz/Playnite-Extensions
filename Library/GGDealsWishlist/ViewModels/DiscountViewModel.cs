@@ -262,6 +262,5 @@ namespace GGDealsWishlist.ViewModels
     }
 }
 
-//TODO: Fix grouping when changing sorting while grouped.
 //TODO: Add list of games to the settings for themes to use them. Have to ask if the sorting is important.
 //LATER: Maybe add option to just select a saved Playnite filter to filter the games.
