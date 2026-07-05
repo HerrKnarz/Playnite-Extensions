@@ -1,5 +1,4 @@
-﻿using GGDealsWishlist.ViewModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GGDealsWishlist.Models
 {
@@ -8,8 +7,6 @@ namespace GGDealsWishlist.Models
         private bool _debugMode = false;
         private string _defaultCategory = string.Empty;
         private ImageOption _discountViewImage = ImageOption.GGDealsBanner;
-        private int _discountViewWindowHeight;
-        private int _discountViewWindowWidth;
         private bool _importGamesAsInstalled = false;
         private int _maxGamesToImport = 100;
         private bool _onlyImportGames = true;
@@ -33,17 +30,7 @@ namespace GGDealsWishlist.Models
             set => SetValue(ref _discountViewImage, value);
         }
 
-        public int DiscountViewWindowHeight
-        {
-            get => _discountViewWindowHeight;
-            set => SetValue(ref _discountViewWindowHeight, value);
-        }
-
-        public int DiscountViewWindowWidth
-        {
-            get => _discountViewWindowWidth;
-            set => SetValue(ref _discountViewWindowWidth, value);
-        }
+        public DiscountViewSettings DiscountViewSettings { get; set; } = new DiscountViewSettings();
 
         public bool ImportGamesAsInstalled
         {

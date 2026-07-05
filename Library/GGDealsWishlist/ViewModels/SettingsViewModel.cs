@@ -13,26 +13,6 @@ using System.Windows;
 
 namespace GGDealsWishlist.ViewModels
 {
-    public enum ImageOption
-    {
-        GGDealsBanner = 1,
-        Cover = 2,
-        Icon = 3,
-    }
-
-    /// <summary>
-    /// Dictionary of types with captions to show in a combo box.
-    /// </summary>
-    public class ImageOptionWithCaptions : Dictionary<ImageOption, string>
-    {
-        public ImageOptionWithCaptions()
-        {
-            Add(ImageOption.GGDealsBanner, ResourceProvider.GetString("LOCGGDealsWishlistImageOptionGGDealsBanner"));
-            Add(ImageOption.Cover, ResourceProvider.GetString("LOCGGDealsWishlistImageOptionCover"));
-            Add(ImageOption.Icon, ResourceProvider.GetString("LOCGGDealsWishlistImageOptionIcon"));
-        }
-    }
-
     public class SettingsViewModel : ObservableObject, ISettings
     {
         private readonly GGDealsWishlist plugin;

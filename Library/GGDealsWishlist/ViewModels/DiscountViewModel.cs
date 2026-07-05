@@ -20,39 +20,40 @@ namespace GGDealsWishlist.ViewModels
     public class DiscountViewModel : ObservableObject
     {
         private readonly GGDealsWishlist _plugin;
-        private SortOrder _currentSortOrder = SortOrder.Discount;
         private CollectionViewSource _gamesViewSource;
         private bool _groupByShop;
         private string _searchTerm = string.Empty;
         private bool _showOnlyDiscountedGames = true;
         private bool _showOnlyHistoricalLowPrices = false;
+        private SortOrder _sortOrder = SortOrder.Discount;
 
         public DiscountViewModel(GGDealsWishlist plugin)
         {
             _plugin = plugin;
 
+            _groupByShop = _plugin.Settings.Settings.DiscountViewSettings.GroupByShop;
+            _showOnlyDiscountedGames = _plugin.Settings.Settings.DiscountViewSettings.ShowOnlyDiscountedGames;
+            _showOnlyHistoricalLowPrices = _plugin.Settings.Settings.DiscountViewSettings.ShowOnlyHistoricalLowPrices;
+            _sortOrder = _plugin.Settings.Settings.DiscountViewSettings.SortOrder;
+
             PrepareGamesViewSource();
         }
 
         public RelayCommand<Window> CloseCommand => new RelayCommand<Window>(win =>
-                {
-                    _plugin.Settings.Settings.DiscountViewWindowHeight = Convert.ToInt32(win.Height);
-                    _plugin.Settings.Settings.DiscountViewWindowWidth = Convert.ToInt32(win.Width);
-                    _plugin.SavePluginSettings(_plugin.Settings.Settings);
-
-                    win.DialogResult = true;
-                    win.Close();
-                });
-
-        public SortOrder CurrentSortOrder
         {
-            get => _currentSortOrder;
-            set
-            {
-                SetValue(ref _currentSortOrder, value);
-                SortGames();
-            }
-        }
+            var settings = _plugin.Settings.Settings.DiscountViewSettings;
+
+            settings.GroupByShop = GroupByShop;
+            settings.ShowOnlyDiscountedGames = ShowOnlyDiscountedGames;
+            settings.ShowOnlyHistoricalLowPrices = ShowOnlyHistoricalLowPrices;
+            settings.SortOrder = SortOrder;
+            settings.WindowHeight = Convert.ToInt32(win.Height);
+            settings.WindowWidth = Convert.ToInt32(win.Width);
+            _plugin.SavePluginSettings(_plugin.Settings.Settings);
+
+            win.DialogResult = true;
+            win.Close();
+        });
 
         public GGDealsGames Games { get; set; }
 
@@ -69,27 +70,14 @@ namespace GGDealsWishlist.ViewModels
             {
                 SetValue(ref _groupByShop, value);
 
-                SortGames(_groupByShop);
-
-                if (_groupByShop)
-                {
-                    GamesViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("DiscountData.ShopName"));
-                }
-                else
-                {
-                    GamesViewSource.View.GroupDescriptions.Clear();
-                }
-
-                ((IEditableCollectionView)GamesViewSource.View).CommitEdit();
-                GamesViewSource.View.Filter = Filter;
+                SortGroupFilter();
             }
         }
 
         public RelayCommand RefreshDiscountsCommand => new RelayCommand(() =>
         {
             RefreshGames();
-            GamesViewSource.View.Filter = Filter;
-            SortGames();
+            SortGroupFilter();
         });
 
         public string SearchTerm
@@ -124,6 +112,16 @@ namespace GGDealsWishlist.ViewModels
             }
         }
 
+        public SortOrder SortOrder
+        {
+            get => _sortOrder;
+            set
+            {
+                SetValue(ref _sortOrder, value);
+                SortGroupFilter();
+            }
+        }
+
         public SortOrderWithCaptions SortOrderWithCaptions { get; } = new SortOrderWithCaptions();
 
         public static void ShowWindow(GGDealsWishlist plugin)
@@ -136,7 +134,7 @@ namespace GGDealsWishlist.ViewModels
 
                 var window = WindowHelper.CreateSizedWindow(
                     ResourceProvider.GetString("LOCGGDealsWishlistMenuDiscountView"),
-                    plugin.Settings.Settings.DiscountViewWindowWidth, plugin.Settings.Settings.DiscountViewWindowHeight);
+                    plugin.Settings.Settings.DiscountViewSettings.WindowWidth, plugin.Settings.Settings.DiscountViewSettings.WindowHeight);
 
                 window.Content = view;
                 window.DataContext = viewModel;
@@ -171,8 +169,7 @@ namespace GGDealsWishlist.ViewModels
                 Source = Games
             };
 
-            GamesViewSource.View.Filter = Filter;
-            SortGames();
+            SortGroupFilter();
         }
 
         private void RefreshGames()
@@ -197,18 +194,18 @@ namespace GGDealsWishlist.ViewModels
             }, globalProgressOptions);
         }
 
-        private void SortGames(bool sortByShop = false)
+        private void SortGames()
         {
             using (GamesViewSource.DeferRefresh())
             {
                 GamesViewSource.SortDescriptions.Clear();
 
-                if (sortByShop)
+                if (GroupByShop)
                 {
                     GamesViewSource.SortDescriptions.Add(new SortDescription("DiscountData.ShopName", ListSortDirection.Ascending));
                 }
 
-                switch (CurrentSortOrder)
+                switch (SortOrder)
                 {
                     case SortOrder.Name:
                         GamesViewSource.SortDescriptions.Add(new SortDescription("SortingName", ListSortDirection.Ascending));
@@ -230,6 +227,24 @@ namespace GGDealsWishlist.ViewModels
 
                 GamesViewSource.IsLiveSortingRequested = true;
             }
+
+            GamesViewSource.View.Filter = Filter;
+        }
+
+        private void SortGroupFilter()
+        {
+            SortGames();
+
+            if (GroupByShop)
+            {
+                GamesViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("DiscountData.ShopName"));
+            }
+            else
+            {
+                GamesViewSource.View.GroupDescriptions.Clear();
+            }
+
+            GamesViewSource.View.Filter = Filter;
         }
     }
 
@@ -247,6 +262,6 @@ namespace GGDealsWishlist.ViewModels
     }
 }
 
-//TODO: Add options to settings
+//TODO: Fix grouping when changing sorting while grouped.
 //TODO: Add list of games to the settings for themes to use them. Have to ask if the sorting is important.
 //LATER: Maybe add option to just select a saved Playnite filter to filter the games.

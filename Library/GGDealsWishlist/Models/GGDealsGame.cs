@@ -1,5 +1,4 @@
-﻿using GGDealsWishlist.ViewModels;
-using KNARZhelper.GamesCommon;
+﻿using KNARZhelper.GamesCommon;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
@@ -9,6 +8,13 @@ using System.Windows;
 
 namespace GGDealsWishlist.Models
 {
+    public enum ImageOption
+    {
+        GGDealsBanner = 1,
+        Cover = 2,
+        Icon = 3,
+    }
+
     public class GGDealsGame : ObservableObject
     {
         private readonly Settings _settings;
@@ -92,6 +98,19 @@ namespace GGDealsWishlist.Models
             DiscountData.DiscountCode = notificationMessage;
             await Task.Delay(1000);
             DiscountData.DiscountCode = tempCode;
+        }
+    }
+
+    /// <summary>
+    /// Dictionary of types with captions to show in a combo box.
+    /// </summary>
+    public class ImageOptionWithCaptions : Dictionary<ImageOption, string>
+    {
+        public ImageOptionWithCaptions()
+        {
+            Add(ImageOption.GGDealsBanner, ResourceProvider.GetString("LOCGGDealsWishlistImageOptionGGDealsBanner"));
+            Add(ImageOption.Cover, ResourceProvider.GetString("LOCGGDealsWishlistImageOptionCover"));
+            Add(ImageOption.Icon, ResourceProvider.GetString("LOCGGDealsWishlistImageOptionIcon"));
         }
     }
 }
