@@ -35,14 +35,12 @@ namespace GGDealsWishlist
             DataHandler = new GGDealsDataHandler(Settings.Settings);
         }
 
+        public static GGDealsDataHandler DataHandler { get; set; }
         public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
 
         public static Guid PluginId { get; } = Guid.Parse("ea4636ef-91da-441c-9efb-99dc751c5189");
 
         public override LibraryClient Client { get; } = new GGDealsWishlistClient();
-
-        public GGDealsDataHandler DataHandler { get; }
-
         public override Guid Id => PluginId;
 
         public override string LibraryIcon => Icon;

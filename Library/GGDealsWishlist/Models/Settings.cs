@@ -116,6 +116,20 @@ namespace GGDealsWishlist.Models
             set => SetValue(ref _onlyImportGames, value);
         }
 
+        [DontSerialize]
+        public GGDealsGames WishlistedGames
+        {
+            get
+            {
+                if (GGDealsWishlist.DataHandler.Games is null || GGDealsWishlist.DataHandler.Games.Count == 0)
+                {
+                    GGDealsWishlist.DataHandler.RefreshGames();
+                }
+
+                return GGDealsWishlist.DataHandler.Games;
+            }
+        }
+
         public string WishlistUrl
         {
             get => _wishlistUrl;

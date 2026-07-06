@@ -157,12 +157,12 @@ namespace GGDealsWishlist.ViewModels
 
         private void PrepareGamesViewSource()
         {
-            if (_plugin.DataHandler.Games is null || _plugin.DataHandler.Games.Count == 0 || _plugin.DataHandler.Games.LastRefresh < DateTime.Now.AddHours(-1))
+            if (GGDealsWishlist.DataHandler.Games is null || GGDealsWishlist.DataHandler.Games.Count == 0 || GGDealsWishlist.DataHandler.Games.LastRefresh < DateTime.Now.AddHours(-1))
             {
                 RefreshGames();
             }
 
-            Games = _plugin.DataHandler.Games;
+            Games = GGDealsWishlist.DataHandler.Games;
 
             GamesViewSource = new CollectionViewSource
             {
@@ -185,7 +185,7 @@ namespace GGDealsWishlist.ViewModels
             {
                 try
                 {
-                    _plugin.DataHandler.RefreshGames();
+                    GGDealsWishlist.DataHandler.RefreshGames();
                 }
                 catch (Exception ex)
                 {
