@@ -46,6 +46,7 @@
                  MaxWidth="400"
                  MinWidth="100"
                  ItemsSource="{Binding Settings.GameProfiles}"
+                 d:ItemsSource="{d:SampleData}"
                  ItemTemplate="{StaticResource GameProfileTemplate}"
                  SelectedItem="{Binding SelectedGameProfile}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -84,6 +85,7 @@
                  SelectionMode="Single"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemsSource="{Binding SelectedGameProfile.FolderConfigs}"
+                 d:ItemsSource="{d:SampleData}"
                  ItemTemplate="{StaticResource FolderConfigTemplate}"
                  SelectedItem="{Binding SelectedFolderConfig}">
             <ListBox.ItemContainerStyle>
@@ -96,6 +98,7 @@
         </ListBox>
 
         <ItemsControl ItemsSource="{Binding CommonConfigs}"
+                      d:ItemsSource="{d:SampleData}"
                       Grid.Column="1"
                       Grid.Row="2">
             <ItemsControl.ItemsPanel>

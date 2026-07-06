@@ -1,4 +1,7 @@
-﻿using KNARZhelper;
+﻿using GGDealsWishlist.Models;
+using GGDealsWishlist.ViewModels;
+using GGDealsWishlist.Views;
+using KNARZhelper;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
@@ -12,31 +15,52 @@ namespace GGDealsWishlist
 {
     public class GGDealsWishlist : LibraryPlugin
     {
-        private readonly GGDealsDataHandler _dataHandler;
-
         public GGDealsWishlist(IPlayniteAPI api) : base(api)
         {
-            Settings = new GGDealsWishlistSettingsViewModel(this);
+            Settings = new SettingsViewModel(this);
             Properties = new LibraryPluginProperties
             {
                 HasSettings = true
             };
 
-            _dataHandler = new GGDealsDataHandler(Settings.Settings);
+            var iconResourcesToAdd = new Dictionary<string, string>
+            {
+                { "ggdDiscountIcon", "\xefdd" }
+            };
+
+            foreach (var iconResource in iconResourcesToAdd)
+            {
+                MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+            }
+
+            DataHandler = new GGDealsDataHandler(Settings.Settings);
+            Games = new GGDealsGames(Settings.Settings);
         }
 
+        public static GGDealsDataHandler DataHandler { get; set; }
+
+        public static GGDealsGames Games { get; set; }
+
         public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
+
         public static Guid PluginId { get; } = Guid.Parse("ea4636ef-91da-441c-9efb-99dc751c5189");
+
         public override LibraryClient Client { get; } = new GGDealsWishlistClient();
         public override Guid Id => PluginId;
+
         public override string LibraryIcon => Icon;
 
         public override string Name => "GG.deals Wishlist";
 
-        private GGDealsWishlistSettingsViewModel Settings { get; set; }
+        public SettingsViewModel Settings { get; set; }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
+            if (!Settings.Settings.ImportGamesToLibrary)
+            {
+                return base.GetGames(args);
+            }
+
             if (string.IsNullOrEmpty(Settings.Settings.WishlistUrl))
             {
                 var notificationMessage = new NotificationMessage(
@@ -52,11 +76,11 @@ namespace GGDealsWishlist
 
             Log.Debug(Settings.Settings.DebugMode, "### STARTED RETRIEVING NEW GAMES ########################################");
 
-            _dataHandler.RetrieveGames();
+            DataHandler.RefreshGames();
 
             Log.Debug(Settings.Settings.DebugMode, "### FINISHED RETRIEVING NEW GAMES ########################################");
 
-            return _dataHandler.Games.GetNewGames(Settings.Settings.MaxGamesToImport);
+            return Games.GetNewGames(Settings.Settings.MaxGamesToImport);
         }
 
         public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
@@ -69,9 +93,57 @@ namespace GGDealsWishlist
             yield return new GGDealsWishlistInstallController(args.Game);
         }
 
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            var menuSection = ResourceProvider.GetString("LOCGGDealsWishlistPluginName");
+
+            var menuItems = new List<MainMenuItem>
+            {
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCGGDealsWishlistMenuDiscountView"),
+                    MenuSection = $"@{menuSection}",
+                    Icon = "ggdDiscountIcon",
+                    Action = a => DiscountViewModel.ShowWindow(this)
+                }
+            };
+
+            return menuItems;
+        }
+
         public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
-        public override UserControl GetSettingsView(bool firstRunSettings) => new GGDealsWishlistSettingsView();
+        public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
+
+        public override IEnumerable<SidebarItem> GetSidebarItems()
+        {
+            if (!Settings.Settings.DisplaySidebarButton)
+            {
+                yield break;
+            }
+
+            yield return new SidebarItem
+            {
+                Title = ResourceProvider.GetString("LOCGGDealsWishlistMenuDiscountView"),
+                Icon = Icon,
+                Activated = () => DiscountViewModel.ShowWindow(this)
+            };
+        }
+
+        public override IEnumerable<TopPanelItem> GetTopPanelItems()
+        {
+            if (!Settings.Settings.DisplayTopPanelButton)
+            {
+                yield break;
+            }
+
+            yield return new TopPanelItem
+            {
+                Title = ResourceProvider.GetString("LOCGGDealsWishlistMenuDiscountView"),
+                Icon = Icon,
+                Activated = () => DiscountViewModel.ShowWindow(this)
+            };
+        }
     }
 }
 
