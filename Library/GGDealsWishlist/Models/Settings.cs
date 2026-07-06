@@ -117,16 +117,16 @@ namespace GGDealsWishlist.Models
         }
 
         [DontSerialize]
-        public GGDealsGames WishlistedGames
+        public GGDealsGames WishListedGames
         {
             get
             {
-                if (GGDealsWishlist.DataHandler.Games is null || GGDealsWishlist.DataHandler.Games.Count == 0)
+                if (GGDealsWishlist.Games is null || GGDealsWishlist.Games.Count == 0)
                 {
                     GGDealsWishlist.DataHandler.RefreshGames();
                 }
 
-                return GGDealsWishlist.DataHandler.Games;
+                return GGDealsWishlist.Games;
             }
         }
 

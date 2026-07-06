@@ -157,12 +157,12 @@ namespace GGDealsWishlist.ViewModels
 
         private void PrepareGamesViewSource()
         {
-            if (GGDealsWishlist.DataHandler.Games is null || GGDealsWishlist.DataHandler.Games.Count == 0 || GGDealsWishlist.DataHandler.Games.LastRefresh < DateTime.Now.AddHours(-1))
+            if (GGDealsWishlist.Games is null || GGDealsWishlist.Games.Count == 0 || GGDealsWishlist.Games.LastRefresh < DateTime.Now.AddHours(-1))
             {
                 RefreshGames();
             }
 
-            Games = GGDealsWishlist.DataHandler.Games;
+            Games = GGDealsWishlist.Games;
 
             GamesViewSource = new CollectionViewSource
             {

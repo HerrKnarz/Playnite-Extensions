@@ -1,4 +1,5 @@
-﻿using GGDealsWishlist.ViewModels;
+﻿using GGDealsWishlist.Models;
+using GGDealsWishlist.ViewModels;
 using GGDealsWishlist.Views;
 using KNARZhelper;
 using Playnite.SDK;
@@ -33,9 +34,13 @@ namespace GGDealsWishlist
             }
 
             DataHandler = new GGDealsDataHandler(Settings.Settings);
+            Games = new GGDealsGames(Settings.Settings);
         }
 
         public static GGDealsDataHandler DataHandler { get; set; }
+
+        public static GGDealsGames Games { get; set; }
+
         public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
 
         public static Guid PluginId { get; } = Guid.Parse("ea4636ef-91da-441c-9efb-99dc751c5189");
@@ -75,7 +80,7 @@ namespace GGDealsWishlist
 
             Log.Debug(Settings.Settings.DebugMode, "### FINISHED RETRIEVING NEW GAMES ########################################");
 
-            return DataHandler.Games.GetNewGames(Settings.Settings.MaxGamesToImport);
+            return Games.GetNewGames(Settings.Settings.MaxGamesToImport);
         }
 
         public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)

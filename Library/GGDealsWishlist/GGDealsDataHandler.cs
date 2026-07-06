@@ -35,8 +35,6 @@ namespace GGDealsWishlist
             _settings = settings;
         }
 
-        public GGDealsGames Games { get; } = new GGDealsGames();
-
         public Dictionary<string, Game> ImportedGames
         {
             get
@@ -56,14 +54,14 @@ namespace GGDealsWishlist
         {
             API.Instance.MainView.UIDispatcher.Invoke(delegate
             {
-                Games.Clear();
+                GGDealsWishlist.Games.Clear();
             });
 
             _platformHelper = new PlatformHelper(API.Instance.Database.Platforms);
 
             RetrieveGames();
 
-            Games.LastRefresh = DateTime.Now;
+            GGDealsWishlist.Games.LastRefresh = DateTime.Now;
         }
 
         private string ComposeUrl(int page)
@@ -101,7 +99,7 @@ namespace GGDealsWishlist
         {
             var gameCountString = document.QuerySelector("span.search-results-counter span:nth-of-type(2)")?.TextContent;
 
-            return int.TryParse(gameCountString?.Trim().FirstPart(" "), out var maxCount) && maxCount <= Games.Count;
+            return int.TryParse(gameCountString?.Trim().FirstPart(" "), out var maxCount) && maxCount <= GGDealsWishlist.Games.Count;
         }
 
         private void GetGame(IElement cell)
@@ -188,7 +186,7 @@ namespace GGDealsWishlist
 
                 Log.Debug(_settings.DebugMode, $"### GAME {gameId} - {gameName}: FETCHED DATA. ########################################");
 
-                Games.Add(game);
+                GGDealsWishlist.Games.Add(game);
             }
             catch (Exception ex)
             {
