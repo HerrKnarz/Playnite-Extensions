@@ -22,6 +22,10 @@ Extension to get metadata from wikipedia. It can fetch name, cover, genres, deve
 
 [-> Info, help and documentation](https://knarzwerk.de/en/playnite-extensions/wikipedia-metadata/)
 
+## GG.deals Wishlist
+
+Extension to get discount data to and optionally import wishlisted games from GG.deals. Viewing discounts is possible without importing the games but can't support all filtering and display options going forward.
+
 ## Metadata Utilities
 
 Extension to manage metadata for the games in the playnite library. It adds a new metadata editor to easily edit them, find and merge similar metadata across types, remove unwanted metadata and much more. Age ratings, categories, features, genres, series and tags are supported.

@@ -10,15 +10,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
 
-namespace GGDealsWishlist
+namespace GGDealsWishlist.ViewModels
 {
-    public class GGDealsWishlistSettingsViewModel : ObservableObject, ISettings
+    public class SettingsViewModel : ObservableObject, ISettings
     {
         private readonly GGDealsWishlist plugin;
         private Settings settings;
 
-        public GGDealsWishlistSettingsViewModel(GGDealsWishlist plugin)
+        public SettingsViewModel(GGDealsWishlist plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite
             // saves data to a location based on what plugin requested the operation.
@@ -31,32 +32,30 @@ namespace GGDealsWishlist
             Settings = savedSettings ?? new Settings();
         }
 
-        public RelayCommand AddCategoryCommand
-            => new RelayCommand(() =>
+        public static RelayCommand<object> RestartRequiredCommand => new RelayCommand<object>((sender) =>
+        {
+            try
             {
-                var typeManager = new TypeCategory();
-                var label = typeManager.LabelPlural;
-                var items = new ObservableCollection<BaseMetadataObject>();
+                var winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
 
-                typeManager.LoadAllMetadata(new HashSet<System.Guid>()).ForEach(item => items.Add(
-                                new BaseMetadataObject(typeManager, typeManager.Type, item.Name)
-                                {
-                                    Id = item.Id
-                                }));
-
-                items.Sort(i => i.Name);
-
-                SelectMetadataViewModel.GetWindow(items, label, false)?.ShowDialog();
-
-                if (items.Count(i => i.Selected) == 0)
+                if (winParent.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
                 {
-                    return;
+                    ((dynamic)winParent.DataContext).IsRestartRequired = true;
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+        });
 
-                Settings.DefaultCategory = items.First(i => i.Selected).Name;
-            });
+        public RelayCommand AddCategoryCommand => new RelayCommand(() => AddCategory());
 
-        public Visibility GGDealsCollectionUpdaterWarningVisibility => IsGGDealsCollectionUpdaterInstalled ? Visibility.Visible : Visibility.Hidden;
+        public Visibility GGDealsCollectionUpdaterWarningVisibility => IsGGDealsCollectionUpdaterInstalled ? Visibility.Visible : Visibility.Collapsed;
+
+        public ImageOptionWithCaptions ImageOptionWithCaptions { get; } = new ImageOptionWithCaptions();
+
+        public RelayCommand SetHistoricalLowColorCommand => new RelayCommand(() => SetHistoricalLowColor());
 
         public Settings Settings
         {
@@ -69,6 +68,7 @@ namespace GGDealsWishlist
         }
 
         internal static bool IsGGDealsCollectionUpdaterInstalled => API.Instance.Addons.Plugins.Exists(p => p.Id == Guid.Parse("2af05ded-085c-426b-a10e-8e03185092bf"));
+
         private Settings EditingClone { get; set; }
 
         public void BeginEdit() =>
@@ -92,6 +92,42 @@ namespace GGDealsWishlist
             // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
+        }
+
+        private void AddCategory()
+        {
+            var typeManager = new TypeCategory();
+            var label = typeManager.LabelPlural;
+            var items = new ObservableCollection<BaseMetadataObject>();
+
+            typeManager.LoadAllMetadata(new HashSet<System.Guid>()).ForEach(item => items.Add(
+                            new BaseMetadataObject(typeManager, typeManager.Type, item.Name)
+                            {
+                                Id = item.Id
+                            }));
+
+            items.Sort(i => i.Name);
+
+            SelectMetadataViewModel.GetWindow(items, label, false)?.ShowDialog();
+
+            if (items.Count(i => i.Selected) == 0)
+            {
+                return;
+            }
+
+            Settings.DefaultCategory = items.First(i => i.Selected).Name;
+        }
+
+        private void SetHistoricalLowColor()
+        {
+            var colorDialog = new ColorDialog();
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                var color = colorDialog.Color;
+
+                Settings.HistoricalLowColorHex = $"#FF{color.R:X2}{color.G:X2}{color.B:X2}";
+            }
         }
     }
 }

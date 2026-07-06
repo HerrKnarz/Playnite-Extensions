@@ -60,16 +60,14 @@
                         Orientation="Vertical">
                 <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigName}"
                                   Description="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigNameDescription}"
-                                  MinLabelWidth="100"
-                                  HorizontalControlAlignment="Stretch">
+                                  MinLabelWidth="100">
                     <TextBox Text="{Binding FolderConfig.Name}"
                              Name="txtName" />
                 </c:SettingsOption>
 
                 <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPath}"
                                   Description="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigPathDescription}"
-                                  MinLabelWidth="100"
-                                  HorizontalControlAlignment="Stretch">
+                                  MinLabelWidth="100">
                     <DockPanel>
                         <Button Content="&#xec5b;"
                                 Style="{DynamicResource KNARZIconButton}"
@@ -84,15 +82,13 @@
 
                 <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMask}"
                                   Description="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigFileMaskDescription}"
-                                  MinLabelWidth="100"
-                                  HorizontalControlAlignment="Stretch">
+                                  MinLabelWidth="100">
                     <TextBox Text="{Binding FolderConfig.FileMask}" />
                 </c:SettingsOption>
 
                 <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigMediaType}"
                                   Description="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigMediaTypeDescription}"
-                                  MinLabelWidth="100"
-                                  HorizontalControlAlignment="Stretch">
+                                  MinLabelWidth="100">
                     <ComboBox ItemsSource="{Binding MediaTypesWithCaptions}"
                               DisplayMemberPath="Value"
                               SelectedValuePath="Key"
@@ -319,7 +315,6 @@
 
                             <c:SettingsOption Heading="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigReplaceInvalidCharsWith}"
                                               Description="{DynamicResource LOCScreenshotUtilitiesLocalProviderSettingsFolderConfigDescriptionReplaceInvalidCharsWith}"
-                                              HorizontalControlAlignment="Stretch"
                                               Margin="0,20,0,0">
                                 <TextBox Text="{Binding FolderConfig.InvalidCharReplacement}" />
                             </c:SettingsOption>
