@@ -112,8 +112,28 @@ namespace GGDealsWishlist
 
         public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
 
+        public override IEnumerable<SidebarItem> GetSidebarItems()
+        {
+            if (!Settings.Settings.DisplaySidebarButton)
+            {
+                yield break;
+            }
+
+            yield return new SidebarItem
+            {
+                Title = ResourceProvider.GetString("LOCGGDealsWishlistMenuDiscountView"),
+                Icon = Icon,
+                Activated = () => DiscountViewModel.ShowWindow(this)
+            };
+        }
+
         public override IEnumerable<TopPanelItem> GetTopPanelItems()
         {
+            if (!Settings.Settings.DisplayTopPanelButton)
+            {
+                yield break;
+            }
+
             yield return new TopPanelItem
             {
                 Title = ResourceProvider.GetString("LOCGGDealsWishlistMenuDiscountView"),

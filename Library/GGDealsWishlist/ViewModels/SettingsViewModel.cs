@@ -32,6 +32,23 @@ namespace GGDealsWishlist.ViewModels
             Settings = savedSettings ?? new Settings();
         }
 
+        public static RelayCommand<object> RestartRequiredCommand => new RelayCommand<object>((sender) =>
+        {
+            try
+            {
+                var winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
+
+                if (winParent.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
+                {
+                    ((dynamic)winParent.DataContext).IsRestartRequired = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+        });
+
         public RelayCommand AddCategoryCommand => new RelayCommand(() => AddCategory());
 
         public Visibility GGDealsCollectionUpdaterWarningVisibility => IsGGDealsCollectionUpdaterInstalled ? Visibility.Visible : Visibility.Collapsed;

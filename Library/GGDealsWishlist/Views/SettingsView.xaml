@@ -22,8 +22,7 @@
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <c:SettingsSection Heading="{DynamicResource LOCGGDealsWishlistSettingsGeneral}"
-                               Margin="0, 0, 0, 15">
+            <c:SettingsSection Heading="{DynamicResource LOCGGDealsWishlistSettingsGeneral}">
                 <StackPanel>
                     <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsWishlistUrl}"
                                       Description="{DynamicResource LOCGGDealsWishlistSettingsWishlistUrlDescription}"
@@ -52,8 +51,7 @@
                 </StackPanel>
             </c:SettingsSection>
 
-            <c:SettingsSection Heading="{DynamicResource LOCGGDealsWishlistSettingsImportSettings}"
-                               Margin="0, 0, 0, 15">
+            <c:SettingsSection Heading="{DynamicResource LOCGGDealsWishlistSettingsImportSettings}">
                 <StackPanel>
                     <Border Margin="0, 5, 0, 15"
                             Padding="15"
@@ -119,8 +117,7 @@
                 </StackPanel>
             </c:SettingsSection>
 
-            <c:SettingsSection Heading="{DynamicResource LOCGGDealsWishlistSettingsDiscountViewSettings}"
-                               Margin="0, 0, 0, 15">
+            <c:SettingsSection Heading="{DynamicResource LOCGGDealsWishlistSettingsDiscountViewSettings}">
                 <StackPanel>
                     <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsDiscountImageOption}"
                                       Description="{DynamicResource LOCGGDealsWishlistSettingsDiscountImageOptionDescription}"
@@ -147,6 +144,22 @@
                                     Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
                         </DockPanel>
                     </c:SettingsOption>
+                    <CheckBox IsChecked="{Binding Settings.DisplayTopPanelButton}"
+                              Content="{DynamicResource LOCGGDealsWishlistSettingsDisplayTopPanelButton}"
+                              Command="{Binding RestartRequiredCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                              Margin="0, 0, 0, 5" />
+                    <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsDisplayTopPanelButtonDescription}"
+                               Style="{StaticResource SettingsDescription}"
+                               Margin="0, 0, 0, 15" />
+
+                    <CheckBox IsChecked="{Binding Settings.DisplaySidebarButton}"
+                              Content="{DynamicResource LOCGGDealsWishlistSettingsDisplaySidebarButton}"
+                              Command="{Binding RestartRequiredCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                              Margin="0, 0, 0, 5" />
+                    <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsDisplaySidebarButtonDescription}"
+                               Style="{StaticResource SettingsDescription}" />
                 </StackPanel>
             </c:SettingsSection>
         </StackPanel>

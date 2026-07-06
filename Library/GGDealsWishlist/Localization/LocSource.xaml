@@ -27,6 +27,10 @@
     <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountImageOption">Image in Discount View</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountImageOptionDescription">The image that will be displayed for each game in the Discount View. The GG.deals banner will be loaded live from the web when displayed.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountViewSettings">Discount View Settings</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDisplayTopPanelButton">Display Top Panel Button</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDisplayTopPanelButtonDescription">When enabled, a button will be displayed in the top panel to access the discount view. Requires a restart of Playnite to take effect.</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDisplaySidebarButton">Display Sidebar Button</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDisplaySidebarButtonDescription">When enabled, a button will be displayed in the sidebar to access the discount view. Requires a restart of Playnite to take effect.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsFilterTip">💡Tip: To filter which items you want to import from your wishlist you can open the shareable link in your browser, change some of the filter settings on that page, and then copy the link with the added filter settings from the browser back into the wishlist URL field.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsGeneral">General</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsHistoricalLowColor">Historical Low Color</sys:String>

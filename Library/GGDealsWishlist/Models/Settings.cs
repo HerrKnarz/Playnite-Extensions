@@ -9,6 +9,8 @@ namespace GGDealsWishlist.Models
         private bool _debugMode = false;
         private string _defaultCategory = string.Empty;
         private ImageOption _discountViewImage = ImageOption.GGDealsBanner;
+        private bool _displaySidebarButton = false;
+        private bool _displayTopPanelButton = true;
         private Brush _historicalLowBrush = new SolidColorBrush(Colors.DarkGreen);
         private Color _historicalLowColor = Colors.DarkGreen;
         private string _historicalLowColorHex = "#FF006400";
@@ -37,6 +39,18 @@ namespace GGDealsWishlist.Models
         }
 
         public DiscountViewSettings DiscountViewSettings { get; set; } = new DiscountViewSettings();
+
+        public bool DisplaySidebarButton
+        {
+            get => _displaySidebarButton;
+            set => SetValue(ref _displaySidebarButton, value);
+        }
+
+        public bool DisplayTopPanelButton
+        {
+            get => _displayTopPanelButton;
+            set => SetValue(ref _displayTopPanelButton, value);
+        }
 
         [DontSerialize]
         public Brush HistoricalLowBrush
