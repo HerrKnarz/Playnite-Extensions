@@ -13,6 +13,7 @@ namespace GGDealsWishlist.Models
         private Color _historicalLowColor = Colors.DarkGreen;
         private string _historicalLowColorHex = "#FF006400";
         private bool _importGamesAsInstalled = false;
+        private bool _importGamesToLibrary = true;
         private int _maxGamesToImport = 100;
         private bool _onlyImportGames = true;
         private string _wishlistUrl = string.Empty;
@@ -73,6 +74,12 @@ namespace GGDealsWishlist.Models
         {
             get => _importGamesAsInstalled;
             set => SetValue(ref _importGamesAsInstalled, value);
+        }
+
+        public bool ImportGamesToLibrary
+        {
+            get => _importGamesToLibrary;
+            set => SetValue(ref _importGamesToLibrary, value);
         }
 
         public int MaxGamesToImport

@@ -53,6 +53,11 @@ namespace GGDealsWishlist
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
+            if (!Settings.Settings.ImportGamesToLibrary)
+            {
+                return base.GetGames(args);
+            }
+
             if (string.IsNullOrEmpty(Settings.Settings.WishlistUrl))
             {
                 var notificationMessage = new NotificationMessage(

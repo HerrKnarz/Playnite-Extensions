@@ -22,108 +22,133 @@
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <Border Margin="0, 5, 0, 15"
-                    Padding="15"
-                    CornerRadius="5"
-                    BorderBrush="DarkRed"
-                    BorderThickness="2"
-                    Visibility="{Binding GGDealsCollectionUpdaterWarningVisibility}">
-                <Border.Background>
-                    <SolidColorBrush Opacity="0.2"
-                                     Color="DarkRed" />
-                </Border.Background>
-                <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsPluginWarning}"
-                           TextWrapping="Wrap" />
-            </Border>
+            <c:SettingsSection Heading="{DynamicResource LOCGGDealsWishlistSettingsGeneral}"
+                               Margin="0, 0, 0, 15">
+                <StackPanel>
+                    <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsWishlistUrl}"
+                                      Description="{DynamicResource LOCGGDealsWishlistSettingsWishlistUrlDescription}"
+                                      MinLabelWidth="150">
+                        <TextBox Text="{Binding Settings.WishlistUrl}"
+                                 MinWidth="200" />
+                    </c:SettingsOption>
 
-            <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsWishlistUrl}"
-                              Description="{DynamicResource LOCGGDealsWishlistSettingsWishlistUrlDescription}"
-                              MinLabelWidth="150">
-                <TextBox Text="{Binding Settings.WishlistUrl}"
-                         MinWidth="200" />
-            </c:SettingsOption>
+                    <Border Margin="0, 5, 0, 15"
+                            Padding="15"
+                            CornerRadius="5"
+                            BorderBrush="DarkGreen"
+                            BorderThickness="2">
+                        <Border.Background>
+                            <SolidColorBrush Opacity="0.2"
+                                             Color="DarkGreen" />
+                        </Border.Background>
+                        <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsFilterTip}"
+                                   TextWrapping="Wrap" />
+                    </Border>
+                    <CheckBox IsChecked="{Binding Settings.DebugMode}"
+                              Content="{DynamicResource LOCGGDealsWishlistSettingsDebugMode}"
+                              Margin="0, 0, 0, 5" />
+                    <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsDebugModeDescription}"
+                               Style="{StaticResource SettingsDescription}" />
+                </StackPanel>
+            </c:SettingsSection>
 
-            <Border Margin="0, 5, 0, 15"
-                    Padding="15"
-                    CornerRadius="5"
-                    BorderBrush="DarkGreen"
-                    BorderThickness="2">
-                <Border.Background>
-                    <SolidColorBrush Opacity="0.2"
-                                     Color="DarkGreen" />
-                </Border.Background>
-                <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsFilterTip}"
-                           TextWrapping="Wrap" />
-            </Border>
+            <c:SettingsSection Heading="{DynamicResource LOCGGDealsWishlistSettingsImportSettings}"
+                               Margin="0, 0, 0, 15">
+                <StackPanel>
+                    <Border Margin="0, 5, 0, 15"
+                            Padding="15"
+                            CornerRadius="5"
+                            BorderBrush="DarkRed"
+                            BorderThickness="2"
+                            Visibility="{Binding GGDealsCollectionUpdaterWarningVisibility}">
+                        <Border.Background>
+                            <SolidColorBrush Opacity="0.2"
+                                             Color="DarkRed" />
+                        </Border.Background>
+                        <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsPluginWarning}"
+                                   TextWrapping="Wrap" />
+                    </Border>
 
-            <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsDefaultCategory}"
-                              Description="{DynamicResource LOCGGDealsWishlistSettingsDefaultCategoryDescription}"
-                              MinLabelWidth="150">
-                <DockPanel>
-                    <Button Content="{DynamicResource LOCGGDealsWishlistSettingsSelect}"
-                            DockPanel.Dock="Right"
-                            Margin="10, 0, 0, 0"
-                            Command="{Binding AddCategoryCommand}"
-                            CommandParameter="{Binding Settings.DefaultCategory}" />
-                    <TextBox Text="{Binding Settings.DefaultCategory}"
-                             MinWidth="100" />
-                </DockPanel>
-            </c:SettingsOption>
+                    <CheckBox IsChecked="{Binding Settings.ImportGamesToLibrary}"
+                              Content="{DynamicResource LOCGGDealsWishlistSettingsImportToLibrary}"
+                              Margin="0, 0, 0, 5" />
+                    <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsImportToLibraryDescription}"
+                               Style="{StaticResource SettingsDescription}"
+                               Margin="0, 0, 0, 15" />
 
-            <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsMaxGamesToImport}"
-                              Description="{DynamicResource LOCGGDealsWishlistSettingsMaxGamesToImportDescription}"
-                              MinLabelWidth="150"
-                              HorizontalControlAlignment="Left">
-                <TextBox Text="{Binding Settings.MaxGamesToImport}"
-                         Width="40" />
-            </c:SettingsOption>
+                    <CheckBox IsChecked="{Binding Settings.ImportGamesAsInstalled}"
+                              Content="{DynamicResource LOCGGDealsWishlistSettingsImportAsInstalled}"
+                              Margin="0, 0, 0, 5"
+                              IsEnabled="{Binding Settings.ImportGamesToLibrary}" />
+                    <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsImportAsInstalledDescription}"
+                               Style="{StaticResource SettingsDescription}"
+                               Margin="0, 0, 0, 15" />
 
-            <CheckBox IsChecked="{Binding Settings.ImportGamesAsInstalled}"
-                      Content="{DynamicResource LOCGGDealsWishlistSettingsImportAsInstalled}"
-                      Margin="0, 0, 0, 5" />
-            <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsImportAsInstalledDescription}"
-                       Style="{StaticResource SettingsDescription}"
-                       Margin="0, 0, 0, 15" />
+                    <CheckBox IsChecked="{Binding Settings.OnlyImportGames}"
+                              Content="{DynamicResource LOCGGDealsWishlistSettingsOnlyImportGames}"
+                              Margin="0, 0, 0, 5"
+                              IsEnabled="{Binding Settings.ImportGamesToLibrary}" />
+                    <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsOnlyImportGamesDescription}"
+                               Style="{StaticResource SettingsDescription}"
+                               Margin="0, 0, 0, 15" />
 
-            <CheckBox IsChecked="{Binding Settings.OnlyImportGames}"
-                      Content="{DynamicResource LOCGGDealsWishlistSettingsOnlyImportGames}"
-                      Margin="0, 0, 0, 5" />
-            <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsOnlyImportGamesDescription}"
-                       Style="{StaticResource SettingsDescription}"
-                       Margin="0, 0, 0, 15" />
+                    <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsMaxGamesToImport}"
+                                      Description="{DynamicResource LOCGGDealsWishlistSettingsMaxGamesToImportDescription}"
+                                      MinLabelWidth="150"
+                                      HorizontalControlAlignment="Left">
+                        <TextBox Text="{Binding Settings.MaxGamesToImport}"
+                                 Width="40"
+                                 IsEnabled="{Binding Settings.ImportGamesToLibrary}" />
+                    </c:SettingsOption>
 
-            <CheckBox IsChecked="{Binding Settings.DebugMode}"
-                      Content="{DynamicResource LOCGGDealsWishlistSettingsDebugMode}"
-                      Margin="0, 0, 0, 5" />
-            <TextBlock Text="{DynamicResource LOCGGDealsWishlistSettingsDebugModeDescription}"
-                       Style="{StaticResource SettingsDescription}"
-                       Margin="0, 0, 0, 15" />
+                    <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsDefaultCategory}"
+                                      Description="{DynamicResource LOCGGDealsWishlistSettingsDefaultCategoryDescription}"
+                                      MinLabelWidth="150">
+                        <DockPanel>
+                            <Button Content="{DynamicResource LOCGGDealsWishlistSettingsSelect}"
+                                    DockPanel.Dock="Right"
+                                    Margin="10, 0, 0, 0"
+                                    Command="{Binding AddCategoryCommand}"
+                                    CommandParameter="{Binding Settings.DefaultCategory}"
+                                    IsEnabled="{Binding Settings.ImportGamesToLibrary}" />
+                            <TextBox Text="{Binding Settings.DefaultCategory}"
+                                     MinWidth="100"
+                                     IsEnabled="{Binding Settings.ImportGamesToLibrary}" />
+                        </DockPanel>
+                    </c:SettingsOption>
+                </StackPanel>
+            </c:SettingsSection>
 
-            <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsDiscountImageOption}"
-                              Description="{DynamicResource LOCGGDealsWishlistSettingsDiscountImageOptionDescription}"
-                              MinLabelWidth="150">
-                <ComboBox Name="ImageOptionComboBox"
-                          ItemsSource="{Binding Path=ImageOptionWithCaptions}"
-                          DisplayMemberPath="Value"
-                          SelectedValuePath="Key"
-                          SelectedValue="{Binding Settings.DiscountViewImage}" />
-            </c:SettingsOption>
-            <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsHistoricalLowColor}"
-                              Description="{DynamicResource LOCGGDealsWishlistSettingsHistoricalLowColorDescription}"
-                              MinLabelWidth="150"
-                              HorizontalControlAlignment="Left">
-                <DockPanel>
-                    <Button Content="{DynamicResource LOCGGDealsWishlistSettingsSelect}"
-                            DockPanel.Dock="Right"
-                            Margin="10, 0, 0, 0"
-                            Command="{Binding SetHistoricalLowColorCommand}" />
-                    <Border Background="{Binding Settings.HistoricalLowBrush}"
-                            d:Background="Green"
-                            Margin="0, 5"
-                            VerticalAlignment="Stretch"
-                            Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
-                </DockPanel>
-            </c:SettingsOption>
+            <c:SettingsSection Heading="{DynamicResource LOCGGDealsWishlistSettingsDiscountViewSettings}"
+                               Margin="0, 0, 0, 15">
+                <StackPanel>
+                    <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsDiscountImageOption}"
+                                      Description="{DynamicResource LOCGGDealsWishlistSettingsDiscountImageOptionDescription}"
+                                      MinLabelWidth="150">
+                        <ComboBox Name="ImageOptionComboBox"
+                                  ItemsSource="{Binding Path=ImageOptionWithCaptions}"
+                                  DisplayMemberPath="Value"
+                                  SelectedValuePath="Key"
+                                  SelectedValue="{Binding Settings.DiscountViewImage}" />
+                    </c:SettingsOption>
+                    <c:SettingsOption Heading="{DynamicResource LOCGGDealsWishlistSettingsHistoricalLowColor}"
+                                      Description="{DynamicResource LOCGGDealsWishlistSettingsHistoricalLowColorDescription}"
+                                      MinLabelWidth="150"
+                                      HorizontalControlAlignment="Left">
+                        <DockPanel>
+                            <Button Content="{DynamicResource LOCGGDealsWishlistSettingsSelect}"
+                                    DockPanel.Dock="Right"
+                                    Margin="10, 0, 0, 0"
+                                    Command="{Binding SetHistoricalLowColorCommand}" />
+                            <Border Background="{Binding Settings.HistoricalLowBrush}"
+                                    d:Background="Green"
+                                    Margin="0, 5"
+                                    VerticalAlignment="Stretch"
+                                    Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+                        </DockPanel>
+                    </c:SettingsOption>
+                </StackPanel>
+            </c:SettingsSection>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
