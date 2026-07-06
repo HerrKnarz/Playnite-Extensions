@@ -1,5 +1,14 @@
 AddonId: GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189
 Packages:
+  - Version: 0.4.0
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-07-06
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-07-06/GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189_0_4_0.pext
+    Changelog:
+      - Added new discount view with filter, sorting and grouping options loosely mimicking the gg.deals website.
+      - Importing games to the library is now optional, but importing the games enables more options in the discount view going forward.
+      - Added discount data to the settings for theme devs to use in their own views.
+      - Updated localization
   - Version: 0.3.0
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-06-27
