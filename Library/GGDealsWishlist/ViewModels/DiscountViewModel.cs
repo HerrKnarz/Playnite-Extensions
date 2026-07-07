@@ -10,18 +10,11 @@ using System.Windows.Data;
 
 namespace GGDealsWishlist.ViewModels
 {
-    public enum SortOrder
-    {
-        Name = 1,
-        Discount = 2,
-        Price = 3,
-    }
-
     public class DiscountViewModel : ObservableObject
     {
         private readonly GGDealsWishlist _plugin;
         private CollectionViewSource _gamesViewSource;
-        private bool _groupByShop;
+        private GroupBy _groupBy = GroupBy.None;
         private string _searchTerm = string.Empty;
         private bool _showOnlyDiscountedGames = true;
         private bool _showOnlyHistoricalLowPrices = false;
@@ -31,7 +24,7 @@ namespace GGDealsWishlist.ViewModels
         {
             _plugin = plugin;
 
-            _groupByShop = _plugin.Settings.Settings.DiscountViewSettings.GroupByShop;
+            _groupBy = _plugin.Settings.Settings.DiscountViewSettings.GroupBy;
             _showOnlyDiscountedGames = _plugin.Settings.Settings.DiscountViewSettings.ShowOnlyDiscountedGames;
             _showOnlyHistoricalLowPrices = _plugin.Settings.Settings.DiscountViewSettings.ShowOnlyHistoricalLowPrices;
             _sortOrder = _plugin.Settings.Settings.DiscountViewSettings.SortOrder;
@@ -43,7 +36,7 @@ namespace GGDealsWishlist.ViewModels
         {
             var settings = _plugin.Settings.Settings.DiscountViewSettings;
 
-            settings.GroupByShop = GroupByShop;
+            settings.GroupBy = GroupBy;
             settings.ShowOnlyDiscountedGames = ShowOnlyDiscountedGames;
             settings.ShowOnlyHistoricalLowPrices = ShowOnlyHistoricalLowPrices;
             settings.SortOrder = SortOrder;
@@ -63,22 +56,24 @@ namespace GGDealsWishlist.ViewModels
             set => SetValue(ref _gamesViewSource, value);
         }
 
-        public bool GroupByShop
+        public GroupBy GroupBy
         {
-            get => _groupByShop;
+            get => _groupBy;
             set
             {
-                SetValue(ref _groupByShop, value);
+                SetValue(ref _groupBy, value);
 
                 SortGroupFilter();
             }
         }
 
+        public GroupByWithCaptions GroupByWithCaptions { get; } = new GroupByWithCaptions();
+
         public RelayCommand RefreshDiscountsCommand => new RelayCommand(() =>
-        {
-            RefreshGames();
-            SortGroupFilter();
-        });
+                {
+                    RefreshGames();
+                    SortGroupFilter();
+                });
 
         public string SearchTerm
         {
@@ -200,9 +195,15 @@ namespace GGDealsWishlist.ViewModels
             {
                 GamesViewSource.SortDescriptions.Clear();
 
-                if (GroupByShop)
+                switch (GroupBy)
                 {
-                    GamesViewSource.SortDescriptions.Add(new SortDescription("DiscountData.ShopName", ListSortDirection.Ascending));
+                    case GroupBy.Shop:
+                        GamesViewSource.SortDescriptions.Add(new SortDescription("DiscountData.ShopName", ListSortDirection.Ascending));
+                        break;
+
+                    case GroupBy.CompletionStatus:
+                        GamesViewSource.SortDescriptions.Add(new SortDescription("Game.CompletionStatus", ListSortDirection.Ascending));
+                        break;
                 }
 
                 switch (SortOrder)
@@ -235,29 +236,22 @@ namespace GGDealsWishlist.ViewModels
         {
             SortGames();
 
-            if (GroupByShop)
+            switch (GroupBy)
             {
-                GamesViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("DiscountData.ShopName"));
-            }
-            else
-            {
-                GamesViewSource.View.GroupDescriptions.Clear();
+                case GroupBy.Shop:
+                    GamesViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("DiscountData.ShopName"));
+                    break;
+
+                case GroupBy.CompletionStatus:
+                    GamesViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("Game.CompletionStatus"));
+                    break;
+
+                default:
+                    GamesViewSource.View.GroupDescriptions.Clear();
+                    break;
             }
 
             GamesViewSource.View.Filter = Filter;
-        }
-    }
-
-    /// <summary>
-    /// Dictionary of types with captions to show in a combo box.
-    /// </summary>
-    public class SortOrderWithCaptions : Dictionary<SortOrder, string>
-    {
-        public SortOrderWithCaptions()
-        {
-            Add(SortOrder.Name, ResourceProvider.GetString("LOCGGDealsWishlistSortOrderName"));
-            Add(SortOrder.Discount, ResourceProvider.GetString("LOCGGDealsWishlistSortOrderDiscount"));
-            Add(SortOrder.Price, ResourceProvider.GetString("LOCGGDealsWishlistSortOrderPrice"));
         }
     }
 }

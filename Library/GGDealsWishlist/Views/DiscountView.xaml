@@ -88,16 +88,22 @@
                               SelectedValue="{Binding SortOrder}"
                               Margin="0, 0, 0, 15"
                               DockPanel.Dock="Top" />
+                    <Label Content="{Binding Source={StaticResource LOCGGDealsWishlistDiscountGroupBy}}"
+                           Margin="0, 0, 0, 5"
+                           DockPanel.Dock="Top" />
+                    <ComboBox Name="GroupByComboBox"
+                              ItemsSource="{Binding Path=GroupByWithCaptions}"
+                              DisplayMemberPath="Value"
+                              SelectedValuePath="Key"
+                              SelectedValue="{Binding GroupBy}"
+                              Margin="0, 0, 0, 25"
+                              DockPanel.Dock="Top" />
                     <CheckBox Content="{Binding Source={StaticResource LOCGGDealsWishlistDiscountShowOnlyDiscounted}}"
                               IsChecked="{Binding ShowOnlyDiscountedGames}"
                               Margin="0, 0, 0, 15"
                               DockPanel.Dock="Top" />
                     <CheckBox Content="{Binding Source={StaticResource LOCGGDealsWishlistDiscountShowOnlyHistoricalLow}}"
                               IsChecked="{Binding ShowOnlyHistoricalLowPrices}"
-                              Margin="0, 0, 0, 15"
-                              DockPanel.Dock="Top" />
-                    <CheckBox Content="{Binding Source={StaticResource LOCGGDealsWishlistDiscountGroupByShop}}"
-                              IsChecked="{Binding GroupByShop}"
                               Margin="0, 0, 0, 15"
                               DockPanel.Dock="Top" />
                     <Button Command="{Binding RefreshDiscountsCommand}"
