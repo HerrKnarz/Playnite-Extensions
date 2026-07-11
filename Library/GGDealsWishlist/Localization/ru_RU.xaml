@@ -10,7 +10,7 @@
     <sys:String x:Key="LOCGGDealsWishlistDiscountGoTo">Перейти на</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountGroupBy">Группировать по</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountHistoricalLow">Historical low</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyDiscounted">Show only discounted games</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyDiscounted">Показать только игры со скидкой</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyHistoricalLow">Show only historical low prices</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountSortBy">Сортировать по</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistGroupByCompletionStatus">Статус завершения</sys:String>
