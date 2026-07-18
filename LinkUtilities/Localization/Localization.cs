@@ -1,4 +1,6 @@
-﻿using LinkUtilities;
+﻿// Ignore Spelling: Loc
+
+using LinkUtilities;
 using Playnite.Markup;
 
 namespace Playnite;

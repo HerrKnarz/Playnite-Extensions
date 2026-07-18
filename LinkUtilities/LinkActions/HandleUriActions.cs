@@ -103,7 +103,7 @@ internal class HandleUriActions : BaseAction
 
         var actionArgs = GetActionArgs(LinkUtilitiesPlugin.PlayniteApi, games, Loc.link_utilities_name());
 
-        actionArgs.ShowDialogs = true;
+        actionArgs.ShowDialog = true;
 
         await DoForAllAsync(actionArgs);
     }

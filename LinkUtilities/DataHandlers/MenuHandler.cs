@@ -66,6 +66,26 @@ public class MenuHandler(IPlayniteApi playniteApi)
         };
     }
 
+    private static ICollection<MenuItemImpl>? GetBrowserSearchItems(List<BaseActionGame> games)
+    {
+        if (LinkUtilitiesPlugin.Plugin is null)
+        {
+            return null;
+        }
+
+        var subItems = new List<MenuItemImpl>();
+
+        foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.CanBeBrowserSearched).OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase))
+        {
+            var subItem = new MenuItemImpl(link.LinkName,
+                (clickArgs) => link.StartBrowserSearch([.. games.Select(g => g.Game)]));
+
+            subItems.Add(subItem);
+        }
+
+        return [new MenuItemImpl(Loc.menu_search_link_in_browser(), subItems)];
+    }
+
     //TODO: Check if this needs to change once themes are supported in Playnite 11.0
     private static SolidColorBrush GetIconColor() =>
             (SolidColorBrush?)System.Windows.Application.Current?.TryFindResource("TextBrush") ?? new SolidColorBrush(Colors.White);
@@ -123,26 +143,6 @@ public class MenuHandler(IPlayniteApi playniteApi)
         }
 
         return [new MenuItemImpl(Loc.menu_section_add_link(), subItems)];
-    }
-
-    private ICollection<MenuItemImpl>? GetBrowserSearchItems(List<BaseActionGame> games)
-    {
-        if (LinkUtilitiesPlugin.Plugin is null)
-        {
-            return null;
-        }
-
-        var subItems = new List<MenuItemImpl>();
-
-        foreach (var link in LinkUtilitiesPlugin.Plugin.Links.Where(l => l.CanBeBrowserSearched).OrderBy(x => x.LinkName, StringComparer.CurrentCultureIgnoreCase))
-        {
-            var subItem = new MenuItemImpl(link.LinkName,
-                (clickArgs) => link.StartBrowserSearch([.. games.Select(g => g.Game)]));
-
-            subItems.Add(subItem);
-        }
-
-        return [new MenuItemImpl(Loc.menu_search_link_in_browser(), subItems)];
     }
 
     private ICollection<MenuItemImpl>? GetCleanUpLinksItems(List<BaseActionGame> games)

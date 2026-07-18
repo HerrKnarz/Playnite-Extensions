@@ -7,31 +7,39 @@ using System.Net;
 
 namespace LinkUtilities.Linker.LinkSources;
 
-public class LinkHG101(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
+public class LinkIGDB(string id, LinkSourceArgs args) : BaseLinkSource(id, args)
 {
+    private const string _websiteUrl = "https://www.igdb.com/";
     private readonly IBrowsingContext _context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
-    public static string ClassId => $"linkutilities.hardcoregaming101.link";
-    public override string BaseUrl => "https://www.hardcoregaming101.net/";
-    public override string LinkName => "Hardcore Gaming 101";
-    public override string SearchUrl => $"{BaseUrl}?s=";
+    private string? _gameSlug = string.Empty;
+    public static string ClassId => $"linkutilities.igdb.link";
+    public override string BaseUrl => $"{_websiteUrl}games/";
+    public override string CheckForContent => $"<meta content=\"{BaseUrl}{_gameSlug}\"";
+    public override string LinkName => "IGDB";
+    public override string SearchUrl => $"{_websiteUrl}search?utf8=✓&q=";
 
     public override List<TestCase> TestCases =>
         [
         new TestCase(){
-            CaseName = "Hardcore Gaming 101 Metal Gear Solid 3: Snake Eater",
+            CaseName = "IGDB Metal Gear Solid 3: Snake Eater",
             GameName = "Metal Gear Solid 3: Snake Eater",
             GamePathExpected = "metal-gear-solid-3-snake-eater",
-            SearchedUrlExpected = "https://www.hardcoregaming101.net/metal-gear-solid-3-snake-eater/",
-            UrlExpected = "https://www.hardcoregaming101.net/metal-gear-solid-3-snake-eater"
+            SearchedUrlExpected = "https://www.igdb.com/games/metal-gear-solid-3-snake-eater",
+            UrlExpected = "https://www.igdb.com/games/metal-gear-solid-3-snake-eater"
         }
     ];
 
     public override async Task<string?> GetGamePathAsync(Game game, string? gameName = null)
-        => (gameName ?? game.Name)
-            .RemoveSpecialChars()
-            .CollapseWhitespaces()?
-            .Replace(" ", "-")
-            .ToLower();
+    {
+        _gameSlug = (gameName ?? game.Name)
+                .RemoveDiacritics()
+                .RemoveSpecialChars()
+                .CollapseWhitespaces()?
+                .Replace(" ", "-")
+                .ToLower();
+
+        return _gameSlug;
+    }
 
     public override async Task<IEnumerable<ChooseDialogItem>> GetSearchResultsAsync(ChooseItemWithSearchAsyncArgs searchArgs)
     {
@@ -46,7 +54,7 @@ public class LinkHG101(string id, LinkSourceArgs args) : BaseLinkSource(id, args
 
             var document = await _context.OpenAsync(req => req.Content(htmlSource));
 
-            var cells = document.QuerySelectorAll("header.entry-header");
+            var cells = document.QuerySelectorAll("#search-results .media-body");
 
             if (!cells.HasItems())
             {
@@ -57,12 +65,7 @@ public class LinkHG101(string id, LinkSourceArgs args) : BaseLinkSource(id, args
 
             foreach (var node in cells)
             {
-                if (node.QuerySelector("a.Review") is null)
-                {
-                    continue;
-                }
-
-                if (node.QuerySelector("h2.entry-title > a") is not IHtmlAnchorElement link)
+                if (node.QuerySelector("a") is not IHtmlAnchorElement link)
                 {
                     continue;
                 }
@@ -70,7 +73,8 @@ public class LinkHG101(string id, LinkSourceArgs args) : BaseLinkSource(id, args
                 var result = new LinkSearchResult
                 {
                     Name = WebUtility.HtmlDecode(link.TextContent),
-                    Url = link.Href
+                    Url = link.Href,
+                    Description = WebUtility.HtmlDecode(node.QuerySelector(".mar-md-bottom a")?.TextContent.CollapseWhitespaces()),
                 };
 
                 if (result.Name.IsNullOrEmpty() || result.Url.IsNullOrEmpty())

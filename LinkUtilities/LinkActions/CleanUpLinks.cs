@@ -9,12 +9,12 @@ public class CleanUpLinks : BaseAction
 
     public override string Name => Loc.action_name_clean_up_links();
 
-    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, bool showDialogs = false)
+    public static async Task CreateAndExecuteAsync(IPlayniteApi api, List<BaseActionGame> games, string pluginName, bool showDialog = false)
     {
         var action = new CleanUpLinks();
         var args = action.GetActionArgs(api, games, pluginName);
 
-        args.ShowDialogs = showDialogs;
+        args.ShowDialog = showDialog;
 
         await action.DoForAllAsync(args);
     }
