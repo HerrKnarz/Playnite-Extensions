@@ -61,7 +61,17 @@ public class LinkNamePatterns : ObservableCollection<LinkNamePattern>
         return true;
     }
 
-    public void RemoveEmpty() => this.RemoveAll(x => !(x.NamePattern?.Length == 0) && !(x.UrlPattern?.Length == 0));
+    public void RemoveEmpty(bool removePattern = false)
+    {
+        if (removePattern)
+        {
+            this.RemoveAll(x => x.UrlPattern.IsNullOrEmpty() && x.LinkTypeIdentifier.IsNullOrEmpty());
+        }
+        else
+        {
+            this.RemoveAll(x => x.NamePattern.IsNullOrEmpty() && x.UrlPattern.IsNullOrEmpty());
+        }
+    }
 
     public void SortPatterns()
     {

@@ -31,6 +31,9 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
     public partial LinkNamePattern? SelectedPattern { get; set; }
 
     [ObservableProperty]
+    public partial LinkNamePattern? SelectedRemovePattern { get; set; }
+
+    [ObservableProperty]
     public partial LinkUtilitiesPluginSettings Settings { get; set; } = LoadSettings();
 
     public static LinkUtilitiesPluginSettings LoadSettings()
@@ -85,6 +88,11 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
             SelectedPattern = Settings.LinkNamePatterns.First();
         }
 
+        if (Settings.RemovePatterns.HasItems())
+        {
+            SelectedRemovePattern = Settings.RemovePatterns.First();
+        }
+
         await Task.CompletedTask;
     }
 
@@ -93,6 +101,12 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
 
     public override async Task EndEditAsync(EndEditArgs args)
     {
+        Settings.LinkNamePatterns.RemoveEmpty();
+        Settings.LinkNamePatterns.SortPatterns();
+
+        Settings.RemovePatterns.RemoveEmpty(true);
+        Settings.RemovePatterns.SortPatterns();
+
         SaveSettings(Settings);
 
         LinkUtilitiesPlugin.Settings = Settings;
@@ -118,6 +132,9 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
     private void AddDefaultLinkNamePatterns() => Settings.LinkNamePatterns.AddDefaultPatterns(PatternTypes.LinkNamePattern);
 
     [RelayCommand]
+    private void AddDefaultRemovePatterns() => Settings.RemovePatterns.AddDefaultPatterns(PatternTypes.RemovePattern);
+
+    [RelayCommand]
     private void AddLinkNamePattern()
     {
         var pattern = new LinkNamePattern();
@@ -125,6 +142,16 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
         Settings.LinkNamePatterns.Add(pattern);
 
         SelectedPattern = pattern;
+    }
+
+    [RelayCommand]
+    private void AddRemovePattern()
+    {
+        var pattern = new LinkNamePattern();
+
+        Settings.RemovePatterns.Add(pattern);
+
+        SelectedRemovePattern = pattern;
     }
 
     [RelayCommand]
@@ -139,5 +166,19 @@ public partial class LinkUtilitiesSettingsHandler : PluginSettingsHandler
     }
 
     [RelayCommand]
+    private void RemoveRemovePatterns(object item)
+    {
+        if (item is not LinkNamePattern linkPattern)
+        {
+            return;
+        }
+
+        Settings.RemovePatterns.Remove(linkPattern);
+    }
+
+    [RelayCommand]
     private void SortPatterns() => Settings.LinkNamePatterns.SortPatterns();
+
+    [RelayCommand]
+    private void SortRemovePatterns() => Settings.RemovePatterns.SortPatterns();
 }

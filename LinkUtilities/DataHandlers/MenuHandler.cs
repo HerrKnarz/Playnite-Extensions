@@ -20,6 +20,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
             new MenuItemDescriptor(ActionIds.TypeSearchLinks, Loc.menu_section_search_link()),
             new MenuItemDescriptor(ActionIds.TypeBrowserSearch, Loc.menu_search_link_in_browser()),
             new MenuItemDescriptor(ActionIds.TypeRemoveDuplicates, Loc.menu_remove_duplicate_links()),
+            new MenuItemDescriptor(ActionIds.TypeRemoveLinks, Loc.menu_remove_unwanted_links()),
             new MenuItemDescriptor(ActionIds.TypeCleanUpLinks, Loc.menu_clean_up_links()),
             new MenuItemDescriptor(ActionIds.TypeAddFromClipboard, Loc.menu_add_link_from_clipboard()),
             new MenuItemDescriptor(ActionIds.TypeConvertSteamClient, Loc.menu_convert_steam_links_to_client()),
@@ -57,6 +58,7 @@ public class MenuHandler(IPlayniteApi playniteApi)
             ActionIds.TypeConvertSteamClient => GetConvertSteamlinksItems(games),
             ActionIds.TypeConvertSteamWeb => GetConvertSteamlinksItems(games, false),
             ActionIds.TypeRemoveDuplicates => GetRemoveDuplicatesItems(games),
+            ActionIds.TypeRemoveLinks => GetRemoveLinksItems(games),
             ActionIds.TypeSearchLinks => GetSearchLinksItems(games),
             ActionIds.TypeTestAdd => GetTestAddItems(),
             "link:utilities.test.method" => GetTestMethodItems(games),
@@ -167,6 +169,15 @@ public class MenuHandler(IPlayniteApi playniteApi)
         return [
             new(Loc.menu_remove_duplicate_links(),
                 (clickArgs) => RemoveDuplicates.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name()),
+                false,
+                UIIcon.FromFontIcon("f0a96", Playnite.Fonts.NerdFont, GetIconColor()))];
+    }
+
+    private ICollection<MenuItemImpl>? GetRemoveLinksItems(List<BaseActionGame> games)
+    {
+        return [
+            new(Loc.menu_remove_unwanted_links(),
+                (clickArgs) => RemoveLinks.CreateAndExecuteAsync(playniteApi, games, Loc.link_utilities_name()),
                 false,
                 UIIcon.FromFontIcon("f0a96", Playnite.Fonts.NerdFont, GetIconColor()))];
     }

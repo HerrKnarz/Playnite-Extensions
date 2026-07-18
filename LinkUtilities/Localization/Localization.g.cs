@@ -46,6 +46,13 @@ public static partial class Loc
         return GetString("action_name_remove_duplicates");
     }
     /// <summary>
+    /// Remove unwanted links
+    /// </summary>
+    public static string action_name_remove_links()
+    {
+        return GetString("action_name_remove_links");
+    }
+    /// <summary>
     /// Link from uri
     /// </summary>
     public static string action_name_uri_links()
@@ -107,6 +114,13 @@ public static partial class Loc
     public static string dialog_removed_duplicates_message(object gameCount)
     {
         return GetString("dialog_removed_duplicates_message", ("gameCount", gameCount));
+    }
+    /// <summary>
+    /// Removed unwanted links from {$gameCount} games!
+    /// </summary>
+    public static string dialog_removed_links_message(object gameCount)
+    {
+        return GetString("dialog_removed_links_message", ("gameCount", gameCount));
     }
     /// <summary>
     /// A link to {$linkType} already exists. You can replace the existing link or add a new one by entering a new link name.
@@ -200,6 +214,13 @@ public static partial class Loc
         return GetString("menu_remove_duplicate_links");
     }
     /// <summary>
+    /// Remove unwanted links
+    /// </summary>
+    public static string menu_remove_unwanted_links()
+    {
+        return GetString("menu_remove_unwanted_links");
+    }
+    /// <summary>
     /// All missing websites
     /// </summary>
     public static string menu_search_link_to_all_missing_websites()
@@ -268,6 +289,13 @@ public static partial class Loc
     public static string progress_removing_duplicates()
     {
         return GetString("progress_removing_duplicates");
+    }
+    /// <summary>
+    /// Removing unwanted links...
+    /// </summary>
+    public static string progress_removing_links()
+    {
+        return GetString("progress_removing_links");
     }
     /// <summary>
     /// Add link
@@ -354,7 +382,7 @@ public static partial class Loc
         return GetString("settings_debug_mode");
     }
     /// <summary>
-    /// Remove duplicate links after the game meta data was updated
+    /// Remove duplicate links after the game meta data was updated.
     /// </summary>
     public static string settings_duplicates_remove_after_change()
     {
@@ -375,7 +403,7 @@ public static partial class Loc
         return GetString("settings_is_regex");
     }
     /// <summary>
-    /// Link name
+    /// Link Name
     /// </summary>
     public static string settings_link_name()
     {
@@ -389,13 +417,6 @@ public static partial class Loc
         return GetString("settings_link_name_description");
     }
     /// <summary>
-    /// Link type
-    /// </summary>
-    public static string settings_link_type()
-    {
-        return GetString("settings_link_type");
-    }
-    /// <summary>
     /// Type the link will be assigned to when the patterns match. If no type is specified the link name will be used.
     /// </summary>
     public static string settings_link_type_description()
@@ -403,7 +424,7 @@ public static partial class Loc
         return GetString("settings_link_type_description");
     }
     /// <summary>
-    /// Name pattern
+    /// Name Pattern
     /// </summary>
     public static string settings_name_pattern()
     {
@@ -417,7 +438,7 @@ public static partial class Loc
         return GetString("settings_name_pattern_description");
     }
     /// <summary>
-    /// Partial match
+    /// Partial Match
     /// </summary>
     public static string settings_partial_match()
     {
@@ -431,7 +452,21 @@ public static partial class Loc
         return GetString("settings_partial_match_description");
     }
     /// <summary>
-    /// Search link
+    /// Type of the link to remove. If no type is specified, only the URL pattern will be matched.
+    /// </summary>
+    public static string settings_remove_link_type_description()
+    {
+        return GetString("settings_remove_link_type_description");
+    }
+    /// <summary>
+    /// Remove unwanted links after the game meta data was updated.
+    /// </summary>
+    public static string settings_remove_unwanted_after_change()
+    {
+        return GetString("settings_remove_unwanted_after_change");
+    }
+    /// <summary>
+    /// Search Link
     /// </summary>
     public static string settings_search_link()
     {
@@ -459,14 +494,28 @@ public static partial class Loc
         return GetString("settings_tab_assign_link_types_description");
     }
     /// <summary>
-    /// General settings
+    /// General Settings
     /// </summary>
     public static string settings_tab_general()
     {
         return GetString("settings_tab_general");
     }
     /// <summary>
-    /// URL pattern
+    /// Remove Links
+    /// </summary>
+    public static string settings_tab_remove_links()
+    {
+        return GetString("settings_tab_remove_links");
+    }
+    /// <summary>
+    /// Often metadata providers automatically add links to some websites you don't want. Here you can define patterns for those links you want to remove. The url patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character. Alternatively you can use the "Regex" checkbox and treat the pattern as regular expressions. You need to specify an URL pattern, link type or both to match a link. If only one of them is specified, the other will be ignored when matching.
+    /// </summary>
+    public static string settings_tab_remove_links_description()
+    {
+        return GetString("settings_tab_remove_links_description");
+    }
+    /// <summary>
+    /// URL Pattern
     /// </summary>
     public static string settings_url_pattern()
     {
@@ -509,6 +558,10 @@ public static partial class LocId
     /// </summary>
     public const string action_name_remove_duplicates = "action_name_remove_duplicates";
     /// <summary>
+    /// Remove unwanted links
+    /// </summary>
+    public const string action_name_remove_links = "action_name_remove_links";
+    /// <summary>
     /// Link from uri
     /// </summary>
     public const string action_name_uri_links = "action_name_uri_links";
@@ -544,6 +597,10 @@ public static partial class LocId
     /// Removed duplicate links from {$gameCount} games!
     /// </summary>
     public const string dialog_removed_duplicates_message = "dialog_removed_duplicates_message";
+    /// <summary>
+    /// Removed unwanted links from {$gameCount} games!
+    /// </summary>
+    public const string dialog_removed_links_message = "dialog_removed_links_message";
     /// <summary>
     /// A link to {$linkType} already exists. You can replace the existing link or add a new one by entering a new link name.
     /// </summary>
@@ -597,6 +654,10 @@ public static partial class LocId
     /// </summary>
     public const string menu_remove_duplicate_links = "menu_remove_duplicate_links";
     /// <summary>
+    /// Remove unwanted links
+    /// </summary>
+    public const string menu_remove_unwanted_links = "menu_remove_unwanted_links";
+    /// <summary>
     /// All missing websites
     /// </summary>
     public const string menu_search_link_to_all_missing_websites = "menu_search_link_to_all_missing_websites";
@@ -636,6 +697,10 @@ public static partial class LocId
     /// Removing duplicate links...
     /// </summary>
     public const string progress_removing_duplicates = "progress_removing_duplicates";
+    /// <summary>
+    /// Removing unwanted links...
+    /// </summary>
+    public const string progress_removing_links = "progress_removing_links";
     /// <summary>
     /// Add link
     /// </summary>
@@ -685,7 +750,7 @@ public static partial class LocId
     /// </summary>
     public const string settings_debug_mode = "settings_debug_mode";
     /// <summary>
-    /// Remove duplicate links after the game meta data was updated
+    /// Remove duplicate links after the game meta data was updated.
     /// </summary>
     public const string settings_duplicates_remove_after_change = "settings_duplicates_remove_after_change";
     /// <summary>
@@ -697,7 +762,7 @@ public static partial class LocId
     /// </summary>
     public const string settings_is_regex = "settings_is_regex";
     /// <summary>
-    /// Link name
+    /// Link Name
     /// </summary>
     public const string settings_link_name = "settings_link_name";
     /// <summary>
@@ -705,15 +770,11 @@ public static partial class LocId
     /// </summary>
     public const string settings_link_name_description = "settings_link_name_description";
     /// <summary>
-    /// Link type
-    /// </summary>
-    public const string settings_link_type = "settings_link_type";
-    /// <summary>
     /// Type the link will be assigned to when the patterns match. If no type is specified the link name will be used.
     /// </summary>
     public const string settings_link_type_description = "settings_link_type_description";
     /// <summary>
-    /// Name pattern
+    /// Name Pattern
     /// </summary>
     public const string settings_name_pattern = "settings_name_pattern";
     /// <summary>
@@ -721,7 +782,7 @@ public static partial class LocId
     /// </summary>
     public const string settings_name_pattern_description = "settings_name_pattern_description";
     /// <summary>
-    /// Partial match
+    /// Partial Match
     /// </summary>
     public const string settings_partial_match = "settings_partial_match";
     /// <summary>
@@ -729,7 +790,15 @@ public static partial class LocId
     /// </summary>
     public const string settings_partial_match_description = "settings_partial_match_description";
     /// <summary>
-    /// Search link
+    /// Type of the link to remove. If no type is specified, only the URL pattern will be matched.
+    /// </summary>
+    public const string settings_remove_link_type_description = "settings_remove_link_type_description";
+    /// <summary>
+    /// Remove unwanted links after the game meta data was updated.
+    /// </summary>
+    public const string settings_remove_unwanted_after_change = "settings_remove_unwanted_after_change";
+    /// <summary>
+    /// Search Link
     /// </summary>
     public const string settings_search_link = "settings_search_link";
     /// <summary>
@@ -745,11 +814,19 @@ public static partial class LocId
     /// </summary>
     public const string settings_tab_assign_link_types_description = "settings_tab_assign_link_types_description";
     /// <summary>
-    /// General settings
+    /// General Settings
     /// </summary>
     public const string settings_tab_general = "settings_tab_general";
     /// <summary>
-    /// URL pattern
+    /// Remove Links
+    /// </summary>
+    public const string settings_tab_remove_links = "settings_tab_remove_links";
+    /// <summary>
+    /// Often metadata providers automatically add links to some websites you don't want. Here you can define patterns for those links you want to remove. The url patterns can contain wildcards. A * can be zero or more characters, a ? has to be exactly one character. Alternatively you can use the "Regex" checkbox and treat the pattern as regular expressions. You need to specify an URL pattern, link type or both to match a link. If only one of them is specified, the other will be ignored when matching.
+    /// </summary>
+    public const string settings_tab_remove_links_description = "settings_tab_remove_links_description";
+    /// <summary>
+    /// URL Pattern
     /// </summary>
     public const string settings_url_pattern = "settings_url_pattern";
     /// <summary>

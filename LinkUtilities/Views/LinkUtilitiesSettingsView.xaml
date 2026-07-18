@@ -35,8 +35,7 @@
                                   Content="{p:LocString {x:Static p:LocId.settings_duplicates_remove_after_change}}"
                                   Margin="0, 0, 0, 15" />
 
-                        <c:SettingsOption Heading="{p:LocString {x:Static p:LocId.settings_duplicates_remove_type}}"
-                                          HorizontalControlAlignment="Stretch">
+                        <c:SettingsOption Heading="{p:LocString {x:Static p:LocId.settings_duplicates_remove_type}}">
                             <ComboBox ItemsSource="{Binding Path=Settings.DuplicateTypesWithCaptions}"
                                       DisplayMemberPath="Value"
                                       SelectedValuePath="Key"
@@ -134,7 +133,7 @@
                     <DockPanel DockPanel.Dock="Top">
                         <ListBox Name="LbLinkNamePatterns"
                                  DockPanel.Dock="Left"
-                                 MinWidth="150"
+                                 MinWidth="200"
                                  VerticalAlignment="Stretch"
                                  ItemsSource="{Binding Settings.LinkNamePatterns}"
                                  SelectedItem="{Binding SelectedPattern}">
@@ -165,7 +164,6 @@
                                     VerticalAlignment="Top">
                             <c:SettingsOption Heading="{p:LocString {x:Static p:LocId.settings_link_name}}"
                                               Description="{p:LocString {x:Static p:LocId.settings_link_name_description}}"
-                                              HorizontalControlAlignment="Stretch"
                                               MinLabelWidth="100">
                                 <TextBox Text="{Binding LinkName}"
                                          MinWidth="100" />
@@ -173,7 +171,6 @@
 
                             <c:SettingsOption Heading="{p:LocString {x:Static p:LocId.settings_name_pattern}}"
                                               Description="{p:LocString {x:Static p:LocId.settings_name_pattern_description}}"
-                                              HorizontalControlAlignment="Stretch"
                                               MinLabelWidth="100">
                                 <DockPanel>
                                     <CheckBox IsChecked="{Binding LinkNameIsRegex}"
@@ -187,7 +184,6 @@
 
                             <c:SettingsOption Heading="{p:LocString {x:Static p:LocId.settings_url_pattern}}"
                                               Description="{p:LocString {x:Static p:LocId.settings_url_pattern_description}}"
-                                              HorizontalControlAlignment="Stretch"
                                               MinLabelWidth="100">
                                 <DockPanel>
                                     <CheckBox IsChecked="{Binding UrlPatternIsRegex}"
@@ -199,9 +195,8 @@
                                 </DockPanel>
                             </c:SettingsOption>
 
-                            <c:SettingsOption Heading="{p:LocString {x:Static p:LocId.settings_link_type}}"
+                            <c:SettingsOption Heading="{p:LocString {x:Static p:LocId.caption_link_type}}"
                                               Description="{p:LocString {x:Static p:LocId.settings_link_type_description}}"
-                                              HorizontalControlAlignment="Stretch"
                                               MinLabelWidth="100">
                                 <ComboBox ItemsSource="{Binding Path=DataContext.LinkTypes, ElementName=TiPatternTab}"
                                           DisplayMemberPath="Name"
@@ -215,6 +210,99 @@
                                       Content="{p:LocString {x:Static p:LocId.settings_partial_match}}" />
                             <TextBlock Text="{p:LocString {x:Static p:LocId.settings_partial_match_description}}"
                                        Style="{StaticResource SettingsDescription}" />
+                        </StackPanel>
+                    </DockPanel>
+                </DockPanel>
+            </c:SettingsSection>
+        </TabItem>
+        <TabItem Header="{p:LocString {x:Static p:LocId.settings_tab_remove_links}}">
+            <c:SettingsSection Description="{p:LocString {x:Static p:LocId.settings_tab_remove_links_description}}"
+                               Margin="5, 10, 10, 5"
+                               x:Name="TiRemovePatternTab">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal"
+                                DockPanel.Dock="Bottom"
+                                Margin="0,10,0,0"
+                                HorizontalAlignment="Left">
+                        <Button Content="&#xea60;"
+                                ToolTip="{p:LocString {x:Static p:LocId.settings_button_add}}"
+                                FontFamily="{DynamicResource NerdFont}"
+                                Command="{Binding AddRemovePatternCommand}" />
+                        <Button Content="{p:LocString {x:Static p:LocId.settings_button_add_defaults}}"
+                                Margin="10,0,0,0"
+                                Command="{Binding AddDefaultRemovePatternsCommand}" />
+                        <Button Content="&#xf04ba;"
+                                ToolTip="{p:LocString {x:Static p:LocId.settings_button_sort}}"
+                                FontFamily="{DynamicResource NerdFont}"
+                                Margin="10,0,0,0"
+                                Command="{Binding SortRemovePatternsCommand}" />
+                    </StackPanel>
+
+                    <CheckBox IsChecked="{Binding Settings.RemoveUnwantedAfterChange}"
+                              Content="{p:LocString {x:Static p:LocId.settings_remove_unwanted_after_change}}"
+                              DockPanel.Dock="Top"
+                              Margin="0, 0, 0, 15" />
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <ListBox Name="LbRemovePatterns"
+                                 DockPanel.Dock="Left"
+                                 MinWidth="200"
+                                 VerticalAlignment="Stretch"
+                                 ItemsSource="{Binding Settings.RemovePatterns}"
+                                 SelectedItem="{Binding SelectedRemovePattern}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel Margin="5">
+                                        <Button Content="&#xf48e;"
+                                                ToolTip="{p:LocString {x:Static p:LocId.settings_button_remove}}"
+                                                FontFamily="{DynamicResource NerdFont}"
+                                                DockPanel.Dock="Right"
+                                                Margin="10, 0, 0, 0"
+                                                Command="{Binding Path=DataContext.RemoveRemovePatternsCommand, ElementName=TiRemovePatternTab}"
+                                                CommandParameter="{Binding}" />
+                                        <TextBlock Text="{Binding LinkName}"
+                                                   MinWidth="100"
+                                                   VerticalAlignment="Center" />
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <i:Interaction.Behaviors>
+                                <ui:ScrollIntoViewBehavior />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                        <StackPanel DockPanel.Dock="Right"
+                                    Margin="15, 0, 0, 0"
+                                    d:DataContext="{d:DesignInstance Type=models:LinkNamePattern}"
+                                    DataContext="{Binding SelectedRemovePattern}"
+                                    VerticalAlignment="Top">
+                            <c:SettingsOption Heading="{p:LocString {x:Static p:LocId.settings_link_name}}"
+                                              MinLabelWidth="100">
+                                <TextBox Text="{Binding LinkName}"
+                                         MinWidth="100" />
+                            </c:SettingsOption>
+
+                            <c:SettingsOption Heading="{p:LocString {x:Static p:LocId.settings_url_pattern}}"
+                                              Description="{p:LocString {x:Static p:LocId.settings_url_pattern_description}}"
+                                              MinLabelWidth="100">
+                                <DockPanel>
+                                    <CheckBox IsChecked="{Binding UrlPatternIsRegex}"
+                                              Margin="10, 0, 0, 0"
+                                              DockPanel.Dock="Right"
+                                              Content="{p:LocString {x:Static p:LocId.settings_is_regex}}" />
+                                    <TextBox Text="{Binding UrlPattern}"
+                                             MinWidth="100" />
+                                </DockPanel>
+                            </c:SettingsOption>
+
+                            <c:SettingsOption Heading="{p:LocString {x:Static p:LocId.caption_link_type}}"
+                                              Description="{p:LocString {x:Static p:LocId.settings_remove_link_type_description}}"
+                                              MinLabelWidth="100">
+                                <ComboBox ItemsSource="{Binding Path=DataContext.LinkTypes, ElementName=TiRemovePatternTab}"
+                                          DisplayMemberPath="Name"
+                                          SelectedValuePath="Id"
+                                          SelectedValue="{Binding Path=LinkTypeIdentifier}"
+                                          MinWidth="200" />
+                            </c:SettingsOption>
                         </StackPanel>
                     </DockPanel>
                 </DockPanel>

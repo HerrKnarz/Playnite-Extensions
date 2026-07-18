@@ -34,4 +34,10 @@ public partial class LinkUtilitiesPluginSettings : ObservableObject
 
     [ObservableProperty]
     public partial DuplicateTypes RemoveDuplicatesType { get; set; } = DuplicateTypes.TypeAndUrl;
+
+    [ObservableProperty]
+    public partial LinkNamePatterns RemovePatterns { get; set; } = new();
+
+    [ObservableProperty]
+    public partial bool RemoveUnwantedAfterChange { get; set; } = false;
 }

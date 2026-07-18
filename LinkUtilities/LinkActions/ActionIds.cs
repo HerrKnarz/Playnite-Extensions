@@ -11,6 +11,7 @@ public static class ActionIds
     public const string TypeConvertSteamWeb = "link.utilities.convert.steam.web";
     public const string TypeHandleUriActions = "link.utilities.handle.uri.actions";
     public const string TypeRemoveDuplicates = "link.utilities.remove.duplicates";
+    public const string TypeRemoveLinks = "link.utilities.remove.links";
     public const string TypeSearchLinks = "link.utilities.search.links";
     public const string TypeTestAdd = "link.utilities.test.add";
 }

@@ -21,9 +21,15 @@ public class CleanUpLinks : BaseAction
 
     public override async Task<bool> ExecuteAsync(BaseActionGame game, BaseActionArgs args)
     {
-        //NEXT: Add this to the actual game update event and add a menu entry for manual execution.
-
         var result = false;
+
+        if (LinkUtilitiesPlugin.Settings.RemoveUnwantedAfterChange)
+        {
+            var action = new RemoveLinks();
+            var removeArgs = action.GetActionArgs(args.Api, args.Games, args.PluginName);
+
+            result |= await action.ExecuteAsync(game, removeArgs);
+        }
 
         if (LinkUtilitiesPlugin.Settings.ConvertSteamLinksAfterChange)
         {
