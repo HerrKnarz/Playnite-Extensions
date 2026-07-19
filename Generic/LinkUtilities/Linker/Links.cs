@@ -53,6 +53,7 @@ namespace LinkUtilities.Linker
             Add(new LinkSteamPeek());
             Add(new LinkStrategyWiki());
             Add(new LinkTvTropes());
+            Add(new LinkUVL());
             Add(new LinkVndb());
             Add(new LinkWikipedia());
             Add(new LinkZopharsDomain());
