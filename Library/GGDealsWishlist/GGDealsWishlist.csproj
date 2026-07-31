@@ -145,6 +145,12 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs">
       <Link>Shared\StringHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\Models\UrlLoadResult.cs">
+      <Link>Shared\WebCommon\Models\UrlLoadResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\WebHelper.cs">
+      <Link>Shared\WebCommon\WebHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WindowHelper.cs">
       <Link>Shared\WindowHelper.cs</Link>
     </Compile>
@@ -227,5 +233,6 @@
   <ItemGroup>
     <Content Include="Resources\dummy-600x900.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
