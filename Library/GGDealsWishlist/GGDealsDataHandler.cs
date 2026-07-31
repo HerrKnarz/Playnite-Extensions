@@ -26,7 +26,6 @@ namespace GGDealsWishlist
         private readonly WebViewSettings _webViewSettings = new WebViewSettings
         {
             JavaScriptEnabled = true,
-            //UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         };
 
         private PlatformHelper _platformHelper;

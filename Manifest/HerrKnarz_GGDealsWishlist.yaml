@@ -1,5 +1,12 @@
 AddonId: GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189
 Packages:
+  - Version: 0.4.3
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-07-31
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-07-31/GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189_0_4_3.pext
+    Changelog:
+      - Potential fix for bot filters blocking the import of the wishlist. If you still have issues, please report them on GitHub.
+      - Fixed the new Import Analyzer addon displaying all games as missing.
   - Version: 0.4.1
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-07-07
