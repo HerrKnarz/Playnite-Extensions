@@ -1,4 +1,5 @@
-﻿using KNARZhelper;
+﻿using HtmlAgilityPack;
+using KNARZhelper;
 using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
 using KNARZhelper.WebCommon;
@@ -129,14 +130,17 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
         {
             try
             {
-                var urlLoadResult = WebHelper.LoadHtmlDocument($"{_searchUrl}{searchTerm.UrlEncode()}");
+                var urlLoadResult = WebHelperAgility.LoadHtmlDocument($"{_searchUrl}{searchTerm.UrlEncode()}");
 
-                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.Document is null)
+                if (urlLoadResult.ErrorDetails.Length > 0 || urlLoadResult.PageText.IsNullOrEmpty())
                 {
                     return null;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//li[@class='elenco_galleria']");
+                var document = new HtmlDocument();
+                document.LoadHtml(urlLoadResult.PageText);
+
+                var htmlNodes = document.DocumentNode.SelectNodes("//li[@class='elenco_galleria']");
 
                 if (htmlNodes?.Any() ?? false)
                 {
@@ -171,14 +175,17 @@ namespace ScreenshotUtilitiesArcadeDatabaseProvider
 
             try
             {
-                var urlLoadResult = await WebHelper.LoadHtmlDocumentAsync(url);
+                var urlLoadResult = await WebHelperAgility.LoadHtmlDocumentAsync(url);
 
-                if (urlLoadResult.StatusCode != HttpStatusCode.OK || urlLoadResult.Document == null)
+                if (urlLoadResult.StatusCode != HttpStatusCode.OK || urlLoadResult.PageText.IsNullOrEmpty())
                 {
                     return false;
                 }
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//ul[@class='elenco_immagini']/li");
+                var document = new HtmlDocument();
+                document.LoadHtml(urlLoadResult.PageText);
+
+                var htmlNodes = document.DocumentNode.SelectNodes("//ul[@class='elenco_immagini']/li");
 
                 if (htmlNodes == null || (htmlNodes.Count == 0))
                 {

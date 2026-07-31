@@ -81,6 +81,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Enum\DbInteractionResult.cs">
       <Link>Shared\DbInteractionResult.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs">
+      <Link>Shared\FileHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>

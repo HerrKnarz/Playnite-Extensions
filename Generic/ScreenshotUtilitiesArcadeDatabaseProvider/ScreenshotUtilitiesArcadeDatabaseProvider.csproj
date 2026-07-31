@@ -107,6 +107,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\WebHelper.cs">
       <Link>Shared\WebCommon\WebHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\WebHelperAgility.cs">
+      <Link>Shared\WebCommon\WebHelperAgility.cs</Link>
+    </Compile>
     <Compile Include="ScreenshotUtilitiesArcadeDatabaseProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
