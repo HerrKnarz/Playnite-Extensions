@@ -2,6 +2,7 @@
 using LinkUtilities.Settings;
 using LinkUtilities.ViewModels;
 using Playnite.SDK.Models;
+using System;
 using System.Collections.Generic;
 using System.Net;
 
@@ -9,7 +10,7 @@ namespace LinkUtilities.Models
 {
     public class Pipeline : LinkWorker
     {
-        public Pipeline(int id) : base(id)
+        public Pipeline(int id, Guid pluginId = default) : base(id, pluginId)
         {
         }
 

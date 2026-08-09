@@ -73,10 +73,12 @@ namespace LinkUtilities
             }
         }
 
+        public static Guid PluginId { get; } = Guid.Parse("f692b4bb-238d-4080-ae76-4aaefde6f7a1");
+
         /// <summary>
         /// The global GUID to identify the extension in playnite
         /// </summary>
-        public override Guid Id { get; } = Guid.Parse("f692b4bb-238d-4080-ae76-4aaefde6f7a1");
+        public override Guid Id => PluginId;
 
         /// <summary>
         /// The settings view model of the extension
@@ -300,24 +302,21 @@ namespace LinkUtilities
             menuItems.AddRange(new List<GameMenuItem>
             {
                 // Adds the "All configured websites" item to the "add link to" sub menu.
-                new GameMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllConfiguredWebsites"),
                     MenuSection = $"{menuSection}|{menuAddLinks}",
                     Icon = "luAddIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.Add)
                 },
                 // Adds the "selected websites..." item to the "add link to" sub menu.
-                new GameMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSelectedWebsites"),
                     MenuSection = $"{menuSection}|{menuAddLinks}",
                     Icon = "luAddIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.AddSelected)
                 },
                 // Adds a separator to the "add link to" sub menu
-                new GameMenuItem
-                {
+                new() {
                     Description = "-",
                     MenuSection = $"{menuSection}|{menuAddLinks}"
                 }
@@ -328,32 +327,28 @@ namespace LinkUtilities
             menuItems.AddRange(new List<GameMenuItem>
             {
                 // Adds the "All configured websites" item to the "search link to" sub menu.
-                new GameMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllConfiguredWebsites"),
                     MenuSection = $"{menuSection}|{menuSearchLinks}",
                     Icon = "luSearchIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.Search)
                 },
                 // Adds the "All missing websites" item to the "search link to" sub menu.
-                new GameMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllMissingWebsites"),
                     MenuSection = $"{menuSection}|{menuSearchLinks}",
                     Icon = "luSearchIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.SearchMissing)
                 },
                 // Adds the "selected websites..." item to the "search link to" sub menu.
-                new GameMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSelectedWebsites"),
                     MenuSection = $"{menuSection}|{menuSearchLinks}",
                     Icon = "luSearchIcon",
                     Action = a => DoForAll(games, AddWebsiteLinks.Instance(), true, ActionModifierTypes.SearchSelected)
                 },
                 // Adds a separator to the "search link to" sub menu
-                new GameMenuItem
-                {
+                new() {
                     Description = "-",
                     MenuSection = $"{menuSection}|{menuSearchLinks}"
                 }
@@ -366,16 +361,14 @@ namespace LinkUtilities
             {
                 menuItems.AddRange(new List<GameMenuItem>
                 {
-                    new GameMenuItem
-                    {
+                    new() {
                         Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAllMissingWebsites"),
                         MenuSection = $"{menuSection}|{menuBrowserSearchLinks}",
                         Icon = "luWebIcon",
                         Action = a => DoForAll(games, AddWebsiteLinks.Instance(), false, ActionModifierTypes.SearchInBrowser)
                     },
                         // Adds a separator to the browser search sub menu
-                    new GameMenuItem
-                    {
+                    new() {
                         Description = "-",
                         MenuSection = $"{menuSection}|{menuBrowserSearchLinks}"
                     }
@@ -387,49 +380,42 @@ namespace LinkUtilities
             menuItems.AddRange(new List<GameMenuItem>
             {
                 // Adds a separator to the browser search sub menu
-                new GameMenuItem
-                {
+                new() {
                     Description = "-",
                     MenuSection = menuSection
                 },
                 // Adds the "Add link from clipboard" item to the game menu
-                new GameMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuAddLinkFromClipboard"),
                     MenuSection = menuSection,
                     Icon = "luClipboardIcon",
                     Action = a => DoForAll(games, AddLinkFromClipboard.Instance(), true)
                 },
                 // Adds a separator to the game menu
-                new GameMenuItem
-                {
+                new() {
                     Description = "-",
                     MenuSection = menuSection
                 },
                 // Adds the "Check links" item to the game menu
-                new GameMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCheckLinks"),
                     MenuSection = menuSection,
                     Icon = "luCheckIcon",
                     Action = a => CheckLinks(games)
                 },
-                new GameMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
                     MenuSection = menuSection,
                     Icon = "luCleanIcon",
                     Action = a => DoForAll(games, DoAfterChange.Instance(), true)
                 },
                 // Adds a separator to the game menu
-                new GameMenuItem
-                {
+                new() {
                     Description = "-",
                     MenuSection = menuSection
                 },
                 // Adds the "sort Links by name" item to the game menu.
-                new GameMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
                     MenuSection = menuSection,
                     Icon = "luSortIcon",
@@ -540,8 +526,7 @@ namespace LinkUtilities
             var menuItems = new List<MainMenuItem>
             {
                 // Adds the "clean up" item to the main menu.
-                new MainMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
                     MenuSection = $"@{menuSection}|{menuAllGames}",
                     Icon = "luCleanIcon",
@@ -551,8 +536,7 @@ namespace LinkUtilities
                         DoForAll(games, DoAfterChange.Instance(), true);
                     }
                 },
-                new MainMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuCleanUp"),
                     MenuSection = $"@{menuSection}|{menuFilteredGames}",
                     Icon = "luCleanIcon",
@@ -563,19 +547,16 @@ namespace LinkUtilities
                     }
                 },
                 // Adds a separator
-                new MainMenuItem
-                {
+                new() {
                     Description = "-",
                     MenuSection = $"@{menuSection}|{menuAllGames}"
                 },
-                new MainMenuItem
-                {
+                new() {
                     Description = "-",
                     MenuSection = $"@{menuSection}|{menuFilteredGames}"
                 },
                 // Adds the "sort Links by name" item to the main menu.
-                new MainMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
                     MenuSection = $"@{menuSection}|{menuAllGames}",
                     Icon = "luSortIcon",
@@ -585,8 +566,7 @@ namespace LinkUtilities
                         DoForAll(games, SortLinks.Instance(), true, ActionModifierTypes.Name);
                     }
                 },
-                new MainMenuItem
-                {
+                new() {
                     Description = ResourceProvider.GetString("LOCLinkUtilitiesMenuSortLinksByName"),
                     MenuSection = $"@{menuSection}|{menuFilteredGames}",
                     Icon = "luSortIcon",

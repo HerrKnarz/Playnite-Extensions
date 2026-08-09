@@ -50,7 +50,7 @@ namespace LinkUtilities.LinkActions
         {
             foreach (var linker in LibraryLinks)
             {
-                linker.Value.Pipeline = new Pipeline(0);
+                linker.Value.Pipeline = new Pipeline(0, LinkUtilities.PluginId);
             }
 
             return true;
