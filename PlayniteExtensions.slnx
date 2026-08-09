@@ -83,6 +83,9 @@
     </Project>
   </Folder>
   <Folder Name="/Metadata/">
+    <Project Path="Metadata/UVLMetadata/UVLMetadata.csproj">
+      <BuildType Solution="Deploy|*" Project="Release" />
+    </Project>
     <Project Path="Metadata/WikipediaMetadata.Test/WikipediaMetadata.Test.csproj">
       <BuildType Solution="Deploy|Any CPU" Project="Debug" />
       <BuildType Solution="Deploy|x86" Project="Release" />

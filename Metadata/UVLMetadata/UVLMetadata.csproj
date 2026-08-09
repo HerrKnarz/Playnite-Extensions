@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyTitle>UVL Metadata</AssemblyTitle>
+    <Product>UVL Metadata</Product>
+    <RootNamespace>UVLMetadata</RootNamespace>
+    <AssemblyName>UVLMetadata</AssemblyName>
+    <Company>HerrKnarz</Company>
+    <Copyright>Copyright © 2026 under MIT license</Copyright>
+    <Platform>AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net462</TargetFramework>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <LangVersion>14</LangVersion>
+    <UseWpf>true</UseWpf>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Version>0.5.0</Version>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs" Link="Shared\Controls\SettingsOption.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsSection.cs" Link="Shared\Controls\SettingsSection.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs" Link="Shared\FilesCommon\FileHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\Models\UrlLoadResult.cs" Link="Shared\WebCommon\Models\UrlLoadResult.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\LinkWorker.cs" Link="Shared\WebCommon\LinkWorker.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\WebHelper.cs" Link="Shared\WebCommon\WebHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\AsyncHelper.cs" Link="Shared\AsyncHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs" Link="Shared\Log.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs" Link="Shared\MiscHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\PlatformHelper.cs" Link="Shared\PlatformHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs" Link="Shared\StringHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extension.yaml" CopyToOutputDirectory="Always" />
+    <None Include="icon.png" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Localization\*.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\CommonStyles.xaml">
+      <Link>Shared\Controls\CommonStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsStyles.xaml">
+      <Link>Shared\Controls\SettingsStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="0.9.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="PlayniteSDK" Version="6.16.0" />
+  </ItemGroup>
+</Project>
