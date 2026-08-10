@@ -12,8 +12,6 @@ namespace UVLMetadata;
 
 public class MetadataProvider(MetadataRequestOptions options, PluginSettings settings, IPlayniteAPI playniteApi, UVLConnect uvlConnect) : OnDemandMetadataProvider
 {
-    //NEXT: Add age ratings. Can be found in the "Culture" group under "Concepts" using "Rating:" as prefix.
-
     private UVLGameMetadata _foundGame;
 
     public override List<MetadataField> AvailableFields => UVLMetadata.Fields;

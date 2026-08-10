@@ -119,6 +119,7 @@
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesKLOVProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesLocalProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesSteamProvider.yaml" />
+    <File Path="Manifest/HerrKnarz_UVLMetadata.yaml" />
     <File Path="Manifest/HerrKnarz_WikipediaMetadata.yaml" />
   </Folder>
 </Solution>
