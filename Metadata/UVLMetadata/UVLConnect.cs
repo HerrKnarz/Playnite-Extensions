@@ -20,10 +20,12 @@ namespace UVLMetadata;
 /// </summary>
 public class UVLConnect(UVLMetadata plugin)
 {
+    public IDocument searchedDocument = null;
     private readonly IBrowsingContext _context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
     private readonly LinkWorker _linkWorker = new(1);
     private readonly string _searchUrl = $"{Resources.WebsiteUrl}/globalsearch/?t=";
     public PlatformHelper PlatformHelper { get; } = new(API.Instance.Database.Platforms);
+
     public UVLTags Tags => plugin.Tags;
 
     /// <summary>
@@ -64,54 +66,81 @@ public class UVLConnect(UVLMetadata plugin)
     {
         try
         {
-            PlatformHelper.RefreshPlatformList(API.Instance.Database.Platforms);
-
-            var document = LoadDocument($"{_searchUrl}{searchTerm.UrlEncode()}");
-
-            var cells = document.QuerySelectorAll("div.card");
-
-            if (cells is null || !cells.Any())
+            if (searchTerm.StartsWith("https://www.uvlist.net/game-"))
             {
-                return null;
-            }
+                searchedDocument = GetGameData(searchTerm);
 
-            var results = cells.FirstOrDefault(c => c.QuerySelector("h2.card-header")?.TextContent == "Games by title")?.QuerySelectorAll("tbody > tr");
+                var name = searchedDocument.QuerySelector("header h1")?.TextContent;
 
-            if (results?.Any() ?? false)
-            {
-                var resultList = new List<GenericItemOption>();
-
-                foreach (var row in results)
+                if (name.IsNullOrEmpty())
                 {
-                    var platform = row.QuerySelector("td:nth-child(3)")?.TextContent;
-
-                    if (!platform.IsNullOrEmpty())
-                    {
-                        var foundPlatform = PlatformHelper.GetPlatforms(platform).FirstOrDefault();
-
-                        if (foundPlatform != null)
-                        {
-                            if (foundPlatform is MetadataSpecProperty specProperty)
-                            {
-                                platform = API.Instance.Database.Platforms.FirstOrDefault(p => p.SpecificationId == specProperty.Id)?.Name ?? platform;
-                            }
-                            else if (foundPlatform is MetadataNameProperty nameProperty)
-                            {
-                                platform = nameProperty.Name;
-                            }
-                        }
-                    }
-
-                    resultList.Add(new UVLItemOption
-                    {
-                        Name = WebUtility.HtmlDecode(row.QuerySelector("td:nth-child(1) a")?.TextContent),
-                        Url = Resources.WebsiteUrl + row.QuerySelector("td:nth-child(1) a")?.GetAttribute("href"),
-                        Platform = platform,
-                        Description = WebUtility.HtmlDecode($"{row.QuerySelector("td:nth-child(2)")?.TextContent} - {platform} - {row.QuerySelector("td:nth-child(4)")?.TextContent}")
-                    });
+                    searchedDocument = null;
+                    return null;
                 }
 
+                var resultList = new List<GenericItemOption>
+                {
+                    new UVLItemOption
+                    {
+                        Name = name,
+                        Url = searchTerm,
+                        Description = ResourceProvider.GetString("LOCUVLMetadataSearchDialogUrlFound"),
+                    }
+                };
+
                 return resultList;
+            }
+            else
+            {
+                PlatformHelper.RefreshPlatformList(API.Instance.Database.Platforms);
+
+                var document = LoadDocument($"{_searchUrl}{searchTerm.UrlEncode()}");
+
+                var cells = document.QuerySelectorAll("div.card");
+
+                if (cells is null || !cells.Any())
+                {
+                    return null;
+                }
+
+                var results = cells.FirstOrDefault(c => c.QuerySelector("h2.card-header")?.TextContent == "Games by title")?.QuerySelectorAll("tbody > tr");
+
+                if (results?.Any() ?? false)
+                {
+                    var resultList = new List<GenericItemOption>();
+
+                    foreach (var row in results)
+                    {
+                        var platform = row.QuerySelector("td:nth-child(3)")?.TextContent;
+
+                        if (!platform.IsNullOrEmpty())
+                        {
+                            var foundPlatform = PlatformHelper.GetPlatforms(platform).FirstOrDefault();
+
+                            if (foundPlatform != null)
+                            {
+                                if (foundPlatform is MetadataSpecProperty specProperty)
+                                {
+                                    platform = API.Instance.Database.Platforms.FirstOrDefault(p => p.SpecificationId == specProperty.Id)?.Name ?? platform;
+                                }
+                                else if (foundPlatform is MetadataNameProperty nameProperty)
+                                {
+                                    platform = nameProperty.Name;
+                                }
+                            }
+                        }
+
+                        resultList.Add(new UVLItemOption
+                        {
+                            Name = WebUtility.HtmlDecode(row.QuerySelector("td:nth-child(1) a")?.TextContent),
+                            Url = Resources.WebsiteUrl + row.QuerySelector("td:nth-child(1) a")?.GetAttribute("href"),
+                            Platform = platform,
+                            Description = WebUtility.HtmlDecode($"{row.QuerySelector("td:nth-child(2)")?.TextContent} - {platform} - {row.QuerySelector("td:nth-child(4)")?.TextContent}")
+                        });
+                    }
+
+                    return resultList;
+                }
             }
         }
         catch (Exception ex)

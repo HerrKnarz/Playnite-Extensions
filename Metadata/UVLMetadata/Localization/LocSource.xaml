@@ -9,6 +9,7 @@
     <sys:String x:Key="LOCUVLMetadataSearchDialog">select game</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogCover">select cover image</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogBackground">select background image</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSearchDialogUrlFound">A game with that URL was found.</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataSettingsButtonTagsRefresh">Refresh tags</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUse">Description to use</sys:String>

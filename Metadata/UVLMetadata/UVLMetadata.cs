@@ -25,6 +25,7 @@ public class UVLMetadata : MetadataPlugin
         MetadataField.Features,
         MetadataField.Series,
         MetadataField.Platform,
+        MetadataField.AgeRating,
     ];
 
     //TODO: Add support for CoverImage and BackgroundImage if there is demand. The problem is that UVL requires

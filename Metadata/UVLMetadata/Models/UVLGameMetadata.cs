@@ -8,6 +8,7 @@ namespace UVLMetadata.Models;
 /// </summary>
 public class UVLGameMetadata
 {
+    public List<MetadataProperty> AgeRatings { get; set; }
     public int CriticScore { get; set; } = -1;
     public string Description { get; set; }
     public List<MetadataProperty> Developers { get; set; }

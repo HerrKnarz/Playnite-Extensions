@@ -75,8 +75,9 @@ public class GamePageParser(PluginSettings settings, UVLConnect uvlConnect)
             GameMetadata.Tags = [];
             GameMetadata.Features = [];
             GameMetadata.Series = [];
+            GameMetadata.AgeRatings = [];
 
-            //Tags in UVL can be series, genres, features and normal tags.
+            //Tags in UVL can be series, genres, features, age ratings and normal tags.
             GetInfoCardTags(infoCardHtml);
             GetTechnicalSpecs(accordionItems);
             GetTags(accordionItems);
@@ -97,9 +98,9 @@ public class GamePageParser(PluginSettings settings, UVLConnect uvlConnect)
         }
     }
 
-    private void AddToField(string name, TagCategory tagCategory, bool seriesOverride = false)
+    private void AddToField(string name, TagCategory tagCategory, List<MetadataProperty> fieldOverride = null)
     {
-        if (!tagCategory.Enabled)
+        if (!tagCategory.Enabled && fieldOverride is null)
         {
             return;
         }
@@ -114,9 +115,9 @@ public class GamePageParser(PluginSettings settings, UVLConnect uvlConnect)
             _ => throw new NotImplementedException(),
         };
 
-        if (seriesOverride)
+        if (fieldOverride is not null)
         {
-            field = GameMetadata.Series;
+            field = fieldOverride;
             valueName = name;
         }
 
@@ -156,7 +157,7 @@ public class GamePageParser(PluginSettings settings, UVLConnect uvlConnect)
 
         foreach (var element in linkElements)
         {
-            var linkName = Resources.LinkPairs.GetNameForString(element.TextContent);
+            var linkName = Resources.LinkPairs.GetNameForString(element.TextContent.Trim());
             var linkUrl = element.GetAttribute("href");
 
             if (linkUrl.Contains("www.google.com/search") || GameMetadata.Links.Any(l => l.Url == linkUrl || l.Name == linkName))
@@ -397,7 +398,15 @@ public class GamePageParser(PluginSettings settings, UVLConnect uvlConnect)
                 continue;
             }
 
-            AddToField(tag.ShortName, settings.TagCategories[tag.Category], tag.Type == TagType.Series);
+            var fieldOverride = tag.Type == TagType.Series ? GameMetadata.Series : null;
+
+            if (tag.Category == TagCategoryId.Culture && tag.Type == TagType.Concept && tag.Name.StartsWith("Rating:"))
+            {
+                fieldOverride = GameMetadata.AgeRatings;
+                tag.ShortName = tag.ShortName.Replace("Rating:", "").Trim();
+            }
+
+            AddToField(tag.ShortName, settings.TagCategories[tag.Category], fieldOverride);
         }
     }
 
@@ -432,7 +441,7 @@ public class GamePageParser(PluginSettings settings, UVLConnect uvlConnect)
     {
         foreach (var element in elements)
         {
-            yield return new Link(Resources.LinkPairs.GetNameForString(element.TextContent), element.GetAttribute("href"));
+            yield return new Link(Resources.LinkPairs.GetNameForString(element.TextContent.Trim()), element.GetAttribute("href"));
         }
     }
 

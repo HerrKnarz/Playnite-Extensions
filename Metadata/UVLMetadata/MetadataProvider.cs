@@ -12,6 +12,8 @@ namespace UVLMetadata;
 
 public class MetadataProvider(MetadataRequestOptions options, PluginSettings settings, IPlayniteAPI playniteApi, UVLConnect uvlConnect) : OnDemandMetadataProvider
 {
+    //NEXT: Add age ratings. Can be found in the "Culture" group under "Concepts" using "Rating:" as prefix.
+
     private UVLGameMetadata _foundGame;
 
     public override List<MetadataField> AvailableFields => UVLMetadata.Fields;
@@ -19,6 +21,12 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
     //public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args) => GetImage(MetadataField.BackgroundImage, args);
 
     //public override MetadataFile GetCoverImage(GetMetadataFieldArgs args) => GetImage(MetadataField.CoverImage, args);
+
+    public override IEnumerable<MetadataProperty> GetAgeRatings(GetMetadataFieldArgs args)
+    {
+        var ageRatings = FindGame().AgeRatings;
+        return ageRatings?.Any() ?? false ? ageRatings : base.GetAgeRatings(args);
+    }
 
     public override int? GetCriticScore(GetMetadataFieldArgs args)
     {
@@ -101,6 +109,7 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
         }
 
         _foundGame = new UVLGameMetadata();
+        uvlConnect.searchedDocument = null;
 
         try
         {
@@ -119,8 +128,8 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
             else
             {
                 var chosen = playniteApi.Dialogs.ChooseItemWithSearch(null, uvlConnect.GetSearchResults,
-                                                                      options.GameData.Name,
-                                                                      $"UVL: {ResourceProvider.GetString("LOCUVLMetadataSearchDialog")}");
+                                                      options.GameData.Name,
+                                                      $"UVL: {ResourceProvider.GetString("LOCUVLMetadataSearchDialog")}");
 
                 if (chosen is not UVLItemOption option)
                 {
@@ -134,7 +143,14 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
             {
                 var uvlGamePageParser = new GamePageParser(settings, uvlConnect);
 
-                uvlGamePageParser.Parse(url, uvlConnect.GetGameData(url));
+                if (uvlConnect.searchedDocument is null)
+                {
+                    uvlGamePageParser.Parse(url, uvlConnect.GetGameData(url));
+                }
+                else
+                {
+                    uvlGamePageParser.Parse(url, uvlConnect.searchedDocument);
+                }
 
                 return _foundGame = uvlGamePageParser.GameMetadata;
             }
