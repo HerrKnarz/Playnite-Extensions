@@ -9,9 +9,9 @@
     <sys:String x:Key="LOCGGDealsWishlistDiscountFilter">Фильтр</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountGoTo">Перейти на</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountGroupBy">Группировать по</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistDiscountHistoricalLow">Historical low</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistDiscountHistoricalLow">Исторически низкий уровень</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyDiscounted">Показать только игры со скидкой</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyHistoricalLow">Show only historical low prices</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyHistoricalLow">Показывать только исторические низкие цены</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountSortBy">Сортировать по</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistGroupByCompletionStatus">Статус завершения</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistGroupByNone">Нет</sys:String>
@@ -35,8 +35,8 @@
     <sys:String x:Key="LOCGGDealsWishlistSettingsDisplaySidebarButtonDescription">When enabled, a button will be displayed in the sidebar to access the discount view. Requires a restart of Playnite to take effect.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsFilterTip">💡Совет: Чтобы отфильтровать игры, которые вы хотите импортировать из списка желаний, откройте ссылку для общего доступа в браузере, измените некоторые параметры фильтра на этой странице, а затем скопируйте ссылку с добавленными параметрами фильтра из браузера обратно в поле URL списка желаний.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsGeneral">Основные</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistSettingsHistoricalLowColor">Historical Low Color</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistSettingsHistoricalLowColorDescription">The color used to highlight historical low prices in the discount view.</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsHistoricalLowColor">Цвет исторически низкого уровня</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsHistoricalLowColorDescription">Цвет, используемый для выделения исторических низких цен при просмотре скидки.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsImportAsInstalled">Импортировать игры как установленные</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsImportAsInstalledDescription">Импортировать игры из вашего списка желаний как установленные. Нажатие кнопки «Играть» переведет вас на страницу игры на GGDeals.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsImportSettings">Import Settings</sys:String>
