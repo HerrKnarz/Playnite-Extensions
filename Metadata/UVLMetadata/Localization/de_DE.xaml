@@ -3,6 +3,10 @@
 
     <sys:String x:Key="LOCUVLMetadataName">UVL-Metadaten</sys:String>
 
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusAuthenticated">Authentifiziert</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Nicht authentifiziert</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Status wird überprüft...</sys:String>
+
     <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">Um Tags von UVL herunterzuladen, müssen Sie sie mindestens einmal aktualisieren. Möchten Sie das jetzt tun? Es sollte nur ein paar Sekunden dauern.</sys:String>
     <sys:String x:Key="LOCUVLMetadataProgressRefreshingTags">Aktualisiere Tags...</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialog">wähle Spiel</sys:String>
@@ -11,6 +15,9 @@
     <sys:String x:Key="LOCUVLMetadataSearchDialogUrlFound">Ein Spiel mit dieser URL wurde gefunden.</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataSettingsButtonTagsRefresh">Tags aktualisieren</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsButtonAuthenticate">Authentifizieren</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthentication">Authentifizierung</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthenticationDescription">Um die Massenimport Funktion nutzen zu können, müssen Sie ein Konto in UVL haben und eingeloggt sein, weil nur angemeldete Benutzer auf die Seiten zugreifen können, die alle Spiele für einen Tag auflisten. Wenn Sie die Bulk-Import-Funktion nicht verwenden möchten, können Sie die Authentifizierung überspringen.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUse">Zu verwendende Beschreibung</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUseDescription">Wählen Sie die Art der Beschreibung für die Metadaten aus. Die andere wird als Fallback verwendet. Wenn beide verwendet werden sollen, werden sie durch eine horizontale Linie getrennt.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionLastRefresh">Letzter Aktualisierung:</sys:String>
@@ -32,6 +39,7 @@
     <sys:String x:Key="LOCUVLMetadataSettingsTagsImportAs">Importieren als</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataTagCategoryActivity">Aktivitäten</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryAdvisories">Ratschläge</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryCartoon">Cartoon</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryCulture">Kultur</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryCreature">Kreaturen</sys:String>
