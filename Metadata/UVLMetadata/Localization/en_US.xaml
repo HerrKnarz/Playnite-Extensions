@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:String x:Key="LOCUVLMetadataName">UVL Metadata</sys:String>
 
@@ -35,7 +33,7 @@
     <sys:String x:Key="LOCUVLMetadataSettingsRatingMedian">Median</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsSectionGeneral">General</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsSectionTags">Tags</sys:String>
-    <sys:String x:Key="LOCUVLMetadataSettingsSectionTagsDescription">Here you can define which tag categories you want to add as tags, features or genres and specify a prefix for it. Tags of the type "series" will always be added to the series field and won't have a prefix.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsSectionTagsDescription">Here you can define which tag categories you want to add as tags, features or genres and specify a prefix for it. Tags of the type &quot;series&quot; will always be added to the series field and won't have a prefix.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsTagsCategory">Category</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsTagsPrefix">Prefix</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsTagsImportAs">Import as</sys:String>
