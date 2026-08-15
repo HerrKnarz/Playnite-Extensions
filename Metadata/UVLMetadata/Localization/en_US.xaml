@@ -5,6 +5,10 @@
 
     <sys:String x:Key="LOCUVLMetadataName">UVL Metadata</sys:String>
 
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusAuthenticated">Authenticated</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Not Authenticated</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Checking Status...</sys:String>
+
     <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">To download tags from UVL you need to refresh them at least once. Do you want to do that now? It should only take a few seconds.</sys:String>
     <sys:String x:Key="LOCUVLMetadataProgressRefreshingTags">Refreshing tags...</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialog">select game</sys:String>
@@ -13,6 +17,9 @@
     <sys:String x:Key="LOCUVLMetadataSearchDialogUrlFound">A game with that URL was found.</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataSettingsButtonTagsRefresh">Refresh tags</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsButtonAuthenticate">Authenticate</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthentication">Authentication</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthenticationDescription">To be able to use the bulk import feature you need to have an account in UVL and be logged in, because only logged in users can access the pages listing all games for a tag. If you don't want to use the bulk import feature, you can skip authentication.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUse">Description to use</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUseDescription">Select which type of description to use for the metadata. The other one will be used as a fallback. If both are to be used, they will be separated by a horizontal line.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionLastRefresh">Last refresh:</sys:String>
@@ -34,6 +41,7 @@
     <sys:String x:Key="LOCUVLMetadataSettingsTagsImportAs">Import as</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataTagCategoryActivity">Activities</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryAdvisories">Advisories</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryCartoon">Cartoon</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryCulture">Culture</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryCreature">Creatures</sys:String>

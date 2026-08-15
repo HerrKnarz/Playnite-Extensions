@@ -15,6 +15,13 @@ using UVLMetadata.Parser;
 
 namespace UVLMetadata;
 
+public enum AuthenticationStatus
+{
+    NotAuthenticated,
+    Authenticated,
+    Unknown
+}
+
 /// <summary>
 /// Handles all website calls to UVL
 /// </summary>
@@ -23,10 +30,56 @@ public class UVLConnect(UVLMetadata plugin)
     public IDocument searchedDocument = null;
     private readonly IBrowsingContext _context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
     private readonly LinkWorker _linkWorker = new(1);
+    private readonly string _loginUrl = $"{Resources.WebsiteUrl}/admin/login.php";
+    private readonly string _profileUrl = $"{Resources.WebsiteUrl}/me/";
     private readonly string _searchUrl = $"{Resources.WebsiteUrl}/globalsearch/?t=";
+
     public PlatformHelper PlatformHelper { get; } = new(API.Instance.Database.Platforms);
 
     public UVLTags Tags => plugin.Tags;
+
+    public AuthenticationStatus Authenticate()
+    {
+        using var onScreenWebView = API.Instance.WebViews.CreateView(800, 800);
+        try
+        {
+            onScreenWebView.DeleteDomainCookiesRegex(@"uvlist\.net");
+            onScreenWebView.Navigate(_loginUrl);
+            var isLoggedIn = AuthenticationStatus.Unknown;
+
+            var firstPageAfterLogin = false;
+
+            onScreenWebView.LoadingChanged += async (sender, args) =>
+            {
+                var address = onScreenWebView.GetCurrentAddress();
+
+                if (!args.IsLoading)
+                {
+                    if (!firstPageAfterLogin && address.StartsWith(_profileUrl, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        firstPageAfterLogin = true;
+
+                        isLoggedIn = AuthenticationStatus.Authenticated;
+
+                        onScreenWebView.Close();
+                    }
+                }
+            };
+
+            onScreenWebView.OpenDialog();
+
+            return isLoggedIn;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Failed to authenticate with UVL");
+            return AuthenticationStatus.NotAuthenticated;
+        }
+        finally
+        {
+            onScreenWebView.Dispose();
+        }
+    }
 
     /// <summary>
     /// Tries to find a single game based on the given name.
@@ -150,6 +203,9 @@ public class UVLConnect(UVLMetadata plugin)
 
         return null;
     }
+
+    public AuthenticationStatus IsUserLoggedIn() =>
+        LoadDocument(_profileUrl)?.QuerySelector("#dropdownMenuButton1") is not null ? AuthenticationStatus.Authenticated : AuthenticationStatus.NotAuthenticated;
 
     public IDocument LoadDocument(string url)
     {

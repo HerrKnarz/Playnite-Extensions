@@ -2,6 +2,7 @@
 using Playnite.SDK.Data;
 using Playnite.SDK.Plugins;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using UVLMetadata.Models;
 
@@ -11,6 +12,7 @@ public class UVLMetadataSettingsViewModel : ObservableObject, ISettings
 {
     private readonly UVLMetadata _plugin;
 
+    private RelayCommand authenticateCommand;
     private RelayCommand refreshTagsCommand;
 
     public UVLMetadataSettingsViewModel(UVLMetadata plugin)
@@ -25,7 +27,18 @@ public class UVLMetadataSettingsViewModel : ObservableObject, ISettings
         Settings.LastTagRefresh = plugin.Tags.LastRefresh;
 
         PrepareTagCategories();
+
+        CheckAuthenticationStatus();
     }
+
+    public ICommand AuthenticateCommand => authenticateCommand ??= new RelayCommand(Authenticate);
+
+    public string AuthenticationStatusText => IsAuthenticated switch
+    {
+        AuthenticationStatus.Authenticated => ResourceProvider.GetString("LOCUVLMetadataAuthenticationStatusAuthenticated"),
+        AuthenticationStatus.NotAuthenticated => ResourceProvider.GetString("LOCUVLMetadataAuthenticationStatusNotAuthenticated"),
+        _ => ResourceProvider.GetString("LOCUVLMetadataAuthenticationStatusCheckingStatus")
+    };
 
     public Dictionary<DescriptionToUse, string> DescriptionToUseModes { get; } = new()
     {
@@ -41,6 +54,12 @@ public class UVLMetadataSettingsViewModel : ObservableObject, ISettings
         { MetadataField.Tags, ResourceProvider.GetString("LOCTagsLabel") }
     };
 
+    public AuthenticationStatus IsAuthenticated
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = AuthenticationStatus.Unknown;
+
     public Dictionary<RatingToUse, string> RatingToUseModes { get; } = new()
     {
         { RatingToUse.Median, ResourceProvider.GetString("LOCUVLMetadataSettingsRatingMedian") },
@@ -48,12 +67,20 @@ public class UVLMetadataSettingsViewModel : ObservableObject, ISettings
     };
 
     public ICommand RefreshTagsCommand => refreshTagsCommand ??= new RelayCommand(RefreshTags);
+
     public PluginSettings Settings { get; private set; }
+
     private PluginSettings EditingClone { get; set; }
 
     public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
 
     public void CancelEdit() => Settings = EditingClone;
+
+    public async void CheckAuthenticationStatus()
+    {
+        IsAuthenticated = _plugin.UVLConnect.IsUserLoggedIn();
+        await Task.FromResult(0);
+    }
 
     public void EndEdit() => _plugin.SavePluginSettings(Settings);
 
@@ -89,6 +116,8 @@ public class UVLMetadataSettingsViewModel : ObservableObject, ISettings
         errors = [];
         return true;
     }
+
+    private void Authenticate() => IsAuthenticated = _plugin.UVLConnect.Authenticate();
 
     private void RefreshTags()
     {

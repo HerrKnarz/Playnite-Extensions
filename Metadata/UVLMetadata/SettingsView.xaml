@@ -25,6 +25,22 @@
         <StackPanel x:Name="spSettings">
             <c:SettingsSection Heading="{DynamicResource LOCUVLMetadataSettingsSectionGeneral}">
                 <StackPanel>
+                    <c:SettingsOption Heading="{DynamicResource LOCUVLMetadataSettingsCaptionAuthentication}"
+                                      Description="{DynamicResource LOCUVLMetadataSettingsCaptionAuthenticationDescription}"
+                                      MinLabelWidth="100">
+                        <DockPanel>
+                            <Button VerticalAlignment="Center"
+                                    Margin="0,0,10,0"
+                                    Width="100"
+                                    DockPanel.Dock="Right"
+                                    Content="{DynamicResource LOCUVLMetadataSettingsButtonAuthenticate}"
+                                    Command="{Binding AuthenticateCommand}" />
+                            <TextBlock Text="{Binding AuthenticationStatusText}"
+                                       VerticalAlignment="Center"
+                                       DockPanel.Dock="Left" />
+                        </DockPanel>
+                    </c:SettingsOption>
+
                     <c:SettingsOption Heading="{DynamicResource LOCUVLMetadataSettingsCaptionRatingToUse}"
                                       Description="{DynamicResource LOCUVLMetadataSettingsCaptionRatingToUseDescription}"
                                       MinLabelWidth="100">

@@ -28,6 +28,7 @@ namespace UVLMetadata.Models
         Traditional,
         Vehicle,
         VideoGame,
+        Advisories,
     }
 
     public class TagCategories : Dictionary<TagCategoryId, TagCategory>
@@ -182,6 +183,13 @@ namespace UVLMetadata.Models
                 {
                     TranslationResourceKey = "LOCUVLMetadataTagCategoryVideoGame",
                     Url = $"{Resources.WebsiteUrl}/groups/browse/1-Video game"
+                });
+
+            Add(TagCategoryId.Advisories,
+                new TagCategory()
+                {
+                    TranslationResourceKey = "LOCUVLMetadataTagCategoryAdvisories",
+                    Url = $"{Resources.WebsiteUrl}/groups/browse/21-Advisories"
                 });
 
             this[TagCategoryId.GameGenre].Prefix = string.Empty;
