@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using UVLMetadata.Models;
 
-namespace UVLMetadata;
+namespace UVLMetadata.ViewModels;
 
-public class UVLMetadataSettingsViewModel : ObservableObject, ISettings
+public class SettingsViewModel : ObservableObject, ISettings
 {
     private readonly UVLMetadata _plugin;
 
     private RelayCommand authenticateCommand;
     private RelayCommand refreshTagsCommand;
 
-    public UVLMetadataSettingsViewModel(UVLMetadata plugin)
+    public SettingsViewModel(UVLMetadata plugin)
     {
         // Injecting your plugin instance is required for Save/Load method because Playnite saves
         // data to a location based on what plugin requested the operation.

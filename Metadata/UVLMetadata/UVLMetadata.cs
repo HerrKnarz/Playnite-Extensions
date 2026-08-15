@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using UVLMetadata.Models;
+using UVLMetadata.ViewModels;
+using UVLMetadata.Views;
 
 namespace UVLMetadata;
 
@@ -36,7 +38,7 @@ public class UVLMetadata : MetadataPlugin
     {
         Tags = new UVLTags(this);
         UVLConnect = new UVLConnect(this);
-        Settings = new UVLMetadataSettingsViewModel(this);
+        Settings = new SettingsViewModel(this);
         Properties = new MetadataPluginProperties
         {
             HasSettings = true
@@ -49,7 +51,7 @@ public class UVLMetadata : MetadataPlugin
 
     public override string Name => "UVL";
 
-    public UVLMetadataSettingsViewModel Settings { get; set; }
+    public SettingsViewModel Settings { get; set; }
 
     public override List<MetadataField> SupportedFields => Fields;
 
@@ -61,5 +63,5 @@ public class UVLMetadata : MetadataPlugin
 
     public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
-    public override UserControl GetSettingsView(bool firstRunSettings) => new UVLMetadataSettingsView();
+    public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
 }
