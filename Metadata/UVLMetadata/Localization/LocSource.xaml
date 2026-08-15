@@ -1,0 +1,56 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCUVLMetadataName">UVL Metadata</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">To download tags from UVL you need to refresh them at least once. Do you want to do that now? It should only take a few seconds.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressRefreshingTags">Refreshing tags...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSearchDialog">select game</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSearchDialogCover">select cover image</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSearchDialogBackground">select background image</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSearchDialogUrlFound">A game with that URL was found.</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataSettingsButtonTagsRefresh">Refresh tags</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUse">Description to use</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUseDescription">Select which type of description to use for the metadata. The other one will be used as a fallback. If both are to be used, they will be separated by a horizontal line.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionLastRefresh">Last refresh:</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionLastRefreshDescription">To import tags from UVL you need to refresh them using this button at least once. I recommend to refresh them once in a while to keep the metadata up to date, but they usually don't change very often.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionOnlyUseFirstDescription">Only use first description</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionOnlyUseFirstDescriptionDescription">UVL can have several descriptions for the same game. If enabled, only the first description of the selected type will be used. Otherwise all will be fetched and separated by a horizontal line.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionRatingToUse">Critic score to use</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionRatingToUseDescription">Select which rating to use for the metadata. The median and average scores are calculated from the list of reviews on the UVL website.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsDescriptionToUseBoth">Both</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsDescriptionToUseDescription">Description</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsDescriptionToUseOfficialDescription">Official Description</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsRatingAverage">Average</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsRatingMedian">Median</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsSectionGeneral">General</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsSectionTags">Tags</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsSectionTagsDescription">Here you can define which tag categories you want to add as tags, features or genres and specify a prefix for it. Tags of the type "series" will always be added to the series field and won't have a prefix.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsTagsCategory">Category</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsTagsPrefix">Prefix</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsTagsImportAs">Import as</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataTagCategoryActivity">Activities</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryCartoon">Cartoon</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryCulture">Culture</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryCreature">Creatures</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryDisplay">Display</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryFictionGenre">Fiction Genre</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryGameEngine">Game Engine</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryGameGenre">Game Genre</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryHardware">Hardware</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryHistorical">Historical</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryLocation">Locations</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryMusic">Music</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryOther">Other</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryPerspective">Perspective</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryPlayerOptions">Player Options</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategorySoftware">Software</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategorySport">Sport</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryTool">Tools</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryTraditional">Traditional</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryVehicle">Vehicles</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryVideoGame">Video Game</sys:String>
+</ResourceDictionary>

@@ -41,13 +41,15 @@ namespace GGDealsWishlist.Models
         /// <returns>List of new GameMetadata objects.</returns>
         public List<GameMetadata> GetNewGames(int maxGames = 0)
         {
-            var list = this
-                .Where(ng => ng.Game is null)
-                .Take(maxGames)
-                .Select(g => g.ImportedMetadata)
-                .ToList();
+            maxGames = maxGames < 1 ? int.MaxValue : maxGames;
 
-            return maxGames > 0 ? list.Take(maxGames).ToList() : list;
+            var games = new List<GameMetadata>();
+
+            games.AddRange(this.Where(ng => ng.Game != null).Select(g => g.ImportedMetadata));
+
+            games.AddMissing(this.Where(ng => ng.Game is null).Take(maxGames).Select(g => g.ImportedMetadata));
+
+            return games;
         }
     }
 }

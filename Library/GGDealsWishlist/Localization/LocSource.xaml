@@ -9,11 +9,14 @@
     <sys:String x:Key="LOCGGDealsWishlistDiscountCodeCopied">Code copied!</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountFilter">Filter</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountGoTo">Go to</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistDiscountGroupByShop">Group by shop</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistDiscountGroupBy">Group by</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountHistoricalLow">Historical low</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyDiscounted">Show only discounted games</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyHistoricalLow">Show only historical low prices</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountSortBy">Sort by</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistGroupByCompletionStatus">Completion Status</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistGroupByNone">None</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistGroupByShop">Shop</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistImageOptionGGDealsBanner">GG.deals banner</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistImageOptionCover">Game cover</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistImageOptionIcon">Game icon</sys:String>

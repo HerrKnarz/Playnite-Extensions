@@ -29,8 +29,8 @@ namespace LinkUtilities.BaseClasses
             Settings = new LinkSourceSetting
             {
                 LinkName = LinkName,
-                IsAddable = AddType != LinkAddTypes.None ? true : (bool?)null,
-                IsSearchable = CanBeSearched ? true : (bool?)null,
+                IsAddable = AddType != LinkAddTypes.None ? true : null,
+                IsSearchable = CanBeSearched ? true : null,
                 ShowInMenus = true,
                 ApiKey = null,
                 NeedsApiKey = false
@@ -237,7 +237,7 @@ namespace LinkUtilities.BaseClasses
             }
         }
 
-        public virtual List<GenericItemOption> GetSearchResults(string searchTerm) => new List<GenericItemOption>();
+        public virtual List<GenericItemOption> GetSearchResults(string searchTerm) => new();
 
         public virtual bool Prepare(ActionModifierTypes actionModifier = ActionModifierTypes.None, bool isBulkAction = true)
         {
@@ -246,7 +246,7 @@ namespace LinkUtilities.BaseClasses
                 return true;
             }
 
-            Pipeline = new Pipeline(-1);
+            Pipeline = new Pipeline(-1, LinkUtilities.PluginId);
 
             return true;
         }

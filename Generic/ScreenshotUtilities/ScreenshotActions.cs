@@ -405,7 +405,15 @@ namespace ScreenshotUtilities
                 }
 
                 groups.DeleteOrphanedFiles();
-                groups.ForEach(g => g.SortOrder = plugin.Settings.Settings.ProviderSettings[g.Provider.Name].SortOrder);
+
+                foreach (var group in groups)
+                {
+                    if (plugin.Settings.Settings.ProviderSettings.ContainsKey(group.Provider.Name))
+                    {
+                        group.SortOrder = plugin.Settings.Settings.ProviderSettings[group.Provider.Name].SortOrder;
+                    }
+                }
+
                 groups.Sort(g => g.Name);
                 groups.Sort(g => g.SortOrder);
 

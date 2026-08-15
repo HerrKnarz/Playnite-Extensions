@@ -60,7 +60,7 @@ namespace LinkUtilities.Models
 
             while (pipelineId < maxPipelines)
             {
-                Add(new Pipeline(pipelineId)
+                Add(new Pipeline(pipelineId, LinkUtilities.PluginId)
                 {
                     Game = game
                 });

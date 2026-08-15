@@ -1,0 +1,16 @@
+﻿Id: UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f
+Name: UVL Metadata
+Author: HerrKnarz
+Version: 0.5.0
+Module: UVLMetadata.dll
+Type: MetadataProvider
+Icon: icon.png
+Links:
+  - Name: GitHub
+    Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
+  - Name: AddOn database
+    Url: https://playnite.link/addons.html#UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f
+  - Name: Translate
+    Url: https://crowdin.com/project/playnite-extension-linkutiliti
+  - Name: Ko-fi (Tips and Donations)
+    Url: https://ko-fi.com/herrknarz

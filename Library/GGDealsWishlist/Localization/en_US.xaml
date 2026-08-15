@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGGDealsWishlistPluginName">GG.deals Wishlist</sys:String>
 
     <sys:String x:Key="LOCGGDealsWishlistConfigNotice">You need to add your wishlist url to the addon settings to be able to import games from GG.deals.</sys:String>

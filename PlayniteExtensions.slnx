@@ -83,6 +83,9 @@
     </Project>
   </Folder>
   <Folder Name="/Metadata/">
+    <Project Path="Metadata/UVLMetadata/UVLMetadata.csproj">
+      <BuildType Solution="Deploy|*" Project="Release" />
+    </Project>
     <Project Path="Metadata/WikipediaMetadata.Test/WikipediaMetadata.Test.csproj">
       <BuildType Solution="Deploy|Any CPU" Project="Debug" />
       <BuildType Solution="Deploy|x86" Project="Release" />
@@ -116,6 +119,7 @@
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesKLOVProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesLocalProvider.yaml" />
     <File Path="Manifest/HerrKnarz_ScreenshotUtilitiesSteamProvider.yaml" />
+    <File Path="Manifest/HerrKnarz_UVLMetadata.yaml" />
     <File Path="Manifest/HerrKnarz_WikipediaMetadata.yaml" />
   </Folder>
 </Solution>

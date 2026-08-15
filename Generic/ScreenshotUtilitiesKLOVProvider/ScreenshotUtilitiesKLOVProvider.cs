@@ -1,4 +1,5 @@
-﻿using KNARZhelper;
+﻿using HtmlAgilityPack;
+using KNARZhelper;
 using KNARZhelper.MetadataCommon;
 using KNARZhelper.ScreenshotsCommon;
 using KNARZhelper.ScreenshotsCommon.Models;
@@ -121,16 +122,19 @@ namespace ScreenshotUtilitiesKLOVProvider
 
             try
             {
-                var urlLoadResult = await WebHelper.LoadHtmlDocumentAsync(url);
+                var urlLoadResult = await WebHelperAgility.LoadHtmlDocumentAsync(url);
 
-                if (urlLoadResult.StatusCode != HttpStatusCode.OK || urlLoadResult.Document == null)
+                if (urlLoadResult.StatusCode != HttpStatusCode.OK || urlLoadResult.PageText.IsNullOrEmpty())
                 {
                     return false;
                 }
 
-                var gameName = WebUtility.HtmlDecode(urlLoadResult.Document.DocumentNode.SelectSingleNode("//h1")?.InnerText.Trim());
+                var document = new HtmlDocument();
+                document.LoadHtml(urlLoadResult.PageText);
 
-                var htmlNodes = urlLoadResult.Document.DocumentNode.SelectNodes("//a[@data-fancybox='gallery']");
+                var gameName = WebUtility.HtmlDecode(document.DocumentNode.SelectSingleNode("//h1")?.InnerText.Trim());
+
+                var htmlNodes = document.DocumentNode.SelectNodes("//a[@data-fancybox='gallery']");
 
                 if (htmlNodes == null || (htmlNodes.Count == 0))
                 {

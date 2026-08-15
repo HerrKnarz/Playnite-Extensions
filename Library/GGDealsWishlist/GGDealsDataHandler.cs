@@ -2,6 +2,7 @@
 using AngleSharp.Dom;
 using GGDealsWishlist.Models;
 using KNARZhelper;
+using KNARZhelper.WebCommon;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -25,7 +26,6 @@ namespace GGDealsWishlist
         private readonly WebViewSettings _webViewSettings = new WebViewSettings
         {
             JavaScriptEnabled = true,
-            UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         };
 
         private PlatformHelper _platformHelper;
@@ -229,14 +229,16 @@ namespace GGDealsWishlist
 
         private IDocument LoadPage(string url)
         {
+            var htmlSource = string.Empty;
+
             using (var webView = API.Instance.WebViews.CreateOffscreenView(_webViewSettings))
             {
-                webView.NavigateAndWait(url);
-                var htmlSource = webView.GetPageSource();
-                webView.Close();
+                htmlSource = WebHelper.LoadPageWithSmartWait(webView, url, _settings.DebugMode, GGDealsWishlist.PluginId);
 
-                return AsyncHelper.RunSync(async () => await _context.OpenAsync(req => req.Content(htmlSource)));
+                webView.Close();
             }
+
+            return AsyncHelper.RunSync(async () => await _context.OpenAsync(req => req.Content(htmlSource)));
         }
 
         private void RetrieveGames(int page = 1)
