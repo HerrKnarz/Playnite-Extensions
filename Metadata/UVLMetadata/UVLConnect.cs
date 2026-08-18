@@ -246,7 +246,7 @@ public class UVLConnect(UVLMetadata plugin)
 
                     var parser = new GroupParser();
 
-                    foreach (var category in plugin.Settings.Settings.TagCategories)
+                    foreach (var category in plugin.Settings.Settings.TagCategories.OrderBy(v => v.Value.Name))
                     {
                         if (activateGlobalProgress.CancelToken.IsCancellationRequested)
                         {
@@ -268,6 +268,8 @@ public class UVLConnect(UVLMetadata plugin)
 
                         activateGlobalProgress.CurrentProgressValue++;
                     }
+
+                    plugin.Tags.SetCategoryCaptions();
 
                     plugin.Tags.Save();
                 }

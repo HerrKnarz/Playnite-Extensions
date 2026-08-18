@@ -12,8 +12,8 @@ public class SettingsViewModel : ObservableObject, ISettings
 {
     private readonly UVLMetadata _plugin;
 
-    private RelayCommand authenticateCommand;
-    private RelayCommand refreshTagsCommand;
+    private RelayCommand _authenticateCommand;
+    private RelayCommand _refreshTagsCommand;
 
     public SettingsViewModel(UVLMetadata plugin)
     {
@@ -31,7 +31,7 @@ public class SettingsViewModel : ObservableObject, ISettings
         CheckAuthenticationStatus();
     }
 
-    public ICommand AuthenticateCommand => authenticateCommand ??= new RelayCommand(Authenticate);
+    public ICommand AuthenticateCommand => _authenticateCommand ??= new RelayCommand(Authenticate);
 
     public string AuthenticationStatusText => IsAuthenticated switch
     {
@@ -66,7 +66,7 @@ public class SettingsViewModel : ObservableObject, ISettings
         { RatingToUse.Average, ResourceProvider.GetString("LOCUVLMetadataSettingsRatingAverage") }
     };
 
-    public ICommand RefreshTagsCommand => refreshTagsCommand ??= new RelayCommand(RefreshTags);
+    public ICommand RefreshTagsCommand => _refreshTagsCommand ??= new RelayCommand(RefreshTags);
 
     public PluginSettings Settings { get; private set; }
 

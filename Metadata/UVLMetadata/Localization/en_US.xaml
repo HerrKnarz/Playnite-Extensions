@@ -9,6 +9,9 @@
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Not Authenticated</sys:String>
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Checking Status...</sys:String>
 
+    <sys:String x:Key="LOCUVLMetadataBulkImportSearchTag">Search Tag</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMenuBulkImport">Bulk Import</sys:String>
+
     <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">To download tags from UVL you need to refresh them at least once. Do you want to do that now? It should only take a few seconds.</sys:String>
     <sys:String x:Key="LOCUVLMetadataProgressRefreshingTags">Refreshing tags...</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialog">select game</sys:String>
@@ -62,4 +65,9 @@
     <sys:String x:Key="LOCUVLMetadataTagCategoryTraditional">Traditional</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryVehicle">Vehicles</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryVideoGame">Video Game</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataTagTypeConcept">Concept</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagTypeEntity">Entity</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagTypeSeries">Series</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagTypeTheme">Theme</sys:String>
 </ResourceDictionary>

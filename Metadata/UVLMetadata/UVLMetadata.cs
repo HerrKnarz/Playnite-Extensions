@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,16 @@ public class UVLMetadata : MetadataPlugin
             HasSettings = true
         };
 
+        var iconResourcesToAdd = new Dictionary<string, string>
+            {
+                { "tagCategoryIcon", "\xf005" }
+            };
+
+        foreach (var iconResource in iconResourcesToAdd)
+        {
+            MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+        }
+
         Tags.LoadFromFile();
     }
 
@@ -58,6 +69,23 @@ public class UVLMetadata : MetadataPlugin
     public UVLTags Tags { get; }
 
     public UVLConnect UVLConnect { get; }
+
+    public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+    {
+        var menuSection = ResourceProvider.GetString("LOCUVLMetadataName");
+
+        var menuItems = new List<MainMenuItem>
+            {
+                new() {
+                    Description = ResourceProvider.GetString("LOCUVLMetadataMenuBulkImport"),
+                    MenuSection = $"@{menuSection}",
+                    Icon = "tagCategoryIcon",
+                    Action = a => BulkImportViewModel.ShowWindow(this)
+                }
+            };
+
+        return menuItems;
+    }
 
     public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, Settings.Settings, PlayniteApi, UVLConnect);
 

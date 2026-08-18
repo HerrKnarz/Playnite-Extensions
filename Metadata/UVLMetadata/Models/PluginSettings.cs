@@ -5,6 +5,12 @@ namespace UVLMetadata.Models;
 
 public class PluginSettings : ObservableObject
 {
+    public BulkImportSettings BulkImportSettings
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = new BulkImportSettings();
+
     public DescriptionToUse DescriptionToUse
     {
         get;
@@ -34,4 +40,19 @@ public class PluginSettings : ObservableObject
         get;
         set => SetValue(ref field, value);
     } = [];
+}
+
+public class BulkImportSettings : ObservableObject
+{
+    public int WindowHeight
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = 600;
+
+    public int WindowWidth
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = 800;
 }

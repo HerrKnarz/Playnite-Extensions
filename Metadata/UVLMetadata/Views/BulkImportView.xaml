@@ -1,0 +1,192 @@
+﻿<UserControl x:Class="UVLMetadata.Views.BulkImportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:UVLMetadata.Views"
+             xmlns:localModels="clr-namespace:UVLMetadata.Models"
+             xmlns:knarzHelperControls="clr-namespace:KNARZhelper.Controls"
+             xmlns:vm="clr-namespace:UVLMetadata.ViewModels"
+             xmlns:c="clr-namespace:KNARZhelper.Controls"
+             d:DataContext="{d:DesignInstance Type=vm:BulkImportViewModel}"
+             mc:Ignorable="d"
+             d:Background="LightGray"
+             d:DesignHeight="600"
+             d:DesignWidth="900">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UVLMetadata;component/Shared/Controls/SettingsStyles.xaml" />
+                <ResourceDictionary Source="/UVLMetadata;component/Shared/Controls/CommonStyles.xaml" />
+                <d:ResourceDictionary Source="/UVLMetadata;component/Localization/en_US.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel>
+        <Border DockPanel.Dock="Top"
+                BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
+                d:BorderBrush="{DynamicResource KNARZDummyBrush}"
+                BorderThickness="0,1,0,0"
+                Margin="0,0,0,0" />
+        <Border DockPanel.Dock="Bottom"
+                BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
+                d:BorderBrush="{DynamicResource KNARZDummyBrush}"
+                BorderThickness="0,1,0,0"
+                Margin="0,0,0,0">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="10">
+                <Button Content="{DynamicResource LOCCloseLabel}"
+                        d:Content="Close"
+                        Command="{Binding CloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                        IsDefault="True"
+                        Style="{DynamicResource BottomButton}"
+                        d:Style="{StaticResource KNARZBottomButton}" />
+            </StackPanel>
+        </Border>
+
+        <Grid Margin="15, 10"
+              DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <c:SettingsSection Heading="{Binding Source={StaticResource LOCUVLMetadataBulkImportSearchTag}}"
+                               Grid.Column="0"
+                               Margin="0, 0, 15, 0"
+                               Width="400">
+                <DockPanel>
+                    <DockPanel Margin="0, 0, 0, 15"
+                               DockPanel.Dock="Top">
+                        <Button Content="&#xef00;"
+                                Style="{DynamicResource KNARZIconButton}"
+                                Click="ClearSearchBox"
+                                DockPanel.Dock="Right"
+                                Margin="5,0,0,0"
+                                Padding="5,5,8,5" />
+                        <TextBox Name="SearchBox"
+                                 Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
+                    </DockPanel>
+
+                    <ListBox Name="LbTagList"
+                             Grid.Column="1"
+                             ItemsSource="{Binding TagsViewSource.View}"
+                             d:ItemsSource="{d:SampleData}"
+                             SelectionMode="Single"
+                             Background="{DynamicResource NormalBrushDark}"
+                             d:Background="White"
+                             HorizontalContentAlignment="Stretch"
+                             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                             VirtualizingPanel.IsVirtualizing="True"
+                             ScrollViewer.CanContentScroll="True"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                        <ListBox.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.ContainerStyle>
+                                    <Style TargetType="{x:Type GroupItem}">
+                                        <Setter Property="Margin"
+                                                Value="0" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                    <Expander IsExpanded="{Binding DataContext.GroupsExpanded, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                              Margin="0, 0, 0, 4"
+                                                              Padding="2"
+                                                              Background="{DynamicResource ExpanderBackgroundBrush}">
+                                                        <Expander.Header>
+                                                            <DockPanel Margin="5"
+                                                                       LastChildFill="False">
+                                                                <TextBlock FontWeight="Bold"
+                                                                           Text="{Binding Name}"
+                                                                           FontSize="{StaticResource FontSizeLarger}"
+                                                                           VerticalAlignment="Center"
+                                                                           Margin="0,0,5,0"
+                                                                           DockPanel.Dock="Left"
+                                                                           Foreground="{DynamicResource TextBrush}" />
+                                                                <TextBlock FontWeight="Bold"
+                                                                           Text="{Binding ItemCount, StringFormat=({0})}"
+                                                                           VerticalAlignment="Center"
+                                                                           DockPanel.Dock="Right"
+                                                                           Foreground="{DynamicResource HighlightGlyphBrush}" />
+                                                            </DockPanel>
+                                                        </Expander.Header>
+                                                        <Expander.Content>
+                                                            <ItemsPresenter />
+                                                        </Expander.Content>
+                                                    </Expander>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </GroupStyle.ContainerStyle>
+                            </GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.ContainerStyle>
+                                    <Style TargetType="{x:Type GroupItem}">
+                                        <Setter Property="Margin"
+                                                Value="0" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                    <Expander IsExpanded="True"
+                                                              Margin="0, 2, 0, 0"
+                                                              Padding="10, 2, 2, 2"
+                                                              Background="{DynamicResource ExpanderBackgroundBrush}">
+                                                        <Expander.Header>
+                                                            <DockPanel Margin="5"
+                                                                       LastChildFill="False">
+                                                                <TextBlock FontWeight="Bold"
+                                                                           Text="{Binding Name}"
+                                                                           FontSize="{StaticResource FontSize}"
+                                                                           VerticalAlignment="Center"
+                                                                           Margin="0,0,5,0"
+                                                                           DockPanel.Dock="Left"
+                                                                           Foreground="{DynamicResource TextBrush}" />
+                                                                <TextBlock FontWeight="Bold"
+                                                                           Text="{Binding ItemCount, StringFormat=({0})}"
+                                                                           FontSize="{StaticResource FontSizeSmall}"
+                                                                           VerticalAlignment="Center"
+                                                                           DockPanel.Dock="Right"
+                                                                           Foreground="{DynamicResource HighlightGlyphBrush}" />
+                                                            </DockPanel>
+                                                        </Expander.Header>
+                                                        <Expander.Content>
+                                                            <ItemsPresenter />
+                                                        </Expander.Content>
+                                                    </Expander>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </GroupStyle.ContainerStyle>
+                            </GroupStyle>
+                        </ListBox.GroupStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="5">
+                                    <DockPanel Margin="0, 0, 0, 2">
+                                        <TextBlock Text="{Binding GameCount, StringFormat=({0})}"
+                                                   FontSize="{StaticResource FontSizeSmall}"
+                                                   VerticalAlignment="Center"
+                                                   DockPanel.Dock="Right" />
+                                        <TextBlock Text="{Binding ShortName}"
+                                                   FontWeight="Bold"
+                                                   Margin="0,0,5,0"
+                                                   TextWrapping="Wrap"
+                                                   DockPanel.Dock="Left" />
+                                    </DockPanel>
+                                    <TextBlock Text="{Binding Description}"
+                                               FontSize="{StaticResource FontSizeSmall}"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </c:SettingsSection>
+        </Grid>
+    </DockPanel>
+</UserControl>

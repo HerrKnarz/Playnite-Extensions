@@ -41,6 +41,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\PersistGroupExpandedStateBehavior.cs" Link="Shared\Controls\PersistGroupExpandedStateBehavior.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs" Link="Shared\Controls\SettingsOption.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsSection.cs" Link="Shared\Controls\SettingsSection.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs" Link="Shared\FilesCommon\FileHelper.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs" Link="Shared\MiscHelper.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\PlatformHelper.cs" Link="Shared\PlatformHelper.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\StringHelper.cs" Link="Shared\StringHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\WindowHelper.cs" Link="Shared\WindowHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml" CopyToOutputDirectory="Always" />
@@ -76,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.9" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.16.0" />
   </ItemGroup>
