@@ -1,5 +1,9 @@
 ﻿using KNARZhelper;
+using KNARZhelper.MetadataCommon;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
+using KNARZhelper.MetadataCommon.ViewModels;
 using Playnite.SDK;
+using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,8 +22,10 @@ public class BulkImportViewModel : ObservableObject
     private readonly GameMatcher _gameMatcher = new([.. API.Instance.Database.Games]);
     private readonly UVLMetadata _plugin;
     private RelayCommand<Window> _closeCommand;
+    private RelayCommand<IList<object>> _importTagsCommand;
+    private RelayCommand _searchGamesCommand;
 
-    private RelayCommand searchGamesCommand;
+    private RelayCommand selectFieldValueCommand;
 
     public BulkImportViewModel(UVLMetadata plugin)
     {
@@ -29,6 +35,18 @@ public class BulkImportViewModel : ObservableObject
     }
 
     public ICommand CloseCommand => _closeCommand ??= new RelayCommand<Window>(Close);
+
+    public MetadataField FieldType
+    {
+        get;
+        set => SetValue(ref field, value);
+    }
+
+    public string FieldValue
+    {
+        get;
+        set => SetValue(ref field, value);
+    }
 
     public string FoundGamesSectionCaption =>
         MatchedTag is not null
@@ -40,6 +58,23 @@ public class BulkImportViewModel : ObservableObject
         get;
         set => SetValue(ref field, value);
     } = false;
+
+    public Dictionary<MetadataField, string> ImportAsModes { get; } = new()
+    {
+        { MetadataField.AgeRating, ResourceProvider.GetString("LOCAgeRatingLabel") },
+        { MetadataField.Features, ResourceProvider.GetString("LOCFeatureLabel") },
+        { MetadataField.Genres, ResourceProvider.GetString("LOCGenreLabel") },
+        { MetadataField.Series, ResourceProvider.GetString("LOCSeriesLabel") },
+        { MetadataField.Tags, ResourceProvider.GetString("LOCTagLabel") },
+    };
+
+    public bool ImportLink
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = true;
+
+    public ICommand ImportTagsCommand => _importTagsCommand ??= new RelayCommand<IList<object>>(ImportTags);
 
     public ObservableCollection<MatchedGame> MatchedGames
     {
@@ -53,11 +88,19 @@ public class BulkImportViewModel : ObservableObject
         set
         {
             SetValue(ref field, value);
+
             OnPropertyChanged(nameof(FoundGamesSectionCaption));
+
+            _plugin.Settings.Settings.TagCategories.TryGetValue(MatchedTag?.Category ?? 0, out var tagCategory);
+
+            var fieldName = string.Empty;
+
+            FieldType = tagCategory?.ImportAsByTag(MatchedTag, out fieldName, out _) ?? MetadataField.Tags;
+            FieldValue = fieldName ?? MatchedTag?.ShortName ?? string.Empty;
         }
     }
 
-    public ICommand SearchGamesCommand => searchGamesCommand ??= new RelayCommand(SearchGames);
+    public ICommand SearchGamesCommand => _searchGamesCommand ??= new RelayCommand(SearchGames);
 
     public string SearchTerm
     {
@@ -74,6 +117,8 @@ public class BulkImportViewModel : ObservableObject
         get;
         set => SetValue(ref field, value);
     }
+
+    public ICommand SelectFieldValueCommand => selectFieldValueCommand ??= new RelayCommand(SelectFieldValue);
 
     public CollectionViewSource TagsViewSource
     {
@@ -125,11 +170,14 @@ public class BulkImportViewModel : ObservableObject
     {
         if (!SearchTerm.IsNullOrEmpty() && !GroupsExpanded)
         {
-            //NEXT: This can't be bound to the IsExpanded property of the expander, or else all will open when opening just one. But maybe it can work as a data trigger or similar to only set the IsExpanded property of the expander when the filter is active.
             GroupsExpanded = true;
         }
 
         return SearchTerm.IsNullOrEmpty() || (item is UVLTag tag && tag.ShortName.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    private void ImportTags(IList<object> tags)
+    {
     }
 
     private void PrepareTagsViewSource()
@@ -176,5 +224,38 @@ public class BulkImportViewModel : ObservableObject
         _gameMatcher.MatchGames(foundGames);
 
         MatchedGames.AddMissing(_gameMatcher.MatchedGames.Values.OrderBy(v => v.PlayniteGame.RealSortingName).ThenBy(v => v.PlayniteGame.Game.ReleaseDate));
+    }
+
+    private void SelectFieldValue()
+    {
+        BaseListType typeManager = FieldType switch
+        {
+            MetadataField.AgeRating => new TypeAgeRating(),
+            MetadataField.Features => new TypeFeature(),
+            MetadataField.Genres => new TypeGenre(),
+            MetadataField.Series => new TypeSeries(),
+            MetadataField.Tags => new TypeTag(),
+            _ => throw new NotImplementedException(),
+        };
+
+        var label = typeManager.LabelPlural;
+        var items = new ObservableCollection<BaseMetadataObject>();
+
+        typeManager.LoadAllMetadata([]).ForEach(item => items.Add(
+            new BaseMetadataObject(typeManager, typeManager.Type, item.Name)
+            {
+                Id = item.Id
+            }));
+
+        items.Sort(i => i.Name);
+
+        SelectMetadataViewModel.GetWindow(items, label, false)?.ShowDialog();
+
+        if (items.Count(i => i.Selected) == 0)
+        {
+            return;
+        }
+
+        FieldValue = items.First(i => i.Selected).Name;
     }
 }

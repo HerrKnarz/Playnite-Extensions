@@ -98,32 +98,43 @@ public class GamePageParser(PluginSettings settings, UVLConnect uvlConnect)
         }
     }
 
-    private void AddToField(string name, TagCategory tagCategory, List<MetadataProperty> fieldOverride = null)
+    private void AddToField(UVLTag tag)
     {
-        if (!tagCategory.Enabled && fieldOverride is null)
+        var tagCategory = settings.TagCategories[tag.Category];
+        var fieldType = tagCategory.ImportAsByTag(tag, out var nameToUse, out var alwaysImport);
+
+        if (!tagCategory.Enabled && !alwaysImport)
         {
             return;
         }
 
-        var valueName = $"{tagCategory.Prefix}{name}";
+        AddToField(nameToUse, fieldType);
+    }
 
-        var field = tagCategory.ImportAs switch
+    private void AddToField(string name, TagCategory tagCategory)
+    {
+        if (!tagCategory.Enabled)
         {
+            return;
+        }
+
+        AddToField($"{tagCategory.Prefix}{name}", tagCategory.ImportAs);
+    }
+
+    private void AddToField(string name, MetadataField fieldType)
+    {
+        var field = fieldType switch
+        {
+            MetadataField.AgeRating => GameMetadata.AgeRatings,
             MetadataField.Features => GameMetadata.Features,
             MetadataField.Genres => GameMetadata.Genres,
+            MetadataField.Series => GameMetadata.Series,
             MetadataField.Tags => GameMetadata.Tags,
             _ => throw new NotImplementedException(),
         };
-
-        if (fieldOverride is not null)
+        if (!field.Any(t => (t as MetadataNameProperty).Name == name))
         {
-            field = fieldOverride;
-            valueName = name;
-        }
-
-        if (!field.Any(t => (t as MetadataNameProperty).Name == valueName))
-        {
-            field.Add(new MetadataNameProperty(valueName));
+            field.Add(new MetadataNameProperty(name));
         }
     }
 
@@ -398,15 +409,7 @@ public class GamePageParser(PluginSettings settings, UVLConnect uvlConnect)
                 continue;
             }
 
-            var fieldOverride = tag.Type == TagType.Series ? GameMetadata.Series : null;
-
-            if (tag.Category == TagCategoryId.Culture && tag.Type == TagType.Concept && tag.Name.StartsWith("Rating:"))
-            {
-                fieldOverride = GameMetadata.AgeRatings;
-                tag.ShortName = tag.ShortName.Replace("Rating:", "").Trim();
-            }
-
-            AddToField(tag.ShortName, settings.TagCategories[tag.Category], fieldOverride);
+            AddToField(tag);
         }
     }
 

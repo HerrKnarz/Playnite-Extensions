@@ -9,14 +9,18 @@
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Not Authenticated</sys:String>
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Checking Status...</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGames">Found Games</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">Found Games for "{0}"</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedName">Matched name</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedPlatform">Matched platform</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedRelease">Matched year</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingType">Matched by</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGames">Found Games</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">Found Games for "{0}"</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImport">Import</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImportAs">Import As</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImportLink">Import Link</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportSearchGames">Search Games</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportSearchTag">Search Tag</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSelect">Select</sys:String>
     <sys:String x:Key="LOCUVLMetadataMenuBulkImport">Bulk Import</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataDialogNoGamesFound">No games were found for the selected tag.</sys:String>

@@ -43,8 +43,27 @@
   <ItemGroup>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs" Link="Shared\Controls\SettingsOption.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsSection.cs" Link="Shared\Controls\SettingsSection.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Enum\DbInteractionResult.cs" Link="Shared\Enum\DbInteractionResult.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs" Link="Shared\FilesCommon\FileHelper.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\GameEx.cs" Link="Shared\GamesCommon\GameEx.cs" />
+	  <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\BaseMetadataObject.cs" Link="Shared\MetadataCommon\BaseMetadataObject.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseListType.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\BaseListType.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\BaseObjectType.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\BaseObjectType.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IClearAbleType.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\IClearAbleType.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IEditableObjectType.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\IEditableObjectType.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IGameInfoType.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\IGameInfoType.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IMetadataFieldType.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\IMetadataFieldType.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IObjectType.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\IObjectType.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IValueType.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\IValueType.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeAgeRating.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\TypeAgeRating.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeFeature.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\TypeFeature.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeGenre.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\TypeGenre.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeSeries.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\TypeSeries.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeTag.cs" Link="Shared\MetadataCommon\DatabaseObjectTypes\TypeTag.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Enum\FieldType.cs" Link="Shared\MetadataCommon\Enum\FieldType.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Enum\ItemValueType.cs" Link="Shared\MetadataCommon\Enum\ItemValueType.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\ViewModels\SelectMetadataViewModel.cs" Link="Shared\MetadataCommon\ViewModels\SelectMetadataViewModel.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Views\SelectMetadataView.xaml.cs" Link="Shared\MetadataCommon\Views\SelectMetadataView.xaml.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\Models\UrlLoadResult.cs" Link="Shared\WebCommon\Models\UrlLoadResult.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\LinkWorker.cs" Link="Shared\WebCommon\LinkWorker.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\WebHelper.cs" Link="Shared\WebCommon\WebHelper.cs" />
@@ -73,6 +92,11 @@
     <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsStyles.xaml">
       <Link>Shared\Controls\SettingsStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+	<Page Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\Views\SelectMetadataView.xaml">
+      <Link>Shared\MetadataCommon\Views\SelectMetadataView.xaml</Link>
+	  <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

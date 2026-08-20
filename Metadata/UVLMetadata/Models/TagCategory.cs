@@ -225,5 +225,26 @@ namespace UVLMetadata.Models
 
         [DontSerialize]
         public string Url { get; set; }
+
+        public MetadataField ImportAsByTag(UVLTag tag, out string name, out bool alwaysImport)
+        {
+            if (tag.Type == TagType.Series)
+            {
+                name = tag.ShortName;
+                alwaysImport = true;
+                return MetadataField.Series;
+            }
+
+            if (tag.Category == TagCategoryId.Culture && tag.Type == TagType.Concept && tag.Name.StartsWith("Rating:"))
+            {
+                name = tag.ShortName.Replace("Rating:", "").Trim();
+                alwaysImport = true;
+                return MetadataField.AgeRating;
+            }
+
+            name = $"{Prefix}{tag.ShortName}";
+            alwaysImport = false;
+            return ImportAs;
+        }
     }
 }
