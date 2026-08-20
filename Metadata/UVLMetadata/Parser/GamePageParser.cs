@@ -18,7 +18,7 @@ internal static class CssSelectors
     public static string Companies => "header .page-data";
     public static string GameName => "header h1";
     public static string InfoCard => "section > .container-fluid > .row > .col-12:nth-child(2) .card-body:nth-child(1)";
-    public static string Links => ".spaced-buttons > a";
+    public static string Links => ".col > div.spaced-buttons > a";
     public static string MainGenre => $"{InfoCard} span:nth-child(1)";
     public static string Perspective => $"{InfoCard} span:nth-child(2)";
     public static string Platforms => "a[data-type=platform]";
@@ -148,7 +148,7 @@ public class GamePageParser(PluginSettings settings, UVLConnect uvlConnect)
 
     private IEnumerable<Link> GetAccordionLinks(IHtmlCollection<IElement> accordionItems, string itemTitle = "Links")
     {
-        var linkElements = GetAccordionItem(accordionItems, itemTitle)?.QuerySelectorAll("a");
+        var linkElements = GetAccordionItem(accordionItems, itemTitle)?.QuerySelectorAll(".accordion-body > span > a, div > a");
 
         if (linkElements is null)
         {

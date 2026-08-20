@@ -53,7 +53,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <c:SettingsSection Heading="{Binding Source={StaticResource LOCUVLMetadataBulkImportSearchTag}}"
+            <c:SettingsSection Heading="{DynamicResource LOCUVLMetadataBulkImportSearchTag}"
                                Grid.Column="0"
                                Margin="0, 0, 15, 0"
                                Width="400">
@@ -70,10 +70,20 @@
                                  Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" />
                     </DockPanel>
 
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                DockPanel.Dock="Bottom"
+                                Margin="0, 15, 0, 0">
+                        <Button Content="{DynamicResource LOCUVLMetadataBulkImportSearchGames}"
+                                Command="{Binding SearchGamesCommand}"
+                                IsEnabled="{Binding ElementName=LbTagList, Path=SelectedItems.Count}" />
+                    </StackPanel>
+
                     <ListBox Name="LbTagList"
                              Grid.Column="1"
                              ItemsSource="{Binding TagsViewSource.View}"
                              d:ItemsSource="{d:SampleData}"
+                             SelectedItem="{Binding SelectedTag}"
                              SelectionMode="Single"
                              Background="{DynamicResource NormalBrushDark}"
                              d:Background="White"
@@ -92,25 +102,41 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                    <Expander IsExpanded="{Binding DataContext.GroupsExpanded, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                                              Margin="0, 0, 0, 4"
+                                                    <Expander Margin="0, 0, 0, 4"
                                                               Padding="2"
-                                                              Background="{DynamicResource ExpanderBackgroundBrush}">
+                                                              Tag="{Binding DataContext.GroupsExpanded, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                              Background="{DynamicResource ExpanderBackgroundBrush}"
+                                                              d:Background="White">
+                                                        <Expander.Style>
+                                                            <Style TargetType="{x:Type Expander}"
+                                                                   BasedOn="{StaticResource {x:Type Expander}}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}"
+                                                                                 Value="True">
+                                                                        <Setter Property="IsExpanded"
+                                                                                Value="True" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Expander.Style>
                                                         <Expander.Header>
                                                             <DockPanel Margin="5"
                                                                        LastChildFill="False">
                                                                 <TextBlock FontWeight="Bold"
                                                                            Text="{Binding Name}"
                                                                            FontSize="{StaticResource FontSizeLarger}"
+                                                                           d:FontSize="14"
                                                                            VerticalAlignment="Center"
                                                                            Margin="0,0,5,0"
                                                                            DockPanel.Dock="Left"
-                                                                           Foreground="{DynamicResource TextBrush}" />
+                                                                           Foreground="{DynamicResource TextBrush}"
+                                                                           d:Foreground="Black" />
                                                                 <TextBlock FontWeight="Bold"
                                                                            Text="{Binding ItemCount, StringFormat=({0})}"
                                                                            VerticalAlignment="Center"
                                                                            DockPanel.Dock="Right"
-                                                                           Foreground="{DynamicResource HighlightGlyphBrush}" />
+                                                                           Foreground="{DynamicResource HighlightGlyphBrush}"
+                                                                           d:Foreground="Black" />
                                                             </DockPanel>
                                                         </Expander.Header>
                                                         <Expander.Content>
@@ -134,23 +160,28 @@
                                                     <Expander IsExpanded="True"
                                                               Margin="0, 2, 0, 0"
                                                               Padding="10, 2, 2, 2"
-                                                              Background="{DynamicResource ExpanderBackgroundBrush}">
+                                                              Background="{DynamicResource ExpanderBackgroundBrush}"
+                                                              d:Background="White">
                                                         <Expander.Header>
                                                             <DockPanel Margin="5"
                                                                        LastChildFill="False">
                                                                 <TextBlock FontWeight="Bold"
                                                                            Text="{Binding Name}"
                                                                            FontSize="{StaticResource FontSize}"
+                                                                           d:FontSize="14"
                                                                            VerticalAlignment="Center"
                                                                            Margin="0,0,5,0"
                                                                            DockPanel.Dock="Left"
-                                                                           Foreground="{DynamicResource TextBrush}" />
+                                                                           Foreground="{DynamicResource TextBrush}"
+                                                                           d:Foreground="Black" />
                                                                 <TextBlock FontWeight="Bold"
                                                                            Text="{Binding ItemCount, StringFormat=({0})}"
                                                                            FontSize="{StaticResource FontSizeSmall}"
+                                                                           d:FontSize="10"
                                                                            VerticalAlignment="Center"
                                                                            DockPanel.Dock="Right"
-                                                                           Foreground="{DynamicResource HighlightGlyphBrush}" />
+                                                                           Foreground="{DynamicResource HighlightGlyphBrush}"
+                                                                           d:Foreground="Black" />
                                                             </DockPanel>
                                                         </Expander.Header>
                                                         <Expander.Content>
@@ -168,8 +199,9 @@
                             <DataTemplate>
                                 <StackPanel Margin="5">
                                     <DockPanel Margin="0, 0, 0, 2">
-                                        <TextBlock Text="{Binding GameCount, StringFormat=({0})}"
+                                        <TextBlock Text="{Binding GamesCountFormatted}"
                                                    FontSize="{StaticResource FontSizeSmall}"
+                                                   d:FontSize="10"
                                                    VerticalAlignment="Center"
                                                    DockPanel.Dock="Right" />
                                         <TextBlock Text="{Binding ShortName}"
@@ -180,12 +212,61 @@
                                     </DockPanel>
                                     <TextBlock Text="{Binding Description}"
                                                FontSize="{StaticResource FontSizeSmall}"
+                                               d:FontSize="10"
                                                TextWrapping="Wrap" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </DockPanel>
+            </c:SettingsSection>
+
+            <c:SettingsSection Heading="{Binding FoundGamesSectionCaption}"
+                               Grid.Column="1">
+
+                <DataGrid Name="GamesGrid"
+                          ItemsSource="{Binding MatchedGames}"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          IsReadOnly="True"
+                          HeadersVisibility="Column"
+                          ColumnWidth="*"
+                          CanUserSortColumns="True"
+                          EnableRowVirtualization="True"
+                          SelectionMode="Extended">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{DynamicResource LOCGameNameTitle}"
+                                            d:Header="Name"
+                                            Binding="{Binding PlayniteGame.Game.Name}"
+                                            MinWidth="50"
+                                            SortDirection="Ascending"
+                                            SortMemberPath="PlayniteGame.RealSortingName" />
+                        <DataGridTextColumn Header="{DynamicResource LOCGameReleaseYearTitle}"
+                                            d:Header="Year"
+                                            Binding="{Binding PlayniteGame.Game.ReleaseYear}"
+                                            Width="SizeToCells" />
+                        <DataGridTextColumn Header="{DynamicResource LOCPlatformsTitle}"
+                                            d:Header="Platforms"
+                                            Binding="{Binding PlayniteGame.Platforms}"
+                                            MinWidth="50" />
+                        <DataGridTextColumn Header="{DynamicResource LOCUVLMetadataBulkImportCaptionMatchedName}"
+                                            d:Header="Matched name"
+                                            Binding="{Binding UVLGame.Name}"
+                                            MinWidth="50" />
+                        <DataGridTextColumn Header="{DynamicResource LOCUVLMetadataBulkImportCaptionMatchedRelease}"
+                                            d:Header="Matched year"
+                                            Binding="{Binding UVLGame.ReleaseDate}"
+                                            Width="SizeToCells" />
+                        <DataGridTextColumn Header="{DynamicResource LOCUVLMetadataBulkImportCaptionMatchedPlatform}"
+                                            d:Header="Matched platform"
+                                            Binding="{Binding UVLGame.Platform}"
+                                            MinWidth="50" />
+                        <DataGridTextColumn Header="{DynamicResource LOCUVLMetadataBulkImportCaptionMatchingType}"
+                                            d:Header="Matched by"
+                                            Binding="{Binding MatchingTypeCaption}"
+                                            MinWidth="50" />
+                    </DataGrid.Columns>
+                </DataGrid>
             </c:SettingsSection>
         </Grid>
     </DockPanel>

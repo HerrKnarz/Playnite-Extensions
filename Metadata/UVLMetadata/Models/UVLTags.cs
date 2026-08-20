@@ -31,7 +31,6 @@ public class UVLTags(UVLMetadata plugin) : List<UVLTag>
     /// <summary>
     /// Loads the tags from a JSON file with the same structure.
     /// </summary>
-    /// <param name="file">The JSON file to read from.</param>
     public void LoadFromFile()
     {
         Clear();

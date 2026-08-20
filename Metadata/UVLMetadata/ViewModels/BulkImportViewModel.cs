@@ -2,7 +2,9 @@
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -13,8 +15,11 @@ namespace UVLMetadata.ViewModels;
 
 public class BulkImportViewModel : ObservableObject
 {
+    private readonly GameMatcher _gameMatcher = new([.. API.Instance.Database.Games]);
     private readonly UVLMetadata _plugin;
     private RelayCommand<Window> _closeCommand;
+
+    private RelayCommand searchGamesCommand;
 
     public BulkImportViewModel(UVLMetadata plugin)
     {
@@ -25,11 +30,34 @@ public class BulkImportViewModel : ObservableObject
 
     public ICommand CloseCommand => _closeCommand ??= new RelayCommand<Window>(Close);
 
+    public string FoundGamesSectionCaption =>
+        MatchedTag is not null
+            ? $"{string.Format(ResourceProvider.GetString("LOCUVLMetadataBulkImportFoundGamesFor"), MatchedTag?.ShortName)}"
+            : ResourceProvider.GetString("LOCUVLMetadataBulkImportFoundGames");
+
     public bool GroupsExpanded
     {
         get;
         set => SetValue(ref field, value);
     } = false;
+
+    public ObservableCollection<MatchedGame> MatchedGames
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = [];
+
+    public UVLTag MatchedTag
+    {
+        get;
+        set
+        {
+            SetValue(ref field, value);
+            OnPropertyChanged(nameof(FoundGamesSectionCaption));
+        }
+    }
+
+    public ICommand SearchGamesCommand => searchGamesCommand ??= new RelayCommand(SearchGames);
 
     public string SearchTerm
     {
@@ -40,6 +68,12 @@ public class BulkImportViewModel : ObservableObject
             TagsViewSource.View.Filter = Filter;
         }
     } = string.Empty;
+
+    public UVLTag SelectedTag
+    {
+        get;
+        set => SetValue(ref field, value);
+    }
 
     public CollectionViewSource TagsViewSource
     {
@@ -91,6 +125,7 @@ public class BulkImportViewModel : ObservableObject
     {
         if (!SearchTerm.IsNullOrEmpty() && !GroupsExpanded)
         {
+            //NEXT: This can't be bound to the IsExpanded property of the expander, or else all will open when opening just one. But maybe it can work as a data trigger or similar to only set the IsExpanded property of the expander when the filter is active.
             GroupsExpanded = true;
         }
 
@@ -115,5 +150,31 @@ public class BulkImportViewModel : ObservableObject
         TagsViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("TypeCaption"));
 
         TagsViewSource.View.Filter = Filter;
+    }
+
+    private void SearchGames()
+    {
+        if (SelectedTag is null)
+        {
+            return;
+        }
+
+        var url = SelectedTag.Slug.Replace("/groups/info/", $"{Resources.WebsiteUrl}/gamesearch/?ftag=");
+
+        var foundGames = _plugin.UVLConnect.GetDetailSearchResults(url, SelectedTag.GameCount);
+
+        if (foundGames is null || !foundGames.Any())
+        {
+            API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCUVLMetadataDialogNoGamesFound"), "UVL");
+            return;
+        }
+
+        MatchedGames.Clear();
+
+        MatchedTag = SelectedTag;
+
+        _gameMatcher.MatchGames(foundGames);
+
+        MatchedGames.AddMissing(_gameMatcher.MatchedGames.Values.OrderBy(v => v.PlayniteGame.RealSortingName).ThenBy(v => v.PlayniteGame.Game.ReleaseDate));
     }
 }

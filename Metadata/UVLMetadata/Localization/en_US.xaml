@@ -9,11 +9,29 @@
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Not Authenticated</sys:String>
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Checking Status...</sys:String>
 
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGames">Found Games</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">Found Games for "{0}"</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedName">Matched name</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedPlatform">Matched platform</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedRelease">Matched year</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingType">Matched by</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSearchGames">Search Games</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportSearchTag">Search Tag</sys:String>
     <sys:String x:Key="LOCUVLMetadataMenuBulkImport">Bulk Import</sys:String>
 
+    <sys:String x:Key="LOCUVLMetadataDialogNoGamesFound">No games were found for the selected tag.</sys:String>
     <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">To download tags from UVL you need to refresh them at least once. Do you want to do that now? It should only take a few seconds.</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeLink">Link</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeName">Name</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeNameAndPlatform">Name and Platform</sys:String>
+
     <sys:String x:Key="LOCUVLMetadataProgressRefreshingTags">Refreshing tags...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressLoadingGames">Loading games...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGames">Matching games</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesMatching">Matching...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesPreparing">Preparing...</sys:String>
+
     <sys:String x:Key="LOCUVLMetadataSearchDialog">select game</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogCover">select cover image</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogBackground">select background image</sys:String>

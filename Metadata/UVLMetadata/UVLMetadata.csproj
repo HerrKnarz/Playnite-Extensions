@@ -41,10 +41,10 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\PersistGroupExpandedStateBehavior.cs" Link="Shared\Controls\PersistGroupExpandedStateBehavior.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs" Link="Shared\Controls\SettingsOption.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsSection.cs" Link="Shared\Controls\SettingsSection.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs" Link="Shared\FilesCommon\FileHelper.cs" />
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\GameEx.cs" Link="Shared\GamesCommon\GameEx.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\Models\UrlLoadResult.cs" Link="Shared\WebCommon\Models\UrlLoadResult.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\LinkWorker.cs" Link="Shared\WebCommon\LinkWorker.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\WebCommon\WebHelper.cs" Link="Shared\WebCommon\WebHelper.cs" />

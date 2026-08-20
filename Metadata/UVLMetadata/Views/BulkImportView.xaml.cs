@@ -14,5 +14,10 @@ namespace UVLMetadata.Views
         }
 
         private void ClearSearchBox(object sender, RoutedEventArgs e) => SearchBox.Clear();
+
+        private void Button_Click()
+        {
+
+        }
     }
 }

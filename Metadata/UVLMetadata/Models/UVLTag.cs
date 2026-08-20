@@ -22,6 +22,9 @@ namespace UVLMetadata.Models
         public string Description { get; set; }
         public int GameCount { get; set; } = 0;
 
+        [DontSerialize]
+        public string GamesCountFormatted => $"({GameCount})";
+
         public string Name
         {
             get;
