@@ -1,8 +1,11 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Plugins;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using UVLMetadata.Models;
 
@@ -14,6 +17,7 @@ public class SettingsViewModel : ObservableObject, ISettings
 
     private RelayCommand _authenticateCommand;
     private RelayCommand _refreshTagsCommand;
+    private RelayCommand<object> _restartRequiredCommand;
 
     public SettingsViewModel(UVLMetadata plugin)
     {
@@ -67,6 +71,8 @@ public class SettingsViewModel : ObservableObject, ISettings
     };
 
     public ICommand RefreshTagsCommand => _refreshTagsCommand ??= new RelayCommand(RefreshTags);
+
+    public ICommand RestartRequiredCommand => _restartRequiredCommand ??= new RelayCommand<object>(RestartRequired);
 
     public PluginSettings Settings { get; private set; }
 
@@ -123,5 +129,22 @@ public class SettingsViewModel : ObservableObject, ISettings
     {
         _plugin.UVLConnect.RefreshTags();
         Settings.LastTagRefresh = _plugin.Tags.LastRefresh;
+    }
+
+    private void RestartRequired(object sender)
+    {
+        try
+        {
+            var winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
+
+            if (winParent.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
+            {
+                ((dynamic)winParent.DataContext).IsRestartRequired = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex);
+        }
     }
 }

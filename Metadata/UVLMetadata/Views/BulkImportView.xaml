@@ -74,6 +74,13 @@
                                 HorizontalAlignment="Right"
                                 DockPanel.Dock="Bottom"
                                 Margin="0, 15, 0, 0">
+                        <Button Name="BtnRefreshTags"
+                                VerticalAlignment="Center"
+                                Margin="0,0,10,0"
+                                Width="100"
+                                DockPanel.Dock="Right"
+                                Content="{DynamicResource LOCUVLMetadataSettingsButtonTagsRefresh}"
+                                Command="{Binding RefreshTagsCommand}" />
                         <Button Content="{DynamicResource LOCUVLMetadataBulkImportSearchGames}"
                                 Command="{Binding SearchGamesCommand}"
                                 IsEnabled="{Binding ElementName=LbTagList, Path=SelectedItems.Count}" />

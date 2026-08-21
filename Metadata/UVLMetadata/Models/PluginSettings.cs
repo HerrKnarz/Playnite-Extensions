@@ -17,6 +17,12 @@ public class PluginSettings : ObservableObject
         set => SetValue(ref field, value);
     } = DescriptionToUse.Both;
 
+    public bool DisplayTopPanelButton
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = true;
+
     public DateTime LastTagRefresh
     {
         get;

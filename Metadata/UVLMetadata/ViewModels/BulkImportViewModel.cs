@@ -3,6 +3,7 @@ using KNARZhelper.MetadataCommon;
 using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
 using KNARZhelper.MetadataCommon.ViewModels;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,8 @@ public class BulkImportViewModel : ObservableObject
     private readonly UVLMetadata _plugin;
     private RelayCommand<Window> _closeCommand;
     private RelayCommand<IList<object>> _importTagsCommand;
+    private RelayCommand _refreshTagsCommand;
     private RelayCommand _searchGamesCommand;
-
     private RelayCommand selectFieldValueCommand;
 
     public BulkImportViewModel(UVLMetadata plugin)
@@ -100,6 +101,7 @@ public class BulkImportViewModel : ObservableObject
         }
     }
 
+    public ICommand RefreshTagsCommand => _refreshTagsCommand ??= new RelayCommand(RefreshTags);
     public ICommand SearchGamesCommand => _searchGamesCommand ??= new RelayCommand(SearchGames);
 
     public string SearchTerm
@@ -176,8 +178,74 @@ public class BulkImportViewModel : ObservableObject
         return SearchTerm.IsNullOrEmpty() || (item is UVLTag tag && tag.ShortName.Contains(SearchTerm, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    private void ImportTags(IList<object> tags)
+    private BaseListType GetTypeManager()
     {
+        return FieldType switch
+        {
+            MetadataField.AgeRating => new TypeAgeRating(),
+            MetadataField.Features => new TypeFeature(),
+            MetadataField.Genres => new TypeGenre(),
+            MetadataField.Series => new TypeSeries(),
+            MetadataField.Tags => new TypeTag(),
+            _ => null,
+        };
+    }
+
+    private void ImportTags(IList<object> games)
+    {
+        if (games is null || games.Count < 1)
+        {
+            return;
+        }
+
+        var typeManager = GetTypeManager();
+        var gamesAffected = new List<Game>();
+
+        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+
+        try
+        {
+            var matchedGames = games.Select(x => x as MatchedGame).Where(x => x is not null).ToList();
+
+            var fieldId = typeManager.AddDbObject(FieldValue);
+
+            foreach (var game in matchedGames)
+            {
+                if (game is null)
+                {
+                    continue;
+                }
+
+                if (typeManager.AddValueToGame(game.PlayniteGame.Game, fieldId))
+                {
+                    gamesAffected.AddMissing(game.PlayniteGame.Game);
+                }
+
+                if (ImportLink && !(game.PlayniteGame.Game.Links?.Any(x => x.Url.Contains("uvlist.net")) ?? false))
+                {
+                    game.PlayniteGame.Game.Links ??= [];
+
+                    game.PlayniteGame.Game.Links.Add(new Link()
+                    {
+                        Name = "UVL",
+                        Url = game.UVLGame.Url
+                    });
+
+                    gamesAffected.AddMissing(game.PlayniteGame.Game);
+                }
+            }
+
+            API.Instance.MainView.UIDispatcher.Invoke(delegate
+            {
+                API.Instance.Database.Games.Update(gamesAffected);
+            });
+        }
+        finally
+        {
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+        }
+
+        API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCUVLMetadataBulkImportGamesAffected"), typeManager.LabelSingular, gamesAffected.Count), "UVL");
     }
 
     private void PrepareTagsViewSource()
@@ -196,6 +264,18 @@ public class BulkImportViewModel : ObservableObject
 
         TagsViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("CategoryCaption"));
         TagsViewSource.View.GroupDescriptions.Add(new PropertyGroupDescription("TypeCaption"));
+
+        TagsViewSource.View.Filter = Filter;
+    }
+
+    private void RefreshTags()
+    {
+        using (TagsViewSource.DeferRefresh())
+        {
+            _plugin.UVLConnect.RefreshTags();
+            _plugin.Settings.Settings.LastTagRefresh = _plugin.Tags.LastRefresh;
+            _plugin.SavePluginSettings(_plugin.Settings.Settings);
+        }
 
         TagsViewSource.View.Filter = Filter;
     }
@@ -228,15 +308,12 @@ public class BulkImportViewModel : ObservableObject
 
     private void SelectFieldValue()
     {
-        BaseListType typeManager = FieldType switch
+        var typeManager = GetTypeManager();
+
+        if (typeManager is null)
         {
-            MetadataField.AgeRating => new TypeAgeRating(),
-            MetadataField.Features => new TypeFeature(),
-            MetadataField.Genres => new TypeGenre(),
-            MetadataField.Series => new TypeSeries(),
-            MetadataField.Tags => new TypeTag(),
-            _ => throw new NotImplementedException(),
-        };
+            return;
+        }
 
         var label = typeManager.LabelPlural;
         var items = new ObservableCollection<BaseMetadataObject>();

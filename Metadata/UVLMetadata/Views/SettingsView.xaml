@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              d:Background="LightGray"
              Padding="15, 10"
-             d:DesignHeight="800"
+             d:DesignHeight="1000"
              d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -126,6 +126,14 @@
                                        DockPanel.Dock="Left" />
                         </DockPanel>
                     </c:SettingsOption>
+
+                    <CheckBox IsChecked="{Binding Settings.DisplayTopPanelButton}"
+                              Content="{DynamicResource LOCUVLMetadataSettingsCaptionDisplayTopPanelButton}"
+                              Command="{Binding RestartRequiredCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                              Margin="0, 0, 0, 5" />
+                    <TextBlock Text="{DynamicResource LOCUVLMetadataSettingsCaptionDisplayTopPanelButtonDescription}"
+                               Style="{StaticResource SettingsDescription}" />
                 </StackPanel>
             </c:SettingsSection>
         </StackPanel>

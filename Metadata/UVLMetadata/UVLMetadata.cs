@@ -3,6 +3,8 @@ using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Windows.Controls;
 using UVLMetadata.Models;
 using UVLMetadata.ViewModels;
@@ -58,6 +60,7 @@ public class UVLMetadata : MetadataPlugin
         Tags.LoadFromFile();
     }
 
+    public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
     public override Guid Id { get; } = Guid.Parse("b825766b-c151-43cd-a918-7322fdc1868f");
 
     public override string Name => "UVL";
@@ -92,4 +95,19 @@ public class UVLMetadata : MetadataPlugin
     public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
     public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
+
+    public override IEnumerable<TopPanelItem> GetTopPanelItems()
+    {
+        if (!Settings.Settings.DisplayTopPanelButton)
+        {
+            yield break;
+        }
+
+        yield return new TopPanelItem
+        {
+            Title = ResourceProvider.GetString("LOCUVLMetadataMenuBulkImport"),
+            Icon = Icon,
+            Activated = () => BulkImportViewModel.ShowWindow(this)
+        };
+    }
 }
