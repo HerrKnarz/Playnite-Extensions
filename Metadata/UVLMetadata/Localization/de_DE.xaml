@@ -7,19 +7,56 @@
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Nicht authentifiziert</sys:String>
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Status wird überprüft...</sys:String>
 
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedName">Übereinstimmender Name</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedPlatform">Angepasste Plattform</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedRelease">Übereinstimmendes Jahr</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingScore">Passende Punktzahl</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingType">Passend von</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGames">Gefundene Spiele</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">Spiele für &quot;{0} &quot; gefunden</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportGamesAffected">{0} zu {1} Spiele hinzugefügt!</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImport">Importieren</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImportAs">Importieren als</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImportLink">Link importieren</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSearchGames">Spiele suchen</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSearchTag">Such-Tag</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSelect">Auswählen</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMenuBulkImport">Massenimport</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataDialogNoGamesFound">Es wurden keine Spiele für den ausgewählten Tag gefunden.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataDialogLoginRequired">Sie müssen in Ihr UVL-Konto eingeloggt sein, um den Massenimport zu verwenden. Möchten Sie die Addon-Einstellungen öffnen?</sys:String>
     <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">Um Tags von UVL herunterzuladen, müssen Sie sie mindestens einmal aktualisieren. Möchten Sie das jetzt tun? Es sollte nur ein paar Sekunden dauern.</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataMatchingScorePerfect">Perfekt</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreVeryGood">Sehr gut</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreGood">Gut</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreAcceptable">Akzeptabel</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScorePoor">Arm</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeLink">Link</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeName">Name</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeNameAndPlatform">Name und Plattform</sys:String>
+
     <sys:String x:Key="LOCUVLMetadataProgressRefreshingTags">Aktualisiere Tags...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressLoadingGames">Lade Spiele...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGames">Passende Spiele</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesMatching">Passen...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesPreparing">Vorbereiten...</sys:String>
+
     <sys:String x:Key="LOCUVLMetadataSearchDialog">wähle Spiel</sys:String>
-    <sys:String x:Key="LOCUVLMetadataSearchDialogCover">wähle Coverbild</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogBackground">wähle Hintergrundbild</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSearchDialogCover">wähle Coverbild</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogUrlFound">Ein Spiel mit dieser URL wurde gefunden.</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataSettingsButtonTagsRefresh">Tags aktualisieren</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsButtonAuthenticate">Authentifizieren</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsButtonLogout">Abmelden</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthentication">Authentifizierung</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthenticationDescription">Um die Massenimport Funktion nutzen zu können, müssen Sie ein Konto in UVL haben und eingeloggt sein, weil nur angemeldete Benutzer auf die Seiten zugreifen können, die alle Spiele für einen Tag auflisten. Wenn Sie die Bulk-Import-Funktion nicht verwenden möchten, können Sie die Authentifizierung überspringen.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUse">Zu verwendende Beschreibung</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUseDescription">Wählen Sie die Art der Beschreibung für die Metadaten aus. Die andere wird als Fallback verwendet. Wenn beide verwendet werden sollen, werden sie durch eine horizontale Linie getrennt.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionDisplayTopPanelButton">Top Panel Taste für Massenimport anzeigen</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionDisplayTopPanelButtonDescription">Wenn aktiviert, wird im oberen Bereich eine Schaltfläche für den Import von Metadaten angezeigt. Sie können auch auf den Massenimport über das Erweiterungsmenü zugreifen.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionLastRefresh">Letzter Aktualisierung:</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionLastRefreshDescription">Um Tags von UVL zu importieren, müssen Sie sie mindestens einmal mit dieser Schaltfläche aktualisieren. Ich empfehle, sie einmal zu aktualisieren, um die Metadaten auf dem neuesten Stand zu halten, aber sie ändern sich meist nicht sehr häufig.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionOnlyUseFirstDescription">Nur erste Beschreibung verwenden</sys:String>
@@ -60,4 +97,9 @@
     <sys:String x:Key="LOCUVLMetadataTagCategoryTraditional">Traditionell</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryVehicle">Fahrzeuge</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryVideoGame">Videospiel</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataTagTypeConcept">Konzept</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagTypeEntity">Entität</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagTypeSeries">Serie</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagTypeTheme">Thema</sys:String>
 </ResourceDictionary>
