@@ -9,9 +9,10 @@
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Not Authenticated</sys:String>
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Checking Status...</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedName">Matched name</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedPlatform">Matched platform</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedRelease">Matched year</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedName">Matched Name</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedPlatform">Matched Platform</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedRelease">Matched Year</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingScore">Matching Score</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingType">Matched by</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportFoundGames">Found Games</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">Found Games for "{0}"</sys:String>
@@ -25,7 +26,14 @@
     <sys:String x:Key="LOCUVLMetadataMenuBulkImport">Bulk Import</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataDialogNoGamesFound">No games were found for the selected tag.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataDialogLoginRequired">You need to be logged in to your UVL account to use the bulk import. Do you want to open the addon settings?</sys:String>
     <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">To download tags from UVL you need to refresh them at least once. Do you want to do that now? It should only take a few seconds.</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataMatchingScorePerfect">Perfect</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreVeryGood">Very Good</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreGood">Good</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreAcceptable">Acceptable</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScorePoor">Poor</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataMatchingTypeLink">Link</sys:String>
     <sys:String x:Key="LOCUVLMetadataMatchingTypeName">Name</sys:String>
@@ -38,12 +46,13 @@
     <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesPreparing">Preparing...</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataSearchDialog">select game</sys:String>
-    <sys:String x:Key="LOCUVLMetadataSearchDialogCover">select cover image</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogBackground">select background image</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSearchDialogCover">select cover image</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogUrlFound">A game with that URL was found.</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataSettingsButtonTagsRefresh">Refresh tags</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsButtonAuthenticate">Authenticate</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsButtonLogout">Logout</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthentication">Authentication</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthenticationDescription">To be able to use the bulk import feature you need to have an account in UVL and be logged in, because only logged in users can access the pages listing all games for a tag. If you don't want to use the bulk import feature, you can skip authentication.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUse">Description to use</sys:String>

@@ -8,7 +8,8 @@ namespace UVLMetadata.Models;
 public class UVLItemOption : GenericItemOption
 {
     public string DeflatedName { get; set; }
-    public string Platform { get; set; }
+    public string PlatformName { get; set; }
+    public string PlatformSpecId { get; set; }
     public string ReleaseDate { get; set; }
     public string Url { get; set; }
 }

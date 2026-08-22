@@ -85,7 +85,13 @@ public class GameMatcher(List<Game> playniteGames)
                         foundByLink.TryAdd(uvlGame, linkMatches);
                     }
 
-                    _gamesPerNameAndPlatform.TryGetValue($"{uvlGame.DeflatedName}_{uvlGame.Platform.ToLower()}", out var nameAndPlatformMatches);
+                    _gamesPerNameAndPlatform.TryGetValue($"{uvlGame.DeflatedName}#{uvlGame.PlatformSpecId.ToLower()}", out var nameAndPlatformMatches);
+
+                    if (nameAndPlatformMatches is null || nameAndPlatformMatches.Count == 0)
+                    {
+                        _gamesPerNameAndPlatform.TryGetValue($"{uvlGame.DeflatedName}_{uvlGame.PlatformName.ToLower()}", out nameAndPlatformMatches);
+                    }
+
                     if (nameAndPlatformMatches != null && nameAndPlatformMatches.Count > 0)
                     {
                         foundByNameAndPlatform.TryAdd(uvlGame, nameAndPlatformMatches);
@@ -123,7 +129,6 @@ public class GameMatcher(List<Game> playniteGames)
                     foreach (var link in game.Links.Where(l => l.Url.Contains("uvlist.net", StringComparison.InvariantCultureIgnoreCase)))
                     {
                         var cleanedUrl = WebHelper.CleanUpUrl(link.Url);
-
                         AddGameByKey(_gamesPerLink, cleanedUrl, game.Id);
                     }
                 }
@@ -136,8 +141,7 @@ public class GameMatcher(List<Game> playniteGames)
                 {
                     foreach (var platform in game.Platforms)
                     {
-                        var nameAndPlatformKey = $"{deflatedName}_{platform.Name.ToLower()}";
-
+                        var nameAndPlatformKey = $"{deflatedName}{(platform.SpecificationId.IsNullOrEmpty() ? "_" + platform.Name.ToLower() : "#" + platform.SpecificationId.ToLower())}";
                         AddGameByKey(_gamesPerNameAndPlatform, nameAndPlatformKey, game.Id);
                     }
                 }
@@ -174,12 +178,12 @@ public class GameMatcher(List<Game> playniteGames)
 
                     MatchedGames.Add(gameId, new MatchedGame
                     {
-                        MatchingType = matchingType,
                         PlayniteGame = new GameEx(game)
                         {
                             Platforms = string.Join(", ", game.Platforms?.Select(x => x.Name).ToList() ?? [])
                         },
-                        UVLGame = match.Key
+                        UVLGame = match.Key,
+                        MatchingType = matchingType
                     });
                 }
             }

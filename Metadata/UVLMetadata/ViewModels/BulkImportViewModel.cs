@@ -130,6 +130,23 @@ public class BulkImportViewModel : ObservableObject
 
     public static void ShowWindow(UVLMetadata plugin)
     {
+        if (plugin.Settings.IsAuthenticated != AuthenticationStatus.Authenticated)
+        {
+            if (API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCUVLMetadataDialogLoginRequired"), "UVL", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                plugin.OpenSettingsView();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        if (plugin.Settings.IsAuthenticated != AuthenticationStatus.Authenticated)
+        {
+            return;
+        }
+
         System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
 
         try
@@ -211,27 +228,34 @@ public class BulkImportViewModel : ObservableObject
 
             foreach (var game in matchedGames)
             {
-                if (game is null)
+                try
                 {
-                    continue;
-                }
-
-                if (typeManager.AddValueToGame(game.PlayniteGame.Game, fieldId))
-                {
-                    gamesAffected.AddMissing(game.PlayniteGame.Game);
-                }
-
-                if (ImportLink && !(game.PlayniteGame.Game.Links?.Any(x => x.Url.Contains("uvlist.net")) ?? false))
-                {
-                    game.PlayniteGame.Game.Links ??= [];
-
-                    game.PlayniteGame.Game.Links.Add(new Link()
+                    if (game is null)
                     {
-                        Name = "UVL",
-                        Url = game.UVLGame.Url
-                    });
+                        continue;
+                    }
 
-                    gamesAffected.AddMissing(game.PlayniteGame.Game);
+                    if (typeManager.AddValueToGame(game.PlayniteGame.Game, fieldId))
+                    {
+                        gamesAffected.AddMissing(game.PlayniteGame.Game);
+                    }
+
+                    if (ImportLink && !(game.PlayniteGame.Game.Links?.Any(x => x.Url.Contains("uvlist.net")) ?? false))
+                    {
+                        game.PlayniteGame.Game.Links ??= [];
+
+                        game.PlayniteGame.Game.Links.Add(new Link()
+                        {
+                            Name = "UVL",
+                            Url = game.UVLGame.Url
+                        });
+
+                        gamesAffected.AddMissing(game.PlayniteGame.Game);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.Error(exception, $"Error during importing {typeManager.LabelSingular} {FieldValue} for game {game.PlayniteGame.Game.Name}", true);
                 }
             }
 

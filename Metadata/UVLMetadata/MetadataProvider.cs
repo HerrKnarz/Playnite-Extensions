@@ -10,21 +10,20 @@ using UVLMetadata.Parser;
 
 namespace UVLMetadata;
 
-public class MetadataProvider(MetadataRequestOptions options, PluginSettings settings, IPlayniteAPI playniteApi, UVLConnect uvlConnect) : OnDemandMetadataProvider
+public class MetadataProvider(MetadataRequestOptions options, UVLMetadata plugin) : OnDemandMetadataProvider
 {
     private UVLGameMetadata _foundGame;
 
     public override List<MetadataField> AvailableFields => UVLMetadata.Fields;
-
-    //public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args) => GetImage(MetadataField.BackgroundImage, args);
-
-    //public override MetadataFile GetCoverImage(GetMetadataFieldArgs args) => GetImage(MetadataField.CoverImage, args);
 
     public override IEnumerable<MetadataProperty> GetAgeRatings(GetMetadataFieldArgs args)
     {
         var ageRatings = FindGame().AgeRatings;
         return ageRatings?.Any() ?? false ? ageRatings : base.GetAgeRatings(args);
     }
+
+    //public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args) => GetImage(MetadataField.BackgroundImage, args);
+    //public override MetadataFile GetCoverImage(GetMetadataFieldArgs args) => GetImage(MetadataField.CoverImage, args);
 
     public override int? GetCriticScore(GetMetadataFieldArgs args)
     {
@@ -107,27 +106,28 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
         }
 
         _foundGame = new UVLGameMetadata();
-        uvlConnect.searchedDocument = null;
+        plugin.UVLConnect.searchedDocument = null;
 
         try
         {
-            if (settings.LastTagRefresh == DateTime.MinValue && API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCUVLMetadataDialogRefreshTags"), "UVL", System.Windows.MessageBoxButton.YesNo) == System.Windows.MessageBoxResult.Yes)
+            if (plugin.Settings.Settings.LastTagRefresh == DateTime.MinValue && API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCUVLMetadataDialogRefreshTags"), "UVL", System.Windows.MessageBoxButton.YesNo) == System.Windows.MessageBoxResult.Yes)
             {
-                uvlConnect.RefreshTags();
-                settings.LastTagRefresh = DateTime.Now;
+                plugin.UVLConnect.RefreshTags();
+                plugin.Settings.Settings.LastTagRefresh = DateTime.Now;
             }
 
             string url;
 
             if (options.IsBackgroundDownload)
             {
-                url = uvlConnect.FindGame(options.GameData)?.Url;
+                url = plugin.UVLConnect.FindGame(options.GameData)?.Url;
             }
             else
             {
-                var chosen = playniteApi.Dialogs.ChooseItemWithSearch(null, uvlConnect.GetSearchResults,
-                                                      options.GameData.Name,
-                                                      $"UVL: {ResourceProvider.GetString("LOCUVLMetadataSearchDialog")}");
+                var chosen = API.Instance.Dialogs.ChooseItemWithSearch(null,
+                    plugin.UVLConnect.GetSearchResults,
+                    options.GameData.Name,
+                    $"UVL: {ResourceProvider.GetString("LOCUVLMetadataSearchDialog")}");
 
                 if (chosen is not UVLItemOption option)
                 {
@@ -137,17 +137,17 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
                 url = option.Url;
             }
 
-            if (url != string.Empty)
+            if (!url.IsNullOrEmpty())
             {
-                var uvlGamePageParser = new GamePageParser(settings, uvlConnect);
+                var uvlGamePageParser = new GamePageParser(plugin.Settings.Settings, plugin.UVLConnect);
 
-                if (uvlConnect.searchedDocument is null)
+                if (plugin.UVLConnect.searchedDocument is null)
                 {
-                    uvlGamePageParser.Parse(url, uvlConnect.GetGameData(url));
+                    uvlGamePageParser.Parse(url, plugin.UVLConnect.GetGameData(url));
                 }
                 else
                 {
-                    uvlGamePageParser.Parse(url, uvlConnect.searchedDocument);
+                    uvlGamePageParser.Parse(url, plugin.UVLConnect.searchedDocument);
                 }
 
                 return _foundGame = uvlGamePageParser.GameMetadata;
@@ -213,7 +213,7 @@ public class MetadataProvider(MetadataRequestOptions options, PluginSettings set
         {
             var galleryParser = new GalleryParser();
 
-            var galleryData = uvlConnect.LoadDocument(_foundGame.GalleryUrl);
+            var galleryData = plugin.UVLConnect.LoadDocument(_foundGame.GalleryUrl);
 
             _foundGame.FoundImages = galleryParser.Parse(galleryData);
         }

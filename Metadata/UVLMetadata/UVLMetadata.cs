@@ -60,7 +60,7 @@ public class UVLMetadata : MetadataPlugin
         Tags.LoadFromFile();
     }
 
-    public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
+    public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", @"uvl-logo-white.png");
     public override Guid Id { get; } = Guid.Parse("b825766b-c151-43cd-a918-7322fdc1868f");
 
     public override string Name => "UVL";
@@ -90,7 +90,7 @@ public class UVLMetadata : MetadataPlugin
         return menuItems;
     }
 
-    public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, Settings.Settings, PlayniteApi, UVLConnect);
+    public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, this);
 
     public override ISettings GetSettings(bool firstRunSettings) => Settings;
 

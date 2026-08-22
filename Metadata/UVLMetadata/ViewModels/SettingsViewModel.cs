@@ -37,6 +37,13 @@ public class SettingsViewModel : ObservableObject, ISettings
 
     public ICommand AuthenticateCommand => _authenticateCommand ??= new RelayCommand(Authenticate);
 
+    public string AuthenticationButtonText => IsAuthenticated switch
+    {
+        AuthenticationStatus.Authenticated => ResourceProvider.GetString("LOCUVLMetadataSettingsButtonLogout"),
+        AuthenticationStatus.NotAuthenticated => ResourceProvider.GetString("LOCUVLMetadataSettingsButtonAuthenticate"),
+        _ => ResourceProvider.GetString("LOCUVLMetadataSettingsButtonAuthenticate")
+    };
+
     public string AuthenticationStatusText => IsAuthenticated switch
     {
         AuthenticationStatus.Authenticated => ResourceProvider.GetString("LOCUVLMetadataAuthenticationStatusAuthenticated"),
@@ -60,8 +67,21 @@ public class SettingsViewModel : ObservableObject, ISettings
 
     public AuthenticationStatus IsAuthenticated
     {
-        get;
-        set => SetValue(ref field, value);
+        get
+        {
+            if (field == AuthenticationStatus.Unknown)
+            {
+                field = _plugin.UVLConnect.IsUserLoggedIn();
+            }
+
+            return field;
+        }
+        set
+        {
+            SetValue(ref field, value);
+            OnPropertyChanged(nameof(AuthenticationButtonText));
+            OnPropertyChanged(nameof(AuthenticationStatusText));
+        }
     } = AuthenticationStatus.Unknown;
 
     public Dictionary<RatingToUse, string> RatingToUseModes { get; } = new()
@@ -80,7 +100,11 @@ public class SettingsViewModel : ObservableObject, ISettings
 
     public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
 
-    public void CancelEdit() => Settings = EditingClone;
+    public void CancelEdit()
+    {
+        Settings = EditingClone;
+        PrepareTagCategories();
+    }
 
     public async void CheckAuthenticationStatus()
     {
@@ -123,7 +147,26 @@ public class SettingsViewModel : ObservableObject, ISettings
         return true;
     }
 
-    private void Authenticate() => IsAuthenticated = _plugin.UVLConnect.Authenticate();
+    private void Authenticate()
+    {
+        if (IsAuthenticated == AuthenticationStatus.Authenticated)
+        {
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+
+            try
+            {
+                IsAuthenticated = _plugin.UVLConnect.Logout();
+            }
+            finally
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            }
+        }
+        else
+        {
+            IsAuthenticated = _plugin.UVLConnect.Authenticate();
+        }
+    }
 
     private void RefreshTags()
     {

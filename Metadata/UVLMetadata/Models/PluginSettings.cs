@@ -54,11 +54,11 @@ public class BulkImportSettings : ObservableObject
     {
         get;
         set => SetValue(ref field, value);
-    } = 600;
+    } = 700;
 
     public int WindowWidth
     {
         get;
         set => SetValue(ref field, value);
-    } = 800;
+    } = 1000;
 }

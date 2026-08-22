@@ -30,10 +30,9 @@
                                       MinLabelWidth="100">
                         <DockPanel>
                             <Button VerticalAlignment="Center"
-                                    Margin="0,0,10,0"
-                                    Width="100"
+                                    Margin="10,0,0,0"
                                     DockPanel.Dock="Right"
-                                    Content="{DynamicResource LOCUVLMetadataSettingsButtonAuthenticate}"
+                                    Content="{Binding AuthenticationButtonText}"
                                     Command="{Binding AuthenticateCommand}" />
                             <TextBlock Text="{Binding AuthenticationStatusText}"
                                        VerticalAlignment="Center"
@@ -116,8 +115,7 @@
                         <DockPanel>
                             <Button Name="BtnRefreshTags"
                                     VerticalAlignment="Center"
-                                    Margin="0,0,10,0"
-                                    Width="100"
+                                    Margin="10,0,0,0"
                                     DockPanel.Dock="Right"
                                     Content="{DynamicResource LOCUVLMetadataSettingsButtonTagsRefresh}"
                                     Command="{Binding RefreshTagsCommand}" />

@@ -12,7 +12,7 @@
              mc:Ignorable="d"
              d:Background="LightGray"
              d:DesignHeight="600"
-             d:DesignWidth="900">
+             d:DesignWidth="1000">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -280,33 +280,85 @@
                             <DataGridTextColumn Header="{DynamicResource LOCGameNameTitle}"
                                                 d:Header="Name"
                                                 Binding="{Binding PlayniteGame.Game.Name}"
+                                                ToolTipService.ToolTip="{Binding PlayniteGame.Game.Name}"
                                                 MinWidth="50"
                                                 SortDirection="Ascending"
                                                 SortMemberPath="PlayniteGame.RealSortingName" />
                             <DataGridTextColumn Header="{DynamicResource LOCGameReleaseYearTitle}"
                                                 d:Header="Year"
                                                 Binding="{Binding PlayniteGame.Game.ReleaseYear}"
-                                                Width="SizeToCells" />
+                                                Width="SizeToHeader" />
                             <DataGridTextColumn Header="{DynamicResource LOCPlatformsTitle}"
                                                 d:Header="Platforms"
                                                 Binding="{Binding PlayniteGame.Platforms}"
+                                                ToolTipService.ToolTip="{Binding PlayniteGame.Platforms}"
                                                 MinWidth="50" />
                             <DataGridTextColumn Header="{DynamicResource LOCUVLMetadataBulkImportCaptionMatchedName}"
                                                 d:Header="Matched name"
                                                 Binding="{Binding UVLGame.Name}"
+                                                ToolTipService.ToolTip="{Binding UVLGame.Name}"
                                                 MinWidth="50" />
                             <DataGridTextColumn Header="{DynamicResource LOCUVLMetadataBulkImportCaptionMatchedRelease}"
                                                 d:Header="Matched year"
                                                 Binding="{Binding UVLGame.ReleaseDate}"
-                                                Width="SizeToCells" />
+                                                Width="SizeToHeader" />
                             <DataGridTextColumn Header="{DynamicResource LOCUVLMetadataBulkImportCaptionMatchedPlatform}"
                                                 d:Header="Matched platform"
-                                                Binding="{Binding UVLGame.Platform}"
-                                                MinWidth="50" />
+                                                Binding="{Binding UVLGame.PlatformName}" />
                             <DataGridTextColumn Header="{DynamicResource LOCUVLMetadataBulkImportCaptionMatchingType}"
                                                 d:Header="Matched by"
-                                                Binding="{Binding MatchingTypeCaption}"
-                                                MinWidth="50" />
+                                                Binding="{Binding MatchingTypeCaption}" />
+
+                            <DataGridTextColumn Header="{DynamicResource LOCUVLMetadataBulkImportCaptionMatchingScore}"
+                                                d:Header="Matching Score"
+                                                Binding="{Binding MatchingScoreCaption}"
+                                                Width="SizeToHeader"
+                                                SortMemberPath="MatchingScore">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock"
+                                           BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Setter Property="Padding"
+                                                Value="4, 2, 2, 2" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding MatchingScore}"
+                                                         Value="{x:Static localModels:MatchingScore.Perfect}">
+                                                <Setter Property="Background"
+                                                        Value="DarkGreen" />
+                                                <Setter Property="Foreground"
+                                                        Value="LightGreen" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MatchingScore}"
+                                                         Value="{x:Static localModels:MatchingScore.VeryGood}">
+                                                <Setter Property="Background"
+                                                        Value="DarkGreen" />
+                                                <Setter Property="Foreground"
+                                                        Value="LightGreen" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MatchingScore}"
+                                                         Value="{x:Static localModels:MatchingScore.Good}">
+                                                <Setter Property="Background"
+                                                        Value="DarkGoldenrod" />
+                                                <Setter Property="Foreground"
+                                                        Value="LightGoldenrodYellow" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MatchingScore}"
+                                                         Value="{x:Static localModels:MatchingScore.Acceptable}">
+                                                <Setter Property="Background"
+                                                        Value="DarkGoldenrod" />
+                                                <Setter Property="Foreground"
+                                                        Value="LightGoldenrodYellow" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MatchingScore}"
+                                                         Value="{x:Static localModels:MatchingScore.Poor}">
+                                                <Setter Property="Background"
+                                                        Value="DarkRed" />
+                                                <Setter Property="Foreground"
+                                                        Value="LightSalmon" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </c:SettingsSection>

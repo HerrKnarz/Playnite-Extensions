@@ -101,9 +101,9 @@ public class UVLConnect(UVLMetadata plugin)
 
         var result =
             searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(compareName, StringComparison.InvariantCultureIgnoreCase)
-               && game.Platforms.Any(gp => gp.Name == ((UVLItemOption)p).Platform))
+               && game.Platforms.Any(gp => gp.SpecificationId == ((UVLItemOption)p).PlatformSpecId || gp.Name == ((UVLItemOption)p).PlatformName))
             ?? searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(searchName, StringComparison.InvariantCultureIgnoreCase)
-                && game.Platforms.Any(gp => gp.Name == ((UVLItemOption)p).Platform))
+                && game.Platforms.Any(gp => gp.SpecificationId == ((UVLItemOption)p).PlatformSpecId || gp.Name == ((UVLItemOption)p).PlatformName))
             ?? searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(compareName, StringComparison.InvariantCultureIgnoreCase))
             ?? searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(searchName, StringComparison.InvariantCultureIgnoreCase));
 
@@ -280,6 +280,28 @@ public class UVLConnect(UVLMetadata plugin)
         return document;
     }
 
+    public AuthenticationStatus Logout()
+    {
+        try
+        {
+            var logoutUrl = $"{Resources.WebsiteUrl}/r/user.php?a=logout";
+            var urlLoadResult = _linkWorker.LoadUrl(logoutUrl, DocumentType.Empty, true);
+
+            if ((urlLoadResult.StatusCode != HttpStatusCode.RedirectMethod) || urlLoadResult.ErrorDetails.Length > 0)
+            {
+                Log.Debug($"Failed to logout: {logoutUrl} - {urlLoadResult.StatusCode}");
+                return AuthenticationStatus.Authenticated;
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex);
+            return AuthenticationStatus.Authenticated;
+        }
+
+        return AuthenticationStatus.NotAuthenticated;
+    }
+
     public void RefreshTags()
     {
         Cursor.Current = Cursors.WaitCursor;
@@ -312,6 +334,7 @@ public class UVLConnect(UVLMetadata plugin)
 
                         if (category.Value.Url.IsNullOrEmpty())
                         {
+                            Log.Debug($"Skipping tag category {category.Value.Name} because it has no URL defined.");
                             continue;
                         }
 
@@ -351,7 +374,7 @@ public class UVLConnect(UVLMetadata plugin)
 
         PlatformHelper.RefreshPlatformList(API.Instance.Database.Platforms);
 
-        var dateSelector = isDetailSearch ? "td:nth-child(3)" : "td:nth-child(1)";
+        var dateSelector = isDetailSearch ? "td:nth-child(3)" : "td:nth-child(2)";
         var platformSelector = isDetailSearch ? "td:nth-child(4)" : "td:nth-child(3)";
         var companySelector = isDetailSearch ? "td:nth-child(2)" : "td:nth-child(4)";
 
@@ -359,21 +382,26 @@ public class UVLConnect(UVLMetadata plugin)
 
         foreach (var row in results)
         {
-            var platform = row.QuerySelector(platformSelector)?.TextContent;
+            var platformName = row.QuerySelector(platformSelector)?.TextContent;
+            var platformSpecId = string.Empty;
 
-            if (!platform.IsNullOrEmpty())
+            if (!platformName.IsNullOrEmpty())
             {
-                var foundPlatform = PlatformHelper.GetPlatforms(platform).FirstOrDefault();
+                var foundPlatform = PlatformHelper.GetPlatforms(platformName).FirstOrDefault();
 
                 if (foundPlatform != null)
                 {
                     if (foundPlatform is MetadataSpecProperty specProperty)
                     {
-                        platform = API.Instance.Database.Platforms.FirstOrDefault(p => p.SpecificationId == specProperty.Id)?.Name ?? platform;
+                        var foundPlatformInDb = API.Instance.Database.Platforms.Where(p => p.SpecificationId == specProperty.Id)?
+                            .OrderBy(p => p.Name == "Arcade" ? 0 : 1).ThenBy(p => p.Name).FirstOrDefault();
+
+                        platformName = foundPlatformInDb?.Name ?? platformName;
+                        platformSpecId = foundPlatformInDb?.SpecificationId ?? platformSpecId;
                     }
                     else if (foundPlatform is MetadataNameProperty nameProperty)
                     {
-                        platform = nameProperty.Name;
+                        platformName = nameProperty.Name;
                     }
                 }
             }
@@ -383,8 +411,9 @@ public class UVLConnect(UVLMetadata plugin)
                 Name = WebUtility.HtmlDecode(row.QuerySelector("td:nth-child(1) a")?.TextContent),
                 Url = Resources.WebsiteUrl + row.QuerySelector("td:nth-child(1) a")?.GetAttribute("href"),
                 ReleaseDate = row.QuerySelector(dateSelector)?.TextContent,
-                Platform = platform,
-                Description = WebUtility.HtmlDecode($"{row.QuerySelector(dateSelector)?.TextContent} - {platform} - {row.QuerySelector(companySelector)?.TextContent}")
+                PlatformName = platformName,
+                PlatformSpecId = platformSpecId,
+                Description = WebUtility.HtmlDecode($"{row.QuerySelector(dateSelector)?.TextContent} - {platformName} - {row.QuerySelector(companySelector)?.TextContent}")
             });
         }
 
