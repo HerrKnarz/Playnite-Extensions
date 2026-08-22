@@ -1,7 +1,10 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Windows.Controls;
 using UVLMetadata.Models;
 using UVLMetadata.ViewModels;
@@ -44,9 +47,20 @@ public class UVLMetadata : MetadataPlugin
             HasSettings = true
         };
 
+        var iconResourcesToAdd = new Dictionary<string, string>
+            {
+                { "tagCategoryIcon", "\xf005" }
+            };
+
+        foreach (var iconResource in iconResourcesToAdd)
+        {
+            MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+        }
+
         Tags.LoadFromFile();
     }
 
+    public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", @"uvl-logo-white.png");
     public override Guid Id { get; } = Guid.Parse("b825766b-c151-43cd-a918-7322fdc1868f");
 
     public override string Name => "UVL";
@@ -59,9 +73,41 @@ public class UVLMetadata : MetadataPlugin
 
     public UVLConnect UVLConnect { get; }
 
-    public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, Settings.Settings, PlayniteApi, UVLConnect);
+    public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+    {
+        var menuSection = ResourceProvider.GetString("LOCUVLMetadataName");
+
+        var menuItems = new List<MainMenuItem>
+            {
+                new() {
+                    Description = ResourceProvider.GetString("LOCUVLMetadataMenuBulkImport"),
+                    MenuSection = $"@{menuSection}",
+                    Icon = "tagCategoryIcon",
+                    Action = a => BulkImportViewModel.ShowWindow(this)
+                }
+            };
+
+        return menuItems;
+    }
+
+    public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options) => new MetadataProvider(options, this);
 
     public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
     public override UserControl GetSettingsView(bool firstRunSettings) => new SettingsView();
+
+    public override IEnumerable<TopPanelItem> GetTopPanelItems()
+    {
+        if (!Settings.Settings.DisplayTopPanelButton)
+        {
+            yield break;
+        }
+
+        yield return new TopPanelItem
+        {
+            Title = ResourceProvider.GetString("LOCUVLMetadataMenuBulkImport"),
+            Icon = Icon,
+            Activated = () => BulkImportViewModel.ShowWindow(this)
+        };
+    }
 }

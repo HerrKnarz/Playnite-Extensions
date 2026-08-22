@@ -3,14 +3,13 @@
 namespace UVLMetadata.Models;
 
 /// <summary>
-/// Search results for UVL searches with added key property.
+/// Search results for UVL searches with added properties needed to process them.
 /// </summary>
 public class UVLItemOption : GenericItemOption
 {
-    public string Platform;
-
-    /// <summary>
-    /// unique URL of the page
-    /// </summary>
-    public string Url;
+    public string DeflatedName { get; set; }
+    public string PlatformName { get; set; }
+    public string PlatformSpecId { get; set; }
+    public string ReleaseDate { get; set; }
+    public string Url { get; set; }
 }
