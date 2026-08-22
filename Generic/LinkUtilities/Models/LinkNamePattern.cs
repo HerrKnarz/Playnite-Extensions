@@ -16,7 +16,8 @@ namespace LinkUtilities.Models
         public string LinkName { get; set; }
 
         /// <summary>
-        /// Pattern the link title has to match. Can contain wildcards * (zero or more characters) or ? (exactly one character).
+        /// Pattern the link title has to match. Can contain wildcards * (zero or more characters)
+        /// or ? (exactly one character).
         /// </summary>
         [SerializationPropertyName("namePattern")]
         public string NamePattern { get; set; }
@@ -40,7 +41,8 @@ namespace LinkUtilities.Models
         public int? Position { get; set; }
 
         /// <summary>
-        /// Pattern the URL has to match. Can contain wildcards * (zero or more characters) or ? (exactly one character).
+        /// Pattern the URL has to match. Can contain wildcards * (zero or more characters) or ?
+        /// (exactly one character).
         /// </summary>
         [SerializationPropertyName("urlPattern")]
         public string UrlPattern { get; set; }
@@ -54,8 +56,8 @@ namespace LinkUtilities.Models
         public bool LinkMatch(string linkName, string linkUrl, bool overridePartialMatch = false)
             => overridePartialMatch || PartialMatch
                 ? (!string.IsNullOrWhiteSpace(NamePattern) && Regex.IsMatch(linkName, NameRegEx)) ||
-                  (!string.IsNullOrWhiteSpace(UrlPattern) && Regex.IsMatch(linkUrl, UrlRegEx))
+                  (!string.IsNullOrWhiteSpace(UrlPattern) && Regex.IsMatch(linkUrl ?? string.Empty, UrlRegEx))
                 : (string.IsNullOrWhiteSpace(NamePattern) || Regex.IsMatch(linkName, NameRegEx)) &&
-                  (string.IsNullOrWhiteSpace(UrlPattern) || Regex.IsMatch(linkUrl, UrlRegEx));
+                  (string.IsNullOrWhiteSpace(UrlPattern) || Regex.IsMatch(linkUrl ?? string.Empty, UrlRegEx));
     }
 }
