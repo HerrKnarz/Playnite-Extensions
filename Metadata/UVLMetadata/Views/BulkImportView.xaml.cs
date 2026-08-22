@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace UVLMetadata.Views
 {
     /// <summary>
-    /// Interaction logic for TagCategorySelector.xaml
+    /// Interaction logic for BulkImportView.xaml
     /// </summary>
     public partial class BulkImportView : UserControl
     {
@@ -14,10 +14,5 @@ namespace UVLMetadata.Views
         }
 
         private void ClearSearchBox(object sender, RoutedEventArgs e) => SearchBox.Clear();
-
-        private void Button_Click()
-        {
-
-        }
     }
 }

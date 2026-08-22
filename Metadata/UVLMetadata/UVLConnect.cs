@@ -367,9 +367,11 @@ public class UVLConnect(UVLMetadata plugin)
 
     private List<UVLItemOption> ProcessSearchResults(IHtmlCollection<IElement> results, bool isDetailSearch = false)
     {
+        var resultList = new List<UVLItemOption>();
+
         if (!results?.Any() ?? true)
         {
-            return null;
+            return resultList;
         }
 
         PlatformHelper.RefreshPlatformList(API.Instance.Database.Platforms);
@@ -377,8 +379,6 @@ public class UVLConnect(UVLMetadata plugin)
         var dateSelector = isDetailSearch ? "td:nth-child(3)" : "td:nth-child(2)";
         var platformSelector = isDetailSearch ? "td:nth-child(4)" : "td:nth-child(3)";
         var companySelector = isDetailSearch ? "td:nth-child(2)" : "td:nth-child(4)";
-
-        var resultList = new List<UVLItemOption>();
 
         foreach (var row in results)
         {

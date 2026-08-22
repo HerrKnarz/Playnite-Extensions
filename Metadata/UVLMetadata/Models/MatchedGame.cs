@@ -21,8 +21,6 @@ public enum MatchingType
     NameAndPlatform
 }
 
-//NEXT: Add color coding to the score field in the view!
-
 public class MatchedGame : ObservableObject
 {
     public MatchingScore MatchingScore

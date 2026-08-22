@@ -216,6 +216,12 @@ public class BulkImportViewModel : ObservableObject
         }
 
         var typeManager = GetTypeManager();
+
+        if (typeManager is null)
+        {
+            return;
+        }
+
         var gamesAffected = new List<Game>();
 
         System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;

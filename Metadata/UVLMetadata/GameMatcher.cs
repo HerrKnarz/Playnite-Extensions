@@ -32,12 +32,12 @@ public class GameMatcher(List<Game> playniteGames)
         WhitespacesToHyphens = true
     };
 
+    private readonly ConcurrentDictionary<string, IList<Guid>> _gamesPerLink = new();
+    private readonly ConcurrentDictionary<string, IList<Guid>> _gamesPerName = new();
+    private readonly ConcurrentDictionary<string, IList<Guid>> _gamesPerNameAndPlatform = new();
+    private readonly int _maxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 1.5));
+    private bool _isPrepared = false;
     public Dictionary<Guid, MatchedGame> MatchedGames { get; set; } = [];
-    private ConcurrentDictionary<string, IList<Guid>> _gamesPerLink { get; set; } = new ConcurrentDictionary<string, IList<Guid>>();
-    private ConcurrentDictionary<string, IList<Guid>> _gamesPerName { get; set; } = new ConcurrentDictionary<string, IList<Guid>>();
-    private ConcurrentDictionary<string, IList<Guid>> _gamesPerNameAndPlatform { get; set; } = new ConcurrentDictionary<string, IList<Guid>>();
-    private bool _isPrepared { get; set; } = false;
-    private int _maxDegreeOfParallelism { get; set; } = Convert.ToInt32(Math.Ceiling(Environment.ProcessorCount * 1.5));
 
     public void MatchGames(List<UVLItemOption> uvlGames)
     {
@@ -85,11 +85,11 @@ public class GameMatcher(List<Game> playniteGames)
                         foundByLink.TryAdd(uvlGame, linkMatches);
                     }
 
-                    _gamesPerNameAndPlatform.TryGetValue($"{uvlGame.DeflatedName}#{uvlGame.PlatformSpecId.ToLower()}", out var nameAndPlatformMatches);
+                    _gamesPerNameAndPlatform.TryGetValue($"{uvlGame.DeflatedName}#{uvlGame.PlatformSpecId?.ToLowerInvariant()}", out var nameAndPlatformMatches);
 
                     if (nameAndPlatformMatches is null || nameAndPlatformMatches.Count == 0)
                     {
-                        _gamesPerNameAndPlatform.TryGetValue($"{uvlGame.DeflatedName}_{uvlGame.PlatformName.ToLower()}", out nameAndPlatformMatches);
+                        _gamesPerNameAndPlatform.TryGetValue($"{uvlGame.DeflatedName}_{uvlGame.PlatformName?.ToLowerInvariant()}", out nameAndPlatformMatches);
                     }
 
                     if (nameAndPlatformMatches != null && nameAndPlatformMatches.Count > 0)
