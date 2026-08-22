@@ -180,7 +180,7 @@ public class SettingsViewModel : ObservableObject, ISettings
         {
             var winParent = MiscHelper.FindParent<Window>((FrameworkElement)sender);
 
-            if (winParent.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
+            if (winParent?.DataContext?.GetType().GetProperty("IsRestartRequired") != null)
             {
                 ((dynamic)winParent.DataContext).IsRestartRequired = true;
             }

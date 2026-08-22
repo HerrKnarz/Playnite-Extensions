@@ -92,6 +92,13 @@ public class BulkImportViewModel : ObservableObject
 
             OnPropertyChanged(nameof(FoundGamesSectionCaption));
 
+            if (MatchedTag is null)
+            {
+                FieldType = MetadataField.Tags;
+                FieldValue = string.Empty;
+                return;
+            }
+
             _plugin.Settings.Settings.TagCategories.TryGetValue(MatchedTag?.Category ?? 0, out var tagCategory);
 
             var fieldName = string.Empty;
@@ -246,7 +253,7 @@ public class BulkImportViewModel : ObservableObject
                         gamesAffected.AddMissing(game.PlayniteGame.Game);
                     }
 
-                    if (ImportLink && !(game.PlayniteGame.Game.Links?.Any(x => x.Url.Contains("uvlist.net")) ?? false))
+                    if (ImportLink && !(game.PlayniteGame.Game.Links?.Any(x => x.Url?.Contains("uvlist.net") ?? false) ?? false))
                     {
                         game.PlayniteGame.Game.Links ??= [];
 
@@ -261,7 +268,7 @@ public class BulkImportViewModel : ObservableObject
                 }
                 catch (Exception exception)
                 {
-                    Log.Error(exception, $"Error during importing {typeManager.LabelSingular} {FieldValue} for game {game.PlayniteGame.Game.Name}", true);
+                    Log.Error(exception, $"Error during importing {typeManager.LabelSingular} {FieldValue} for game {game.PlayniteGame.Game.Name}");
                 }
             }
 

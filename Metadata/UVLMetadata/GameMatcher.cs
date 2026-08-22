@@ -12,14 +12,6 @@ using UVLMetadata.Models;
 
 namespace UVLMetadata;
 
-public class MatchValues
-{
-    public Guid Id { get; set; }
-    public string Link { get; set; }
-    public string Name { get; set; }
-    public string Platform { get; set; }
-}
-
 public class GameMatcher(List<Game> playniteGames)
 {
     private readonly StringFormatParameters _formatParameters = new()
@@ -157,9 +149,12 @@ public class GameMatcher(List<Game> playniteGames)
     {
         dictionary.AddOrUpdate(key, [gameId], (_, existing) =>
         {
-            if (!existing.Contains(gameId))
+            lock (existing)
             {
-                existing.Add(gameId);
+                if (!existing.Contains(gameId))
+                {
+                    existing.Add(gameId);
+                }
             }
 
             return existing;
