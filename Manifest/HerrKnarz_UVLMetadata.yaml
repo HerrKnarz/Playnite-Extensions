@@ -1,5 +1,13 @@
 AddonId: UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f
 Packages:
+  - Version: 0.6.0
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-08-22
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-08-22/UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f_0_6_0.pext
+    Changelog:
+      - Added bulk import functionality
+      - Fixed some parsing issues adding wrong links etc. for users that have edit rights on UVL
+      - Refined platform matching
   - Version: 0.5.0
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-08-10
