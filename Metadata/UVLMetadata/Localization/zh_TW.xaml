@@ -3,16 +3,60 @@
 
     <sys:String x:Key="LOCUVLMetadataName">UVL Metadata</sys:String>
 
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusAuthenticated">Authenticated</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Not Authenticated</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Checking Status...</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedName">Matched Name</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedPlatform">Matched Platform</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedRelease">Matched Year</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingScore">Matching Score</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingType">Matched by</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGames">Found Games</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">Found Games for &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportGamesAffected">Added {0} to {1} games!</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImport">Import</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImportAs">Import As</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImportLink">Import Link</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSearchGames">Search Games</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSearchTag">Search Tag</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSelect">Select</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMenuBulkImport">Bulk Import</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataDialogNoGamesFound">No games were found for the selected tag.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataDialogLoginRequired">You need to be logged in to your UVL account to use the bulk import. Do you want to open the addon settings?</sys:String>
     <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">To download tags from UVL you need to refresh them at least once. Do you want to do that now? It should only take a few seconds.</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataMatchingScorePerfect">Perfect</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreVeryGood">Very Good</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreGood">Good</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreAcceptable">Acceptable</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScorePoor">Poor</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeLink">Link</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeName">Name</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeNameAndPlatform">Name and Platform</sys:String>
+
     <sys:String x:Key="LOCUVLMetadataProgressRefreshingTags">Refreshing tags...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressLoadingGames">Loading games...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGames">Matching games</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesMatching">Matching...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesPreparing">Preparing...</sys:String>
+
     <sys:String x:Key="LOCUVLMetadataSearchDialog">select game</sys:String>
-    <sys:String x:Key="LOCUVLMetadataSearchDialogCover">select cover image</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogBackground">select background image</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSearchDialogCover">select cover image</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogUrlFound">A game with that URL was found.</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataSettingsButtonTagsRefresh">Refresh tags</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsButtonAuthenticate">Authenticate</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsButtonLogout">Logout</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthentication">Authentication</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthenticationDescription">To be able to use the bulk import feature you need to have an account in UVL and be logged in, because only logged in users can access the pages listing all games for a tag. If you don't want to use the bulk import feature, you can skip authentication.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUse">Description to use</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUseDescription">Select which type of description to use for the metadata. The other one will be used as a fallback. If both are to be used, they will be separated by a horizontal line.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionDisplayTopPanelButton">Display top panel button for bulk import</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionDisplayTopPanelButtonDescription">If enabled, a button will be displayed in the top panel for bulk importing metadata. You can also access the bulk import via the extensions menu.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionLastRefresh">Last refresh:</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionLastRefreshDescription">To import tags from UVL you need to refresh them using this button at least once. I recommend to refresh them once in a while to keep the metadata up to date, but they usually don't change very often.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionOnlyUseFirstDescription">Only use first description</sys:String>
@@ -32,6 +76,7 @@
     <sys:String x:Key="LOCUVLMetadataSettingsTagsImportAs">Import as</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataTagCategoryActivity">Activities</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagCategoryAdvisories">Advisories</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryCartoon">Cartoon</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryCulture">Culture</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryCreature">Creatures</sys:String>
@@ -52,4 +97,9 @@
     <sys:String x:Key="LOCUVLMetadataTagCategoryTraditional">Traditional</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryVehicle">Vehicles</sys:String>
     <sys:String x:Key="LOCUVLMetadataTagCategoryVideoGame">Video Game</sys:String>
+
+    <sys:String x:Key="LOCUVLMetadataTagTypeConcept">Concept</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagTypeEntity">Entity</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagTypeSeries">Series</sys:String>
+    <sys:String x:Key="LOCUVLMetadataTagTypeTheme">Theme</sys:String>
 </ResourceDictionary>
