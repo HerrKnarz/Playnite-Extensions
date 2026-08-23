@@ -23,10 +23,10 @@
     <sys:String x:Key="LOCWikipediaMetadataSettingsRatingHighest">Höchste Wertung</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsRatingAverage">Durchschnitt aller Wertungen</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsAddValue">Wert hinzufügen</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsShowTopPanelCategoryImportButton">Schaltfläche für den Import der oberen Kategorie anzeigen</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsParallelismLabel">Parellelism:</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsParallelismExplanation">Der Parallelismus bestimmt, wie viele gleichzeitige Threads verwendet werden können, um die Kategorie Import Spiel Matching zu verarbeiten. Es wird empfohlen, dies niedriger als die Anzahl der Kerne in Ihrer CPU zu setzen.</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataCategoryDownloadText">Laden Sie die Kategorie und ihre untergeordneten Kategorien herunter. Wikipedia unterstützt bis zu 100 Anfragen pro Minute, daher kann dies für Kategorien mit vielen Kind-Kategorien 1 oder mehr Minuten dauern. {0} Kategorien heruntergeladen.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsShowTopPanelCategoryImportButton">Button für den Import in der oberen Leiste anzeigen</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsParallelismLabel">Parallelität:</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsParallelismExplanation">Die Parallelität bestimmt, wie viele gleichzeitige Threads verwendet werden können, um das Spiel-Matching im Kategorie-Import zu verarbeiten. Es wird empfohlen, dies niedriger als die Anzahl der Kerne in deiner CPU zu setzen.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataCategoryDownloadText">Lade die Kategorie und ihre untergeordneten Kategorien herunter. Wikipedia unterstützt bis zu 100 Anfragen pro Minute, daher kann dies für Kategorien mit vielen Kind-Kategorien 1 oder mehr Minuten dauern. {0} Kategorien heruntergeladen.</sys:String>
 
     <sys:String x:Key="LOCWikipediaMetadataSearchDialog">suche Spiel</sys:String>
 </ResourceDictionary>
