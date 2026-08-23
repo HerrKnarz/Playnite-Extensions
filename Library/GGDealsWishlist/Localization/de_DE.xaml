@@ -13,8 +13,8 @@
     <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyDiscounted">Nur reduzierte Spiele anzeigen</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountShowOnlyHistoricalLow">Nur historisch niedrige Preise anzeigen</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistDiscountSortBy">Sortieren nach</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistGroupByCompletionStatus">Abschlussstatus</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistGroupByNone">Keine</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistGroupByCompletionStatus">Spielfortschritt</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistGroupByNone">Nichts</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistGroupByShop">Shop</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistImageOptionGGDealsBanner">GG.Deals-Banner</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistImageOptionCover">Spielcover</sys:String>
