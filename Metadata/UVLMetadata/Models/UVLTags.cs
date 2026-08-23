@@ -31,7 +31,6 @@ public class UVLTags(UVLMetadata plugin) : List<UVLTag>
     /// <summary>
     /// Loads the tags from a JSON file with the same structure.
     /// </summary>
-    /// <param name="file">The JSON file to read from.</param>
     public void LoadFromFile()
     {
         Clear();
@@ -46,6 +45,8 @@ public class UVLTags(UVLMetadata plugin) : List<UVLTag>
         var tags = Serialization.FromJsonFile<List<UVLTag>>(file.FullName);
 
         AddRange(tags);
+
+        SetCategoryCaptions();
     }
 
     /// <summary>
@@ -61,5 +62,16 @@ public class UVLTags(UVLMetadata plugin) : List<UVLTag>
         var serializedData = Serialization.ToJson(this, true);
 
         FileHelper.WriteStringToFile(_fileName, serializedData, true);
+    }
+
+    public void SetCategoryCaptions()
+    {
+        foreach (var tag in this)
+        {
+            if (plugin.Settings.Settings.TagCategories.TryGetValue(tag.Category, out var category))
+            {
+                tag.CategoryCaption = category.Name;
+            }
+        }
     }
 }

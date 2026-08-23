@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Data;
+﻿using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 
 namespace UVLMetadata.Models
@@ -15,9 +16,14 @@ namespace UVLMetadata.Models
     {
         public TagCategoryId Category { get; set; }
 
-        public string Description { get; set; }
+        [DontSerialize]
+        public string CategoryCaption { get; set; } = string.Empty;
 
+        public string Description { get; set; }
         public int GameCount { get; set; } = 0;
+
+        [DontSerialize]
+        public string GamesCountFormatted => $"({GameCount})";
 
         public string Name
         {
@@ -47,6 +53,24 @@ namespace UVLMetadata.Models
 
         public string Slug { get; set; }
 
-        public TagType Type { get; set; }
+        public TagType Type
+        {
+            get;
+            set
+            {
+                field = value;
+                TypeCaption = value switch
+                {
+                    TagType.Series => ResourceProvider.GetString("LOCUVLMetadataTagTypeSeries"),
+                    TagType.Theme => ResourceProvider.GetString("LOCUVLMetadataTagTypeTheme"),
+                    TagType.Concept => ResourceProvider.GetString("LOCUVLMetadataTagTypeConcept"),
+                    TagType.Entity => ResourceProvider.GetString("LOCUVLMetadataTagTypeEntity"),
+                    _ => string.Empty,
+                };
+            }
+        }
+
+        [DontSerialize]
+        public string TypeCaption { get; set; } = string.Empty;
     }
 }

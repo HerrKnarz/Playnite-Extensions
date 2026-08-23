@@ -5,11 +5,23 @@ namespace UVLMetadata.Models;
 
 public class PluginSettings : ObservableObject
 {
+    public BulkImportSettings BulkImportSettings
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = new BulkImportSettings();
+
     public DescriptionToUse DescriptionToUse
     {
         get;
         set => SetValue(ref field, value);
     } = DescriptionToUse.Both;
+
+    public bool DisplayTopPanelButton
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = true;
 
     public DateTime LastTagRefresh
     {
@@ -34,4 +46,19 @@ public class PluginSettings : ObservableObject
         get;
         set => SetValue(ref field, value);
     } = [];
+}
+
+public class BulkImportSettings : ObservableObject
+{
+    public int WindowHeight
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = 700;
+
+    public int WindowWidth
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = 1000;
 }

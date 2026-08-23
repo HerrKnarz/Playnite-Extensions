@@ -1,15 +1,15 @@
-﻿<UserControl x:Class="UVLMetadata.UVLMetadataSettingsView"
+﻿<UserControl x:Class="UVLMetadata.Views.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:UVLmetadata="clr-namespace:UVLMetadata"
+             xmlns:UVLmetadata="clr-namespace:UVLMetadata.ViewModels"
              xmlns:c="clr-namespace:KNARZhelper.Controls"
-             d:DataContext="{d:DesignInstance Type=UVLmetadata:UVLMetadataSettingsViewModel}"
+             d:DataContext="{d:DesignInstance Type=UVLmetadata:SettingsViewModel}"
              mc:Ignorable="d"
              d:Background="LightGray"
              Padding="15, 10"
-             d:DesignHeight="800"
+             d:DesignHeight="1000"
              d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -25,6 +25,21 @@
         <StackPanel x:Name="spSettings">
             <c:SettingsSection Heading="{DynamicResource LOCUVLMetadataSettingsSectionGeneral}">
                 <StackPanel>
+                    <c:SettingsOption Heading="{DynamicResource LOCUVLMetadataSettingsCaptionAuthentication}"
+                                      Description="{DynamicResource LOCUVLMetadataSettingsCaptionAuthenticationDescription}"
+                                      MinLabelWidth="100">
+                        <DockPanel>
+                            <Button VerticalAlignment="Center"
+                                    Margin="10,0,0,0"
+                                    DockPanel.Dock="Right"
+                                    Content="{Binding AuthenticationButtonText}"
+                                    Command="{Binding AuthenticateCommand}" />
+                            <TextBlock Text="{Binding AuthenticationStatusText}"
+                                       VerticalAlignment="Center"
+                                       DockPanel.Dock="Left" />
+                        </DockPanel>
+                    </c:SettingsOption>
+
                     <c:SettingsOption Heading="{DynamicResource LOCUVLMetadataSettingsCaptionRatingToUse}"
                                       Description="{DynamicResource LOCUVLMetadataSettingsCaptionRatingToUseDescription}"
                                       MinLabelWidth="100">
@@ -100,8 +115,7 @@
                         <DockPanel>
                             <Button Name="BtnRefreshTags"
                                     VerticalAlignment="Center"
-                                    Margin="0,0,10,0"
-                                    Width="100"
+                                    Margin="10,0,0,0"
                                     DockPanel.Dock="Right"
                                     Content="{DynamicResource LOCUVLMetadataSettingsButtonTagsRefresh}"
                                     Command="{Binding RefreshTagsCommand}" />
@@ -110,6 +124,14 @@
                                        DockPanel.Dock="Left" />
                         </DockPanel>
                     </c:SettingsOption>
+
+                    <CheckBox IsChecked="{Binding Settings.DisplayTopPanelButton}"
+                              Content="{DynamicResource LOCUVLMetadataSettingsCaptionDisplayTopPanelButton}"
+                              Command="{Binding RestartRequiredCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                              Margin="0, 0, 0, 5" />
+                    <TextBlock Text="{DynamicResource LOCUVLMetadataSettingsCaptionDisplayTopPanelButtonDescription}"
+                               Style="{StaticResource SettingsDescription}" />
                 </StackPanel>
             </c:SettingsSection>
         </StackPanel>
