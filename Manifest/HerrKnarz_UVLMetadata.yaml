@@ -1,5 +1,14 @@
 AddonId: UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f
 Packages:
+  - Version: 0.6.1
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-08-23
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-08-23/UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f_0_6_1.pext
+    Changelog:
+      - The bulk import now sets the modified date of the affected games.
+      - Fixed bug causing the bulk import to fail due to games having links with no url.
+      - Moved tags are now left out of the list for bulk import.
+      - Updated localization
   - Version: 0.6.0
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-08-22

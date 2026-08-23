@@ -241,6 +241,8 @@ public class BulkImportViewModel : ObservableObject
 
             foreach (var game in matchedGames)
             {
+                var needsUpdate = false;
+
                 try
                 {
                     if (game is null)
@@ -248,10 +250,7 @@ public class BulkImportViewModel : ObservableObject
                         continue;
                     }
 
-                    if (typeManager.AddValueToGame(game.PlayniteGame.Game, fieldId))
-                    {
-                        gamesAffected.AddMissing(game.PlayniteGame.Game);
-                    }
+                    needsUpdate = typeManager.AddValueToGame(game.PlayniteGame.Game, fieldId);
 
                     if (ImportLink && !(game.PlayniteGame.Game.Links?.Any(x => x.Url?.Contains("uvlist.net") ?? false) ?? false))
                     {
@@ -263,7 +262,14 @@ public class BulkImportViewModel : ObservableObject
                             Url = game.UVLGame.Url
                         });
 
-                        gamesAffected.AddMissing(game.PlayniteGame.Game);
+                        needsUpdate = true;
+                    }
+
+                    if (needsUpdate)
+                    {
+                        game.PlayniteGame.Game.Modified = DateTime.Now;
+
+                        gamesAffected.Add(game.PlayniteGame.Game);
                     }
                 }
                 catch (Exception exception)

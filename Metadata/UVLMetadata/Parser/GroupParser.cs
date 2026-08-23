@@ -40,7 +40,7 @@ public class GroupParser
                     Category = category
                 };
 
-                if (tag.Name.IsNullOrEmpty() || tag.Name.Equals("----") || tag.Slug.IsNullOrEmpty() || tag.GameCount < 1)
+                if (tag.Name.Replace("-", "").Trim().IsNullOrEmpty() || tag.Slug.IsNullOrEmpty() || tag.GameCount < 1)
                 {
                     continue;
                 }

@@ -118,7 +118,7 @@ public class GameMatcher(List<Game> playniteGames)
             {
                 if (game.Links is not null && game.Links.Any())
                 {
-                    foreach (var link in game.Links.Where(l => l.Url.Contains("uvlist.net", StringComparison.InvariantCultureIgnoreCase)))
+                    foreach (var link in game.Links.Where(l => l.Url?.Contains("uvlist.net", StringComparison.InvariantCultureIgnoreCase) ?? false))
                     {
                         var cleanedUrl = WebHelper.CleanUpUrl(link.Url);
                         AddGameByKey(_gamesPerLink, cleanedUrl, game.Id);

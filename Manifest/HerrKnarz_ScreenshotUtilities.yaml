@@ -1,5 +1,12 @@
 AddonId: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Packages:
+  - Version: 0.8.4
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-08-23
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-08-23/ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90_0_8_4.pext
+    Changelog:
+      - Fixed bug causing screenshots to not be loaded when selecting a game.
+      - Updated localization
   - Version: 0.8.3
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-06-01
