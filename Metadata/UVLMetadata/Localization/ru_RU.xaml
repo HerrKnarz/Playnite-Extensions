@@ -3,8 +3,8 @@
 
     <sys:String x:Key="LOCUVLMetadataName">Метаданные UVL</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusAuthenticated">Authenticated</sys:String>
-    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Not Authenticated</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusAuthenticated">Аутентифицирован</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Не аутентифицирован</sys:String>
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Проверка статуса...</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedName">Matched Name</sys:String>
