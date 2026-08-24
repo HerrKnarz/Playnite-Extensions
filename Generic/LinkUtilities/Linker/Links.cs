@@ -28,6 +28,7 @@ namespace LinkUtilities.Linker
             Add(new LibraryLinkGog());
             Add(new LinkGogDb());
             Add(new LinkGrouvee());
+            Add(new LinkHallOfLight());
             Add(new LinkHg101());
             Add(new LinkIGDB());
             Add(new LinkIgn());

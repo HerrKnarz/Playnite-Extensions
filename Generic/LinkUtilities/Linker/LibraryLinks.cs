@@ -1,25 +1,29 @@
 ﻿using LinkUtilities.BaseClasses;
+using LinkUtilities.Helper;
 using LinkUtilities.Linker.Libraries;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LinkUtilities.Linker
 {
     /// <summary>
-    /// List of all game library link associations. Is used to get the specific library of the game via the GUID.
+    /// List of all game library link associations. Is used to get the specific library of the game
+    /// via the GUID.
     /// </summary>
     internal class LibraryLinks : Dictionary<Guid, LibraryLink>
     {
         public LibraryLinks()
         {
             var steamLib = new LibraryLinkSteam();
-            Add(steamLib.Id, steamLib);
+            Add(steamLib.LibraryIds.First(), steamLib);
 
             var gogLib = new LibraryLinkGog();
-            Add(gogLib.Id, gogLib);
+            Add(LinkHelper.GogId, gogLib);
+            Add(LinkHelper.GogOssId, gogLib);
 
             var itchLib = new LibraryLinkItch();
-            Add(itchLib.Id, itchLib);
+            Add(itchLib.LibraryIds.First(), itchLib);
         }
     }
 }

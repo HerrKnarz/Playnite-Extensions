@@ -7,6 +7,10 @@ namespace LinkUtilities.Models
     /// </summary>
     public class SearchResult : GenericItemOption
     {
+        public string PlatformName;
+
+        public string PlatformSpecId;
+
         /// <summary>
         /// URL of the link
         /// </summary>

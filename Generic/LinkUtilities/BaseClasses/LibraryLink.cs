@@ -9,7 +9,7 @@ namespace LinkUtilities.BaseClasses
     /// </summary>
     internal abstract class LibraryLink : Linker
     {
-        public abstract Guid Id { get; }
+        public abstract HashSet<Guid> LibraryIds { get; }
 
         /// <summary>
         /// Adds a link to the specific game page of the library.
@@ -17,11 +17,12 @@ namespace LinkUtilities.BaseClasses
         /// <param name="game">Game the link will be added to</param>
         /// <param name="links">List of links to return (is usually only one for a library)</param>
         /// <returns>
-        /// True, if a link could be added. Returns false, if a link with that name was already present or couldn't be added.
+        /// True, if a link could be added. Returns false, if a link with that name was already
+        /// present or couldn't be added.
         /// </returns>
         public abstract bool FindLibraryLink(Game game, out List<Link> links);
 
         public override bool FindLinks(Game game, out List<Link> links)
-            => game.PluginId == Id ? FindLibraryLink(game, out links) : base.FindLinks(game, out links);
+            => LibraryIds.Contains(game.PluginId) ? FindLibraryLink(game, out links) : base.FindLinks(game, out links);
     }
 }

@@ -41,6 +41,11 @@ namespace LinkUtilities.LinkActions
 
             foreach (var linker in LibraryLinks)
             {
+                if (linker.Value.Pipeline == null)
+                {
+                    continue;
+                }
+
                 linker.Value.Pipeline.Dispose();
                 linker.Value.Pipeline = null;
             }

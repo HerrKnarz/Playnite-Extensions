@@ -1,5 +1,4 @@
 ﻿using KNARZhelper;
-using KNARZhelper.WebCommon;
 using LinkUtilities.BaseClasses;
 using LinkUtilities.Helper;
 using LinkUtilities.Interfaces;
@@ -43,7 +42,7 @@ namespace LinkUtilities.Linker.Libraries
         /// <summary>
         /// ID of the game library to identify it in Playnite.
         /// </summary>
-        public override Guid Id { get; } = SteamHelper.SteamId;
+        public override HashSet<Guid> LibraryIds { get; } = new HashSet<Guid> { SteamHelper.SteamId };
 
         public override string LinkName => "Steam";
         public string NameAchievementLink { get; set; } = "Achievements";
@@ -64,7 +63,7 @@ namespace LinkUtilities.Linker.Libraries
 
         public override bool FindLinks(Game game, out List<Link> links)
         {
-            if (game.PluginId == Id)
+            if (LibraryIds.Contains(game.PluginId))
             {
                 return FindLibraryLink(game, out links);
             }
@@ -122,7 +121,17 @@ namespace LinkUtilities.Linker.Libraries
 
             if (AddAchievementLink)
             {
-                AddLink(game, links, gameId, _urlAchievements, NameAchievementLink);
+                CheckForContent = "achievementsTabOn";
+                AllowedCallbackUrls.Add(string.Format(_urlCommunity, gameId));
+                try
+                {
+                    AddLink(game, links, gameId, _urlAchievements, NameAchievementLink, true);
+                }
+                finally
+                {
+                    CheckForContent = string.Empty;
+                    AllowedCallbackUrls.Clear();
+                }
             }
 
             if (AddCommunityLink)

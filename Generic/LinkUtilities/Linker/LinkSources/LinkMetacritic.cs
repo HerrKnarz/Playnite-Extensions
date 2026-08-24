@@ -18,7 +18,10 @@ namespace LinkUtilities.Linker.LinkSources
         // Metacritic Links need the game name in lowercase without special characters and hyphens
         // instead of white spaces.
         public override string GetGamePath(Game game, string gameName = null)
-            => (gameName ?? game.Name).RemoveSpecialChars()
+            => (gameName ?? game.Name)
+                .SpecialCharsToWords()
+                .RemoveSpecialChars()
+                .Replace("-", " ")
                 .CollapseWhitespaces()
                 .Replace(" ", "-")
                 .ToLower() + "/";

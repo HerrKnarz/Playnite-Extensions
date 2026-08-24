@@ -99,7 +99,7 @@ namespace LinkUtilities.Linker.LinkSources
 
             if (result.Contains(_placeholderGogId))
             {
-                if (game.PluginId != LinkHelper.GogId)
+                if (!game.PluginId.IsOneOf(LinkHelper.GogId, LinkHelper.GogOssId))
                 {
                     return string.Empty;
                 }

@@ -29,7 +29,7 @@ namespace LinkUtilities.Linker.Libraries
         /// <summary>
         /// ID of the game library to identify it in Playnite.
         /// </summary>
-        public override Guid Id { get; } = LinkHelper.GogId;
+        public override HashSet<Guid> LibraryIds { get; } = new HashSet<Guid> { LinkHelper.GogId, LinkHelper.GogOssId };
 
         public override string LinkName => "GOG";
         public override bool ReturnsSameUrl { get; set; } = true;

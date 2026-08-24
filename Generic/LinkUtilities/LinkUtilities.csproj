@@ -123,6 +123,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MiscHelper.cs">
       <Link>Shared\MiscHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\PlatformHelper.cs">
+      <Link>Shared\PlatformHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\SteamHelper.cs">
       <Link>Shared\SteamHelper.cs</Link>
     </Compile>
@@ -173,6 +176,7 @@
     <Compile Include="Linker\LinkSources\LinkGrouvee.cs" />
     <Compile Include="Linker\LinkSources\LinkBackloggd.cs" />
     <Compile Include="Linker\LinkSources\LinkGGDeals.cs" />
+    <Compile Include="Linker\LinkSources\LinkHallOfLight.cs" />
     <Compile Include="Linker\LinkSources\LinkIGDB.cs" />
     <Compile Include="Linker\LinkSources\LinkKillerListOfVideoGames.cs" />
     <Compile Include="Linker\LinkSources\LinkModDB.cs" />
