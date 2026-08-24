@@ -1,5 +1,11 @@
 AddonId: GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189
 Packages:
+  - Version: 0.4.4
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-08-24
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-08-24/GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189_0_4_4.pext
+    Changelog:
+      - Updated localization
   - Version: 0.4.3
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-07-31
