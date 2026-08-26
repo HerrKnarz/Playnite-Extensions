@@ -26,20 +26,20 @@ namespace LinkUtilities.Linker.LinkSources
                 return string.Empty;
             }
 
-            var compareName = searchName.NormalizeSearchTerm();
+            var compareName = searchName.SpecialCharsToWords().NormalizeSearchTerm(false);
             searchName = searchName.RemoveEditionSuffix();
 
             var searchResults = GetSearchResults(searchName);
 
-            searchName = searchName.NormalizeSearchTerm();
+            searchName = searchName.SpecialCharsToWords().NormalizeSearchTerm(false);
 
             var result =
-                searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(compareName, StringComparison.InvariantCultureIgnoreCase)
+                searchResults?.FirstOrDefault(p => p.Name.SpecialCharsToWords().NormalizeSearchTerm(false).Equals(compareName, StringComparison.InvariantCultureIgnoreCase)
                    && game.Platforms.Any(gp => gp.SpecificationId == ((SearchResult)p).PlatformSpecId || gp.Name == ((SearchResult)p).PlatformName))
-                ?? searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(searchName, StringComparison.InvariantCultureIgnoreCase)
+                ?? searchResults?.FirstOrDefault(p => p.Name.SpecialCharsToWords().NormalizeSearchTerm(false).Equals(searchName, StringComparison.InvariantCultureIgnoreCase)
                     && game.Platforms.Any(gp => gp.SpecificationId == ((SearchResult)p).PlatformSpecId || gp.Name == ((SearchResult)p).PlatformName))
-                ?? searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(compareName, StringComparison.InvariantCultureIgnoreCase))
-                ?? searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(searchName, StringComparison.InvariantCultureIgnoreCase));
+                ?? searchResults?.FirstOrDefault(p => p.Name.SpecialCharsToWords().NormalizeSearchTerm(false).Equals(compareName, StringComparison.InvariantCultureIgnoreCase))
+                ?? searchResults?.FirstOrDefault(p => p.Name.SpecialCharsToWords().NormalizeSearchTerm(false).Equals(searchName, StringComparison.InvariantCultureIgnoreCase));
 
             return result is SearchResult uvlResult ? uvlResult.Url : string.Empty;
         }
