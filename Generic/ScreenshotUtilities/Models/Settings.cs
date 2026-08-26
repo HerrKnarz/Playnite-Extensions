@@ -61,6 +61,10 @@ namespace ScreenshotUtilities.Models
             get => _currentScreenshotGroups; set => SetValue(ref _currentScreenshotGroups, value);
         }
 
+        [DontSerialize]
+        public ObservableCollection<ScreenshotGroup> CurrentStoreScreenshotGroups
+            => _currentScreenshotGroups.Where(g => g.Provider.Id != Guid.Parse("a049eff8-fd41-4dbc-9e35-01acc6b1a0cb")).ToObservable();
+
         public bool Debug
         {
             get => _debug;
