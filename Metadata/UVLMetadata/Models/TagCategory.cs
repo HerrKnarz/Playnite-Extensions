@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Plugins;
 using System.Collections.Generic;
@@ -235,7 +236,7 @@ namespace UVLMetadata.Models
                 return MetadataField.Series;
             }
 
-            if (tag.Category == TagCategoryId.Culture && tag.Type == TagType.Concept && tag.Name.StartsWith("Rating:"))
+            if (tag.Category.IsOneOf(TagCategoryId.Advisories, TagCategoryId.Culture) && tag.Type == TagType.Concept && tag.Name.StartsWith("Rating:"))
             {
                 name = tag.ShortName.Replace("Rating:", "").Trim();
                 alwaysImport = true;
