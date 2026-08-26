@@ -1,5 +1,11 @@
 AddonId: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Packages:
+  - Version: 0.8.5
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-08-26
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-08-26/ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90_0_8_5.pext
+    Changelog:
+      - Added CurrentStoreScreenshotGroups property to the settings to make it easier for themes to display store screenshots together.
   - Version: 0.8.4
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-08-23

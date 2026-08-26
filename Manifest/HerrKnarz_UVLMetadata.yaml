@@ -1,5 +1,15 @@
 AddonId: UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f
 Packages:
+  - Version: 0.6.2
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-08-26
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-08-26/UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f_0_6_2.pext
+    Changelog:
+      - Significantly sped up and improved game matching.
+      - Game matching now also works for games in other alphabetical scripts (e.g. Cyrillic, Chinese, etc.).
+      - Improved matching score in the bulk importer by rating matches with long game titles higher and pre-2000 games with shorter titles lower.
+      - Ratings from the Advisories tag category will now also be treated as age ratings.
+      - Updated localization
   - Version: 0.6.1
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-08-23
