@@ -3,9 +3,9 @@
 
     <sys:String x:Key="LOCUVLMetadataName">Метаданные UVL</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusAuthenticated">Authenticated</sys:String>
-    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Not Authenticated</sys:String>
-    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Checking Status...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusAuthenticated">Аутентифицирован</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Не аутентифицирован</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Проверка статуса...</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedName">Matched Name</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedPlatform">Matched Platform</sys:String>
@@ -13,18 +13,18 @@
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingScore">Matching Score</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingType">Matched by</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportFoundGames">Found Games</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">Found Games for &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">Найдены игры для &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportGamesAffected">Added {0} to {1} games!</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportImport">Import</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportImportAs">Import As</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImport">Импорт</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImportAs">Импортировать как</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportImportLink">Import Link</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportSearchGames">Search Games</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportSearchTag">Search Tag</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportSelect">Select</sys:String>
-    <sys:String x:Key="LOCUVLMetadataMenuBulkImport">Bulk Import</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSearchGames">Поиск игр</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSearchTag">Поиск тега</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSelect">Выбрать</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMenuBulkImport">Массовый импорт</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataDialogNoGamesFound">No games were found for the selected tag.</sys:String>
-    <sys:String x:Key="LOCUVLMetadataDialogLoginRequired">You need to be logged in to your UVL account to use the bulk import. Do you want to open the addon settings?</sys:String>
+    <sys:String x:Key="LOCUVLMetadataDialogNoGamesFound">Не найдено игр для выбранного тега.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataDialogLoginRequired">Вы должны войти в свою учетную запись UVL, чтобы использовать массовый импорт. Вы хотите открыть настройки плагина?</sys:String>
     <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">Чтобы загрузить теги из UVL, необходимо обновить их хотя бы один раз. Вы хотите сделать это сейчас? Это займет всего несколько секунд.</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataMatchingScorePerfect">Perfect</sys:String>
@@ -33,15 +33,15 @@
     <sys:String x:Key="LOCUVLMetadataMatchingScoreAcceptable">Acceptable</sys:String>
     <sys:String x:Key="LOCUVLMetadataMatchingScorePoor">Poor</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataMatchingTypeLink">Link</sys:String>
-    <sys:String x:Key="LOCUVLMetadataMatchingTypeName">Name</sys:String>
-    <sys:String x:Key="LOCUVLMetadataMatchingTypeNameAndPlatform">Name and Platform</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeLink">Ссылка</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeName">Название</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingTypeNameAndPlatform">Название и Платформа</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataProgressRefreshingTags">Обновление тегов...</sys:String>
-    <sys:String x:Key="LOCUVLMetadataProgressLoadingGames">Loading games...</sys:String>
-    <sys:String x:Key="LOCUVLMetadataProgressMatchingGames">Matching games</sys:String>
-    <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesMatching">Matching...</sys:String>
-    <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesPreparing">Preparing...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressLoadingGames">Загрузка игр...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGames">Совпадающие игры</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesMatching">Подбор...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataProgressMatchingGamesPreparing">Подготовка...</sys:String>
 
     <sys:String x:Key="LOCUVLMetadataSearchDialog">выбрать игру</sys:String>
     <sys:String x:Key="LOCUVLMetadataSearchDialogBackground">выбрать фоновое изображение</sys:String>
@@ -50,8 +50,8 @@
 
     <sys:String x:Key="LOCUVLMetadataSettingsButtonTagsRefresh">Обновить метки</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsButtonAuthenticate">Authenticate</sys:String>
-    <sys:String x:Key="LOCUVLMetadataSettingsButtonLogout">Logout</sys:String>
-    <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthentication">Authentication</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsButtonLogout">Выйти</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthentication">Аутентификация</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthenticationDescription">To be able to use the bulk import feature you need to have an account in UVL and be logged in, because only logged in users can access the pages listing all games for a tag. If you don't want to use the bulk import feature, you can skip authentication.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUse">Описание, используемое</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUseDescription">Выберите, какой тип описания использовать для метаданных. Другой тип будет использоваться в качестве запасного варианта. Если оба метода будут использованы, то они будут разделены горизонтальной линией.</sys:String>
