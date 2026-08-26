@@ -36,21 +36,29 @@ public class MatchedGame : ObservableObject
             {
                 if (PlayniteGame.Game.ReleaseYear == uvlReleaseYearAsInt)
                 {
-                    return MatchingType != MatchingType.NameAndPlatform ? MatchingScore.VeryGood : MatchingScore.Perfect;
+                    return uvlReleaseYearAsInt < 2000 && UVLGame.Name.Length < 15
+                        ? MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Acceptable : MatchingScore.Perfect
+                        : MatchingType != MatchingType.NameAndPlatform ? MatchingScore.VeryGood : MatchingScore.Perfect;
                 }
 
                 if (PlayniteGame.Game.ReleaseYear is null)
                 {
-                    return MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Poor : MatchingScore.Acceptable;
+                    return uvlReleaseYearAsInt < 2000 && UVLGame.Name.Length < 15
+                        ? MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Poor : MatchingScore.Good
+                        : MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Good : MatchingScore.VeryGood;
                 }
 
-                if (Math.Abs(PlayniteGame.Game.ReleaseYear.Value - uvlReleaseYearAsInt) <= 3)
+                if (Math.Abs(PlayniteGame.Game.ReleaseYear.Value - uvlReleaseYearAsInt) <= 5)
                 {
-                    return MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Good : MatchingScore.VeryGood;
+                    return uvlReleaseYearAsInt < 2000 && UVLGame.Name.Length < 15
+                        ? MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Acceptable : MatchingScore.VeryGood
+                        : MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Good : MatchingScore.VeryGood;
                 }
             }
 
-            return MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Poor : MatchingScore.Acceptable;
+            return UVLGame.Name.Length < 15
+                ? MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Poor : MatchingScore.Acceptable
+                : MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Good : MatchingScore.VeryGood;
         }
     }
 
