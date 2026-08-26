@@ -14,16 +14,6 @@ namespace UVLMetadata;
 
 public class GameMatcher(List<Game> playniteGames)
 {
-    private readonly StringFormatParameters _formatParameters = new()
-    {
-        RemoveDiacritics = true,
-        RemoveEditionSuffix = true,
-        RemoveSpecialChars = true,
-        ToLower = true,
-        UnderscoresToWhitespaces = true,
-        WhitespacesToHyphens = true
-    };
-
     private readonly ConcurrentDictionary<string, IList<Guid>> _gamesPerLink = new();
     private readonly ConcurrentDictionary<string, IList<Guid>> _gamesPerName = new();
     private readonly ConcurrentDictionary<string, IList<Guid>> _gamesPerNameAndPlatform = new();
@@ -69,7 +59,7 @@ public class GameMatcher(List<Game> playniteGames)
                         return;
                     }
 
-                    uvlGame.DeflatedName = uvlGame.Name.FormatString(_formatParameters) ?? string.Empty;
+                    uvlGame.DeflatedName = uvlGame.Name.SpecialCharsToWords().RemoveEditionSuffix().RemoveDiacritics().NormalizeSearchTerm(false) ?? string.Empty;
 
                     _gamesPerLink.TryGetValue(WebHelper.CleanUpUrl(uvlGame.Url), out var linkMatches);
                     if (linkMatches != null && linkMatches.Count > 0)
@@ -125,7 +115,7 @@ public class GameMatcher(List<Game> playniteGames)
                     }
                 }
 
-                var deflatedName = game.Name.FormatString(_formatParameters);
+                var deflatedName = game.Name.SpecialCharsToWords().RemoveEditionSuffix().RemoveDiacritics().NormalizeSearchTerm(false);
 
                 AddGameByKey(_gamesPerName, deflatedName, game.Id);
 

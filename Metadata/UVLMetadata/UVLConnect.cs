@@ -91,21 +91,21 @@ public class UVLConnect(UVLMetadata plugin)
     /// </returns>
     public UVLItemOption FindGame(Game game)
     {
-        var compareName = game.Name.NormalizeSearchTerm();
+        var compareName = game.Name.SpecialCharsToWords().NormalizeSearchTerm(false);
         var searchName = game.Name.RemoveEditionSuffix();
 
         // We search for the game name on UVL
         var searchResults = GetSearchResults(searchName);
 
-        searchName = searchName.NormalizeSearchTerm();
+        searchName = searchName.SpecialCharsToWords().NormalizeSearchTerm(false);
 
         var result =
-            searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(compareName, StringComparison.InvariantCultureIgnoreCase)
+            searchResults?.FirstOrDefault(p => p.Name.SpecialCharsToWords().NormalizeSearchTerm(false).Equals(compareName, StringComparison.InvariantCultureIgnoreCase)
                && game.Platforms.Any(gp => gp.SpecificationId == ((UVLItemOption)p).PlatformSpecId || gp.Name == ((UVLItemOption)p).PlatformName))
-            ?? searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(searchName, StringComparison.InvariantCultureIgnoreCase)
+            ?? searchResults?.FirstOrDefault(p => p.Name.SpecialCharsToWords().NormalizeSearchTerm(false).Equals(searchName, StringComparison.InvariantCultureIgnoreCase)
                 && game.Platforms.Any(gp => gp.SpecificationId == ((UVLItemOption)p).PlatformSpecId || gp.Name == ((UVLItemOption)p).PlatformName))
-            ?? searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(compareName, StringComparison.InvariantCultureIgnoreCase))
-            ?? searchResults?.FirstOrDefault(p => p.Name.NormalizeSearchTerm().Equals(searchName, StringComparison.InvariantCultureIgnoreCase));
+            ?? searchResults?.FirstOrDefault(p => p.Name.SpecialCharsToWords().NormalizeSearchTerm(false).Equals(compareName, StringComparison.InvariantCultureIgnoreCase))
+            ?? searchResults?.FirstOrDefault(p => p.Name.SpecialCharsToWords().NormalizeSearchTerm(false).Equals(searchName, StringComparison.InvariantCultureIgnoreCase));
 
         return result is UVLItemOption uvlResult ? uvlResult : null;
     }
