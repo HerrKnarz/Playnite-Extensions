@@ -11,17 +11,11 @@ using System.Net;
 using System.Threading;
 using System.Web;
 using System.Windows.Forms;
+using UVLMetadata.Enums;
 using UVLMetadata.Models;
 using UVLMetadata.Parser;
 
 namespace UVLMetadata;
-
-public enum AuthenticationStatus
-{
-    NotAuthenticated,
-    Authenticated,
-    Unknown
-}
 
 /// <summary>
 /// Handles all website calls to UVL

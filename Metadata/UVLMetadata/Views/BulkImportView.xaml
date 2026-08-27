@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:UVLMetadata.Views"
-             xmlns:localModels="clr-namespace:UVLMetadata.Models"
+             xmlns:localEnums="clr-namespace:UVLMetadata.Enums"
              xmlns:knarzHelperControls="clr-namespace:KNARZhelper.Controls"
              xmlns:vm="clr-namespace:UVLMetadata.ViewModels"
              xmlns:c="clr-namespace:KNARZhelper.Controls"
@@ -321,35 +321,35 @@
                                                 Value="4, 2, 2, 2" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding MatchingScore}"
-                                                         Value="{x:Static localModels:MatchingScore.Perfect}">
+                                                         Value="{x:Static localEnums:MatchingScore.Perfect}">
                                                 <Setter Property="Background"
                                                         Value="DarkGreen" />
                                                 <Setter Property="Foreground"
                                                         Value="LightGreen" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding MatchingScore}"
-                                                         Value="{x:Static localModels:MatchingScore.VeryGood}">
+                                                         Value="{x:Static localEnums:MatchingScore.VeryGood}">
                                                 <Setter Property="Background"
                                                         Value="DarkGreen" />
                                                 <Setter Property="Foreground"
                                                         Value="LightGreen" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding MatchingScore}"
-                                                         Value="{x:Static localModels:MatchingScore.Good}">
+                                                         Value="{x:Static localEnums:MatchingScore.Good}">
                                                 <Setter Property="Background"
                                                         Value="DarkGoldenrod" />
                                                 <Setter Property="Foreground"
                                                         Value="LightGoldenrodYellow" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding MatchingScore}"
-                                                         Value="{x:Static localModels:MatchingScore.Acceptable}">
+                                                         Value="{x:Static localEnums:MatchingScore.Acceptable}">
                                                 <Setter Property="Background"
                                                         Value="DarkGoldenrod" />
                                                 <Setter Property="Foreground"
                                                         Value="LightGoldenrodYellow" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding MatchingScore}"
-                                                         Value="{x:Static localModels:MatchingScore.Poor}">
+                                                         Value="{x:Static localEnums:MatchingScore.Poor}">
                                                 <Setter Property="Background"
                                                         Value="DarkRed" />
                                                 <Setter Property="Foreground"

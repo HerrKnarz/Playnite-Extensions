@@ -1,7 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using UVLMetadata.Enums;
 
 namespace UVLMetadata.Models;
+
+public class BulkImportSettings : ObservableObject
+{
+    public AddLink AddLink
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = AddLink.PerfectAndVeryGood;
+
+    public int WindowHeight
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = 700;
+
+    public int WindowWidth
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = 1000;
+}
 
 public class PluginSettings : ObservableObject
 {
@@ -46,19 +68,4 @@ public class PluginSettings : ObservableObject
         get;
         set => SetValue(ref field, value);
     } = [];
-}
-
-public class BulkImportSettings : ObservableObject
-{
-    public int WindowHeight
-    {
-        get;
-        set => SetValue(ref field, value);
-    } = 700;
-
-    public int WindowWidth
-    {
-        get;
-        set => SetValue(ref field, value);
-    } = 1000;
 }

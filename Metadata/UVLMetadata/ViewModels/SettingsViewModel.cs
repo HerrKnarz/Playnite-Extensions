@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using UVLMetadata.Enums;
 using UVLMetadata.Models;
 
 namespace UVLMetadata.ViewModels;
@@ -14,7 +15,6 @@ namespace UVLMetadata.ViewModels;
 public class SettingsViewModel : ObservableObject, ISettings
 {
     private readonly UVLMetadata _plugin;
-
     private RelayCommand _authenticateCommand;
     private RelayCommand _refreshTagsCommand;
     private RelayCommand<object> _restartRequiredCommand;
@@ -37,26 +37,11 @@ public class SettingsViewModel : ObservableObject, ISettings
 
     public ICommand AuthenticateCommand => _authenticateCommand ??= new RelayCommand(Authenticate);
 
-    public string AuthenticationButtonText => IsAuthenticated switch
-    {
-        AuthenticationStatus.Authenticated => ResourceProvider.GetString("LOCUVLMetadataSettingsButtonLogout"),
-        AuthenticationStatus.NotAuthenticated => ResourceProvider.GetString("LOCUVLMetadataSettingsButtonAuthenticate"),
-        _ => ResourceProvider.GetString("LOCUVLMetadataSettingsButtonAuthenticate")
-    };
+    public string AuthenticationButtonText => AuthenticationStatusButtonModes[IsAuthenticated];
 
-    public string AuthenticationStatusText => IsAuthenticated switch
-    {
-        AuthenticationStatus.Authenticated => ResourceProvider.GetString("LOCUVLMetadataAuthenticationStatusAuthenticated"),
-        AuthenticationStatus.NotAuthenticated => ResourceProvider.GetString("LOCUVLMetadataAuthenticationStatusNotAuthenticated"),
-        _ => ResourceProvider.GetString("LOCUVLMetadataAuthenticationStatusCheckingStatus")
-    };
+    public string AuthenticationStatusText => AuthenticationStatusModes[IsAuthenticated];
 
-    public Dictionary<DescriptionToUse, string> DescriptionToUseModes { get; } = new()
-    {
-        { DescriptionToUse.OfficialDescription, ResourceProvider.GetString("LOCUVLMetadataSettingsDescriptionToUseOfficialDescription") },
-        { DescriptionToUse.Description, ResourceProvider.GetString("LOCUVLMetadataSettingsDescriptionToUseDescription") },
-        { DescriptionToUse.Both, ResourceProvider.GetString("LOCUVLMetadataSettingsDescriptionToUseBoth") }
-    };
+    public DescriptionToUseModes DescriptionToUseModes { get; } = [];
 
     public Dictionary<MetadataField, string> ImportAsModes { get; } = new()
     {
@@ -84,11 +69,7 @@ public class SettingsViewModel : ObservableObject, ISettings
         }
     } = AuthenticationStatus.Unknown;
 
-    public Dictionary<RatingToUse, string> RatingToUseModes { get; } = new()
-    {
-        { RatingToUse.Median, ResourceProvider.GetString("LOCUVLMetadataSettingsRatingMedian") },
-        { RatingToUse.Average, ResourceProvider.GetString("LOCUVLMetadataSettingsRatingAverage") }
-    };
+    public RatingToUseModes RatingToUseModes { get; } = [];
 
     public ICommand RefreshTagsCommand => _refreshTagsCommand ??= new RelayCommand(RefreshTags);
 
@@ -96,6 +77,8 @@ public class SettingsViewModel : ObservableObject, ISettings
 
     public PluginSettings Settings { get; private set; }
 
+    private AuthenticationStatusButtonModes AuthenticationStatusButtonModes { get; } = [];
+    private AuthenticationStatusModes AuthenticationStatusModes { get; } = [];
     private PluginSettings EditingClone { get; set; }
 
     public void BeginEdit() => EditingClone = Serialization.GetClone(Settings);

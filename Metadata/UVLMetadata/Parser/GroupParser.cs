@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using KNARZhelper;
 using System.Collections.Generic;
+using UVLMetadata.Enums;
 using UVLMetadata.Models;
 
 namespace UVLMetadata.Parser;

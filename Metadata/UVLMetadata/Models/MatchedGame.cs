@@ -2,24 +2,9 @@
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using UVLMetadata.Enums;
 
 namespace UVLMetadata.Models;
-
-public enum MatchingScore
-{
-    Perfect,
-    VeryGood,
-    Good,
-    Acceptable,
-    Poor
-}
-
-public enum MatchingType
-{
-    Link,
-    Name,
-    NameAndPlatform
-}
 
 public class MatchedGame : ObservableObject
 {
@@ -62,15 +47,7 @@ public class MatchedGame : ObservableObject
         }
     }
 
-    public string MatchingScoreCaption => MatchingScore switch
-    {
-        MatchingScore.Perfect => ResourceProvider.GetString("LOCUVLMetadataMatchingScorePerfect"),
-        MatchingScore.VeryGood => ResourceProvider.GetString("LOCUVLMetadataMatchingScoreVeryGood"),
-        MatchingScore.Good => ResourceProvider.GetString("LOCUVLMetadataMatchingScoreGood"),
-        MatchingScore.Acceptable => ResourceProvider.GetString("LOCUVLMetadataMatchingScoreAcceptable"),
-        MatchingScore.Poor => ResourceProvider.GetString("LOCUVLMetadataMatchingScorePoor"),
-        _ => string.Empty
-    };
+    public string MatchingScoreCaption => MatchingScoreModes[MatchingScore];
 
     public MatchingType MatchingType
     {
@@ -79,24 +56,13 @@ public class MatchedGame : ObservableObject
         {
             SetValue(ref field, value);
 
-            MatchingTypeCaption = field switch
-            {
-                MatchingType.Link => ResourceProvider.GetString("LOCUVLMetadataMatchingTypeLink"),
-                MatchingType.Name => ResourceProvider.GetString("LOCUVLMetadataMatchingTypeName"),
-                MatchingType.NameAndPlatform => ResourceProvider.GetString("LOCUVLMetadataMatchingTypeNameAndPlatform"),
-                _ => string.Empty
-            };
-
+            OnPropertyChanged(nameof(MatchingTypeCaption));
             OnPropertyChanged(nameof(MatchingScore));
             OnPropertyChanged(nameof(MatchingScoreCaption));
         }
     }
 
-    public string MatchingTypeCaption
-    {
-        get;
-        set => SetValue(ref field, value);
-    } = string.Empty;
+    public string MatchingTypeCaption => MatchingTypeModes[MatchingType];
 
     public GameEx PlayniteGame
     {
@@ -109,4 +75,7 @@ public class MatchedGame : ObservableObject
         get;
         set => SetValue(ref field, value);
     }
+
+    private MatchingScoreModes MatchingScoreModes { get; } = [];
+    private MatchingTypeModes MatchingTypeModes { get; } = [];
 }

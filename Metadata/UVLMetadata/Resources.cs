@@ -1,22 +1,9 @@
 ﻿using KNARZhelper;
 using System;
 using System.Collections.Generic;
-using UVLMetadata.Models;
+using UVLMetadata.Enums;
 
 namespace UVLMetadata;
-
-public enum DescriptionToUse
-{
-    Description,
-    OfficialDescription,
-    Both,
-}
-
-public enum RatingToUse
-{
-    Median,
-    Average,
-}
 
 /// <summary>
 /// contains several resources needed to parse the UVL data

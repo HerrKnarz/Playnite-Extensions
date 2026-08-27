@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using UVLMetadata.Enums;
 using UVLMetadata.Models;
 using UVLMetadata.Views;
 

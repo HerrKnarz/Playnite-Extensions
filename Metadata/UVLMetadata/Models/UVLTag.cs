@@ -1,17 +1,10 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
+using UVLMetadata.Enums;
 
 namespace UVLMetadata.Models
 {
-    public enum TagType
-    {
-        Series,
-        Theme,
-        Concept,
-        Entity,
-    }
-
     public class UVLTag
     {
         public TagCategoryId Category { get; set; }

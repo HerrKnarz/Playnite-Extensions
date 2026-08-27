@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using UVLMetadata.Enums;
 using UVLMetadata.Models;
 
 namespace UVLMetadata.Parser;
