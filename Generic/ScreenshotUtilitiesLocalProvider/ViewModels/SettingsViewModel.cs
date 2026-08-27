@@ -191,7 +191,7 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
                 configToEdit.StringExpander = _plugin.StringExpander;
                 configToEdit.TestGame = new GameEx(game);
 
-                var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit"), 1200, 800);
+                var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit"), 1200, 850);
                 window.Content = new EditFolderConfigView();
                 window.DataContext = new EditFolderConfigViewModel(configToEdit, SelectedGameProfile.GameId != default);
 
