@@ -24,17 +24,27 @@ public class BulkImportViewModel : ObservableObject
     private readonly GameMatcher _gameMatcher = new([.. API.Instance.Database.Games]);
     private readonly UVLMetadata _plugin;
     private RelayCommand<Window> _closeCommand;
-    private RelayCommand<IList<object>> _importTagsCommand;
+    private RelayCommand _importTagsCommand;
     private RelayCommand _refreshTagsCommand;
     private RelayCommand _searchGamesCommand;
-    private RelayCommand selectFieldValueCommand;
+    private RelayCommand _selectFieldValueCommand;
+    private RelayCommand<IList<object>> _toggleSelectedCommand;
 
     public BulkImportViewModel(UVLMetadata plugin)
     {
         _plugin = plugin;
+        AddLink = _plugin.Settings.Settings.BulkImportSettings.AddLink;
 
         PrepareTagsViewSource();
     }
+
+    public AddLink AddLink
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = AddLink.PerfectAndVeryGood;
+
+    public AddLinkModes AddLinkModes { get; } = [];
 
     public ICommand CloseCommand => _closeCommand ??= new RelayCommand<Window>(Close);
 
@@ -70,13 +80,7 @@ public class BulkImportViewModel : ObservableObject
         { MetadataField.Tags, ResourceProvider.GetString("LOCTagLabel") },
     };
 
-    public bool ImportLink
-    {
-        get;
-        set => SetValue(ref field, value);
-    } = true;
-
-    public ICommand ImportTagsCommand => _importTagsCommand ??= new RelayCommand<IList<object>>(ImportTags);
+    public ICommand ImportTagsCommand => _importTagsCommand ??= new RelayCommand(ImportTags);
 
     public ObservableCollection<MatchedGame> MatchedGames
     {
@@ -128,13 +132,15 @@ public class BulkImportViewModel : ObservableObject
         set => SetValue(ref field, value);
     }
 
-    public ICommand SelectFieldValueCommand => selectFieldValueCommand ??= new RelayCommand(SelectFieldValue);
+    public ICommand SelectFieldValueCommand => _selectFieldValueCommand ??= new RelayCommand(SelectFieldValue);
 
     public CollectionViewSource TagsViewSource
     {
         get;
         set => SetValue(ref field, value);
     }
+
+    public ICommand ToggleSelectedCommand => _toggleSelectedCommand ??= new RelayCommand<IList<object>>(games => ToggleSelected(games));
 
     public static void ShowWindow(UVLMetadata plugin)
     {
@@ -187,6 +193,7 @@ public class BulkImportViewModel : ObservableObject
 
         settings.WindowHeight = Convert.ToInt32(win.Height);
         settings.WindowWidth = Convert.ToInt32(win.Width);
+        settings.AddLink = AddLink;
         _plugin.SavePluginSettings(_plugin.Settings.Settings);
 
         win.DialogResult = true;
@@ -216,17 +223,19 @@ public class BulkImportViewModel : ObservableObject
         };
     }
 
-    private void ImportTags(IList<object> games)
+    private void ImportTags()
     {
-        if (games is null || games.Count < 1)
-        {
-            return;
-        }
-
         var typeManager = GetTypeManager();
 
         if (typeManager is null)
         {
+            return;
+        }
+
+        if (MatchedGames.Count < 1 || !MatchedGames.Any(g => g.Selected))
+        {
+            API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCUVLMetadataBulkImportGamesAffected"), typeManager.LabelSingular, 0), "UVL");
+
             return;
         }
 
@@ -236,11 +245,9 @@ public class BulkImportViewModel : ObservableObject
 
         try
         {
-            var matchedGames = games.Select(x => x as MatchedGame).Where(x => x is not null).ToList();
-
             var fieldId = typeManager.AddDbObject(FieldValue);
 
-            foreach (var game in matchedGames)
+            foreach (var game in MatchedGames.Where(x => x.Selected))
             {
                 var needsUpdate = false;
 
@@ -253,7 +260,16 @@ public class BulkImportViewModel : ObservableObject
 
                     needsUpdate = typeManager.AddValueToGame(game.PlayniteGame.Game, fieldId);
 
-                    if (ImportLink && !(game.PlayniteGame.Game.Links?.Any(x => x.Url?.Contains("uvlist.net") ?? false) ?? false))
+                    var importLink = AddLink switch
+                    {
+                        AddLink.Never => false,
+                        AddLink.PerfectAndVeryGood => game.MatchingScore is MatchingScore.Perfect or MatchingScore.VeryGood,
+                        AddLink.MatchingPlatform => game.PlayniteGame.Game.Platforms?.Any(x => x.SpecificationId?.Equals(game.UVLGame.PlatformSpecId) ?? false) ?? false,
+                        AddLink.AllGames => true,
+                        _ => false
+                    };
+
+                    if (importLink && !(game.PlayniteGame.Game.Links?.Any(x => x.Url?.Contains("uvlist.net") ?? false) ?? false))
                     {
                         game.PlayniteGame.Game.Links ??= [];
 
@@ -262,6 +278,8 @@ public class BulkImportViewModel : ObservableObject
                             Name = "UVL",
                             Url = game.UVLGame.Url
                         });
+
+                        _gameMatcher.AddLinkMatch(game.PlayniteGame.Game, game.UVLGame.Url);
 
                         needsUpdate = true;
                     }
@@ -378,5 +396,25 @@ public class BulkImportViewModel : ObservableObject
         }
 
         FieldValue = items.First(i => i.Selected).Name;
+    }
+
+    private void ToggleSelected(IList<object> games)
+    {
+        if (games is null || games.Count < 1)
+        {
+            return;
+        }
+
+        var gamesToSelect = games.Select(x => x as MatchedGame).Where(x => x is not null).ToList();
+
+        if (gamesToSelect.Count < 1)
+        {
+            return;
+        }
+
+        foreach (var game in gamesToSelect)
+        {
+            game.Selected = !game.Selected;
+        }
     }
 }

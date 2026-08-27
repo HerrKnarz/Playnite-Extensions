@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              d:Background="LightGray"
              Padding="15, 10"
-             d:DesignHeight="1000"
+             d:DesignHeight="1200"
              d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -123,6 +123,20 @@
                                        VerticalAlignment="Center"
                                        DockPanel.Dock="Left" />
                         </DockPanel>
+                    </c:SettingsOption>
+                </StackPanel>
+            </c:SettingsSection>
+            <c:SettingsSection Heading="{DynamicResource LOCUVLMetadataSettingsSectionBulkImport}"
+                               Description="{DynamicResource LOCUVLMetadataSettingsSectionBulkImportDescription}">
+                <StackPanel>
+                    <c:SettingsOption Heading="{DynamicResource LOCUVLMetadataSettingsCaptionAddLink}"
+                                      Description="{DynamicResource LOCUVLMetadataSettingsCaptionAddLinkDescription}"
+                                      MinLabelWidth="100">
+                        <ComboBox ItemsSource="{Binding Path=AddLinkModes}"
+                                  DisplayMemberPath="Value"
+                                  SelectedValuePath="Key"
+                                  SelectedValue="{Binding Path=Settings.BulkImportSettings.AddLink}"
+                                  MinWidth="200" />
                     </c:SettingsOption>
 
                     <CheckBox IsChecked="{Binding Settings.DisplayTopPanelButton}"

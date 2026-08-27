@@ -241,7 +241,7 @@
                                   DockPanel.Dock="Left" />
                         <TextBox Text="{Binding FieldValue}"
                                  VerticalAlignment="Center"
-                                 Margin="10, 0, 0, 0"
+                                 Margin="15, 0, 0, 0"
                                  MinWidth="100"
                                  DockPanel.Dock="Left" />
                         <Button Content="{DynamicResource LOCUVLMetadataBulkImportSelect}"
@@ -249,21 +249,28 @@
                                 Command="{Binding SelectFieldValueCommand}"
                                 DockPanel.Dock="Left" />
 
-                        <CheckBox Content="{DynamicResource LOCUVLMetadataBulkImportImportLink}"
-                                  IsChecked="{Binding ImportLink}"
-                                  VerticalAlignment="Center"
+                        <Label Content="{DynamicResource LOCUVLMetadataSettingsCaptionAddLink}"
+                               VerticalAlignment="Center"
+                               Margin="15, 0, 0, 0"
+                               DockPanel.Dock="Left" />
+
+                        <ComboBox ItemsSource="{Binding Path=AddLinkModes}"
+                                  DisplayMemberPath="Value"
+                                  SelectedValuePath="Key"
+                                  SelectedValue="{Binding Path=AddLink}"
+                                  MinWidth="150"
                                   Margin="10, 0, 0, 0"
                                   DockPanel.Dock="Left" />
+
                         <Button Content="{DynamicResource LOCUVLMetadataBulkImportImport}"
                                 Command="{Binding ImportTagsCommand}"
-                                CommandParameter="{Binding SelectedItems, ElementName=GamesGrid}"
                                 Margin="10, 0, 0, 0"
-                                IsEnabled="{Binding ElementName=GamesGrid, Path=SelectedItems.Count}"
                                 DockPanel.Dock="Right" />
                     </DockPanel>
                 </c:SettingsSection>
 
                 <c:SettingsSection Heading="{Binding FoundGamesSectionCaption}"
+                                   Description="{DynamicResource LOCUVLMetadataBulkImportDescription}"
                                    DockPanel.Dock="Top">
 
                     <DataGrid Name="GamesGrid"
@@ -277,6 +284,14 @@
                               EnableRowVirtualization="True"
                               SelectionMode="Extended">
                         <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="SizeToCells"
+                                                    SortMemberPath="Selected">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Selected}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Header="{DynamicResource LOCGameNameTitle}"
                                                 d:Header="Name"
                                                 Binding="{Binding PlayniteGame.Game.Name}"
@@ -360,6 +375,11 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                         </DataGrid.Columns>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Key="Space"
+                                        Command="{Binding ToggleSelectedCommand}"
+                                        CommandParameter="{Binding SelectedItems, ElementName=GamesGrid}" />
+                        </DataGrid.InputBindings>
                     </DataGrid>
                 </c:SettingsSection>
             </DockPanel>

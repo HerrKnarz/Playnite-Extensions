@@ -22,6 +22,8 @@ public class GameMatcher(List<Game> playniteGames)
     private bool _isPrepared = false;
     public Dictionary<Guid, MatchedGame> MatchedGames { get; set; } = [];
 
+    public void AddLinkMatch(Game game, string linkUrl) => AddGameByKey(_gamesPerLink, WebHelper.CleanUpUrl(linkUrl), game.Id);
+
     public void MatchGames(List<UVLItemOption> uvlGames)
     {
         var globalProgressOptions = new GlobalProgressOptions($"{ResourceProvider.GetString("LOCUVLMetadataProgressMatchingGames")}", true)

@@ -64,6 +64,12 @@ public class MatchedGame : ObservableObject
         set => SetValue(ref field, value);
     }
 
+    public bool Selected
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = true;
+
     public UVLItemOption UVLGame
     {
         get;

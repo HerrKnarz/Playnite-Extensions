@@ -35,6 +35,8 @@ public class SettingsViewModel : ObservableObject, ISettings
         CheckAuthenticationStatus();
     }
 
+    public AddLinkModes AddLinkModes { get; } = [];
+
     public ICommand AuthenticateCommand => _authenticateCommand ??= new RelayCommand(Authenticate);
 
     public string AuthenticationButtonText => AuthenticationStatusButtonModes[IsAuthenticated];
@@ -70,7 +72,6 @@ public class SettingsViewModel : ObservableObject, ISettings
     } = AuthenticationStatus.Unknown;
 
     public RatingToUseModes RatingToUseModes { get; } = [];
-
     public ICommand RefreshTagsCommand => _refreshTagsCommand ??= new RelayCommand(RefreshTags);
 
     public ICommand RestartRequiredCommand => _restartRequiredCommand ??= new RelayCommand<object>(RestartRequired);
