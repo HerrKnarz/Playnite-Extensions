@@ -1,5 +1,14 @@
 AddonId: UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f
 Packages:
+  - Version: 0.7.0
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-08-27
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-08-27/UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f_0_7_0.pext
+    Changelog:
+      - Changed the selection of games in the bulk import window to check boxes that can be toggled by hitting space.
+      - Games matched by links don't automatically count as a perfect match anymore, but are now rated the same as name and platform matches.
+      - Added option to only add UVL links to games with very good or perfect matches or that have the same platform as the UVL game in bulk import.
+      - When adding a link during bulk import this link will now automatically used to match the game for further tags without the need to close the window in between.
   - Version: 0.6.2
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-08-26
