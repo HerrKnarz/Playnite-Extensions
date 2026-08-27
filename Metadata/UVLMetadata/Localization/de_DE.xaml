@@ -3,6 +3,11 @@
 
     <sys:String x:Key="LOCUVLMetadataName">UVL Metadata</sys:String>
 
+    <sys:String x:Key="LOCUVLMetadataAddLinkPerfectAndVeryGood">zu perfektionieren und sehr gute Spiele</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAddLinkMatchingPlatform">zu Spielen mit der passenden Plattform</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAddLinkAllGames">für alle Spiele</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAddLinkNever">nie</sys:String>
+
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusAuthenticated">Authentifiziert</sys:String>
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Nicht authentifiziert</sys:String>
     <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Status wird überprüft...</sys:String>
@@ -12,12 +17,12 @@
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedRelease">Übereinstimmendes Jahr</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingScore">Matching-Score</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingType">gematcht nach</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportDescription">Wählen Sie die Spiele aus, für die Sie Tags importieren möchten, indem Sie die Kontrollkästchen aktivieren. Mit der Leertaste können Sie das Kontrollkästchen für alle ausgewählten Zeilen schnell umschalten.</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportFoundGames">Gefundene Spiele</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">Für &quot;{0} &quot; gefundene Spiele</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportGamesAffected">{0} zu {1} Spiel(en) hinzugefügt!</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportImport">Importieren</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportImportAs">Importieren als</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportImportLink">Link importieren</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportSearchGames">Spiele suchen</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportSearchTag">Such-Tag</sys:String>
     <sys:String x:Key="LOCUVLMetadataBulkImportSelect">Auswählen</sys:String>
@@ -51,6 +56,8 @@
     <sys:String x:Key="LOCUVLMetadataSettingsButtonTagsRefresh">Tags aktualisieren</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsButtonAuthenticate">Authentifizieren</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsButtonLogout">Abmelden</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionAddLink">Link hinzufügen</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsCaptionAddLinkDescription">Da UVL plattformspezifische Seiten für jedes Spiel hat und die zugehörigen Spiele falsche Flaggen sein können können Sie festlegen, wie Links hinzugefügt werden sollen, wenn Sie Massendaten importieren.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthentication">Authentifizierung</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionAuthenticationDescription">Um die Massenimport Funktion nutzen zu können, musst du ein Konto auf der UVL-Webseite haben und eingeloggt sein, weil nur angemeldete Benutzer auf die Seiten zugreifen können, die alle Spiele für einen Tag auflisten. Wenn du die Bulk-Import-Funktion nicht verwenden möchtest, kannst du die Authentifizierung überspringen.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsCaptionDescriptionToUse">Zu verwendende Beschreibung</sys:String>
@@ -68,6 +75,8 @@
     <sys:String x:Key="LOCUVLMetadataSettingsDescriptionToUseOfficialDescription">Offizielle Beschreibung</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsRatingAverage">Durchschnitt</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsRatingMedian">Medianisch</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsSectionBulkImport">Massenimport</sys:String>
+    <sys:String x:Key="LOCUVLMetadataSettingsSectionBulkImportDescription">Mit der Massenimport Funktion können Sie UVL Tags für mehrere Spiele auf einmal importieren. Sie können ihn über die Menüoption im Erweiterungsmenü oder optional über eine oben konfigurierte Schaltfläche aufrufen.</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsSectionGeneral">Allgemein</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsSectionTags">Tags</sys:String>
     <sys:String x:Key="LOCUVLMetadataSettingsSectionTagsDescription">Hier kannst du festlegen, welche Tag-Kategorien du als Tags, Features oder Genres hinzufügen möchtest und einen Präfix dafür angeben. Tags des Typs &quot;Serie&quot; werden immer dem Serienfeld hinzugefügt und haben keinen Präfix.</sys:String>
