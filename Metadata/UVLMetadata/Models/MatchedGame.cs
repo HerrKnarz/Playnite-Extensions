@@ -1,5 +1,4 @@
 ﻿using KNARZhelper.GamesCommon;
-using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using UVLMetadata.Enums;
@@ -12,38 +11,33 @@ public class MatchedGame : ObservableObject
     {
         get
         {
-            if (MatchingType == MatchingType.Link)
-            {
-                return MatchingScore.Perfect;
-            }
-
             if (int.TryParse(UVLGame.ReleaseDate, out var uvlReleaseYearAsInt))
             {
                 if (PlayniteGame.Game.ReleaseYear == uvlReleaseYearAsInt)
                 {
                     return uvlReleaseYearAsInt < 2000 && UVLGame.Name.Length < 15
-                        ? MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Acceptable : MatchingScore.Perfect
-                        : MatchingType != MatchingType.NameAndPlatform ? MatchingScore.VeryGood : MatchingScore.Perfect;
+                        ? MatchingType == MatchingType.Name ? MatchingScore.Good : MatchingScore.Perfect
+                        : MatchingType == MatchingType.Name ? MatchingScore.VeryGood : MatchingScore.Perfect;
                 }
 
-                if (PlayniteGame.Game.ReleaseYear is null)
+                if (PlayniteGame.Game.ReleaseYear is null || Math.Abs(PlayniteGame.Game.ReleaseYear.Value - uvlReleaseYearAsInt) > 5)
                 {
                     return uvlReleaseYearAsInt < 2000 && UVLGame.Name.Length < 15
-                        ? MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Poor : MatchingScore.Good
-                        : MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Good : MatchingScore.VeryGood;
+                        ? MatchingType == MatchingType.Name ? MatchingScore.Poor : MatchingScore.Good
+                        : MatchingType == MatchingType.Name ? MatchingScore.Good : MatchingScore.VeryGood;
                 }
 
                 if (Math.Abs(PlayniteGame.Game.ReleaseYear.Value - uvlReleaseYearAsInt) <= 5)
                 {
                     return uvlReleaseYearAsInt < 2000 && UVLGame.Name.Length < 15
-                        ? MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Acceptable : MatchingScore.VeryGood
-                        : MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Good : MatchingScore.VeryGood;
+                        ? MatchingType == MatchingType.Name ? MatchingScore.Acceptable : MatchingScore.VeryGood
+                        : MatchingType == MatchingType.Name ? MatchingScore.Good : MatchingScore.VeryGood;
                 }
             }
 
             return UVLGame.Name.Length < 15
-                ? MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Poor : MatchingScore.Acceptable
-                : MatchingType != MatchingType.NameAndPlatform ? MatchingScore.Good : MatchingScore.VeryGood;
+                ? MatchingType == MatchingType.Name ? MatchingScore.Poor : MatchingScore.Good
+                : MatchingType == MatchingType.Name ? MatchingScore.Good : MatchingScore.VeryGood;
         }
     }
 
