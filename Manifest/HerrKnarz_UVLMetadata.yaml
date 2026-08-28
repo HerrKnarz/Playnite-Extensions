@@ -1,5 +1,14 @@
 AddonId: UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f
 Packages:
+  - Version: 0.7.1
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-08-28
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-08-28/UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f_0_7_1.pext
+    Changelog:
+      - Double clicking a tag in the bulk import window now triggers the game search without needing to click the button.
+      - After games were searched in the bulk import window, the first game in the list is now automatically selected and focused.
+      - Fixed closing the bulk import window when hitting enter.
+      - Updated localization
   - Version: 0.7.0
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-08-27
