@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.Controls;
 using KNARZhelper.MetadataCommon;
 using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
 using KNARZhelper.MetadataCommon.ViewModels;
@@ -19,7 +20,7 @@ using UVLMetadata.Views;
 
 namespace UVLMetadata.ViewModels;
 
-public class BulkImportViewModel : ObservableObject
+public class BulkImportViewModel : ObservableObject, IRequestFocus
 {
     private readonly GameMatcher _gameMatcher = new([.. API.Instance.Database.Games]);
     private readonly UVLMetadata _plugin;
@@ -37,6 +38,8 @@ public class BulkImportViewModel : ObservableObject
 
         PrepareTagsViewSource();
     }
+
+    public event EventHandler<FocusRequestedEventArgs> FocusRequested;
 
     public AddLink AddLink
     {
@@ -126,6 +129,12 @@ public class BulkImportViewModel : ObservableObject
         }
     } = string.Empty;
 
+    public MatchedGame SelectedGame
+    {
+        get;
+        set => SetValue(ref field, value);
+    }
+
     public UVLTag SelectedTag
     {
         get;
@@ -167,7 +176,7 @@ public class BulkImportViewModel : ObservableObject
         {
             var viewModel = new BulkImportViewModel(plugin);
 
-            var view = new BulkImportView();
+            var view = new BulkImportView(viewModel);
 
             var window = WindowHelper.CreateSizedWindow(
                 $"UVL {ResourceProvider.GetString("LOCUVLMetadataMenuBulkImport")}", plugin.Settings.Settings.BulkImportSettings.WindowWidth, plugin.Settings.Settings.BulkImportSettings.WindowHeight);
@@ -310,6 +319,8 @@ public class BulkImportViewModel : ObservableObject
         API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCUVLMetadataBulkImportGamesAffected"), typeManager.LabelSingular, gamesAffected.Count), "UVL");
     }
 
+    private void OnFocusRequested(string propertyName) => FocusRequested?.Invoke(this, new FocusRequestedEventArgs(propertyName));
+
     private void PrepareTagsViewSource()
     {
         TagsViewSource = new CollectionViewSource
@@ -366,6 +377,15 @@ public class BulkImportViewModel : ObservableObject
         _gameMatcher.MatchGames(foundGames);
 
         MatchedGames.AddMissing(_gameMatcher.MatchedGames.Values.OrderBy(v => v.PlayniteGame.RealSortingName).ThenBy(v => v.PlayniteGame.Game.ReleaseDate));
+
+        if (MatchedGames.Count == 0)
+        {
+            return;
+        }
+
+        SelectedGame = MatchedGames.FirstOrDefault();
+
+        OnFocusRequested(nameof(SelectedGame));
     }
 
     private void SelectFieldValue()

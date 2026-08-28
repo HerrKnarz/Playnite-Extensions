@@ -41,6 +41,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\DataGridFocusHelper.cs" Link="Shared\Controls\DataGridFocusHelper.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs" Link="Shared\Controls\SettingsOption.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsSection.cs" Link="Shared\Controls\SettingsSection.cs" />
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Enum\DbInteractionResult.cs" Link="Shared\Enum\DbInteractionResult.cs" />

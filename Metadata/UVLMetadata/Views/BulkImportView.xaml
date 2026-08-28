@@ -40,7 +40,6 @@
                         d:Content="Close"
                         Command="{Binding CloseCommand}"
                         CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                        IsDefault="True"
                         Style="{DynamicResource BottomButton}"
                         d:Style="{StaticResource KNARZBottomButton}" />
             </StackPanel>
@@ -204,8 +203,13 @@
                         </ListBox.GroupStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Margin="5">
-                                    <DockPanel Margin="0, 0, 0, 2">
+                                <StackPanel Background="Transparent">
+                                    <StackPanel.InputBindings>
+                                        <MouseBinding Gesture="LeftDoubleClick"
+                                                      Command="{Binding DataContext.SearchGamesCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" />
+                                    </StackPanel.InputBindings>
+
+                                    <DockPanel Margin="5, 5, 5, 2">
                                         <TextBlock Text="{Binding GamesCountFormatted}"
                                                    FontSize="{StaticResource FontSizeSmall}"
                                                    d:FontSize="10"
@@ -220,6 +224,7 @@
                                     <TextBlock Text="{Binding Description}"
                                                FontSize="{StaticResource FontSizeSmall}"
                                                d:FontSize="10"
+                                               Margin="5, 0, 5, 5"
                                                TextWrapping="Wrap" />
                                 </StackPanel>
                             </DataTemplate>
@@ -275,6 +280,7 @@
 
                     <DataGrid Name="GamesGrid"
                               ItemsSource="{Binding MatchedGames}"
+                              SelectedItem="{Binding SelectedGame}"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
                               IsReadOnly="True"
@@ -282,7 +288,8 @@
                               ColumnWidth="*"
                               CanUserSortColumns="True"
                               EnableRowVirtualization="True"
-                              SelectionMode="Extended">
+                              SelectionMode="Extended"
+                              SelectionUnit="FullRow">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Width="SizeToCells"
                                                     SortMemberPath="Selected">
