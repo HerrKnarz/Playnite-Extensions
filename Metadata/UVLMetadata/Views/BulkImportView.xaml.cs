@@ -9,8 +9,6 @@ namespace UVLMetadata.Views
     /// </summary>
     public partial class BulkImportView : UserControl
     {
-        //NEXT: Find out why the focus is not set on the first call when opening the window but only from the second time on.
-
         public BulkImportView(object viewModel)
         {
             InitializeComponent();
@@ -26,7 +24,7 @@ namespace UVLMetadata.Views
         {
             switch (e.PropertyName)
             {
-                case "SelectedGame":
+                case "MatchedGames":
                     DataGridFocusHelper.SelectRowByIndex(GamesGrid, 0);
                     break;
             }

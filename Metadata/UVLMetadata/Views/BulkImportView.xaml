@@ -280,7 +280,6 @@
 
                     <DataGrid Name="GamesGrid"
                               ItemsSource="{Binding MatchedGames}"
-                              SelectedItem="{Binding SelectedGame}"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
                               IsReadOnly="True"

@@ -129,12 +129,6 @@ public class BulkImportViewModel : ObservableObject, IRequestFocus
         }
     } = string.Empty;
 
-    public MatchedGame SelectedGame
-    {
-        get;
-        set => SetValue(ref field, value);
-    }
-
     public UVLTag SelectedTag
     {
         get;
@@ -383,9 +377,7 @@ public class BulkImportViewModel : ObservableObject, IRequestFocus
             return;
         }
 
-        SelectedGame = MatchedGames.FirstOrDefault();
-
-        OnFocusRequested(nameof(SelectedGame));
+        OnFocusRequested(nameof(MatchedGames));
     }
 
     private void SelectFieldValue()
