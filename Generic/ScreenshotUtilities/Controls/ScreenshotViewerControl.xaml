@@ -76,12 +76,13 @@
                          SelectedItem="{Binding SelectedGroup.SelectedScreenshot}"
                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
                          ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                         ScrollViewer.PanningMode="HorizontalOnly"
-                         VirtualizingPanel.ScrollUnit="Pixel"
-                         VirtualizingStackPanel.VirtualizationMode="Recycling">
+                         ScrollViewer.PanningMode="HorizontalOnly">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <VirtualizingStackPanel Orientation="Horizontal" />
+                            <VirtualizingStackPanel Orientation="Horizontal"
+                                                    IsVirtualizing="True"
+                                                    VirtualizationMode="Recycling"
+                                                    ScrollUnit="Pixel" />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
