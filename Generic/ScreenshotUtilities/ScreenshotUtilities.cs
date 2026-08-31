@@ -120,23 +120,22 @@ namespace ScreenshotUtilities
                     Description = "-",
                     MenuSection = menuSection
                 });
+            }
 
-                if (args.Games.Count == 1)
-                {
-                    providers.AddRange(Settings.Settings.CurrentScreenshotGroups
-                        .Where(g => g.Screenshots?.Count > 0)
-                        .Select(g => g.Provider)
-                        .Distinct()
-                        .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
-                        .ThenBy(p => p.Name));
-                }
-                else
-                {
-                    providers.AddRange(ScreenshotProviders
-                        .Select(p => new ScreenshotProvider(p.ProviderName, p.Id))
-                        .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
-                        .ThenBy(p => p.Name));
-                }
+            if (args.Games.Count == 1)
+            {
+                providers.AddRange(Settings.Settings.CurrentScreenshotGroups
+                    .Select(g => g.Provider)
+                    .Distinct()
+                    .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
+                    .ThenBy(p => p.Name));
+            }
+            else
+            {
+                providers.AddRange(ScreenshotProviders
+                    .Select(p => new ScreenshotProvider(p.ProviderName, p.Id))
+                    .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
+                    .ThenBy(p => p.Name));
             }
 
             menuItems.AddRange(GetDownloadMenuItems(args.Games, providers));
@@ -323,7 +322,7 @@ namespace ScreenshotUtilities
 
         private IEnumerable<GameMenuItem> GetDownloadMenuItems(List<Game> games, List<ScreenshotProvider> providers)
         {
-            if (providers?.Count == 0)
+            if (providers?.Count == 0 || (games.Count == 1 && Settings.Settings.CurrentScreenshotGroups?.ScreenshotCount == 0))
             {
                 yield break;
             }
@@ -476,23 +475,7 @@ namespace ScreenshotUtilities
 
         private IEnumerable<GameMenuItem> GetRefreshThumbnailsMenuItems(List<Game> games, List<ScreenshotProvider> providers)
         {
-            if (games.Count < 2 && Settings.Settings.CurrentScreenshotGroups?.ScreenshotCount == 0)
-            {
-                yield break;
-            }
-
-            if (games.Count == 1)
-            {
-                providers = Settings.Settings.CurrentScreenshotGroups
-                    .Where(g => g.Screenshots?.Count(s => s.IsDownloaded) > 0)
-                    .Select(g => g.Provider)
-                    .Distinct()
-                    .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
-                    .ThenBy(p => p.Name)
-                    .ToList();
-            }
-
-            if (providers?.Count == 0)
+            if (providers?.Count == 0 || (games.Count < 2 && Settings.Settings.CurrentScreenshotGroups?.ScreenshotCount == 0))
             {
                 yield break;
             }
@@ -537,16 +520,6 @@ namespace ScreenshotUtilities
 
         private IEnumerable<GameMenuItem> GetResetGameMenuItems(List<Game> games, List<ScreenshotProvider> providers)
         {
-            if (games.Count > 1)
-            {
-                providers.Clear();
-                providers.AddRange(Settings.Settings.CurrentScreenshotGroups
-                    .Select(g => g.Provider)
-                    .Distinct()
-                    .OrderBy(p => Settings.Settings.ProviderSettings[p.Name].SortOrder)
-                    .ThenBy(p => p.Name));
-            }
-
             if (providers?.Count == 0)
             {
                 yield break;
