@@ -49,6 +49,13 @@
                                  Width="40" />
                     </c:SettingsOption>
 
+                    <CheckBox IsChecked="{Binding Settings.FetchForNewGames}"
+                              Content="{DynamicResource LOCScreenshotUtilitiesSettingsFetchForNewGames}"
+                              Margin="0, 0, 0, 5" />
+                    <TextBlock Text="{DynamicResource LOCScreenshotUtilitiesSettingsFetchForNewGamesDescription}"
+                               Style="{StaticResource SettingsDescription}"
+                               Margin="0, 0, 0, 15" />
+
                     <CheckBox IsChecked="{Binding Settings.DisplayViewerControl}"
                               Content="{DynamicResource LOCScreenshotUtilitiesSettingsDisplayViewerControl}"
                               Margin="0, 0, 0, 5" />

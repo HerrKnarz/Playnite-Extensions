@@ -28,7 +28,7 @@ namespace ScreenshotUtilities
     internal static class ScreenshotActions
     {
         internal static void DoForAll(List<Game> games, ScreenshotUtilities plugin,
-            ActionModifierType actionModifier = ActionModifierType.None, Guid providerId = default, bool completeLibrary = false)
+            ActionModifierType actionModifier = ActionModifierType.None, Guid providerId = default, bool completeLibrary = false, bool onNewGames = false)
         {
             if (games == null || games.Count == 0)
             {
@@ -147,7 +147,7 @@ namespace ScreenshotUtilities
                                         break;
 
                                     case ActionModifierType.RefreshScreenshots:
-                                        if (AsyncHelper.RunSync(async () => await GetScreenshotsAsync(game, plugin, true, providerId)))
+                                        if (AsyncHelper.RunSync(async () => await GetScreenshotsAsync(game, plugin, !onNewGames, providerId)))
                                         {
                                             gamesAffected++;
                                         }
@@ -195,7 +195,11 @@ namespace ScreenshotUtilities
                 }
 
                 Cursor.Current = Cursors.Default;
-                API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(resultMessage), gamesAffected));
+
+                if (!onNewGames)
+                {
+                    API.Instance.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString(resultMessage), gamesAffected));
+                }
             }
             finally
             {

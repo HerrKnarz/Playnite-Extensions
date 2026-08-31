@@ -72,11 +72,17 @@ namespace ScreenshotUtilities
         }
 
         public override Guid Id { get; } = Guid.Parse("485d682f-73e9-4d54-b16f-b8dd49e88f90");
+
         public bool ProvidersInitialized { get; set; } = false;
+
         public List<ButtonControl> ScreenshotButtonControls { get; set; } = new List<ButtonControl>();
+
         public List<ScreenshotProviderPlugin> ScreenshotProviders { get; set; } = new List<ScreenshotProviderPlugin>();
+
         public List<ScreenshotViewerControl> ScreenshotViewerControls { get; set; } = new List<ScreenshotViewerControl>();
+
         public ScreenshotUtilitiesSettingsViewModel Settings { get; set; }
+
         public Timer Timer { get; private set; }
 
         public async Task DownloadScreenshotsAsync(Game game, Guid providerId = default)
@@ -247,6 +253,25 @@ namespace ScreenshotUtilities
             base.OnGameStopped(args);
 
             ScreenshotActions.HandleGameStoppedAsync(this, args.Game);
+        }
+
+        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
+        {
+            if (Settings.Settings.LastAutoLibUpdate == default)
+            {
+                Settings.Settings.LastAutoLibUpdate = DateTime.Now.AddMinutes(-10);
+            }
+
+            if (Settings.Settings.FetchForNewGames)
+            {
+                var games = PlayniteApi.Database.Games
+                    .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
+
+                ScreenshotActions.DoForAll(games, this, ActionModifierType.RefreshScreenshots, onNewGames: true);
+            }
+
+            Settings.Settings.LastAutoLibUpdate = DateTime.Now;
+            SavePluginSettings(Settings.Settings);
         }
 
         public async Task RefreshThumbnailsAsync(Game game, Guid providerId = default)

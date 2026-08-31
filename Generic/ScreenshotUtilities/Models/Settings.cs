@@ -16,8 +16,10 @@ namespace ScreenshotUtilities.Models
         private bool _displayButtonControl = true;
         private bool _displayViewerControl = true;
         private ObservableCollection<MetadataObject> _downloadFilter = new ObservableCollection<MetadataObject>();
+        private bool _fetchForNewGames = false;
         private bool _isButtonControlVisible = false;
         private bool _isViewerControlVisible = false;
+        private DateTime _lastAutoLibUpdate = DateTime.MinValue;
         private Dictionary<string, ProviderSettings> _providerSettings = new Dictionary<string, ProviderSettings>();
         private int _thumbnailHeight = 120;
         private int _viewerWindowHeight = 700;
@@ -89,6 +91,12 @@ namespace ScreenshotUtilities.Models
             set => SetValue(ref _downloadFilter, value);
         }
 
+        public bool FetchForNewGames
+        {
+            get => _fetchForNewGames;
+            set => SetValue(ref _fetchForNewGames, value);
+        }
+
         [DontSerialize]
         public bool HasLocalScreenshots
            => !(CurrentLocalScreenshotGroup is null) && CurrentLocalScreenshotGroup.HasScreenshots;
@@ -105,6 +113,12 @@ namespace ScreenshotUtilities.Models
         {
             get => _isViewerControlVisible;
             set => SetValue(ref _isViewerControlVisible, value);
+        }
+
+        public DateTime LastAutoLibUpdate
+        {
+            get => _lastAutoLibUpdate;
+            set => SetValue(ref _lastAutoLibUpdate, value);
         }
 
         public Dictionary<string, ProviderSettings> ProviderSettings

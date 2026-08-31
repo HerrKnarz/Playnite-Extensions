@@ -94,6 +94,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Display button to open the standalone viewer in the theme</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayDescription">Your theme has to support ScreenshotUtilities to display the control.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Display screenshot viewer control in the theme</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchForNewGames">Automatically fetch screenshots for newly imported games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchForNewGamesDescription">When enabled, screenshots will be fetched automatically for new games when they get imported. When disabled the screenshots will only be fetched when first selecting a game in the library. Enabling this might interfere with the download filter since newly imported games might not have the required categories or tags set yet.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchMode">Fetch mode</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeDescription">This determines if screenshots are fetched automatically or manually. When set to "Only if first in priority", it will only fetch screenshots if no other provider with a higher priority already has screenshots.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeAlways">Always, ignoring priority</sys:String>
