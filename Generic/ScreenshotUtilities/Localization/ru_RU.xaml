@@ -70,6 +70,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Папка «Скриншоты» не может быть удалена после удаления игры {0}. Пожалуйста, удалите её вручную. Нажмите на это сообщение, чтобы открыть папку.</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">Загрузка скриншотов</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressInitialize">Initializing screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">Обновление скриншотов</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">Обновление миниатюр</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">Сброс скриншотов</sys:String>
