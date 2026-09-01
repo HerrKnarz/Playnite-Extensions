@@ -22,7 +22,8 @@ namespace ScreenshotUtilities
         RefreshScreenshots,
         RefreshThumbnails,
         Reset,
-        Ignore
+        Ignore,
+        Initialize
     }
 
     internal static class ScreenshotActions
@@ -57,6 +58,10 @@ namespace ScreenshotUtilities
 
                     case ActionModifierType.Ignore:
                         SetGameToIgnore(games[0], plugin, providerId);
+                        break;
+
+                    case ActionModifierType.Initialize:
+                        PrepareScreenshotsAsync(games[0], plugin, true, false);
                         break;
                 }
 
@@ -107,6 +112,10 @@ namespace ScreenshotUtilities
                     case ActionModifierType.Ignore:
                         progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressDisable");
                         resultMessage = "LOCScreenshotUtilitiesResultDisable";
+                        break;
+
+                    case ActionModifierType.Initialize:
+                        progressMessage = ResourceProvider.GetString("LOCScreenshotUtilitiesProgressInitialize");
                         break;
                 }
 
@@ -177,12 +186,16 @@ namespace ScreenshotUtilities
                                         SetGameToIgnore(game, plugin, providerId, false);
                                         gamesAffected++;
                                         break;
+
+                                    case ActionModifierType.Initialize:
+                                        AsyncHelper.RunSync(async () => await PrepareScreenshotsAsync(game, plugin, true, false));
+                                        break;
                                 }
 
                                 activateGlobalProgress.CurrentProgressValue++;
                             }
 
-                            if (gamesAffected > 0)
+                            if (gamesAffected > 0 && !onNewGames)
                             {
                                 plugin.RefreshControls();
                             }
@@ -339,7 +352,7 @@ namespace ScreenshotUtilities
             window.ShowDialog();
         }
 
-        internal static async Task PrepareScreenshotsAsync(Game game, ScreenshotUtilities plugin, bool getFromSource = true)
+        internal static async Task PrepareScreenshotsAsync(Game game, ScreenshotUtilities plugin, bool getFromSource = true, bool refreshControl = true)
         {
             try
             {
@@ -438,14 +451,17 @@ namespace ScreenshotUtilities
                             API.Instance.Database.Games.Update(game);
                         }
 
-                        plugin.Settings.Settings.CurrentScreenshotGroups = groups;
-
-                        if (plugin.Settings.Settings.DisplayViewerControl && groups.ScreenshotCount > 0)
+                        if (refreshControl)
                         {
-                            plugin.Settings.Settings.IsViewerControlVisible = true;
-                        }
+                            plugin.Settings.Settings.CurrentScreenshotGroups = groups;
 
-                        plugin.RefreshControls();
+                            if (plugin.Settings.Settings.DisplayViewerControl && groups.ScreenshotCount > 0)
+                            {
+                                plugin.Settings.Settings.IsViewerControlVisible = true;
+                            }
+
+                            plugin.RefreshControls();
+                        }
                     }
                     catch (Exception ex)
                     {

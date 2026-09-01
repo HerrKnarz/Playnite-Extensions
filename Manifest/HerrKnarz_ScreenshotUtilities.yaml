@@ -1,5 +1,13 @@
 AddonId: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Packages:
+  - Version: 0.9.0
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-09-01
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-09-01/ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90_0_9_0.pext
+    Changelog:
+      - Added option to fetch screenshots for newly added games automatically after they got imported instead of only when selecting them first in the library. Can be enabled in the settings.
+      - Fixed some menu entries not always showing up when several games are selected.
+      - Attempt to optimize performance of the screenshot viewer for games with a lot of screenshots from a single provider.
   - Version: 0.8.5
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-08-26

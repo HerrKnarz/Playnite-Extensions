@@ -267,7 +267,7 @@ namespace ScreenshotUtilities
                 var games = PlayniteApi.Database.Games
                     .Where(x => x.Added != null && x.Added > Settings.Settings.LastAutoLibUpdate).ToList();
 
-                ScreenshotActions.DoForAll(games, this, ActionModifierType.RefreshScreenshots, onNewGames: true);
+                ScreenshotActions.DoForAll(games, this, ActionModifierType.Initialize, onNewGames: true);
             }
 
             Settings.Settings.LastAutoLibUpdate = DateTime.Now;
