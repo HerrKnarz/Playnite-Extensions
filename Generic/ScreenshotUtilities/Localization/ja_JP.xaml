@@ -70,6 +70,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">ゲーム {0} の削除後にスクリーンショットフォルダーを削除できませんでした。手動で削除してください。このメッセージをクリックするとフォルダーを開けます。</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">スクリーンショットをダウンロード中</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressInitialize">Initializing screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">スクリーンショットを更新中</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">サムネイルを更新中</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">スクリーンショットをリセット中</sys:String>
@@ -93,6 +94,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">テーマ内にスタンドアロンビューアーを開くボタンを表示</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayDescription">コントロールを表示するには、テーマが ScreenshotUtilities に対応している必要があります。</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">テーマ内にスクリーンショットビューアーコントロールを表示</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchForNewGames">Automatically fetch screenshots for newly imported games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchForNewGamesDescription">When enabled, screenshots will be fetched automatically for new games when they get imported. When disabled the screenshots will only be fetched when first selecting a game in the library. Enabling this might interfere with the download filter since newly imported games might not have the required categories or tags set yet.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchMode">取得モード</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeDescription">スクリーンショットを自動で取得するか、手動で取得するかを決定します。「優先順位で最初の場合のみ」に設定すると、より高い優先順位の他のプロバイダーにスクリーンショットがまだない場合にのみ取得します。</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeAlways">常に取得（優先順位を無視）</sys:String>

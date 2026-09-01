@@ -70,6 +70,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots folder couldn't be deleted after the game {0} was removed. Please delete it manually. Click on this message to open the folder.</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">Downloading screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressInitialize">Initializing screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">Refreshing screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">Refreshing thumbnails</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">Resetting screenshots</sys:String>
@@ -93,6 +94,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Exibir botão para abrir o visualizador independente no tema</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayDescription">Your theme has to support ScreenshotUtilities to display the control.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Display screenshot viewer control in the theme</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchForNewGames">Automatically fetch screenshots for newly imported games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchForNewGamesDescription">When enabled, screenshots will be fetched automatically for new games when they get imported. When disabled the screenshots will only be fetched when first selecting a game in the library. Enabling this might interfere with the download filter since newly imported games might not have the required categories or tags set yet.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchMode">Fetch mode</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeDescription">This determines if screenshots are fetched automatically or manually. When set to &quot;Only if first in priority&quot;, it will only fetch screenshots if no other provider with a higher priority already has screenshots.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeAlways">Always, ignoring priority</sys:String>

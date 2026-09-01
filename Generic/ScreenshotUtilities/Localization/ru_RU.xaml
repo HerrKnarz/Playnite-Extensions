@@ -70,6 +70,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Папка «Скриншоты» не может быть удалена после удаления игры {0}. Пожалуйста, удалите её вручную. Нажмите на это сообщение, чтобы открыть папку.</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">Загрузка скриншотов</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressInitialize">Initializing screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">Обновление скриншотов</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">Обновление миниатюр</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">Сброс скриншотов</sys:String>
@@ -93,6 +94,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Кнопка отображения, чтобы открыть окно просмотра в теме</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayDescription">Ваша тема должна поддерживать ScreenshotUtilities для отображения управления.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Отображать управление просмотром скриншота в теме</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchForNewGames">Automatically fetch screenshots for newly imported games</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchForNewGamesDescription">When enabled, screenshots will be fetched automatically for new games when they get imported. When disabled the screenshots will only be fetched when first selecting a game in the library. Enabling this might interfere with the download filter since newly imported games might not have the required categories or tags set yet.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchMode">Режим получения</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeDescription">Этот параметр определяет, будут ли скриншоты загружаться автоматически или вручную. Если установлено значение «Только если первый по приоритету», скриншоты будут загружаться только в том случае, если ни у одного другого поставщика с более высоким приоритетом еще нет скриншотов.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeAlways">Всегда, игнорировать приоритет</sys:String>
