@@ -70,6 +70,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Теку зі знімками екрану не вдалося видалити після видалення гри {0}. Видаліть теку вручну. Натисніть на це повідомлення, щоб її відкрити.</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">Downloading screenshots</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressInitialize">Initializing screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">Refreshing screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">Refreshing thumbnails</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">Resetting screenshots</sys:String>
