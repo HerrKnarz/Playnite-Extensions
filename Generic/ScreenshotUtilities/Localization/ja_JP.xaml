@@ -70,6 +70,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">ゲーム {0} の削除後にスクリーンショットフォルダーを削除できませんでした。手動で削除してください。このメッセージをクリックするとフォルダーを開けます。</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">スクリーンショットをダウンロード中</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressInitialize">Initializing screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">スクリーンショットを更新中</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">サムネイルを更新中</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">スクリーンショットをリセット中</sys:String>
