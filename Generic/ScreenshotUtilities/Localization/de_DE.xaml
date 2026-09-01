@@ -70,6 +70,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots-Ordner konnte nicht gelöscht werden, nachdem das Spiel {0} entfernt wurde. Bitte lösche es manuell. Klicke auf diese Nachricht, um den Ordner zu öffnen.</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">Screenshots werden heruntergeladen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressInitialize">Initialisiere Screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">Screenshots werden aktualisiert</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">Vorschaubilder werden aktualisiert</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">Screenshots werden zurückgesetzt</sys:String>
