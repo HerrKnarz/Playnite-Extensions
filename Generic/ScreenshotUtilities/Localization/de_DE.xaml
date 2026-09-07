@@ -70,6 +70,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesNotificationFolderNotDeleted">Screenshots-Ordner konnte nicht gelöscht werden, nachdem das Spiel {0} entfernt wurde. Bitte lösche es manuell. Klicke auf diese Nachricht, um den Ordner zu öffnen.</sys:String>
 
     <sys:String x:Key="LOCScreenshotUtilitiesProgressDownload">Screenshots werden heruntergeladen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesProgressInitialize">Initialisiere Screenshots</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshScreenshots">Screenshots werden aktualisiert</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressRefreshThumbnails">Vorschaubilder werden aktualisiert</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesProgressReset">Screenshots werden zurückgesetzt</sys:String>
@@ -93,6 +94,8 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayButtonControl">Button für den Standalone-Viewer im Theme anzeigen</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayDescription">Dein Theme muss ScreenshotUtilities unterstützen, um das Element anzuzeigen.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsDisplayViewerControl">Screenshot-Viewer im Theme anzeigen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchForNewGames">Screenshots für neu importierte Spiele automatisch abrufen</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchForNewGamesDescription">Wenn aktiviert, werden Screenshots automatisch für neue Spiele abgerufen, wenn sie importiert werden. Wenn deaktiviert, werden die Screenshots nur abgerufen, wenn ein Spiel in der Bibliothek ausgewählt wird. Das Aktivieren kann den Download-Filter beeinträchtigen, da neu importierte Spiele möglicherweise noch nicht die benötigten Kategorien oder Tags gesetzt haben.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchMode">Abruf-Modus</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeDescription">Dies legt fest, ob Screenshots automatisch oder manuell abgerufen werden. Wenn auf &quot;Nur wenn erster in der Priorität&quot; gesetzt ist, werden nur dann Screenshots ermittelt, wenn kein anderer Anbieter mit höherer Priorität bereits Screenshots hat.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsFetchModeAlways">Immer, ignoriert die Priorität</sys:String>
