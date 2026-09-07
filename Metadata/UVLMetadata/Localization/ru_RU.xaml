@@ -3,8 +3,8 @@
 
     <sys:String x:Key="LOCUVLMetadataName">Метаданные UVL</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataAddLinkPerfectAndVeryGood">to perfect and very good matches</sys:String>
-    <sys:String x:Key="LOCUVLMetadataAddLinkMatchingPlatform">to games with matching platform</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAddLinkPerfectAndVeryGood">к идеальным и очень хорошим совпадениям</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAddLinkMatchingPlatform">к играм с совпавшей платформой</sys:String>
     <sys:String x:Key="LOCUVLMetadataAddLinkAllGames">to all games</sys:String>
     <sys:String x:Key="LOCUVLMetadataAddLinkNever">never</sys:String>
 
