@@ -76,12 +76,13 @@
                         <Button Name="BtnRefreshTags"
                                 VerticalAlignment="Center"
                                 Margin="0,0,10,0"
-                                Width="100"
+                                MinWidth="100"
                                 DockPanel.Dock="Right"
                                 Content="{DynamicResource LOCUVLMetadataSettingsButtonTagsRefresh}"
                                 Command="{Binding RefreshTagsCommand}" />
                         <Button Content="{DynamicResource LOCUVLMetadataBulkImportSearchGames}"
                                 Command="{Binding SearchGamesCommand}"
+                                MinWidth="100"
                                 IsEnabled="{Binding ElementName=LbTagList, Path=SelectedItems.Count}" />
                     </StackPanel>
 
@@ -251,6 +252,7 @@
                                  DockPanel.Dock="Left" />
                         <Button Content="{DynamicResource LOCUVLMetadataBulkImportSelect}"
                                 Margin="5, 0, 0, 0"
+                                MinWidth="60"
                                 Command="{Binding SelectFieldValueCommand}"
                                 DockPanel.Dock="Left" />
 
@@ -263,13 +265,14 @@
                                   DisplayMemberPath="Value"
                                   SelectedValuePath="Key"
                                   SelectedValue="{Binding Path=AddLink}"
-                                  MinWidth="150"
+                                  MinWidth="120"
                                   Margin="10, 0, 0, 0"
                                   DockPanel.Dock="Left" />
 
                         <Button Content="{DynamicResource LOCUVLMetadataBulkImportImport}"
                                 Command="{Binding ImportTagsCommand}"
                                 Margin="10, 0, 0, 0"
+                                MinWidth="60"
                                 DockPanel.Dock="Right" />
                     </DockPanel>
                 </c:SettingsSection>
