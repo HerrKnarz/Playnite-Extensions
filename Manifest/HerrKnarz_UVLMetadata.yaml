@@ -1,5 +1,14 @@
 AddonId: UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f
 Packages:
+  - Version: 0.7.2
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-09-07
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-09-07/UVLMetadata_b825766b-c151-43cd-a918-7322fdc1868f_0_7_2.pext
+    Changelog:
+      - Fixed button widths to fit longer translations.
+      - skipping developers and publishers if they are only question marks.
+      - Fixed debug notifications that were only supposed to be added for Link Utilities.
+      - Updated localization
   - Version: 0.7.1
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-08-28

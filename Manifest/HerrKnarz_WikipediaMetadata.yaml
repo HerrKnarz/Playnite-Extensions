@@ -1,5 +1,16 @@
 AddonId: WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c
 Packages:
+  - Version: 1.10.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-09-07
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-09-07/WikipediaMetadata_6c1bdd62-77bf-4866-a264-11544508687c_1_10_0.pext
+    Changelog:
+      - Fixed critical bug parsing the description omitting headlines and paragraphs in certain conditions. Unfortunately this bug seems to be introduced in v1.7.0 two years ago and was not noticed until now.
+      - Script and Style tags are now removed from the description without leaving their content behind.
+      - HTML comments are now removed from the description.
+      - Added missing support for fifth level sections in the description.
+      - Fixed falsely splitting values inside article links with commas.
+      - Updated localization
   - Version: 1.9.0
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2026-08-23
