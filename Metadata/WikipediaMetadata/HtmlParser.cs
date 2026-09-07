@@ -11,7 +11,8 @@ using WikipediaMetadata.Models;
 namespace WikipediaMetadata;
 
 /// <summary>
-///     Parser for the html code of a wikipedia page fetched by the rest api, to get the description and additional links.
+/// Parser for the html code of a wikipedia page fetched by the rest api, to get the description and
+/// additional links.
 /// </summary>
 internal class HtmlParser
 {
@@ -23,7 +24,7 @@ internal class HtmlParser
     private readonly List<string> _unwantedParagraphs;
 
     /// <summary>
-    ///     Creates an instance of the class, fetches the html code and parses it.
+    /// Creates an instance of the class, fetches the html code and parses it.
     /// </summary>
     /// <param name="gameKey">Key of the page we want to parse</param>
     /// <param name="settings">Settings of the plugin</param>
@@ -38,8 +39,8 @@ internal class HtmlParser
 
         var html = api.GetPageHtml(gameKey);
 
-        // We use HTML Agility Pack to parse the code. For the description we strip all bloat from the text and
-        // build a simple new html string.
+        // We use HTML Agility Pack to parse the code. For the description we strip all bloat from
+        // the text and build a simple new html string.
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
 
@@ -67,7 +68,7 @@ internal class HtmlParser
     public List<Link> Links { get; } = [];
 
     /// <summary>
-    ///     Removes annotation marks from the text, because we don't need those in the game description.
+    /// Removes annotation marks from the text, because we don't need those in the game description.
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
@@ -97,10 +98,12 @@ internal class HtmlParser
     }
 
     /// <summary>
-    ///     Adds the provided section to the description
+    /// Adds the provided section to the description
     /// </summary>
     /// <param name="node">The section to add</param>
-    /// <param name="level">Level the node appeared in. Is used in some elements to set the right heading level</param>
+    /// <param name="level">
+    /// Level the node appeared in. Is used in some elements to set the right heading level
+    /// </param>
     private void AddSectionToDescription(HtmlNode node, int level = 2)
     {
         if (node.Name.IsOneOf("ul", "ol"))
@@ -123,7 +126,7 @@ internal class HtmlParser
     }
 
     /// <summary>
-    ///     Gets the content of a dl description list and converts it to paragraphs with headlines
+    /// Gets the content of a dl description list and converts it to paragraphs with headlines
     /// </summary>
     /// <param name="htmlList">list to process</param>
     /// <param name="level">Level the dl list appeared in. Is used to add the right heading level</param>
@@ -154,7 +157,7 @@ internal class HtmlParser
     }
 
     /// <summary>
-    ///     Gets the external links from the provided node.
+    /// Gets the external links from the provided node.
     /// </summary>
     /// <param name="node">Node with the links to add.</param>
     private void GetExternalLinks(HtmlNode node)
@@ -204,7 +207,7 @@ internal class HtmlParser
     }
 
     /// <summary>
-    ///     Gets the content of an ul or ol list as cleaned up html code.
+    /// Gets the content of an ul or ol list as cleaned up html code.
     /// </summary>
     /// <param name="htmlList">list to process</param>
     /// <returns>the cleaned up html string for the list and its items</returns>
@@ -238,13 +241,15 @@ internal class HtmlParser
                 // If we have an unsupported div, we simply skip it.
                 case "div" when !node.Attributes.Any(a => a.Name == "class" && a.Value.Contains("div-col")):
                     continue;
-                // Is the div supported, we keep the level and loop through the content of the div, as if it wasn't there at all.
+                // Is the div supported, we keep the level and loop through the content of the div,
+                // as if it wasn't there at all.
                 case "div" when node.Attributes.Any(a => a.Name == "class" && a.Value.Contains("div-col")):
                     LoopSection(node, level);
                     break;
                 // if we have a section, we go one level deeper and loop through the content
                 case "section":
-                    LoopSection(node, ++level);
+                    var newLevel = level;
+                    LoopSection(node, ++newLevel);
                     break;
                 // We add every other tag directly to the description
                 default:
