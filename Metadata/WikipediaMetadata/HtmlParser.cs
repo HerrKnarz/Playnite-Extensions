@@ -44,6 +44,9 @@ internal class HtmlParser
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
 
+        //Remove Style, Script and comment tags first, so they don't mess with the rest.
+        doc.DocumentNode.Descendants().Where(n => n.Name is "script" or "style" || n.NodeType == HtmlNodeType.Comment).ToList().ForEach(n => n.Remove());
+
         // We go through all sections, because those typically contain the text sections of the page.
         foreach (var topLevelSection in doc.DocumentNode.SelectNodes("//body/section"))
         {
@@ -248,8 +251,7 @@ internal class HtmlParser
                     break;
                 // if we have a section, we go one level deeper and loop through the content
                 case "section":
-                    var newLevel = level;
-                    LoopSection(node, ++newLevel);
+                    LoopSection(node, level + 1);
                     break;
                 // We add every other tag directly to the description
                 default:
