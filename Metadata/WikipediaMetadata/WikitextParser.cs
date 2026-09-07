@@ -21,6 +21,7 @@ namespace WikipediaMetadata;
 /// <param name="api">Wikipedia API</param>
 internal class WikitextParser(PluginSettings settings, WikipediaApi api)
 {
+    private static readonly Regex WikiLinkRegex = new("""\[\[(?<article>[^|\]]+)(\|[^\]]+)?\]\]""", RegexOptions.Compiled);
     public WikipediaGameMetadata GameMetadata { get; set; }
 
     /// <summary>
@@ -47,8 +48,9 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
 
             GameMetadata.CriticScore = GetCriticScore(ast);
 
-            // Most of the game relevant data can be found in the "infobox video game" template. Most Wikipedia pages
-            // for games have one of those. Without it, only name, cover image, description and links can be fetched.
+            // Most of the game relevant data can be found in the "infobox video game" template.
+            // Most Wikipedia pages for games have one of those. Without it, only name, cover image,
+            // description and links can be fetched.
             var infoBox = ast.EnumDescendants().OfType<Template>()
                              .FirstOrDefault(t => Resources.InfoBoxVideoGameTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name))));
 
@@ -100,35 +102,9 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
         }
     }
 
-    private static IEnumerable<string> GetLinkedArticlesFromInfoBox(Template infoBox)
-    {
-        foreach (var arg in infoBox.Arguments)
-        {
-            var links = arg.Value.EnumDescendants().OfType<WikiLink>().ToList();
-            foreach (var link in links)
-                yield return link.Target.ToString();
-        }
-    }
-
-    private static readonly Regex WikiLinkRegex = new("""\[\[(?<article>[^|\]]+)(\|[^\]]+)?\]\]""", RegexOptions.Compiled);
-
-    private static IEnumerable<string> GetLinkedArticlesFromInfoBox(string wikiPageSource)
-    {
-        var lines = wikiPageSource
-                    .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
-                    .SkipWhile(l => !(l.TrimStart().StartsWith("{{") && l.Contains("Infobox ")))
-                    .Skip(1)
-                    .TakeWhile(l => !l.TrimStart().StartsWith("}}"));
-
-        var infoBoxContent = string.Join(Environment.NewLine, lines);
-
-        var matches = WikiLinkRegex.Matches(infoBoxContent);
-        foreach (Match match in matches)
-            yield return match.Groups["article"].Value;
-    }
-
     /// <summary>
-    /// Cleans up a template name, because sometimes those contain html comment blocks, and converts it to lower case.
+    /// Cleans up a template name, because sometimes those contain html comment blocks, and converts
+    /// it to lower case.
     /// </summary>
     /// <param name="name">name of the template</param>
     /// <returns>The cleaned up name</returns>
@@ -146,8 +122,10 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
     /// Cleans up a value and splits it by line breaks or commas instead of list templates.
     /// </summary>
     /// <param name="argument">value to be split</param>
-    /// <param name="field">name of the field. Is used to recognize fields, that can contain values that have commas
-    /// we don't want to split.</param>
+    /// <param name="field">
+    /// name of the field. Is used to recognize fields, that can contain values that have commas we
+    /// don't want to split.
+    /// </param>
     /// <param name="removeParentheses">Removes values in parentheses.</param>
     /// <param name="removeSup">Removes values in superscripts.</param>
     /// <returns>List of values</returns>
@@ -175,25 +153,32 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
 
         separators.AddRange(Resources.StringSeparators);
 
-        // Fields for release dates and metacritic contain commas we don't want to split, so we leave commas out of the list.
-        // We also don't split by comma, if the value is already from a list.
+        // Fields for release dates and metacritic contain commas we don't want to split, so we
+        // leave commas out of the list. We also don't split by comma, if the value is already from
+        // a list.
         if (field != "released" && field != "MC" && field != "GR")
         {
-            // We only add a comma, if the string isn't already separated by one of the other separators to retain wanted
-            // commas in company names etc. This is no perfect solution but better than always splitting by comma.
+            // We only add a comma, if the string isn't already separated by one of the other
+            // separators to retain wanted commas in company names etc. This is no perfect solution
+            // but better than always splitting by comma.
             if (separators.All(separator => value.IndexOf(separator, StringComparison.Ordinal) <= -1))
             {
                 separators.AddMissing(",");
             }
         }
 
-        // Since most separators are HTML, we simply replace them with a line break, so ToPlainText doesn't remove them.
-        value = separators.Aggregate(value, (current, replacement) => current.Replace(replacement, "\n"));
-
-        // Since we also split by new line and don't need to do that, if it's the last character, we remove that one.
-        if (value.EndsWith("\n"))
+        if (!IsSingleLink(value))
         {
-            value = value.Remove(value.Length - "\n".Length).Trim();
+            // Since most separators are HTML, we simply replace them with a line break, so
+            // ToPlainText doesn't remove them.
+            value = separators.Aggregate(value, (current, replacement) => current.Replace(replacement, "\n"));
+
+            // Since we also split by new line and don't need to do that, if it's the last
+            // character, we remove that one.
+            if (value.EndsWith("\n"))
+            {
+                value = value.Remove(value.Length - "\n".Length).Trim();
+            }
         }
 
         var parser = new MwParserFromScratch.WikitextParser();
@@ -232,7 +217,8 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
             return -1;
         }
 
-        // Now we use the GetValues function to get all review ratings from the metacritic section in the template.
+        // Now we use the GetValues function to get all review ratings from the metacritic section
+        // in the template.
         var list = GetValues(infoBox, "MC", true);
 
         var ratings = new List<int>();
@@ -296,10 +282,13 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
         {
             case RatingToUse.Lowest:
                 return ratings.Min();
+
             case RatingToUse.Highest:
                 return ratings.Max();
+
             case RatingToUse.Average:
                 return (int)Math.Ceiling(ratings.Average());
+
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -316,8 +305,8 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
         {
             var dates = new List<PartialDate>();
 
-            // We use the GetValues function to fetch all values from the "released" section.
-            // We check each value for a valid date and at those to a datetime list.
+            // We use the GetValues function to fetch all values from the "released" section. We
+            // check each value for a valid date and at those to a datetime list.
             foreach (var property in GetValues(infoBox, "released", true, "", true))
             {
                 if (DateTime.TryParseExact(property.ToString(), Resources.DateFormatStringsFull, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var dateTime))
@@ -357,12 +346,15 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
                     case DateToUse.Earliest:
                         dateToUse = dates.OrderBy(d => d.Date).First();
                         break;
+
                     case DateToUse.Latest:
                         dateToUse = dates.OrderByDescending(d => d.Date).First();
                         break;
+
                     case DateToUse.First:
                         dateToUse = dates.First();
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -399,8 +391,10 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
     /// </summary>
     /// <param name="infoBox">Infobox template</param>
     /// <param name="field">Name of the field</param>
-    /// <param name="removeParentheses">If true all values in parentheses will be removed. Those mostly contain the
-    /// platforms in the developer or publisher fields.</param>
+    /// <param name="removeParentheses">
+    /// If true all values in parentheses will be removed. Those mostly contain the platforms in the
+    /// developer or publisher fields.
+    /// </param>
     /// <param name="prefix">Prefix to be added to the value. Is used to categorize the tags.</param>
     /// <param name="removeSup">Removes values in superscripts.</param>
     /// <returns>List of all found values</returns>
@@ -414,14 +408,15 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
             {
                 var values = new List<MetadataProperty>();
 
-                // We go through all list templates used in the field to fetch the single values in the list.
+                // We go through all list templates used in the field to fetch the single values in
+                // the list.
                 foreach (var template in argument.EnumDescendants().OfType<Template>()
                                                  .Where(t => Resources.ListTemplateNames.Contains(CleanTemplateName(MwParserUtility.NormalizeTemplateArgumentName(t.Name)))))
                 {
                     var arguments = new List<TemplateArgument>();
 
-                    // In the template vgrelease every odd argument is supposed to be the country. So we only use the even
-                    // ones as values.
+                    // In the template vgrelease every odd argument is supposed to be the country.
+                    // So we only use the even ones as values.
                     if (Resources.VgReleaseTemplateNames.Contains(MwParserUtility.NormalizeTemplateArgumentName(template.Name).ToLower()))
                     {
                         var counter = 1;
@@ -513,6 +508,35 @@ internal class WikitextParser(PluginSettings settings, WikipediaApi api)
         }
 
         return argument;
+    }
+
+    private static IEnumerable<string> GetLinkedArticlesFromInfoBox(Template infoBox)
+    {
+        foreach (var arg in infoBox.Arguments)
+        {
+            var links = arg.Value.EnumDescendants().OfType<WikiLink>().ToList();
+            foreach (var link in links)
+            {
+                yield return link.Target.ToString();
+            }
+        }
+    }
+
+    private static IEnumerable<string> GetLinkedArticlesFromInfoBox(string wikiPageSource)
+    {
+        var lines = wikiPageSource
+                    .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+                    .SkipWhile(l => !(l.TrimStart().StartsWith("{{") && l.Contains("Infobox ")))
+                    .Skip(1)
+                    .TakeWhile(l => !l.TrimStart().StartsWith("}}"));
+
+        var infoBoxContent = string.Join(Environment.NewLine, lines);
+
+        var matches = WikiLinkRegex.Matches(infoBoxContent);
+        foreach (Match match in matches)
+        {
+            yield return match.Groups["article"].Value;
+        }
     }
 
     private static bool IsSingleLink(string value) => value.Count(c => c == '[') == 2 &&
