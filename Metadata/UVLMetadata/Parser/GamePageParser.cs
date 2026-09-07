@@ -310,7 +310,7 @@ public class GamePageParser(PluginSettings settings, UVLConnect uvlConnect)
                 return;
             }
 
-            companies.RemoveAll(c => ((MetadataNameProperty)c).Name == "author");
+            companies.RemoveAll(c => ((MetadataNameProperty)c).Name.IsOneOf("author", "?"));
 
             if (isDeveloper)
             {
