@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 // ReSharper disable CommentTypo
 
 namespace WikipediaMetadata;
@@ -24,9 +25,14 @@ public enum RatingToUse
 public static class Resources
 {
     /// <summary>
+    /// The same for fifth levels...
+    /// </summary>
+    public static readonly string[] AllowedFifthLevelNodes = ["h5", "p", "ul", "ol", "div"];
+
+    /// <summary>
     /// The same for fourth levels...
     /// </summary>
-    public static readonly string[] AllowedFourthLevelNodes = ["h4", "p", "ul", "ol", "div"];
+    public static readonly string[] AllowedFourthLevelNodes = ["h4", "p", "ul", "ol", "section", "dl", "div"];
 
     /// <summary>
     /// Array of all in a paragraph accepted tags.
@@ -34,8 +40,9 @@ public static class Resources
     public static readonly string[] AllowedParagraphTags = ["u", "b", "strong", "i", "em", "sub", "sup", "mark", "small", "del", "ins"];
 
     /// <summary>
-    /// We only fetch headings, paragraphs, lists and su sections from a section, because stuff like blockquotes or tables
-    /// don't work well in Playnite and usually aren't essential to the description of a video game.
+    /// We only fetch headings, paragraphs, lists and sub sections from a section, because stuff
+    /// like blockquotes or tables don't work well in Playnite and usually aren't essential to the
+    /// description of a video game.
     /// </summary>
     public static readonly string[] AllowedSecondLevelNodes = ["h2", "p", "ul", "ol", "section", "dl", "div"];
 
@@ -140,7 +147,8 @@ public static class Resources
     public static readonly string[] StringSeparators = ["<br />", "<br/>", "<br>"];
 
     /// <summary>
-    /// List of paragpraphs that usually contain stuff, that's either very hard to parse for a playnite description or unnecessary.
+    /// List of paragpraphs that usually contain stuff, that's either very hard to parse for a
+    /// playnite description or unnecessary.
     /// </summary>
     public static readonly string[] UnwantedParagraphs = ["see also", "notes", "references", "further reading", "sources", "external links"];
 
@@ -150,7 +158,8 @@ public static class Resources
     public static readonly string[] UnwantedTemplateNames = ["efn", "cite web", "cite tweet", "cite video game"];
 
     /// <summary>
-    /// Possible names for video game release templates. Is needed to remove the country value from the list of platforms.
+    /// Possible names for video game release templates. Is needed to remove the country value from
+    /// the list of platforms.
     /// </summary>
     public static readonly string[] VgReleaseTemplateNames = ["vgrelease", "video game release"];
 }

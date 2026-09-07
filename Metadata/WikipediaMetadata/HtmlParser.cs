@@ -17,7 +17,7 @@ namespace WikipediaMetadata;
 internal class HtmlParser
 {
     public static readonly string[][] AllowedNodes =
-        [Resources.AllowedSecondLevelNodes, Resources.AllowedThirdLevelNodes, Resources.AllowedFourthLevelNodes];
+        [Resources.AllowedSecondLevelNodes, Resources.AllowedThirdLevelNodes, Resources.AllowedFourthLevelNodes, Resources.AllowedFifthLevelNodes];
 
     private readonly PluginSettings _settings;
 
@@ -232,7 +232,7 @@ internal class HtmlParser
 
     private void LoopSection(HtmlNode section, int level = 2)
     {
-        var allowedNodesLevel = level > 4 ? 2 : level - 2;
+        var allowedNodesLevel = level > 5 ? 2 : level - 2;
 
         foreach (var node in section.ChildNodes.Where(c => AllowedNodes[allowedNodesLevel].Contains(c.Name)))
         {
