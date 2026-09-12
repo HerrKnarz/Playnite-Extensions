@@ -26,9 +26,9 @@
     <sys:String x:Key="LOCGGDealsWishlistSettingsDebugModeDescription">Включает подробные отладочные сообщения в файл extensions.log</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategory">Категория по умолчанию</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDefaultCategoryDescription">Категория по умолчанию для игр, импортированных из вашего списка желаний на GG.deals. Может быть оставлена ​​пустой.</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountImageOption">Image in Discount View</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountImageOption">Изображения в Просмотре скидок</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountImageOptionDescription">The image that will be displayed for each game in the Discount View. The GG.deals banner will be loaded live from the web when displayed.</sys:String>
-    <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountViewSettings">Discount View Settings</sys:String>
+    <sys:String x:Key="LOCGGDealsWishlistSettingsDiscountViewSettings">Настройки Просмотра скидок</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDisplayTopPanelButton">Показывать кнопку верхней панели</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDisplayTopPanelButtonDescription">When enabled, a button will be displayed in the top panel to access the discount view. Requires a restart of Playnite to take effect.</sys:String>
     <sys:String x:Key="LOCGGDealsWishlistSettingsDisplaySidebarButton">Показывать кнопку боковой панели</sys:String>
