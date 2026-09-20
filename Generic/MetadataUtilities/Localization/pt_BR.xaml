@@ -144,4 +144,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Valores a serem mesclados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">Estes itens nunca serão removidos quando remover itens não usados.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Escrever mensagens de log de depuração (use somente em caso de suspeita de erro!)</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogoTitle">Logo</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogosTitle">Logos</sys:String>
 </ResourceDictionary>
