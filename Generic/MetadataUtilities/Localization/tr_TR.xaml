@@ -144,4 +144,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Birleştirilecek değerler</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">Bu öğeler, kullanılmayan öğeler kaldırılırken asla silinmeyecek.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Hata ayıklama günlük mesajları yazın (yalnızca şüpheli hata durumunda kullanın!)</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogoTitle">Logo</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogosTitle">Logos</sys:String>
 </ResourceDictionary>
