@@ -144,6 +144,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Значения для слияния</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">Эти элементы никогда не будут удалены при удалении неиспользуемых элементов.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Записывать отладочные сообщения (используйте только в случае подозрительной ошибки!)</sys:String>
-    <sys:String x:Key="LOCKNARZHelperLogoTitle">Logo</sys:String>
-    <sys:String x:Key="LOCKNARZHelperLogosTitle">Logos</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogoTitle">Логотип</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogosTitle">Логотипы</sys:String>
 </ResourceDictionary>
