@@ -144,4 +144,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">要合并的值</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">删除未使用的项时永远不会删除这些项。</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">写入调试日志消息（仅在怀疑有错误的情况下使用！）</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogoTitle">Logo</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogosTitle">Logos</sys:String>
 </ResourceDictionary>
