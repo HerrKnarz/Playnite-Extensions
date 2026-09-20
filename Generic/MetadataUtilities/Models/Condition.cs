@@ -1,4 +1,5 @@
-﻿using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
+﻿using KNARZhelper;
+using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
 using KNARZhelper.MetadataCommon.Enum;
 using MetadataUtilities.Enums;
 using Playnite.SDK;
@@ -14,8 +15,8 @@ namespace MetadataUtilities.Models
 
         private DateTime? _dateValue;
         private int? _intValue;
-        private ulong? _ulongValue;
         private string _stringValue;
+        private ulong? _ulongValue;
 
         public Condition(FieldType type, string name = default) : base(type, name)
         {
@@ -37,12 +38,6 @@ namespace MetadataUtilities.Models
         {
             get => _intValue;
             set => SetValue(ref _intValue, value);
-        }
-
-        public ulong? UlongValue
-        {
-            get => _ulongValue;
-            set => SetValue(ref _ulongValue, value);
         }
 
         public string StringValue
@@ -83,13 +78,23 @@ namespace MetadataUtilities.Models
                     case ItemValueType.Ulong:
                         return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {UlongValue}";
 
-                    case ItemValueType.ItemList:
                     case ItemValueType.Media:
+                        return Comparator.IsOneOf(ComparatorType.IsBiggerThan, ComparatorType.IsSmallerThan)
+                            ? $"{TypeLabel} {Comparator.GetEnumDisplayName()} {IntValue} kB"
+                            : $"{TypeLabel} {Comparator.GetEnumDisplayName()} {Name}";
+
+                    case ItemValueType.ItemList:
                     case ItemValueType.None:
                     default:
                         return $"{TypeLabel} {Comparator.GetEnumDisplayName()} {Name}";
                 }
             }
+        }
+
+        public ulong? UlongValue
+        {
+            get => _ulongValue;
+            set => SetValue(ref _ulongValue, value);
         }
 
         public bool IsTrue(Game game)
@@ -170,11 +175,15 @@ namespace MetadataUtilities.Models
                     switch (TypeManager.ValueType)
                     {
                         case ItemValueType.Integer:
+                        case ItemValueType.Media:
                             return TypeManager is INumberType biggerIntType && biggerIntType.IsBiggerThan(game, IntValue);
+
                         case ItemValueType.Date:
                             return TypeManager is INumberType biggerDateType && biggerDateType.IsBiggerThan(game, DateValue);
+
                         case ItemValueType.Ulong:
                             return TypeManager is INumberType biggerUlongType && biggerUlongType.IsBiggerThan(game, UlongValue);
+
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -183,17 +192,22 @@ namespace MetadataUtilities.Models
                     switch (TypeManager.ValueType)
                     {
                         case ItemValueType.Integer:
+                        case ItemValueType.Media:
                             return TypeManager is INumberType smallerIntType && smallerIntType.IsSmallerThan(game, IntValue);
+
                         case ItemValueType.Date:
                             return TypeManager is INumberType smallerDateType && smallerDateType.IsSmallerThan(game, DateValue);
+
                         case ItemValueType.Ulong:
                             return TypeManager is INumberType smallerUlongType && smallerUlongType.IsSmallerThan(game, UlongValue);
+
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
 
                 case ComparatorType.GameIsNew:
                     return ControlCenter.Instance.NewGames.Contains(game.Id);
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -58,8 +58,7 @@ namespace MetadataUtilities.ViewModels
                 ));
 
             ContextMenuConditionsContains.AddMissing(_fieldTypes
-                .Where(x => x.ValueType == ItemValueType.ItemList || x.ValueType == ItemValueType.String ||
-                            x.ValueType == ItemValueType.Integer || x.ValueType == ItemValueType.Date || x.ValueType == ItemValueType.Ulong)
+                .Where(x => x.ValueType.IsOneOf(ItemValueType.ItemList, ItemValueType.String, ItemValueType.Integer, ItemValueType.Date, ItemValueType.Ulong))
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -70,8 +69,7 @@ namespace MetadataUtilities.ViewModels
                 ));
 
             ContextMenuConditionsContainsNot.AddMissing(_fieldTypes
-                .Where(x => x.ValueType == ItemValueType.ItemList || x.ValueType == ItemValueType.String ||
-                            x.ValueType == ItemValueType.Integer || x.ValueType == ItemValueType.Date || x.ValueType == ItemValueType.Ulong)
+                .Where(x => x.ValueType.IsOneOf(ItemValueType.ItemList, ItemValueType.String, ItemValueType.Integer, ItemValueType.Date, ItemValueType.Ulong))
                 .Select(x =>
                     new FieldTypeContextAction
                     {
@@ -453,7 +451,7 @@ namespace MetadataUtilities.ViewModels
                 case ComparatorType.IsBiggerThan:
                 case ComparatorType.IsSmallerThan:
                     {
-                        if (fieldType.GetTypeManager().ValueType == ItemValueType.Integer)
+                        if (fieldType.GetTypeManager().ValueType.IsOneOf(ItemValueType.Integer, ItemValueType.Media))
                         {
                             CreateIntCondition(fieldType, comparatorType);
 
@@ -576,27 +574,6 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        private void CreateUlongCondition(FieldType fieldType, ComparatorType comparatorType)
-        {
-            var ulongValue = 0;
-
-            if (!SelectIntViewModel.ShowDialog(ref ulongValue))
-            {
-                return;
-            }
-
-            if (!ConditionalAction.Conditions.Any(
-                    x => x.Comparator == comparatorType &&
-                         x.Type == fieldType && x.UlongValue == (ulong)ulongValue))
-            {
-                ConditionalAction.Conditions.Add(new Condition(fieldType)
-                {
-                    UlongValue = (ulong)ulongValue,
-                    Comparator = comparatorType
-                });
-            }
-        }
-
         private void CreateStringCondition(FieldType fieldType, ComparatorType comparatorType)
         {
             var dialogResult = API.Instance.Dialogs.SelectString(
@@ -615,6 +592,27 @@ namespace MetadataUtilities.ViewModels
                 ConditionalAction.Conditions.Add(new Condition(fieldType)
                 {
                     StringValue = dialogResult.SelectedString,
+                    Comparator = comparatorType
+                });
+            }
+        }
+
+        private void CreateUlongCondition(FieldType fieldType, ComparatorType comparatorType)
+        {
+            var ulongValue = 0;
+
+            if (!SelectIntViewModel.ShowDialog(ref ulongValue))
+            {
+                return;
+            }
+
+            if (!ConditionalAction.Conditions.Any(
+                    x => x.Comparator == comparatorType &&
+                         x.Type == fieldType && x.UlongValue == (ulong)ulongValue))
+            {
+                ConditionalAction.Conditions.Add(new Condition(fieldType)
+                {
+                    UlongValue = (ulong)ulongValue,
                     Comparator = comparatorType
                 });
             }
