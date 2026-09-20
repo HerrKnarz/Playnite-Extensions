@@ -80,7 +80,7 @@ namespace MetadataUtilities.Models
 
                     case ItemValueType.Media:
                         return Comparator.IsOneOf(ComparatorType.IsBiggerThan, ComparatorType.IsSmallerThan)
-                            ? $"{TypeLabel} {Comparator.GetEnumDisplayName()} {IntValue} kB"
+                            ? $"{TypeLabel} {Comparator.GetEnumDisplayName()} {IntValue} KB"
                             : $"{TypeLabel} {Comparator.GetEnumDisplayName()} {Name}";
 
                     case ItemValueType.ItemList:

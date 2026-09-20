@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Add new object</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">Do you want to add the item(s) to unwanted list?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">A {0} with that name already exists.</sys:String>
@@ -144,4 +146,6 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">Values to merge</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">These items will never be removed when removing unused items.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">Write debug log messages (only use in case of suspected error!)</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogoTitle">Logo</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogosTitle">Logos</sys:String>
 </ResourceDictionary>
