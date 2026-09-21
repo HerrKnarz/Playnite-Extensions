@@ -130,7 +130,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowInEditor">Показать в редакторе метаданных</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelSettingsButton">Показывать кнопку &quot;Настройки&quot; на верхней панели (требуется перезапуск)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsShowTopPanelButton">Показывать кнопку редактора метаданных в верхней панели (требуется перезапуск)</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowUserScoreMenu">Показать опцию для быстрой установки пользовательского счета в контекстном меню игры</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsShowUserScoreMenu">Показать опцию для быстрой установки пользовательской оценки в контекстном меню игры</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsSingleMenuEntry">Поместите все подменю в пункте меню Утилиты Метаданных</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabConditionalActions">Условные действия</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsTabGeneral">Основные</sys:String>
