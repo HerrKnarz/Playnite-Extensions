@@ -1,8 +1,8 @@
-﻿Id: GGdealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189
+﻿Id: GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189
 Name: GG.deals Wishlist
 Author: Alexander Heidn
-Version: 0.4.4
-Module: GGdealsWishlist.dll
+Version: 0.4.5
+Module: GGDealsWishlist.dll
 Type: GameLibrary
 Icon: icon.png
 Links:
@@ -11,6 +11,6 @@ Links:
   - Name: GitHub
     Url: https://github.com/HerrKnarz/Playnite-Extension-LinkUtilities
   - Name: AddOn database
-    Url: https://playnite.link/addons.html#GGdealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189
+    Url: https://playnite.link/addons.html#GGDealsWishlist_ea4636ef-91da-441c-9efb-99dc751c5189
   - Name: Ko-fi (Tips and Donations)
     Url: https://ko-fi.com/herrknarz
