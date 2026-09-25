@@ -15,15 +15,18 @@ namespace MetadataUtilities.ViewModels
             win.Close();
         }, win => win != null);
 
+        public string Unit { get; set; } = string.Empty;
+        public Visibility UnitVisibility => string.IsNullOrWhiteSpace(Unit) ? Visibility.Collapsed : Visibility.Visible;
         public int Value { get; set; } = 0;
 
-        public static bool ShowDialog(ref int value)
+        public static bool ShowDialog(ref int value, string unit = null)
         {
             try
             {
                 var viewModel = new SelectIntViewModel
                 {
-                    Value = value
+                    Value = value,
+                    Unit = unit
                 };
 
                 var view = new SelectIntView();

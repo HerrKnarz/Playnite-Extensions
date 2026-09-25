@@ -210,13 +210,29 @@ namespace MetadataUtilities.ViewModels
                         break;
 
                     case ItemValueType.Media:
-                        if (contextItem.ConditionPropertyType == ConditionPropertyType.Extension)
+                        switch (contextItem.ConditionPropertyType)
                         {
-                            needsSorting = CreateStringCondition(contextItem);
-                            break;
+                            case ConditionPropertyType.Height:
+                            case ConditionPropertyType.Width:
+                                needsSorting = CreateIntCondition(contextItem, "px");
+                                break;
+
+                            case ConditionPropertyType.AspectRatio:
+                                needsSorting = CreateIntCondition(contextItem);
+                                break;
+
+                            case ConditionPropertyType.FileSize:
+                                needsSorting = CreateIntCondition(contextItem, "KB");
+                                break;
+
+                            case ConditionPropertyType.Extension:
+                                needsSorting = CreateStringCondition(contextItem);
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException();
                         }
 
-                        needsSorting = CreateIntCondition(contextItem);
                         break;
 
                     case ItemValueType.String:
@@ -351,11 +367,11 @@ namespace MetadataUtilities.ViewModels
             return false;
         }
 
-        private bool CreateIntCondition(FieldTypeContextItem contextItem)
+        private bool CreateIntCondition(FieldTypeContextItem contextItem, string unit = null)
         {
             var intValue = 0;
 
-            if (!SelectIntViewModel.ShowDialog(ref intValue))
+            if (!SelectIntViewModel.ShowDialog(ref intValue, unit))
             {
                 return false;
             }
