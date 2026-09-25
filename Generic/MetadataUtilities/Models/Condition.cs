@@ -87,6 +87,11 @@ namespace MetadataUtilities.Models
                         return $"{GetDisplayString()} {UlongValue}";
 
                     case ItemValueType.Media:
+                        if (ConditionPropertyType == ConditionPropertyType.Extension)
+                        {
+                            return $"{GetDisplayString()} {StringValue}";
+                        }
+
                         return Comparator.IsOneOf(ComparatorType.IsBiggerThan, ComparatorType.IsSmallerThan, ComparatorType.Equals)
                             ? $"{GetDisplayString()} {IntValue} {(ConditionPropertyType == ConditionPropertyType.FileSize ? "KB" : "px")}"
                             : $"{GetDisplayString()} {Name}";
@@ -318,8 +323,10 @@ namespace MetadataUtilities.Models
             }
 
             var isIntValue = ConditionPropertyType.IsOneOf(ConditionPropertyType.FileSize, ConditionPropertyType.Width, ConditionPropertyType.Height);
+            var isStringValue = ConditionPropertyType == ConditionPropertyType.Extension;
 
-            var valueToCompare = 0;
+            var intValueToCompare = 0;
+            var stringValueToCompare = string.Empty;
 
             if (isIntValue)
             {
@@ -331,15 +338,15 @@ namespace MetadataUtilities.Models
                 switch (ConditionPropertyType)
                 {
                     case ConditionPropertyType.FileSize:
-                        valueToCompare = imageType.GetFileSizeInBytes(game) / 1024;
+                        intValueToCompare = imageType.GetFileSizeInBytes(game) / 1024;
                         break;
 
                     case ConditionPropertyType.Width:
-                        valueToCompare = imageType.GetImageSize(game).Width;
+                        intValueToCompare = imageType.GetImageSize(game).Width;
                         break;
 
                     case ConditionPropertyType.Height:
-                        valueToCompare = imageType.GetImageSize(game).Height;
+                        intValueToCompare = imageType.GetImageSize(game).Height;
                         break;
 
                     default:
@@ -347,21 +354,46 @@ namespace MetadataUtilities.Models
                 }
             }
 
+            if (isStringValue)
+            {
+                stringValueToCompare = imageType.GetExtension(game);
+            }
+
             switch (Comparator)
             {
                 case ComparatorType.IsBiggerThan:
-                    return isIntValue && valueToCompare > IntValue;
+                    return isIntValue && intValueToCompare > IntValue;
 
                 case ComparatorType.IsSmallerThan:
-                    return isIntValue && valueToCompare < IntValue;
+                    return isIntValue && intValueToCompare < IntValue;
 
                 case ComparatorType.Contains:
                 case ComparatorType.Equals:
-                    return isIntValue && valueToCompare == IntValue;
+                    if (isIntValue)
+                    {
+                        return intValueToCompare == IntValue;
+                    }
+
+                    if (isStringValue)
+                    {
+                        return stringValueToCompare.Equals(StringValue, StringComparison.OrdinalIgnoreCase);
+                    }
+
+                    return false;
 
                 case ComparatorType.DoesNotContain:
                 case ComparatorType.DoesntEqual:
-                    return isIntValue && valueToCompare != IntValue;
+                    if (isIntValue)
+                    {
+                        return intValueToCompare != IntValue;
+                    }
+
+                    if (isStringValue)
+                    {
+                        return !stringValueToCompare.Equals(StringValue, StringComparison.OrdinalIgnoreCase);
+                    }
+
+                    return false;
 
                 case ComparatorType.IsEmpty:
                     return TypeManager is IClearAbleType emptyType && emptyType.FieldInGameIsEmpty(game);

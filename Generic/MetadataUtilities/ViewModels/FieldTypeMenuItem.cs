@@ -45,18 +45,24 @@ namespace MetadataUtilities.ViewModels
             {
                 if (_field.ValueType == ItemValueType.Media)
                 {
-                    void AddActions(ConditionPropertyType propertyType)
+                    void AddActions(ConditionPropertyType propertyType, bool isNumber = true)
                     {
                         AddContextAction(ComparatorType.Equals, propertyType);
                         AddContextAction(ComparatorType.DoesntEqual, propertyType);
-                        AddContextAction(ComparatorType.IsBiggerThan, propertyType);
-                        AddContextAction(ComparatorType.IsSmallerThan, propertyType);
+
+                        if (isNumber)
+                        {
+                            AddContextAction(ComparatorType.IsBiggerThan, propertyType);
+                            AddContextAction(ComparatorType.IsSmallerThan, propertyType);
+                        }
+
                         AddSeparator();
                     }
 
                     AddActions(ConditionPropertyType.Width);
                     AddActions(ConditionPropertyType.Height);
                     AddActions(ConditionPropertyType.FileSize);
+                    AddActions(ConditionPropertyType.Extension, false);
                 }
                 else
                 {

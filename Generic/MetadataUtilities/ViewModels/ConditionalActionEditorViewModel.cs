@@ -206,7 +206,16 @@ namespace MetadataUtilities.ViewModels
                 switch (contextItem.FieldType.GetTypeManager().ValueType)
                 {
                     case ItemValueType.Integer:
+                        needsSorting = CreateIntCondition(contextItem);
+                        break;
+
                     case ItemValueType.Media:
+                        if (contextItem.ConditionPropertyType == ConditionPropertyType.Extension)
+                        {
+                            needsSorting = CreateStringCondition(contextItem);
+                            break;
+                        }
+
                         needsSorting = CreateIntCondition(contextItem);
                         break;
 
