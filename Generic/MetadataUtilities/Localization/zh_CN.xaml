@@ -55,16 +55,27 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nand">至少一个条件为假</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">所有条件均为假</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">包含</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">不包含</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">contain</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">don't contain</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">为空</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">不为空</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsBiggerThan">大于</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsSmallerThan">小于</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Equals">equals</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesntEqual">doesn't equal</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">添加</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">移除</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">清除字段</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">clear</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Set">set</sys:String>
+
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Value">Value</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Height">Height</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Width">Width</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_AspectRatio">Aspect Ratio</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_FileSize">File Size</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Extension">Extension</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Filetype">File Type</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">Copy metadata</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">Paste metadata from {0}</sys:String>
@@ -94,6 +105,15 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnused">正在删除未使用的元数据项...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">正在删除不需要的元数据项...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">正在设置用户评分...</sys:String>
+
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsActionsDescription">Here you can add the actions to execute if the conditions on the left are true. To delete an action again just select it in the box and hit the DEL key.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddActions">Add actions</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddConditions">Add conditions</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsDescription">Here you can add as many conditions as you like using the options on the left. The type specified above determines how many conditions have to be true for the actions to be executed. To remove conditions select them in the list and hit the DEL key.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsEnabledDescription">Disabled conditional actions won't run automatically, but can still be executed manually.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsNameDescription">Name for the conditional action that will be displayed in the settings list and in menus.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Position of the conditional action in the settings list and in menus.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsTypeDescription">Type of the conditional action. Determines how the conditions will be evaluated.</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">添加默认值</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">添加现有项</sys:String>
@@ -145,5 +165,4 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">删除未使用的项时永远不会删除这些项。</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">写入调试日志消息（仅在怀疑有错误的情况下使用！）</sys:String>
     <sys:String x:Key="LOCKNARZHelperLogoTitle">Logo</sys:String>
-    <sys:String x:Key="LOCKNARZHelperLogosTitle">Logos</sys:String>
 </ResourceDictionary>
