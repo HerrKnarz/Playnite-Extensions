@@ -22,19 +22,6 @@ namespace MetadataUtilities.Views
             }
         }
 
-        private void ButtonContextClick(object sender, RoutedEventArgs e)
-        {
-            var contextMenu = ((Button)sender)?.ContextMenu;
-
-            if (contextMenu == null)
-            {
-                return;
-            }
-
-            contextMenu.DataContext = ((Button)sender).DataContext;
-            contextMenu.IsOpen = true;
-        }
-
         private void TextBlockContextClick(object sender, RoutedEventArgs e)
         {
             var contextMenu = ((TextBlock)sender)?.ContextMenu;

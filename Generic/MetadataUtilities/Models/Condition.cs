@@ -269,7 +269,7 @@ namespace MetadataUtilities.Models
 
         private bool IsTrueItemList(Game game)
         {
-            if (!(TypeManager is IValueType valueType))
+            if (!(TypeManager is IValueType))
             {
                 return false;
             }
