@@ -273,7 +273,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Magick.NET-Q8-x86">
-      <Version>14.13.1</Version>
+      <Version>14.17.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
       <Version>1.1.39</Version>

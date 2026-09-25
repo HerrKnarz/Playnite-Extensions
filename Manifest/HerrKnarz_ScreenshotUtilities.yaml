@@ -1,5 +1,12 @@
 AddonId: ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90
 Packages:
+  - Version: 0.9.1
+    RequiredApiVersion: 6.17.0
+    ReleaseDate: 2026-09-10
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-09-10/ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90_0_9_1.pext
+    Changelog:
+      - Fixed setting an image as background, cover or icon not removing the old one first.
+      - Updated ImageMagick
   - Version: 0.9.0
     RequiredApiVersion: 6.16.0
     ReleaseDate: 2026-09-01
