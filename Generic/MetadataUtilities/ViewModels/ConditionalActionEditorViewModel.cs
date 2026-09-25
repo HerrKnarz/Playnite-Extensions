@@ -19,138 +19,38 @@ namespace MetadataUtilities.ViewModels
     public class ConditionalActionEditorViewModel : ObservableObject
     {
         private readonly List<IMetadataFieldType> _fieldTypes = FieldTypeHelper.GetAllTypes();
+
+        private ObservableCollection<FieldTypeMenuItem> _actionMenuItems = new ObservableCollection<FieldTypeMenuItem>();
         private ConditionalAction _conditionalAction;
+
+        private ObservableCollection<FieldTypeMenuItem> _conditionMenuItems = new ObservableCollection<FieldTypeMenuItem>();
 
         public ConditionalActionEditorViewModel(ConditionalAction conditionalAction)
         {
             _conditionalAction = conditionalAction;
 
-            ContextMenuActionsAdd.AddMissing(_fieldTypes
-                .Where(x => x.CanBeSetInGame && x.ValueType != ItemValueType.LinkList)
-                .Select(x =>
-                    new FieldTypeContextAction
-                    {
-                        Name = x.LabelSingular,
-                        Action = AddActionAddCommand,
-                        FieldType = x.Type
-                    }
-                ));
+            ConditionMenuItems = new ObservableCollection<FieldTypeMenuItem>
+            {
+                new FieldTypeMenuItem(FieldType.Empty, ConditionCommand)
+            };
 
-            ContextMenuActionsRemove.AddMissing(_fieldTypes
-                .Where(x => x.CanBeSetInGame && x.CanBeClearedInGame && x.ValueType == ItemValueType.ItemList)
-                .Select(x =>
-                    new FieldTypeContextAction
-                    {
-                        Name = x.LabelSingular,
-                        Action = AddActionRemoveCommand,
-                        FieldType = x.Type
-                    }
-                ));
+            ConditionMenuItems.AddMissing(_fieldTypes
+                .Select(x => new FieldTypeMenuItem(x.Type, ConditionCommand)));
 
-            ContextMenuActionsClear.AddMissing(_fieldTypes.Where(x => x.CanBeClearedInGame)
-                .Select(x =>
-                    new FieldTypeContextAction
-                    {
-                        Name = x.LabelSingular,
-                        Action = AddActionClearCommand,
-                        FieldType = x.Type
-                    }
-                ));
+            ActionMenuItems = new ObservableCollection<FieldTypeMenuItem>();
 
-            ContextMenuConditionsContains.AddMissing(_fieldTypes
-                .Where(x => x.ValueType.IsOneOf(ItemValueType.ItemList, ItemValueType.String, ItemValueType.Integer, ItemValueType.Date, ItemValueType.Ulong))
-                .Select(x =>
-                    new FieldTypeContextAction
-                    {
-                        Name = x.LabelSingular,
-                        Action = AddConditionContainsCommand,
-                        FieldType = x.Type
-                    }
-                ));
-
-            ContextMenuConditionsContainsNot.AddMissing(_fieldTypes
-                .Where(x => x.ValueType.IsOneOf(ItemValueType.ItemList, ItemValueType.String, ItemValueType.Integer, ItemValueType.Date, ItemValueType.Ulong))
-                .Select(x =>
-                    new FieldTypeContextAction
-                    {
-                        Name = x.LabelSingular,
-                        Action = AddConditionContainsNotCommand,
-                        FieldType = x.Type
-                    }
-                ));
-
-            ContextMenuConditionsEmpty.AddMissing(_fieldTypes.Where(x => x.CanBeEmptyInGame)
-                .Select(x =>
-                    new FieldTypeContextAction
-                    {
-                        Name = x.LabelSingular,
-                        Action = AddConditionIsEmptyCommand,
-                        FieldType = x.Type
-                    }
-                ));
-
-            ContextMenuConditionsNotEmpty.AddMissing(_fieldTypes.Where(x => x.CanBeEmptyInGame)
-                .Select(x =>
-                    new FieldTypeContextAction
-                    {
-                        Name = x.LabelSingular,
-                        Action = AddConditionIsNotEmptyCommand,
-                        FieldType = x.Type
-                    }
-                ));
-
-            ContextMenuConditionsBiggerThan.AddMissing(_fieldTypes
-                .Where(x => x is INumberType)
-                .Select(x =>
-                    new FieldTypeContextAction
-                    {
-                        Name = x.LabelSingular,
-                        Action = AddConditionIsBiggerThanCommand,
-                        FieldType = x.Type
-                    }
-                ));
-
-            ContextMenuConditionsSmallerThan.AddMissing(_fieldTypes
-                .Where(x => x is INumberType)
-                .Select(x =>
-                    new FieldTypeContextAction
-                    {
-                        Name = x.LabelSingular,
-                        Action = AddConditionIsSmallerThanCommand,
-                        FieldType = x.Type
-                    }
-                ));
+            ActionMenuItems.AddMissing(_fieldTypes
+                .Where(x => x.CanBeSetInGame || x.CanBeClearedInGame)
+                .Select(x => new FieldTypeMenuItem(x.Type, ActionCommand, false)));
         }
 
-        public RelayCommand<FieldType> AddActionAddCommand => new RelayCommand<FieldType>(type =>
-            AddActions(type, ActionType.AddObject));
+        public RelayCommand<FieldTypeContextItem> ActionCommand => new RelayCommand<FieldTypeContextItem>(type => AddActions(type));
 
-        public RelayCommand<FieldType> AddActionClearCommand => new RelayCommand<FieldType>(type =>
-            AddActions(type, ActionType.ClearField));
-
-        public RelayCommand<FieldType> AddActionRemoveCommand => new RelayCommand<FieldType>(type =>
-            AddActions(type, ActionType.RemoveObject));
-
-        public RelayCommand<FieldType> AddConditionContainsCommand => new RelayCommand<FieldType>(type =>
-            AddConditions(type, ComparatorType.Contains));
-
-        public RelayCommand<FieldType> AddConditionContainsNotCommand => new RelayCommand<FieldType>(type =>
-            AddConditions(type, ComparatorType.DoesNotContain));
-
-        public RelayCommand AddConditionGameIsNewCommand => new RelayCommand(() =>
-            AddConditions(FieldType.Empty, ComparatorType.GameIsNew));
-
-        public RelayCommand<FieldType> AddConditionIsBiggerThanCommand => new RelayCommand<FieldType>(type =>
-            AddConditions(type, ComparatorType.IsBiggerThan));
-
-        public RelayCommand<FieldType> AddConditionIsEmptyCommand => new RelayCommand<FieldType>(type =>
-            AddConditions(type, ComparatorType.IsEmpty));
-
-        public RelayCommand<FieldType> AddConditionIsNotEmptyCommand => new RelayCommand<FieldType>(type =>
-            AddConditions(type, ComparatorType.IsNotEmpty));
-
-        public RelayCommand<FieldType> AddConditionIsSmallerThanCommand => new RelayCommand<FieldType>(type =>
-            AddConditions(type, ComparatorType.IsSmallerThan));
+        public ObservableCollection<FieldTypeMenuItem> ActionMenuItems
+        {
+            get => _actionMenuItems;
+            set => SetValue(ref _actionMenuItems, value);
+        }
 
         public ConditionalAction ConditionalAction
         {
@@ -158,32 +58,13 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _conditionalAction, value);
         }
 
-        public ObservableCollection<FieldTypeContextAction> ContextMenuActionsAdd { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
+        public RelayCommand<FieldTypeContextItem> ConditionCommand => new RelayCommand<FieldTypeContextItem>(type => AddConditions(type));
 
-        public ObservableCollection<FieldTypeContextAction> ContextMenuActionsClear { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
-
-        public ObservableCollection<FieldTypeContextAction> ContextMenuActionsRemove { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
-
-        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsBiggerThan { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
-
-        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsContains { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
-
-        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsContainsNot { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
-
-        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsEmpty { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
-
-        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsNotEmpty { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
-
-        public ObservableCollection<FieldTypeContextAction> ContextMenuConditionsSmallerThan { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
+        public ObservableCollection<FieldTypeMenuItem> ConditionMenuItems
+        {
+            get => _conditionMenuItems;
+            set => SetValue(ref _conditionMenuItems, value);
+        }
 
         public RelayCommand<IList<object>> RemoveActionCommand => new RelayCommand<IList<object>>(items =>
         {
@@ -260,321 +141,348 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public void AddActions(FieldType fieldType, ActionType actionType)
+        public void AddActions(FieldTypeContextItem contextItem)
         {
-            if (actionType == ActionType.ClearField)
+            var needsSorting = false;
+
+            if (contextItem.ActionType == ActionType.ClearField)
             {
-                if (!ConditionalAction.Actions.Any(x => x.ActionType == actionType && x.Type == fieldType))
+                needsSorting = CreateAction(contextItem);
+            }
+            else
+            {
+                switch (contextItem.FieldType.GetTypeManager().ValueType)
                 {
-                    ConditionalAction.Actions.Add(new Action(fieldType)
-                    {
-                        ActionType = actionType
-                    });
+                    case ItemValueType.ItemList:
+                        needsSorting = CreateListAction(contextItem);
+                        break;
+
+                    case ItemValueType.Boolean:
+                        needsSorting = CreateAction(contextItem);
+                        break;
+
+                    case ItemValueType.Integer:
+                        needsSorting = CreateIntAction(contextItem);
+                        break;
+
+                    case ItemValueType.Date:
+                        needsSorting = CreateDateAction(contextItem);
+                        break;
+
+                    case ItemValueType.Media:
+                        needsSorting = CreateMediaAction(contextItem);
+                        break;
+
+                    case ItemValueType.String:
+                        needsSorting = CreateStringAction(contextItem);
+                        break;
+
+                    case ItemValueType.Ulong:
+                        needsSorting = CreateUlongAction(contextItem);
+                        break;
+
+                    case ItemValueType.None:
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-
-                return;
             }
 
-            switch (fieldType.GetTypeManager().ValueType)
+            if (needsSorting)
             {
-                case ItemValueType.ItemList:
-                    var items = ControlCenter.GetItemsFromAddDialog(fieldType);
-
-                    if (items.Count == 0)
-                    {
-                        return;
-                    }
-
-                    foreach (var item in items.Where(item =>
-                                 ConditionalAction.Actions.All(x =>
-                                     x.TypeAndName != item.TypeAndName || x.ActionType != actionType)))
-                    {
-                        ConditionalAction.Actions.Add(new Action(item.Type, item.Name)
-                        {
-                            ActionType = actionType
-                        });
-                    }
-
-                    break;
-
-                case ItemValueType.Boolean:
-                    if (!ConditionalAction.Actions.Any(
-                            x => x.ActionType == actionType &&
-                                 x.Type == fieldType))
-                    {
-                        ConditionalAction.Actions.Add(new Action(fieldType)
-                        {
-                            ActionType = actionType
-                        });
-                    }
-
-                    break;
-
-                case ItemValueType.Integer:
-                    var intValue = 0;
-
-                    if (!SelectIntViewModel.ShowDialog(ref intValue))
-                    {
-                        return;
-                    }
-
-                    if (!ConditionalAction.Actions.Any(
-                            x => x.ActionType == actionType &&
-                                 x.Type == fieldType && x.IntValue == intValue))
-                    {
-                        ConditionalAction.Actions.Add(new Action(fieldType)
-                        {
-                            IntValue = intValue,
-                            ActionType = actionType
-                        });
-                    }
-
-                    break;
-
-                case ItemValueType.Date:
-                    var dateValue = DateTime.Today;
-
-                    if (!SelectDateViewModel.ShowDialog(ref dateValue))
-                    {
-                        return;
-                    }
-
-                    if (!ConditionalAction.Actions.Any(
-                            x => x.ActionType == actionType &&
-                                 x.Type == fieldType && x.DateValue == dateValue))
-                    {
-                        ConditionalAction.Actions.Add(new Action(fieldType)
-                        {
-                            DateValue = dateValue,
-                            ActionType = actionType
-                        });
-                    }
-
-                    break;
-
-                case ItemValueType.Media:
-                    var mediaPath = API.Instance.Dialogs.SelectImagefile();
-
-                    if (!mediaPath.Any())
-                    {
-                        return;
-                    }
-
-                    if (!ConditionalAction.Actions.Any(
-                            x => x.ActionType == actionType &&
-                                 x.Type == fieldType && x.StringValue == mediaPath))
-                    {
-                        ConditionalAction.Actions.Add(new Action(fieldType)
-                        {
-                            StringValue = mediaPath,
-                            ActionType = actionType
-                        });
-                    }
-
-                    break;
-
-                case ItemValueType.String:
-                    var dialogResult = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCMetadataUtilitiesDialogEnterValue"), default);
-
-                    if (!dialogResult.Result)
-                    {
-                        return;
-                    }
-
-                    var stringValue = dialogResult.SelectedString;
-
-                    if (!stringValue.Any())
-                    {
-                        return;
-                    }
-
-                    if (!ConditionalAction.Actions.Any(
-                            x => x.ActionType == actionType &&
-                                 x.Type == fieldType && x.StringValue == stringValue))
-                    {
-                        ConditionalAction.Actions.Add(new Action(fieldType)
-                        {
-                            StringValue = stringValue,
-                            ActionType = actionType
-                        });
-                    }
-
-                    break;
-
-                case ItemValueType.Ulong:
-                    var ulongValue = 0;
-
-                    if (!SelectIntViewModel.ShowDialog(ref ulongValue))
-                    {
-                        return;
-                    }
-
-                    if (!ConditionalAction.Actions.Any(
-                            x => x.ActionType == actionType &&
-                                 x.Type == fieldType && x.UlongValue == (ulong)ulongValue))
-                    {
-                        ConditionalAction.Actions.Add(new Action(fieldType)
-                        {
-                            UlongValue = (ulong)ulongValue,
-                            ActionType = actionType
-                        });
-                    }
-
-                    break;
-
-                case ItemValueType.None:
-                default:
-                    throw new ArgumentOutOfRangeException();
+                ConditionalAction.Actions.Sort(x => x.ToString);
             }
-
-            ConditionalAction.Actions.Sort(x => x.ToString);
         }
 
-        public void AddConditions(FieldType fieldType, ComparatorType comparatorType)
+        public void AddConditions(FieldTypeContextItem contextItem = null)
         {
-            switch (comparatorType)
+            var needsSorting = false;
+
+            if (contextItem.Comparator.IsOneOf(ComparatorType.IsEmpty, ComparatorType.IsNotEmpty, ComparatorType.GameIsNew))
             {
-                case ComparatorType.IsEmpty:
-                case ComparatorType.IsNotEmpty:
-                case ComparatorType.GameIsNew:
-                    {
-                        if (!ConditionalAction.Conditions.Any(x => x.Comparator == comparatorType && x.Type == fieldType))
-                        {
-                            ConditionalAction.Conditions.Add(new Condition(fieldType)
-                            {
-                                Comparator = comparatorType
-                            });
-                        }
-
-                        return;
-                    }
-                case ComparatorType.IsBiggerThan:
-                case ComparatorType.IsSmallerThan:
-                    {
-                        if (fieldType.GetTypeManager().ValueType.IsOneOf(ItemValueType.Integer, ItemValueType.Media))
-                        {
-                            CreateIntCondition(fieldType, comparatorType);
-
-                            return;
-                        }
-
-                        if (fieldType.GetTypeManager().ValueType == ItemValueType.Ulong)
-                        {
-                            CreateUlongCondition(fieldType, comparatorType);
-
-                            return;
-                        }
-
-                        if (fieldType.GetTypeManager().ValueType != ItemValueType.Date)
-                        {
-                            return;
-                        }
-
-                        CreateDateCondition(fieldType, comparatorType);
-
-                        return;
-                    }
-                case ComparatorType.Contains:
-                    break;
-
-                case ComparatorType.DoesNotContain:
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(comparatorType), comparatorType, null);
+                needsSorting = CreateCondition(contextItem);
             }
-
-            if (fieldType.GetTypeManager().ValueType == ItemValueType.Integer)
+            else
             {
-                CreateIntCondition(fieldType, comparatorType);
-
-                return;
-            }
-
-            if (fieldType.GetTypeManager().ValueType == ItemValueType.Ulong)
-            {
-                CreateUlongCondition(fieldType, comparatorType);
-
-                return;
-            }
-
-            if (fieldType.GetTypeManager().ValueType == ItemValueType.Date)
-            {
-                CreateDateCondition(fieldType, comparatorType);
-
-                return;
-            }
-
-            if (fieldType.GetTypeManager().ValueType == ItemValueType.String)
-            {
-                CreateStringCondition(fieldType, comparatorType);
-
-                return;
-            }
-
-            var items = ControlCenter.GetItemsFromAddDialog(fieldType);
-
-            if (items.Count == 0)
-            {
-                return;
-            }
-
-            foreach (var item in items.Where(item =>
-                         ConditionalAction.Conditions.All(x =>
-                             x.TypeAndName != item.TypeAndName || x.Comparator != comparatorType)))
-            {
-                ConditionalAction.Conditions.Add(new Condition(item.Type, item.Name)
+                switch (contextItem.FieldType.GetTypeManager().ValueType)
                 {
-                    Comparator = comparatorType
-                });
+                    case ItemValueType.Integer:
+                    case ItemValueType.Media:
+                        needsSorting = CreateIntCondition(contextItem);
+                        break;
+
+                    case ItemValueType.String:
+                        needsSorting = CreateStringCondition(contextItem);
+                        break;
+
+                    case ItemValueType.Date:
+                        needsSorting = CreateDateCondition(contextItem);
+                        break;
+
+                    case ItemValueType.Ulong:
+                        needsSorting = CreateUlongCondition(contextItem);
+                        break;
+
+                    case ItemValueType.ItemList:
+                        needsSorting = CreateListCondition(contextItem);
+                        break;
+                }
             }
 
-            ConditionalAction.Conditions.Sort(x => x.ToString);
+            if (needsSorting)
+            {
+                ConditionalAction.Conditions.Sort(x => x.ToString);
+            }
         }
 
-        private void CreateDateCondition(FieldType fieldType, ComparatorType comparatorType)
+        private bool CreateAction(FieldTypeContextItem contextItem)
+        {
+            if (!ConditionalAction.Actions.Any(x => x.ActionType == contextItem.ActionType && x.Type == contextItem.FieldType))
+            {
+                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                {
+                    ActionType = contextItem.ActionType
+                });
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CreateCondition(FieldTypeContextItem contextItem)
+        {
+            if (!ConditionalAction.Conditions.Any(x => x.Comparator == contextItem.Comparator && x.Type == contextItem.FieldType))
+            {
+                ConditionalAction.Conditions.Add(new Condition(contextItem.FieldType)
+                {
+                    Comparator = contextItem.Comparator
+                });
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CreateDateAction(FieldTypeContextItem contextItem)
         {
             var dateValue = DateTime.Today;
 
             if (!SelectDateViewModel.ShowDialog(ref dateValue))
             {
-                return;
+                return false;
+            }
+
+            if (!ConditionalAction.Actions.Any(
+                    x => x.ActionType == contextItem.ActionType &&
+                         x.Type == contextItem.FieldType && x.DateValue == dateValue))
+            {
+                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                {
+                    DateValue = dateValue,
+                    ActionType = contextItem.ActionType
+                });
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CreateDateCondition(FieldTypeContextItem contextItem)
+        {
+            var dateValue = DateTime.Today;
+
+            if (!SelectDateViewModel.ShowDialog(ref dateValue))
+            {
+                return false;
             }
 
             if (!ConditionalAction.Conditions.Any(
-                    x => x.Comparator == comparatorType &&
-                         x.Type == fieldType && x.DateValue == dateValue))
+                x => x.Comparator == contextItem.Comparator &&
+                x.ConditionPropertyType == contextItem.ConditionPropertyType &&
+                x.Type == contextItem.FieldType &&
+                x.DateValue == dateValue))
             {
-                ConditionalAction.Conditions.Add(new Condition(fieldType)
+                ConditionalAction.Conditions.Add(new Condition(contextItem.FieldType)
                 {
                     DateValue = dateValue,
-                    Comparator = comparatorType
+                    Comparator = contextItem.Comparator,
+                    ConditionPropertyType = contextItem.ConditionPropertyType
                 });
+
+                return true;
             }
+
+            return false;
         }
 
-        private void CreateIntCondition(FieldType fieldType, ComparatorType comparatorType)
+        private bool CreateIntAction(FieldTypeContextItem contextItem)
         {
             var intValue = 0;
 
             if (!SelectIntViewModel.ShowDialog(ref intValue))
             {
-                return;
+                return false;
+            }
+
+            if (!ConditionalAction.Actions.Any(
+                    x => x.ActionType == contextItem.ActionType &&
+                         x.Type == contextItem.FieldType && x.IntValue == intValue))
+            {
+                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                {
+                    IntValue = intValue,
+                    ActionType = contextItem.ActionType
+                });
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CreateIntCondition(FieldTypeContextItem contextItem)
+        {
+            var intValue = 0;
+
+            if (!SelectIntViewModel.ShowDialog(ref intValue))
+            {
+                return false;
             }
 
             if (!ConditionalAction.Conditions.Any(
-                    x => x.Comparator == comparatorType &&
-                         x.Type == fieldType && x.IntValue == intValue))
+                x => x.Comparator == contextItem.Comparator &&
+                x.ConditionPropertyType == contextItem.ConditionPropertyType &&
+                x.Type == contextItem.FieldType &&
+                x.IntValue == intValue))
             {
-                ConditionalAction.Conditions.Add(new Condition(fieldType)
+                ConditionalAction.Conditions.Add(new Condition(contextItem.FieldType)
                 {
                     IntValue = intValue,
-                    Comparator = comparatorType
+                    Comparator = contextItem.Comparator,
+                    ConditionPropertyType = contextItem.ConditionPropertyType
                 });
+
+                return true;
             }
+
+            return false;
         }
 
-        private void CreateStringCondition(FieldType fieldType, ComparatorType comparatorType)
+        private bool CreateListAction(FieldTypeContextItem contextItem)
+        {
+            var items = ControlCenter.GetItemsFromAddDialog(contextItem.FieldType);
+
+            if (items.Count == 0)
+            {
+                return false;
+            }
+
+            var addedItems = false;
+
+            foreach (var item in items.Where(item =>
+                         ConditionalAction.Actions.All(x =>
+                             x.TypeAndName != item.TypeAndName || x.ActionType != contextItem.ActionType)))
+            {
+                ConditionalAction.Actions.Add(new Action(item.Type, item.Name)
+                {
+                    ActionType = contextItem.ActionType
+                });
+
+                addedItems = true;
+            }
+
+            return addedItems;
+        }
+
+        private bool CreateListCondition(FieldTypeContextItem contextItem)
+        {
+            var items = ControlCenter.GetItemsFromAddDialog(contextItem.FieldType);
+
+            if (items.Count == 0)
+            {
+                return false;
+            }
+
+            var addedItems = false;
+
+            foreach (var item in items.Where(item =>
+                ConditionalAction.Conditions.All(x =>
+                    x.TypeAndName != item.TypeAndName ||
+                    x.Comparator != contextItem.Comparator ||
+                    x.ConditionPropertyType != contextItem.ConditionPropertyType)))
+            {
+                ConditionalAction.Conditions.Add(new Condition(item.Type, item.Name)
+                {
+                    Comparator = contextItem.Comparator,
+                    ConditionPropertyType = contextItem.ConditionPropertyType
+                });
+
+                addedItems = true;
+            }
+
+            return addedItems;
+        }
+
+        private bool CreateMediaAction(FieldTypeContextItem contextItem)
+        {
+            var mediaPath = API.Instance.Dialogs.SelectImagefile();
+
+            if (!mediaPath.Any())
+            {
+                return false;
+            }
+
+            if (!ConditionalAction.Actions.Any(
+                    x => x.ActionType == contextItem.ActionType &&
+                         x.Type == contextItem.FieldType && x.StringValue == mediaPath))
+            {
+                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                {
+                    StringValue = mediaPath,
+                    ActionType = contextItem.ActionType
+                });
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CreateStringAction(FieldTypeContextItem contextItem)
+        {
+            var dialogResult = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCMetadataUtilitiesDialogEnterValue"), default);
+
+            if (!dialogResult.Result)
+            {
+                return false;
+            }
+
+            var stringValue = dialogResult.SelectedString;
+
+            if (!stringValue.Any())
+            {
+                return false;
+            }
+
+            if (!ConditionalAction.Actions.Any(
+                    x => x.ActionType == contextItem.ActionType &&
+                         x.Type == contextItem.FieldType && x.StringValue == stringValue))
+            {
+                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                {
+                    StringValue = stringValue,
+                    ActionType = contextItem.ActionType
+                });
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CreateStringCondition(FieldTypeContextItem contextItem)
         {
             var dialogResult = API.Instance.Dialogs.SelectString(
                 ResourceProvider.GetString("LOCMetadataUtilitiesDialogRegExNotice"),
@@ -582,40 +490,79 @@ namespace MetadataUtilities.ViewModels
 
             if (!dialogResult.Result)
             {
-                return;
+                return false;
             }
 
             if (!ConditionalAction.Conditions.Any(
-                    x => x.Comparator == comparatorType &&
-                         x.Type == fieldType && x.StringValue == dialogResult.SelectedString))
+                x => x.Comparator == contextItem.Comparator &&
+                x.ConditionPropertyType == contextItem.ConditionPropertyType &&
+                x.Type == contextItem.FieldType &&
+                x.StringValue == dialogResult.SelectedString))
             {
-                ConditionalAction.Conditions.Add(new Condition(fieldType)
+                ConditionalAction.Conditions.Add(new Condition(contextItem.FieldType)
                 {
                     StringValue = dialogResult.SelectedString,
-                    Comparator = comparatorType
+                    Comparator = contextItem.Comparator,
+                    ConditionPropertyType = contextItem.ConditionPropertyType
                 });
+
+                return true;
             }
+
+            return false;
         }
 
-        private void CreateUlongCondition(FieldType fieldType, ComparatorType comparatorType)
+        private bool CreateUlongAction(FieldTypeContextItem contextItem)
         {
             var ulongValue = 0;
 
             if (!SelectIntViewModel.ShowDialog(ref ulongValue))
             {
-                return;
+                return false;
+            }
+
+            if (!ConditionalAction.Actions.Any(
+                    x => x.ActionType == contextItem.ActionType &&
+                         x.Type == contextItem.FieldType && x.UlongValue == (ulong)ulongValue))
+            {
+                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                {
+                    UlongValue = (ulong)ulongValue,
+                    ActionType = contextItem.ActionType
+                });
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CreateUlongCondition(FieldTypeContextItem contextItem)
+        {
+            var ulongValue = 0;
+
+            if (!SelectIntViewModel.ShowDialog(ref ulongValue))
+            {
+                return false;
             }
 
             if (!ConditionalAction.Conditions.Any(
-                    x => x.Comparator == comparatorType &&
-                         x.Type == fieldType && x.UlongValue == (ulong)ulongValue))
+                x => x.Comparator == contextItem.Comparator &&
+                x.ConditionPropertyType == contextItem.ConditionPropertyType &&
+                x.Type == contextItem.FieldType &&
+                x.UlongValue == (ulong)ulongValue))
             {
-                ConditionalAction.Conditions.Add(new Condition(fieldType)
+                ConditionalAction.Conditions.Add(new Condition(contextItem.FieldType)
                 {
                     UlongValue = (ulong)ulongValue,
-                    Comparator = comparatorType
+                    Comparator = contextItem.Comparator,
+                    ConditionPropertyType = contextItem.ConditionPropertyType
                 });
+
+                return true;
             }
+
+            return false;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using KNARZhelper;
+using KNARZhelper.Controls;
 using KNARZhelper.MetadataCommon;
 using KNARZhelper.MetadataCommon.DatabaseObjectTypes;
 using KNARZhelper.MetadataCommon.Enum;
@@ -56,6 +57,8 @@ namespace MetadataUtilities
                 ElementList = _controlTypes.Select(type => type.Key).ToList(),
                 SourceName = "MetadataUtilities"
             });
+
+            ResourceHelper.LoadIconFont(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 
             var iconResourcesToAdd = new Dictionary<string, string>
             {
@@ -286,7 +289,6 @@ namespace MetadataUtilities
             PrefixItemControls.Add(newControl);
 
             return newControl;
-
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)

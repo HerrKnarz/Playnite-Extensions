@@ -20,6 +20,9 @@ namespace MetadataUtilities.Models
         private int _sortNo;
         private LogicType _type = LogicType.And;
 
+        [DontSerialize]
+        public int ActionCount => Actions.Count;
+
         public ObservableCollection<Action> Actions
         {
             get => _actions;
@@ -34,6 +37,9 @@ namespace MetadataUtilities.Models
             get => _canBeExecutedManually;
             set => SetValue(ref _canBeExecutedManually, value);
         }
+
+        [DontSerialize]
+        public int ConditionCount => Conditions.Count;
 
         public ObservableCollection<Condition> Conditions
         {

@@ -5,12 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:metadataUtilities="clr-namespace:MetadataUtilities"
              d:DataContext="{d:DesignInstance Type=viewModels:ConditionalActionEditorViewModel}"
+             xmlns:c="clr-namespace:KNARZhelper.Controls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:viewModels="clr-namespace:MetadataUtilities.ViewModels"
              xmlns:enums="clr-namespace:MetadataUtilities.Enums"
              mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800">
+             d:Background="LightGray"
+             d:DesignHeight="600"
+             d:DesignWidth="1000">
+    <UserControl.InputBindings>
+        <KeyBinding Gesture="CTRL+S"
+                    Command="{Binding SaveCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+    </UserControl.InputBindings>
     <UserControl.Resources>
         <ResourceDictionary>
             <metadataUtilities:LogicTypeConverter x:Key="LogicTypeConverter" />
@@ -22,159 +29,55 @@
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
 
-            <ContextMenu x:Key="ConditionsMenuContains"
-                         ItemsSource="{Binding ContextMenuConditionsContains}">
-                <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header"
-                                Value="{Binding Name}" />
-                        <Setter Property="Command"
-                                Value="{Binding Action }" />
-                        <Setter Property="CommandParameter"
-                                Value="{Binding FieldType}" />
-                    </Style>
-                </ContextMenu.ItemContainerStyle>
-            </ContextMenu>
+            <ControlTemplate x:Key="mist"
+                             TargetType="{x:Type MenuItem}">
+                <Separator />
+            </ControlTemplate>
 
-            <ContextMenu x:Key="ConditionsMenuContainNot"
-                         ItemsSource="{Binding ContextMenuConditionsContainsNot}">
-                <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header"
-                                Value="{Binding Name}" />
-                        <Setter Property="Command"
-                                Value="{Binding Action }" />
-                        <Setter Property="CommandParameter"
-                                Value="{Binding FieldType}" />
-                    </Style>
-                </ContextMenu.ItemContainerStyle>
-            </ContextMenu>
+            <ControlTemplate x:Key="mict"
+                             TargetType="{x:Type MenuItem}">
+                <MenuItem Header="{Binding Name}"
+                          Command="{Binding Path=Command}"
+                          CommandParameter="{Binding}">
+                    <MenuItem.Icon>
+                        <TextBlock Text="{Binding Icon}"
+                                   FontFamily="{DynamicResource KNARZIconFont}"
+                                   Width="16"
+                                   Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ControlTemplate>
 
-            <ContextMenu x:Key="ConditionsMenuIsEmpty"
-                         ItemsSource="{Binding ContextMenuConditionsEmpty}">
-                <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header"
-                                Value="{Binding Name}" />
-                        <Setter Property="Command"
-                                Value="{Binding Action }" />
-                        <Setter Property="CommandParameter"
-                                Value="{Binding FieldType}" />
-                    </Style>
-                </ContextMenu.ItemContainerStyle>
-            </ContextMenu>
-            <ContextMenu x:Key="ConditionsMenuIsNotEmpty"
-                         ItemsSource="{Binding ContextMenuConditionsNotEmpty}">
-                <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header"
-                                Value="{Binding Name}" />
-                        <Setter Property="Command"
-                                Value="{Binding Action }" />
-                        <Setter Property="CommandParameter"
-                                Value="{Binding FieldType}" />
-                    </Style>
-                </ContextMenu.ItemContainerStyle>
-            </ContextMenu>
+            <Style x:Key="cmics"
+                   TargetType="{x:Type MenuItem}">
+                <Setter Property="Template"
+                        Value="{StaticResource mict}" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsSeparator}"
+                                 Value="True">
+                        <Setter Property="Template"
+                                Value="{StaticResource mist}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
 
-            <ContextMenu x:Key="ConditionsMenuIsBiggerThan"
-                         ItemsSource="{Binding ContextMenuConditionsBiggerThan}">
-                <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header"
-                                Value="{Binding Name}" />
-                        <Setter Property="Command"
-                                Value="{Binding Action }" />
-                        <Setter Property="CommandParameter"
-                                Value="{Binding FieldType}" />
-                    </Style>
-                </ContextMenu.ItemContainerStyle>
-            </ContextMenu>
-
-            <ContextMenu x:Key="ConditionsMenuIsSmallerThan"
-                         ItemsSource="{Binding ContextMenuConditionsSmallerThan}">
-                <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header"
-                                Value="{Binding Name}" />
-                        <Setter Property="Command"
-                                Value="{Binding Action }" />
-                        <Setter Property="CommandParameter"
-                                Value="{Binding FieldType}" />
-                    </Style>
-                </ContextMenu.ItemContainerStyle>
-            </ContextMenu>
-
-            <ContextMenu x:Key="ActionsMenuAdd"
-                         ItemsSource="{Binding ContextMenuActionsAdd}">
-                <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header"
-                                Value="{Binding Name}" />
-                        <Setter Property="Command"
-                                Value="{Binding Action }" />
-                        <Setter Property="CommandParameter"
-                                Value="{Binding FieldType}" />
-                    </Style>
-                </ContextMenu.ItemContainerStyle>
-            </ContextMenu>
-            <ContextMenu x:Key="ActionsMenuRemove"
-                         ItemsSource="{Binding ContextMenuActionsRemove}">
-                <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header"
-                                Value="{Binding Name}" />
-                        <Setter Property="Command"
-                                Value="{Binding Action }" />
-                        <Setter Property="CommandParameter"
-                                Value="{Binding FieldType}" />
-                    </Style>
-                </ContextMenu.ItemContainerStyle>
-            </ContextMenu>
-            <ContextMenu x:Key="ActionsMenuClear"
-                         ItemsSource="{Binding ContextMenuActionsClear}">
-                <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem"
-                           BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Header"
-                                Value="{Binding Name}" />
-                        <Setter Property="Command"
-                                Value="{Binding Action }" />
-                        <Setter Property="CommandParameter"
-                                Value="{Binding FieldType}" />
-                    </Style>
-                </ContextMenu.ItemContainerStyle>
-            </ContextMenu>
             <ResourceDictionary.MergedDictionaries>
+                <d:ResourceDictionary Source="/MetadataUtilities;component/Localization/en_US.xaml" />
                 <ResourceDictionary Source="/MetadataUtilities;component/Shared/Controls/CommonStyles.xaml" />
+                <ResourceDictionary Source="/MetadataUtilities;component/Shared/Controls/SettingsStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <UserControl.InputBindings>
-        <KeyBinding Gesture="CTRL+S"
-                    Command="{Binding SaveCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-    </UserControl.InputBindings>
-    <DockPanel FocusManager.FocusedElement="{Binding ElementName=NameEdit}"
-               d:Background="AliceBlue">
+    <DockPanel FocusManager.FocusedElement="{Binding ElementName=NameEdit}">
         <Border DockPanel.Dock="Top"
                 BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
                 d:BorderBrush="{DynamicResource KNARZDummyBrush}"
                 BorderThickness="0,1,0,0"
-                Margin="0,0,0,0" />
+                Margin="0, 5, 0, 0" />
         <Border DockPanel.Dock="Bottom"
                 BorderBrush="{DynamicResource WindowPanelSeparatorBrush}"
                 d:BorderBrush="{DynamicResource KNARZDummyBrush}"
-                BorderThickness="0,1,0,0"
-                Margin="0,10,0,0">
+                BorderThickness="0,1,0,0">
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                         Margin="10">
@@ -194,174 +97,132 @@
         </Border>
 
         <Grid DockPanel.Dock="Top"
-              Margin="10,10, 10, 5">
+              Margin="15">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Column="0"
-                  Grid.Row="0"
-                  Margin="0, 0, 5, 10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+            <c:SettingsOption Heading="{DynamicResource LOCNameLabel}"
+                              d:Heading="Name"
+                              Description="{DynamicResource LOCMetadataUtilitiesSettingsConditionalActionsNameDescription}"
+                              Grid.Column="0"
+                              Grid.Row="0"
+                              MinLabelWidth="70"
+                              Margin="0, 0, 10, 0">
+                <TextBox Text="{Binding ConditionalAction.Name}"
+                         Name="NameEdit" />
+            </c:SettingsOption>
 
-                <Label Grid.Column="0"
-                       Grid.Row="0"
-                       Content="{DynamicResource LOCNameLabel}"
-                       d:Content="Name"
-                       Margin="0, 0, 10, 10" />
-                <TextBox Grid.Column="1"
-                         Grid.Row="0"
-                         Name="NameEdit"
-                         Margin="0,0, 0, 10"
-                         Text="{Binding ConditionalAction.Name, UpdateSourceTrigger=PropertyChanged}" />
-                <Label Grid.Column="0"
-                       Grid.Row="1"
-                       Content="{DynamicResource LOCTypeLabel}"
-                       d:Content="Type"
-                       Margin="0, 0, 10, 10" />
-                <ComboBox Grid.Column="1"
-                          Grid.Row="1"
-                          SelectedItem="{Binding ConditionalAction.Type}"
-                          ItemsSource="{Binding Source={StaticResource LogicTypeValues}}"
-                          Margin="0, 0, 0, 10">
+            <c:SettingsOption Heading="{DynamicResource LOCTypeLabel}"
+                              d:Heading="Type"
+                              Description="{DynamicResource LOCMetadataUtilitiesSettingsConditionalActionsTypeDescription}"
+                              Grid.Column="1"
+                              Grid.Row="0"
+                              MinLabelWidth="70">
+                <ComboBox SelectedItem="{Binding ConditionalAction.Type}"
+                          ItemsSource="{Binding Source={StaticResource LogicTypeValues}}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource LogicTypeConverter}}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Label Grid.Column="0"
-                       Grid.Row="2"
-                       Content="{DynamicResource LOCMetadataUtilitiesSettingsPosition}"
-                       d:Content="Position"
-                       Margin="0, 0, 10, 10" />
-                <TextBox Grid.Column="1"
-                         Grid.Row="2"
-                         Margin="0, 0, 0, 10"
-                         Text="{Binding ConditionalAction.SortNo, UpdateSourceTrigger=PropertyChanged}" />
-            </Grid>
-            <Grid Grid.Column="1"
-                  Grid.Row="0"
-                  Margin="5, 0, 0, 10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <WrapPanel VerticalAlignment="Center">
-                    <CheckBox Grid.Row="0"
-                              IsChecked="{Binding ConditionalAction.Enabled}"
-                              Margin="0, 0, 20, 10">
-                        <TextBlock Text="{DynamicResource LOCEnabledTitle}"
-                                   d:Text="Enabled"
-                                   TextWrapping="Wrap" />
-                    </CheckBox>
-                    <CheckBox Grid.Column="1"
-                              Grid.Row="0"
-                              IsChecked="{Binding ConditionalAction.ExecuteOnNewBeforeMetadata}"
-                              Margin="0, 0, 0, 10">
-                        <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata}"
-                                   d:Text="Execute only on new games before metadata download"
-                                   TextWrapping="Wrap" />
-                    </CheckBox>
-                </WrapPanel>
-                <CheckBox Grid.Row="1"
-                          IsChecked="{Binding ConditionalAction.CanBeExecutedManually}"
-                          Margin="0, 0, 0, 10">
-                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsCanBeExecutedManually}"
-                               d:Text="Can be executed manually"
-                               TextWrapping="Wrap" />
-                </CheckBox>
-                <CheckBox Grid.Row="2"
-                          IsChecked="{Binding ConditionalAction.IgnoreConditionOnManual}"
-                          Margin="0, 0, 0, 10">
-                    <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual}"
-                               d:Text="Ignore conditions when executing manually"
-                               TextWrapping="Wrap" />
-                </CheckBox>
-            </Grid>
+            </c:SettingsOption>
 
-            <GroupBox Grid.Column="0"
-                      Grid.Row="1"
-                      Header="{DynamicResource LOCMetadataUtilitiesSettingsConditions}"
-                      d:Header=" Conditions"
-                      Padding="10, 10, 10, 0"
-                      Margin="0,0,5,0">
+            <c:SettingsOption Heading="{DynamicResource LOCMetadataUtilitiesSettingsPosition}"
+                              d:Heading="Position"
+                              Description="{DynamicResource LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription}"
+                              Grid.Column="0"
+                              Grid.Row="1"
+                              MinLabelWidth="70"
+                              Margin="0, 0, 10, 0">
+                <TextBox Text="{Binding ConditionalAction.SortNo}"
+                         MinWidth="100" />
+            </c:SettingsOption>
+
+            <StackPanel Grid.Column="1"
+                        Grid.Row="1">
+                <CheckBox IsChecked="{Binding ConditionalAction.Enabled}"
+                          Content="{DynamicResource LOCEnabledTitle}"
+                          d:Content="Enabled"
+                          Margin="0, 5, 0, 5" />
+                <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsConditionalActionsEnabledDescription}"
+                           Style="{StaticResource SettingsDescription}"
+                           Margin="0, 0, 0, 15" />
+            </StackPanel>
+
+            <CheckBox IsChecked="{Binding ConditionalAction.ExecuteOnNewBeforeMetadata}"
+                      Grid.Column="0"
+                      Grid.Row="2"
+                      Margin="0, 0, 10, 10">
+                <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata}"
+                           TextWrapping="Wrap" />
+            </CheckBox>
+
+            <CheckBox IsChecked="{Binding ConditionalAction.CanBeExecutedManually}"
+                      Grid.Column="1"
+                      Grid.Row="2"
+                      Margin="0, 0, 0, 15">
+                <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsCanBeExecutedManually}"
+                           TextWrapping="Wrap" />
+            </CheckBox>
+
+            <CheckBox IsChecked="{Binding ConditionalAction.IgnoreConditionOnManual}"
+                      Grid.Column="0"
+                      Grid.Row="3"
+                      Margin="0, 0, 10, 15">
+                <TextBlock Text="{DynamicResource LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual}"
+                           d:Text="Ignore conditions when executing manually"
+                           TextWrapping="Wrap" />
+            </CheckBox>
+
+            <c:SettingsSection Heading="{DynamicResource LOCMetadataUtilitiesSettingsConditions}"
+                               Description="{DynamicResource LOCMetadataUtilitiesSettingsConditionalActionsConditionsDescription}"
+                               Grid.Column="0"
+                               Grid.Row="4"
+                               Margin="0, 0, 5, 0">
                 <DockPanel>
-                    <DockPanel DockPanel.Dock="Bottom"
-                               HorizontalAlignment="Stretch"
-                               Margin="0,10,0,0">
-                        <Button Content="&#xec53;"
-                                DockPanel.Dock="Right"
-                                Style="{StaticResource KNARZIconButton}"
-                                ToolTip="{DynamicResource LOCRemoveTitle}"
-                                d:ToolTip="Remove"
-                                Margin="0,0,0,10"
-                                Command="{Binding RemoveConditionCommand}"
-                                CommandParameter="{Binding SelectedItems, ElementName=LbConditions}" />
-                        <WrapPanel Orientation="Horizontal"
-                                   DockPanel.Dock="Left">
-                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_Contains}"
-                                    d:Content="contains"
-                                    Margin="0,0,10,10"
-                                    DockPanel.Dock="Left"
-                                    ContextMenu="{StaticResource ConditionsMenuContains}"
-                                    Click="ButtonContextClick" />
-                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_DoesNotContain}"
-                                    d:Content="doesn't contain"
-                                    Margin="0,0,10,10"
-                                    DockPanel.Dock="Left"
-                                    ContextMenu="{StaticResource ConditionsMenuContainNot}"
-                                    Click="ButtonContextClick" />
-                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsEmpty}"
-                                    d:Content="is empty"
-                                    Margin="0,0,10,10"
-                                    DockPanel.Dock="Left"
-                                    ContextMenu="{StaticResource ConditionsMenuIsEmpty}"
-                                    Click="ButtonContextClick" />
-                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsNotEmpty}"
-                                    d:Content="isn't empty"
-                                    Margin="0,0,10,10"
-                                    DockPanel.Dock="Left"
-                                    ContextMenu="{StaticResource ConditionsMenuIsNotEmpty}"
-                                    Click="ButtonContextClick" />
-                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsBiggerThan}"
-                                    d:Content="Is bigger than"
-                                    Margin="0,0,10,10"
-                                    DockPanel.Dock="Left"
-                                    ContextMenu="{StaticResource ConditionsMenuIsBiggerThan}"
-                                    Click="ButtonContextClick" />
-                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_IsSmallerThan}"
-                                    d:Content="is smaller than"
-                                    Margin="0,0,10,10"
-                                    DockPanel.Dock="Left"
-                                    ContextMenu="{StaticResource ConditionsMenuIsSmallerThan}"
-                                    Click="ButtonContextClick" />
-                            <Button Content="{DynamicResource LOCMetadataUtilitiesGameIsNew}"
-                                    d:Content="is new"
-                                    Margin="0,0,10,10"
-                                    DockPanel.Dock="Left"
-                                    Command="{Binding AddConditionGameIsNewCommand}" />
-                        </WrapPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <Border DockPanel.Dock="Top"
+                                Padding="5"
+                                Margin="0, 0, 5, 2"
+                                Background="{DynamicResource ExpanderBackgroundBrush}">
+                            <Label Content="{DynamicResource LOCMetadataUtilitiesSettingsConditionalActionsAddConditions}" />
+                        </Border>
+                        <ListBox DockPanel.Dock="Bottom"
+                                 Name="LbConditionMenu"
+                                 ItemsSource="{Binding ConditionMenuItems}"
+                                 d:ItemsSource="{d:SampleData ItemCount=5}"
+                                 Width="200"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 Margin="0, 0, 5, 0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"
+                                               PreviewMouseUp="TextBlockContextClick"
+                                               Padding="0, 5">
+                                        <TextBlock.ContextMenu>
+                                            <ContextMenu ItemsSource="{Binding ContextActions}"
+                                                         ItemContainerStyle="{StaticResource cmics}" />
+                                        </TextBlock.ContextMenu>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </DockPanel>
-                    <ListBox DockPanel.Dock="Top"
+                    <ListBox DockPanel.Dock="Right"
                              Name="LbConditions"
                              ItemsSource="{Binding ConditionalAction.Conditions}"
-                             SelectionMode="Extended">
+                             SelectionMode="Extended"
+                             d:ItemsSource="{d:SampleData ItemCount=5}">
                         <ListBox.InputBindings>
                             <KeyBinding Key="DEL"
                                         Command="{Binding RemoveConditionCommand}"
@@ -369,57 +230,56 @@
                         </ListBox.InputBindings>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ToString}" />
+                                <TextBlock Text="{Binding ToString}"
+                                           Padding="0, 5" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </DockPanel>
-            </GroupBox>
+            </c:SettingsSection>
 
-            <GroupBox Grid.Column="1"
-                      Grid.Row="1"
-                      Header="{DynamicResource LOCActionsLabel}"
-                      d:Header="Actions"
-                      Padding="10, 10, 10, 0"
-                      Margin="5,0,0,0">
-                <DockPanel>
-                    <DockPanel DockPanel.Dock="Bottom"
-                               HorizontalAlignment="Stretch"
-                               Margin="0,10,0,0">
-                        <Button Content="&#xec53;"
-                                DockPanel.Dock="Right"
-                                Style="{StaticResource KNARZIconButton}"
-                                ToolTip="{DynamicResource LOCRemoveTitle}"
-                                d:ToolTip="Remove"
-                                Margin="0,0,0,10"
-                                Command="{Binding RemoveActionCommand}"
-                                CommandParameter="{Binding SelectedItems, ElementName=LbActions}" />
-                        <WrapPanel Orientation="Horizontal"
-                                   DockPanel.Dock="Left">
-                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_AddObject}"
-                                    d:Content="add"
-                                    Margin="0,0,10,10"
-                                    DockPanel.Dock="Left"
-                                    ContextMenu="{StaticResource ActionsMenuAdd}"
-                                    Click="ButtonContextClick" />
-                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_RemoveObject}"
-                                    d:Content="remove"
-                                    Margin="0,0,10,10"
-                                    DockPanel.Dock="Left"
-                                    ContextMenu="{StaticResource ActionsMenuRemove}"
-                                    Click="ButtonContextClick" />
-                            <Button Content="{DynamicResource LOCMetadataUtilitiesEnum_ClearField}"
-                                    d:Content="clear field"
-                                    Margin="0,0,10,10"
-                                    DockPanel.Dock="Left"
-                                    ContextMenu="{StaticResource ActionsMenuClear}"
-                                    Click="ButtonContextClick" />
-                        </WrapPanel>
+            <c:SettingsSection Heading="{DynamicResource LOCActionsLabel}"
+                               d:Heading="Actions"
+                               Description="{DynamicResource LOCMetadataUtilitiesSettingsConditionalActionsActionsDescription}"
+                               Grid.Column="1"
+                               Grid.Row="4"
+                               Margin="5, 0, 0, 0">
+
+                <DockPanel  DockPanel.Dock="Top">
+                    <DockPanel DockPanel.Dock="Left">
+                        <Border DockPanel.Dock="Top"
+                                Padding="5"
+                                Margin="0, 0, 5, 2"
+                                Background="{DynamicResource ExpanderBackgroundBrush}">
+                            <Label Content="{DynamicResource LOCMetadataUtilitiesSettingsConditionalActionsAddActions}" />
+                        </Border>
+                        <ListBox DockPanel.Dock="Bottom"
+                                 Name="LbActionsMenu"
+                                 ItemsSource="{Binding ActionMenuItems}"
+                                 d:ItemsSource="{d:SampleData ItemCount=5}"
+                                 Width="200"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 Margin="0, 0, 5, 0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"
+                                               PreviewMouseUp="TextBlockContextClick"
+                                               Padding="0, 5">
+                                        <TextBlock.ContextMenu>
+                                            <ContextMenu ItemsSource="{Binding ContextActions}"
+                                                         ItemContainerStyle="{StaticResource cmics}" />
+                                        </TextBlock.ContextMenu>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </DockPanel>
-                    <ListBox DockPanel.Dock="Top"
+
+                    <ListBox DockPanel.Dock="Right"
                              Name="LbActions"
                              ItemsSource="{Binding ConditionalAction.Actions}"
-                             SelectionMode="Extended">
+                             SelectionMode="Extended"
+                             d:ItemsSource="{d:SampleData ItemCount=5}">
                         <ListBox.InputBindings>
                             <KeyBinding Key="DEL"
                                         Command="{Binding RemoveActionCommand}"
@@ -427,12 +287,13 @@
                         </ListBox.InputBindings>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ToString}" />
+                                <TextBlock Text="{Binding ToString}"
+                                           Padding="0, 5" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </DockPanel>
-            </GroupBox>
+            </c:SettingsSection>
         </Grid>
     </DockPanel>
 </UserControl>

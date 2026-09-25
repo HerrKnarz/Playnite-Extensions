@@ -69,6 +69,15 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\AddonInteractions.cs">
       <Link>Shared\AddonInteractions.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\ResourceHelper.cs">
+      <Link>Shared\Controls\ResourceHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs">
+      <Link>Shared\Controls\SettingsOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsSection.cs">
+      <Link>Shared\Controls\SettingsSection.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Enum\DbInteractionResult.cs">
       <Link>Shared\DbInteractionResult.cs</Link>
     </Compile>
@@ -305,6 +314,7 @@
     <Compile Include="Actions\RemoveUnwantedAction.cs" />
     <Compile Include="Actions\SetUserScoreAction.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="Enums\ConditionPropertyType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\Action.cs" />
@@ -330,7 +340,8 @@
     <Compile Include="ViewModels\ChangeTypeViewModel.cs" />
     <Compile Include="ViewModels\ConditionalActionEditorViewModel.cs" />
     <Compile Include="ViewModels\CopyMetadataViewModel.cs" />
-    <Compile Include="ViewModels\FieldTypeContextAction.cs" />
+    <Compile Include="ViewModels\FieldTypeContextItem.cs" />
+    <Compile Include="ViewModels\FieldTypeMenuItem.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\MergeRuleEditorViewModel.cs" />
     <Compile Include="ViewModels\PrefixItemControlViewModel.cs" />
@@ -372,6 +383,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\KNARZhelper\KNARZhelper\Resources\KNARZIconFont.ttf">
+      <Link>Resources\KNARZIconFont.ttf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -388,6 +403,11 @@
     <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\CommonStyles.xaml">
       <Link>Shared\Controls\CommonStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsStyles.xaml">
+      <Link>Shared\Controls\SettingsStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\SearchGameView.xaml">
       <Link>Shared\GamesCommon\SearchGameView.xaml</Link>

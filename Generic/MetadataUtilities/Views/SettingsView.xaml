@@ -372,7 +372,8 @@
                           DockPanel.Dock="Top"
                           Margin="0, 10, 0, 0"
                           ItemsSource="{Binding Settings.ConditionalActions}"
-                          VerticalContentAlignment="Stretch">
+                          VerticalContentAlignment="Stretch"
+                          d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="Auto"
@@ -412,7 +413,8 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Width="Auto"
-                                            Header="{DynamicResource LOCGameManualTitle}">
+                                            Header="{DynamicResource LOCGameManualTitle}"
+                                            d:Header="Manual">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding CanBeExecutedManually, UpdateSourceTrigger=PropertyChanged}"
@@ -431,12 +433,23 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Width="Auto"
-                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsConditions}"
-                                            DisplayMemberBinding="{Binding ConditionString}" />
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsConditions}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ConditionCount}" ToolTip="{Binding ConditionString}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Width="Auto"
                                             Header="{DynamicResource LOCActionsLabel}"
-                                            d:Header="Actions"
-                                            DisplayMemberBinding="{Binding ActionString}" />
+                                            d:Header="Actions">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ActionCount}"
+                                                   ToolTip="{Binding ActionString}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>

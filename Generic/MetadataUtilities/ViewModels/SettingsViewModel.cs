@@ -52,7 +52,7 @@ namespace MetadataUtilities.ViewModels
 
             FieldTypeButtons.AddMissing(_fieldTypes
                 .Select(x =>
-                    new FieldTypeContextAction
+                    new FieldTypeContextItem
                     {
                         Name = x.Value,
                         FieldType = x.Key
@@ -61,7 +61,7 @@ namespace MetadataUtilities.ViewModels
 
             FieldTypeButtonsExtended.AddMissing(_allFieldTypes.Where(x => x.CanBeSetInGame && x.CanBeClearedInGame && x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
-                    new FieldTypeContextAction
+                    new FieldTypeContextItem
                     {
                         Name = x.LabelPlural,
                         FieldType = x.Type
@@ -70,7 +70,7 @@ namespace MetadataUtilities.ViewModels
 
             FieldTypeButtonsUnwanted.AddMissing(_allFieldTypes.Where(x => x.CanBeSetInGame && x.CanBeClearedInGame && x.CanBeSetByMetadataAddOn && x.ValueType == ItemValueType.ItemList)
                 .Select(x =>
-                    new FieldTypeContextAction
+                    new FieldTypeContextItem
                     {
                         Name = x.LabelPlural,
                         FieldType = x.Type
@@ -199,14 +199,14 @@ namespace MetadataUtilities.ViewModels
         public RelayCommand<object> EditMergeRuleCommand
             => new RelayCommand<object>(rule => EditMergeRule((MergeRule)rule), rule => rule != null);
 
-        public ObservableCollection<FieldTypeContextAction> FieldTypeButtons { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
+        public ObservableCollection<FieldTypeContextItem> FieldTypeButtons { get; set; } =
+            new ObservableCollection<FieldTypeContextItem>();
 
-        public ObservableCollection<FieldTypeContextAction> FieldTypeButtonsExtended { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
+        public ObservableCollection<FieldTypeContextItem> FieldTypeButtonsExtended { get; set; } =
+            new ObservableCollection<FieldTypeContextItem>();
 
-        public ObservableCollection<FieldTypeContextAction> FieldTypeButtonsUnwanted { get; set; } =
-            new ObservableCollection<FieldTypeContextAction>();
+        public ObservableCollection<FieldTypeContextItem> FieldTypeButtonsUnwanted { get; set; } =
+            new ObservableCollection<FieldTypeContextItem>();
 
         public Dictionary<FieldType, string> FieldValuePairs => FieldTypeHelper.ItemListFieldValues(true);
 
