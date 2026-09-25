@@ -1,5 +1,4 @@
-﻿using KNARZhelper;
-using KNARZhelper.GamesCommon;
+﻿using KNARZhelper.GamesCommon;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
@@ -57,12 +56,6 @@ namespace ScreenshotUtilitiesLocalProvider.Models
         {
             get => _overrideGlobalConfigs;
             set => SetValue(ref _overrideGlobalConfigs, value);
-        }
-
-        public void PrepareProfile(StringExpander stringExpander, Guid gameId)
-        {
-            FolderConfigs?.ForEach(c => c.StringExpander = stringExpander);
-            GameId = gameId;
         }
 
         public void SetGame(Guid gameId)

@@ -171,7 +171,7 @@ namespace ScreenshotUtilitiesLocalProvider.Models
             });
 
         [DontSerialize]
-        public StringExpander StringExpander { get; set; }
+        public StringExpander StringExpander => ScreenshotUtilitiesLocalProvider.StringExpander;
 
         [DontSerialize]
         public GameEx TestGame
@@ -206,37 +206,62 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 
         public string FormatGameName(string gameName)
         {
-            var formatParameters = new StringFormatParameters
+            try
             {
-                InvalidCharReplacement = InvalidCharReplacement,
-                RemoveDiacritics = RemoveDiacritics,
-                RemoveEditionSuffix = RemoveEditionSuffix,
-                RemoveHyphens = RemoveHyphens,
-                RemoveSpecialChars = RemoveSpecialChars,
-                RemoveWhitespaces = RemoveWhitespaces,
-                ReplaceInvalidFileNameChars = true,
-                UnderscoresToWhitespaces = UnderscoresToWhitespaces,
-                WhitespacesToHyphens = WhitespacesToHyphens,
-                WhitespacesToUnderscores = WhitespacesToUnderscores
-            };
+                var formatParameters = new StringFormatParameters
+                {
+                    InvalidCharReplacement = InvalidCharReplacement,
+                    RemoveDiacritics = RemoveDiacritics,
+                    RemoveEditionSuffix = RemoveEditionSuffix,
+                    RemoveHyphens = RemoveHyphens,
+                    RemoveSpecialChars = RemoveSpecialChars,
+                    RemoveWhitespaces = RemoveWhitespaces,
+                    ReplaceInvalidFileNameChars = true,
+                    UnderscoresToWhitespaces = UnderscoresToWhitespaces,
+                    WhitespacesToHyphens = WhitespacesToHyphens,
+                    WhitespacesToUnderscores = WhitespacesToUnderscores
+                };
 
-            return gameName.FormatString(formatParameters);
+                return gameName.FormatString(formatParameters);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Error formatting game name {gameName} in {Name}");
+                return gameName;
+            }
         }
 
         public List<Screenshot> LoadScreenshots(Game game)
         {
-            var gameName = FormatGameName(game.Name);
-            var folder = StringExpander.ReplaceAllPlaceholders(Path, game, gameName);
-            var fileMask = StringExpander.ReplaceAllPlaceholders(FileMask, game, gameName);
             var result = new List<Screenshot>();
-
-            if (string.IsNullOrEmpty(folder))
-            {
-                return result;
-            }
 
             try
             {
+                //TODO: Remove debug los once not needed anymore
+                Log.Debug($"Loading screenshots from {Name} for {game.Name} -> Getting path and file mask.");
+
+                var gameName = FormatGameName(game.Name);
+
+                //TODO: Remove debug los once not needed anymore
+                Log.Debug($"Loading screenshots from {Name} for {game.Name} -> formatted game name to {gameName}");
+
+                if (StringExpander is null)
+                {
+                    Log.Debug($"StringExpander is null in {Name} for {game.Name}");
+                    return result;
+                }
+
+                var folder = StringExpander.ReplaceAllPlaceholders(Path, game, gameName);
+                var fileMask = StringExpander.ReplaceAllPlaceholders(FileMask, game, gameName);
+
+                //TODO: Remove debug los once not needed anymore
+                Log.Debug($"Loading screenshots from {Name} for {game.Name} in folder {folder} with file mask {fileMask}");
+
+                if (string.IsNullOrEmpty(folder))
+                {
+                    return result;
+                }
+
                 var dirInfo = new DirectoryInfo(folder);
 
                 if (!dirInfo.Exists)
@@ -244,9 +269,9 @@ namespace ScreenshotUtilitiesLocalProvider.Models
                     return result;
                 }
 
-                var files = dirInfo.GetFiles(fileMask, ScanSubFolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).OrderBy(f => f.Name).ToList();
+                var files = dirInfo.GetFiles(fileMask, ScanSubFolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)?.OrderBy(f => f.Name).ToList();
 
-                if (files.Count == 0)
+                if (files is null || files.Count == 0)
                 {
                     return result;
                 }
@@ -268,12 +293,11 @@ namespace ScreenshotUtilitiesLocalProvider.Models
 
         public void ResolveConfig()
         {
-            StringExpander?.ResetCache();
+            StringExpander.ResetCache();
+            StringExpander.TestExpansions(TestGame?.Game);
 
-            StringExpander?.TestExpansions(TestGame?.Game);
-
-            ResolvedPath = StringExpander?.ReplaceAllPlaceholders(Path, TestGame?.Game, ExampleResult);
-            ResolvedFileMask = StringExpander?.ReplaceAllPlaceholders(FileMask, TestGame?.Game, ExampleResult); ;
+            ResolvedPath = StringExpander.ReplaceAllPlaceholders(Path, TestGame?.Game, ExampleResult);
+            ResolvedFileMask = StringExpander.ReplaceAllPlaceholders(FileMask, TestGame?.Game, ExampleResult);
         }
 
         public void ResolveFormat() => ExampleResult = FormatGameName(ExampleName) ?? string.Empty;

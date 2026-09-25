@@ -21,7 +21,7 @@ namespace ScreenshotUtilitiesLocalProvider
 {
     public class ScreenshotUtilitiesLocalProvider : GenericPlugin, IScreenshotProviderPlugin
     {
-        public StringExpander StringExpander = new StringExpander();
+        public static StringExpander StringExpander = new StringExpander();
         private Game _game;
         private ScreenshotGroup _screenshotGroup;
 
@@ -73,7 +73,7 @@ namespace ScreenshotUtilitiesLocalProvider
                 return;
             }
 
-            Settings.Settings.GameProfiles.ForEach(p => p.PrepareProfile(StringExpander, p.GameId));
+            Settings.Settings.GameProfiles.ForEach(p => p.SetGame(p.GameId));
         }
 
         private async Task<bool> FetchScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate)
