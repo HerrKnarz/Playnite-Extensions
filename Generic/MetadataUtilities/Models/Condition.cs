@@ -6,6 +6,7 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
+using System.Linq;
 
 namespace MetadataUtilities.Models
 {
@@ -87,7 +88,7 @@ namespace MetadataUtilities.Models
                         return $"{GetDisplayString()} {UlongValue}";
 
                     case ItemValueType.Media:
-                        if (ConditionPropertyType == ConditionPropertyType.Extension)
+                        if (ConditionPropertyType.IsOneOf(ConditionPropertyType.Extension, ConditionPropertyType.AspectRatio))
                         {
                             return $"{GetDisplayString()} {StringValue}";
                         }
@@ -323,10 +324,12 @@ namespace MetadataUtilities.Models
             }
 
             var isIntValue = ConditionPropertyType.IsOneOf(ConditionPropertyType.FileSize, ConditionPropertyType.Width, ConditionPropertyType.Height);
-            var isStringValue = ConditionPropertyType == ConditionPropertyType.Extension;
+            var isStringValue = ConditionPropertyType.IsOneOf(ConditionPropertyType.Extension, ConditionPropertyType.AspectRatio);
 
             var intValueToCompare = 0;
             var stringValueToCompare = string.Empty;
+            var aspectRatioToCompare = 0.0;
+            var aspectRatioCondition = 0.0;
 
             if (isIntValue)
             {
@@ -356,19 +359,45 @@ namespace MetadataUtilities.Models
 
             if (isStringValue)
             {
-                stringValueToCompare = imageType.GetExtension(game);
+                if (ConditionPropertyType == ConditionPropertyType.AspectRatio)
+                {
+                    aspectRatioCondition = StringValue.Split(':').Select(double.Parse).Aggregate((x, y) => x / y);
+
+                    var imageSize = imageType.GetImageSize(game);
+
+                    aspectRatioToCompare = imageSize.Width / (double)imageSize.Height;
+                }
+                else if (ConditionPropertyType == ConditionPropertyType.Extension)
+                {
+                    stringValueToCompare = imageType.GetExtension(game);
+                }
             }
 
             switch (Comparator)
             {
                 case ComparatorType.IsBiggerThan:
+                    if (ConditionPropertyType == ConditionPropertyType.AspectRatio)
+                    {
+                        return aspectRatioToCompare > aspectRatioCondition;
+                    }
+
                     return isIntValue && intValueToCompare > IntValue;
 
                 case ComparatorType.IsSmallerThan:
+                    if (ConditionPropertyType == ConditionPropertyType.AspectRatio)
+                    {
+                        return aspectRatioToCompare < aspectRatioCondition;
+                    }
+
                     return isIntValue && intValueToCompare < IntValue;
 
                 case ComparatorType.Contains:
                 case ComparatorType.Equals:
+                    if (ConditionPropertyType == ConditionPropertyType.AspectRatio)
+                    {
+                        return aspectRatioToCompare > aspectRatioCondition * 0.99 && aspectRatioToCompare < aspectRatioCondition * 1.01;
+                    }
+
                     if (isIntValue)
                     {
                         return intValueToCompare == IntValue;
@@ -383,6 +412,11 @@ namespace MetadataUtilities.Models
 
                 case ComparatorType.DoesNotContain:
                 case ComparatorType.DoesntEqual:
+                    if (ConditionPropertyType == ConditionPropertyType.AspectRatio)
+                    {
+                        return aspectRatioToCompare < aspectRatioCondition * 0.99 || aspectRatioToCompare > aspectRatioCondition * 1.01;
+                    }
+
                     if (isIntValue)
                     {
                         return intValueToCompare != IntValue;

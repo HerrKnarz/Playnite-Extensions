@@ -345,6 +345,7 @@
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\MergeRuleEditorViewModel.cs" />
     <Compile Include="ViewModels\PrefixItemControlViewModel.cs" />
+    <Compile Include="ViewModels\SelectAspectRatioViewModel.cs" />
     <Compile Include="ViewModels\SelectDateViewModel.cs" />
     <Compile Include="ViewModels\SelectIntViewModel.cs" />
     <Compile Include="Views\ConditionalActionEditorView.xaml.cs">
@@ -364,6 +365,9 @@
     </Compile>
     <Compile Include="Views\MergeRuleEditorView.xaml.cs">
       <DependentUpon>MergeRuleEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelectAspectRatioView.xaml.cs">
+      <DependentUpon>SelectAspectRatioView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
@@ -440,6 +444,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MergeRuleEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelectAspectRatioView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

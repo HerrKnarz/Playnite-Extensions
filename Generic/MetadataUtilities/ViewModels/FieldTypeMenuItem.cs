@@ -61,6 +61,7 @@ namespace MetadataUtilities.ViewModels
 
                     AddActions(ConditionPropertyType.Width);
                     AddActions(ConditionPropertyType.Height);
+                    AddActions(ConditionPropertyType.AspectRatio);
                     AddActions(ConditionPropertyType.FileSize);
                     AddActions(ConditionPropertyType.Extension, false);
                 }

@@ -218,7 +218,7 @@ namespace MetadataUtilities.ViewModels
                                 break;
 
                             case ConditionPropertyType.AspectRatio:
-                                needsSorting = CreateIntCondition(contextItem);
+                                needsSorting = CreateAspectRatioCondition(contextItem);
                                 break;
 
                             case ConditionPropertyType.FileSize:
@@ -266,6 +266,37 @@ namespace MetadataUtilities.ViewModels
                 ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
                 {
                     ActionType = contextItem.ActionType
+                });
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CreateAspectRatioCondition(FieldTypeContextItem contextItem)
+        {
+            var intXValue = 0;
+            var intYValue = 0;
+
+            if (!SelectAspectRatioViewModel.ShowDialog(ref intXValue, ref intYValue))
+            {
+                return false;
+            }
+
+            var ratio = $"{intXValue}:{intYValue}";
+
+            if (!ConditionalAction.Conditions.Any(
+                x => x.Comparator == contextItem.Comparator &&
+                x.ConditionPropertyType == contextItem.ConditionPropertyType &&
+                x.Type == contextItem.FieldType &&
+                x.StringValue == ratio))
+            {
+                ConditionalAction.Conditions.Add(new Condition(contextItem.FieldType)
+                {
+                    StringValue = ratio,
+                    Comparator = contextItem.Comparator,
+                    ConditionPropertyType = contextItem.ConditionPropertyType
                 });
 
                 return true;
