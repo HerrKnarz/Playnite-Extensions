@@ -99,7 +99,17 @@ namespace MetadataUtilities
 
             var itemList = items.Select(x => (BaseMetadataObject)x).ToObservable();
 
-            var window = SelectMetadataViewModel.GetWindow(itemList, label);
+            var addNewCommand = new RelayCommand(() =>
+            {
+                var newItem = AddNewItem(type, prefix, true, true);
+                if (newItem != null)
+                {
+                    itemList.Add(newItem);
+                    newItem.Selected = true;
+                }
+            });
+
+            var window = SelectMetadataViewModel.GetWindow(itemList, label, true, addNewCommand);
 
             return (window?.ShowDialog() ?? false)
                 ? itemList.Where(x => x.Selected).ToList()
@@ -120,6 +130,7 @@ namespace MetadataUtilities
                 case List<Game> listOfGames:
                     gamesToUpdate = listOfGames;
                     break;
+
                 case List<Guid> gameIds:
                     {
                         foreach (var gameId in gameIds)
@@ -179,6 +190,13 @@ namespace MetadataUtilities
             }
 
             rule.MergeItems();
+        }
+
+        public void OpenCopyMetadataWindow(Game sourceGame)
+        {
+            var window = CopyMetadataViewModel.GetWindow(sourceGame);
+
+            window?.ShowDialog();
         }
 
         public List<MetadataObject> RemoveUnusedMetadata(bool autoMode = false)
@@ -345,13 +363,6 @@ namespace MetadataUtilities
         {
             KnownGames.UnionWith(NewGames);
             NewGames.Clear();
-        }
-
-        public void OpenCopyMetadataWindow(Game sourceGame)
-        {
-            var window = CopyMetadataViewModel.GetWindow(sourceGame);
-
-            window?.ShowDialog();
         }
 
         public void SavePluginSettings() => _plugin?.SavePluginSettings(Settings);
