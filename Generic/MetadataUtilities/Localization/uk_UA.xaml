@@ -106,20 +106,26 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Прибирання небажаних елементів метаданих...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Встановлення рахунку користувача...</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsActionsDescription">Here you can add the actions to execute if the conditions on the left are true. To delete an action again just select it in the box and hit the DEL key.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsActionsDescription">Here you can add the actions to execute when the conditions on the left are met or not. To delete an action again just select it in the box and hit the DEL key.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddActions">Add actions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddConditions">Add conditions</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsDescription">Here you can add as many conditions as you like using the options on the left. The type specified above determines how many conditions have to be true for the actions to be executed. To remove conditions select them in the list and hit the DEL key.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsDescription">Here you can add as many conditions as you like using the options on the left. The requirements selection specifies how the conditions are considered to be met for the actions to be executed. To remove conditions select them in the list and hit the DEL key.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsMet">Conditions met</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsNotMet">Conditions not met</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsEnabledDescription">Disabled conditional actions won't run automatically, but can still be executed manually.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsNameDescription">Name for the conditional action that will be displayed in the settings list and in menus.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Position of the conditional action in the settings list and in menus.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsTypeDescription">Type of the conditional action. Determines how the conditions will be evaluated.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirements">Requirements</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirementsDescription">Specifies when the list of conditions is considered to be met in its entirety in order to execute the actions.</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsActionsMet">Actions (when met)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsActionsNotMet">Actions (when not met)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Додати типові</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Додати наявні елементи</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Завжди додавати елементи які ви прибираєте в Редакторі Метаданих до списку небажаного не питаючи.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Завжди зберігати ручні об'єднання як правила об'єднання.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Можна виконати вручну</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManuallyDescription">Enabling this will allow the conditional action to be executed manually via the game context menu. It doesn't need to be enabled itself.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Стовпці в ігровій сітці Редактора Метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Умови</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">Підтвердити видалення</sys:String>
@@ -130,10 +136,12 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Змінити</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Префікси не можуть бути порожніми!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Виконувати тільки з новими іграми перед завантаженням метаданих</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadataDescription">Enabling this will execute the action only if it's a new game and no metadata was downloaded yet. Be careful when adding metadata this way, as it will keep the metadata download from adding their own to the respective fields.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Сховати в подробицях</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Сховати в редакторі</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ігнорувати умови</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ігнорувати умови при виконанні вручну</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManualDescription">Enabling this will ignore conditions when executing the action manually. It will automatically consider the conditions to be met, so only the &quot;conditions met&quot; tab will be executed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ігнорувати приховані ігри в при підрахунку</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ігнорувати приховані ігри при прибиранні невикористаних метаданих</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Автоматично виконувати правила об'єднання при оновленні метаданих</sys:String>
