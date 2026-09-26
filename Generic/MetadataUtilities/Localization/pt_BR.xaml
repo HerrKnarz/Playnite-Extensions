@@ -106,20 +106,26 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">Removendo itens de metadados indesejados...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Definindo pontuação do usuário...</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsActionsDescription">Here you can add the actions to execute if the conditions on the left are true. To delete an action again just select it in the box and hit the DEL key.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsActionsDescription">Here you can add the actions to execute when the conditions on the left are met or not. To delete an action again just select it in the box and hit the DEL key.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddActions">Add actions</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddConditions">Add conditions</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsDescription">Here you can add as many conditions as you like using the options on the left. The type specified above determines how many conditions have to be true for the actions to be executed. To remove conditions select them in the list and hit the DEL key.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsDescription">Here you can add as many conditions as you like using the options on the left. The requirements selection specifies how the conditions are considered to be met for the actions to be executed. To remove conditions select them in the list and hit the DEL key.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsMet">Conditions met</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsNotMet">Conditions not met</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsEnabledDescription">Disabled conditional actions won't run automatically, but can still be executed manually.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsNameDescription">Name for the conditional action that will be displayed in the settings list and in menus.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Position of the conditional action in the settings list and in menus.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsTypeDescription">Type of the conditional action. Determines how the conditions will be evaluated.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirements">Requirements</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirementsDescription">Specifies when the list of conditions is considered to be met in its entirety in order to execute the actions.</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsActionsMet">Actions (when met)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsActionsNotMet">Actions (when not met)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">Adicionar valores padrão</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">Adicionar item existente</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">Sempre adicione itens que você remover no Editor de Metadados à lista indesejada sem perguntar.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">Sempre salvar mesclagens manuais como regras de mesclagem.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">Pode ser executado manualmente</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManuallyDescription">Enabling this will allow the conditional action to be executed manually via the game context menu. It doesn't need to be enabled itself.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">Colunas na grade de jogos do Editor de Metadados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">Condições</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">Confirmar exclusão</sys:String>
@@ -130,10 +136,12 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">Editar</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">Os prefixos não podem estar vazios!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">Executar somente em novos jogos antes de baixar os metadados</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadataDescription">Enabling this will execute the action only if it's a new game and no metadata was downloaded yet. Be careful when adding metadata this way, as it will keep the metadata download from adding their own to the respective fields.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">Ocultar nos detalhes</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">Ocultar no editor</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">Ignorar Condições</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">Ignorar condições ao executar manualmente</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManualDescription">Enabling this will ignore conditions when executing the action manually. It will automatically consider the conditions to be met, so only the &quot;conditions met&quot; tab will be executed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">Ignorar jogos ocultos na contagem de jogos</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">Ignorar jogos ocultos ao remover metadados não utilizados</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">Executar automaticamente regras de mesclagem ao atualizar os metadados</sys:String>
