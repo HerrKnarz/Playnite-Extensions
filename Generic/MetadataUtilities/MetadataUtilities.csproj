@@ -208,6 +208,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeIcon.cs">
       <Link>Shared\MetadataCommon\DatabaseObjectTypes\TypeIcon.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeInstallDirectory.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\TypeInstallDirectory.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeInstallSize.cs">
       <Link>Shared\MetadataCommon\DatabaseObjectTypes\TypeInstallSize.cs</Link>
     </Compile>
