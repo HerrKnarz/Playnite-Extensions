@@ -436,17 +436,26 @@
                                             Header="{DynamicResource LOCMetadataUtilitiesSettingsConditions}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding ConditionCount}" ToolTip="{Binding ConditionString}" />
+                                        <TextBlock Text="{Binding ConditionCount}"
+                                                   ToolTip="{Binding ConditionString}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Width="Auto"
-                                            Header="{DynamicResource LOCActionsLabel}"
-                                            d:Header="Actions">
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsActionsMet}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding ActionCount}"
                                                    ToolTip="{Binding ActionString}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto"
+                                            Header="{DynamicResource LOCMetadataUtilitiesSettingsActionsNotMet}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding FalseActionCount}"
+                                                   ToolTip="{Binding FalseActionString}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

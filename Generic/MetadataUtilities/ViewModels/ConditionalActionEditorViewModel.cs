@@ -22,8 +22,8 @@ namespace MetadataUtilities.ViewModels
 
         private ObservableCollection<FieldTypeMenuItem> _actionMenuItems = new ObservableCollection<FieldTypeMenuItem>();
         private ConditionalAction _conditionalAction;
-
         private ObservableCollection<FieldTypeMenuItem> _conditionMenuItems = new ObservableCollection<FieldTypeMenuItem>();
+        private ObservableCollection<FieldTypeMenuItem> _falseActionMenuItems = new ObservableCollection<FieldTypeMenuItem>();
 
         public ConditionalActionEditorViewModel(ConditionalAction conditionalAction)
         {
@@ -42,6 +42,12 @@ namespace MetadataUtilities.ViewModels
             ActionMenuItems.AddMissing(_fieldTypes
                 .Where(x => x.CanBeSetInGame || x.CanBeClearedInGame)
                 .Select(x => new FieldTypeMenuItem(x.Type, ActionCommand, false)));
+
+            FalseActionMenuItems = new ObservableCollection<FieldTypeMenuItem>();
+
+            FalseActionMenuItems.AddMissing(_fieldTypes
+                .Where(x => x.CanBeSetInGame || x.CanBeClearedInGame)
+                .Select(x => new FieldTypeMenuItem(x.Type, FalseActionCommand, false)));
         }
 
         public RelayCommand<FieldTypeContextItem> ActionCommand => new RelayCommand<FieldTypeContextItem>(type => AddActions(type));
@@ -66,6 +72,14 @@ namespace MetadataUtilities.ViewModels
             set => SetValue(ref _conditionMenuItems, value);
         }
 
+        public RelayCommand<FieldTypeContextItem> FalseActionCommand => new RelayCommand<FieldTypeContextItem>(type => AddActions(type, false));
+
+        public ObservableCollection<FieldTypeMenuItem> FalseActionMenuItems
+        {
+            get => _falseActionMenuItems;
+            set => SetValue(ref _falseActionMenuItems, value);
+        }
+
         public RelayCommand<IList<object>> RemoveActionCommand => new RelayCommand<IList<object>>(items =>
         {
             foreach (var item in items.ToList().Cast<Action>())
@@ -81,6 +95,14 @@ namespace MetadataUtilities.ViewModels
                 ConditionalAction.Conditions.Remove(item);
             }
         }, items => items?.Count != 0);
+
+        public RelayCommand<IList<object>> RemoveFalseActionCommand => new RelayCommand<IList<object>>(items =>
+                {
+                    foreach (var item in items.ToList().Cast<Action>())
+                    {
+                        ConditionalAction.FalseActions.Remove(item);
+                    }
+                }, items => items?.Count != 0);
 
         public RelayCommand<Window> SaveCommand => new RelayCommand<Window>(win =>
         {
@@ -141,44 +163,46 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        public void AddActions(FieldTypeContextItem contextItem)
+        public void AddActions(FieldTypeContextItem contextItem, bool conditionsMet = true)
         {
             var needsSorting = false;
 
+            var actions = conditionsMet ? ConditionalAction.Actions : ConditionalAction.FalseActions;
+
             if (contextItem.ActionType == ActionType.ClearField)
             {
-                needsSorting = CreateAction(contextItem);
+                needsSorting = CreateAction(contextItem, actions);
             }
             else
             {
                 switch (contextItem.FieldType.GetTypeManager().ValueType)
                 {
                     case ItemValueType.ItemList:
-                        needsSorting = CreateListAction(contextItem);
+                        needsSorting = CreateListAction(contextItem, actions);
                         break;
 
                     case ItemValueType.Boolean:
-                        needsSorting = CreateAction(contextItem);
+                        needsSorting = CreateAction(contextItem, actions);
                         break;
 
                     case ItemValueType.Integer:
-                        needsSorting = CreateIntAction(contextItem);
+                        needsSorting = CreateIntAction(contextItem, actions);
                         break;
 
                     case ItemValueType.Date:
-                        needsSorting = CreateDateAction(contextItem);
+                        needsSorting = CreateDateAction(contextItem, actions);
                         break;
 
                     case ItemValueType.Media:
-                        needsSorting = CreateMediaAction(contextItem);
+                        needsSorting = CreateMediaAction(contextItem, actions);
                         break;
 
                     case ItemValueType.String:
-                        needsSorting = CreateStringAction(contextItem);
+                        needsSorting = CreateStringAction(contextItem, actions);
                         break;
 
                     case ItemValueType.Ulong:
-                        needsSorting = CreateUlongAction(contextItem);
+                        needsSorting = CreateUlongAction(contextItem, actions);
                         break;
 
                     case ItemValueType.None:
@@ -189,7 +213,7 @@ namespace MetadataUtilities.ViewModels
 
             if (needsSorting)
             {
-                ConditionalAction.Actions.Sort(x => x.ToString);
+                actions.Sort(x => x.ToString);
             }
         }
 
@@ -259,11 +283,11 @@ namespace MetadataUtilities.ViewModels
             }
         }
 
-        private bool CreateAction(FieldTypeContextItem contextItem)
+        private bool CreateAction(FieldTypeContextItem contextItem, IList<Action> actions)
         {
-            if (!ConditionalAction.Actions.Any(x => x.ActionType == contextItem.ActionType && x.Type == contextItem.FieldType))
+            if (!actions.Any(x => x.ActionType == contextItem.ActionType && x.Type == contextItem.FieldType))
             {
-                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                actions.Add(new Action(contextItem.FieldType)
                 {
                     ActionType = contextItem.ActionType
                 });
@@ -320,7 +344,7 @@ namespace MetadataUtilities.ViewModels
             return false;
         }
 
-        private bool CreateDateAction(FieldTypeContextItem contextItem)
+        private bool CreateDateAction(FieldTypeContextItem contextItem, IList<Action> actions)
         {
             var dateValue = DateTime.Today;
 
@@ -329,11 +353,11 @@ namespace MetadataUtilities.ViewModels
                 return false;
             }
 
-            if (!ConditionalAction.Actions.Any(
+            if (!actions.Any(
                     x => x.ActionType == contextItem.ActionType &&
                          x.Type == contextItem.FieldType && x.DateValue == dateValue))
             {
-                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                actions.Add(new Action(contextItem.FieldType)
                 {
                     DateValue = dateValue,
                     ActionType = contextItem.ActionType
@@ -373,7 +397,7 @@ namespace MetadataUtilities.ViewModels
             return false;
         }
 
-        private bool CreateIntAction(FieldTypeContextItem contextItem)
+        private bool CreateIntAction(FieldTypeContextItem contextItem, IList<Action> actions)
         {
             var intValue = 0;
 
@@ -382,11 +406,11 @@ namespace MetadataUtilities.ViewModels
                 return false;
             }
 
-            if (!ConditionalAction.Actions.Any(
+            if (!actions.Any(
                     x => x.ActionType == contextItem.ActionType &&
                          x.Type == contextItem.FieldType && x.IntValue == intValue))
             {
-                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                actions.Add(new Action(contextItem.FieldType)
                 {
                     IntValue = intValue,
                     ActionType = contextItem.ActionType
@@ -426,7 +450,7 @@ namespace MetadataUtilities.ViewModels
             return false;
         }
 
-        private bool CreateListAction(FieldTypeContextItem contextItem)
+        private bool CreateListAction(FieldTypeContextItem contextItem, IList<Action> actions)
         {
             var items = ControlCenter.GetItemsFromAddDialog(contextItem.FieldType);
 
@@ -438,10 +462,10 @@ namespace MetadataUtilities.ViewModels
             var addedItems = false;
 
             foreach (var item in items.Where(item =>
-                         ConditionalAction.Actions.All(x =>
+                         actions.All(x =>
                              x.TypeAndName != item.TypeAndName || x.ActionType != contextItem.ActionType)))
             {
-                ConditionalAction.Actions.Add(new Action(item.Type, item.Name)
+                actions.Add(new Action(item.Type, item.Name)
                 {
                     ActionType = contextItem.ActionType
                 });
@@ -481,7 +505,7 @@ namespace MetadataUtilities.ViewModels
             return addedItems;
         }
 
-        private bool CreateMediaAction(FieldTypeContextItem contextItem)
+        private bool CreateMediaAction(FieldTypeContextItem contextItem, IList<Action> actions)
         {
             var mediaPath = API.Instance.Dialogs.SelectImagefile();
 
@@ -490,11 +514,11 @@ namespace MetadataUtilities.ViewModels
                 return false;
             }
 
-            if (!ConditionalAction.Actions.Any(
+            if (!actions.Any(
                     x => x.ActionType == contextItem.ActionType &&
                          x.Type == contextItem.FieldType && x.StringValue == mediaPath))
             {
-                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                actions.Add(new Action(contextItem.FieldType)
                 {
                     StringValue = mediaPath,
                     ActionType = contextItem.ActionType
@@ -506,7 +530,7 @@ namespace MetadataUtilities.ViewModels
             return false;
         }
 
-        private bool CreateStringAction(FieldTypeContextItem contextItem)
+        private bool CreateStringAction(FieldTypeContextItem contextItem, IList<Action> actions)
         {
             var dialogResult = API.Instance.Dialogs.SelectString("", ResourceProvider.GetString("LOCMetadataUtilitiesDialogEnterValue"), default);
 
@@ -522,11 +546,11 @@ namespace MetadataUtilities.ViewModels
                 return false;
             }
 
-            if (!ConditionalAction.Actions.Any(
+            if (!actions.Any(
                     x => x.ActionType == contextItem.ActionType &&
                          x.Type == contextItem.FieldType && x.StringValue == stringValue))
             {
-                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                actions.Add(new Action(contextItem.FieldType)
                 {
                     StringValue = stringValue,
                     ActionType = contextItem.ActionType
@@ -568,7 +592,7 @@ namespace MetadataUtilities.ViewModels
             return false;
         }
 
-        private bool CreateUlongAction(FieldTypeContextItem contextItem)
+        private bool CreateUlongAction(FieldTypeContextItem contextItem, IList<Action> actions)
         {
             var ulongValue = 0;
 
@@ -577,11 +601,11 @@ namespace MetadataUtilities.ViewModels
                 return false;
             }
 
-            if (!ConditionalAction.Actions.Any(
+            if (!actions.Any(
                     x => x.ActionType == contextItem.ActionType &&
                          x.Type == contextItem.FieldType && x.UlongValue == (ulong)ulongValue))
             {
-                ConditionalAction.Actions.Add(new Action(contextItem.FieldType)
+                actions.Add(new Action(contextItem.FieldType)
                 {
                     UlongValue = (ulong)ulongValue,
                     ActionType = contextItem.ActionType
