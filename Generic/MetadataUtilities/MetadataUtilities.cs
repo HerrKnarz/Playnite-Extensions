@@ -99,6 +99,8 @@ namespace MetadataUtilities
                 return;
             }
 
+            //NEXT: Add the missing ones!!!
+
             // some actions only run for games, that have values in one of the supported fields and
             // those differ from the ones before.
             var games = args.UpdatedItems.Where(item =>
@@ -147,7 +149,6 @@ namespace MetadataUtilities
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             var menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesName");
-            var mergeSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsMergeRules");
             var conditionalSection = ResourceProvider.GetString("LOCMetadataUtilitiesSettingsTabConditionalActions");
             var menuItems = new List<GameMenuItem>();
             var games = args.Games.Distinct().ToList();
@@ -226,15 +227,7 @@ namespace MetadataUtilities
                 }
             });
 
-            /*menuItems.AddRange(Settings.Settings.MergeRules.OrderBy(x => x.TypeAndName).Select(rule => new GameMenuItem
-            {
-                Description = rule.TypeAndName,
-                MenuSection = $"{menuSection}|{mergeSection}",
-                Action = a => MergeAction.Instance().DoForAll(myGames, true,
-                    ActionModifierType.None, rule)
-            })); */
-
-            menuItems.AddRange(Settings.Settings.ConditionalActions.OrderBy(x => x.Name).Select(action => new GameMenuItem
+            menuItems.AddRange(Settings.Settings.ConditionalActions.Where(c => c.CanBeExecutedManually).OrderBy(c => c.Name).Select(action => new GameMenuItem
             {
                 Description = action.Name,
                 MenuSection = $"{menuSection}|{conditionalSection}",
