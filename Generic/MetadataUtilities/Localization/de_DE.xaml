@@ -22,7 +22,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">Element zu {0} Spielen hinzugefügt</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">Element aus {0} Spielen entfernt</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">Element in {1} Spielen umgeschaltet</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Der eingegebene Text kann ein regulärer Ausdruck sein.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Der eingegebene String wird als regulärer Ausdruck interpretiert.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Unerwünschte Metadaten aus {0} Spielen entfernt!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Unternehmen umbenennen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Du benennst einen {0} um. Möchtest du auch den entsprechenden {1} umbenennen?</sys:String>
@@ -56,7 +56,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">Alle Bedingungen sind falsch</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">enthalten</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains_Alt">enthält</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">nicht enthalten</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain_Alt">enthält nicht</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">ist leer</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">ist nicht leer</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsBiggerThan">ist größer als</sys:String>
