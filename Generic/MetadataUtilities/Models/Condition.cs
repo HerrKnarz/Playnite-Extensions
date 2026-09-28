@@ -451,12 +451,16 @@ namespace MetadataUtilities.Models
             switch (Comparator)
             {
                 case ComparatorType.Contains:
-                case ComparatorType.Equals:
                     return stringType.GameContainsValue(game, StringValue);
 
+                case ComparatorType.Equals:
+                    return TypeManager is BaseStringType equalsType && equalsType.GetValue(game).Equals(StringValue, StringComparison.OrdinalIgnoreCase);
+
                 case ComparatorType.DoesNotContain:
-                case ComparatorType.DoesntEqual:
                     return !stringType.GameContainsValue(game, StringValue);
+
+                case ComparatorType.DoesntEqual:
+                    return TypeManager is BaseStringType doesntEqualType && !doesntEqualType.GetValue(game).Equals(StringValue, StringComparison.OrdinalIgnoreCase);
 
                 case ComparatorType.IsEmpty:
                     return TypeManager is IClearAbleType emptyType && emptyType.FieldInGameIsEmpty(game);

@@ -67,7 +67,7 @@ namespace MetadataUtilities.ViewModels
                 }
                 else
                 {
-                    if (_field.ValueType == ItemValueType.ItemList && isList)
+                    if ((_field.ValueType == ItemValueType.ItemList && isList) || _field.ValueType == ItemValueType.String)
                     {
                         AddContextAction(ComparatorType.Contains);
                         AddContextAction(ComparatorType.DoesNotContain);
@@ -142,7 +142,7 @@ namespace MetadataUtilities.ViewModels
                 FieldType = FieldType,
                 Name = conditionPropertyType != ConditionPropertyType.Value
                     ? $"{conditionPropertyType.GetEnumDisplayNameWithType()} {comparatorType.GetEnumDisplayName()}"
-                    : comparatorType.GetEnumDisplayName()
+                    : comparatorType.GetEnumDisplayName(comparatorType.IsOneOf(ComparatorType.Contains, ComparatorType.DoesNotContain) && !(_field is BaseObjectType objectType && objectType.IsList))
             });
         }
 

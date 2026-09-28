@@ -565,7 +565,7 @@ namespace MetadataUtilities.ViewModels
         private bool CreateStringCondition(FieldTypeContextItem contextItem)
         {
             var dialogResult = API.Instance.Dialogs.SelectString(
-                ResourceProvider.GetString("LOCMetadataUtilitiesDialogRegExNotice"),
+                contextItem.Comparator == ComparatorType.Contains ? ResourceProvider.GetString("LOCMetadataUtilitiesDialogRegExNotice") : null,
                 ResourceProvider.GetString("LOCMetadataUtilitiesDialogEnterValue"), default);
 
             if (!dialogResult.Result)

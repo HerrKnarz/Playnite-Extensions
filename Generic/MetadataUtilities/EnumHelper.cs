@@ -74,11 +74,11 @@ namespace MetadataUtilities
             }
         }
 
-        public static string GetEnumDisplayName(this Enum e)
-                    => ResourceProvider.GetString($"LOCMetadataUtilitiesEnum_{e}");
+        public static string GetEnumDisplayName(this Enum e, bool altValue = false)
+                    => ResourceProvider.GetString($"LOCMetadataUtilitiesEnum_{e}{(altValue ? "_Alt" : string.Empty)}");
 
-        public static string GetEnumDisplayNameWithType(this Enum e)
-            => ResourceProvider.GetString($"LOCMetadataUtilitiesEnum_{e.GetType().Name}_{e}");
+        public static string GetEnumDisplayNameWithType(this Enum e, bool altValue = false)
+            => ResourceProvider.GetString($"LOCMetadataUtilitiesEnum_{e.GetType().Name}_{e}{(altValue ? "_Alt" : string.Empty)}");
     }
 
     public class FieldTypeConverter : IValueConverter
