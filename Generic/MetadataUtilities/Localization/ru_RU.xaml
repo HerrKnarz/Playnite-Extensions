@@ -22,7 +22,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">элемент добавлен в {0} играх</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">элемент удален из {0} игр</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">элемент переключён в {0} играх</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Введённая строка может быть регулярным выражением.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">The entered string will be interpreted as a regular expression.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Удалены ненужные метаданные из {0} игр!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Переименовать компанию</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Вы переименовываете {0}. Хотите ли вы также переименовать соответствующий {1}?</sys:String>
@@ -56,7 +56,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">Все условия ложные</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">contain</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains_Alt">contains</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">don't contain</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain_Alt">doesn't contain</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">пусто</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">не пусто</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsBiggerThan">больше, чем</sys:String>
