@@ -10,6 +10,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace MetadataUtilities
@@ -160,7 +161,7 @@ namespace MetadataUtilities
 
         public bool AddNewGame(Guid id) => NewGames.Add(id);
 
-        public void GetKnownGames()
+        public async Task GetKnownGames()
         {
             if (KnownGames != null)
             {
@@ -168,6 +169,8 @@ namespace MetadataUtilities
             }
 
             KnownGames = API.Instance.Database.Games.Select(x => x.Id).Distinct().ToHashSet();
+
+            Log.Debug(Settings.WriteDebugLog, $"Retrieved known games: {KnownGames.Count}");
         }
 
         public void MergeMetadataObjects(MetadataObject mergeTarget, MetadataObjects items, bool saveAsRule = false)
@@ -210,15 +213,7 @@ namespace MetadataUtilities
                 return temporaryList;
             }
 
-            var globalProgressOptions = new GlobalProgressOptions(
-                ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
-                false
-            )
-            {
-                IsIndeterminate = true
-            };
-
-            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            void RemoveUnusedMetadata()
             {
                 try
                 {
@@ -245,12 +240,36 @@ namespace MetadataUtilities
                     {
                         item.RemoveFromDb(types.FirstOrDefault(x => x.Type == item.Type)?.HiddenAsUnused ?? false);
                     }
+
+                    Log.Debug(Settings.WriteDebugLog, $"Removed unused metadata: {temporaryList.Count}");
                 }
                 catch (Exception ex)
                 {
                     Log.Error(ex);
                 }
-            }, globalProgressOptions);
+            }
+
+            if (autoMode)
+            {
+                IsUpdating = true;
+                try
+                {
+                    RemoveUnusedMetadata();
+                }
+                finally
+                {
+                    IsUpdating = false;
+                }
+            }
+            else
+            {
+                var globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"), false)
+                {
+                    IsIndeterminate = true
+                };
+
+                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress => RemoveUnusedMetadata(), globalProgressOptions);
+            }
 
             if (temporaryList.Count != 0)
             {

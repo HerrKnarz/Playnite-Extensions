@@ -18,8 +18,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Media;
 using Control = System.Windows.Controls.Control;
 using MergeAction = MetadataUtilities.Actions.MergeAction;
@@ -361,6 +361,8 @@ namespace MetadataUtilities
         {
             base.OnApplicationStarted(args);
 
+            Log.Debug(Settings.Settings.WriteDebugLog, $"OnApplicationStarted: Getting known games");
+
             ControlCenter.Instance.GetKnownGames();
 
             if (!Settings.Settings.TypeConfigs.Any(x => x.RemoveUnusedItems))
@@ -368,24 +370,12 @@ namespace MetadataUtilities
                 return;
             }
 
-            RemoveUnused();
+            Log.Debug(Settings.Settings.WriteDebugLog, $"OnApplicationStarted: Removing unused");
+
+            new Task(RemoveUnused).Start();
         }
 
-        public void RemoveUnused()
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            ControlCenter.Instance.IsUpdating = true;
-
-            try
-            {
-                ControlCenter.Instance.RemoveUnusedMetadata(true);
-            }
-            finally
-            {
-                Cursor.Current = Cursors.Default;
-                ControlCenter.Instance.IsUpdating = false;
-            }
-        }
+        public void RemoveUnused() => ControlCenter.Instance.RemoveUnusedMetadata(true);
 
         private static bool OnRenameObject(object sender, string oldName, string newName) => ControlCenter.Instance.RenameObject((IMetadataFieldType)sender, oldName, newName);
 
