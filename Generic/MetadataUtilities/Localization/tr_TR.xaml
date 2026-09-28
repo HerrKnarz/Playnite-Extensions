@@ -22,7 +22,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">{0} oyuna öğe eklendi</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">{0} oyundan öğe kaldırıldı</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">{0} oyunda öğe değiştirildi</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Girilen dize bir düzenli ifade olabilir.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">The entered string will be interpreted as a regular expression.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">{0} oyundan istenmeyen meta veri öğeleri kaldırıldı!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Şirketi yeniden adlandırın</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Bir {0} adını değiştiriyorsunuz. Karşılık gelen {1} adını da değiştirmek istiyor musunuz?</sys:String>
@@ -56,7 +56,9 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">Tüm şartlar geçersiz</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">contain</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains_Alt">contains</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">don't contain</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain_Alt">doesn't contain</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">boş</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">boş değil</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsBiggerThan">daha büyük</sys:String>
