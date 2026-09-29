@@ -90,6 +90,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Прибрати небажані метадані</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">Скинути нові ігри</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesMenuImageUtilities">Image Utilities</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageHorizontally">Flip {0} horizontally</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageVertically">Flip {0} vertically</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRotateImage">Rotate {0} {1}°</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Нова гра</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Редактор правил об'єднання</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
