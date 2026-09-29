@@ -121,7 +121,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsNotMet">Bedingungen nicht erfüllt</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsEnabledDescription">Deaktivierte bedingte Aktionen werden nicht automatisch ausgeführt, können aber dennoch manuell ausgeführt werden.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsNameDescription">Name für die bedingte Aktion, die in der Einstellungsliste und im Menü angezeigt wird.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Defines the order the conditional actions will be executed, so you can let actions with a higher number react to changes actions with a lower number made.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Definiert die Reihenfolge, in der die bedingten Aktionen ausgeführt werden, so können Sie Aktionen mit einer höheren Zahl auf Änderungen reagieren lassen, die mit einer geringeren Zahl durchgeführt werden.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirements">Erfüllungsvoraussetzung</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirementsDescription">Legt fest, wann die Liste der Bedingungen als vollständig erfüllt betrachtet wird, um die Aktionen auszuführen.</sys:String>
 
