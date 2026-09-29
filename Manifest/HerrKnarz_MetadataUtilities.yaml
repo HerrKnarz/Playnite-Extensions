@@ -1,5 +1,20 @@
 AddonId: MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be
 Packages:
+  - Version: 1.9.0
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2026-09-29
+    PackageUrl: https://github.com/HerrKnarz/Playnite-Extensions/releases/download/2026-09-29/MetadataUtilities_485ab5f0-bfb1-4c17-93cc-20d8338673be_1_9_0.pext
+    Changelog:
+      - Overhauled conditional actions to allow for more complex conditions and actions and make them easier to understand.
+      - Added support for Extra Metadata logos and installation folder for conditional actions and copying fields between games. 
+      - Added width, height, aspect ratio, file size and extension of backgrounds, covers, icons and logos as conditions, so you can add tags or similar, when media files don't match your preferences.
+      - Added option to specify actions that will be execute, when the conditions are not met. This allows for more complex conditional actions, like adding a tag, when a game has no cover and removing it, when it has one.
+      - Added option to define conditions for exact matches in string fields in addition to the existing regex support.
+      - Added new Image Utilities context menu to games to quickly flip or rotate backgrounds, covers, icons and logos.
+      - Added option to directly add new items to the Select item dialogs throughout the addon, so you don't have to leave the dialog to add a new item to the database first.
+      - Removing unused metadata on startup now runs in the background instead of blocking the startup process.
+      - Fixed displaying all conditional actions in the game context menu instead of only the ones that are actually set to be executed manually.
+      - Updated localization.
   - Version: 1.8.5
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2026-09-07

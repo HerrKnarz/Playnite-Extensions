@@ -123,7 +123,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsNotMet">Conditions not met</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsEnabledDescription">Disabled conditional actions won't run automatically, but can still be executed manually.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsNameDescription">Name for the conditional action that will be displayed in the settings list and in menus.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Position of the conditional action in the settings list and in menus.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Defines the order the conditional actions will be executed, so you can let actions with a higher number react to changes actions with a lower number made.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirements">Requirements</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirementsDescription">Specifies when the list of conditions is considered to be met in its entirety in order to execute the actions.</sys:String>
 
