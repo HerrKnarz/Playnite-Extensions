@@ -7,11 +7,11 @@ using System.Windows.Input;
 namespace MetadataUtilities.Views
 {
     /// <summary>
-    /// Interaction logic for SelectIntView.xaml
+    /// Interaction logic for SelectAspectRatioView.xaml
     /// </summary>
-    public partial class SelectIntView
+    public partial class SelectAspectRatioView : UserControl
     {
-        public SelectIntView()
+        public SelectAspectRatioView()
         {
             InitializeComponent();
         }

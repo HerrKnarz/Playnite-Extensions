@@ -103,6 +103,12 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\ImageHelper.cs">
       <Link>Shared\FilesCommon\ImageHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\MediaHelper.cs">
+      <Link>Shared\FilesCommon\MediaHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\VideoHelper.cs">
+      <Link>Shared\FilesCommon\VideoHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Log.cs">
       <Link>Shared\Log.cs</Link>
     </Compile>
@@ -273,7 +279,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Magick.NET-Q8-x86">
-      <Version>14.13.1</Version>
+      <Version>14.17.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
       <Version>1.1.39</Version>

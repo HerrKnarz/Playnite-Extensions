@@ -15,10 +15,14 @@ namespace MetadataUtilities.Models
         private ObservableCollection<Condition> _conditions = new ObservableCollection<Condition>();
         private bool _enabled = true;
         private bool _executeOnNewBeforeMetadata;
+        private ObservableCollection<Action> _falseActions = new ObservableCollection<Action>();
         private bool _ignoreConditionOnManual;
         private string _name = string.Empty;
         private int _sortNo;
         private LogicType _type = LogicType.And;
+
+        [DontSerialize]
+        public int ActionCount => Actions.Count;
 
         public ObservableCollection<Action> Actions
         {
@@ -34,6 +38,9 @@ namespace MetadataUtilities.Models
             get => _canBeExecutedManually;
             set => SetValue(ref _canBeExecutedManually, value);
         }
+
+        [DontSerialize]
+        public int ConditionCount => Conditions.Count;
 
         public ObservableCollection<Condition> Conditions
         {
@@ -55,6 +62,18 @@ namespace MetadataUtilities.Models
             get => _executeOnNewBeforeMetadata;
             set => SetValue(ref _executeOnNewBeforeMetadata, value);
         }
+
+        [DontSerialize]
+        public int FalseActionCount => FalseActions.Count;
+
+        public ObservableCollection<Action> FalseActions
+        {
+            get => _falseActions;
+            set => SetValue(ref _falseActions, value);
+        }
+
+        [DontSerialize]
+        public string FalseActionString => string.Join("\n", FalseActions.Select(x => x.ToString).ToArray());
 
         public bool IgnoreConditionOnManual
         {
@@ -83,8 +102,7 @@ namespace MetadataUtilities.Models
         [DontSerialize]
         public string TypeString => Type.GetEnumDisplayName();
 
-        public bool CheckAndExecute(Game game, bool isManual = false) =>
-            ((isManual && IgnoreConditionOnManual) || CheckConditions(game)) && Execute(game);
+        public bool CheckAndExecute(Game game, bool isManual = false) => Execute(game, (isManual && IgnoreConditionOnManual) || CheckConditions(game));
 
         public bool CheckConditions(Game game)
         {
@@ -115,12 +133,13 @@ namespace MetadataUtilities.Models
             }
         }
 
-        private bool Execute(Game game)
+        private bool Execute(Game game, bool conditionsMet = true)
         {
-            var mustUpdate = Actions.OrderBy(x => x.ActionType == ActionType.ClearField ? 1 : 2)
-                .Aggregate(false, (current, action) => current | action.Execute(game));
-
-            return mustUpdate;
+            return conditionsMet
+                ? Actions.OrderBy(x => x.ActionType == ActionType.ClearField ? 1 : 2)
+                    .Aggregate(false, (current, action) => current | action.Execute(game))
+                : FalseActions.OrderBy(x => x.ActionType == ActionType.ClearField ? 1 : 2)
+                    .Aggregate(false, (current, action) => current | action.Execute(game));
         }
     }
 }

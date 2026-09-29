@@ -10,6 +10,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace MetadataUtilities
@@ -99,7 +100,17 @@ namespace MetadataUtilities
 
             var itemList = items.Select(x => (BaseMetadataObject)x).ToObservable();
 
-            var window = SelectMetadataViewModel.GetWindow(itemList, label);
+            var addNewCommand = new RelayCommand(() =>
+            {
+                var newItem = AddNewItem(type, prefix, true, true);
+                if (newItem != null)
+                {
+                    itemList.Add(newItem);
+                    newItem.Selected = true;
+                }
+            });
+
+            var window = SelectMetadataViewModel.GetWindow(itemList, label, true, addNewCommand);
 
             return (window?.ShowDialog() ?? false)
                 ? itemList.Where(x => x.Selected).ToList()
@@ -120,6 +131,7 @@ namespace MetadataUtilities
                 case List<Game> listOfGames:
                     gamesToUpdate = listOfGames;
                     break;
+
                 case List<Guid> gameIds:
                     {
                         foreach (var gameId in gameIds)
@@ -149,7 +161,7 @@ namespace MetadataUtilities
 
         public bool AddNewGame(Guid id) => NewGames.Add(id);
 
-        public void GetKnownGames()
+        public async Task GetKnownGames()
         {
             if (KnownGames != null)
             {
@@ -157,6 +169,8 @@ namespace MetadataUtilities
             }
 
             KnownGames = API.Instance.Database.Games.Select(x => x.Id).Distinct().ToHashSet();
+
+            Log.Debug(Settings.WriteDebugLog, $"Retrieved known games: {KnownGames.Count}");
         }
 
         public void MergeMetadataObjects(MetadataObject mergeTarget, MetadataObjects items, bool saveAsRule = false)
@@ -181,6 +195,13 @@ namespace MetadataUtilities
             rule.MergeItems();
         }
 
+        public void OpenCopyMetadataWindow(Game sourceGame)
+        {
+            var window = CopyMetadataViewModel.GetWindow(sourceGame);
+
+            window?.ShowDialog();
+        }
+
         public List<MetadataObject> RemoveUnusedMetadata(bool autoMode = false)
         {
             var temporaryList = new List<MetadataObject>();
@@ -192,15 +213,7 @@ namespace MetadataUtilities
                 return temporaryList;
             }
 
-            var globalProgressOptions = new GlobalProgressOptions(
-                ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"),
-                false
-            )
-            {
-                IsIndeterminate = true
-            };
-
-            API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress =>
+            void RemoveUnusedMetadata()
             {
                 try
                 {
@@ -227,12 +240,36 @@ namespace MetadataUtilities
                     {
                         item.RemoveFromDb(types.FirstOrDefault(x => x.Type == item.Type)?.HiddenAsUnused ?? false);
                     }
+
+                    Log.Debug(Settings.WriteDebugLog, $"Removed unused metadata: {temporaryList.Count}");
                 }
                 catch (Exception ex)
                 {
                     Log.Error(ex);
                 }
-            }, globalProgressOptions);
+            }
+
+            if (autoMode)
+            {
+                IsUpdating = true;
+                try
+                {
+                    RemoveUnusedMetadata();
+                }
+                finally
+                {
+                    IsUpdating = false;
+                }
+            }
+            else
+            {
+                var globalProgressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCMetadataUtilitiesProgressRemovingUnused"), false)
+                {
+                    IsIndeterminate = true
+                };
+
+                API.Instance.Dialogs.ActivateGlobalProgress(activateGlobalProgress => RemoveUnusedMetadata(), globalProgressOptions);
+            }
 
             if (temporaryList.Count != 0)
             {
@@ -345,13 +382,6 @@ namespace MetadataUtilities
         {
             KnownGames.UnionWith(NewGames);
             NewGames.Clear();
-        }
-
-        public void OpenCopyMetadataWindow(Game sourceGame)
-        {
-            var window = CopyMetadataViewModel.GetWindow(sourceGame);
-
-            window?.ShowDialog();
         }
 
         public void SavePluginSettings() => _plugin?.SavePluginSettings(Settings);

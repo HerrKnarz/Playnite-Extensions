@@ -12,8 +12,8 @@ namespace MetadataUtilities.Models
         private ActionType _actionType = ActionType.AddObject;
         private DateTime _dateValue;
         private int _intValue;
-        private ulong _ulongValue;
         private string _stringValue;
+        private ulong _ulongValue;
 
         public Action(FieldType type, string name = default) : base(type, name)
         {
@@ -45,12 +45,6 @@ namespace MetadataUtilities.Models
             set => SetValue(ref _intValue, value);
         }
 
-        public ulong UlongValue
-        {
-            get => _ulongValue;
-            set => SetValue(ref _ulongValue, value);
-        }
-
         public string StringValue
         {
             get => _stringValue;
@@ -64,26 +58,26 @@ namespace MetadataUtilities.Models
             {
                 if (ActionType == ActionType.ClearField)
                 {
-                    return $"{ActionType.GetEnumDisplayName()} {TypeLabel}";
+                    return $"{ActionType.GetEnumDisplayName()} {TypeLabelInGame}";
                 }
 
                 switch (TypeManager.ValueType)
                 {
                     case ItemValueType.Boolean:
-                        return $"{ActionType.GetEnumDisplayName()} {TypeLabel}";
+                        return $"{ActionType.GetEnumDisplayName()} {TypeLabelInGame}";
 
                     case ItemValueType.Integer:
-                        return $"{ActionType.GetEnumDisplayName()} {TypeLabel} {IntValue}";
+                        return $"{ActionType.GetEnumDisplayName()} {TypeLabelInGame}: {IntValue}";
 
                     case ItemValueType.Date:
-                        return $"{ActionType.GetEnumDisplayName()} {TypeLabel} {DateValue:yyyy-MM-dd}";
+                        return $"{ActionType.GetEnumDisplayName()} {TypeLabelInGame}: {DateValue:yyyy-MM-dd}";
 
                     case ItemValueType.Media:
                     case ItemValueType.String:
-                        return $"{ActionType.GetEnumDisplayName()} {TypeLabel} \"{StringValue}\"";
+                        return $"{ActionType.GetEnumDisplayName()} {TypeLabelInGame}: \"{StringValue}\"";
 
                     case ItemValueType.Ulong:
-                        return $"{ActionType.GetEnumDisplayName()} {TypeLabel} {UlongValue}";
+                        return $"{ActionType.GetEnumDisplayName()} {TypeLabelInGame}: {UlongValue}";
 
                     case ItemValueType.ItemList:
                     case ItemValueType.None:
@@ -93,11 +87,18 @@ namespace MetadataUtilities.Models
             }
         }
 
+        public ulong UlongValue
+        {
+            get => _ulongValue;
+            set => SetValue(ref _ulongValue, value);
+        }
+
         public bool Execute(Game game)
         {
             switch (ActionType)
             {
                 case ActionType.AddObject:
+                case ActionType.Set:
                     switch (TypeManager.ValueType)
                     {
                         case ItemValueType.Integer:

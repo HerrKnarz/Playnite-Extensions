@@ -188,7 +188,6 @@ namespace ScreenshotUtilitiesLocalProvider.ViewModels
         {
             try
             {
-                configToEdit.StringExpander = _plugin.StringExpander;
                 configToEdit.TestGame = new GameEx(game);
 
                 var window = WindowHelper.CreateSizedWindow(ResourceProvider.GetString("LOCScreenshotUtilitiesLocalProviderSettingsButtonEdit"), 1200, 850);

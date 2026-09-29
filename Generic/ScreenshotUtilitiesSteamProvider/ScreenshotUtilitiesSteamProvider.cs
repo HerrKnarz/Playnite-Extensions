@@ -152,6 +152,11 @@ namespace ScreenshotUtilitiesSteamProvider
 
         private async Task<bool> LoadScreenshotsFromSourceAsync()
         {
+            if (string.IsNullOrEmpty(_screenshotGroup.GameIdentifier))
+            {
+                return false;
+            }
+
             var apiUrl = $"https://store.steampowered.com/api/appdetails?appids={_screenshotGroup.GameIdentifier}";
 
             var result = await ApiHelper.GetJsonFromApiAsync<SteamAppDetails>(apiUrl, ProviderName);

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace MetadataUtilities.ViewModels
 {
-    public class SelectIntViewModel : ObservableObject
+    internal class SelectAspectRatioViewModel : ObservableObject
     {
         public RelayCommand<Window> OkCommand => new RelayCommand<Window>(win =>
         {
@@ -15,21 +15,20 @@ namespace MetadataUtilities.ViewModels
             win.Close();
         }, win => win != null);
 
-        public string Unit { get; set; } = string.Empty;
-        public Visibility UnitVisibility => string.IsNullOrWhiteSpace(Unit) ? Visibility.Collapsed : Visibility.Visible;
-        public int Value { get; set; } = 0;
+        public int ValueX { get; set; } = 0;
+        public int ValueY { get; set; } = 0;
 
-        public static bool ShowDialog(ref int value, string unit = null)
+        public static bool ShowDialog(ref int valueX, ref int valueY)
         {
             try
             {
-                var viewModel = new SelectIntViewModel
+                var viewModel = new SelectAspectRatioViewModel
                 {
-                    Value = value,
-                    Unit = unit
+                    ValueX = valueX,
+                    ValueY = valueY
                 };
 
-                var view = new SelectIntView();
+                var view = new SelectAspectRatioView();
 
                 var window = WindowHelper.CreateFixedDialog(ResourceProvider.GetString("LOCMetadataUtilitiesDialogEnterValue"));
                 window.Content = view;
@@ -40,13 +39,14 @@ namespace MetadataUtilities.ViewModels
                     return false;
                 }
 
-                value = viewModel.Value;
+                valueX = viewModel.ValueX;
+                valueY = viewModel.ValueY;
 
                 return true;
             }
             catch (Exception exception)
             {
-                Log.Error(exception, "Error during initializing select int dialog", true);
+                Log.Error(exception, "Error during initializing select aspect ratio dialog", true);
 
                 return false;
             }

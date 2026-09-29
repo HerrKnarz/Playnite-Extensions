@@ -8,6 +8,9 @@
         IsNotEmpty,
         IsBiggerThan,
         IsSmallerThan,
-        GameIsNew
+        GameIsNew,
+        Equals,
+        DoesntEqual,
+        None
     }
 }

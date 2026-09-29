@@ -11,7 +11,7 @@ namespace MetadataUtilities.Models
         private bool _addRemovedToUnwanted;
         private bool _alwaysSaveManualMergeRules;
         private int _conditionActionWindowHeight = 600;
-        private int _conditionActionWindowWidth = 800;
+        private int _conditionActionWindowWidth = 1000;
         private ObservableCollection<ConditionalAction> _conditionalActions = new ObservableCollection<ConditionalAction>();
         private int _editorWindowHeight = 600;
         private int _editorWindowWidth = 1200;

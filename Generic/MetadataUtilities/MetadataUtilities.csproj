@@ -66,8 +66,29 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\AddonInteractions.cs">
+      <Link>Shared\AddonInteractions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\AsyncHelper.cs">
+      <Link>Shared\AsyncHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\ResourceHelper.cs">
+      <Link>Shared\Controls\ResourceHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsOption.cs">
+      <Link>Shared\Controls\SettingsOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsSection.cs">
+      <Link>Shared\Controls\SettingsSection.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\Enum\DbInteractionResult.cs">
       <Link>Shared\DbInteractionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs">
+      <Link>Shared\FilesHelper\FileHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\ImageHelper.cs">
+      <Link>Shared\FilesHelper\ImageHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\GameEx.cs">
       <Link>Shared\GamesCommon\GameEx.cs</Link>
@@ -130,6 +151,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IGameInfoType.cs">
       <Link>Shared\MetadataCommon\DatabaseObjectTypes\IGameInfoType.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IImageType.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\IImageType.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\IMetadataFieldType.cs">
       <Link>Shared\MetadataCommon\DatabaseObjectTypes\IMetadataFieldType.cs</Link>
     </Compile>
@@ -190,6 +214,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeIcon.cs">
       <Link>Shared\MetadataCommon\DatabaseObjectTypes\TypeIcon.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeInstallDirectory.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\TypeInstallDirectory.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeInstallSize.cs">
       <Link>Shared\MetadataCommon\DatabaseObjectTypes\TypeInstallSize.cs</Link>
     </Compile>
@@ -204,6 +231,9 @@
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeLink.cs">
       <Link>Shared\MetadataCommon\DatabaseObjectTypes\TypeLink.cs</Link>
+    </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeLogo.cs">
+      <Link>Shared\MetadataCommon\DatabaseObjectTypes\TypeLogo.cs</Link>
     </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\MetadataCommon\DatabaseObjectTypes\TypeManual.cs">
       <Link>Shared\MetadataCommon\DatabaseObjectTypes\TypeManual.cs</Link>
@@ -293,7 +323,9 @@
     <Compile Include="Actions\RemoveUnwantedAction.cs" />
     <Compile Include="Actions\SetUserScoreAction.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="Enums\ConditionPropertyType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ImageProcessor.cs" />
     <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\Action.cs" />
     <Compile Include="Enums\ActionType.cs" />
@@ -318,10 +350,12 @@
     <Compile Include="ViewModels\ChangeTypeViewModel.cs" />
     <Compile Include="ViewModels\ConditionalActionEditorViewModel.cs" />
     <Compile Include="ViewModels\CopyMetadataViewModel.cs" />
-    <Compile Include="ViewModels\FieldTypeContextAction.cs" />
+    <Compile Include="ViewModels\FieldTypeContextItem.cs" />
+    <Compile Include="ViewModels\FieldTypeMenuItem.cs" />
     <Compile Include="ViewModels\MergeDialogViewModel.cs" />
     <Compile Include="ViewModels\MergeRuleEditorViewModel.cs" />
     <Compile Include="ViewModels\PrefixItemControlViewModel.cs" />
+    <Compile Include="ViewModels\SelectAspectRatioViewModel.cs" />
     <Compile Include="ViewModels\SelectDateViewModel.cs" />
     <Compile Include="ViewModels\SelectIntViewModel.cs" />
     <Compile Include="Views\ConditionalActionEditorView.xaml.cs">
@@ -342,6 +376,9 @@
     <Compile Include="Views\MergeRuleEditorView.xaml.cs">
       <DependentUpon>MergeRuleEditorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SelectAspectRatioView.xaml.cs">
+      <DependentUpon>SelectAspectRatioView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -360,6 +397,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\KNARZhelper\KNARZhelper\Resources\KNARZIconFont.ttf">
+      <Link>Resources\KNARZIconFont.ttf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -376,6 +417,11 @@
     <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\CommonStyles.xaml">
       <Link>Shared\Controls\CommonStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\..\KNARZhelper\KNARZhelper\Controls\SettingsStyles.xaml">
+      <Link>Shared\Controls\SettingsStyles.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\SearchGameView.xaml">
       <Link>Shared\GamesCommon\SearchGameView.xaml</Link>
@@ -411,6 +457,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SelectAspectRatioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -438,6 +488,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Magick.NET-Q8-x86">
+      <Version>14.17.1</Version>
+    </PackageReference>
     <PackageReference Include="PlayniteSDK">
       <Version>6.16.0</Version>
     </PackageReference>

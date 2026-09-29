@@ -22,14 +22,16 @@ namespace MetadataUtilities.Views
             }
         }
 
-        private void ButtonContextClick(object sender, RoutedEventArgs e)
+        private void TextBlockContextClick(object sender, RoutedEventArgs e)
         {
-            var contextMenu = ((Button)sender)?.ContextMenu;
+            var contextMenu = ((TextBlock)sender)?.ContextMenu;
 
             if (contextMenu == null)
+            {
                 return;
+            }
 
-            contextMenu.DataContext = ((Button)sender).DataContext;
+            contextMenu.DataContext = ((TextBlock)sender).DataContext;
             contextMenu.IsOpen = true;
         }
     }
