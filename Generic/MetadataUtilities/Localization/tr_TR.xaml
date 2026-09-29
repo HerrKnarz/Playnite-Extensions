@@ -90,6 +90,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">İstenmeyen meta verileri kaldırın</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">Yeni oyunları sıfırlayın</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesMenuImageUtilities">Image Utilities</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageHorizontally">Flip {0} horizontally</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageVertically">Flip {0} vertically</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRotateImage">Rotate {0} {1}°</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Oyun yeni</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Birleştirme Kuralı Düzenleyicisi</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Meta Veri Araçları</sys:String>
