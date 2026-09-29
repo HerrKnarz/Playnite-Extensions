@@ -90,6 +90,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">不要なメタデータを削除</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">新規ゲームをリセット</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesMenuImageUtilities">Image Utilities</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageHorizontally">Flip {0} horizontally</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageVertically">Flip {0} vertically</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRotateImage">Rotate {0} {1}°</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">ゲームは新規</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">統合ルールエディター</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">Metadata Utilities</sys:String>
