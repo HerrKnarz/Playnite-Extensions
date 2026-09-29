@@ -456,57 +456,59 @@ namespace MetadataUtilities
 
             var typeManager = fieldType.GetTypeManager();
 
-            if (typeManager is IImageType imageType && imageType.GetFile(game) != null)
+            if (!(typeManager is IImageType imageType) || imageType.GetFile(game).IsNullOrEmpty())
             {
-                if (addDivider)
-                {
-                    yield return new GameMenuItem
-                    {
-                        Description = "-",
-                        MenuSection = menuSection
-                    };
-                }
+                yield break;
+            }
 
+            if (addDivider)
+            {
                 yield return new GameMenuItem
                 {
-                    Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuFlipImageHorizontally"), typeManager.LabelInGame),
-                    MenuSection = menuSection,
-                    Icon = "muFlipHorizontally",
-                    Action = a => ImageProcessor.Mirror(args.Games.First(), fieldType, true)
-                };
-
-                yield return new GameMenuItem
-                {
-                    Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuFlipImageVertically"), typeManager.LabelInGame),
-                    MenuSection = menuSection,
-                    Icon = "muFlipVertically",
-                    Action = a => ImageProcessor.Mirror(args.Games.First(), fieldType, false)
-                };
-
-                yield return new GameMenuItem
-                {
-                    Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuRotateImage"), typeManager.LabelInGame, 90),
-                    MenuSection = menuSection,
-                    Icon = "muRotate",
-                    Action = a => ImageProcessor.Rotate(args.Games.First(), fieldType, 90)
-                };
-
-                yield return new GameMenuItem
-                {
-                    Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuRotateImage"), typeManager.LabelInGame, 180),
-                    MenuSection = menuSection,
-                    Icon = "muRotate",
-                    Action = a => ImageProcessor.Rotate(args.Games.First(), fieldType, 180)
-                };
-
-                yield return new GameMenuItem
-                {
-                    Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuRotateImage"), typeManager.LabelInGame, 270),
-                    MenuSection = menuSection,
-                    Icon = "muRotate",
-                    Action = a => ImageProcessor.Rotate(args.Games.First(), fieldType, 270)
+                    Description = "-",
+                    MenuSection = menuSection
                 };
             }
+
+            yield return new GameMenuItem
+            {
+                Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuFlipImageHorizontally"), typeManager.LabelInGame),
+                MenuSection = menuSection,
+                Icon = "muFlipHorizontally",
+                Action = a => ImageProcessor.Mirror(args.Games.First(), fieldType, true)
+            };
+
+            yield return new GameMenuItem
+            {
+                Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuFlipImageVertically"), typeManager.LabelInGame),
+                MenuSection = menuSection,
+                Icon = "muFlipVertically",
+                Action = a => ImageProcessor.Mirror(args.Games.First(), fieldType, false)
+            };
+
+            yield return new GameMenuItem
+            {
+                Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuRotateImage"), typeManager.LabelInGame, 90),
+                MenuSection = menuSection,
+                Icon = "muRotate",
+                Action = a => ImageProcessor.Rotate(args.Games.First(), fieldType, 90)
+            };
+
+            yield return new GameMenuItem
+            {
+                Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuRotateImage"), typeManager.LabelInGame, 180),
+                MenuSection = menuSection,
+                Icon = "muRotate",
+                Action = a => ImageProcessor.Rotate(args.Games.First(), fieldType, 180)
+            };
+
+            yield return new GameMenuItem
+            {
+                Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuRotateImage"), typeManager.LabelInGame, 270),
+                MenuSection = menuSection,
+                Icon = "muRotate",
+                Action = a => ImageProcessor.Rotate(args.Games.First(), fieldType, 270)
+            };
         }
 
         private void ShowSettings() => OpenSettingsView();
