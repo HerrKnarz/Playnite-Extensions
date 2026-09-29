@@ -90,6 +90,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">删除不需要的元数据</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">重置新游戏</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesMenuImageUtilities">Image Utilities</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageHorizontally">Flip {0} horizontally</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageVertically">Flip {0} vertically</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRotateImage">Rotate {0} {1}°</sys:String>
+
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">游戏是新的</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">合并规则编辑器</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesName">元数据实用工具</sys:String>
