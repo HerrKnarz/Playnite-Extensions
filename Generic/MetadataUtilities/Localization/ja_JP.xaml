@@ -22,7 +22,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">{0} 件のゲームに項目を追加しました</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">{0} 件のゲームから項目を削除しました</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">{0} 件のゲームで項目を切り替えました</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">入力した文字列は正規表現として使用できます。</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">The entered string will be interpreted as a regular expression.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">{0} 件のゲームから不要なメタデータ項目を削除しました！</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">会社名を変更</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">{0} の名前を変更しようとしています。対応する {1} の名前も変更しますか？</sys:String>
@@ -55,16 +55,29 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nand">いずれかの条件が偽</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">すべての条件が偽</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">含む</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">含まない</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">contain</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains_Alt">contains</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">don't contain</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain_Alt">doesn't contain</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">空である</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">空ではない</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsBiggerThan">より大きい</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsSmallerThan">より小さい</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Equals">equals</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesntEqual">doesn't equal</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">追加</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">削除</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">フィールドをクリア</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">clear</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Set">set</sys:String>
+
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Value">Value</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Height">Height</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Width">Width</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_AspectRatio">Aspect Ratio</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_FileSize">File Size</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Extension">Extension</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Filetype">File Type</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">メタデータをコピー</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">{0} からメタデータを貼り付け</sys:String>
@@ -76,6 +89,11 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnused">未使用のメタデータを削除</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">不要なメタデータを削除</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">新規ゲームをリセット</sys:String>
+
+    <sys:String x:Key="LOCMetadataUtilitiesMenuImageUtilities">Image Utilities</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageHorizontally">Flip {0} horizontally</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageVertically">Flip {0} vertically</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRotateImage">Rotate {0} {1}°</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">ゲームは新規</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">統合ルールエディター</sys:String>
@@ -95,11 +113,26 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressRemovingUnwantedMessage">不要なメタデータ項目を削除中...</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">ユーザースコアを設定中...</sys:String>
 
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsActionsDescription">Here you can add the actions to execute when the conditions on the left are met or not. To delete an action again just select it in the box and hit the DEL key.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddActions">Add actions</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddConditions">Add conditions</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsDescription">Here you can add as many conditions as you like using the options on the left. The requirements selection specifies how the conditions are considered to be met for the actions to be executed. To remove conditions select them in the list and hit the DEL key.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsMet">Conditions met</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsNotMet">Conditions not met</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsEnabledDescription">Disabled conditional actions won't run automatically, but can still be executed manually.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsNameDescription">Name for the conditional action that will be displayed in the settings list and in menus.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Position of the conditional action in the settings list and in menus.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirements">Requirements</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirementsDescription">Specifies when the list of conditions is considered to be met in its entirety in order to execute the actions.</sys:String>
+
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsActionsMet">Actions (when met)</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsActionsNotMet">Actions (when not met)</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddDefaults">既定値を追加</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddExistingItems">既存の項目を追加</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAddRemovedToUnwanted">メタデータエディターで削除した項目を、確認せず常に不要リストに追加。</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsAlwaysSaveManualMergeRules">手動統合を常に統合ルールとして保存。</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManually">手動で実行可能</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsCanBeExecutedManuallyDescription">Enabling this will allow the conditional action to be executed manually via the game context menu. It doesn't need to be enabled itself.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsColumnsInGameGrid">メタデータエディターのゲームグリッドに表示する列</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditions">条件</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConfirmDeletion">削除を確認</sys:String>
@@ -110,10 +143,12 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsEdit">編集</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsErrorEmptyPrefix">接頭辞を空にすることはできません！</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadata">メタデータのダウンロード前の新規ゲームにのみ実行</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsExecuteOnNewBeforeMetadataDescription">Enabling this will execute the action only if it's a new game and no metadata was downloaded yet. Be careful when adding metadata this way, as it will keep the metadata download from adding their own to the respective fields.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInDetails">詳細で非表示</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsHideInEditor">エディターで非表示</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditions">条件を無視</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManual">手動実行時に条件を無視</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreConditionsOnManualDescription">Enabling this will ignore conditions when executing the action manually. It will automatically consider the conditions to be met, so only the &quot;conditions met&quot; tab will be executed.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInGameCount">ゲーム数で非表示ゲームを無視</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsIgnoreHiddenGamesInRemoveUnused">未使用のメタデータを削除するときに非表示ゲームを無視</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsMergeMetadataOnMetadataUpdate">メタデータ更新時に統合ルールを自動的に実行</sys:String>
@@ -144,4 +179,5 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsValuesToMerge">統合する値</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWhiteListInfo">未使用の項目を削除するときに、これらの項目は削除されません。</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsWriteDebugLog">デバッグログメッセージを書き込む（エラーが疑われる場合のみ使用してください！）</sys:String>
+    <sys:String x:Key="LOCKNARZHelperLogoTitle">Logo</sys:String>
 </ResourceDictionary>

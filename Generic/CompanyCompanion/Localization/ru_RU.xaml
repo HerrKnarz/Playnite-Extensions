@@ -11,7 +11,7 @@
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeGroup">Слияние группы</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowMergeToolTip">Снимите флажок, если эта компания не должна быть объединена с другими.</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowName">Объединение компаний</sys:String>
-    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">Новое имя:</sys:String>
+    <sys:String x:Key="LOCCompanyCompanionMergeWindowNewName">Новое название:</sys:String>
     <sys:String x:Key="LOCCompanyCompanionMergeWindowUseAsName">Использовать в качестве названия</sys:String>
 
     <sys:String x:Key="LOCCompanyCompanionMenuMergeDuplicates">Объединить дубликаты</sys:String>
