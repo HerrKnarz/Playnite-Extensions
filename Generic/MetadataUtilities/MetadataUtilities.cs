@@ -20,8 +20,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Control = System.Windows.Controls.Control;
+using FontFamily = System.Windows.Media.FontFamily;
 using MergeAction = MetadataUtilities.Actions.MergeAction;
 using UserControl = System.Windows.Controls.UserControl;
 
@@ -76,6 +76,18 @@ namespace MetadataUtilities
             foreach (var iconResource in iconResourcesToAdd)
             {
                 MiscHelper.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+            }
+
+            var knarzIconResourcesToAdd = new Dictionary<string, string>
+            {
+                { "muRotate", "\xf111" },
+                { "muFlipVertically", "\xf112" },
+                { "muFlipHorizontally", "\xf113" }
+            };
+
+            foreach (var iconResource in knarzIconResourcesToAdd)
+            {
+                MiscHelper.AddTextKnarzFontResource(iconResource.Key, iconResource.Value);
             }
         }
 
@@ -234,6 +246,19 @@ namespace MetadataUtilities
                 Action = a => ExecuteConditionalActionsAction.Instance().DoForAll(myGames, true,
                     ActionModifierType.IsManual, action)
             }));
+
+            var imageMenuItems = new List<GameMenuItem>();
+
+            imageMenuItems.AddRange(GetGameMenuImageItems(args, FieldType.Background, false));
+            imageMenuItems.AddRange(GetGameMenuImageItems(args, FieldType.Cover, imageMenuItems.Count > 0));
+            imageMenuItems.AddRange(GetGameMenuImageItems(args, FieldType.Icon, imageMenuItems.Count > 0));
+
+            if (AddonInteractions.IsExtraMetadataLoaderInstalled())
+            {
+                imageMenuItems.AddRange(GetGameMenuImageItems(args, FieldType.Logo, imageMenuItems.Count > 0));
+            }
+
+            menuItems.AddRange(imageMenuItems);
 
             var quickAddItems = new List<GameMenuItem>();
 
@@ -421,6 +446,67 @@ namespace MetadataUtilities
             }
 
             return menuItems;
+        }
+
+        private IEnumerable<GameMenuItem> GetGameMenuImageItems(GetGameMenuItemsArgs args, FieldType fieldType, bool addDivider = true)
+        {
+            var menuSection = ResourceProvider.GetString("LOCMetadataUtilitiesMenuImageUtilities");
+
+            var game = args.Games.First();
+
+            var typeManager = fieldType.GetTypeManager();
+
+            if (typeManager is IImageType imageType && imageType.GetFile(game) != null)
+            {
+                if (addDivider)
+                {
+                    yield return new GameMenuItem
+                    {
+                        Description = "-",
+                        MenuSection = menuSection
+                    };
+                }
+
+                yield return new GameMenuItem
+                {
+                    Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuFlipImageHorizontally"), typeManager.LabelInGame),
+                    MenuSection = menuSection,
+                    Icon = "muFlipHorizontally",
+                    Action = a => ImageProcessor.Mirror(args.Games.First(), fieldType, true)
+                };
+
+                yield return new GameMenuItem
+                {
+                    Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuFlipImageVertically"), typeManager.LabelInGame),
+                    MenuSection = menuSection,
+                    Icon = "muFlipVertically",
+                    Action = a => ImageProcessor.Mirror(args.Games.First(), fieldType, false)
+                };
+
+                yield return new GameMenuItem
+                {
+                    Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuRotateImage"), typeManager.LabelInGame, 90),
+                    MenuSection = menuSection,
+                    Icon = "muRotate",
+                    Action = a => ImageProcessor.Rotate(args.Games.First(), fieldType, 90)
+                };
+
+                yield return new GameMenuItem
+                {
+                    Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuRotateImage"), typeManager.LabelInGame, 180),
+                    MenuSection = menuSection,
+                    Icon = "muRotate",
+                    Action = a => ImageProcessor.Rotate(args.Games.First(), fieldType, 180)
+                };
+
+                yield return new GameMenuItem
+                {
+                    Description = string.Format(ResourceProvider.GetString("LOCMetadataUtilitiesMenuRotateImage"), typeManager.LabelInGame, 270),
+                    MenuSection = menuSection,
+                    Icon = "muRotate",
+                    Action = a => ImageProcessor.Rotate(args.Games.First(), fieldType, 270)
+                };
+            }
         }
 
         private void ShowSettings() => OpenSettingsView();

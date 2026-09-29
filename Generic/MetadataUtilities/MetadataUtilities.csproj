@@ -87,6 +87,9 @@
     <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs">
       <Link>Shared\FilesHelper\FileHelper.cs</Link>
     </Compile>
+    <Compile Include="..\..\KNARZhelper\KNARZhelper\FilesCommon\ImageHelper.cs">
+      <Link>Shared\FilesHelper\ImageHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\KNARZhelper\KNARZhelper\GamesCommon\GameEx.cs">
       <Link>Shared\GamesCommon\GameEx.cs</Link>
     </Compile>
@@ -322,6 +325,7 @@
     <Compile Include="EnumHelper.cs" />
     <Compile Include="Enums\ConditionPropertyType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ImageProcessor.cs" />
     <Compile Include="MetadataUtilities.cs" />
     <Compile Include="Models\Action.cs" />
     <Compile Include="Enums\ActionType.cs" />
@@ -484,6 +488,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Magick.NET-Q8-x86">
+      <Version>14.17.1</Version>
+    </PackageReference>
     <PackageReference Include="PlayniteSDK">
       <Version>6.16.0</Version>
     </PackageReference>
