@@ -111,7 +111,7 @@
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsSelect">Выбрать</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsSortOrder">Порядок сортировки</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsSortOrderDescription">Поставщики будут отображаться в меню и в элементах управления просмотра в указанном порядке.</sys:String>
-    <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots">Тэгнуть с</sys:String>
+    <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshots">Назначить тег</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsTagWhenHavingScreenshotsDescription">Этот тег будет добавлен к играм, если они получат скриншоты от поставщика. Он будет удален, когда скриншоты будут удалены.</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeight">Высота миниатюры</sys:String>
     <sys:String x:Key="LOCScreenshotUtilitiesSettingsThumbnailHeightDescription">Высота создаваемых миниатюр в пикселях. Ширина рассчитывается исходя из соотношения сторон изображения. Миниатюры будут создаваться только для загруженных скриншотов или при включенной опции «Всегда создавать миниатюры».</sys:String>
