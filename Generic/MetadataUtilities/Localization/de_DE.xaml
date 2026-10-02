@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddNewObject">Neues Objekt hinzufügen</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAddToUnwanted">Möchtest du die Elemente zur Unerwünscht-Liste hinzufügen?</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogAlreadyExists">{0} mit diesem Namen existiert bereits.</sys:String>
@@ -123,7 +121,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsNotMet">Bedingungen nicht erfüllt</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsEnabledDescription">Deaktivierte bedingte Aktionen werden nicht automatisch ausgeführt, können aber dennoch manuell ausgeführt werden.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsNameDescription">Name für die bedingte Aktion, die in der Einstellungsliste und im Menü angezeigt wird.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Gibt die Reihenfolge vor, in der die bedingten Aktionen ausgeführt werden, so dass du Aktionen mit höherer Nummer auf Änderungen von Aktionen mit einer niedrigeren reagieren lassen kannst.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Definiert die Reihenfolge, in der die bedingten Aktionen ausgeführt werden, so können Sie Aktionen mit einer höheren Zahl auf Änderungen reagieren lassen, die mit einer geringeren Zahl durchgeführt werden.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirements">Erfüllungsvoraussetzung</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirementsDescription">Legt fest, wann die Liste der Bedingungen als vollständig erfüllt betrachtet wird, um die Aktionen auszuführen.</sys:String>
 
