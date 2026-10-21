@@ -22,7 +22,7 @@
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessAdd">элемент добавлен в {0} играх</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessRemove">элемент удален из {0} игр</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogQuickAddSuccessToggle">элемент переключён в {0} играх</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">The entered string will be interpreted as a regular expression.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesDialogRegExNotice">Введенная строка будет интерпретироваться как регулярное выражение.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRemovedUnwantedMessage">Удалены ненужные метаданные из {0} игр!</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompany">Переименовать компанию</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesDialogRenameCompanyQuestion">Вы переименовываете {0}. Хотите ли вы также переименовать соответствующий {1}?</sys:String>
@@ -55,10 +55,10 @@
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nand">Любое условие ложное</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_Nor">Все условия ложные</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">contain</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains_Alt">contains</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">don't contain</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain_Alt">doesn't contain</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains">содержит</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Contains_Alt">содержат</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain">не содержат</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_DoesNotContain_Alt">не содержит</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsEmpty">пусто</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsNotEmpty">не пусто</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_IsBiggerThan">больше, чем</sys:String>
@@ -68,16 +68,16 @@
 
     <sys:String x:Key="LOCMetadataUtilitiesEnum_AddObject">добавить</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesEnum_RemoveObject">удалить</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">clear</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_Set">set</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ClearField">очистить</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_Set">задать</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Value">Value</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Height">Height</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Width">Width</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_AspectRatio">Aspect Ratio</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_FileSize">File Size</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Extension">Extension</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Filetype">File Type</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Value">Значение</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Height">Высота</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Width">Ширина</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_AspectRatio">Соотношение сторон</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_FileSize">Размер файла</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Extension">Расширение</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesEnum_ConditionPropertyType_Filetype">Тип файла</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesMenuCopyMetadata">Скопировать метаданные</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuPasteMetadata">Вставить метаданные из {0}</sys:String>
@@ -90,10 +90,10 @@
     <sys:String x:Key="LOCMetadataUtilitiesMenuRemoveUnwanted">Удалить ненужные метаданные</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMenuResetNewGames">Сбросить новые игры</sys:String>
 
-    <sys:String x:Key="LOCMetadataUtilitiesMenuImageUtilities">Image Utilities</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageHorizontally">Flip {0} horizontally</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageVertically">Flip {0} vertically</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesMenuRotateImage">Rotate {0} {1}°</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuImageUtilities">Утилиты изображений</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageHorizontally">Отразить {0} горизонтально</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuFlipImageVertically">Отразить {0} вертикально</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesMenuRotateImage">Повернуть {0} {1}°</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesGameIsNew">Игра новая</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesMergeRuleEditor">Редактор правил объединения</sys:String>
@@ -114,14 +114,14 @@
     <sys:String x:Key="LOCMetadataUtilitiesProgressSettingUserScore">Установка счёта пользователя...</sys:String>
 
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsActionsDescription">Here you can add the actions to execute when the conditions on the left are met or not. To delete an action again just select it in the box and hit the DEL key.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddActions">Add actions</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddConditions">Add conditions</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddActions">Добавить действия</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsAddConditions">Добавить условия</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsDescription">Here you can add as many conditions as you like using the options on the left. The requirements selection specifies how the conditions are considered to be met for the actions to be executed. To remove conditions select them in the list and hit the DEL key.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsMet">Conditions met</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsConditionsNotMet">Conditions not met</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsEnabledDescription">Disabled conditional actions won't run automatically, but can still be executed manually.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsNameDescription">Name for the conditional action that will be displayed in the settings list and in menus.</sys:String>
-    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Position of the conditional action in the settings list and in menus.</sys:String>
+    <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsPositionDescription">Defines the order the conditional actions will be executed, so you can let actions with a higher number react to changes actions with a lower number made.</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirements">Requirements</sys:String>
     <sys:String x:Key="LOCMetadataUtilitiesSettingsConditionalActionsRequirementsDescription">Specifies when the list of conditions is considered to be met in its entirety in order to execute the actions.</sys:String>
 
