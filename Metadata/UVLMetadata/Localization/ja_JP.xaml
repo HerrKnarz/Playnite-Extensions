@@ -1,40 +1,40 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:String x:Key="LOCUVLMetadataName">UVL Metadata</sys:String>
+    <sys:String x:Key="LOCUVLMetadataName">UVLメタデータ</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataAddLinkPerfectAndVeryGood">to perfect and very good matches</sys:String>
-    <sys:String x:Key="LOCUVLMetadataAddLinkMatchingPlatform">to games with matching platform</sys:String>
-    <sys:String x:Key="LOCUVLMetadataAddLinkAllGames">to all games</sys:String>
-    <sys:String x:Key="LOCUVLMetadataAddLinkNever">never</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAddLinkPerfectAndVeryGood">完全一致および非常に一致度の高いゲームに</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAddLinkMatchingPlatform">プラットフォームが一致するゲームに</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAddLinkAllGames">すべてのゲームに</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAddLinkNever">追加しない</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusAuthenticated">Authenticated</sys:String>
-    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">Not Authenticated</sys:String>
-    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">Checking Status...</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusAuthenticated">認証済み</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusNotAuthenticated">未認証</sys:String>
+    <sys:String x:Key="LOCUVLMetadataAuthenticationStatusCheckingStatus">状態を確認しています…</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedName">Matched Name</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedPlatform">Matched Platform</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedRelease">Matched Year</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingScore">Matching Score</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingType">Matched by</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportDescription">Select the games you want to import tags for by enabling the check boxes. You can use the space bar to quickly toggle the check box for all selected rows.</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGames">Found Games</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">Found Games for &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportGamesAffected">Added {0} to {1} games!</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportImport">Import</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportImportAs">Import As</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportSearchGames">Search Games</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportSearchTag">Search Tag</sys:String>
-    <sys:String x:Key="LOCUVLMetadataBulkImportSelect">Select</sys:String>
-    <sys:String x:Key="LOCUVLMetadataMenuBulkImport">Bulk Import</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedName">一致した名前</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedPlatform">一致したプラットフォーム</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchedRelease">一致した年</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingScore">一致度</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportCaptionMatchingType">照合方法</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportDescription">タグをインポートするゲームのチェックボックスをオンにしてください。スペースキーを使用すると、選択したすべての行のチェックボックスをすばやく切り替えられます。</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGames">見つかったゲーム</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportFoundGamesFor">「{0}」で見つかったゲーム</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportGamesAffected">{1}件のゲームに{0}を追加しました！</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImport">インポート</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportImportAs">ゲームを検索</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSearchGames">ゲームを検索</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSearchTag">タグを検索</sys:String>
+    <sys:String x:Key="LOCUVLMetadataBulkImportSelect">選択</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMenuBulkImport">一括インポート</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataDialogNoGamesFound">No games were found for the selected tag.</sys:String>
-    <sys:String x:Key="LOCUVLMetadataDialogLoginRequired">You need to be logged in to your UVL account to use the bulk import. Do you want to open the addon settings?</sys:String>
-    <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">To download tags from UVL you need to refresh them at least once. Do you want to do that now? It should only take a few seconds.</sys:String>
+    <sys:String x:Key="LOCUVLMetadataDialogNoGamesFound">選択したタグに該当するゲームが見つかりませんでした。</sys:String>
+    <sys:String x:Key="LOCUVLMetadataDialogLoginRequired">一括インポートを使用するには、UVLアカウントへのログインが必要です。アドオンの設定を開きますか？</sys:String>
+    <sys:String x:Key="LOCUVLMetadataDialogRefreshTags">UVLからタグをダウンロードするには、少なくとも一度はタグを更新する必要があります。今すぐ更新しますか？ 数秒で完了するはずです。</sys:String>
 
-    <sys:String x:Key="LOCUVLMetadataMatchingScorePerfect">Perfect</sys:String>
-    <sys:String x:Key="LOCUVLMetadataMatchingScoreVeryGood">Very Good</sys:String>
-    <sys:String x:Key="LOCUVLMetadataMatchingScoreGood">Good</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScorePerfect">完全一致</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreVeryGood">非常に高い</sys:String>
+    <sys:String x:Key="LOCUVLMetadataMatchingScoreGood">高い</sys:String>
     <sys:String x:Key="LOCUVLMetadataMatchingScoreAcceptable">Acceptable</sys:String>
     <sys:String x:Key="LOCUVLMetadataMatchingScorePoor">Poor</sys:String>
 
