@@ -23,10 +23,10 @@
     <sys:String x:Key="LOCWikipediaMetadataSettingsRatingHighest">最も高い評価</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsRatingAverage">すべての評価の平均</sys:String>
     <sys:String x:Key="LOCWikipediaMetadataSettingsAddValue">値を追加</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsShowTopPanelCategoryImportButton">Show top panel category import button</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsParallelismLabel">Parellelism:</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataSettingsParallelismExplanation">Parallelism dictates how many simultaneous threads can be used to process the category import game matching. It is recommended to set this lower than the amount of cores in your CPU.</sys:String>
-    <sys:String x:Key="LOCWikipediaMetadataCategoryDownloadText">Downloading category and its child categories. Wikipedia supports up to 100 requests per minute, so for categories with many child categories, this can take 1 or more minutes. Downloaded {0} categories.</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsShowTopPanelCategoryImportButton">カテゴリーのインポートボタンを上部パネルに表示</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsParallelismLabel">並列処理数：</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataSettingsParallelismExplanation">並列処理数は、カテゴリーのインポート時にゲームの照合処理に使用できるスレッドの同時実行数を指定します。CPUのコア数よりも少ない値に設定することをおすすめします。</sys:String>
+    <sys:String x:Key="LOCWikipediaMetadataCategoryDownloadText">カテゴリーとそのサブカテゴリーをダウンロードしています。Wikipediaでは1分間に最大100件のリクエストが可能なため、サブカテゴリーが多い場合は1分以上かかることがあります。{0}件のカテゴリーをダウンロードしました。</sys:String>
 
     <sys:String x:Key="LOCWikipediaMetadataSearchDialog">ゲームを選択</sys:String>
 </ResourceDictionary>
